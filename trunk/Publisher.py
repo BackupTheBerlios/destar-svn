@@ -1,6 +1,6 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2004 by Holger Schurig
+# Copyright (C) 2005 by Holger Schurig
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,25 +19,35 @@
 
 
 """
-DeStar session management. For simplicity, I put the session stuff directly
-into the Publisher object, so I don't use Quixote's classes 'Session' and
-'SessionPublisher'.
+DeStarPublisher also has it's own session management. For simplicity, I put
+the session stuff directly into the Publisher object, so I don't use
+Quixote's classes 'Session' and 'SessionPublisher'.
 
 Reasons:
 
 a) they set a cookie, some browsers don't allow cookies
 
 b) if you stop and start DeStar (which happens very often during
-   Development) you always get an ugly error message
+   Development) Quixote's session handler would give you ugly error messages
 
-c) Keeping the session data in the server scales quite ok, because
+c) Keeping the session data in the publisher object scales quite ok, because
    DeStar will usually only be used inside the LAN anyway
 
 But keep in mind that a session here is not a (user, host, browser_process)
-tuple, but a (user, host) tuple!
+tuple, but a (user, host) tuple.
 
 TODO: the default implementation provided here is not persistent. There is
 also no cleanup code to remove old sessions.
+
+
+The Session holds several values:
+
+request.session.user         User name
+request.session.level        User level (0=disabled/not logged in
+                                         1=normal PBX user
+                                         2=PBX Administrator
+                                         3=PBX Configurator
+                                         4=Programmer
 """
 
 
@@ -78,8 +88,8 @@ class DeStarPublisher(Publisher):
 			users = backend.getConfiglets(name="CfgOptUser")
 			if not users:
 				# be Admin if there are no users configured
-				session.user  = "virtual config user"
-				session.level = 3
+				session.user  = "programmer"
+				session.level = 4
 			else:
 				for user in users:
 					if user.pc == ip:

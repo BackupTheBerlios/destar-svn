@@ -1,6 +1,6 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2004 by Holger Schurig
+# Copyright (C) 2005 by Holger Schurig
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,12 +23,16 @@ import sys, os
 
 try:
 	import sqlite
+except ImportError:
+	print "Note: you should install python-sqlite to have CDR functionality"
+
+try:
 	db_fn = "/var/log/asterisk/cdr.db"
 	if not os.access(db_fn, os.O_RDWR):
 		raise ImportError
 	db = sqlite.connect(db_fn, autocommit=False, command_logfile=sys.stdout)
-except ImportError:
-	print "Note: you should install sqlite, pysqlite and res_sqlite to have CDR functionality"
+except:
+	print "Note: you don't seem to have access to /var/log/asterisk/cdr.db yet"
 	if __name__ == "__main__": sys.exit(0)
 	db = None
 

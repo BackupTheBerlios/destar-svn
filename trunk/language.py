@@ -1,6 +1,6 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2004 by Holger Schurig
+# Copyright (C) 2005 by Holger Schurig
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,10 +30,13 @@
 
 import os, gettext
 try:
+	# TODO: here we should have sub-directories for the languages
 	translation = gettext.GNUTranslations(open('destar.mo','rb'))
 except IOError:
 	translation = gettext.NullTranslations()
 translation.install()
 
+
+# Some test code
 if __name__ == '__main__':
 	print _("This menu will contain all sorts of administration stuff:")
