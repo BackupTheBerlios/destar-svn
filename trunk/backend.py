@@ -61,14 +61,14 @@ def fixupZaptel():
 		if param_list.__len__() == 5:
 			type, sigtype, channel = param_list[1:4]
 			channel = int(channel)
-			if type == 'fxs':
+			if type == 'fxo':
 				#print "Configing FXO line %d" % channel
 				zap_chans_dict[channel] = [ type, sigtype ]
-			elif type == 'fxo':
+			elif type == 'fxs':
 				#print "Configing FXS line %d" % channel
 				zap_chans_dict[channel] = [ type, sigtype ]
 			else :
-				print "Unknown zaptel type '%s' % type"
+				print "Unknown zaptel type '%s'" % type
 		param_list = re.split('^defaultzone\s*=\s*(\w+)', s)
 		if param_list.__len__() == 3:
 			lang = param_list[1]

@@ -36,4 +36,4 @@ except IOError:
 translation.install()
 
 if __name__ == '__main__':
-	print _("Have fun!")
+	print _("This menu will contain all sorts of administration stuff:")
