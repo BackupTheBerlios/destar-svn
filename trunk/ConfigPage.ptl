@@ -30,7 +30,6 @@ def menu(request):
 		('Phones/', 'Phones'),
 		('Lines/', 'Telco Lines'),
 		('Applications/', 'Applications'),
-		('Permissions/', 'Permissions'),
 		('Options/', 'Options'),
 		('',''),
 		('write', 'Write config'),

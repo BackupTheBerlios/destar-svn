@@ -37,5 +37,5 @@ class CfgAppPlay(CfgApp):
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		# TODO don't write extension or display error if user added extension
-		c.appendExten(self.ext, "Playback(%s)" % self.filename)
+		c.appendExten(self.ext, "Playback(%s,skip)" % self.filename)
 		c.appendExten(self.ext, "Hangup")

@@ -51,34 +51,6 @@ CfgOptVoicemail(
 	skipms   = 3,
 	)
 
-CfgPermDial(
-	name     = "out-internal",
-	desc     = "",
-	ignorepat = "",
-	include  = "default",
-	)
-
-CfgPermDial(
-	name     = "out-local",
-	desc     = "",
-	ignorepat = "",
-	include  = "default",
-	)
-
-CfgPermDial(
-	name     = "out-national",
-	desc     = "",
-	ignorepat = "0",
-	include  = "default",
-	)
-
-CfgPermDial(
-	name     = "out-intl",
-	desc     = "",
-	ignorepat = "0",
-	include  = "default",
-	)
-
 CfgPhoneSip(
 	name     = "hschurig",
 	secret   = "",
@@ -87,7 +59,6 @@ CfgPhoneSip(
 	context  = "default",
 	did      = True,
 	callerid = "15",
-	permission = "out-internal",
 	usevm    = False,
 	usemwi   = False,
 	pin      = "1111",

@@ -592,8 +592,7 @@ class CfgPhone(Cfg):
 
 	def fixup(self):
 		Cfg.fixup(self)
-		useContext(self.context)
-		useContext(self.permission)
+		useContext("phones")
 
 
 	def createExtensionConfig(self):
@@ -605,16 +604,15 @@ class CfgPhone(Cfg):
 			ret = ext.appendExten(exten, "Macro(dial-std-exten,%s/%s,%s,%d)" % (
 				self.technology,
 				self.name,
-				self.context,
+				"phones",
 				int(self.usevm))
 			      )
 
-		if self.context:
-			ext = AstConf("extensions.conf")
-			ext.setSection(self.context)
-			if self.ext:
-				createDialEntry(self.ext)
-			createDialEntry(self.name);
+		ext = AstConf("extensions.conf")
+		ext.setSection("phones")
+		if self.ext:
+			createDialEntry(self.ext)
+		createDialEntry(self.name);
 
 
 	def createVoicemailConfig(self, conf):
@@ -639,27 +637,3 @@ class CfgApp(Cfg):
 	of software that has a number and that you can dial)."""
 
 	group ="Applications"
-
-
-
-class CfgPerm(Cfg):
-	"""Base class for all permissions. Still on my TODO list to
-	implement fully."""
-
-	group = "Permissions"
-
-
-	def head(self):
-			return (_("Type"), _("Name"), _("Include"))
-
-
-	def row(self):
-		try:
-			ctx = self.name
-		except AttributeError:
-			ctx = ''
-		try:
-			inc = self.include
-		except AttributeError:
-			inc = ''
-		return (self.shortName, ctx, inc)

@@ -28,7 +28,6 @@ class CfgPhoneExtension(CfgPhone):
 	variables = [VarType("name",     title=_("Name"), len=15),
 
 		     VarType("ext",      title=_("Extension"), optional=True, len=6),
-		     VarType("context",  title=_("Context"), default="default", hide=True, optional=True, len=15),
 		     VarType("did",      title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
 		     VarType("Outbound", title=_("Calls from the phone"), type="label"),
@@ -36,14 +35,6 @@ class CfgPhoneExtension(CfgPhone):
 		     ]
 
 	technology = "virtual"
-
-
-	def fixup(self):
-		"""I needed to overwrite this, because there is no self.permission and therefore
-		CfgPhone.fixup can't call useContect(self.permission)."""
-
-		Cfg.fixup(self)
-		useContext(self.context)
 
 
 	def isAddable(self):
@@ -65,5 +56,5 @@ class CfgPhoneExtension(CfgPhone):
 
 	def createAsteriskConfiglet(self):
 		ext = AstConf("extensions.conf")
-		ext.setSection(self.context)
+		ext.setSection("phones")
 		ext.appendExten(self.ext, "Goto(%s)" % self.phone)

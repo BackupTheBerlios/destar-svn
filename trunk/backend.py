@@ -108,6 +108,9 @@ def initializeAsteriskConfig():
 	c.append("writeprotect=yes")
 	c.append('#include "macros.inc"')
 
+	c.setSection("default")
+	c.append("include=phones")
+
 	c = AstConf("sip.conf")
 	c.append("language=de")
 	c.append("maxexpirey=3600")
@@ -537,7 +540,7 @@ def determineStateOfPhones():
 		#k = p._state.keys()
 		#k.sort()
 		#for s in k:
-		#	print " ", s, p._state[s]
+		#	#print " ", s, p._state[s]
 		#print
 
 	return (phones, other)

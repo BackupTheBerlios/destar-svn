@@ -35,12 +35,10 @@ class CfgPhoneSip(CfgPhone):
 			#	phone with this number. A phone without an extension can still
 			#	be used as a target for direct dialin or calling groups.""")
 		     ),
-		     VarType("context",    title=_("Context"), default="default", hide=True, optional=True, len=15),
 		     VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
 		     VarType("Outbound",   title=_("Calls from the phone"), type="label"),
 		     VarType("callerid",   title=_("Caller-Id"), optional=True),
-		     VarType("permission", title=_("Permissions"), type="choice"),
 
 		     VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
 		     VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
@@ -63,8 +61,6 @@ class CfgPhoneSip(CfgPhone):
 		sip.append("canreinvite=no")
 		if self.callerid:
 			sip.appendValue(self, "callerid")
-		if self.permission:
-			sip.append("context=%s" % self.permission)
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(sip)

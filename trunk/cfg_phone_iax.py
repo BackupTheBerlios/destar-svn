@@ -31,13 +31,11 @@ class CfgPhoneIax(CfgPhone):
 
 			VarType("Inbound",      title=_("Calls to the phone"), type="label"),
 			VarType("ext",	        title=_("Extension"), optional=True, len=6),
-			VarType("context",      title=_("Context"), default="default", optional=True, hide=True),
 			VarType("did",	        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
 			VarType("Outbound",     title=_("Calls from the phone"), type="label"),
 			VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
 			VarType("calleridname", title=_("Caller-Id Name"), optional=True),
-			VarType("permission",   title=_("Permission"), type="choice"),
 
 			VarType("Voicemail",    title=_("Voicemail settings"), type="label"),
 			VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
@@ -63,8 +61,6 @@ class CfgPhoneIax(CfgPhone):
 			iax.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
 			iax.append('callerid=%s' % self.calleridnum)
-		if self.permission:
-			iax.appendValue("context=%s", self.permission)
 		iax.appendValue("notransfer=%s", self.notransfer)
 														    
 		self.createExtensionConfig()

@@ -38,13 +38,11 @@ class CfgPhoneMGCP(CfgPhone):
 			VarType("threeway",     title=_("Three way calling"), type="bool", optional=True),
 			VarType("transfer",     title=_("Enable Call transfer"), type="bool", optional=True),
 			VarType("forward",	title=_("Enable Call forward"), type="bool", optional=True),
-			VarType("context",      title=_("Context"), default="default", hide=True, optional=True, len=15),
 			VarType("did",          title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
 			VarType("Outbound",     title=_("Calls from the phone"), type="label"),
 			VarType("calleridnum",  title=_("Caller-Id-number"), optional=True),
 			VarType("calleridname",	title=_("Caller-Id-Name"), optional=True),
-			VarType("permission",   title=_("Permissions"), type="choice"),
 
 			VarType("Voicemail",    title=_("Voicemail settings"), type="label", len=6),
 			VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
@@ -71,8 +69,6 @@ class CfgPhoneMGCP(CfgPhone):
 			mgcp.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
 			mgcp.append('callerid=%s' % self.calleridnum)
-		if self.permission:
-			mgcp.append("context=%s" % self.permission)
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(mgcp)
