@@ -20,8 +20,43 @@
 
 from Templates import *
 from quixote.form2 import *
-import configlets, backend, manager
 import cdrutils
+
+
+_q_parent = 'page_admin'
+_q_title  = _("Call Details")
+_q_desc   = _("Get statistics about made and received calls")
+_q_level  = 2
+
+
+def _q_access(request):
+        if request.session.level < _q_level:
+		cantAccessPage()
+
+
+def _q_test():
+	return cdrutils.db
+
+
+def cdrShowResults [html] (where=[]):
+        cursor = cdrutils.select(order=[str('answer DESC')], where=where, limit=20)
+        row = cursor.fetchone()
+        if row:
+                '<table><tr>'
+                for s in row.keys():
+                        '<th>'
+                        s
+                        '</th>'
+                '</tr>'
+                while row:
+                        '<tr>'
+                        for s in row:
+                                '<td>'
+                                s
+                                '</td>'
+                        '</tr>'
+                        row = cursor.fetchone()
+                '</table>'
 
 
 def cdrForm [plain] (request, srcextension="", dstextension="" ):
@@ -47,40 +82,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="" ):
 	return render()
 
 
-def cdrShowResults [html] (where=[]):
-        cursor = cdrutils.select(order=[str('answer DESC')], where=where, limit=20)
-        row = cursor.fetchone()
-        if row:
-                '<table><tr>'
-                for s in row.keys():
-                        '<th>'
-                        s
-                        '</th>'
-                '</tr>'
-                while row:
-                        '<tr>'
-                        for s in row:
-                                '<td>'
-                                s
-                                '</td>'
-                        '</tr>'
-                        row = cursor.fetchone()
-                '</table>'
-
-
-def panelFeaturesForm [plain] (request, directory="opanel"):
-	form = Form()
-	form.add(StringWidget, "directory",  "%s" % directory, title=htmltext(_("Directory ")))
-	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)
-	
-	def render [html] ():
-		form.render()
-	
-	if not form.is_submitted() or form.has_errors():
-		return render()
-	
-	if form["directory"]:
-		# Change the configuration file automatically
-		print form["directory"]
-	
-	return render()
+def _q_index [plain] (request):
+	header(_q_title)
+	cdrForm(request)
+	footer()
