@@ -24,7 +24,7 @@ from language import _
 
 class CfgLineFwdIax(CfgLine):
 
-	shortName   = _("FreeworldDialup IAX")
+	shortName   = _("Provider FreeworldDialup (via IAX protocol)")
 
 	description = _("""You can register free of charge at
 			http://freeworlddialup.com and get an FWD Id where

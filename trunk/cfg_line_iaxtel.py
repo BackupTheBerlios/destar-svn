@@ -24,7 +24,7 @@ from language import _
 
 class CfgLineIaxtel(CfgLine):
 
-	shortName   = _("Iaxtel")
+	shortName   = _("Provider Iaxtel")
 
 	description = _("""You can register free of charge at
 			http://www.iaxtel.com and get an IAXtel number  where

@@ -24,30 +24,34 @@ from language import _
 
 class CfgLineIaxtrunk(CfgLine):
 
-	shortName   = _("IaxTrunk")
+	shortName   = _("IAX Trunk")
 
-	description = _("""This configlet allows you to setup a iax trunk line
-			to another asterisk server or a iax termination provider.'.""")
+	description = _("""Used to setup an IAX trunk to another Asterisk server or an IAX termination.""")
 
-	variables	=[VarType("name",		title=_("Name"), len=15, default="iaxtrunk"),
-				VarType("IaxTrunkid",	title=_("IAX username"),   len=6),
-				VarType("IaxTrunkpw",	title=_("IAX password"), len=15),
-				VarType("host",		title=_("IAX Trunk Hostname or IP address"), len=25),
-				VarType("Outbound",	title=_("Calls to IAX trunk"), type="label"),
-				VarType("ext",		title=_("Extension"), optional=True, len=6),
-				VarType("context",	title=_("Context"), default="out-pstn", optional=True, hide=True),
-				VarType("callerid",	title=_("Caller-Id Name"), optional=True),
-				VarType("Inbound",	title=_("Calls from IAX trunk"), type="label"),
-				VarType("extin",		title=_("Extension to ring"), optional=True, type="choice"),
-				VarType("contextin",	title=_("Context"), optional=True, hide=True, default="in-pstn")
-				]
+	variables	= [
+		VarType("name",       title=_("Name"), len=15, default="iaxtrunk"),
+		VarType("id",         title=_("IAX username"),   len=6),
+		VarType("pw",         title=_("IAX password"), len=15),
+		VarType("host",       title=_("IAX host"), len=25),
+
+		VarType("Outbound",   title=_("Calls to IAX trunk"), type="label"),
+		VarType("ext",        title=_("Extension"), optional=True, len=6),
+		VarType("context",    title=_("Context"), default="out-pstn", optional=True, hide=True),
+		VarType("callerid",   title=_("Caller-Id Name"), optional=True),
+
+		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
+		VarType("extin",      title=_("Extension to ring"), optional=True, len=4),
+		VarType("contextin",  title=_("Context"), optional=True, hide=True, default="in-pstn")
+		]
 
 	technology = "IAX2"
+
 
 	def fixup(self):
 		CfgLine.fixup(self)
 		useContext(self.context)
-		useContext("in-IaxTrunk")
+		useContext("in-iaxtrunk")
+
 
 	def createAsteriskConfiglet(self):
 		needModule("res_crypto")
@@ -61,8 +65,8 @@ class CfgLineIaxtrunk(CfgLine):
 			c.setSection(self.context)
 			if self.callerid:
 				c.appendExten(ext, "SetCIDName(%s)" % self.callerid)
-			c.appendExten(ext, "SetCIDNum(%s)" % self.IaxTrunkid)
-			c.appendExten(ext, "Dial(IAX2/%s:%s@%s/${EXTEN:%d},60,r)" % (self.IaxTrunkid, self.IaxTrunkpw, self.host, len(self.ext)))
+			c.appendExten(ext, "SetCIDNum(%s)" % self.id)
+			c.appendExten(ext, "Dial(IAX2/%s:%s@%s/${EXTEN:%d},60,r)" % (self.id, self.pw, self.host, len(self.ext)))
 			#c.appendExten(ext, "Busy")
 		if self.extin and self.contextin:
 			c.setSection(self.contextin)
@@ -70,12 +74,12 @@ class CfgLineIaxtrunk(CfgLine):
 
 		c = AstConf("iax.conf")
 		c.setSection("general")
-		c.append("register=%s:%s@%s" % (self.IaxTrunkid, self.IaxTrunkpw, self.host))
+		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
 
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
-			c.append("context=in-IaxTrunk")
+			c.append("context=in-iaxtrunk")
 			c.append("auth=md5")
 			c.append("host=%s" % self.host)
-			c.append("secret= %s" % self.IaxTrunkPW)
+			c.append("secret= %s" % self.pw)
