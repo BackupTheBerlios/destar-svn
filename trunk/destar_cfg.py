@@ -29,12 +29,13 @@ CfgAppMilliwatt(
 
 CfgAppRecord(
 	ext      = "92",
-	filename = "/tmp/record.gsm",
+	filename = "/tmp/record",
+	format   = "WAV",
 	)
 
 CfgAppPlay(
 	ext      = "93",
-	filename = "/tmp/record.gsm",
+	filename = "/tmp/record",
 	)
 
 CfgAppMusic(
