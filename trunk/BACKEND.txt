@@ -40,7 +40,7 @@ the frontend. It's tasks are:
 
 
 configlets.py
-------------
+-------------
 
 This files contains base classes for all configlets to inherit from.
 
