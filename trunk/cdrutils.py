@@ -34,9 +34,10 @@ except ImportError:
 
 
 def select(
-		fields=['src','dst','answer','billsec','amaflags','disposition'],
+		fields=['src as desde','dst','answer','billsec','amaflags','disposition'],
 		groupby=[],
 		having=[],
+		where=[],
 		order=['Acctid'],
 		limit=0,
 		offset=0,
@@ -46,6 +47,10 @@ def select(
 	sql = ['SELECT']
 	sql.append( ','.join(fields) )
 	sql.append('FROM cdr')
+
+	if where:
+		sql.append('WHERE ')
+		sql.append( ' AND '.join(where) )
 
 	if groupby:
 		sql.append('GROUP BY')

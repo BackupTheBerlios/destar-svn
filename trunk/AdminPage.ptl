@@ -20,6 +20,7 @@
 
 from Templates import *
 from quixote.errors import *
+import UserUI as ui
 import cdrutils
 
 _q_exports = []
@@ -34,7 +35,7 @@ def menu(request):
 	a = []
 	if cdrutils.db:
 		#'<li><a href="cdr">Simple CDR list</a></li>'
-		a.append( ('cdr', 'Simple CDR list') )
+		a.append( ('cdr', _('Simple CDR list')) )
 	return a
 
 
@@ -43,25 +44,7 @@ def cdr [plain] (request):
 	# This is far from Areski :-)
 
 	header(htmltext(_('Call detail record')), menu)
-	cursor = cdrutils.select(order=[str('answer DESC')], limit=30)
-	row = cursor.fetchone()
-	if row:
-		'<table><tr>'
-		for s in row.keys():
-			'<th>'
-			s
-			'</th>'
-		'</tr>'
-		while row:
-			'<tr>'
-			for s in row:
-				'<td>'
-				s
-				'</td>'
-			'</tr>'
-			row = cursor.fetchone()
-		'</table>'
-			
+	ui.cdrForm(request)
 	footer()
 
 
