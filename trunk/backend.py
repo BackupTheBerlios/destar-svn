@@ -186,13 +186,16 @@ def createAsteriskConfig():
 	# test if all config files are OK to be written or overwritten
 	res = []
 	for fn,cnf in configlets.asterisk_configfiles:
-		#print "checking file", cnf.fn
+		# zaptel.conf can't have CONF_TAG at the top, so no need to search for it
+		if fn=='zaptel.conf':
+			continue
 		if os.path.exists(cnf.fn):
 			f = open(cnf.fn, "r")
 			s = f.readline()
 			if s != configlets.CONF_TAG:
 				#print "cnf.fn is not safe"
 				res.append(fn)
+				continue
 	if res: return res
 	
 	# if we had no errors, write all stuff out

@@ -218,7 +218,7 @@ def write [html] (request):
 	backend.createPythonConfig()
 	files = backend.createAsteriskConfig()
 	if files:
-		showConfigFilesThatNeedBackup(files)
+		ui.showConfigFilesThatNeedBackup(files)
 	else:
 		'<p>'
 		_("Wrote configuration")
