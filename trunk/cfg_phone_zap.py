@@ -1,7 +1,6 @@
 # -*- coding: iso-latin-1 -*-
 #
 # Copyright (C) 2005 by Holger Schurig,
-# add ons by Michael Bielicki, TAAN Softworks Corp.
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,12 +23,12 @@ from configlets import *
 
 class CfgPhoneZap(CfgPhone):
 
-	shortName = _("Standard PSTN phone")
+	shortName = _("Standard ZAP phone")
 	variables = [
 		VarType("name",       title=_("Name"), len=15),
-		VarType("channel",    title=_("Zaptel channel number"), type="rostring", default=1, len=2),
-		VarType("lang", title=_("Channel Language"), default="en", len=2),
-		VarType("sigtype", title=_("Signalling type"), type="choice", options=[('ks', 'kewlstart'),('ls','loopstart')]),
+		VarType("channel",    title=_("Zaptel channel number"), type="string", default=1, len=2),
+		VarType("lang",       title=_("Channel Language"), default="en", len=2),
+		VarType("sigtype",    title=_("Signalling type"), type="choice", options=[('ks', 'kewlstart'),('ls','loopstart')]),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
@@ -57,25 +56,22 @@ class CfgPhoneZap(CfgPhone):
 			c.appendValue(self, "callerid")
 		else: # must add an empty value, because it may be set elsewhere
 			c.append("callerid=")
-		#prefix = ""
-		#c.append("dialplan=local")
-		#c.append("pridialplan=local")
 		#immediate must be no according to http://www.voip-info.org/wiki-Asterisk+tips+DID
 		#c.append("immediate=yes")
 		c.append("group=1")
 		# TODO?
-		c.append("context=in-pstn")
-		c.append("channel=%d" % self.channel)
-		needModule("chan_sip")
+		c.append("context=default")
+		c.append("channel=%s" % self.channel)
+		needModule("chan_zap")
+
+		c = AstConf("zaptel.conf")
+		c.setSection("")
+		c.destar_comment = False
+		c.append("fxo%s=%s" % (self.sigtype, self.channel))
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(c)
 	
-
-	def isAddable(self):
-		return False
-	isAddable = classmethod(isAddable)
-
 
 	def zapType(self):
 		return 'fxs'
