@@ -1,6 +1,6 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2004 by Holger Schurig
+# Copyright (C) 2004 by Holger Schurig, some addons by Michael Bielicki, TAAN Softworks Corp.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -95,8 +95,10 @@ def initializeAsteriskConfig():
 
 	* extensions.conf
 	* sip.conf
-	* iax.cpnf
+	* iax.conf
 	* indications.conf
+	* mgcp.conf
+	and creates macros.inc
 	"""
 
 
@@ -149,10 +151,154 @@ def initializeAsteriskConfig():
 	c.append("info = 950/330,0/200,1400/330,0/200,1800/330,0/1000")
 	needModule("res_indications")
 
-	# TODO InitializeMacros
+	c = AstConf("macros.inc")
+	c.append(";")
+	c.append("; Macro to dial a standard local extension")
+	c.append(";")
+	c.append("; format: Macro(stdexten,dest,context,voicebox 1/0)")
+	c.append(";")
+	c.setSection("macro-dial-std-exten")
+	c.append(";")
+	c.append("; test for CFIM (Call Forwarding Immediate)")
+	c.append("exten=s,1,DBget(temp=CFIM/${MACRO_EXTEN})")
+	c.append("exten=s,2,Goto(${ARG2},${temp})")
+
+	c.append("; no CFIM")
+	c.append("exten=s,102,DBGet(temp=DND/${MACRO_EXTEN})")
+	c.append("; no CFIM, DND set")
+	c.append("exten=s,103,GotoIf($[${ARG3}vm = 1vm]?105:104)")
+	c.append("; no CFIM, DND set, but no voicemaiL:")
+	c.append(";TODO: set cause code")
+	c.append("exten=s,104,Hangup")
+	c.append("; no CFIM, DND set, voicemail set:")
+	c.append("exten=s,105,Macro(voicemail,u${MACRO_EXTEN})")
+	c.append("exten=s,106,Hangup")
+
+	c.append("; no CFIM, no DND")
+	c.append("exten=s,203,DBGet(dsec=DSEC/${MACRO_EXTEN})")
+	c.append("exten=s,204,NoOp")
+	c.append("exten=s,205,DBGet(dopt=DOPT/${MACRO_EXTEN})")
+	c.append("exten=s,206,NoOp")
+	c.append("exten=s,207,Dial(${ARG1},${dsec},${dopt})")
+	c.append("; Dial result was 'timeout'")
+	c.append("exten=s,208,SetVar(vmopt=u)")
+	c.append("exten=s,209,Noop")
+	c.append("exten=s,210,DBGet(temp=CFBS/${MACRO_EXTEN})")
+	c.append("exten=s,211,Goto(${ARG2},${temp})")
+
+	c.append("; no CFIM, no DND, no DSEC (dial seconds)")
+	c.append("exten=s,304,SetVar(dsec=45)")
+	c.append("exten=s,305,Goto(205)")
+	c.append("; no CFIM, no DND, no DOPT (dial options)")
+	c.append("exten=s,306,SetVar(dopt=Ttr)")
+	c.append("exten=s,307,Goto(207)")
+
+	c.append("; Dial result was 'unavailable' or 'busy'")
+	c.append("exten=s,308,SetVar(vmopt=b)")
+	c.append("exten=s,309,Noop")
+	c.append("exten=s,310,Goto(210)")
+
+	c.append("; dial did no go throught, CFBS not set")
+	c.append("exten=s,311,GotoIf($[${ARG3}vm = 1vm]?313:312)")
+	c.append("exten=s,312,Hangup")
+	c.append("exten=s,313,Macro(voicemail,${vmopt}${MACRO_EXTEN})")
+
+	c.append("exten=i,0,Hangup")
+	c.append(";")
+	c.append("; format: Macro(voicemail,<VoiceMail2 arguments>)")
+	c.append(";")
+	c.setSection("macro-voicemail")
+	c.append("exten => s,1,Answer")
+	c.append("exten => s,2,Wait(1)")
+	c.append("exten => s,3,VoiceMail2(${ARG1})")
+	c.append(";exten => s,104,Macro(dial-result,3)")
+
+	c.append(";exten => h,1,Macro(dial-result)")
+	c.append(";exten => t,1,Macro(dial-result)")
 
 
+	c.append(";")
+	c.append("; format: Macro(dial-result,[<cause>])")
+	c.append(";")
+	c.setSection("macro-dial-result")
+	c.append("exten => s,1,AbsoluteTimeout(35)")
+	c.append("exten => s,2,GotoIf($[foo${ARG1} != foo]?cause_${ARG1},1:cause_${HANGUPCAUSE},1)")
 
+	c.append("; undefined error (mostly when an existing extension is currently unavailable)")
+	c.append("exten => _cause_0,1,Answer")
+	c.append("exten => _cause_0,2,Wait(1)")
+	c.append("exten => _cause_0,3,Playback(the-number-u-dialed,skip)")
+	c.append("exten => _cause_0,4,Playback(is-curntly-unavail,skip)")
+	c.append("exten => _cause_0,5,Playback(pls-try-call-later,skip)")
+	c.append("exten => _cause_0,6,Wait(3)")
+	c.append("exten => _cause_0,7,Goto(3)")
+
+	c.append("; normal call clearing")
+	c.append("exten => _cause_1,1,Hangup")
+
+	c.append("; extension currently busy")
+	c.append("exten => _cause_2,1,Answer")
+	c.append("exten => _cause_2,2,PlayTones(busy)")
+	c.append("exten => _cause_2,3,Wait(40)")
+	c.append("exten => _cause_2,4,Goto(2)")
+
+	c.append("; something failed")
+	c.append("exten => _cause_3,1,Answer")
+	c.append("exten => _cause_3,2,PlayTones(info)")
+	c.append("exten => _cause_3,3,Wait(2)")
+	c.append("exten => _cause_3,4,Playback(an-error-has-occured,skip)")
+	c.append("exten => _cause_3,5,Playback(pls-try-call-later,skip)")
+	c.append("exten => _cause_3,6,Wait(2)")
+	c.append("exten => _cause_3,7,Goto(2)")
+
+	c.append("; congestion")
+	c.append("exten => _cause_4,2,Congestion")
+
+	c.append("; unassigned number")
+	c.append("exten => _cause_5,1,Answer")
+	c.append("exten => _cause_5,2,PlayTones(info)")
+	c.append("exten => _cause_5,3,Wait(2)")
+	c.append("exten => _cause_5,4,Playback(ss-noservice,skip)")
+	c.append("exten => _cause_5,5,Wait(2)")
+	c.append("exten => _cause_5,6,Goto(2)")
+
+	c.append("; unallowed number")
+	c.append("exten => _cause_99,1,Answer")
+	c.append("exten => _cause_99,2,PlayTones(info)")
+	c.append("exten => _cause_99,3,Wait(2)")
+	c.append("exten => _cause_99,4,Playback(discon-or-out-of-service,skip)")
+	c.append("exten => _cause_99,5,Wait(2)")
+	c.append("exten => _cause_99,6,Goto(2)")
+
+	c.append("; unauthorized extension")
+	c.append("exten => _cause_100,1,Answer")
+	c.append("exten => _cause_100,2,PlayTones(info)")
+	c.append("exten => _cause_100,3,Wait(2)")
+	c.append("exten => _cause_100,6,Playback(your-extension,skip)")
+	c.append("exten => _cause_100,7,Playback(not-yet-assigned,skip)")
+	c.append("exten => _cause_100,8,Playback(please-contact-tech-supt,skip)")
+	c.append("exten => _cause_100,9,Wait(2)")
+	c.append("exten => _cause_100,10,Goto(2)")
+
+	c.append("; all other errors")
+	c.append("exten => _cause_X.,1,Answer")
+	c.append("exten => _cause_X.,2,PlayTones(info)")
+	c.append("exten => _cause_X.,3,Wait(2)")
+	c.append("exten => _cause_X.,4,Playback(an-error-has-occured,skip)")
+	c.append("exten => _cause_X.,5,Playback(error-number,skip)")
+	c.append("exten => _cause_X.,6,GotoIf($[foo${ARG1} != foo]?7:11)")
+	c.append("exten => _cause_X.,7,Say_Number(${ARG1})")
+	c.append("exten => _cause_X.,8,Wait(1)")
+	c.append("exten => _cause_X.,9,Playback(please-contact-tech-supt,skip)")
+	c.append("exten => _cause_X.,10,Goto(14)")
+	c.append("exten => _cause_X.,11,SayNumber(${HANGUPCAUSE})")
+	c.append("exten => _cause_X.,12,Wait(1)")
+	c.append("exten => _cause_X.,13,Playback(please-contact-tech-supt,skip)")
+	c.append("exten => _cause_X.,14,Wait(2)")
+	c.append("exten => _cause_X.,15,Goto(2)")
+	c.append("exten => T,1,PlayTones(congestion)")
+	c.append("exten => T,2,Wait(5)")
+	c.append("exten => T,3,Hangup")
 
 def createAsteriskConfig():
 	"""This creates all the Asterisk config files in /etc/asterisk.
