@@ -488,8 +488,8 @@ def configletsList(grp=None):
 def configletsGrouped():
 	"""Returns a list of all configuration objects, organized into groups:
 
-	{ 'Applications': [class MilliWattTest, class EchoTest, ...],
-	  'Options':      [class AsteriskOptions, class RtpOptions, ... ],
+	{ 'applications': [class MilliWattTest, class EchoTest, ...],
+	  'options':      [class AsteriskOptions, class RtpOptions, ... ],
 	  ...
 	}
 	"""
@@ -554,9 +554,9 @@ def moveConfigletUp(id):
 		if configlets.config_entries[id2].group==obj.group:
 			configlets.config_entries[id] = configlets.config_entries[id2]
 			configlets.config_entries[id2] = obj
-			return True
+			return obj
 		id2 = id2 - 1
-	return False
+	return None
 
 
 
@@ -570,9 +570,9 @@ def moveConfigletDown(id):
 		if configlets.config_entries[id2].group==obj.group:
 			configlets.config_entries[id] = configlets.config_entries[id2]
 			configlets.config_entries[id2] = obj
-			return True
+			return obj
 		id2 = id2 + 1
-	return False
+	return None
 
 
 
