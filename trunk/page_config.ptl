@@ -19,12 +19,11 @@
 
 
 from Templates import *
-#from quixote.errors import AccessError
-import backend, language
+import backend, string
 
 
 _q_parent = 'page_main'
-_q_title  = _("Config")
+_q_title  = _("Configuration")
 _q_desc   = _("Modify PBX configuration")
 _q_level  = 3
 
@@ -38,9 +37,7 @@ tipped = False
 def configurationTip [plain] (tip, url, label):
 	global tipped
 	if not tipped:
-		'<h2>'
 		htmltext(_('Configuration tips'))
-		'</h2>'
 		'<ul>'
 	tipped = True
 	'<li>'
@@ -65,7 +62,7 @@ def configurationTips [plain] (request):
 			_("You should create a phone"),
 			"Phones/",
 			[_("Configuration"), _("Edit Phones")] )
-	if not backend.countConfiglets("Phones"):
+	if not backend.countConfiglets("TelCoLines"):
 		configurationTip(
 			_("You should create a telco line"),
 			"TelCoLines/",
@@ -95,7 +92,7 @@ def showConfigurables [plain] (head):
 	for group in backend.configletsGrouped():
 		'<tr>'
 		'<td>%s</td>' % backend.countConfiglets(group)
-		'<td><a href="%s">%s</a></td>' % (group, _(group))
+		'<td><a href="%s">%s</a></td>' % (group.lower(), _(group))
 		'</tr>'
 	'</table>'
 
