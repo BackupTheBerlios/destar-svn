@@ -193,9 +193,9 @@ def header [html] (title, menu=None, refresh=None):
 	
 def footer [html] ():
 	'</div>\n'
-	'<div id="footer">\n'
-	'<p><a href="http://www.holgerschurig.de/destar.html"> DeStar Homepage</a></p>\n'
-	'</div>'
+	#'<div id="footer">\n'
+	#'<p><a href="http://www.holgerschurig.de/destar.html"> DeStar Homepage</a></p>\n'
+	#'</div>'
 	'</body>\n'
 	'</html>\n'
 
