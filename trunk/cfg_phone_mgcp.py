@@ -1,7 +1,7 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2004 by Holger Schurig
-# 
+# Copyright (C) 2004 by Michael Bielicki, TAAN Softworks Corp.
+# Based on work by Holger Schurig
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -25,14 +25,11 @@ from language import _
 class CfgPhoneMGCP(CfgPhone):
 
 	shortName = _("Standard MGCP phone")
-	variables = [VarType("name",            title=_("Name"), len=15),
+	variables = [VarType("name",            title=_("Name"), len=15, hint=_("""If you haven't configured a name for your phone please use the IP address here.""")),
 			VarType("secret",       title=_("Password"), optional=True, len=6),
 			VarType("host",         title=_("IP address of phone"), len=15),
 			VarType("ext",          title=_("Extension"), optional=True, len=6
-			# This can wait until we have popup-windows
-			#hint=_("""If you define an extension, then you can call the
-			#	phone with this number. A phone without an extension can still
-			#	be used as a target for direct dialin or calling groups.""")
+	
 			),
 			VarType("nat",          title=_("NAT"), type="bool", optional=True),
 			VarType("threeway",     title=_("Three way calling"), type="bool", optional=True),
