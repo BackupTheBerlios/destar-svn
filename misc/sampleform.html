@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=iso-8859-15" />
+<title>_DESTAR_TITLE_</title>
+<link rel="stylesheet" type="text/css" href="default.css" />
+<script language="JavaScript" type="text/javascript">
+<!--
+<![CDATA[
+if(document.layers) {document.write("<style>td{padding:0px;}<\/style>")}
+]]>
+//-->
+</script>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Pragma-directive" content="no-cache" />
+<meta http-equiv="Cache-Directive" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+</head>
+<body>
+<div class="center"><span class="pagetitle">_DESTAR_TITLE_</span></div>
+<table class="hide"><tr>
+ <td class="login-info-left">Logged in as: <span class="italic">_USER_</span> <span class="small">(_CLASS_)</span></td>
+ <!-- <td class="login-info-right"><form method="post" name="form_set_project" action="set_project.php"><select name="project_id" class="small" onchange="document.forms.form_set_project.submit();"><option value="0">All Projects</option><option value="14">ACD</option><option value="11">Applications</option><option value="13">Configuration Error</option><option value="12">Core Asterisk</option><option value="7">Documentation</option><option value="17">Experimental Features</option><option value="19" selected="selected" >Feature Requests</option><option value="3">H.323</option><option value="4">IAX</option><option value="16">Inclusion Features</option><option value="18">Internationalization</option><option value="10">libpri</option><option value="5">MGCP</option><option value="6">Modems</option><option value="15">Portability</option><option value="2">SIP</option><option value="8">Zaptel</option></select><input type="submit" value="Switch" class="small" /></form></td> -->
+</tr></table>
+<table class="width100" cellspacing="0"><tr>
+ <td class="menu"><a href="main_page.php">Main</a> | 
+                  <a href="proj_doc_page.php">Docs</a> | 
+                  <a href="account_page.php">My Account</a> | 
+                  <a href="logout_page.php">Logout</a></td>
+ <!-- <td class="right" style="white-space: nowrap;"><form method="post" action="jump_to_bug.php"><input type="text" name="bug_id" size="10" class="small" />&nbsp;<input type="submit" value="Jump" class="small" />&nbsp;</form></td> -->
+</tr></table>
+<br />
+<div align="center">
+<form name="report_bug_form" method="post" enctype="multipart/form-data" action="bug_report.php">
+<table class="width75" cellspacing="1">
+
+<!-- Title
+<tr>
+	<td bgcolor="#ffff99" class="center" colspan=2>
+		<i>Please read <a href="http://www.digium.com/bugguidelines.html"> the
+		   bug guidelines</a> before placing any bug reports!<br>
+		<b>Reports which do not follow these guidelines will be
+		   promptly closed.</b></i>
+	</td>
+</tr> -->
+<tr>
+	<td class="form-title">
+		<input type="hidden" name="handler_id" value="0" />
+		Enter Report Details	</td>
+	<td class="right">
+		[&nbsp;<a href="bug_report_advanced_page.php">Advanced Report</a>&nbsp;]	</td>
+</tr>
+
+
+<!-- Category -->
+<tr class="row-1">
+	<td class="category" width="30%">
+		Category <a href="doc/documentation.html#category" target="_info">[?]</a>	</td>
+	<td width="70%">
+		<select tabindex="1" name="category">
+			<option value="Apps">Apps</option><option value="General">General</option><option value="IAX">IAX</option><option value="MGCP">MGCP</option><option value="SIP">SIP</option>		</select>
+	</td>
+</tr>
+
+
+<!-- Reproducibility -->
+<tr class="row-2">
+	<td class="category">
+		Reproducibility <a href="doc/documentation.html#reproducibility" target="_info">[?]</a>	</td>
+	<td>
+		<select tabindex="2" name="reproducibility">
+			<option value="10">always</option><option value="30">sometimes</option><option value="50">random</option><option value="70">have not tried</option><option value="90">unable to duplicate</option><option value="100">N/A</option>		</select>
+	</td>
+</tr>
+
+
+<!-- Severity -->
+<tr class="row-1">
+	<td class="category">
+		Severity <a href="doc/documentation.html#severity" target="_info">[?]</a>	</td>
+	<td>
+		<select tabindex="3" name="severity">
+			<option value="10">feature</option><option value="20">trivial</option><option value="30">text</option><option value="40">tweak</option><option value="50">minor</option><option value="60">major</option><option value="70">crash</option><option value="80">block</option>		</select>
+	</td>
+</tr>
+
+
+<!-- Priority (if permissions allow) -->
+
+
+<!-- spacer -->
+<tr>
+	<td class="spacer" colspan="2">&nbsp;</td>
+</tr>
+
+
+<!-- Summary -->
+<tr class="row-2">
+	<td class="category">
+		<span class="required">*</span>Summary <a href="doc/documentation.html#summary" target="_info">[?]</a>	</td>
+	<td>
+		<input tabindex="5" type="text" name="summary" size="60" maxlength="128" value="" />
+	</td>
+</tr>
+
+
+<!-- Description -->
+<tr class="row-1">
+	<td class="category">
+		<span class="required">*</span>Description <a href="doc/documentation.html#description" target="_info">[?]</a>	</td>
+	<td>
+		<textarea tabindex="6" name="description" cols="60" rows="5" wrap="virtual"></textarea>
+	</td>
+</tr>
+
+
+<!-- Additional information -->
+<tr class="row-2">
+	<td class="category">
+		Additional Information <a href="doc/documentation.html#additional_information" target="_info">[?]</a>	</td>
+	<td>
+		<textarea tabindex="7" name="additional_info" cols="60" rows="5" wrap="virtual"></textarea>
+	</td>
+</tr>
+
+
+<!-- spacer -->
+<tr>
+	<td class="spacer" colspan="2">&nbsp;</td>
+</tr>
+
+
+<!-- Custom Fields -->
+
+
+
+
+<!-- File Upload (if enabled) -->
+<tr class="row-1">
+	<td class="category">
+		Upload File	</td>
+	<td>
+		<input type="hidden" name="max_file_size" value="5000000" />
+		<input tabindex="8" name="file" type="file" size="60" />
+	</td>
+</tr>
+
+
+<!-- View Status -->
+<tr class="row-2">
+	<td class="category">
+		View Status	</td>
+	<td>
+		<input tabindex="9" type="radio" name="view_state" value="10"  checked="checked"  /> public		<input tabindex="10" type="radio" name="view_state" value="50"  /> private	</td>
+</tr>
+
+
+<!-- Report Stay (report more bugs) -->
+<tr class="row-1">
+	<td class="category">
+		Report Stay <a href="doc/documentation.html#report_stay" target="_info">[?]</a>	</td>
+	<td>
+		<input tabindex="11" type="checkbox" name="report_stay"  /> (check to report more bugs)
+	</td>
+</tr>
+
+
+<!-- Submit Button -->
+<tr>
+	<td class="left">
+		<span class="required"> * required</span>
+	</td>
+	<td class="center">
+		<input tabindex="12" type="submit" value="Submit Report" />
+	</td>
+</tr>
+
+
+</table>
+</form>
+</div>
+
+
+<!-- Autofocus JS -->
+<script language="JavaScript">
+<!--
+<![CDATA[
+	window.document.report_bug_form.category.focus();
+]]
+//-->
+</script>
+
+<br />
+<hr size="1" />
+<span class="timer"><a href="http://mantisbt.sourceforge.net/">Destar _VERSION_</a></span>
+<address>Copyright &copy; 2004 by Holger Schurig</address>
+</body>
+</html>

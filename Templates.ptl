@@ -1,0 +1,233 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2004 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from quixote.html import htmltext, htmlescape
+from quixote.publish import get_publisher, get_request
+from language import _
+import copy
+
+
+
+class HtmlTable:
+
+	class TwoDimensionalArray:
+		"""An automatically growing two-dimensional array, based on work from
+		http://www.pasko.net/PyHtmlTable/"""
+
+		def __init__(self, x=1, y=1, fill=''):
+			self.array        = []
+			self.maxX         = x
+			self.maxY         = y
+			self.defaultfill  = fill
+
+			for xi in range(x):
+				self.array.append([])
+				for yi in range(y):
+					self.array[xi].append(copy.copy(fill))
+
+		def addCol(self):
+			nrow = []
+			for f in range(self.maxX):
+				self.array[f].append(copy.copy(self.defaultfill))
+
+			self.maxY = self.maxY +1
+
+		def addRow(self):
+			nrow = []
+			for f in range(self.maxY):
+				nrow.append(copy.copy(self.defaultfill))
+			self.array.append( copy.copy(nrow) )
+			self.maxX = self.maxX +1
+
+		def get(self, x, y):
+			try:
+				return self.array[x][y]
+			except:
+				return None
+
+		def set(self, x, y, data):
+			if x >= self.maxX:
+				for i in range(self.maxX-1, x):
+					self.addRow()
+			if y >= self.maxY:
+				for i in range(self.maxY-1, y):
+					self.addCol()
+			self.array[x][y] = data
+
+
+	def __init__(self, rows, cols):
+		self.cells = self.TwoDimensionalArray(rows,cols)
+		self.attrs = self.TwoDimensionalArray(rows,cols, {})
+
+	def setCell(self, x, y, data):
+		self.cells.set(x, y, data)
+
+	def setAttr(self, x, y, **attr):
+		dict = self.attrs.get(x,y) or {}
+		dict.update(attr)
+		self.attrs.set(x,y, dict)
+
+	def setRowSpan(self, x,y, span):
+		self.setAttr(x,y, rowspan=span)
+		for i in range(y+1,y+span):
+			self.setAttr(x,i, __hide=True)
+
+	def setColSpan(self, x,y, span):
+		self.setAttr(x,y, colspan=span)
+		for i in range(x+1,x+span):
+			self.setAttr(i,y, __hide=True)
+
+	def getRow [html] (self, y):
+		a = []
+		a.append('<tr>\n')
+		for x in range(self.cells.maxX):
+			b = []
+			attr = self.attrs.get(x,y)
+			hide = False
+			elem = 'td'
+			#print "attr:", attr
+			if attr:
+				for k in attr:
+					if k == '__hide':
+						hide = True
+						break
+					if k == '__head':
+						elem = 'th'
+						continue
+					b.append('%s="%s"' % (k,attr[k]))
+				if hide: continue
+				if b: b.insert(0, '')
+			a.append('<%s%s>' % (elem, ' '.join(b)) )
+			a.append(self.cells.get(x,y) or '&nbsp;')
+			a.append('</%s>\n' % elem)
+		a.append('</tr>')
+		return a
+
+
+	def getRows(self):
+		a = []
+		for y in range(self.cells.maxY):
+			a.extend(self.getRow(y))
+		return a
+
+	def getHtml [html] (self, **attr):
+		a = []
+		for k in attr:
+			if k[0] == '_':
+				a.append('%s="%s"' % (k[1:],attr[k]))
+			else:
+				a.append('%s="%s"' % (k,attr[k]))
+		if a:
+			a.insert(0,'')
+		a = [ "<table%s>" % ' '.join(a) ]
+		a.extend(self.getRows())
+		a.append('</table>')
+		return ''.join(a)
+
+
+
+
+def header [html] (title, menu=None, refresh=None):
+
+	# Boilerplate
+	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+	'<html xmlns="http://www.w3.org/1999/xhtml">'
+	'<head>'
+	'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />'
+	if refresh:
+		'<meta http-equiv="Refresh" content="%d;" />' % refresh
+	'<meta name="Author" content="DeStar, made by Holger Schurig" />'
+	'<title>%s</title>' % title
+	'<style type="text/css" media="all">@import "/pages/layout.css";</style>'
+	'</head>'
+	'<body>'
+	#'<body onload="window.resizeTo(800,600);">'
+
+
+	# Header
+	'<a href="/" class="header">De<em>Star</em></a>'
+	
+	# Side menu
+	'<div id="navigation" class="nav">'
+	n = 0
+	for m in getMenu():
+		if m[0] > n:
+			'<ul>'
+			n = m[0]
+		elif m[0] < n:
+			'</ul>'
+			n = m[0]
+		if m[2]:
+			'<li><a href="%s">%s</a></li>' % (m[1],m[2])
+		else:
+			'<li>&nbsp;</li>'
+	for i in range(n):
+		'</ul>'
+	'</div>'
+
+	'<div id="contentHeading">'
+	'<h1>%s</h1>' % title
+	'</div>'
+
+	# Content
+	'<div id="content">'
+
+	
+def footer [html] ():
+	'</div>'
+	'</body>\n'
+	'</html>\n'
+
+
+def getMenu():
+	m = []
+	request = get_request()
+	path = request.environ['PATH_INFO']
+	#print "path:", path
+	path = path[1:].split('/')
+	#print "path:", path
+
+	stack = get_publisher().get_namespace_stack()
+	def calcMenu(root='', n=0):
+		try:
+			obj = stack[n]
+		except IndexError:
+			return
+		if obj.__dict__.has_key('menu'):
+			menu = obj.menu(request)
+			#print "menu:", obj, menu
+			for e in menu:
+				#print n, e
+				m.append( (n+1,'/'.join([root,e[0]]),e[1]) )
+				#print e[0], path[n]
+				if e[0]==path[n] or e[0]==path[n]+'/':
+					calcMenu('/'.join([root,path[n]]), n+1)
+		
+	calcMenu()
+	return m
+
+
+
+def errorpage [html] (txt, menu=None):
+	header(_('Error'), menu)
+	'<p>'
+	txt
+	'.</p>'
+	footer()

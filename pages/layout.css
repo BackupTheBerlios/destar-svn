@@ -1,0 +1,238 @@
+/* Ideas takes from http://www.htmldog.com/css/default.css */
+
+
+/**********************************/
+
+.header {
+	display: block;
+	font-size: 2em;
+	font-weight: bolder;
+	xpadding: 0.5em;
+}
+
+.header em {
+	color: #36c;
+	font-style: normal;
+}
+
+/**********************************/
+
+body {
+	color: black;
+	background: white;
+	font-size: 77%;
+	padding: 0.5em 1em;
+	margin: 0;
+}
+
+body, textarea, input {
+	font-family: arial, helvetica, sans-serif;
+}
+
+:link {
+	color: #00c;
+}
+
+:visited {
+	color: #609;
+}
+
+a:active {
+	color: #c00
+}
+
+;a:hover {
+;	color: #00c;
+;	background-color: yellow;
+;}
+
+h1 {
+	display: inline;
+	font-size: 2em;
+}
+
+h1, h1 a:link, h1 a:visited {
+	text-decoration: none;
+	color: #36c;
+}
+
+h1 a:hover {
+	color: #339;
+	background-color: transparent;
+}
+
+h1 a:hover em {
+	color: #36c;
+}
+
+
+/**********************************/
+
+#navigation {
+	left: 1em;
+	background: #eef;
+}
+
+.nav {
+	position: absolute;
+	width: 11.5em;
+	padding-bottom: 1em;
+}
+
+.nav ul {
+	padding: 0;
+}
+
+.nav li {
+	display: inline;
+}
+
+.nav a {
+	display: block;
+	width: 8.5em;
+	color: #336;
+	line-height: 1.2em;
+	text-decoration: none;
+	padding: 0.15em 0.5em;
+	border: 1px #eef solid;
+	margin: 1px 0.5em;
+	voice-family: "\"}\"";
+	voice-family:inherit;
+	width: 9.5em;
+}
+html>body .navigation a{
+	width: 9.5em;
+}
+
+.nav ul ul a {
+	width: 6.5em;
+	padding: 0.15em 0.5em 0.15em 1.5em;
+	voice-family: "\"}\"";
+	voice-family:inherit;
+	width: 8.5em;
+}
+html>body .nav ul ul a {
+	width: 8.5em;
+}
+
+.nav a:visited {
+	color: #558;
+}
+
+.nav a:hover {
+	color: #336;
+	background-color: #f7f7f7;
+	text-decoration: none;
+	border-color: #ddd;
+}
+
+
+/**********************************/
+
+#contentHeading {
+	background: #eef;
+	padding: 5px;
+	margin-left: 12.5em;
+	margin-bottom: 0.7em;
+}
+
+#content {
+	margin-left: 12.5em;
+}
+
+.addmore h2 {
+	margin-top: 1.5em;
+}
+
+.addmore li {
+	list-style-type: square;
+}
+
+th {
+	text-align: left;
+}
+
+/**********************************/
+
+#state {
+	padding: 0;
+	border-spacing: 0;
+	/* TODO: fixed layout, valign=top */
+}
+
+#phone {
+	border: 1px solid #000;
+	/* TODO: border-collapse, width */
+}
+
+#line {
+	border: 1px solid #000;
+	/* TODO: border-collapse, width */
+}
+
+#phonename {
+	font-weight: bold;
+}
+
+#phonestate {
+	float: right;
+}
+
+/**********************************/
+
+form.quixote .errornotice {
+	margin-bottom: 1em;
+	font-weight: bold;
+	color: #f00;
+	float: left;
+}
+
+form.quixote .title {
+	width: 16em;
+	float: left;
+	margin: 0 0.5em 10px 0;
+	Xclear: left;
+}
+
+form.quixote .required {
+	color: #f00;
+	padding: 0.4em;
+}
+
+form.quixote .submit {
+	clear: left;
+}
+
+form.quixote .content .error {
+	color: #f00;
+	display: inline;
+	font-weight: bold;
+	margin-left: 1em;
+}
+
+form.quixote .LabelWidget {
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+	font-weight: bold;
+	font-size: 114%;
+	color: #336;
+	background-color: #f7f7f7;
+}
+
+form.quixote .SubmitWidget {
+	margin-top: 2em;
+	margin-right: 1em;
+	float: left;
+}
+
+form.quixote .StringWidget,
+form.quixote .CheckboxWidget,
+form.quixote .SingleSelectWidget,
+form.quixote .MultipleSelectWidget {
+	clear: left;
+}
+
+form.quixote div.FormTokenWidget,
+form.quixote.div.HiddenWidget {
+	display: none;
+}

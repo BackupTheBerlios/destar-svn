@@ -1,0 +1,93 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2004 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from language import _
+from quixote.errors import *
+import cdrutils
+
+_q_exports = []
+
+if cdrutils.db:
+	_q_exports.append('cdr')
+
+
+
+
+def menu(request):
+	a = []
+	if cdrutils.db:
+		#'<li><a href="cdr">Simple CDR list</a></li>'
+		a.append( ('cdr', 'Simple CDR list') )
+	return a
+
+
+
+def cdr [html] (request):
+	# This is far from Areski :-)
+
+	header(_('CDR'), menu)
+	cursor = cdrutils.select(order=[str('answer DESC')], limit=30)
+	print dir(cursor)
+	row = cursor.fetchone()
+	if row:
+		'<table><tr>'
+		for s in row.keys():
+			'<th>'
+			s
+			'</th>'
+		'</tr>'
+		while row:
+			'<tr>'
+			for s in row:
+				'<td>'
+				s
+				'</td>'
+			'</tr>'
+			row = cursor.fetchone()
+		'</table>'
+			
+	footer()
+
+
+def _q_index [html] (request):
+	header(_('Administration'), menu)
+	'<p>'
+	_('This menu will contain all sorts of administration stuff:')
+	'</p>'
+	'<ul>'
+	for s in (_('Administrator login capability'),
+		  _('Disable phone numbers, e.g. 0900 services'),
+		  _('Upload MP3s with Music-On-Hold'),
+		  _('See made calls of all users'),
+		  _('See received calls of all users'),
+		  _('Convert CDR (call details recordings) into Euro and Cent'),
+		  _('Various statistics'),
+		  _('Maintain public phone directory'),
+	):
+		'<li>'
+		s
+		'</li>'
+	'</ul>'
+	footer()
+
+def _q_access(request):
+	if request.session.level < 2:
+		raise AccessError("You don't have access to administration.")

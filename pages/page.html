@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/Strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+<head>
+<title><span nevow:render="title">Sample title</span></title>
+<!-- <meta name="description" content="CSS 4 You - The Finest in Stylesheets: Tipps und Tricks" /> -->
+<!-- <meta name="keyword" content="CSS 4 You, CSS for You, CSS 1, CSS 2, CSS Level 1, CSS Level 2, Cascading Stylesheets, Referenzen, Eigenschaften, Property, Forum" /> -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="Author" content="Holger Schurig" />
+<link rel="Stylesheet" type="text/css" href="pages/nc4.css" media="screen" />
+<link rel="Stylesheet" type="text/css" href="pages/screen.css" media="screen" />
+<link rel="Stylesheet" type="text/css" href="pages/print.css" media="print" />
+<!--[if IE]>
+ <link rel="Stylesheet" href="pages/ie.css" type="text/css" />
+<![endif]-->
+<!--[if lt IE 6]>
+ <link rel="Stylesheet" href="pages/ie5.css" type="text/css" />
+<![endif]-->
+ </head>
+<body>
+
+<!-- Header Start -->
+<div id="head1">
+<span class="tl">
+<a id="t" name="t">&nbsp;</a>
+<a href="/"><img src="pages/destar.gif" width="72" height="51" alt="DESTAR Logo" title="DESTAR Logo" /></a>
+</span>
+<span class="tr">
+<a class="tr" href="user">User</a>
+<a class="tr" href="admin">Admin</a>
+<a class="tr" href="config">Config</a>
+</span>
+</div>
+
+<!-- Header End -->
+<div id="head3">&nbsp;</div>
+
+<!-- Side menu -->
+<div id="menu">
+<ul>
+<span nevow:data="menu" nevow:render="menu">
+<li><a class="h1" href="general">General</a></li>
+<li><a class="h2" href="config">Configuration</a></li>
+<li><a href="status">Status</a></li>
+</span>
+</ul>
+</div>
+
+<!-- Content -->
+<div id="content">
+<h1><span nevow:render="title">Sample title</span></h1>
+<p nevow:render="content">This is where the contents will end up :-)</p>
+</div>
+
+<!-- Nach-oben-Link auf jeder Seite -->
+<p id="gotop"><a href="#t"><span nevow:render="gotop">Go to top</span></a></p>
+
+</body>
+</html>

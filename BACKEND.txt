@@ -1,0 +1,212 @@
+The BACKEND
+-=-=-=-=-=-
+
+
+Structure
+=========
+
+The backend consists of very few python files:
+
+* backend.py
+* configlets.py
+* cfg_*.py
+* language.py
+* cdrutils.py
+* manager.py
+
+The backend is self-contained. That means, you don't need the frontend to
+use it.
+
+In fact, you can use a normal text editor to edit
+/etc/asterisk/destar_cfg.py and then run 'python backend.py' to create a new
+set of Asterisk config files.
+
+
+backend.py
+----------
+
+This is the wizard-of-all. It's the only python module that get's called by
+the frontend. It's tasks are:
+
+* read in all Configlets that are in ./cfg_*.py. Configlets are things that
+  you can configure and that can create Asterisk configuration.
+
+* read in the current configuration, first from /etc/asterisk/destar_cfg.py
+  and, if this file does not exist, from ./destar_cfg.py
+
+* provide query interfaces to the frontend where the Frontend can ask for
+  "Give me all configlets that define external line" or "Give me all
+  currently defined SIP phones".
+
+
+configlets.py
+------------
+
+This files contains base classes for all configlets to inherit from.
+
+It also contains the AsteriskConfigFile class, a class that is very handy to
+store an in-memory representation of a an Asterisk config file. Configlets
+can get a handle to an individual config file via the AstConf() function and
+append or prepend data. Once that is done, we can call the write() method
+and write out a newly created Asterisk config file. And this config file
+might then contain entries that 20 or more configlets placed into it.
+
+Configlets can't 'import backend' because the backend import them, so we
+have to have some backend functions in this file ...
+
+
+cfg_*.py
+--------
+
+Each one of this files contain one configlets. Any file that has the form
+cfg_*.py will be imported. So you can put your own files into this
+directory.
+
+A configlet has these properties:
+
+* It can store data - this data ends up in destar_cfg.py and can be used in
+  the createAsteriskConfiglet() method
+
+* and is a descendand from the Cfg class
+
+* the data that it can store is described in variables[] - this variable
+  description is used by the frontend to auto-generate form
+
+* it has a 'shortName' and a 'group', it can also have a 'description' - 
+  this info is used by the frontend to generate menus and to decorate the
+  form
+
+* it can have head() and repr() methods - those methods are used by the
+  frontend when it has to generate tables. Many configlets doesn't have
+  those methods but inherit them from their base class.
+
+* it has a createAsteriskConfiglet() method that modifies the in-memory
+  representation of an Asterisk config file
+
+
+cdrutils.py
+===========
+
+This backend module contains code to access the cdr_sqlite.so made
+call data record database.
+
+
+manager.py
+==========
+
+This contains the interface to the Asterisk Manager.
+
+
+Example
+=======
+
+Grey is all theory. Let's get dirty. Look at destar_cfg.py and search for
+'Rtp'. You see something like this:
+
+CfgOptRtp(
+        rtpstart = 16000,
+        rtpend   = 17000,
+        )
+
+Now look at cfg_opt_rtp.py. You'll see:
+
+  # -*- coding: iso-latin-1 -*-
+
+  from configlets import *
+  from language import _
+
+This the usual boilerplate of all configlets. They import everything from
+configlets.py. And they import a silly translation function _() from
+language.py.
+
+
+  class CfgOptRtp(CfgOptSingle):
+
+Our configlet for the RTP Options inherit from CfgOptSingle. That has some
+code to make sure that only one single CfgOptRtp object can be instantiated.
+All other base classes (CfgApp, CfgLine, CfgPhone, CfgPerm, CfgOpt) allow
+more than one object instantiation.
+
+    shortName = _("RTP options")
+
+This is the name of this configlet that will be displayed by the frontend.
+It is a translatable string, as can be seen by the _() idiom.
+
+    variables = [VarType("rtpstart",
+                         type="int",
+                         title=_("Start of RTP port area")
+                         default=15000),
+                 VarType("rtpend", 
+                         type="int",
+                         title=_("End of RTP port area"),
+                         default=17000)]
+
+This is an array with VarType() object instantiations. Each VarType stands
+for one object attribute. It defines
+
+* name 
+* type (defaults to 'string')
+* len (defaults to '60')
+* title
+* hint
+* optional (default to False)
+* default (a default value)
+* hide
+
+These fields will later generate an menu in the frontend that has this
+format:
+
+    title:    _value-or-default_______  hint
+
+In our case, it will be:
+
+    Start of RTP port area: _15000____
+    End of RTP port area:   _17000____
+
+Now, assume we filled out this form and submit it. When we have
+self.rtpstart and self.rtpend. Now, what do we do with those values?
+We write them into the asterisk config file:
+
+    def createAsteriskConfiglet(self):
+      c = AstConf("rtp.conf")
+      c.appendValue(self, "rtpstart")
+      c.appendValue(self, "rtpend")
+
+
+
+
+Handling Asterisk config files
+==============================
+
+ class AsteriskConfigFile and AstConf()
+
+The  class contains an in-memory representation of an asterisk configuration
+file. The function is factory method for the class. It also returns the same
+class instance for a given config file name. This allows one to call, say,
+c = AstConf("extensions.conf") from several places and always get a reference
+to the same file.
+
+There are various methods in the class to add new lines to the config files,
+see the docstrings in the class. When you call the
+backend.createAsteriskConfig() method something will get written.
+
+
+
+
+
+Data files
+==========
+
+destar_cfg.py
+-------------
+
+This file is both a data file and source code.
+
+It is a data file because it is generated by a program and contains data
+about all configured items.
+
+It is source source because I use the python interpreter to read the file.
+It is imported into the name space of backend.py via "execfile()", not via
+"import"
+
+backend.createPythonConfig() writes this file.

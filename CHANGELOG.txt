@@ -1,0 +1,162 @@
+2004-08-16
+
+ * fixed tab/whitespace fixed config file creation for IAX voicemailbox
+ * added notransfer to CfgPhoneIAX, delete canreinvite from the same
+ * don't return None menu if there is no CDR
+ * backend.py: make getConfiglet known in configlets.py, so that configlets can use it, too
+ * cfg_line_fwdiax.py: added default name, don't use hard-coded SIP technology
+ * ConfigUI.py: bug fix
+ * don't break if pysqlite is there, but no cdr.db
+
+2004-08-13
+
+* finished login/logout capability
+* different default configuration
+* added configuration tips for first-time starters
+* backend.countConfiglets() can now count specific object types
+* new configlets.generatePassword() 'function' (callable class)
+* nicer cfg_opt_manager.py, generate secure passwords
+* removed or disabled some unfinished configlets
+* again fiddled with the CSS
+
+
+2004-08-12
+
+* added CfgOptUser as well as beginnings of session object
+  with auto-login-based-on-ip-feature
+* added logout code (login has to be done via auto-login feature
+  so far)
+* moved UI logic for the user page into ui/User.ptl
+* Admin.ptl and Users.ptl print some of the TODO-items as teasers :-)
+* incorporated Medusa into the code base
+* fixed bug in the menu calculation, multi-choice widgets
+* allow configlets to be retrieved by their .name propery
+
+2004-08-09
+
+* fixed parking config
+* centralized channel state calculations
+* added Asterisk Status to User menu
+* added individual phone status to Asterisk Status
+
+
+2004-08-08
+
+* basic support for DND, CFIM, CFBS
+* virtual phones added, first one is CfgPhoneExt for additional extensions
+
+
+2004-08-06
+
+* manager.py now automatically reconnects when Asterisk does a restart
+* fixed bug when parsing event messages
+* allow setAttr to grow the html grid
+* add option for auto-refresh
+* again rewrote the manager interface
+* allow configlet.key = val
+* cfg_app_park now adds a self-parking extension
+* fixed up/down moving of Configlets
+* the backend now checks that we don't have two thingies with the same name
+  or extension
+* added cfg_app_saytime
+* got rid of my own Widget.py module, now we're back to original Quixote
+
+
+2004-08-05
+
+* even more changes to the layout :-)
+* fixed HTML layout of PBX state
+* got rid of manager.isconnected
+* manager does no longer hang for some seconds when Asterisk is down
+* manager re-connects if Asterisk get's up again
+* now the checkConfig() method of the configlets works
+
+
+2004-07-30
+
+* started to revamp basic template & CSS
+* dynamically generated left menu
+* fixed up&down buttons
+
+
+2004-07-26
+
+* always try to connect to the manager whenever the status page is called
+* added some phone pictures I'll use later
+
+
+2004-07-22
+
+* added name field to all Phones and all Lines, we need this for the
+  status box
+* added technology variable to all Lines
+* added channel() method to all Phones and Lines
+* added User.ptl
+* added HtmlTable based on PyHtmlTables into Templates
+* let Admin.ptl use the new cdrtools, limit display to the last 30 entries
+* hide context from phone forms
+* cdrutils.cdrSelect() -> cdrutils.select()
+* added manager.py and made it handle manager commands and events. For
+  the latter, you have to subclass ManagerClient and redefine handle_event()
+
+
+2004-07-20
+
+* added simple CDR display, still VERY crude, don't use it if you have
+  thousand of CDR records
+* fixed creation of manager.conf
+* new configlets.context_entries where I store all the used contexts, with
+  configlets.useContext() to add entries to it, usually in the fixup()
+  method
+* NeedModule -> needModule
+* store full path in instances of AsteriskConfigFile.fn
+* better function doc strings in backend.py
+* backup config files before overwriting if the config file is not from us
+* groupCount -> countConfiglets
+* fixUp -> fixup
+* CfgPhoneIax got voicemail settings as well, because they are now put into
+  CfgPhone as methods
+* CfgOptLogger got syslog abilities
+
+
+2004-07-19
+
+* beginnings of voicemail, already in CfgSipPhone
+* introducation of Cfg.fixup() to do post-load setup, e.g. only unhide the
+  DID entry in Phones if one of the Lines actually support DID
+* allow entries to be moved up and down
+* fixed writing into destar_cfg.py
+* fixed loading of destar_cfg.py, especially when the cfg file did not
+  define all configlet variables because it was written with an older
+  version of DeStar
+* niced up CfgOptLogger
+* CfgAppParking now uses features.conf as does Asterisk CVS
+
+
+2004-07-15
+
+* add delete and cancel button to forms
+* big restructure of code: we now have individual cfg_*.py
+  that are read dynamically, so you can drop in your own
+* backend.py is pretty much what asterisk.py used to be
+* beginnings of context/permission support
+* enhanced CfgLineCapi
+* better docs in the *.txt files
+* somewhat nicer forms
+
+
+2004-07-12
+
+* added Labels to forms
+* support for phone permissions (via Asterisk contexts)
+* support for disable phone numbers
+
+
+2004-07-09
+
+* you can now add & edit configurables
+* nicer layout for error messages in the form
+* disabled german translations for now
+* added preliminary sidemenu
+* now you can even write your configuration
+* new IaxPhone configurable
