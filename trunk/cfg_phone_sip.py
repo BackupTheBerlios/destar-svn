@@ -30,7 +30,7 @@ class CfgPhoneSip(CfgPhone):
 		VarType("name",       title=_("Name"), len=15),
 		VarType("secret",     title=_("Password"), optional=True, len=6),
 		VarType("host",       title=_("IP address of phone"), len=15),
-		VarType("nat",      title=_("Is the trunk behind NAT ?"), type="bool"),
+		VarType("nat",        title=_("Is the trunk behind NAT ?"), type="bool", optional=True),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
