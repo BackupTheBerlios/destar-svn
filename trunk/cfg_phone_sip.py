@@ -56,8 +56,13 @@ class CfgPhoneSip(CfgPhone):
 			sip.appendValue(self, "host", "defaultip")
 		sip.append("dtmfmode=info")
 		sip.append("canreinvite=no")
-		if self.callerid:
-			sip.appendValue(self, "callerid")
+		if self.callerid and self.ext:
+			sip.append('callerid="%s" <%s>' % (self.callerid, self.ext))
+		elif self.callerid:
+			sip.append('callerid="%s"' % (self.callerid))
+		elif self.ext:
+			sip.append('callerid=<%s>' % (self.ext))
+		
 		if self.nat:
 			sip.append("nat=yes")
 		self.createExtensionConfig()
