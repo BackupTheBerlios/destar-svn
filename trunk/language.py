@@ -30,7 +30,7 @@
 
 import os, gettext
 try:
-	translation = gettext.GNUTranslations(open('destar.moxx','rb'))
+	translation = gettext.GNUTranslations(open('destar.mo','rb'))
 except IOError:
 	translation = gettext.NullTranslations()
 translation.install()

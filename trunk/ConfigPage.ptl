@@ -26,13 +26,13 @@ import backend
 
 def menu(request):
 	return [
-		('Phones/',       'Edit Phones'),
-		('TelCoLines/',   'Edit Telco Lines'),
-		('Applications/', 'Edit Applications'),
-		('Options/',      'Edit Options'),
+		('Phones/',       _("Edit Phones")),
+		('TelCoLines/',   _("Edit Telco Lines")),
+		('Applications/', _("Edit Applications")),
+		('Options/',      _("Edit Options")),
 		('',''),
-		('write',         'Write config'),
-		('reload',        'Reload asterisk'),
+		('write',         _("Write config")),
+		('reload',        _("Reload asterisk")),
 	]
 
 
@@ -229,9 +229,19 @@ def write [html] (request):
 
 def reload [html] (request):
 	header(_("Reloading Asterisk"), menu)
+
 	'<p>'
-	_('Not yet implemented')
+	_('Reload done')
 	'</p>'
+
+	'<p>'
+	_('Watch output below')
+	'</p>'
+
+	'<p>'
+	backend.reloadAsterisk()
+	'</p>'
+
 	footer()
 
 
@@ -247,4 +257,4 @@ def _q_lookup(request, component):
 
 def _q_access(request):
 	if request.session.level < 3:
-		raise AccessError("You don't have access to configuration.")
+		raise AccessError(_("You don't have access to configuration."))
