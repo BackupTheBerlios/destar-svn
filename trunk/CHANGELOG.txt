@@ -1,5 +1,6 @@
 2004-08-19
 
+* enabled parking app
 * fixed layout with integer-widgets
 * added checks to record- and playback app
 * added format options to playback app

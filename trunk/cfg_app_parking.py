@@ -39,17 +39,12 @@ class CfgAppParking(CfgApp):
 		c.setSection("general")
 
 		c.append("parkext=%s" % self.ext)
-		c.append("context=parkedcalls")
+		c.append("context=default")
 		# parkingtime
 		first = int(self.ext)+1
 		c.append("parkpos=%d-%d" % (first, first + self.places))
 		# transferdigittimeout
 
-		c = AstConf("extensions.conf")
-		c.setSection("default")
-		c.appendExten(self.ext, "Park(%s)" % self.ext)
-
-	def isAddable(self):
-		# TODO: this should really be a config option
-		return False
-	isAddable = classmethod(isAddable)
+		#c = AstConf("extensions.conf")
+		#c.setSection("default")
+		#c.appendExten(self.ext, "Park(%s)" % self.ext)
