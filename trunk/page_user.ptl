@@ -21,10 +21,11 @@
 from Templates import *
 
 
-_q_parent = 'page_main'
-_q_title  = _("User")
-_q_desc   = _("Perform tasks allowed by users")
-_q_level  = 0
+_q_parent  = 'page_main'
+_q_title   = _("User")
+_q_desc    = _("Perform tasks allowed by users")
+_q_menupos = 10
+_q_level   = 0
 
 
 def _q_access(request):

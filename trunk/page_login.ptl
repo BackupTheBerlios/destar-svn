@@ -23,10 +23,11 @@ from quixote.form2 import *
 import types, backend
 
 
-_q_parent = 'page_main'
-_q_title  = _("Login")
-_q_desc   = _("Login into DeStar")
-_q_level  = -1
+_q_parent  = 'page_main'
+_q_title   = _("Login")
+_q_desc    = _("Login into DeStar")
+_q_menupos = 90
+_q_level   = -1
 
 
 def _q_access(request):

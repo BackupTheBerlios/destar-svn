@@ -22,11 +22,12 @@ from Templates import *
 import backend
 
 
-_q_parent = 'page_config'
-_q_title  = _("Reload")
-_q_desc   = _("Reload asterisk")
-_q_link   = 'reload'
-_q_level  = 3
+_q_parent  = 'page_config'
+_q_title   = _("Reload")
+_q_desc    = _("Reload asterisk")
+_q_link    = 'reload'
+_q_menupos = 90
+_q_level   = 3
 
 
 def _q_access(request):
