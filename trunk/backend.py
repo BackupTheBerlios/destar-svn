@@ -44,7 +44,6 @@ def fixupZaptel():
 
 	zap_cfg_dict = {}
 	zap_chans_dict = {}
-	
 
 	for obj in configlets.config_entries:
 		if (obj.__class__.__name__ == 'CfgLineZapTDM' or 
@@ -53,21 +52,26 @@ def fixupZaptel():
 	#print "zap_cfg_dict now has: ", zap_cfg_dict
 
 	f = open("/etc/zaptel.conf", "r")
+	marker_found = False
 	while True:
 		s = f.readline()
 		if not s:
 			break
+
+		# TODO: genzeptelconf should generate some marker info, which will help us
+		#       with the creation of those entries
+
 		param_list = re.split('^(fxs|fxo)(ks|ls)=(\d+)', s)
 		if param_list.__len__() == 5:
 			type, sigtype, channel = param_list[1:4]
 			channel = int(channel)
-			if type == 'fxo':
+			if type == 'fxo' and marker_found:
 				#print "Configing FXO line %d" % channel
 				zap_chans_dict[channel] = [ type, sigtype ]
-			elif type == 'fxs':
+			elif type == 'fxs' and marker_found:
 				#print "Configing FXS line %d" % channel
 				zap_chans_dict[channel] = [ type, sigtype ]
-			else :
+			elif marker_found:
 				print "Unknown zaptel type '%s'" % type
 		param_list = re.split('^defaultzone\s*=\s*(\w+)', s)
 		if param_list.__len__() == 3:
