@@ -20,14 +20,14 @@
 
 from Templates import *
 from quixote.errors import *
-import UserUI as ui
+import AdminUI as ui
 import cdrutils
+import sys,os
 
-_q_exports = []
+_q_exports = ['panel']
 
 if cdrutils.db:
 	_q_exports.append('cdr')
-
 
 
 
@@ -36,6 +36,7 @@ def menu(request):
 	if cdrutils.db:
 		#'<li><a href="cdr">Simple CDR list</a></li>'
 		a.append( ('cdr', _('Simple CDR list')) )
+	a.append( ('panel', _('Operator Panel')) )
 	return a
 
 
@@ -46,6 +47,54 @@ def cdr [plain] (request):
 	header(htmltext(_('Call detail record')), menu)
 	ui.cdrForm(request)
 	footer()
+
+def panel [plain] (request):
+	# Operator Panel Section
+	
+	header(htmltext(_('Operator Panel')), menu)
+	'<p>'
+	htmltext(_('This is the Operator Panel configuration section. '))
+	htmltext(_('Here you can configure the basic features of the Panel. '))
+	htmltext(_('This Panel is based on the "Asterisk Flash Operator Panel" from ')) 
+	'<a href="http://www.asternic.org/">http://wwww.asternic.org</a>.'
+	'</p>'
+	htmltext(_('This version of DeStar works with the 0.19 version of the Flash Panel. '))
+	htmltext(_('You can download it from this '))
+	'<a href="http://asternic.org/files/op_panel-0.19.tar.gz">'
+	'link'
+	'</a>.'
+	'<p>'
+	htmltext(_('You must have perl installed in your path to use the Operator Panel. '))
+	have_perl = check_perl()
+	
+	if have_perl:
+		htmltext(_('With this requirement fulfilled, you can configure the panel. '))
+		htmltext(_('It seems that your perl binary is at %s') % perl_binary() )
+		htmltext(_('and it will be used in the configuration.'))
+		'</p>'
+		'<br/>'
+		ui.panelFeaturesForm(request)
+	else:
+		'</p>'
+		'<p>'
+		htmltext(_("You don't have perl installed in your path. "))
+		htmltext(_('You can follow the instructions to install perl '))
+		'<a href="http://search.cpan.org/dist/perl/INSTALL">'
+		htmltext(_('here'))
+		'</a>'
+		htmltext(_(' or in your distribution documentation.'))
+		'</p>'
+	footer()
+
+
+def check_perl():
+	perl = os.popen("perl -v")
+	return not perl.close():
+
+
+def perl_binary():
+	perl = os.popen("which perl")
+	return = perl.read()
 
 
 def _q_index [plain] (request):
