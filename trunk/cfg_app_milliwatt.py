@@ -37,12 +37,3 @@ class CfgAppMilliwatt(CfgApp):
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Milliwatt")
 		c.appendExten(self.ext, "Hangup")
-
-	def checkConfig(self):
-		ret = CfgApp.checkConfig(self)
-		if ret:
-			return ret
-
-		# TODO: this is just for Debugging purposes
-		if self.ext == "13":
-			return ("ext", "cannot be 13")

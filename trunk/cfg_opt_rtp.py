@@ -28,7 +28,6 @@ class CfgOptRtp(CfgOptSingle):
 	variables = [VarType("rtpstart",
 			     type="int",
 			     title=_("Start of RTP port area"),
-			     desc="desc",
 			     hint="hint",
 			     default=16384),
 		     VarType("rtpend",
@@ -36,11 +35,20 @@ class CfgOptRtp(CfgOptSingle):
 			     title=_("End of RTP port area"),
 			     default=16482)]
 
+	def row(self):
+		return (self.shortName, "%d - %d" % (self.rtpstart, self.rtpend))
+
+
+	def checkConfig(self):
+		ret = CfgOpt.checkConfig(self)
+		if ret:
+			return ret
+
+		if self.rtpstart < self.rtpend:
+			return ("rtpend", _("must be higher as start value"))
+
+
 	def createAsteriskConfiglet(self):
 		c = AstConf("rtp.conf")
 		c.appendValue(self, "rtpstart")
 		c.appendValue(self, "rtpend")
-
-
-	def row(self):
-		return (self.shortName, "%d - %d" % (self.rtpstart, self.rtpend))

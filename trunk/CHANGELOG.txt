@@ -1,5 +1,6 @@
 2004-08-19
 
+* updated cfg_opt_rtp.py while writing http://openfacts.berlios.de/index-en.phtml?title=DeStarConfiglets
 * don't ask zaptel.conf to be backed up
 * make all 4 configuration tips appear after a fresh install
 
