@@ -89,12 +89,12 @@ def panel [plain] (request):
 
 def check_perl():
 	perl = os.popen("perl -v")
-	return not perl.close():
+	return not perl.close()
 
 
 def perl_binary():
 	perl = os.popen("which perl")
-	return = perl.read()
+	return perl.read()
 
 
 def _q_index [plain] (request):
