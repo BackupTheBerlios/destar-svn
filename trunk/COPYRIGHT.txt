@@ -1,7 +1,7 @@
 COPYRIGHT
 ---------
 
-All python code of DeStar is (c) 2004 by
+All python code of DeStar is (c) 2005 by
         Holger Schurig
         Lindenweg 3
         61191 Rosbach
