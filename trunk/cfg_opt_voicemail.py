@@ -28,7 +28,7 @@ class CfgOptVoicemail(CfgOptSingle):
 		     VarType("format", title=_("File format for voicemail messages"), type="choice", options=[('wav49','WAV (common sound format)'),('gsm','GSM (smaller)')], default="wav49"),
 		     VarType("maxmessage", title=_("Maximal message length (in seconds)"), type="int", default=180, len=3),
 		     VarType("minmessage", title=_("Minimal message length (in seconds)"), type="int", default=2, len=3),
-		     VarType("maxsilence", title=_("Seconds of silence to the recording"), type="int", default=2, len=2),
+		     VarType("maxsilence", title=_("Seconds of silence to end the recording"), type="int", default=2, len=2),
 		     VarType("silencethreshold", title=_("Silence threshold (what we consider silence, the lower, the more sensitive)"), type="int", default=150, len=2),
 
 		     VarType("playback", title=_("Playback settings"), type="label"),
