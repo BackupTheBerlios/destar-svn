@@ -219,22 +219,22 @@ def configurationTips [html] (request):
 		configurationTip(
 			"You should create a user with type 'Configurator'",
 			"add/CfgOptUser",
-			[_("Configuration"), _("Options"), _("DeStar user")] )
+			[_("Configuration"), _("Edit Options"), _("DeStar user")] )
 	if not backend.countConfiglets("Phones"):
 		configurationTip(
 			"You should create a phone",
 			"Phones/",
-			[_("Configuration"), _("Phones")] )
+			[_("Configuration"), _("Edit Phones")] )
 	if not backend.countConfiglets("Phones"):
 		configurationTip(
 			"You should create a telco line",
-			"Lines/",
-		[_("Configuration"), _("Lines")] )
+			"TelCoLines/",
+		[_("Configuration"), _("Edit TelCo Lines")] )
 	if not backend.countConfiglets(clazz="CfgOptManager"):
 		configurationTip(
 			"You should create a manager entry",
 			"add/CfgOptManager",
-			[_("Configuration"), _("Options"), _("Manager access")] )
+			[_("Configuration"), _("Edit Options"), _("Manager access")] )
 
 	if tipped:
 		'</ul>'

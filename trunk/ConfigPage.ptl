@@ -27,13 +27,13 @@ import backend
 
 def menu(request):
 	return [
-		('Phones/', 'Phones'),
-		('Lines/', 'Telco Lines'),
-		('Applications/', 'Applications'),
-		('Options/', 'Options'),
+		('Phones/',       'Edit Phones'),
+		('TelCoLines/',   'Edit Telco Lines'),
+		('Applications/', 'Edit Applications'),
+		('Options/',      'Edit Options'),
 		('',''),
-		('write', 'Write config'),
-		('reload', 'Reload asterisk'),
+		('write',         'Write config'),
+		('reload',        'Reload asterisk'),
 	]
 
 
@@ -164,6 +164,7 @@ class Groups:
 
 		# Show addable configlets:
 		cg = backend.configletsList(self.group)
+		cg.sort(lambda x,y: cmp(x.shortName,y.shortName) )
 		head = False
 		for o in cg:
 			if not o.isAddable():

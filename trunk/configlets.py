@@ -375,9 +375,6 @@ class Cfg(Holder):
 		global context_entries
 		context_entries = []
 
-		# TODO: should we also call this after we added
-		# or modified a configlet?
-
 		# Make sure all variables are set:
 		for v in self.variables:
 			if not self.__dict__.has_key(v.name):
@@ -537,7 +534,7 @@ class CfgOptSingle(CfgOpt):
 class CfgLine(Cfg):
 	"""Base class for external lines."""
 
-	group = "Lines"
+	group = "TelCoLines"
 
 
 	def __init__(self,**kw):
