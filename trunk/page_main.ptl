@@ -45,6 +45,7 @@ def _q_access(request):
 #    _q_title   = 'Some title'       # must be present, if it is '', then no menu
 #                                    # entry will be generated
 #    _q_desc    = 'Long description' # may be empty
+#    _q_menupos = 0                  # used for sorting the generated menu
 #    _q_level   = 3                  # access level needed for the page
 #    _q_parent  = 'page_blah'        # this means: we should be put into
 #                                    # page_blah's menu
@@ -83,6 +84,8 @@ for s in os.listdir(backend.CONFIGLETS_DIR):
 		# instantiate eventually missing variables
 		if not m.__dict__.has_key('_q_menu'):
 			m.__dict__['_q_menu'] = []
+		if not m.__dict__.has_key('_q_menupos'):
+			m.__dict__['_q_menupos'] = 0
 		if not m.__dict__.has_key('_q_exports'):
 			m.__dict__['_q_exports'] = []
 		if not m.__dict__.has_key('_q_desc'):

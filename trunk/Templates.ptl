@@ -167,21 +167,22 @@ def header [html] (title, menu=None, refresh=None):
 	'<h1 id="nameheader"><a href="/" class="header">De<em>Star</em></a></h1>\n'
 	
 	# Side menu
+	# e[0]: priority, only needed for sorting, discarded
+	# e[1]: Textual link
+	# e[2]: link
+	# e[3]: submenu
 	'<div id="navigation" class="nav">\n'
-	n = 0
-	for m in getMenu():
-		if m[0] > n:
-			'<ul>\n'
-			n = m[0]
-		elif m[0] < n:
-			'</ul>\n'
-			n = m[0]
-		if m[2]:
-			'<li><a href="%s">%s</a></li>\n' % (m[1],m[2])
-		else:
-			'<li>&nbsp;</li>\n'
-	for i in range(n):
+	def showMenu [html] (menu):
+		'<ul>\n'
+		for e in menu:
+			if e[1]:
+				'<li><a href="%s">%s</a></li>\n' % (e[1],e[2])
+			else:
+				'<li>&nbsp;</li>\n'
+			if e[3]:
+				showMenu(e[3])
 		'</ul>\n'
+	showMenu(getMenu())
 	'</div>\n'
 
 
@@ -201,7 +202,6 @@ def footer [html] ():
 
 
 def getMenu():
-	m = []
 	request = get_request()
 	path = request.environ['PATH_INFO']
 	#print "path:", path
@@ -211,6 +211,7 @@ def getMenu():
 	stack = get_publisher().get_namespace_stack()
 
 	def calcMenu(root='', n=0):
+		m = []
 		try:
 			obj = stack[n]
 		except IndexError:
@@ -224,13 +225,17 @@ def getMenu():
 				#print abs(e._q_level), request.session.level
 				if abs(e._q_level) < request.session.level:
 					continue
-			#print request.session.level, e._q_level
-			m.append( (n+1,'/'.join([root,e._q_link]),e._q_title) )
-			#print e._q_link, path[n]
+			
 			if e._q_link==path[n] or e._q_link==path[n]+'/':
-				calcMenu('/'.join([root,path[n]]), n+1)
-		
-	calcMenu()
+				submenu = calcMenu('/'.join([root,path[n]]), n+1)
+			else:
+				submenu = []
+
+			m.append( (e._q_menupos, '/'.join([root,e._q_link]), e._q_title, submenu) )
+		m.sort()
+		return m
+
+	m = calcMenu()
 	return m
 
 
