@@ -29,7 +29,7 @@ class CfgLineSiptrunk(CfgLine):
 
 	variables   = [
 		VarType("name",       title=_("Name"), len=15, default="siptrunk"),
-		VarType("id",         title=_("SIP username"),   len=6),
+		VarType("id",         title=_("SIP username"),   len=15),
 		VarType("pw",         title=_("SIP password"), len=15),
 		VarType("host",       title=_("SIP host"), len=25),
 		VarType("nat",      title=_("Is the trunk behind NAT ?"), type="bool"),
