@@ -21,7 +21,7 @@
 from Templates import *
 from quixote.errors import AccessError
 import ConfigUI as ui
-import backend
+import backend, language
 #import sys, types, string
 
 def menu(request):
@@ -54,7 +54,7 @@ class AddConfiglet:
 		try:
 			obj = backend.newConfiglet(self.type)
 		except KeyError:
-			return errorpage("%s %s" % (_("There is no configurable object with the name"),self.type), menu)
+			return errorpage("%s %s" % (_("Object does not exist"),self.type), menu)
 		return ui.configletsForm(request,
 			obj,
 			title = _("New") + " " + obj.shortName,
@@ -203,7 +203,7 @@ class BackupConfigFile:
 _q_exports = ['write', 'reload']
 
 
-def _q_index (request):
+def _q_index [plain] (request):
 	header(htmltext(_('Configuration')), menu)
 	ui.configurationTips(request)
 	if ui.tipped:
@@ -221,7 +221,7 @@ def write (request):
 		ui.showConfigFilesThatNeedBackup(files)
 	else:
 		'<p>'
-		htmltext/_("Wrote configuration"))
+		htmltext(_("Wrote configuration"))
 		'.</p>'
 	footer()
 
