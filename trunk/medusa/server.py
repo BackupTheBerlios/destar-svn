@@ -8,7 +8,7 @@ An HTTP handler for Medusa that publishes a Quixote application.
 # A simple HTTP server, using Medusa, that publishes a Quixote application.
 
 import sys
-import asyncore, rfc822, socket
+import asyncore, rfc822, socket, urllib
 from cStringIO import StringIO
 try:
 	from quixote.http_response import Stream
@@ -68,6 +68,7 @@ class QuixoteHandler:
 	    path = request.uri
 	    query_string = ''
 
+	path = urllib.unquote(path)
 	server_port = str(self.server.port),
 	http_host = msg.get("Host")
 	if http_host:
