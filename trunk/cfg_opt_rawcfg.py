@@ -23,7 +23,7 @@ from configlets import *
 
 class CfgOptRawCfg(CfgOpt):
 
-	shortName = _("Raw config file snipped")
+	shortName = _("Raw config file snippet")
 	variables = [
 		VarType("name", title=_("Name"), len=15),
 		VarType("file", title=_("File name"), len=15),
