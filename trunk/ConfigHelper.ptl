@@ -24,6 +24,25 @@ import backend
 import types, string
 
 
+class ROStringWidget(StringWidget):
+	"""Widget for output of a simple read-only string
+	"""
+
+	def render_content(self):
+		return htmltext(self.value)
+
+
+class LabelWidget(Widget):
+	"""Widget for output of a simple label, useful for grouping.
+	"""
+
+	def render_content(self):
+		"""We only render a <br> for the content because the
+		inherited render_title already rendered the title for us."""
+
+		return htmltext('<br />')
+
+
 def presentEditableConfiglets [plain] (configlets):
         if configlets:
                 # Show currently defined configlets
