@@ -22,9 +22,10 @@ from Templates import *
 from language import _
 import UserUI as ui
 from quixote.errors import AccessError, PublishError
-import backend
+import backend, manager
 import types
 
+manager.connect()
 
 def menu(request):
 	a = [ ('pbxstate', _('Asterisk state')) ]
@@ -36,7 +37,8 @@ def menu(request):
 		phone = backend.getConfiglet(name=request.session.phone)
 		if phone:
 			a.append( ('%d/state' % phone._id, _('Phone state')) )
-			a.append( ('%d/settings' % phone._id, _('Phone settings')) )
+			if manager.isLoggedIn():
+				a.append( ('%d/settings' % phone._id, _('Phone settings')) )
 
 	return a
 

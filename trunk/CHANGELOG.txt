@@ -5,6 +5,8 @@
 * fixed cfg_line_iaxtrunk.py, it does no longer break
 * homogenized display of telco lines
 * added multiple incoming MSN capability to ISDN over CAPI
+* one MSN can only be assigned once
+* put functionality into User -> Phone settings
 
 2004-08-16
 

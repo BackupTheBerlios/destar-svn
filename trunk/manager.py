@@ -599,6 +599,19 @@ def isLoggedIn():
 	return isConnected() and conn.loggedin
 
 
+def getVar(family, key, default):
+	for s in conn.action('Command', Command='database get %s %s' % (family,key)):
+		if s.startswith('Value: '):
+			return s[7:]
+	return default
+
+def setVar(family, key, val):
+	if val:
+		conn.action('Command', Command='database put %s %s %s' % (family,key,val))
+	else:
+		conn.action('Command', Command='database del %s %s' % (family,key))
+
+
 if __name__ == '__main__':
 	connect()
 	if not isConnected():

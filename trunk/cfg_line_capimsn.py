@@ -57,6 +57,18 @@ class CfgLineCapiMSN(CfgLine):
 		useContext("in-capi")
 
 
+	def checkConfig(self):
+		res = CfgLine.checkConfig(self)
+		if res:
+			return res
+		else:
+			import configlets
+			for obj in configlets.config_entries:
+				if obj.__class__.__name__ == 'CfgLineCapiMSN':
+					if obj.msn == self.msn:
+						return ("msn",_("MSN already assigned"))
+
+
 	def createAsteriskConfiglet(self):
 		needModule("chan_capi")
 

@@ -25,19 +25,16 @@ import configlets, backend, manager
 import time, copy
 
 
-def phoneSettingsForm(request, obj, menu, exitPath="../.."):
-
+def phoneSettingsForm(request, obj, menu, exitPath=".."):
 	if request.form.has_key('_cancel'):
 		return request.redirect(exitPath)
 	form = Form()
 
-	#TODO: get the values
-
-	dnd  = False
-	cfim = ''
-	dsec = 45
-	cfbs = ''
-	vm   = True
+	vm   = int(manager.getVar('VM',   obj.ext, True))
+	dnd  = int(manager.getVar('DND',  obj.ext, False))
+	dsec = int(manager.getVar('DSEC', obj.ext, 45))
+	cfim = manager.getVar('CFIM', obj.ext, '')
+	cfbs = manager.getVar('CFBS', obj.ext, '')
 
 	phones = backend.getChoice(clazz="CfgPhone")
 	phones.remove( (obj.name,obj.name) )
@@ -54,17 +51,15 @@ def phoneSettingsForm(request, obj, menu, exitPath="../.."):
 	if not form.is_submitted() or form.has_errors():
 		return form.render()
 
-	#TODO: store the values
-	print "dnd:",  form['dnd']
-	print "cfim:", form['cfim']
-	print "dsec:", form['dsec']
-	print "cfbs:", form['cfbs']
-	print "vm:",   form['cfbs']
+	manager.setVar('VM',   obj.ext, form['vm'])
+	manager.setVar('DND',  obj.ext, form['dnd'])
+	manager.setVar('DSEC', obj.ext, form['dsec'])
+	s = form['cfim'] or ''
+	print "CFIM:", s
+	manager.setVar('CFIM', obj.ext, form['cfim'] or '')
+	manager.setVar('CFBS', obj.ext, form['cfbs'] or '')
 
-	#return request.redirect(exitPath)
-	return ( form['dnd'], form['cfim'], form['dsec'], form['cfbs'], form['cfbs'])
-
-
+	return request.redirect(exitPath)
 
 
 
@@ -215,7 +210,7 @@ def loggedIn [html] (request):
 
 
 def pbxState [html] ():
-	connect()
+	manager.connect()
 	if not manager.isConnected():
 		'<p>Asterisk is <span class="errornotice">not</span> running!</p>'
 	elif not manager.isLoggedIn():
@@ -310,15 +305,3 @@ def formatChannel(obj, now):
 		ti = ''
 
 	return htmltext('<span id="phonename">%s</span><br />%s<br />%s&nbsp;<span id="phonestate">%s</span>' % (id, number, ti, _(obj._state.State)))
-
-
-
-def connect():
-	# TODO: retrieve username/password from the configlets
-	manager.connect('destar','secret')
-
-
-
-
-# Try to connect as early as possible
-#connect()
