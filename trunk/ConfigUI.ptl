@@ -132,6 +132,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 					v.options = backend.getChoice(clazz="CfgPermDial")
 				elif v.name=="phone":
 					v.options = backend.getChoice(clazz="CfgPhone")
+				elif v.name=="aa":
+					v.options = backend.getChoice(clazz="CfgAppAA")
 				if v.optional:
 					v.options.insert(0, ('',''))
 			if not v.options:
