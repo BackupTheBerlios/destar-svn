@@ -1,5 +1,7 @@
 2004-08-19
 
+* added checks to record- and playback app
+* added format options to playback app
 * updated cfg_opt_rtp.py while writing http://openfacts.berlios.de/index-en.phtml?title=DeStarConfiglets
 * don't ask zaptel.conf to be backed up
 * make all 4 configuration tips appear after a fresh install

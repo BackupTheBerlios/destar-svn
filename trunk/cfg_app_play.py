@@ -29,6 +29,14 @@ class CfgAppPlay(CfgApp):
 	variables   = [VarType("ext",      title=_("Extension"), len=6),
                        VarType("filename", title=_("File name"))]
 
+
+	def checkConfig(self):
+		res = CfgApp.checkConfig(self)
+		if res:
+			return res
+		if self.filename.find(".") != -1:
+			return ("filename", _("Please don't specify an extension"))
+
 	def createAsteriskConfiglet(self):
 		needModule("app_playback")
 

@@ -27,8 +27,28 @@ class CfgAppRecord(CfgApp):
 	shortName   = _("Record sound")
 	description = _("""Allows you to record a sound file. You can hang up, be silent for
 			a second or dial '#' to stop the recording.""")
-	variables   = [VarType("ext",      title=_("Extension"), len=6),
-		       VarType("filename", title=_("File name"))]
+	variables   = [
+		VarType("ext",      title=_("Extension"), len=6),
+		VarType("filename", title=_("File name")),
+		VarType("format",   title=_("Sound format"), type="choice",
+			options=(("gsm", _("GSM compression")),
+				 ("ulaw",_("PCM format 'ulaw'")),
+				 ("alaw",_("alaw")),
+                                 ("vox", _("vox")),
+                                 ("wav", _("WAV-File with Microsoft PCM, 16 bit, mono 8000 Hz")),
+                                 ("WAV", _("WAV-File with GSM 6.10 compression, mono 8000 Hz")),
+                                ),
+			default="WAV")
+		]
+
+
+	def checkConfig(self):
+		res = CfgApp.checkConfig(self)
+		if res:
+			return res
+		if self.filename.find(".") != -1:
+			return ("filename", _("Please don't specify an extension"))
+
 
 	def createAsteriskConfiglet(self):
 		needModule("app_record")
@@ -39,6 +59,5 @@ class CfgAppRecord(CfgApp):
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		# TODO: don't hardcode ":gsm" here
-		# TODO strip any extension or display an error if the user enters an extension
-		c.appendExten(self.ext, "Record(%s:gsm)" % self.filename)
+		c.appendExten(self.ext, "Record(%s:%s)" % (self.filename, self.format) )
 		c.appendExten(self.ext, "Hangup")
