@@ -19,7 +19,6 @@
 
 
 from Templates import *
-from language import _
 from quixote.errors import *
 import cdrutils
 

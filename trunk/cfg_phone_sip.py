@@ -20,7 +20,6 @@
 
 
 from configlets import *
-from language import _
 
 
 class CfgPhoneSip(CfgPhone):

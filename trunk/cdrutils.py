@@ -19,7 +19,7 @@
 
 
 import sys, os
-#from language import _
+
 
 try:
 	import sqlite

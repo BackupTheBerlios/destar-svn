@@ -19,7 +19,6 @@
 
 
 from Templates import *
-from language import _
 import UserUI as ui
 from quixote.errors import AccessError, PublishError
 import backend, manager
@@ -62,7 +61,7 @@ class HandlePhones:
 
 
 	def _q_index(self, request):
-		return errorpage(_("Invalid URL", menu))
+		return errorpage(_("Invalid URL"), menu)
 
 
 	def settings [html] (self, request):

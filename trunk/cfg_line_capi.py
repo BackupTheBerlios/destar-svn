@@ -19,7 +19,7 @@
 
 
 from configlets import *
-from language import _
+
 
 # fcpci: http://www.avm.de/ftp/cardware/fritzcrd.pci/linux/suse.82/index.html
 # chan_capi: http://www.junghanns.net

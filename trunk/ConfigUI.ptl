@@ -19,7 +19,6 @@
 
 
 from Templates import *
-from language import _
 from quixote.form2 import *
 import backend
 import types, string
@@ -136,7 +135,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 				if v.optional:
 					v.options.insert(0, ('',''))
 			if not v.options:
-				return errorpage(_("Required '%s' not found" % v.name))
+				return errorpage(_("Required '%s' not found") % v.name)
 			form.add(SingleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=v.options)
 		elif v.type=="mchoice":
 			# TODO: much of this code should NOT by in a *.ptl file

@@ -19,7 +19,9 @@
 
 
 import os
+import language
 import configlets
+
 
 DESTAR_CFG = "destar_cfg.py"
 CONFIGLETS_DIR = "."

@@ -18,7 +18,6 @@
 #
 
 
-from language import _
 from Templates import *
 import quixote
 from quixote.util import StaticDirectory

@@ -19,7 +19,6 @@
 
 
 from Templates import *
-from language import _
 from quixote.errors import AccessError
 import ConfigUI as ui
 import backend
@@ -50,7 +49,7 @@ class AddConfiglet:
 
 	def _q_index(self, request):
 		if not self.type:
-			return errorpage(_("Invalid URL", menu))
+			return errorpage(_("Invalid URL"), menu)
 
 		try:
 			obj = backend.newConfiglet(self.type)
@@ -106,13 +105,13 @@ class EditConfiglets:
 		if backend.moveConfigletUp(self._id):
 			return request.redirect("..")
 		else:
-			return errorpage(_("Could not swap id's %s and %s" % (self._id-1,self._id)))
+			return errorpage(_("Could not swap id's %s and %s") % (self._id-1,self._id))
 
 	def down(self, request):
 		if backend.moveConfigletDown(self._id):
 			return request.redirect("..")
 		else:
-			return errorpage(_("Could not swap id's %s and %s" % (self._id,self._id+1)))
+			return errorpage(_("Could not swap id's %s and %s") % (self._id,self._id+1))
 
 
 

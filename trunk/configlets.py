@@ -19,7 +19,6 @@
 
 
 import sys, os, types, sha, binascii, time
-from language import _
 
 
 CONF_DIR = "/etc/asterisk"

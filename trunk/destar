@@ -8,6 +8,7 @@ An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
 # based on medusa_http.py from Quixote
 
 
+import language
 import medusa
 from quixote import enable_ptl
 
