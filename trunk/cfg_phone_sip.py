@@ -28,7 +28,7 @@ class CfgPhoneSip(CfgPhone):
 	variables = [
 		VarType("name",       title=_("Name"), len=15),
 		VarType("secret",     title=_("Password"), optional=True, len=6),
-		VarType("host",       title=_("IP address of phone"), len=15),
+		VarType("host",       title=_("IP address of phone"), optional=True, len=15),
 		VarType("nat",        title=_("Is the trunk behind NAT ?"), type="bool", optional=True),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
@@ -52,7 +52,8 @@ class CfgPhoneSip(CfgPhone):
 		sip.append("qualify=yes")
 		sip.appendValue(self, "secret")
 		sip.append("host=dynamic")
-		sip.appendValue(self, "host", "defaultip")
+		if self.host:
+			sip.appendValue(self, "host", "defaultip")
 		sip.append("dtmfmode=info")
 		sip.append("canreinvite=no")
 		if self.callerid:
