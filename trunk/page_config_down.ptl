@@ -23,7 +23,7 @@ from ConfigHelper import *
 
 _q_parent = 'page_config'
 _q_title  = ''
-_q_desc   = ''
+_q_desc   = _("Moves a configlet one position down")
 _q_link   = 'down'
 _q_level  = 3
 
