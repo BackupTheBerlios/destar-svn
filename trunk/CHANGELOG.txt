@@ -1,3 +1,7 @@
+2004-08-19
+
+* make all 4 configuration tips appear after a fresh install
+
 2004-08-18
 
 * moved development to http://developer.berlios.de/projects/destar/

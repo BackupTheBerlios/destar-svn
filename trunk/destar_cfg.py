@@ -50,17 +50,3 @@ CfgOptVoicemail(
 	maxlogins = 3,
 	skipms   = 3,
 	)
-
-CfgPhoneSip(
-	name     = "hschurig",
-	secret   = "",
-	host     = "192.168.233.101",
-	ext      = "15",
-	context  = "default",
-	did      = True,
-	callerid = "15",
-	usevm    = False,
-	usemwi   = False,
-	pin      = "1111",
-	)
-
