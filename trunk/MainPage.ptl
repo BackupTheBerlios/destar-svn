@@ -35,12 +35,27 @@ _q_exports = [
 	]
 
 def menu(request):
-	a = [
+	a = []
+	if request.session.level == 1:
+		a = [ ('user/',   _('User')), ]
+	elif request.session.level == 2:
+		a = [
 		('user/',   _('User')),
 		('admin/',  _('Administration')),
-		('config/', _('Configuration')),
-		('',        ''),
-	]
+		]
+	elif request.session.level == 3:
+		a = [
+			('user/',   _('User')),
+			('admin/',  _('Administration')),
+			('config/', _('Configuration')),
+			('',        ''),
+		]
+		a = [
+			('user/',   _('User')),
+			('admin/',  _('Administration')),
+			('config/', _('Configuration')),
+			('',        ''),
+		]
 
 	if request.session.level:
 			a.append( ('user/logout', _('Log out')) )
