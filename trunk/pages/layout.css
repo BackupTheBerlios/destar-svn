@@ -29,14 +29,6 @@ body, textarea, input {
 	font-family: arial, helvetica, sans-serif;
 }
 
-.addmore {
-	border-width: 2pt;
-	border-color: blue;
-	border-style: solid;
-	background-color: #ffa;
-	width: 25em;
-}
-
 :link {
 	color: #00c;
 }
@@ -134,8 +126,6 @@ html>body .nav ul ul a {
 
 #contentHeading {
 	background: white;
-	padding: 5px;
-	margin-left: 12.5em;
 	margin-bottom: 0.7em;
 }
 
