@@ -17,3 +17,5 @@ release:
 gettext:
 	pygettext.py -d destar *.py *.ptl
 
+msgfmt:
+	msgfmt.py destar.po
