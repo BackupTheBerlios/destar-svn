@@ -125,7 +125,7 @@ class Groups:
 		self._id   = None
 
 
-	def _q_index [html] (self, request):
+	def _q_index [plain] (self, request):
 		header(_(self.group), menu)
 
 		cg = backend.getConfiglets(group=self.group)
