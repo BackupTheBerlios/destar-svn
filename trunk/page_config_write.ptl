@@ -57,7 +57,7 @@ def _q_index [plain] (request):
 			'%s (<a href="../backup/%s">backup</a>)' % (file, file)
 			'</li>'
 		'</ul><p>'
-		htmltext(_("Because of this, I did not touch any of you config files."))
+		htmltext(_("Because of this, I did not touch any of your config files."))
 		'.</p>'
 	else:
 		'<p>'
