@@ -37,10 +37,10 @@ class LabelWidget(Widget):
 	"""
 
 	def render_content(self):
-		"""We only render a <br> for the content because the
-		inherited render_title already rendered the title for us."""
+		"""There isn't content to render and the inherited 
+		render_title already rendered the title for us."""
 
-		return htmltext('<br />')
+		pass
 
 
 def presentEditableConfiglets [plain] (configlets):
@@ -206,9 +206,9 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		t = htmltext(v.title)
 		r = not v.optional
 		if v.type=="string":
-			form.add(StringWidget, v.name, _v, t, v.hint, r, False, maxlength=v.len, size=min(v.size,56) )
+			form.add(StringWidget, v.name, _v, t, v.hint, r, True, maxlength=v.len, size=min(v.size,56) )
 		elif v.type=="text":
-			form.add(TextWidget,   v.name, _v, t, v.hint, r, False, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
+			form.add(TextWidget,   v.name, _v, t, v.hint, r, True, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
 		elif v.type=="choice":
 			if not v.__dict__.has_key("options"):
 				if v.name=="permission":
@@ -240,10 +240,10 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		elif v.type=="bool":
 			form.add(CheckboxWidget, v.name, _v, t, v.hint, r)
 		elif v.type=="label":
-			form.add(LabelWidget,    v.name, title=t, render_br=False)
+			form.add(LabelWidget,    v.name, title=t, render_br=True)
 		elif v.type=="rostring":
-			#form.add(ROStringWidget,    v.name, title=t, render_br=False)
-			form.add(ROStringWidget, v.name, _v, t, v.hint, r, False, maxlength=v.len, size=min(v.size,56) )
+			#form.add(ROStringWidget,    v.name, title=t, render_br=True)
+			form.add(ROStringWidget, v.name, _v, t, v.hint, r, True, maxlength=v.len, size=min(v.size,56) )
 		else:
 			form.add(StringWidget,   v.name, "Unknown type %s" % v.type)
 	

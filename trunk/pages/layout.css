@@ -196,6 +196,10 @@ form.quixote .submit {
 	clear: left;
 }
 
+form.quixote .content {
+	float: left;
+}
+
 form.quixote .content .error {
 	color: #f00;
 	display: inline;
@@ -225,11 +229,14 @@ form.quixote .IntWidget,
 form.quixote .CheckboxWidget,
 form.quixote .SingleSelectWidget,
 form.quixote .MultipleSelectWidget {
-	clear: left;
 }
 
 
 form.quixote div.FormTokenWidget,
 form.quixote.div.HiddenWidget {
 	display: none;
+}
+
+form.quixote br {
+	clear: left;
 }
