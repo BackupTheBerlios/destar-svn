@@ -42,7 +42,7 @@ def menu(request):
 def cdr [html] (request):
 	# This is far from Areski :-)
 
-	header(_('CDR'), menu)
+	header(_('Call detail record'), menu)
 	cursor = cdrutils.select(order=[str('answer DESC')], limit=30)
 	row = cursor.fetchone()
 	if row:
