@@ -213,7 +213,7 @@ def _q_index [plain] (request):
 	footer()
 
 
-def write (request):
+def write [plain] (request):
 	header(htmltext(_("Write configuration")), menu)
 	backend.createPythonConfig()
 	files = backend.createAsteriskConfig()
@@ -227,7 +227,7 @@ def write (request):
 
 
 
-def reload (request):
+def reload [plain] (request):
 	header(htmltext(_("Reloading Asterisk")), menu)
 
 	'<p>'
