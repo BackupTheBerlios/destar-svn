@@ -23,10 +23,11 @@ import os, backend
 
 
 _q_parent = 'page_config'
-_q_title  = _("Write")
-_q_desc   = _("Write configuration files")
-_q_link   = 'write'
+_q_title  = ''
+_q_desc   = _("Backup a config file")
+_q_link   = 'backup'
 _q_level  = 3
+
 
 
 def _q_access(request):
@@ -34,33 +35,11 @@ def _q_access(request):
 		cantAccessPage()
 
 
-def _q_test():
-	return os.access("/etc/asterisk", os.O_RDWR)
-
-
-def _q_index [plain] (request):
-	header(_q_title)
-	try:
-		backend.createPythonConfig()
-	except IOError:
-		'<p>'
-		# TODO
-		group = 'asterisk'
-		htmltext(_("Could not create /etc/asterisk/destar_cfg.py. Make sure the directory is writable for group %s") % group)
-		'.</p>'
-	files = backend.createAsteriskConfig()
-	if files:
-		htmltext(_("There are some config files from your previous configuration that weren't created by DeStar."))
-		'<ul>'
-		for file in files:
-			'<li>'
-			'%s (<a href="../backup/%s">backup</a>)' % (file, file)
-			'</li>'
-		'</ul><p>'
-		htmltext(_("Because of this, I did not touch any of you config files."))
-		'.</p>'
-	else:
-		'<p>'
-		htmltext(_("Wrote configuration"))
-		'.</p>'
-	footer()
+def _q_lookup(request, component):
+         try:
+                 res = backend.backupAsteriskConfig(component)
+         except OSError:
+                 res = None
+         if not res:
+                 return errorpage(htmltext(_("I had a problem backing up %s")) % component)
+         return request.redirect("../write")

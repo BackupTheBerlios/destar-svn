@@ -1,3 +1,36 @@
+2005-04-04
+
+* Big infrastructural change. Basically, we will have one page_*.ptl file
+  for each generated page. In main_page.ptl became quite complex because of
+  all sorts of RTTI-voodoo to Pythons dictionary that I now do. But the
+  other page_*.ptl files are now usually much simpler.
+  * makes *Page.ptl and *UI.ptl obsolete
+  * allows the navition menu to be automatically generated
+* beefed up the configuration tips, e.g. with hints about config file
+  writability
+* move config file backup into it's own page_config_backup.ptl
+
+2005-03-17
+
+* beginnings of fxo/fxs support (e.g. for TDM400P)
+
+2005-03-10
+
+* fix callerid
+
+2005-02-17
+
+* changed the encoding to UTF-8, change HTML a bit so that it is nearer to
+  HTML-4.0.1-strict conformance.
+
+2005-02-04
+
+* beginning of Flash Operator Panel integration
+
+2005-01-27
+
+* some more CDR code
+
 2004-09-02
 
 * added cfg_opt_rawcfg, to allow arbitrary config file snippets
