@@ -609,7 +609,7 @@ def getChoice(clazz, key='name',val='name'):
 		obj._id = n
 		n = n + 1
 		if isinstance(obj, obj2):
-			a.append( (obj.__dict__[key],obj.__dict__[val]) )
+			a.append( (obj.__dict__[val],obj.__dict__[key]) )
 	return a
 
 
