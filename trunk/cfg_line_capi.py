@@ -26,17 +26,14 @@ from language import _
 
 class CfgLineCapi(CfgLine):
 
-	shortName = _("ISDN using CAPI")
-	variables = [VarType("name",  title=_("Name"), len=15),
-		     VarType("msn",   title=_("Subscriber number"), len=15),
+	shortName = _("ISDN using CAPI, outgoing")
+	variables = [
+		VarType("name",      title=_("Name"), len=15),
 
-		     VarType("Inbound",	  title=_("Calls from the ISDN network"), type="label"),
-		     VarType("extin",     title=_("Extension to ring"), optional=True, len=6),
-		     VarType("contextin", title=_("Context"), optional=True, hide=True, default="in-pstn"),
-
-		     VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
-		     VarType("ext",       title=_("Extension"), optional=True, len=6),
-		     VarType("context",   title=_("Context"),   optional=True, hide=True, default="out-pstn")]
+		VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
+		VarType("msn",       title=_("Subscriber number"), len=15),
+		VarType("ext",       title=_("Extension"), optional=True, len=6),
+		]
 
 	technology = "CAPI"
 
@@ -47,8 +44,8 @@ class CfgLineCapi(CfgLine):
 
 	def fixup(self):
 		CfgLine.fixup(self)
-		useContext(self.contextin)
-		useContext(self.context)
+		useContext("in-capi")
+		useContext("out-capi")
 
 
 	def createAsteriskConfiglet(self):
@@ -63,22 +60,32 @@ class CfgLineCapi(CfgLine):
 			c.append("txgain=0.8")
 		c.setSection("interfaces")
 		c.appendValue(self, "msn")
-		c.append("context=%s" % self.contextin)
-		c.append("incomingmsn=*")
+		c.append("context=in-capi")
+
+		msn_arr = []
+		# BUG: it does somehow not work to simply write 'for msn in config_entries',
+                # despite the "from configlets import *" above
+		import configlets
+		for msn in configlets.config_entries:
+			if msn.__class__.__name__ != "CfgLineCapiMSN": continue
+			msn_arr.append(msn.msn)
+		if msn_arr:
+			c.append("incomingmsn=%s" % ",".join(msn_arr) )
 		c.append("controller=1")
 		c.append("softdtmf=1")
 		c.append("devices=2")
 
 		# Write dialin entry:
-		if self.extin:
-			c = AstConf("extensions.conf")
-			c.setSection("in-pstn")
-			c.appendExten("s", "Goto(default,%s,1)" % self.extin)
+		#if self.extin:
+		#	c = AstConf("extensions.conf")
+		#	c.setSection("in-pstn")
+		#	c.appendExten("s", "Goto(default,%s,1)" % self.extin)
 
 		# Write dialout entry:
-		if self.ext and self.context:
+		if self.ext:
 			ext = self.ext
 			if ext.endswith("*"):
 				ext = "_%s." % ext[:-1]
-			c.setSection(self.context)
+			c = AstConf("extensions.conf")
+			c.setSection("out-capi")
 			c.appendExten(ext, "Dial(CAPI/%s:${EXTEN:%d},60,TR)" % (self.msn, len(ext)-2))

@@ -1,12 +1,20 @@
+2004-08-18
+
+* moved development to http://developer.berlios.de/projects/destar/
+* the dialplan is now much simpler
+* fixed cfg_line_iaxtrunk.py, it does no longer break
+* homogenized display of telco lines
+* added multiple incoming MSN capability to ISDN over CAPI
+
 2004-08-16
 
- * fixed tab/whitespace fixed config file creation for IAX voicemailbox
- * added notransfer to CfgPhoneIAX, delete canreinvite from the same
- * don't return None menu if there is no CDR
- * backend.py: make getConfiglet known in configlets.py, so that configlets can use it, too
- * cfg_line_fwdiax.py: added default name, don't use hard-coded SIP technology
- * ConfigUI.py: bug fix
- * don't break if pysqlite is there, but no cdr.db
+* fixed tab/whitespace fixed config file creation for IAX voicemailbox
+* added notransfer to CfgPhoneIAX, delete canreinvite from the same
+* don't return None menu if there is no CDR
+* backend.py: make getConfiglet known in configlets.py, so that configlets can use it, too
+* cfg_line_fwdiax.py: added default name, don't use hard-coded SIP technology
+* ConfigUI.py: bug fix
+* don't break if pysqlite is there, but no cdr.db
 
 2004-08-13
 
