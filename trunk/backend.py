@@ -21,7 +21,7 @@
 import os
 import language
 import configlets
-
+import commands
 
 DESTAR_CFG = "destar_cfg.py"
 CONFIGLETS_DIR = "."
@@ -87,7 +87,6 @@ def createPythonConfig(f=None):
 		a = c.createPythonConfig()
 		for s in a:
 			f.write("%s\n" % s)
-
 
 
 
@@ -730,3 +729,8 @@ if __name__ == "__main__":
 	loadPythonConfig()
 	createPythonConfig()
 	createAsteriskConfig()
+
+def reloadAsterisk():
+	"""This reload the Asterisk PBX."""
+        return commands.getoutput('/usr/sbin/asterisk -rx reload')
+	
