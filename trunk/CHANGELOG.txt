@@ -1,5 +1,6 @@
 2004-08-19
 
+* fixed layout with integer-widgets
 * added checks to record- and playback app
 * added format options to playback app
 * updated cfg_opt_rtp.py while writing http://openfacts.berlios.de/index-en.phtml?title=DeStarConfiglets
