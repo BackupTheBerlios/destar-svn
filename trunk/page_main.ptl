@@ -42,7 +42,8 @@ def _q_access(request):
 # them. For this it needs this variables in each page_*-module.
 #
 #    _q_link    = 'blah'             # link name for the page
-#    _q_title   = 'Some title'       # must be present
+#    _q_title   = 'Some title'       # must be present, if it is '', then no menu
+#                                    # entry will be generated
 #    _q_desc    = 'Long description' # may be empty
 #    _q_level   = 3                  # access level needed for the page
 #    _q_parent  = 'page_blah'        # this means: we should be put into
@@ -51,6 +52,8 @@ def _q_access(request):
 #                                    # automatically created/populated
 #    _q_menu    = []                 # will be automatically created/populated
 #    def _q_index(request):          # the method that will generate the web page
+#    def _q_test():                  # option, if this func return False, then
+#                                    # the menu entry won't be generated
 #	
 #######################################################################
 
@@ -91,9 +94,16 @@ for s in os.listdir('.'):
 		
 # Build the menu structure for all page modules
 for s in sys.modules:
-	if not s.startswith('page_'): continue
-	if s == 'page_main': continue
+	if not s.startswith('page_'):
+		continue
+	if s == 'page_main':
+		continue
+	
 	this_mod = sys.modules[s]
+	if this_mod.__dict__.has_key('_q_test') and not this_mod._q_test():
+		continue
+
+
 	try:
 		parent_mod = sys.modules[this_mod._q_parent]
 	except KeyError:
