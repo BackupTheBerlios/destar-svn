@@ -77,11 +77,18 @@ def _q_exception_handler [html] (request, exc):
 		'</p>'
 		footer()
 	if isinstance(exc, quixote.errors.AccessError) or isinstance(exc, quixote.errors.PublishError):
-		header(_(exc.title))
-		'<p>'
-		_(exc.public_msg)
-		'</p>'
-		footer()
+                if (exc.title == "Access denied"):
+                        header(_('Access Denied'))
+                        '<p>'
+                        _("You don't have access to this location.")
+                        '</p>'
+                        footer()
+                else:
+                        header(_(exc.title))
+                        '<p>'
+                        _(exc.public_msg)
+                        '</p>'
+                        footer()
 	else:
 		raise exc
 
