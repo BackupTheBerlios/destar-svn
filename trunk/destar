@@ -28,11 +28,58 @@ An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
 
 
 
-print "DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2005 by Holger Schurig.\n"
-print "DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,"
-print "you are welcome to redistribute it under certain conditions;"
-print "see the included files GPL-2.txt and COPYRIGHT.txt"
-print
+
+import sys, getopt
+try:
+	# Not all python versions come with the daemonize module
+	import daemonize
+	be_daemon = True
+	pid_file = '/var/run/destar.pid'
+except:
+	be_daemon = False
+	pid_file = ''
+
+
+def print_version():
+	print "DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2005 by Holger Schurig.\n"
+	print "DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,"
+	print "you are welcome to redistribute it under certain conditions;"
+	print "see the included files GPL-2.txt and COPYRIGHT.txt"
+	print
+
+def print_usage():
+	program = "destar"
+	print "DeStar: Asterisk Management web interface"
+	print
+	print "Usage:"
+	print "  %s: normal execution" % program
+	if pid_file:
+		print "  %s -f|--fg|--foreground: don't daemonize" % program
+	print "  %s -h|--help: print this text and exit peacefully" % program
+	print "  %s -v|--version: only print version information" % program
+
+
+try:
+	opts,args = getopt.getopt(sys.argv[1:],'fhp:v', ['fg,foreground','help','pidfile', 'version'])
+except getopt.GetoptError:
+	print_usage()
+	exit(2)
+
+for opt,val in opts:
+	if opt in  ('-f', '--fg', '--foreground'):
+		be_daemon=False
+	if opt in  ('-h', '--help'):
+		print_usage()
+		sys.exit(0)
+	if opt in ('-h', '--pid'):
+		pid_file = val
+	if opt in ('-v', '--version'):
+		print_version()
+		sys.exit(0)
+
+
+print_version()
+
 
 
 # 'language' implements our gettext based internationalization
@@ -54,6 +101,14 @@ except ImportError:
 #enable_ptl()
 import Publisher
 pub = medusa.Server("page_main", port=8080, publisher=Publisher.DeStarPublisher)
+
+
+
+
+# only daemonize after binding to the port. This makes error handling saner
+if be_daemon:
+	daemonize.daemonize(stdout='/var/log/asterisk/destar.log', stderr='/var/log/asterisk/destar.err')
+
 
 try:
 	pub.run()

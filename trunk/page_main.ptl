@@ -19,7 +19,7 @@
 
 
 from Templates import *
-import sys, os, quixote
+import sys, os, quixote, backend
 from quixote.util import StaticDirectory
 
 
@@ -62,7 +62,7 @@ def _q_access(request):
 
 
 # Import all cfg_*.py files once when the module loads.
-for s in os.listdir('.'):
+for s in os.listdir(backend.CONFIGLETS_DIR):
         if not s.startswith('page_'):
 		continue
 	m = None
@@ -164,5 +164,5 @@ def _q_index [plain] (request):
 
 
 # Out static things like images and style-sheets:
-pages = StaticDirectory(os.path.abspath('pages'), list_directory=1)
-# pages = StaticDirectory(os.path.abspath('pages'), list_directory=1, cache_time=60*60)
+pages = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','pages')), list_directory=1)
+# pages = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','pages')), list_directory=1, cache_time=60*60)
