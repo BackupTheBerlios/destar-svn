@@ -28,5 +28,12 @@
 #
 
 
-import gettext
-gettext.install('destar', unicode=1)
+import os, gettext
+try:
+	translation = gettext.GNUTranslations(open('destar.moxx','rb'))
+except IOError:
+	translation = gettext.NullTranslations()
+translation.install()
+
+if __name__ == '__main__':
+	print _("Have fun!")
