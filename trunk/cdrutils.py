@@ -33,53 +33,8 @@ except ImportError:
 	db = None
 
 
-def checkLookupTableAmaflags():
-	try:
-		curs = db.cursor()
-		curs.execute("select count(1) from l_amaflags")
-		return
-	except sqlite._sqlite.DatabaseError:
-		pass
-
-	curs.execute("CREATE TABLE l_amaflags (amaflags INTEGER, flags CHAR(8), PRIMARY KEY(amaflags))")
-	curs.execute("INSERT INTO l_amaflags VALUES (1,'omit')")
-	curs.execute("INSERT INTO l_amaflags VALUES (2,'bill')")
-	curs.execute("INSERT INTO l_amaflags VALUES (3,'doc')")
-	#CREATE UNIQUE INDEX i_amaflags_amaflags on l_amaflags(amaflags);
-	db.commit()
-
-
-def checkLookupTableDisposition():
-	try:
-		curs = db.cursor()
-		curs.execute("select count(1) from l_disposition")
-		return
-	except sqlite._sqlite.DatabaseError:
-		pass
-
-	curs.execute("CREATE TABLE l_disposition (disposition INTEGER, state CHAR(8), PRIMARY KEY(disposition))")
-	curs.execute("INSERT INTO l_disposition VALUES (0,'none')")
-	curs.execute("INSERT INTO l_disposition VALUES (1,'noanswer')")
-	curs.execute("INSERT INTO l_disposition VALUES (2,'busy')")
-	curs.execute("INSERT INTO l_disposition VALUES (3,'noanswer,busy')")
-	curs.execute("INSERT INTO l_disposition VALUES (4,'answered')")
-	curs.execute("INSERT INTO l_disposition VALUES (5,'answered,noanswer')")
-	curs.execute("INSERT INTO l_disposition VALUES (6,'answered,busy')")
-	curs.execute("INSERT INTO l_disposition VALUES (7,'answered,noanswer,busy')")
-	curs.execute("INSERT INTO l_disposition VALUES (8,'failed')")
-	curs.execute("INSERT INTO l_disposition VALUES (9,'failed,noanswer')")
-	curs.execute("INSERT INTO l_disposition VALUES (10,'failed,busy')")
-	curs.execute("INSERT INTO l_disposition VALUES (11,'failed,noanswer,busy')")
-	curs.execute("INSERT INTO l_disposition VALUES (12,'failed,answered')")
-	curs.execute("INSERT INTO l_disposition VALUES (13,'failed,answered,noanswer')")
-	curs.execute("INSERT INTO l_disposition VALUES (14,'failed,answered,busy')")
-	curs.execute("INSERT INTO l_disposition VALUES (15,'failed,answered,noanswer,busy')")
-	#CREATE UNIQUE INDEX INDEX i_disposition_disposition ON l_disposition(disposition);
-	db.commit()
-
-
 def select(
-		fields=['src','dst','answer','billsec','flags','state'],
+		fields=['src','dst','answer','billsec','amaflags','disposition'],
 		groupby=[],
 		having=[],
 		order=['Acctid'],
@@ -91,24 +46,6 @@ def select(
 	sql = ['SELECT']
 	sql.append( ','.join(fields) )
 	sql.append('FROM cdr')
-
-	flag = False
-	if 'flags' in fields:
-		sql.append('LEFT JOIN l_amaflags')
-		flag = True
-	if 'state' in fields:
-		sql.append('LEFT JOIN l_disposition')
-		flag = True
-	if flag:
-		sql.append('WHERE')
-
-	flag = False
-	if 'flags' in fields:
-		sql.append('cdr.amaflags = l_amaflags.amaflags')
-		flag = True
-	if 'state' in fields:
-		if flag: sql.append('AND')
-		sql.append('cdr.disposition = l_disposition.disposition')
 
 	if groupby:
 		sql.append('GROUP BY')
@@ -132,9 +69,6 @@ def select(
 
 
 if __name__ == "__main__":
-	cu = checkLookupTableAmaflags()
-	cu = checkLookupTableDisposition()
-
 	cu = select()
 	while 1:
 		row = cu.fetchone()

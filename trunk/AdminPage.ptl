@@ -45,7 +45,6 @@ def cdr [html] (request):
 
 	header(_('CDR'), menu)
 	cursor = cdrutils.select(order=[str('answer DESC')], limit=30)
-	print dir(cursor)
 	row = cursor.fetchone()
 	if row:
 		'<table><tr>'

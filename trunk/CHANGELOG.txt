@@ -1,6 +1,8 @@
 2004-09-02
 
 * added cfg_opt_rawcfg, to allow arbitrary config file snippets
+* removed l_amaflags and l_disposition from cdrutils.py, this will
+  make it easier later to have different database backends
 
 2004-08-19
 
