@@ -123,7 +123,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		t = htmltext(v.title)
 		r = not v.optional
 		if v.type=="string":
-			form.add(StringWidget, v.name, _v, t, v.hint, r, False, maxlength=v.len, size=min(v.len,56) )
+			form.add(StringWidget, v.name, _v, t, v.hint, r, False, maxlength=v.len, size=min(v.size,56) )
 		elif v.type=="text":
 			form.add(TextWidget,   v.name, _v, t, v.hint, r, False, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
 		elif v.type=="choice":
