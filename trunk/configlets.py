@@ -302,6 +302,7 @@ class VarType(Holder):
 		self.name = name
 		self.__dict__.setdefault("type","string")
 		self.__dict__.setdefault("len",60)
+		self.__dict__.setdefault("size",20)
 		self.__dict__.setdefault("title",self.name)
 		self.__dict__.setdefault("hint","")
 		self.__dict__.setdefault("optional", False)
