@@ -65,11 +65,8 @@ def _q_index [html] (request):
 	'<ul>'
 	"""<li>it's <a href="http://www.holgerschurig.de/destar.html">home page</a></li>"""
 	"""<li>the <a href="http://www.voip-info.org/tiki-index.php?page=Asterisk+GUI+DeStar">VOIP Wiki entry</a> for DeStar</li>"""
-	"""<li>the <a href="http://svn.taansoftworks.com/cgi-bin/repos/destar/trac.cgi">trac repository manager</a> for DeStar</li>"""
-	"""<li>the <a href="http://svn.taansoftworks.com/svn/repos/destar">subversion repository</a> for DeStar"""
+	"""<li>the <a href="http://developer.berlios.de/projects/destar">project page for developers</a> on Berlios</li>"""
 	'</ul>'
-	"""You can checkout a current development version from the repository using subversion by:<BR>svn checkout http://svn.taansoftworks.com/svn/repos/destar"""
-	'<p>'
 	footer()
 
 
@@ -99,5 +96,5 @@ def values [html] (request):
 # No cache:
 pages = StaticDirectory(os.path.abspath('pages'), list_directory=1)
 
-# With cache:
+# TODO: with cache
 # pages = StaticDirectory(os.path.abspath('pages'), list_directory=1, cache_time=60*60)
