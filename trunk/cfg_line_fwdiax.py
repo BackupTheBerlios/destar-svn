@@ -87,4 +87,4 @@ class CfgLineFwdIax(CfgLine):
 		if self.phone:
 			c = AstConf("extensions.conf")
 			c.setSection("in-iaxfwd")
-			c.appendExten(self.msn, "Goto(phones,%s,1)" % self.phone)
+			c.appendExten(self.ext, "Goto(phones,%s,1)" % self.phone)

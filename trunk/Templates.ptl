@@ -146,50 +146,51 @@ class HtmlTable:
 def header [html] (title, menu=None, refresh=None):
 
 	# Boilerplate
-	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
-	'<html xmlns="http://www.w3.org/1999/xhtml">'
-	'<head>'
-	'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />'
+	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n'
+	'<html xmlns="http://www.w3.org/1999/xhtml">\n'
+	'<head>\n'
+	'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n'
 	if refresh:
-		'<meta http-equiv="Refresh" content="%d;" />' % refresh
-	'<meta name="Author" content="DeStar, made by Holger Schurig" />'
-	'<title>%s</title>' % title
-	'<style type="text/css" media="all">@import "/pages/layout.css";</style>'
-	'</head>'
-	'<body>'
+		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
+	'<meta name="Author" content="DeStar, made by Holger Schurig" />\n'
+	'<title>Asterisk/DeStar PBX :: %s</title>\n' % title
+	'<link rel="stylesheet" type="text/css" href="/pages/layout.css">\n'
+	'</head>\n'
+	'<body>\n'
 	#'<body onload="window.resizeTo(800,600);">'
 
 
 	# Header
-	'<a href="/" class="header">De<em>Star</em></a>'
+	'<h1 id="nameheader"><a href="/" class="header">De<em>Star</em></a></h1>\n'
 	
 	# Side menu
-	'<div id="navigation" class="nav">'
+	'<div id="navigation" class="nav">\n'
 	n = 0
 	for m in getMenu():
 		if m[0] > n:
-			'<ul>'
+			'<ul>\n'
 			n = m[0]
 		elif m[0] < n:
-			'</ul>'
+			'</ul>\n'
 			n = m[0]
 		if m[2]:
-			'<li><a href="%s">%s</a></li>' % (m[1],m[2])
+			'<li><a href="%s">%s</a></li>\n' % (m[1],m[2])
 		else:
-			'<li>&nbsp;</li>'
+			'<li>&nbsp;</li>\n'
 	for i in range(n):
-		'</ul>'
-	'</div>'
+		'</ul>\n'
+	'</div>\n'
 
-	'<div id="contentHeading">'
-	'<h1>%s</h1>' % title
-	'</div>'
+	'<h1 id="contentHeading">%s</h1>\n' % title
 
 	# Content
-	'<div id="content">'
+	'<div id="content">\n'
 
 	
 def footer [html] ():
+	'</div>\n'
+	'<div id="footer">\n'
+	'<p><a href="http://www.holgerschurig.de/destar.html"> DeStar Homepage</a></p>\n'
 	'</div>'
 	'</body>\n'
 	'</html>\n'

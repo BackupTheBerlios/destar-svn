@@ -41,11 +41,6 @@ a:active {
 	color: #c00
 }
 
-;a:hover {
-;	color: #00c;
-;	background-color: yellow;
-;}
-
 h1 {
 	display: inline;
 	font-size: 2em;
@@ -130,7 +125,7 @@ html>body .nav ul ul a {
 /**********************************/
 
 #contentHeading {
-	background: #eef;
+	background: #white;
 	padding: 5px;
 	margin-left: 12.5em;
 	margin-bottom: 0.7em;
