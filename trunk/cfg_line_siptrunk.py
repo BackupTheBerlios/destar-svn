@@ -28,7 +28,7 @@ class CfgLineSiptrunk(CfgLine):
 
 	description = _("""Used to setup a SIP trunk to a SIP provider or a different SIP server.""")
 
-	variables	= [
+	variables   = [
 		VarType("name",       title=_("Name"), len=15, default="siptrunk"),
 		VarType("id",         title=_("SIP username"),   len=6),
 		VarType("pw",         title=_("SIP password"), len=15),

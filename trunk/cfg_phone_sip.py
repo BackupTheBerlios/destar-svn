@@ -26,26 +26,22 @@ from language import _
 class CfgPhoneSip(CfgPhone):
 
 	shortName = _("Standard SIP phone")
-	variables = [VarType("name",       title=_("Name"), len=15),
-			VarType("secret",     title=_("Password"), optional=True, len=6),
-			VarType("host",       title=_("IP address of phone"), len=15),
-			VarType("nat",      title=_("Is the trunk behind NAT ?"), type="bool"),
-			VarType("ext",        title=_("Extension"), optional=True, len=6
-			# This can wait until we have popup-windows
-			#hint=_("""If you define an extension, then you can call the
-			#	phone with this number. A phone without an extension can still
-			#	be used as a target for direct dialin or calling groups.""")
-			),
-			VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
+	variables = [
+		VarType("name",       title=_("Name"), len=15),
+		VarType("secret",     title=_("Password"), optional=True, len=6),
+		VarType("host",       title=_("IP address of phone"), len=15),
+		VarType("nat",      title=_("Is the trunk behind NAT ?"), type="bool"),
+		VarType("ext",        title=_("Extension"), optional=True, len=6),
+		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
-		    VarType("Outbound",   title=_("Calls from the phone"), type="label"),
-		    VarType("callerid",   title=_("Caller-Id"), optional=True),
+		VarType("Outbound",   title=_("Calls from the phone"), type="label"),
+		VarType("callerid",   title=_("Caller-Id"), optional=True),
 
-		    VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
-		    VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
-		    VarType("usemwi",     title=_("Signal waiting mail"), type="bool", optional=True),
-		    VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
-		    ]
+		VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
+		VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
+		VarType("usemwi",     title=_("Signal waiting mail"), type="bool", optional=True),
+		VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
+	]
 	technology = "SIP"
 
 	def createAsteriskConfiglet(self):
