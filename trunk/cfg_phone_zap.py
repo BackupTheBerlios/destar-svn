@@ -1,6 +1,6 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2004 by Holger Schurig,
+# Copyright (C) 2005 by Holger Schurig,
 # add ons by Michael Bielicki, TAAN Softworks Corp.
 # 
 # This program is free software; you can redistribute it and/or modify
