@@ -25,20 +25,25 @@ from language import _
 class CfgLineZapHFC(CfgLine):
 
 	shortName = _("ISDN using zaphfc")
-	variables = [VarType("name",  title=_("Name"), len=35),
-		     VarType("ext",   title=_("Extension"), len=6),
-		     VarType("msn",   title=_("Subscriber number"), len=15),
-		     VarType("mode",  title=_("Mode of NTBA"), type="choice", options=("p2p","p2mp"), default="p2mp"),
-		     VarType("cards", title=_("Number of cards"), type="int", default=1, len=2)]
+	variables = [
+		VarType("name",  title=_("Name"), len=35),
+		VarType("mode",  title=_("Mode of NTBA"), type="choice", options=("p2p","p2mp"), default="p2mp"),
+		VarType("cards", title=_("Number of cards"), type="int", default=1, len=2),
+
+		VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
+		VarType("msn",   title=_("Subscriber number"), len=15),
+		VarType("ext",   title=_("Outgoing prefix"), optional=True, len=6),
+		]
 
 
 	def fixup(self):
 		CfgLine.fixup(self)
 		useContext("in-pstn")
-		import configlets
-		for obj in configlets.config_entries:
-			if isinstance(obj, configlets.CfgPhone):
-				print obj.__class__.__name__
+
+		#import configlets
+		#for obj in configlets.config_entries:
+		#	if isinstance(obj, configlets.CfgPhone):
+		#		print obj.__class__.__name__
 
 
 	def createAsteriskConfiglet(self):
@@ -93,8 +98,5 @@ class CfgLineZapHFC(CfgLine):
 		# Write dialout entry:
 		if self.ext:
 			c = AstConf("extensions.conf")
-			c.setSection("out-pstn")
-			ext = self.ext
-			if ext.endswith("*"):
-				ext = "_%s." % (ext[:-1])
-			c.appendExten(ext, "Dial(Zap/g1/${EXTEN:%d},60)" % (len(ext)-2))
+			c.setSection("default")
+			c.appendExten("_%s." % self.ext, "Dial(Zap/g1/${EXTEN:%d},60)" % (len(self.ext)))

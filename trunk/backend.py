@@ -110,6 +110,7 @@ def initializeAsteriskConfig():
 
 	c.setSection("default")
 	c.append("include=phones")
+	c.appendExten("t","Hangup")
 
 	c = AstConf("sip.conf")
 	c.append("language=de")
