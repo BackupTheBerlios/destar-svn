@@ -449,8 +449,6 @@ class Cfg(Holder):
 				except AttributeError:
 					pass
 
-				
-			
 
 
 	def createAsteriskConfig(self):

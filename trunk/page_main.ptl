@@ -108,7 +108,8 @@ for s in sys.modules:
 	# Append module to parent's menu and export-list
 	link = this_mod._q_link
 	#parent_mod._q_menu.append( (link, this_mod._q_title, this_mod._q_desc, this_mod._q_level, this_mod))
-	parent_mod._q_menu.append( this_mod )
+	if this_mod._q_title:
+		parent_mod._q_menu.append( this_mod )
 	parent_mod._q_exports.append( link )
 	# Make this module known in the parent's module namespace
 	parent_mod.__dict__[link] = this_mod
