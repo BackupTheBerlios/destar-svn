@@ -88,7 +88,4 @@ class CfgLineFwdIax(CfgLine):
 		if self.phone:
 			c = AstConf("extensions.conf")
 			c.setSection("in-iaxfwd")
-			phone = getConfiglet(name=self.phone)
-			#print phone
-			# TODO: use dialmacro
-			c.appendExten(self.fwdid, "Dial(%s)" % phone.channel() )
+			c.appendExten(self.msn, "Goto(phones,%s,1)" % self.phone)

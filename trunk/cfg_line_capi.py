@@ -32,7 +32,7 @@ class CfgLineCapi(CfgLine):
 
 		VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
 		VarType("msn",       title=_("Subscriber number"), len=15),
-		VarType("ext",       title=_("Extension"), optional=True, len=6),
+		VarType("ext",       title=_("Outgoing prefix"), optional=True, len=6),
 		]
 
 	technology = "CAPI"
@@ -45,7 +45,6 @@ class CfgLineCapi(CfgLine):
 	def fixup(self):
 		CfgLine.fixup(self)
 		useContext("in-capi")
-		useContext("out-capi")
 
 
 	def createAsteriskConfiglet(self):
@@ -75,17 +74,8 @@ class CfgLineCapi(CfgLine):
 		c.append("softdtmf=1")
 		c.append("devices=2")
 
-		# Write dialin entry:
-		#if self.extin:
-		#	c = AstConf("extensions.conf")
-		#	c.setSection("in-pstn")
-		#	c.appendExten("s", "Goto(default,%s,1)" % self.extin)
-
 		# Write dialout entry:
 		if self.ext:
-			ext = self.ext
-			if ext.endswith("*"):
-				ext = "_%s." % ext[:-1]
 			c = AstConf("extensions.conf")
-			c.setSection("out-capi")
-			c.appendExten(ext, "Dial(CAPI/%s:${EXTEN:%d},60,TR)" % (self.msn, len(ext)-2))
+			c.setSection("default")
+			c.appendExten("_%s." % self.ext, "Dial(CAPI/%s:b${EXTEN:%d},90,T)" % (self.msn, len(self.ext)))

@@ -59,7 +59,7 @@ class CfgLineCapiMSN(CfgLine):
 
 	def createAsteriskConfiglet(self):
 		needModule("chan_capi")
-		phone = getConfiglet(name=self.phone)
+
 		c = AstConf("extensions.conf")
 		c.setSection("in-capi")
-		c.appendExten(self.msn, "Dial(%s)" % phone.channel() )
+		c.appendExten(self.msn, "Goto(phones,%s,1)" % self.phone)
