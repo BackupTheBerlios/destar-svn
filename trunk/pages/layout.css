@@ -29,6 +29,14 @@ body, textarea, input {
 	font-family: arial, helvetica, sans-serif;
 }
 
+.addmore {
+	border-width: 2pt;
+	border-color: blue;
+	border-style: solid;
+	background-color: #ffa;
+	width: 25em;
+}
+
 :link {
 	color: #00c;
 }
@@ -221,6 +229,7 @@ form.quixote .SubmitWidget {
 }
 
 form.quixote .StringWidget,
+form.quixote .ROStringWidget,
 form.quixote .TextWidget,
 form.quixote .IntWidget,
 form.quixote .CheckboxWidget,
@@ -228,6 +237,7 @@ form.quixote .SingleSelectWidget,
 form.quixote .MultipleSelectWidget {
 	clear: left;
 }
+
 
 form.quixote div.FormTokenWidget,
 form.quixote.div.HiddenWidget {

@@ -22,9 +22,10 @@ import os
 import language
 import configlets
 import commands
+import re
 
 DESTAR_CFG = "destar_cfg.py"
-CONFIGLETS_DIR = "."
+CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
 
 
 
@@ -37,6 +38,78 @@ CONFIGLETS_DIR = "."
 
 
 __loaded = False
+
+def fixupZaptel():
+	"""This loads genzaptelconf results"""
+
+	zap_cfg_dict = {}
+	zap_chans_dict = {}
+	
+
+	for obj in configlets.config_entries:
+		if (obj.__class__.__name__ == 'CfgLineZapTDM' or 
+			obj.__class__.__name__ == 'CfgPhoneZap'):
+			zap_cfg_dict[int(obj.channel)] = obj
+	#print "zap_cfg_dict now has: ", zap_cfg_dict
+
+	f = open("/etc/zaptel.conf", "r")
+	while True:
+		s = f.readline()
+		if not s:
+			break
+		param_list = re.split('^(fxs|fxo)(ks|ls)=(\d+)', s)
+		if param_list.__len__() == 5:
+			type, sigtype, channel = param_list[1:4]
+			channel = int(channel)
+			if type == 'fxs':
+				#print "Configing FXO line %d" % channel
+				zap_chans_dict[channel] = [ type, sigtype ]
+			elif type == 'fxo':
+				#print "Configing FXS line %d" % channel
+				zap_chans_dict[channel] = [ type, sigtype ]
+			else :
+				print "Unknown zaptel type '%s' % type
+		param_list = re.split('^defaultzone\s*=\s*(\w+)', s)
+		if param_list.__len__() == 3:
+			lang = param_list[1]
+			#print "Default Language %s" % lang
+	
+	# Scan actual channels
+	for channel in zap_chans_dict.keys():
+		type =    zap_chans_dict[channel][0]
+		sigtype = zap_chans_dict[channel][1]
+		try:
+			obj = zap_cfg_dict[channel]
+                        if obj.zapType() != type:
+				# delete and throw an exception:
+				del zap_cfg_dict[channel]
+				zap_cfg_dict[channel]
+			obj.sigtype = sigtype
+			obj.lang = lang
+			del zap_cfg_dict[channel]	# Handled
+			#print "update:\n" , obj
+		except KeyError:
+			if type == 'fxo':
+				obj = CfgLineZapTDM(name="Zap1",
+					channel  = channel,
+					lang     = lang,
+					sigtype  = sigtype,
+					ext      = "999",
+					)
+			else: # type == 'fxs'
+				obj = CfgPhoneZap(name="Zap1",
+					channel  = channel,
+					lang     = lang,
+					sigtype  = sigtype,
+					ext      = "999",
+					)
+			#print "new:\n" , obj
+	
+	# Scan lost cfg channels
+	for channel in zap_cfg_dict.keys():
+		obj = zap_cfg_dict[channel]
+		obj.name = 'REMOVED'
+
 
 def loadPythonConfig():
 	"""This loads the destar_cfg.py config file either from
@@ -57,6 +130,7 @@ def loadPythonConfig():
 		execfile(DESTAR_CFG)
 
 	fixupConfiglets()
+	fixupZaptel()
 
 	__loaded = True
 

@@ -23,7 +23,7 @@ from language import _
 
 
 class CfgAppPhraseRecordingMenu(CfgApp):
-	 http://www.voip-info.org/tiki-index.php?page=Asterisk+tips+phrase+recording+menu
+	#http://www.voip-info.org/tiki-index.php?page=Asterisk+tips+phrase+recording+menu
 
 	shortName   = _("Phrase recording menu")
 	description = _("""NOT YET WORKING""")

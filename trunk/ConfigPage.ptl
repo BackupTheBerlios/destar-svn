@@ -131,7 +131,7 @@ class Groups:
 		cg = backend.getConfiglets(group=self.group)
 		if cg:
 			# Show currently defined configlets
-			'<table>'
+			'<table id="configureditems">'
 			'<tr>'
 			'<th>E</th>'
 			'<th>D</th>'
