@@ -19,7 +19,7 @@
 
 
 from Templates import *
-import backend, string
+import os, grp, backend, string
 
 
 _q_parent = 'page_main'
@@ -42,9 +42,10 @@ def configurationTip [plain] (tip, url, label):
 	tipped = True
 	'<li>'
 	htmltext(_(tip))
-	': <a href="%s">' % url
-	' -> '.join(label)
-	'</a>'
+	if url:
+		'You can do it in the <a href="%s">' % url
+		' -> '.join(label)
+		'</a> form.'	
 	'</li>'
 
 
@@ -52,29 +53,48 @@ def configurationTips [plain] (request):
 	global tipped
 	tipped = False
 
+	groups = []
+	for gid in os.getgroups():
+		groups.append(grp.getgrgid(gid)[0])
+	groups = ", ".join(groups)
+
 	if request.session.user=='programmer':
 		configurationTip(
-			_("You should create a user with type 'Configurator'"),
+			_("You should create a user with type 'Configurator'. Without this user, everyone connecting to DeStar can configure everything."),
 			"add/CfgOptUser",
-			[_("Configuration"), _("Edit Options"), _("DeStar user")] )
-	if not backend.countConfiglets("Phones"):
+			[_("Configuration"), _("Options"), _("DeStar user")] )
+
+	if not os.access("/etc/asterisk", os.O_RDWR):
 		configurationTip(
-			_("You should create a phone"),
-			"Phones/",
-			[_("Configuration"), _("Edit Phones")] )
-	if not backend.countConfiglets("TelCoLines"):
-		configurationTip(
-			_("You should create a telco line"),
-			"TelCoLines/",
-			[_("Configuration"), _("Edit TelCo Lines")] )
+			_("You should enable write access to the directory /etc/asterisk. Without the ability to modify the configuration files DeStar would be pretty useless. You should 'chmod g+rwx' this directory and set it's group to one of '%s'." % groups),
+			"",
+			[])
+
 	if not backend.countConfiglets(clazz="CfgOptManager"):
 		configurationTip(
-			_("You should create a management API entry"),
+			_("You should create a management API entry. Without this entry, DeStar can't control the Asterisk PBX software."),
 			"add/CfgOptManager",
-			[_("Configuration"), _("Edit Options"), _("Management API access")] )
+			[_("Configuration"), _("Options"), _("Management API access")] )
 
-	# TODO: is /etc/zaptel.conf writable?
-	# TODO: is /etc/asterisk writable?
+	if not backend.countConfiglets("Phones"):
+		configurationTip(
+			_("You should create a phone. Without defined phones you can't make and receive calls."),
+			"Phones/",
+			[_("Configuration"), _("Phones")] )
+
+	if not backend.countConfiglets("TelCoLines"):
+		configurationTip(
+			_("You should create a telco line. Without a 'telco' line (which can be a SIP VOIP-Provider as well) you can only make calls between your local phones."),
+			"TelCoLines/",
+			[_("Configuration"), _("TelCoLines")] )
+
+	if not os.access("/etc/zaptel.conf", os.O_RDWR):
+		configurationTip(
+			_("You should enable write access to /etc/zaptel.conf. Without write access to this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set it's group to one of '%s'." % groups),
+			"",
+			[])
+
+	# TODO: add a tip for sql access to cdr?
 
 	if tipped:
 		'</ul>'

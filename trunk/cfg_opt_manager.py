@@ -24,7 +24,7 @@ from configlets import *
 class CfgOptManager(CfgOpt):
 
 	_opt = ("system", "call", "log", "verbose", "command", "agent", "user")
-	shortName = _("Manager access")
+	shortName = _("Management API access")
 	variables = [VarType("name",   title=_("Name"), len=15),
 		     VarType("secret", title=_("Secret"), len=15, default=generatePassword(8)),
 		     VarType("deny",   title=_("IP disable mask"), len=31, default="0.0.0.0/0.0.0.0"),

@@ -19,7 +19,7 @@
 
 
 from Templates import *
-import backend
+import os, backend
 
 
 _q_parent = 'page_config'
@@ -32,6 +32,10 @@ _q_level  = 3
 def _q_access(request):
         if request.session.level < _q_level:
 		cantAccessPage()
+
+
+def _q_test():
+	return os.access("/etc/asterisk", os.O_RDWR)
 
 
 def _q_lookup(request, component):
