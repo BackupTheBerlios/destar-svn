@@ -1,0 +1,110 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+#from quixote.errors import AccessError
+import backend, language
+
+
+_q_parent = 'page_main'
+_q_title  = _("Config")
+_q_desc   = _("Modify PBX configuration")
+_q_level  = 3
+
+
+def _q_access(request):
+        if request.session.level < _q_level:
+		cantAccessPage()
+
+
+tipped = False
+def configurationTip [plain] (tip, url, label):
+	global tipped
+	if not tipped:
+		'<h2>'
+		htmltext(_('Configuration tips'))
+		'</h2>'
+		'<ul>'
+	tipped = True
+	'<li>'
+	htmltext(_(tip))
+	': <a href="%s">' % url
+	' -> '.join(label)
+	'</a>'
+	'</li>'
+
+
+def configurationTips [plain] (request):
+	global tipped
+	tipped = False
+
+	if request.session.user=='programmer':
+		configurationTip(
+			_("You should create a user with type 'Configurator'"),
+			"add/CfgOptUser",
+			[_("Configuration"), _("Edit Options"), _("DeStar user")] )
+	if not backend.countConfiglets("Phones"):
+		configurationTip(
+			_("You should create a phone"),
+			"Phones/",
+			[_("Configuration"), _("Edit Phones")] )
+	if not backend.countConfiglets("Phones"):
+		configurationTip(
+			_("You should create a telco line"),
+			"TelCoLines/",
+			[_("Configuration"), _("Edit TelCo Lines")] )
+	if not backend.countConfiglets(clazz="CfgOptManager"):
+		configurationTip(
+			_("You should create a management API entry"),
+			"add/CfgOptManager",
+			[_("Configuration"), _("Edit Options"), _("Management API access")] )
+
+	# TODO: is /etc/zaptel.conf writable?
+	# TODO: is /etc/asterisk writable?
+
+	if tipped:
+		'</ul>'
+
+
+def showConfigurables [plain] (head):
+	'<p>'
+	head
+	':</p><table id="subcategories">'
+	'<tr>'
+	for s in (htmltext(_('Configured')), htmltext(_('Category'))):
+		'<th>%s</th>' % s
+	'</tr>'
+
+	for group in backend.configletsGrouped():
+		'<tr>'
+		'<td>%s</td>' % backend.countConfiglets(group)
+		'<td><a href="%s">%s</a></td>' % (group, _(group))
+		'</tr>'
+	'</table>'
+
+
+def _q_index [plain] (request):
+	header(_q_title)
+	configurationTips(request)
+	if tipped:
+		showConfigurables(htmltext(_('Other things you can configure:')))
+	else:
+		showConfigurables(htmltext(_('You can configure the following things')))
+	footer()

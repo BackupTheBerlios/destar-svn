@@ -1,4 +1,23 @@
 #!/usr/bin/env python
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
 
 """
 An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
@@ -8,23 +27,35 @@ An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
 # based on medusa_http.py from Quixote
 
 
-import language
-import medusa
-from quixote import enable_ptl
 
-print "DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2004 by Holger Schurig."
+print "DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2005 by Holger Schurig.\n"
 print "DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,"
 print "you are welcome to redistribute it under certain conditions;"
 print "see the included files GPL-2.txt and COPYRIGHT.txt"
 print
 
-enable_ptl()
-import Publisher
 
-s = medusa.Server("MainPage", port=8080, publisher=Publisher.DeStarPublisher)
+# 'language' implements our gettext based internationalization
+import language
+
+# 'medusa' is a stand-alone web server
+import medusa
+
+# 'quixote' is a web application framework
+try:
+	from quixote import enable_ptl
+except ImportError:
+	print _("Error:"), _("please install Quixote 1.x")
+	import sys
+	sys.exit(1)
+
+# 'Publisher.py' contains our session management, 'page_main' contains
+# the start page.
+#enable_ptl()
+import Publisher
+pub = medusa.Server("page_main", port=8080, publisher=Publisher.DeStarPublisher)
 
 try:
-	s.run()
+	pub.run()
 except KeyboardInterrupt:
 	pass
-

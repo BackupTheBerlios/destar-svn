@@ -1,0 +1,93 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+import backend
+
+
+_q_parent = 'page_config'
+_q_title  = _("Write")
+_q_desc   = _("Write configuration files")
+_q_link   = 'write'
+_q_level  = 3
+
+
+def _q_access(request):
+        if request.session.level < _q_level:
+		cantAccessPage()
+
+
+def _q_lookup(request, component):
+	#print "lookup component", component
+	#if component == 'add':
+	#	return AddConfiglet()
+	if component == 'backup':
+		return BackupConfigFile()
+	#return Groups(component)
+
+
+class BackupConfigFile:
+	_q_exports = []
+
+	def _q_index [plain] (self, request):
+		return ErrorPage(htmltext(_("File name missing")))
+
+	def _q_lookup(self, request, component):
+		# component is tested for sane entries via Quixote ...
+		# http://127.0.0.1:8080/config/write/backup/~/file is catched by Quixote
+		# http://127.0.0.1:8080/config/write/backup/../file is catched by Quixote
+		# http://127.0.0.1:8080/config/write/backup//dev/null is catched by DeStar
+		# ... and also in backend.backupAsteriskConfig we test if the file is in
+		# the list of known components.
+		try:
+			res = backend.backupAsteriskConfig(component)
+		except OSError:
+			res = None
+		if not res:
+			return errorpage(htmltext(_("I had a problem backing up %s")) % component)
+		return request.redirect("../write")
+
+
+def _q_index [plain] (request):
+	header(_q_title)
+	try:
+		backend.createPythonConfig()
+	except IOError:
+		'<p>'
+		# TODO
+		group = 'asterisk'
+		htmltext(_("Could not create /etc/asterisk/destar_cfg.py. Make sure the directory is writable for group %s") % group)
+		'.</p>'
+	files = backend.createAsteriskConfig()
+	if files:
+		htmltext(_("There are some config files from your previous configuration that weren't created by DeStar."))
+		'<ul>'
+		for file in files:
+			'<li>'
+			'%s (<a href="backup/%s">backup</a>)' % (file, file)
+			'</li>'
+		'</ul><p>'
+		htmltext(_("Because of this, I did not touch any of you config files."))
+		'.</p>'
+	else:
+		'<p>'
+		htmltext(_("Wrote configuration"))
+		'.</p>'
+	footer()
