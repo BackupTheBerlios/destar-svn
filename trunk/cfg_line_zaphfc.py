@@ -25,15 +25,17 @@ from language import _
 class CfgLineZapHFC(CfgLine):
 
 	shortName = _("ISDN using zaphfc")
-	variables = [VarType("ext",   title=_("Extension"), len=6),
+	variables = [VarType("name",  title=_("Name"), len=35),
+		     VarType("ext",   title=_("Extension"), len=6),
 		     VarType("msn",   title=_("Subscriber number"), len=15),
 		     VarType("mode",  title=_("Mode of NTBA"), type="choice", options=("p2p","p2mp"), default="p2mp"),
 		     VarType("cards", title=_("Number of cards"), type="int", default=1, len=2)]
 
 
 	def fixup(self):
-		CfgLine.fixup()
+		CfgLine.fixup(self)
 		useContext("in-pstn")
+		import configlets
 		for obj in configlets.config_entries:
 			if isinstance(obj, configlets.CfgPhone):
 				print obj.__class__.__name__
@@ -86,7 +88,7 @@ class CfgLineZapHFC(CfgLine):
 			for p in config_entries:
 				if not isinstance(p, Phone): continue
 				if not p.did: continue
-				c.appendExten("%s%s" % (self.msn,p.ext), "Macro(exten-std,SIP/%s)" % p.name)
+				#c.appendExten("%s%s" % (self.msn,p.ext), "Macro(exten-std,SIP/%s)" % p.name)
 
 		# Write dialout entry:
 		if self.ext:

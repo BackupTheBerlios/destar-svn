@@ -1,4 +1,3 @@
-DEST=files
 DATE=$(shell date +'%Y%m%d-%H%M')
 
 
@@ -9,9 +8,8 @@ clean:
 	     -name "*.au" | xargs rm
 
 
-tar:
-	mkdir -p $(DEST)
-	rm -rf destar-$(DATE)
+release:
 	svn export . destar-$(DATE) 
-	tar cjf $(DEST)/destar-$(DATE).tar.bz2 destar-$(DATE)
-	rm -rf destar-$(DATE)
+	tar cjf destar-$(DATE).tar.bz2 destar-$(DATE)
+	scp destar-$(DATE).tar.bz2 holgerschurig@shell.berlios.de:/home/groups/ftp/pub/destar/
+	rm -rf destar-$(DATE) destar-$(DATE).tar.bz2
