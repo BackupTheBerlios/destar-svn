@@ -136,6 +136,7 @@ def login [plain] (request):
 def info [plain] (request):
 	header(htmltext(_('Logged in')), menu)
 	ui.loggedIn(request)
+	print request.session
 	footer()
 	
 

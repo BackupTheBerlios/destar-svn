@@ -119,7 +119,7 @@ def _q_exception_handler [plain] (request, exc):
 		raise exc
 
 
-def values [html] (request):
+def values [plain] (request):
 	header("Dump of the request_object")
 	request.dump_html()
 	footer()
