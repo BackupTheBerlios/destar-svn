@@ -27,8 +27,18 @@ class CfgOptModule(CfgOpt):
 	shortName = _("Load module")
 	variables = [VarType("name", title=_("Module to load"), len=20)]
 
-	def createAsteriskConfiglet(self):
-		needModule(self.name)
 
 	def row(self):
 		return (self.shortName, self.name)
+
+
+	def checkConfig(self):
+		res = CfgOpt.checkConfig(self)
+		if res:
+			return res
+		if self.name.find(".") != -1:
+			return ("name", _("Please don't specify an extension"))
+
+
+	def createAsteriskConfiglet(self):
+		needModule(self.name)
