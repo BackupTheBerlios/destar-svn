@@ -24,13 +24,19 @@ _q_exports = []
 
 
 
-def menu [html] (request):
-	'<li><a href="/user">User</a></li>'
-	'<li><a href="/admin">Admin</a></li>'
-	'<li><a href="/config">Configuration</a></li>'
+def menu [plain] (request):
+	'<li><a href="/user">'
+	htmltext(_('User'))
+	'</a></li>'
+	'<li><a href="/admin">'
+	htmltext(_('Admin'))
+	'</a></li>'
+	'<li><a href="/config">'
+	htmltext(_('Configuration'))
+	'</a></li>'
 
 
-def _q_index [html] (request):
-	header(_('Page missing'), menu)
-	_('This page is on my TODO list :-)')
+def _q_index [plain] (request):
+	header(htmltext(_('Page missing')), menu)
+	htmltext(_('This page is on my TODO list :-)'))
 	footer()

@@ -54,48 +54,60 @@ def menu(request):
 
 
 
-def _q_index [html] (request):
-	header(_("Main menu"))
-	"""<p>DeStar will allow you to configure and maintain your Asterisk PBX. Currently,
-	only the <A HREF="config">Configuration</A> is somewhat usable. Feel free to add
-	features by submitting patches to holgerschurig using-the-domain gmx point de.</p>"""
+def _q_index [plain] (request):
+	header(htmltext(_("Main menu")))
+	'<p>'
+	htmltext(_("""DeStar will allow you to configure and maintain your Asterisk PBX. Currently, only the """))
+	"""<A HREF="config">"""
+	htmltext(_("Configuration"))
+	"</A>"
+	htmltext(_(" is somewhat usable. Feel free to add features by submitting patches to holgerschurig using-the-domain gmx point de.i"))
+	'</p>'
+	'<p>'
+	htmltext(_("You can get more information about DeStar at"))
+	'</p>'
+ 	'<ul>'
+	"""<li><a href="http://www.holgerschurig.de/destar.html">""" 
+	htmltext(_("It's home page")) 
+	'</a></li>'
+	"""<li><a href="http://www.voip-info.org/tiki-index.php?page=Asterisk+GUI+DeStar">""" 
+	htmltext(_('The VOIP Wiki entryfor DeStar'))
+	'</a></lii>'
+	"""<li><a href="http://developer.berlios.de/projects/destar">"""
+	htmltext(_("The project page for developers on Berlios"))
+	'</a></li>'
+ 	'</ul>'
+ 	footer()
 
-	'<p>You can get more information about DeStar at</p>'
-	'<ul>'
-	"""<li>it's <a href="http://www.holgerschurig.de/destar.html">home page</a></li>"""
-	"""<li>the <a href="http://www.voip-info.org/tiki-index.php?page=Asterisk+GUI+DeStar">VOIP Wiki entry</a> for DeStar</li>"""
-	"""<li>the <a href="http://developer.berlios.de/projects/destar">project page for developers</a> on Berlios</li>"""
-	'</ul>'
-	footer()
 
-
-def _q_exception_handler [html] (request, exc):
+def _q_exception_handler [plain] (request, exc):
+	x	x	x
 	if isinstance(exc, quixote.errors.TraversalError):
-		header(_("Page not found"))
+		header(htmltext(_("Page not found")))
 		'<p>'
-		_('This page does not exist')
+		htmltext(_('This page does not exist'))
 		'</p>'
 		footer()
-	if isinstance(exc, quixote.errors.AccessError) or isinstance(exc, quixote.errors.PublishError):
-                if (exc.title == "Access denied"):
-                        header(_('Access Denied'))
-                        '<p>'
-                        _("You don't have access to this location.")
-                        '</p>'
-                        footer()
-                else:
-                        header(_(exc.title))
-                        '<p>'
-                        _(exc.public_msg)
-                        '</p>'
-                        footer()
-	else:
+        if isinstance(exc, quixote.errors.AccessError) or isinstance(exc, quixote.errors.PublishError):
+	        if (exc.title == "Access denied"):
+			header(htmltext(_('Access Denied')))
+			'<p>'
+			htmltext(_("You don't have access to this location."))
+			'</p>'
+			footer()
+		else:
+			header(_(exc.title))
+			'<p>'
+			_(exc.public_msg)
+			'</p>'
+			footer()
+        else:
 		raise exc
 
 
 def values [html] (request):
 	header("Dump of the request_object")
-	htmltext(request.dump_html())
+	request.dump_html()
 	footer()
 
 

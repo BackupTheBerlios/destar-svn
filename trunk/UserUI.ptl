@@ -62,7 +62,7 @@ def phoneSettingsForm(request, obj, menu, exitPath=".."):
 
 
 
-def phoneState [html] (obj):
+def phoneState [plain] (obj):
 	(phones, other) = backend.determineStateOfPhones()
 	
 	state = copy.copy(obj._state.__dict__)
@@ -71,7 +71,7 @@ def phoneState [html] (obj):
 	'<table border=1 cellpadding=2 cellspacing=0>'
 
 	try:
-		'<tr><td>%s:</td><td>%s</td></tr>' % ( _('State'), _(state['State']) )
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('State')), _(state['State']) )
 		del state['State']
 	except KeyError:
 		pass
@@ -80,57 +80,57 @@ def phoneState [html] (obj):
 	try:
 		t = state['LastUpdate']
 		if t:
-			'<tr><td>%s:</td><td>%s</td></tr>' % ( _('Last updated'), backend.time2HMS(time.time()-t))
+			'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Last updated')), backend.time2HMS(time.time()-t))
 		del state['LastUpdate']
 	except KeyError:
 		pass
 
 	# TODO: Hangup cause
 
-	'<tr><td>%s:</td><td>%s</td></tr>' % ( _('Name'), obj.name)
+	'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Name')), obj.name)
 
-	'<tr><td>%s:</td><td>%s</td></tr>' % ( _('Extension'), obj.ext)
+	'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Extension')), obj.ext)
 
 	try:
-		'<tr><td>%s:</td><td>%s</td></tr>' % ( _('Registration status'), _(state['PeerStatus']) )
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Registration status')), _(state['PeerStatus']) )
 		del state['PeerStatus']
 	except KeyError:
 		pass
 
 	try:
-		'<tr><td>%s:</td><td>%s</td></tr>' % ( _('Channel ID'), _(state['Channel']) )
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Channel ID')), _(state['Channel']) )
 		del state['Channel']
 	except KeyError:
 		pass
 
 	try:
-		'<tr><td>%s:</td><td>%s</td></tr>' % ( _('Called extension'), _(state['Extension']) )
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Called extension')), _(state['Extension']) )
 		del state['Extension']
 	except KeyError:
 		pass
 
 	try:
-		'<tr><td>%s:</td><td>%s(%s)</td></tr>' % ( _('Application'), state['Application'], state['AppData'] )
+		'<tr><td>%s:</td><td>%s(%s)</td></tr>' % ( htmltext(_('Application')), state['Application'], state['AppData'] )
 		del state['Application']
 		del state['AppData']
 	except KeyError:
 		pass
 
 	try:
-		'<tr><td>%s:</td><td>%s</td></tr>' % ( _('Context'), _(state['Context']) )
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Context')), _(state['Context']) )
 		del state['Context']
 	except KeyError:
 		pass
 
 	try:
-		'<tr><td>%s:</td><td>%s</td></tr>' % ( _('Caller ID'), _(state['Callerid']) )
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Caller ID')), _(state['Callerid']) )
 		del state['Callerid']
 	except KeyError:
 		pass
 
 	k = state.keys()
 	if k:
-		'<tr><td>%s</td><td>' % _("Other state")
+		'<tr><td>%s</td><td>' % htmltext(_("Other state"))
 		k.sort()
 		for s in k:
 			if s in ['Event', 'Peer', 'Cause', 'Priority', 'Uniqueid']: continue
@@ -161,60 +161,64 @@ def loginForm(request, menu, exitPath="."):
 	return (form['name'], form['pw'])
 
 
-def notLoggedIn [html] (request):
+def notLoggedIn [plain] (request):
 	'<p>'
-	_('Invalid username or password')
+	htmltext(_('Invalid username or password'))
 	'</p>'
 
 
-def loggedIn [html] (request):
+def loggedIn [plain] (request):
 	'<p>'
 	if request.session.user:
-		_('You are now logged in as user')
+		htmltext(_('You are now logged in as user'))
 		" '<b>"
 		request.session.user
 		"</b>'. "
-		_("Your access level is")
+		htmltext(_("Your access level is"))
 		" %d." % request.session.level
 	else:
-		_("You are not logged in.")
+		htmltext(_("You are not logged in."))
 	' '
-	_('You can do')
+	htmltext(_('You can do'))
 	":</p><ul>"
 	if request.session.level >= 0:
 		"<li>"
-		_('access all public accessible info pages')
+		htmltext(_('access all public accessible info pages'))
 		"</li>"
 	if request.session.level >= 1 and request.session.phone:
 		"<li>"
-		_('change your personal phone settings')
+		htmltext(_('change your personal phone settings'))
 		"</li>"
 	if request.session.level >= 2:
 		"<li>"
-		_('change phone settings of other people')
+		htmltext(_('change phone settings of other people'))
 		"</li>"
 	if request.session.level >= 3:
 		"<li>"
-		_('configure the PBX')
+		htmltext(_('configure the PBX'))
 		"</li>"
 	if request.session.level >= 4:
 		"<li>"
-		_('access debug pages to help program DeStar')
+		htmltext(_('access debug pages to help program DeStar'))
 		"</li>"
 	"</ul><p>"
-	_("Have fun!")
+	htmltext(_("Have fun!"))
 	"</p>"
 	
 
 
 
-def pbxState [html] ():
+def pbxState [plain] ():
 	manager.connect()
 	if not manager.isConnected():
-		'<p>Asterisk is <span class="errornotice">not</span> running!</p>'
+		'<p><span class="errornotice">'
+		htmltext(_("Asterisk is not running!"))
+		'</span></p>'
 	elif not manager.isLoggedIn():
 		# TODO: describe how to set this up
-		'<p>The manager access is <span class="errornotice">not</span> working!</p>'
+		'<p><span class="errornotice">'
+		htmltext(_("The manager access is not working!"))
+		'</span></p>'
 
 	(phones,other) = backend.determineStateOfPhones()
 

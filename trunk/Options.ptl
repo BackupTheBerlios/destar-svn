@@ -26,8 +26,8 @@ _q_exports = ['edit','add','values',]
 
 
 
-def _q_index [html] (request):
-	header('%s - %s' % (_('Configuration'),_('Options'))  )
+def _q_index [plain] (request):
+	header('%s - %s' % (htmltext(_('Configuration')), htmltext(_('Options')))  )
 
 	cg = configlets.getConfigs(group='Options')
 	for o in cg:

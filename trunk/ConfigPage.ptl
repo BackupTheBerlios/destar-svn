@@ -137,7 +137,7 @@ class Groups:
 			'<th>D</th>'
 			'<th>U</th>'
 			for f in cg[0].head():
-				'<th>%s</th>' % _(f)
+				'<th>%s</th>' % htmltext(_(f))
 			'</tr>'
 			n = 0
 			for o in cg:
@@ -169,7 +169,7 @@ class Groups:
 			if not o.isAddable():
 				continue
 			if not head:
-				'<div class="addmore"><h2>%s %s</h2><ul>' % (_("Add more"), self.group) 
+				'<div class="addmore"><h2>%s %s</h2><ul>' % (htmltext(_("Add more")), self.group) 
 				head = True
 			'<li><a href="../add/%s">%s</a></li>' % (o.__name__, o.shortName)
 		if head:
@@ -187,14 +187,14 @@ class BackupConfigFile:
 	_q_exports = []
 
 
-	def _q_index [html] (self, request):
-		return ErrorPage(_("File name missing"))
+	def _q_index [plain] (self, request):
+		return ErrorPage(htmltext(_("File name missing")))
 
 	def _q_lookup(self, request, component):
 		#print "--> backup", component
 		res = backend.backupAsteriskConfig(component)
 		if not res:
-			return errorpage(_("I had a problem backing up %s") % component)
+			return errorpage(htmltext(_("I had a problem backing up %s")) % component)
 		return request.redirect("../write")
 
 
@@ -203,39 +203,39 @@ class BackupConfigFile:
 _q_exports = ['write', 'reload']
 
 
-def _q_index [html] (request):
-	header(_('Configuration'), menu)
+def _q_index (request):
+	header(htmltext(_('Configuration')), menu)
 	ui.configurationTips(request)
 	if ui.tipped:
-		ui.showConfigurables(_('Other things you can configure:'))
+		ui.showConfigurables(htmltext(_('Other things you can configure:')))
 	else:
-		ui.showConfigurables(_('You can configure the following things'))
+		ui.showConfigurables(htmltext(_('You can configure the following things')))
 	footer()
 
 
-def write [html] (request):
-	header(_("Write configuration"), menu)
+def write (request):
+	header(htmltext(_("Write configuration")), menu)
 	backend.createPythonConfig()
 	files = backend.createAsteriskConfig()
 	if files:
 		ui.showConfigFilesThatNeedBackup(files)
 	else:
 		'<p>'
-		_("Wrote configuration")
+		htmltext/_("Wrote configuration"))
 		'.</p>'
 	footer()
 
 
 
-def reload [html] (request):
-	header(_("Reloading Asterisk"), menu)
+def reload (request):
+	header(htmltext(_("Reloading Asterisk")), menu)
 
 	'<p>'
-	_('Reload done')
+	htmltext(_('Reload done'))
 	'</p>'
 
 	'<p>'
-	_('Watch output below')
+	htmltext(_('Watch output below'))
 	'</p>'
 
 	'<p>'
@@ -257,4 +257,4 @@ def _q_lookup(request, component):
 
 def _q_access(request):
 	if request.session.level < 3:
-		raise AccessError(_("You don't have access to configuration."))
+		raise AccessError(htmltext(_("You don't have access to configuration.")))

@@ -20,7 +20,7 @@
 
 from Templates import *
 import UserUI as ui
-from quixote.errors import AccessError, PublishError
+from quixote.errors import AccessError, PublishError, htmltext
 import backend, manager
 import types
 
@@ -64,14 +64,14 @@ class HandlePhones:
 		return errorpage(_("Invalid URL"), menu)
 
 
-	def settings [html] (self, request):
-		header("%s for %s" % (_('Phone settings'), self.obj.name), menu)
+	def settings [plain] (self, request):
+		header("%s for %s" % (htmltext(_('Phone settings')), self.obj.name), menu)
 		ui.phoneSettingsForm(request, self.obj, menu)
 		footer()
 
 
-	def state [html] (self, request):
-		header("%s for %s" % (_('Phone status'), self.obj.name), menu)
+	def state [plain] (self, request):
+		header("%s for %s" % (htmltext(_('Phone status')), self.obj.name), menu)
 		ui.phoneState(self.obj)
 		footer()
 		
@@ -79,21 +79,21 @@ class HandlePhones:
  
 _q_exports = ['pbxstate', 'login', 'logout', 'info']
 
-def _q_index [html] (request):
-	header(_('User functions'), menu)
+def _q_index [plain] (request):
+	header(htmltext(_('User functions')), menu)
 	'<p>'
-	_('This menu will contain all sorts of phone user specific stuff:')
+	htmltext(_('This menu will contain all sorts of phone user specific stuff:'))
 	'</p>'
 	'<ul>'
-	for s in (_('Phone status (number of voicemails, call forwarding etc)'),
-		  _('Set DND (do-not-disturb)'),
-		  _('Set CFIM (call-forwarding)'),
-		  _('Set CFBS (call-forward if busy/unavailable)'),
-		  _('See last n calls made'),
-		  _('See last n calls received'),
-		  _('Maintain personal phone directory'),
-		  _('Initiate call from the web'),
-		  _('Maintain voice mailbox (listen, delete, forward, change texts)'),
+	for s in (htmltext(_('Phone status (number of voicemails, call forwarding etc)')),
+		  htmltext(_('Set DND (do-not-disturb)')),
+		  htmltext(_('Set CFIM (call-forwarding)')),
+		  htmltext(_('Set CFBS (call-forward if busy/unavailable)')),
+		  htmltext(_('See last n calls made')),
+		  htmltext(_('See last n calls received')),
+		  htmltext(_('Maintain personal phone directory')),
+		  htmltext(_('Initiate call from the web')),
+		  htmltext(_('Maintain voice mailbox (listen, delete, forward, change texts)')),
 	):
 		'<li>'
 		s
@@ -101,14 +101,14 @@ def _q_index [html] (request):
 	'</ul>'
 	footer()
 	
-def pbxstate [html] (request):
-	header(_('PBX State'), menu, 10)
+def pbxstate [plain] (request):
+	header(htmltext(_('PBX State')), menu, 10)
 	ui.pbxState()
 	footer()
 
 
-def login [html] (request):
-	header(_('Login'), menu)
+def login [plain] (request):
+	header(htmltext(_('Login')), menu)
 	res = ui.loginForm(request, menu)
 
 	if type(res) != types.TupleType:
@@ -133,8 +133,8 @@ def login [html] (request):
 	footer()
 
 
-def info [html] (request):
-	header(_('Logged in'), menu)
+def info [plain] (request):
+	header(htmltext(_('Logged in')), menu)
 	ui.loggedIn(request)
 	footer()
 	

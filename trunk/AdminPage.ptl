@@ -39,10 +39,10 @@ def menu(request):
 
 
 
-def cdr [html] (request):
+def cdr [plain] (request):
 	# This is far from Areski :-)
 
-	header(_('Call detail record'), menu)
+	header(htmltext(_('Call detail record')), menu)
 	cursor = cdrutils.select(order=[str('answer DESC')], limit=30)
 	row = cursor.fetchone()
 	if row:
@@ -65,20 +65,20 @@ def cdr [html] (request):
 	footer()
 
 
-def _q_index [html] (request):
-	header(_('Administration'), menu)
+def _q_index [plain] (request):
+	header(htmltext(_('Administration')), menu)
 	'<p>'
-	_('This menu will contain all sorts of administration stuff:')
+	htmltext(_('This menu will contain all sorts of administration stuff:'))
 	'</p>'
 	'<ul>'
-	for s in (_('Administrator login capability'),
-		  _('Disable phone numbers, e.g. 0900 services'),
-		  _('Upload MP3s with Music-On-Hold'),
-		  _('See made calls of all users'),
-		  _('See received calls of all users'),
-		  _('Convert CDR (call details recordings) into Euro and Cent'),
-		  _('Various statistics'),
-		  _('Maintain public phone directory'),
+	for s in (htmltext(_('Administrator login capability')),
+		  htmltext(_('Disable phone numbers, e.g. 0900 services')),
+		  htmltext(_('Upload MP3s with Music-On-Hold')),
+		  htmltext(_('See made calls of all users')),
+		  htmltext(_('See received calls of all users')),
+		  htmltext(_('Convert CDR (call details recordings) into Euro and Cent')),
+		  htmltext(_('Various statistics')),
+		  htmltext(_('Maintain public phone directory')),
 	):
 		'<li>'
 		s

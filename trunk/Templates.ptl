@@ -224,8 +224,8 @@ def getMenu():
 
 
 
-def errorpage [html] (txt, menu=None):
-	header(_('Error'), menu)
+def errorpage [plain] (txt, menu=None):
+	header(htmltext(_('Error')), menu)
 	'<p>'
 	txt
 	'.</p>'

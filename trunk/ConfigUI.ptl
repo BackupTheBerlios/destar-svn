@@ -183,69 +183,69 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 
 
 
-def showConfigFilesThatNeedBackup [html] (files):
-	_("""There are some config files from your previous configuration that weren't
-	created by DeStar. Click on the links to backup them.""")
+def showConfigFilesThatNeedBackup [plain] (files):
+	htmltext(_("""There are some config files from your previous configuration that weren't
+	created by DeStar. Click on the links to backup them."""))
 	'<ul>'
 	for file in files:
 		'<li>'
 		'<a href="backup/%s">%s</a>' % (file, file)
 		'</li>'
 	'</ul><p>'
-	_("Because of this, I did not touch any of you config files")
+	htmltext(_("Because of this, I did not touch any of you config files"))
 	'.</p>'
 
 
 tipped = False
-def configurationTip [html] (tip, url, label):
+def configurationTip [plain] (tip, url, label):
 	global tipped
 	if not tipped:
 		'<h2>'
-		_('Configuration tips')
+		htmltext(_('Configuration tips'))
 		'</h2>'
 		'<ul>'
 	tipped = True
 	'<li>'
-	_(tip)
+	htmltext(_(tip))
 	': <a href="%s">' % url
 	' -> '.join(label)
 	'</a>'
 	'</li>'
 
-def configurationTips [html] (request):
+def configurationTips [plain] (request):
 	global tipped
 	tipped = False
 
 	if request.session.user=='virtual config user':
 		configurationTip(
-			"You should create a user with type 'Configurator'",
+			_("You should create a user with type 'Configurator'"),
 			"add/CfgOptUser",
 			[_("Configuration"), _("Edit Options"), _("DeStar user")] )
 	if not backend.countConfiglets("Phones"):
 		configurationTip(
-			"You should create a phone",
+			_("You should create a phone"),
 			"Phones/",
 			[_("Configuration"), _("Edit Phones")] )
 	if not backend.countConfiglets("Phones"):
 		configurationTip(
-			"You should create a telco line",
+			_("You should create a telco line"),
 			"TelCoLines/",
-		[_("Configuration"), _("Edit TelCo Lines")] )
+			[_("Configuration"), _("Edit TelCo Lines")] )
 	if not backend.countConfiglets(clazz="CfgOptManager"):
 		configurationTip(
-			"You should create a manager entry",
+			_("You should create a manager entry"),
 			"add/CfgOptManager",
 			[_("Configuration"), _("Edit Options"), _("Manager access")] )
 
 	if tipped:
 		'</ul>'
 
-def showConfigurables [html] (head):
+def showConfigurables [plain] (head):
 	'<p>'
 	head
 	':</p><table>'
 	'<tr>'
-	for s in (_('Configured'), _('Category')):
+	for s in (htmltext(_('Configured')), htmltext(_('Category'))):
 		'<th>%s</th>' % s
 	'</tr>'
 
