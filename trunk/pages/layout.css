@@ -226,6 +226,7 @@ form.quixote .SubmitWidget {
 }
 
 form.quixote .StringWidget,
+form.quixote .TextWidget,
 form.quixote .IntWidget,
 form.quixote .CheckboxWidget,
 form.quixote .SingleSelectWidget,

@@ -474,6 +474,8 @@ class Cfg(Holder):
 			#print v.name,v.type,_v
 			if v.type in ("string","choice", "mchoice"):
 				cont = '"%s"' % _v
+			elif v.type=="text":
+				cont = '"""%s"""' % _v
 			elif v.type=="int":
 				cont = _v
 			elif v.type=="bool":

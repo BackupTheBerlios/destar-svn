@@ -1,3 +1,7 @@
+2004-09-02
+
+* added cfg_opt_rawcfg, to allow arbitrary config file snippets
+
 2004-08-19
 
 * enabled parking app
