@@ -88,3 +88,21 @@ And why I didn't jump on some existing project:
 
 * I don't want something that is just an text editor via web, e.g. where I
   can select a config file and inside the config file the section.
+
+
+
+
+Webpages & Source Code
+----------------------
+* http://developer.berlios.de/projects/destar/
+* http://svn.berlios.de/viewcvs/destar/trunk/
+
+
+Source code for read-only access:
+
+* svn checkout svn://svn.berlios.de/destar
+
+Source code for an DeStar developer:
+
+* export SVN_SSH="ssh -l developername"
+* svn checkout svn+ssh://svn.berlios.de/svnroot/repos/destar
