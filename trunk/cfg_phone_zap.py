@@ -27,7 +27,6 @@ class CfgPhoneZap(CfgPhone):
 	variables = [
 		VarType("name",       title=_("Name"), len=15),
 		VarType("channel",    title=_("Zaptel channel number"), type="string", default=1, len=2),
-		VarType("lang",       title=_("Channel Language"), default="en", len=2),
 		VarType("sigtype",    title=_("Signalling type"), type="choice", options=[('ks', 'kewlstart'),('ls','loopstart')]),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
@@ -50,7 +49,7 @@ class CfgPhoneZap(CfgPhone):
 		c = AstConf("zapata.conf")
 		if not c.hasSection("channels"):
 			c.setSection("channels")
-			c.append("language=%s" %self.lang)
+			c.append("language=%s" % getLanguage() )
 		c.append("signalling=fxo_%s" % self.sigtype)
 		if self.callerid:
 			c.appendValue(self, "callerid")

@@ -27,7 +27,6 @@ class CfgLineZapTDM(CfgLine):
 	variables = [
 		VarType("name",  title=_("Name"), len=35),
 		VarType("channel", title=_("Zaptel channel number"), type="rostring", default=1, len=2),
-		VarType("lang", title=_("Channel Language"), default="en", len=2),
 		VarType("sigtype", title=_("Signalling type"), type="choice", options=[('ks', 'kewlstart'),('ls','loopstart')]),
 
 		VarType("Outbound",  title=_("Calls to the PSTN network"), type="label"),
@@ -52,7 +51,7 @@ class CfgLineZapTDM(CfgLine):
 		c = AstConf("zapata.conf")
 		if not c.hasSection("channels"):
 			c.setSection("channels")
-			c.append("language=%s" %self.lang)
+			c.append("language=%s" % getLanguage() )
 		c.append("signalling=fxs_%s" % self.sigtype)
 		c.append("callerid=")
 		#prefix = ""

@@ -65,7 +65,7 @@ class CfgLineZapHFC(CfgLine):
 		c = AstConf("zapata.conf")
 		if not c.hasSection("channels"):
 			c.setSection("channels")
-			c.append("language=de")
+			c.append("language=%s" % getLanguage() )
 		c.append("switchtype=euroisdn")
 		if self.mode=="p2p":
 			c.append("signalling=bri_cpe")

@@ -593,11 +593,32 @@ def getConfiglet(id=None, name=None):
 		return obj
 	except:
 		return None
+
+# Configlets can't import the Backend (because the Backend loads/imports
+# the configlets. So we make this method manually known in the configlets module.
 configlets.getConfiglet = getConfiglet
 
 
+
+
+def getConfig(clazz, name, default=None):
+	"""This searches for the first found configlet with the class
+	'clazz'. If found, it looks if this configlet has the attribute name
+	and returns it value or some default."""
+
+	for obj in configlets.config_entries:
+		if obj.__class__.__name__==clazz:
+			return getattr(obj, name, default)
+	return default
+# Configlets can't import the Backend (because the Backend loads/imports
+# the configlets. So we make this method manually known in the configlets module.
+configlets.getConfig = getConfig
+
+
+
+
 def getChoice(clazz, key='name',val='name'):
-	"""This is used to generate a list of tupled which we later use
+	"""This is used to generate a list of tuples which we later use
 	in the select widgets of type "choice" or "mchoice".
 
 	'clazz' is the classname the configlet must have."""

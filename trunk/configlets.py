@@ -490,8 +490,22 @@ class Cfg(Holder):
 
 
 
-#######################################################################
 
+#######################################################################
+#
+# Accessors for various settings
+#
+
+def getLanguage():
+	return getConfig('CfgOptSettings','language', 'en')
+
+
+
+
+#######################################################################
+#
+# Base classes for the different configlet groups
+#
 
 class CfgOpt(Cfg):
 	"""Base class for all Asterisk options."""
