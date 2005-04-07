@@ -100,3 +100,9 @@ class DeStarPublisher(Publisher):
 
 		session.lastaccess = t
 		request.session = session
+
+
+	def filter_output(self, request, output):
+		output = Publisher.filter_output(self, request, output)
+		request.response.set_header('Content-Type','text/html; charset=UTF-8')
+		return output
