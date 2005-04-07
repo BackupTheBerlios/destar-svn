@@ -43,7 +43,7 @@ class CfgOptRtp(CfgOptSingle):
 		if ret:
 			return ret
 
-		if self.rtpstart < self.rtpend:
+		if self.rtpstart > self.rtpend:
 			return ("rtpend", _("must be higher as start value"))
 
 
