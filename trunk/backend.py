@@ -756,4 +756,3 @@ if __name__ == "__main__":
 def reloadAsterisk():
 	"""This reload the Asterisk PBX."""
         return commands.getoutput('/usr/sbin/asterisk -rx reload')
-	

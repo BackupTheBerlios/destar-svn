@@ -72,5 +72,10 @@ class CfgPhoneZap(CfgPhone):
 		self.createVoicemailConfig(c)
 	
 
-	def zapType(self):
-		return 'fxs'
+	def createDialEntry(self, extensions, ext):
+		ret = extensions.appendExten(ext, "Macro(dial-std-exten,%s/%s,%s,%d)" % (
+			self.technology,
+			self.channel,
+			"phones",
+			int(self.usevm))
+		      )

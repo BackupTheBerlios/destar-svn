@@ -606,24 +606,22 @@ class CfgPhone(Cfg):
 		useContext("phones")
 
 
+	def createDialEntry(self, extensions, exten):
+		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,%s,%d)" % (
+			self.technology,
+			self.name,
+			"phones",
+			int(self.usevm))
+		      )
+
 	def createExtensionConfig(self):
-
-		def createDialEntry(exten):
-			needModule("res_adsi")
-			needModule("app_voicemail")
-
-			ret = ext.appendExten(exten, "Macro(dial-std-exten,%s/%s,%s,%d)" % (
-				self.technology,
-				self.name,
-				"phones",
-				int(self.usevm))
-			      )
-
-		ext = AstConf("extensions.conf")
-		ext.setSection("phones")
+		needModule("res_adsi")
+		needModule("app_voicemail")
+		extensions = AstConf("extensions.conf")
+		extensions.setSection("phones")
 		if self.ext:
-			createDialEntry(self.ext)
-		createDialEntry(self.name);
+			self.createDialEntry(extensions, self.ext)
+		self.createDialEntry(extensions, self.name);
 
 
 	def createVoicemailConfig(self, conf):
