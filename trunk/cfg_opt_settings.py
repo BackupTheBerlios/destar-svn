@@ -328,13 +328,13 @@ class CfgOptSettings(CfgOptSingle):
 
 
 		if country.has_key('zaptel'):
-			self.country = country['zaptel']
+			zapcountry = country['zaptel']
+		else:
+			zapcountry = self.country
 		c = AstConf("zaptel.conf")
 		c.setSection("")
 		c.destar_comment = False
-		c.append("loadzone=%s" % self.country)
+		c.append("loadzone=%s" % zapcountry)
 		if self.country != 'us':
 			c.append("loadzone = us")
-			c.append("defaultzone = %s" % self.country)
-		print self.country
-
+			c.append("defaultzone = %s" % zapcountry)
