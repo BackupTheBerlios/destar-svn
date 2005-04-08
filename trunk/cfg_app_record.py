@@ -49,7 +49,7 @@ class CfgAppRecord(CfgApp):
 			return ("filename", _("Please don't specify an extension"))
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("app_record")
 
 		c = AstConf("extensions.conf")

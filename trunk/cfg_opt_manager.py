@@ -42,7 +42,7 @@ class CfgOptManager(CfgOpt):
 			self.secret = "secret"
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("manager.conf")
 		
 		c.setSection("general")

@@ -26,14 +26,9 @@ class CfgOptEnum(CfgOpt):
 	shortName = _("ENUM search domain")
 	variables = [VarType("search", title=_("Domain to search for ENUM entries"))]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("enum.conf")
 		c.appendValue(self, "search")
 
 	def row(self):
 		return (self.shortName, self.search)
-
-	# TODO: nothing in the dialplan uses the enum stuff
-	def isAddable(self):
-		return False
-	isAddable = classmethod(isAddable)

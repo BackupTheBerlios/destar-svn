@@ -47,7 +47,7 @@ class CfgLineCapi(CfgLine):
 		useContext("in-capi")
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("chan_capi")
 
 		# Create config for chan_capi:

@@ -33,7 +33,7 @@ class CfgAppParking(CfgApp):
 		useContext("parkedcalls")
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("features.conf")
 		c.setSection("general")
 

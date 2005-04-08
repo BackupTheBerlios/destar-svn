@@ -28,7 +28,7 @@ class CfgAppMeetme(CfgApp):
 		       VarType("confno",   title=_("Conference number"), len=4),
 		       VarType("pin",      title=_("PIN"), optional=True, len=6)]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("app_meetme")
 
 		c = AstConf("extensions.conf")

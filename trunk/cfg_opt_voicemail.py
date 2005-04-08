@@ -46,7 +46,7 @@ class CfgOptVoicemail(CfgOptSingle):
 			# charset=iso-8859-1
 		    ]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("voicemail.conf")
         	c.setSection("general")
 		c.appendValue(self, "format")

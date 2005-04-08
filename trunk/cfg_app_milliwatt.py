@@ -28,7 +28,7 @@ class CfgAppMilliwatt(CfgApp):
 			measuring.""")
 	variables   = [VarType("ext", title=_("Extension"), len=6)]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("app_milliwatt")
 
 		c = AstConf("extensions.conf")

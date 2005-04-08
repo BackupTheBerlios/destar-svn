@@ -52,7 +52,7 @@ class CfgLineIaxtrunk(CfgLine):
 		useContext("in-iaxtrunk")
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_iax2")
 

@@ -16,7 +16,7 @@ CfgOptLogger(
 CfgOptMusic(
 	name     = "default",
 	type     = "mp3",
-	dir      = "/var/lib/asterisk/mohmp3",
+	dir      = "/usr/share/asterisk/mohmp3",
 	)
 
 CfgAppEcho(

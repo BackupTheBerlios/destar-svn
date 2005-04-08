@@ -41,7 +41,7 @@ class CfgLineDID(CfgLine):
 		if self.phone and self.context:
                         return ("phone", _("Please don't specify both a phone and auto-attendant"))
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
                 c = AstConf("extensions.conf")
 		c.setSection("dids")
                 if self.phone:

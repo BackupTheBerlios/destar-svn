@@ -44,7 +44,7 @@ class CfgPhoneIax(CfgPhone):
 			]
 	technology = "IAX2"
 														    
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_iax2")
 														    

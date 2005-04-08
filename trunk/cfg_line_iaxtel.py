@@ -50,7 +50,7 @@ class CfgLineIaxtel(CfgLine):
 		useContext("in-iaxtel")
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_iax2")
 

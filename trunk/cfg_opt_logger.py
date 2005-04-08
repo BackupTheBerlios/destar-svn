@@ -60,7 +60,7 @@ class CfgOptLogger(CfgOptSingle):
 				optional=True,
 				default="error,warning")]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("logger.conf")
 		c.setSection("general")
 		c.append("dateformat=%y%m%d-%H%M%S")

@@ -43,7 +43,7 @@ class CfgPhoneSip(CfgPhone):
 	]
 	technology = "SIP"
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("chan_sip")
 
 		sip = AstConf("sip.conf")

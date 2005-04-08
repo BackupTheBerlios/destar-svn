@@ -44,14 +44,14 @@ class CfgLineZapTDM(CfgLine):
 		useContext("in-pstn")
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("chan_zap")
 
 		# Create config for chan_zap:
 		c = AstConf("zapata.conf")
 		if not c.hasSection("channels"):
 			c.setSection("channels")
-			c.append("language=%s" % getLanguage() )
+			c.append("language=%s" % getSetting('language','us') )
 		c.append("signalling=fxs_%s" % self.sigtype)
 		c.append("callerid=")
 		#prefix = ""

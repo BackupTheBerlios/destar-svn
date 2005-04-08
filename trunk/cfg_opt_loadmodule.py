@@ -39,5 +39,5 @@ class CfgOptModule(CfgOpt):
 			return ("name", _("Please don't specify an extension"))
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule(self.name)

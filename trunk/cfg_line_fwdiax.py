@@ -54,7 +54,7 @@ class CfgLineFwdIax(CfgLine):
 		useContext("in-iaxfwd")
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_iax2")
 

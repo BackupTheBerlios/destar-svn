@@ -68,7 +68,7 @@ class CfgLineCapiMSN(CfgLine):
 						return ("msn",_("MSN already assigned"))
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("chan_capi")
 
 		c = AstConf("extensions.conf")

@@ -28,7 +28,7 @@ class CfgAppEcho(CfgApp):
 			   use this to find out how much echo you have.""")
 	variables   = [VarType("ext", title=_("Extension"), len=6)]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("app_echo")
 
 		c = AstConf("extensions.conf")

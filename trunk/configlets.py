@@ -454,7 +454,7 @@ class Cfg(Holder):
 	def createAsteriskConfig(self):
 		"Creates AsteriskConfigFile entries if checkConfig() gave us an 'ok'."
 		if self.checkConfig()==None:
-			self.createAsteriskConfiglet()
+			self.createAsteriskConfig()
 
 
 	def createPythonConfig(self):
@@ -496,8 +496,8 @@ class Cfg(Holder):
 # Accessors for various settings
 #
 
-def getLanguage():
-	return getConfig('CfgOptSettings','language', 'en')
+def getSetting(name, default=None):
+	return getConfig('CfgOptSettings',name, default)
 
 
 

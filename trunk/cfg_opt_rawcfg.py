@@ -31,7 +31,7 @@ class CfgOptRawCfg(CfgOpt):
 		VarType("txt",  title=_("Contents"), type="text", size=8, cols=40),
 	]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		file = self.file
 		if file.find('.')==-1:
 			file += '.conf'

@@ -35,7 +35,7 @@ class CfgOptUser(CfgOpt):
 				          ("3",_("Configurator")) )),
 		     ]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		pass
 
 	def row(self):

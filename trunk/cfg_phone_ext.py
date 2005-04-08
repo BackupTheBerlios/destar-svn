@@ -53,7 +53,7 @@ class CfgPhoneExtension(CfgPhone):
 		return (self.shortName, self.ext, "%s -> %s" % (self.name, self.phone))
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		ext = AstConf("extensions.conf")
 		ext.setSection("phones")
 		ext.appendExten(self.ext, "Goto(%s)" % self.phone)

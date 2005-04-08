@@ -42,14 +42,14 @@ class CfgPhoneZap(CfgPhone):
 	technology = "ZAP"
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("chan_zap")
 
 		# Create config for chan_zap:
 		c = AstConf("zapata.conf")
 		if not c.hasSection("channels"):
 			c.setSection("channels")
-			c.append("language=%s" % getLanguage() )
+			c.append("language=%s" % getSetting('language','us') )
 		c.append("signalling=fxo_%s" % self.sigtype)
 		if self.callerid:
 			c.appendValue(self, "callerid")

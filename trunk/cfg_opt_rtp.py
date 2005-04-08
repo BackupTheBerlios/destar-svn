@@ -47,7 +47,7 @@ class CfgOptRtp(CfgOptSingle):
 			return ("rtpend", _("must be higher as start value"))
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("rtp.conf")
 		c.appendValue(self, "rtpstart")
 		c.appendValue(self, "rtpend")

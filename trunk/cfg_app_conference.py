@@ -27,7 +27,7 @@ class CfgAppConference(CfgApp):
 	variables   = [VarType("ext",      title=_("Extension"), len=6),
 		       VarType("confno",   title=_("Conference number"))]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("app_conference")
 
 		c = AstConf("extensions.conf")

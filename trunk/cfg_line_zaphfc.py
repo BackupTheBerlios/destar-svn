@@ -45,7 +45,7 @@ class CfgLineZapHFC(CfgLine):
 		#		print obj.__class__.__name__
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("chan_zap")
 
 		# Create config for the zaphfc kernel module:
@@ -65,7 +65,7 @@ class CfgLineZapHFC(CfgLine):
 		c = AstConf("zapata.conf")
 		if not c.hasSection("channels"):
 			c.setSection("channels")
-			c.append("language=%s" % getLanguage() )
+			c.append("language=%s" % getSetting('language', 'us') )
 		c.append("switchtype=euroisdn")
 		if self.mode=="p2p":
 			c.append("signalling=bri_cpe")

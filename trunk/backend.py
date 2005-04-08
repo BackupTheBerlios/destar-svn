@@ -96,17 +96,29 @@ def initializeAsteriskConfig():
 	"""This puts some hard coded default values into some asterisk
 	config files:
 
+	* adsi.conf
+	* extconfig.conf
 	* extensions.conf
 	* sip.conf
 	* iax.conf
-	* indications.conf
-	* mgcp.conf
-	and creates macros.inc
+	* macros.inc
 	"""
 
 
 	# Start with empty config files
 	configlets.asterisk_configfiles = []
+
+
+	c = AstConf("adsi.conf")
+	c.setSection("intro")
+	c.append("greeping => Welcome to DeStar")
+
+
+
+	c = AstConf("extconfig.conf")
+	c.setSection("settings")
+	c.append("")
+
 
 	c = AstConf("extensions.conf")
 	c.append("static=yes")
@@ -117,6 +129,7 @@ def initializeAsteriskConfig():
 	c.append("include=phones")
 	c.appendExten("t","Hangup")
 
+
 	c = AstConf("sip.conf")
 	c.append("language=de")
 	c.append("maxexpirey=3600")
@@ -126,33 +139,10 @@ def initializeAsteriskConfig():
 	c.append("allow=ulaw")
 	c.append("allow=ilbc")
 
+
 	c = AstConf("iax.conf")
 	c.append("language=de")
 
-	c = AstConf("indications.conf")
-	c.append("country=de")
-	c.setSection("de")
-	c.append("; http://www.teltone.com/prodmanuals/TLE Telephone Line Emulator, Rev M.pdf, Page 54")
-	c.append("; http://www.hettronic.de/hettronic/computer/hardware/isdn/ta2ab/")
-	c.append("description = Germany")
-	c.append("ringcadance = 1000,4000")
-	c.append("; Wählton")
-	c.append("dial = 425")
-	c.append("; Rufton")
-	c.append("ring = 425/1000,0/4000")
-	c.append("; Besetzt")
-	c.append("busy = 425/480,0/480")
-	c.append("; Identisch zu Besetzt, könnte Gassen-Belegt sein")
-	c.append("congestion = 425/480,0/480")
-	c.append("; Anklopfton")
-	c.append("callwaiting = 425/2000,0/6000")
-	c.append("; Besetzt, Rückruf möglich")
-	c.append("dialrecall = 425/500,0/500,425/500,0/500,425/500,0/500,1600/100,0/900")
-	c.append("; Keine Ahnung, was das ist. Kopiert von NL:")
-	c.append("record = 1400/500,0/15000")
-	c.append("; Tüt-Tüt-Tüt, kein Anschluß unter dieser Nummer")
-	c.append("info = 950/330,0/200,1400/330,0/200,1800/330,0/1000")
-	needModule("res_indications")
 
 	c = AstConf("macros.inc")
 	c.append(";")
@@ -218,7 +208,6 @@ def initializeAsteriskConfig():
 
 	c.append(";exten => h,1,Macro(dial-result)")
 	c.append(";exten => t,1,Macro(dial-result)")
-
 
 	c.append(";")
 	c.append("; format: Macro(dial-result,[<cause>])")
@@ -302,6 +291,7 @@ def initializeAsteriskConfig():
 	c.append("exten => T,1,PlayTones(congestion)")
 	c.append("exten => T,2,Wait(5)")
 	c.append("exten => T,3,Hangup")
+
 
 def createAsteriskConfig():
 	"""This creates all the Asterisk config files in /etc/asterisk.

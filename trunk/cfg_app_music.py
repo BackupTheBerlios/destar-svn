@@ -27,7 +27,7 @@ class CfgAppMusic(CfgApp):
 	description = _("Play Play Music On Hold until you hang up.")
 	variables   = [VarType("ext", title=_("Extension"), len=6)]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
 		c.setSection("default")
 		c.appendExten(self.ext, "Answer")

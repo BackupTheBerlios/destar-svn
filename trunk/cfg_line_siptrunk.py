@@ -51,7 +51,7 @@ class CfgLineSiptrunk(CfgLine):
 		useContext("in-siptrunk")
 
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_sip")
 

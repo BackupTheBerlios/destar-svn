@@ -48,7 +48,7 @@ class CfgPhoneMGCP(CfgPhone):
 
 	technology = "MGCP"
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("chan_mgcp")
 
 		mgcp = AstConf("mgcp.conf")

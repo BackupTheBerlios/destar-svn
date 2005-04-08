@@ -28,7 +28,7 @@ class CfgOptMusic(CfgOpt):
 		     VarType("type", title=_("Type"), type="choice", options=("mp3", "quietmp3","mp3nb","quietmp3nb")),
 		     VarType("dir",  title=_("Directory"))]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("musiconhold.conf")
 		c.setSection("classes")
 		c.append("%s=%s:%s" % (self.name, self.type, self.dir))

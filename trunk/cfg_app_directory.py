@@ -29,7 +29,7 @@ class CfgAppDirectory(CfgApp):
 		       VarType("vmcontext", title=_("Voicemail Context"), default="default", len=15),
 		       VarType("context", title=_("Context"), len=15)]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
 		c.setSection(self.context)
 		c.appendExten(self.ext, "Directory(%s)" % self.vmcontext)

@@ -30,7 +30,7 @@ class CfgAppSayTime(CfgApp):
 				("dbY"  , _("Date")),
 				("dbYkM", _("Date and Time"))] )]
 
-	def createAsteriskConfiglet(self):
+	def createAsteriskConfig(self):
 		needModule("app_sayunixtime")
 
 		c = AstConf("extensions.conf")
