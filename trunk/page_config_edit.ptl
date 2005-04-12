@@ -41,5 +41,5 @@ def _q_lookup(request, component):
 		return configletsForm(request, obj, _(obj.shortName), exitPath = "../" + obj.group.lower(),
 )
 	else:
-		return errorpage(_("Object does not exist"), menu)
+		return errorpage(_("Object does not exist"))
 
