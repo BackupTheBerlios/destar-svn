@@ -310,8 +310,14 @@ def createAsteriskConfig():
 	if not configlets.config_entries:
 		return
 	initializeAsteriskConfig()
+	# First write the options
 	for c in configlets.config_entries:
-		c.createAsteriskConfig()
+		if isinstance(c, CfgOpt):
+			c.createAsteriskConfig()
+	# The the rest
+	for c in configlets.config_entries:
+		if not isinstance(c, CfgOpt):
+			c.createAsteriskConfig()
 
 	c = AstConf("modules.conf")
 	for m in c.modules.preload:
