@@ -135,6 +135,11 @@ class AsteriskConfigFile:
 			self.append("%s=%s" % (name, val))
 		elif type(val) == types.FloatType:
 			self.append("%s=%f" % (name, val))
+		elif type(val) == types.BooleanType:
+			if val:
+				self.append("%s=yes" % name)
+			else:
+				self.append("%s=no" % name)
 		else:
 			print "invalid type ", val
 			raise Error
