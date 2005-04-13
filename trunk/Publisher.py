@@ -104,5 +104,7 @@ class DeStarPublisher(Publisher):
 
 	def filter_output(self, request, output):
 		output = Publisher.filter_output(self, request, output)
-		request.response.set_header('Content-Type','text/html; charset=UTF-8')
+		print request.get_path()
+		if not request.get_path().startswith('/pages/'):
+			request.response.set_header('Content-Type','text/html; charset=UTF-8')
 		return output
