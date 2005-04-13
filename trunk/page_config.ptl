@@ -83,11 +83,11 @@ def configurationTips [plain] (request):
 			"Phones/",
 			[_("Configuration"), _("Phones")] )
 
-	if not backend.countConfiglets("TelCoLines"):
+	if not backend.countConfiglets("Trunk"):
 		configurationTip(
-			_("You should create a telco line. Without a 'telco' line (which can be a SIP VOIP-Provider as well) you can only make calls between your local phones."),
-			"TelCoLines/",
-			[_("Configuration"), _("TelCoLines")] )
+			_("You should create a trunk (connection to a Phone company or VOIP Provider). Without a trunk you can only make calls between local phones."),
+			"Trunks/",
+			[_("Configuration"), _("Trunks")] )
 
 	if not os.access("/etc/zaptel.conf", os.O_RDWR):
 		configurationTip(

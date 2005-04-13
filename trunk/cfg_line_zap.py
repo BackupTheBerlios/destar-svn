@@ -21,7 +21,7 @@
 from configlets import *
 
 
-class CfgLineZapTDM(CfgLine):
+class CfgTrunkZapTDM(CfgTrunk):
 
 	shortName = _("PSTN using zaptel-tdm")
 	variables = [
@@ -40,7 +40,7 @@ class CfgLineZapTDM(CfgLine):
 
 
 	def fixup(self):
-		CfgLine.fixup(self)
+		CfgTrunk.fixup(self)
 		useContext("in-pstn")
 
 
@@ -49,21 +49,13 @@ class CfgLineZapTDM(CfgLine):
 
 		# Create config for chan_zap:
 		c = AstConf("zapata.conf")
-		if not c.hasSection("channels"):
-			c.setSection("channels")
-			c.append("language=%s" % getSetting('language','us') )
 		c.append("signalling=fxs_%s" % self.sigtype)
 		c.append("callerid=")
 		#prefix = ""
-		#c.append("dialplan=local")
-		#c.append("pridialplan=local")
-		#immediate must be no according to http://www.voip-info.org/wiki-Asterisk+tips+DID
-		#c.append("immediate=yes")
 		c.append("group=1")
 		# TODO?
 		c.append("context=in-pstn")
 		c.append("channel=%d" % self.channel)
-		#c.append("echocancel=yes")
 
 		# Write dialout entry:
 		if self.ext:

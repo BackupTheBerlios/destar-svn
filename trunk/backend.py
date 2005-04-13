@@ -54,9 +54,12 @@ def loadPythonConfig():
 	# if this doesn't work, read it from current directory
 	fn = os.path.join(configlets.CONF_DIR,DESTAR_CFG)
 	try:
-		execfile(fn)
-	except IOError:
-		execfile(DESTAR_CFG)
+		try:
+			execfile(fn)
+		except IOError:
+			execfile(DESTAR_CFG)
+	except NameError:
+		pass
 
 	fixupConfiglets()
 
@@ -101,6 +104,7 @@ def initializeAsteriskConfig():
 	* extensions.conf
 	* sip.conf
 	* iax.conf
+	* zapata.conf
 	* macros.inc
 	"""
 
@@ -131,7 +135,7 @@ def initializeAsteriskConfig():
 
 
 	c = AstConf("sip.conf")
-	c.append("language=de")
+	c.append("language=%s" % getSetting('language', 'en'))
 	c.append("maxexpirey=3600")
 	c.append("defaultexpirey=3600")
 	c.append("disallow=all")
@@ -141,7 +145,15 @@ def initializeAsteriskConfig():
 
 
 	c = AstConf("iax.conf")
-	c.append("language=de")
+	c.append("language=%s" % getSetting('language', 'en'))
+
+
+	c = AstConf("zapata.conf")
+	c.append("language=%s" % getSetting('language', 'en'))
+	c.setSection("channels")
+	c.append("immediate=no")
+	c.append("overlapdial=yes")
+	c.append("cancallforward=no")
 
 
 	c = AstConf("macros.inc")
@@ -377,7 +389,7 @@ def backupAsteriskConfig(fn):
 # They fish out the configlets by checking if they have the two members
 # class.group and class.shortName. Only configlets that contains both of
 # them are considered "ready for prime time", sheer descendance on Cfg isn't
-# enought. That way CfgPerm, CfgPhone, CfgLine etc won't get listed.
+# enought. That way CfgPerm, CfgPhone, CfgTrunk etc won't get listed.
 #
 
 
@@ -505,9 +517,9 @@ def fixupConfiglets():
 	whenever the configlets get loaded, added, deleted or modified. This
 	way, configlets can react on the presence of other configlets.
 
-	Example: if a telco line with DID (direct inward dialling) is
-	present, then the DID settings in the phone configuration configlets
-	can be unhidden."""
+	Example: if a trunk with DID (direct inward dialling) is present,
+	then the DID settings in the phone configuration configlets can be
+	unhidden."""
 
 
 	for obj in configlets.config_entries:

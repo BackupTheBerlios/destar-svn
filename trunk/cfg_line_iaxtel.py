@@ -21,7 +21,7 @@
 from configlets import *
 
 
-class CfgLineIaxtel(CfgLine):
+class CfgTrunkIaxtel(CfgTrunk):
 
 	shortName   = _("VOIP-Provider Iaxtel")
 
@@ -45,7 +45,7 @@ class CfgLineIaxtel(CfgLine):
 
 
 	def fixup(self):
-		CfgLine.fixup(self)
+		CfgTrunk.fixup(self)
 		useContext(self.context)
 		useContext("in-iaxtel")
 

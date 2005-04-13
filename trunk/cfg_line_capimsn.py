@@ -20,7 +20,7 @@
 
 from configlets import *
 
-class CfgLineCapiMSN(CfgLine):
+class CfgTrunkCapiMSN(CfgTrunk):
 
 	shortName = _("ISDN using CAPI, incoming")
 	variables = [
@@ -41,7 +41,7 @@ class CfgLineCapiMSN(CfgLine):
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.config_entries:
-			if obj.__class__.__name__ == 'CfgLineCapi':
+			if obj.__class__.__name__ == 'CfgTrunkCapi':
 				return True
 		return False
 	isAddable = classmethod(isAddable)
@@ -52,18 +52,18 @@ class CfgLineCapiMSN(CfgLine):
 
 
 	def fixup(self):
-		CfgLine.fixup(self)
+		CfgTrunk.fixup(self)
 		useContext("in-capi")
 
 
 	def checkConfig(self):
-		res = CfgLine.checkConfig(self)
+		res = CfgTrunk.checkConfig(self)
 		if res:
 			return res
 		else:
 			import configlets
 			for obj in configlets.config_entries:
-				if obj.__class__.__name__ == 'CfgLineCapiMSN':
+				if obj.__class__.__name__ == 'CfgTrunkCapiMSN':
 					if obj.msn == self.msn:
 						return ("msn",_("MSN already assigned"))
 

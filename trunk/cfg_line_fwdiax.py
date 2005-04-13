@@ -21,7 +21,7 @@
 from configlets import *
 
 
-class CfgLineFwdIax(CfgLine):
+class CfgTrunkFwdIax(CfgTrunk):
 
 	shortName   = _("VOIP-Provider FreeworldDialup (IAX)")
 
@@ -49,7 +49,7 @@ class CfgLineFwdIax(CfgLine):
 
 
 	def fixup(self):
-		CfgLine.fixup(self)
+		CfgTrunk.fixup(self)
 		useContext(self.context)
 		useContext("in-iaxfwd")
 

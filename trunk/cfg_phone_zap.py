@@ -47,21 +47,15 @@ class CfgPhoneZap(CfgPhone):
 
 		# Create config for chan_zap:
 		c = AstConf("zapata.conf")
-		if not c.hasSection("channels"):
-			c.setSection("channels")
-			c.append("language=%s" % getSetting('language','us') )
 		c.append("signalling=fxo_%s" % self.sigtype)
 		if self.callerid:
 			c.appendValue(self, "callerid")
 		else: # must add an empty value, because it may be set elsewhere
 			c.append("callerid=")
-		#immediate must be no according to http://www.voip-info.org/wiki-Asterisk+tips+DID
-		#c.append("immediate=yes")
 		c.append("group=1")
 		# TODO?
 		c.append("context=default")
 		c.append("channel=%s" % self.channel)
-		needModule("chan_zap")
 
 		c = AstConf("zaptel.conf")
 		c.setSection("")

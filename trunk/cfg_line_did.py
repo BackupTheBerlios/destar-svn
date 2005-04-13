@@ -21,7 +21,7 @@
 from configlets import *
 
 
-class CfgLineDID(CfgLine):
+class CfgTrunkDID(CfgTrunk):
 
 	shortName   = _("direct inward dialing")
 
@@ -35,7 +35,7 @@ class CfgLineDID(CfgLine):
 		]
 
         def checkConfig(self):
-                res = CfgLine.checkConfig(self)
+                res = CfgTrunk.checkConfig(self)
                 if res:
                         return res
 		if self.phone and self.context:

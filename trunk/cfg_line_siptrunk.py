@@ -21,7 +21,7 @@
 from configlets import *
 
 
-class CfgLineSiptrunk(CfgLine):
+class CfgTrunkSiptrunk(CfgTrunk):
 
 	shortName   = _("SIP Trunk")
 
@@ -46,7 +46,7 @@ class CfgLineSiptrunk(CfgLine):
 
 
 	def fixup(self):
-		CfgLine.fixup(self)
+		CfgTrunk.fixup(self)
 		useContext(self.context)
 		useContext("in-siptrunk")
 

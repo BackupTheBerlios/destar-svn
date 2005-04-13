@@ -24,7 +24,7 @@ from configlets import *
 # fcpci: http://www.avm.de/ftp/cardware/fritzcrd.pci/linux/suse.82/index.html
 # chan_capi: http://www.junghanns.net
 
-class CfgLineCapi(CfgLine):
+class CfgTrunkCapi(CfgTrunk):
 
 	shortName = _("ISDN using CAPI, outgoing")
 	variables = [
@@ -43,7 +43,7 @@ class CfgLineCapi(CfgLine):
 
 
 	def fixup(self):
-		CfgLine.fixup(self)
+		CfgTrunk.fixup(self)
 		useContext("in-capi")
 
 
@@ -66,7 +66,7 @@ class CfgLineCapi(CfgLine):
                 # despite the "from configlets import *" above
 		import configlets
 		for msn in configlets.config_entries:
-			if msn.__class__.__name__ != "CfgLineCapiMSN": continue
+			if msn.__class__.__name__ != "CfgTrunkCapiMSN": continue
 			msn_arr.append(msn.msn)
 		if msn_arr:
 			c.append("incomingmsn=%s" % ",".join(msn_arr) )

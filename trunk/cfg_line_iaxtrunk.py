@@ -21,7 +21,7 @@
 from configlets import *
 
 
-class CfgLineIaxtrunk(CfgLine):
+class CfgTrunkIaxtrunk(CfgTrunk):
 
 	shortName   = _("IAX Trunk")
 
@@ -47,7 +47,7 @@ class CfgLineIaxtrunk(CfgLine):
 
 
 	def fixup(self):
-		CfgLine.fixup(self)
+		CfgTrunk.fixup(self)
 		useContext(self.context)
 		useContext("in-iaxtrunk")
 

@@ -324,7 +324,7 @@ config_entries = []
 class Cfg(Holder):
 	"""Base class for all configlets.
 
-	Configlets belong to a group, see CfgPhone, CfgOpt, CfgLine etc. The
+	Configlets belong to a group, see CfgPhone, CfgOpt, CfgTrunk etc. The
 	group is also stored in the variable 'group'.
 
 	Configlets also contain data. This data is stored quite normally, as
@@ -550,10 +550,10 @@ class CfgOptSingle(CfgOpt):
 
 
 
-class CfgLine(Cfg):
+class CfgTrunk(Cfg):
 	"""Base class for external lines."""
 
-	group = "TelCoLines"
+	group = "Trunks"
 
 
 	def __init__(self,**kw):
