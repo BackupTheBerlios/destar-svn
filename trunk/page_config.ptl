@@ -86,7 +86,7 @@ def configurationTips [plain] (request):
 	if not backend.countConfiglets("Trunk"):
 		configurationTip(
 			_("You should create a trunk (connection to a Phone company or VOIP Provider). Without a trunk you can only make calls between local phones."),
-			"Trunks/",
+			"trunks/",
 			[_("Configuration"), _("Trunks")] )
 
 	if not os.access("/etc/zaptel.conf", os.O_RDWR):
