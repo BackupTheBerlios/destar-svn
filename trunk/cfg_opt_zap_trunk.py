@@ -21,29 +21,25 @@
 from configlets import *
 
 
-class CfgOptZapPhone(CfgOptSingle):
+class CfgOptZapTrunk(CfgOptSingle):
 
-	shortName = _("Zaptel Phone Options")
+	shortName = _("Zaptel Trunk Options")
 	variables = [
-		VarType("adsi", title=_("Use ADSI for menu phones"), type="bool"),
-		VarType("callwaiting", title=_("Signal a waiting call"), type="bool"),
-		VarType("callwaitingcallerid", title=_("Send callerid during call waiting indication"), type="bool"),
-		VarType("threewaycalling", title=_("Suspend a call temporarily via a hook flash"), type="bool"),
-		VarType("transfer", title=_("Allow call transfer"), type="bool", default=True),
-		VarType("cancallforward", title=_("Allow call forwards"), type="bool", default=True),
-		VarType("callreturn", title=_("Read caller number with *69"), type="bool", default=True),
+		VarType("busydetect", title=_("Try to detect busy signal to detect if remove site hung up"), type="bool"),
+		VarType("busycount",  title=_("Wait how many busy signals before hanging up"), type="int", default=5),
+		#VarType("callprogress", title=_("?"), type="bool"),
 	]
 
 
 	def isAddable(self):
 		"""We can only add this configlet if we have at least one
-		ZAP phone defined."""
+		ZAP trunk defined."""
 
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.config_entries:
-			if obj.__class__.__name__ == 'CfgPhoneZap':
+			if obj.__class__.__name__ == 'CfgTrunkZap':
 				return True
 		return False
 	isAddable = classmethod(isAddable)
@@ -53,12 +49,8 @@ class CfgOptZapPhone(CfgOptSingle):
 		c = AstConf("zapata.conf")
 		c.setSection("channels")
 
-		c.appendValue(self, "adsi")
-		c.appendValue(self, "callwaiting")
-		c.appendValue(self, "callwaitingcallerid")
-		c.appendValue(self, "threewaycalling")
-		c.appendValue(self, "transfer")
-		c.appendValue(self, "cancallforward")
-		c.appendValue(self, "callreturn")
-
+		c.appendValue(self, "busydetect")
+		c.appendValue(self, "busycount")
+		#c.appendValue(self, "callprogress")
+		
 		c.append("")

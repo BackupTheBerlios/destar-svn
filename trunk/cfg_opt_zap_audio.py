@@ -21,29 +21,26 @@
 from configlets import *
 
 
-class CfgOptZapPhone(CfgOptSingle):
+class CfgOptZapAudio(CfgOptSingle):
 
-	shortName = _("Zaptel Phone Options")
+	shortName = _("Zaptel Audio Options")
 	variables = [
-		VarType("adsi", title=_("Use ADSI for menu phones"), type="bool"),
-		VarType("callwaiting", title=_("Signal a waiting call"), type="bool"),
-		VarType("callwaitingcallerid", title=_("Send callerid during call waiting indication"), type="bool"),
-		VarType("threewaycalling", title=_("Suspend a call temporarily via a hook flash"), type="bool"),
-		VarType("transfer", title=_("Allow call transfer"), type="bool", default=True),
-		VarType("cancallforward", title=_("Allow call forwards"), type="bool", default=True),
-		VarType("callreturn", title=_("Read caller number with *69"), type="bool", default=True),
+		VarType("relaxdtmf", title=_("Be sloppy when detecting DTMF"), type="bool"),
+		VarType("echocancel", title=_("Echo cancel samples"), type="choice", options=["0 (no echo cancel)", "16", "32", "64", "128", "256"], default="128"),
+		VarType("echocancelwhenbridged", title=_("Cancel echo even on bridged calls"), type="bool"),
+		VarType("echotraining", title=_("Do early echo training"), type="bool"),
 	]
 
 
 	def isAddable(self):
 		"""We can only add this configlet if we have at least one
-		ZAP phone defined."""
+		ZAP phone/trunk defined."""
 
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.config_entries:
-			if obj.__class__.__name__ == 'CfgPhoneZap':
+			if obj.__class__.__name__ in ('CfgPhoneZap','CfgTrunkZap'):
 				return True
 		return False
 	isAddable = classmethod(isAddable)
@@ -53,12 +50,11 @@ class CfgOptZapPhone(CfgOptSingle):
 		c = AstConf("zapata.conf")
 		c.setSection("channels")
 
-		c.appendValue(self, "adsi")
-		c.appendValue(self, "callwaiting")
-		c.appendValue(self, "callwaitingcallerid")
-		c.appendValue(self, "threewaycalling")
-		c.appendValue(self, "transfer")
-		c.appendValue(self, "cancallforward")
-		c.appendValue(self, "callreturn")
+		c.appendValue(self, "relaxdtmf")
+		c.appendValue(self, "echocancel")
+		c.appendValue(self, "echocancelwhenbridged")
+		c.appendValue(self, "echotraining")
+		#c.appendValue(self, "rxgain=")
+		#c.appendValue(self, "txgain=")
 
 		c.append("")
