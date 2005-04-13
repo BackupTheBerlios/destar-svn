@@ -29,8 +29,8 @@ class CfgPhoneExtension(CfgPhone):
 		     VarType("ext",      title=_("Extension"), optional=True, len=6),
 		     VarType("did",      title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
-		     VarType("Outbound", title=_("Calls from the phone"), type="label"),
-		     VarType("phone",    title=_("Phone to ring"), type="choice"),
+		     VarType("Outbound", title=_("Calls to the extension"), type="label"),
+		     VarType("phone",    title=_("Real phone to ring"), type="choice"),
 		     ]
 
 	technology = "virtual"
