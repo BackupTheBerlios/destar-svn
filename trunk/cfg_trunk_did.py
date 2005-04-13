@@ -23,7 +23,7 @@ from configlets import *
 
 class CfgTrunkDID(CfgTrunk):
 
-	shortName   = _("direct inward dialing")
+	shortName   = _("Extra direct inward dialing (DID) number")
 
 	description = _("""Used to route a DID to an extension or Auto-Attendant.""")
 

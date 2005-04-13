@@ -21,40 +21,39 @@
 from configlets import *
 
 
-class CfgTrunkIaxtrunk(CfgTrunk):
+class CfgTrunkSiptrunk(CfgTrunk):
 
-	shortName   = _("IAX Trunk")
+	shortName   = _("Standard SIP Trunk")
 
-	description = _("""Used to setup an IAX trunk to another Asterisk server or an IAX termination.""")
+	description = _("""Used to setup a SIP trunk to a SIP provider or a different SIP server.""")
 
-	variables	= [
-		VarType("name",       title=_("Name"), len=15, default="iaxtrunk"),
-		VarType("id",         title=_("IAX username"),   len=6),
-		VarType("pw",         title=_("IAX password"), len=15),
-		VarType("host",       title=_("IAX host"), len=25),
-
-		VarType("Outbound",   title=_("Calls to IAX trunk"), type="label"),
+	variables   = [
+		VarType("name",       title=_("Name"), len=15, default="siptrunk"),
+		VarType("id",         title=_("SIP username"),   len=15),
+		VarType("pw",         title=_("SIP password"), len=15),
+		VarType("host",       title=_("SIP host"), len=25),
+		VarType("nat",      title=_("Is the trunk behind NAT ?"), type="bool"),
+		VarType("Outbound",   title=_("Calls to SIP trunk"), type="label"),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("context",    title=_("Context"), default="out-pstn", optional=True, hide=True),
 		VarType("callerid",   title=_("Caller-Id Name"), optional=True),
-
-		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
+		VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
 		VarType("extin",      title=_("Extension to ring"), optional=True, len=4),
 		VarType("contextin",  title=_("Context"), optional=True, hide=True, default="in-pstn")
 		]
 
-	technology = "IAX2"
+	technology = "SIP"
 
 
 	def fixup(self):
 		CfgTrunk.fixup(self)
 		useContext(self.context)
-		useContext("in-iaxtrunk")
+		useContext("in-siptrunk")
 
 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")
-		needModule("chan_iax2")
+		needModule("chan_sip")
 
 		c = AstConf("extensions.conf")
 		if self.ext:
@@ -65,20 +64,24 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			if self.callerid:
 				c.appendExten(ext, "SetCIDName(%s)" % self.callerid)
 			c.appendExten(ext, "SetCIDNum(%s)" % self.id)
-			c.appendExten(ext, "Dial(IAX2/%s:%s@%s/${EXTEN:%d},60,r)" % (self.id, self.pw, self.host, len(self.ext)))
+			c.appendExten(ext, "Dial(SIP/%s:%s@%s/${EXTEN:%d},60,r)" % (self.id, self.pw, self.host, len(self.ext)))
 			#c.appendExten(ext, "Busy")
 		if self.extin and self.contextin:
 			c.setSection(self.contextin)
 			c.appendExten("s", "Goto(default,%s,1)" % self.extin)
 
-		c = AstConf("iax.conf")
+		c = AstConf("sip.conf")
 		c.setSection("general")
 		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
 
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
-			c.append("context=in-iaxtrunk")
+			c.append("context=in-siptrunk")
 			c.append("auth=md5")
 			c.append("host=%s" % self.host)
 			c.append("secret= %s" % self.pw)
+			if self.nat:
+				c.append("nat=yes")
+				c.append("canreinvite=no")
+			
