@@ -19,7 +19,9 @@
 
 
 from Templates import *
-import os, backend
+from quixote.form2 import *
+from quixote.html import htmlescape
+import os, backend, configlets
 
 
 _q_parent  = 'page_config'
@@ -39,29 +41,98 @@ def _q_test():
 	return os.access("/etc/asterisk", os.O_RDWR)
 
 
-def _q_index [plain] (request):
-	header(_q_title)
+
+def tryToWriteConfig [plain] (configEntries):
 	try:
 		backend.createPythonConfig()
 	except IOError:
 		'<p>'
-		# TODO
-		group = 'asterisk'
+		group = 'asterisk' # TODO
 		htmltext(_("Could not create /etc/asterisk/destar_cfg.py. Make sure the directory is writable for group %s") % group)
 		'.</p>'
-	files = backend.createAsteriskConfig()
-	if files:
-		htmltext(_("There are some config files from your previous configuration that weren't created by DeStar."))
-		'<ul>'
-		for file in files:
+
+
+	errors = False
+	for file,cnf,ok in configEntries:
+		if not ok:
+			if not errors:
+				htmltext(_("There are some config files from your previous configuration that weren't created by DeStar."))
+				'<ul>'
+				errors = True
 			'<li>'
 			'%s (<a href="../backup/%s">backup</a>)' % (file, file)
 			'</li>'
+	if errors:	
 		'</ul><p>'
 		htmltext(_("Because of this, I did not touch any of your config files."))
 		'.</p>'
 	else:
 		'<p>'
+		print "writing"
 		htmltext(_("Wrote configuration"))
 		'.</p>'
+	footer()
+
+
+def showHtmlConfig [plain] (configEntries):
+	'<div id="config">\n'
+	for file, cfg, ok in configEntries:
+		'\n<div id="configFile">'
+		file
+		'</div>\n'
+		'<div id="configContents">\n'
+		if cfg.destar_comment:
+			configlets.CONF_TAG
+			'<br>\n'
+		for sect in cfg.order:
+			if sect:
+				'<div id="configSection">'
+				'['
+				sect
+				']'
+				'</div>\n'
+			for l in cfg.sections[sect]:
+				htmlescape(l)
+				'<br>\n'
+		'</div>\n'
+	'</div>\n'
+
+
+
+
+def _q_index [plain] (request):
+
+	configEntries = backend.createAsteriskConfig(True)
+	configEntries.sort()
+
+	form = Form(attrs={"id":"configForm"})
+	print "Form", form.attrs
+	form.add(CheckboxWidget, '_all',  True, title=_("All files"))
+	for file,cnf,ok in configEntries:
+		form.add(CheckboxWidget, file, False, title=file)
+	form.add(SubmitWidget, '_show',  _("Show config"), render_br=False)
+	form.add(SubmitWidget, '_write', _("Write config"), render_br=False)
+
+	if not form.is_submitted() or form.has_errors():
+		header(_("Select config files"))
+		form.render()
+
+	if form['_all']:
+		entries = configEntries
+	else:
+		entries = []
+		for file,cnf,ok in configEntries:
+			if form[file]:
+				entries.append( (file,cnf,ok) )
+	
+	if not entries:
+		header(_q_desc)
+		_("No config files selected :-(")
+	elif form['_show']:
+		header(_("Show config files"))
+		showHtmlConfig(entries)
+	elif form['_write']:
+		header(_q_desc)
+		tryToWriteConfig(entries)
+
 	footer()

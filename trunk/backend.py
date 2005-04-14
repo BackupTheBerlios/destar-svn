@@ -115,7 +115,7 @@ def initializeAsteriskConfig():
 
 	c = AstConf("adsi.conf")
 	c.setSection("intro")
-	c.append("greeping => Welcome to DeStar")
+	c.append("greeting => Welcome to DeStar")
 
 
 
@@ -305,7 +305,7 @@ def initializeAsteriskConfig():
 	c.append("exten => T,3,Hangup")
 
 
-def createAsteriskConfig():
+def createAsteriskConfig(prepareOnly=False):
 	"""This creates all the Asterisk config files in /etc/asterisk.
 
 	First, we create an in-memory representation of all config files
@@ -344,6 +344,7 @@ def createAsteriskConfig():
 	# test if all config files are OK to be written or overwritten
 	res = []
 	for fn,cnf in configlets.asterisk_configfiles:
+		ok = True
 		# zaptel.conf can't have CONF_TAG at the top, so no need to search for it
 		if fn=='zaptel.conf':
 			continue
@@ -352,13 +353,14 @@ def createAsteriskConfig():
 			s = f.readline()
 			if s != configlets.CONF_TAG:
 				#print "cnf.fn is not safe"
-				res.append(fn)
-				continue
-	if res: return res
+				ok = False
+		res.append( (fn,cnf,ok) )
+	if not ok or prepareOnly: return res
 	
 	# if we had no errors, write all stuff out
 	for _fn,cnf in configlets.asterisk_configfiles:
 		cnf.write()
+	return res
 
 
 

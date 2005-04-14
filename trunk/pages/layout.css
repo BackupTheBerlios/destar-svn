@@ -4,10 +4,8 @@
 /**********************************/
 
 .header {
-	display: block;
 	font-size: 2em;
 	font-weight: bolder;
-	xpadding: 0.5em;
 }
 
 .header em {
@@ -147,15 +145,29 @@ th {
 
 /**********************************/
 
-#state {
-	padding: 0;
-	border-spacing: 0;
-	/* TODO: fixed layout, valign=top */
+#config {
+	font-size: 10pt;
 }
 
-#phone {
-	border: 1px solid #000;
-	/* TODO: border-collapse, width */
+#configFile {
+	background: #eef;
+	padding: 0.2em;
+	font-size: 144%;
+	background-color: #eef;
+}
+
+#configSection {
+	margin-top: 1em;
+}
+
+#configContents {
+	margin-top: 0.5em;
+	margin-bottom: 2em;
+	font-family: monospace;
+}
+
+#configSection {
+	margin-top: 1em;
 }
 
 #line {
@@ -184,7 +196,6 @@ form.quixote .title {
 	width: 16em;
 	float: left;
 	margin: 0 0.5em 10px 0;
-	Xclear: left;
 }
 
 form.quixote .required {
@@ -222,14 +233,6 @@ form.quixote .SubmitWidget {
 	float: left;
 }
 
-form.quixote .StringWidget,
-form.quixote .ROStringWidget,
-form.quixote .TextWidget,
-form.quixote .IntWidget,
-form.quixote .CheckboxWidget,
-form.quixote .SingleSelectWidget,
-form.quixote .MultipleSelectWidget {
-}
 
 
 form.quixote div.FormTokenWidget,
