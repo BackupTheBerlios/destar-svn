@@ -33,8 +33,9 @@ class CfgPhoneSip(CfgPhone):
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
-		VarType("Outbound",   title=_("Calls from the phone"), type="label"),
-		VarType("callerid",   title=_("Caller-Id"), optional=True),
+		VarType("Outbound"  ,   title=_("Calls from the phone"), type="label"),
+		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
+		VarType("calleridname", title=_("Caller-Id Name"), optional=True),
 
 		VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
 		VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
@@ -56,13 +57,14 @@ class CfgPhoneSip(CfgPhone):
 			sip.appendValue(self, "host", "defaultip")
 		sip.append("dtmfmode=info")
 		sip.append("canreinvite=no")
-		if self.callerid and self.ext:
-			sip.append('callerid="%s" <%s>' % (self.callerid, self.ext))
-		elif self.callerid:
-			sip.append('callerid="%s"' % (self.callerid))
-		elif self.ext:
-			sip.append('callerid=<%s>' % (self.ext))
-		
+
+		if self.calleridname and self.calleridnum:
+			sip.append('callerid="%s" <%s>' % (self.calleridname, self.calleridnum))
+		elif self.calleridname:
+			sip.append('callerid="%s"' % self.calleridname)
+		elif self.calleridnum:
+			sip.append('callerid=%s' % self.calleridnum)
+
 		if self.nat:
 			sip.append("nat=yes")
 		self.createExtensionConfig()
