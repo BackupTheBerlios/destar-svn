@@ -152,12 +152,11 @@ def header [html] (title, menu=None, refresh=None):
 	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n'
 	'<html xmlns="http://www.w3.org/1999/xhtml">\n'
 	'<head>\n'
-	#'<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />\n'
 	if refresh:
 		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
 	'<meta name="Author" content="DeStar, made by Holger Schurig" />\n'
 	'<title>Asterisk/DeStar PBX :: %s</title>\n' % title
-	'<link rel="stylesheet" type="text/css" href="/pages/layout.css">\n'
+	'<link rel="stylesheet" type="text/css" href="/static/layout.css">\n'
 	'</head>\n'
 	'<body>\n'
 	#'<body onload="window.resizeTo(800,600);">'
@@ -189,7 +188,8 @@ def header [html] (title, menu=None, refresh=None):
 	# Content
 	'<div id="content">\n'
 
-	'<h2 id="contentHeading">%s</h2>\n' % title
+	if title:
+		'<h2 id="contentHeading">%s</h2>\n' % title
 
 	
 def footer [html] ():
