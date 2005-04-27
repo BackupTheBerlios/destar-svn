@@ -29,17 +29,20 @@ class CfgTrunkIaxtel(CfgTrunk):
 			http://www.iaxtel.com and get an IAXtel number  where
 			people can call you. These calls are free of charge, too.'.""")
 
-	variables   = [VarType("name",     title=_("Name"), len=15),
-		       VarType("iaxtelid",    title=_("IAXTEL number"),   len=6),
-		       VarType("iaxtelpw",    title=_("IAXTEL password"), len=15),
+	variables   = [
+		VarType("name",     title=_("Name"), len=15),
+		VarType("iaxtelid", title=_("IAXTEL number"),   len=6),
+		VarType("iaxtelpw", title=_("IAXTEL password"), len=15),
 
-		       VarType("Outbound", title=_("Calls to IAXTEL"), type="label"),
-		       VarType("ext",      title=_("Extension"), optional=True, len=6),
-		       VarType("context",  title=_("Context"), default="out-pstn", optional=True, hide=True),
-		       VarType("callerid", title=_("Caller-Id Name"), optional=True),
+		VarType("Outbound", title=_("Calls to IAXTEL"), type="label"),
+		VarType("ext",      title=_("Extension"), optional=True, len=6),
+		VarType("context",  title=_("Context"), default="out-pstn", optional=True, hide=True),
+		VarType("callerid", title=_("Caller-Id Name"), optional=True),
 
-		       VarType("Inbound",  title=_("Calls from IAXTEL"), type="label"),
-		       VarType("phone",    title=_("Phone to ring"), optional=True, type="choice")]
+		VarType("Inbound",  title=_("Calls from IAXTEL"), type="label"),
+		VarType("phone",    title=_("Phone to ring"), optional=True, type="choice",
+		                    options=getChoice("CfgPhone"))
+		       ]
 
 	technology = "IAX2"
 

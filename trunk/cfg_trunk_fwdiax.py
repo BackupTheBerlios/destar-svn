@@ -33,17 +33,20 @@ class CfgTrunkFwdIax(CfgTrunk):
 			http://www.freeworlddialup.com/advanced/iax to use this
 			this 'phone line'.""")
 
-	variables   = [VarType("name",     title=_("Name"), len=15, default="fwdiax"),
-		       VarType("fwdid",    title=_("FWD number"),   len=6),
-		       VarType("fwdpw",    title=_("FWD password"), len=15),
+	variables   = [
+		VarType("name",     title=_("Name"), len=15, default="fwdiax"),
+		VarType("fwdid",    title=_("FWD number"),   len=6),
+		VarType("fwdpw",    title=_("FWD password"), len=15),
 
-		       VarType("Outbound", title=_("Calls to FWD"), type="label"),
-		       VarType("ext",      title=_("Extension"), optional=True, len=6),
-		       VarType("context",  title=_("Context"), default="out-pstn", optional=True, hide=True),
-		       VarType("callerid", title=_("Caller-Id Name"), optional=True),
+		VarType("Outbound", title=_("Calls to FWD"), type="label"),
+		VarType("ext",      title=_("Extension"), optional=True, len=6),
+		VarType("context",  title=_("Context"), default="out-pstn", optional=True, hide=True),
+		VarType("callerid", title=_("Caller-Id Name"), optional=True),
 
-		       VarType("Inbound",  title=_("Calls from FWD"), type="label"),
-		       VarType("phone",    title=_("Phone to ring"), optional=True, type="choice")]
+		VarType("Inbound",  title=_("Calls from FWD"), type="label"),
+		VarType("phone",    title=_("Phone to ring"), optional=True, type="choice",
+		                    options=getChoice("CfgPhone"))
+		      ]
 
 	technology = "IAX2"
 

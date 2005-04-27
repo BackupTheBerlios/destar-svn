@@ -26,7 +26,8 @@ class CfgTrunkZapHFC(CfgTrunk):
 	shortName = _("ISDN using zaphfc")
 	variables = [
 		VarType("name",  title=_("Name"), len=35),
-		VarType("mode",  title=_("Mode of NTBA"), type="choice", options=("p2p","p2mp"), default="p2mp"),
+		VarType("mode",  title=_("Mode of NTBA"), type="choice",
+		                 options=("p2p","p2mp"), default="p2mp"),
 		VarType("cards", title=_("Number of cards"), type="int", default=1, len=2),
 
 		VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),

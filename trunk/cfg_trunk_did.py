@@ -30,7 +30,8 @@ class CfgTrunkDID(CfgTrunk):
 	variables	= [
 		VarType("ext",       title=_("Extension"), len=15),
 		VarType("name",	hide=True, default=""),
-		VarType("phone",     title=_("Phone to ring"), optional=True, type="choice"),
+		VarType("phone",     title=_("Phone to ring"), optional=True, type="choice",
+		                     options=getChoice("CfgPhone")),
 		VarType("context",   title=_("Auto-Attendant"), optional=True, len=25)
 		]
 

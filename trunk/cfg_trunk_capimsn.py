@@ -20,6 +20,7 @@
 
 from configlets import *
 
+
 class CfgTrunkCapiMSN(CfgTrunk):
 
 	shortName = _("ISDN using CAPI, incoming")
@@ -28,7 +29,8 @@ class CfgTrunkCapiMSN(CfgTrunk):
 
 		VarType("Inbound",   title=_("Calls from the ISDN network"), type="label"),
 		VarType("msn",       title=_("Subscriber number"), len=15),
-		VarType("phone",     title=_("Phone to ring"), type="choice"),
+		VarType("phone",     title=_("Phone to ring"), type="choice",
+		                     options=getChoice("CfgPhone")),
 		]
 
 	technology = "CAPI"
