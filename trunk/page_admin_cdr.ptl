@@ -83,6 +83,6 @@ def cdrForm [plain] (request, srcextension="", dstextension="" ):
 
 
 def _q_index [plain] (request):
-	header(_q_title)
+	header(_q_desc)
 	cdrForm(request)
 	footer()

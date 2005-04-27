@@ -22,9 +22,9 @@ from Templates import *
 
 
 _q_parent  = 'page_main'
-_q_title   = _("Admin")
+_q_title   = _("Administration")
 _q_desc    = _("Perform administrative to the PBX and users phones")
-_q_menupos = 30
+_q_menupos = 20
 _q_level   = 2
 
 
@@ -34,7 +34,7 @@ def _q_access(request):
 
 
 def _q_index [plain] (request):
-	header(_q_title)
+	header(_q_desc)
 	'<p>'
 	htmltext(_('This menu will contain all sorts of administration stuff:'))
 	'</p>'
