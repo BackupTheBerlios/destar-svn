@@ -23,14 +23,16 @@ from configlets import *
 
 class CfgPhoneExtension(CfgPhone):
 
-	shortName = _("Additional Extension")
-	variables = [VarType("name",     title=_("Name"), len=15),
+	shortName = _("Extension")
+	variables = [
+		VarType("name",     title=_("Name"), len=15),
 
-		     VarType("ext",      title=_("Extension"), optional=True, len=6),
-		     VarType("did",      title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
+		VarType("ext",      title=_("Extension"), optional=True, len=6),
+		VarType("did",      title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
-		     VarType("Outbound", title=_("Calls to the extension"), type="label"),
-		     VarType("phone",    title=_("Real phone to ring"), type="choice"),
+		VarType("Outbound", title=_("Calls to the extension"), type="label"),
+		VarType("phone",    title=_("Real phone to ring"), type="choice",
+		                    options=getChoice("CfgPhone")),
 		     ]
 
 	technology = "virtual"
@@ -43,7 +45,7 @@ class CfgPhoneExtension(CfgPhone):
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.config_entries:
-			if obj.group == 'Phones':
+			if obj.groupName == 'Phones':
 				return True
 		return False
 	isAddable = classmethod(isAddable)

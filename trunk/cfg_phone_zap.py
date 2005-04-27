@@ -23,11 +23,12 @@ from configlets import *
 
 class CfgPhoneZap(CfgPhone):
 
-	shortName = _("Standard ZAP phone")
+	shortName = _("Normal ZAP phone")
 	variables = [
-		VarType("name",       title=_("Name"), len=15),
-		VarType("channel",    title=_("Zaptel channel number"), type="string", default=1, len=2),
-		VarType("sigtype",    title=_("Signalling type"), type="choice", options=[('ks', 'kewlstart'),('ls','loopstart')]),
+		VarType("name",       title=_("Name"), len=35),
+		VarType("channel",    title=_("Zaptel channel number"), type="string", len=5),
+		VarType("sigtype",    title=_("Signalling type"), type="choice",
+	                              options=[('ls','loopstart'),('ks', 'kewlstart')]),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
@@ -56,15 +57,21 @@ class CfgPhoneZap(CfgPhone):
 		# TODO?
 		c.append("context=default")
 		c.append("channel=%s" % self.channel)
+		c.append("")
 
 		c = AstConf("zaptel.conf")
 		c.setSection("")
 		c.destar_comment = False
 		c.append("fxo%s=%s" % (self.sigtype, self.channel))
+		c.append("")
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(c)
 	
+
+	def channelString(self):
+		return "%s/%s" % (self.technology, self.channel)
+
 
 	def createDialEntry(self, extensions, ext):
 		ret = extensions.appendExten(ext, "Macro(dial-std-exten,%s/%s,%s,%d)" % (

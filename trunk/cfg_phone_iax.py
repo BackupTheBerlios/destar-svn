@@ -23,7 +23,7 @@ from configlets import *
 
 class CfgPhoneIax(CfgPhone):
 
-	shortName = _("Standard IAX phone")
+	shortName = _("Normal IAX phone")
 	variables = [VarType("name",            title=_("Name"), len=15),
 			VarType("secret",       title=_("Password"), optional=True, len=6),
 			VarType("host",         title=_("IP address of phone"), optional=True, len=15),
