@@ -425,7 +425,14 @@ class Cfg(Holder):
 
 
 	def isAddable(self):
-		"""returns True if it is OK to create instances of this class."""
+		"""Teturns True if it is OK to create instances of this class.
+
+		This can be used to check if a configlet should be presented
+		in the menu. The method is a classMethod, so that we can call
+		it without instantiating an object, e.g. we can call this
+		like CfgOptPhoneZap.isAddable()."""
+
+		# Normally every object is addable
 		return True
 	isAddable = classmethod(isAddable)
 
@@ -505,6 +512,8 @@ def getSetting(name, default=None):
 	return getConfig('CfgOptSettings',name, default)
 
 
+def getChoice(clazz):
+	return (lambda : __getChoice(clazz=clazz))
 
 
 #######################################################################
@@ -515,7 +524,7 @@ def getSetting(name, default=None):
 class CfgOpt(Cfg):
 	"""Base class for all Asterisk options."""
 
-	group = "Options"
+	groupName = "Options"
 
 
 	def __init__(self,**kw):
@@ -535,16 +544,26 @@ class CfgOptSingle(CfgOpt):
 	"""Some Asterisk options should only exist exactly once in the
 	config. Descend them from this class."""
 
-	group = "Options"
+	groupName = "Options"
 
 
-	def isAddable(self):
+	def isAddable(self, clazz=None):
 		"""Allow Options to be added exactly once. We'll enforce this
 		by looking if the current class is already contained in
-		config_entries[]."""
+		config_entries[].
 
+		If  a child class, e.g.  CfgOptZapAudio.isAddable(), wants
+		to call us, then 'self' is no longer CfgOptZapAudio, but it
+		is CfgOptSingle. This is because of the classMethod
+		attribute of isAddable. So we have an optional parameter
+		'clazz' where the child class can tell us which class should
+		be unique in the config_entries."""
+
+		if not clazz:
+			clazz = self
 		for o in config_entries:
-			if o.__class__ == self: return False
+			#print o.__class__, clazz
+			if o.__class__ == clazz: return False
 		return True
 	isAddable = classmethod(isAddable)
 
@@ -553,7 +572,7 @@ class CfgOptSingle(CfgOpt):
 class CfgTrunk(Cfg):
 	"""Base class for external lines."""
 
-	group = "Trunks"
+	groupName = "Trunks"
 
 
 	def __init__(self,**kw):
@@ -582,7 +601,7 @@ class CfgTrunk(Cfg):
 class CfgPhone(Cfg):
 	"""Base class for all phone devices."""
 
-	group = "Phones"
+	groupName = "Phones"
 
 
 	def __init__(self,**kw):
@@ -602,7 +621,7 @@ class CfgPhone(Cfg):
 		return (self.shortName, ext, self.name)
 
 
-	def channel(self):
+	def channelString(self):
 		return "%s/%s" % (self.technology, self.name)
 
 
@@ -650,4 +669,4 @@ class CfgApp(Cfg):
 	"""Base class for all applications (an application is a piece
 	of software that has a number and that you can dial)."""
 
-	group ="Applications"
+	groupName ="Applications"
