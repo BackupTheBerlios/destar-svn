@@ -26,7 +26,8 @@ class CfgOptZapAudio(CfgOptSingle):
 	shortName = _("Zaptel Audio Options")
 	variables = [
 		VarType("relaxdtmf", title=_("Be sloppy when detecting DTMF"), type="bool"),
-		VarType("echocancel", title=_("Echo cancel samples"), type="choice", options=["0 (no echo cancel)", "16", "32", "64", "128", "256"], default="128"),
+		VarType("echocancel", title=_("Echo cancel samples"), type="choice",
+	                              options=["0 (no echo cancel)", "16", "32", "64", "128", "256"], default="128"),
 		VarType("echocancelwhenbridged", title=_("Cancel echo even on bridged calls"), type="bool"),
 		VarType("echotraining", title=_("Do early echo training"), type="bool"),
 	]
@@ -41,7 +42,7 @@ class CfgOptZapAudio(CfgOptSingle):
 		import configlets
 		for obj in configlets.config_entries:
 			if obj.__class__.__name__ in ('CfgPhoneZap','CfgTrunkZap'):
-				return True
+				return CfgOptSingle.isAddable(self)
 		return False
 	isAddable = classmethod(isAddable)
 
@@ -50,6 +51,8 @@ class CfgOptZapAudio(CfgOptSingle):
 		c = AstConf("zapata.conf")
 		c.setSection("channels")
 
+		c.append("")
+		c.append("; %s" % self.shortName)
 		c.appendValue(self, "relaxdtmf")
 		c.appendValue(self, "echocancel")
 		c.appendValue(self, "echocancelwhenbridged")
@@ -57,4 +60,3 @@ class CfgOptZapAudio(CfgOptSingle):
 		#c.appendValue(self, "rxgain=")
 		#c.appendValue(self, "txgain=")
 
-		c.append("")

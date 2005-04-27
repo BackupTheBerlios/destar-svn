@@ -40,7 +40,7 @@ class CfgOptZapTrunk(CfgOptSingle):
 		import configlets
 		for obj in configlets.config_entries:
 			if obj.__class__.__name__ == 'CfgTrunkZap':
-				return True
+				return CfgOptSingle.isAddable(self)
 		return False
 	isAddable = classmethod(isAddable)
 
@@ -49,8 +49,7 @@ class CfgOptZapTrunk(CfgOptSingle):
 		c = AstConf("zapata.conf")
 		c.setSection("channels")
 
+		c.append("")
+		c.append("; %s" % self.shortName)
 		c.appendValue(self, "busydetect")
 		c.appendValue(self, "busycount")
-		#c.appendValue(self, "callprogress")
-		
-		c.append("")

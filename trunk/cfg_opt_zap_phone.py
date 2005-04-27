@@ -44,7 +44,7 @@ class CfgOptZapPhone(CfgOptSingle):
 		import configlets
 		for obj in configlets.config_entries:
 			if obj.__class__.__name__ == 'CfgPhoneZap':
-				return True
+				return CfgOptSingle.isAddable(self)
 		return False
 	isAddable = classmethod(isAddable)
 
@@ -53,6 +53,8 @@ class CfgOptZapPhone(CfgOptSingle):
 		c = AstConf("zapata.conf")
 		c.setSection("channels")
 
+		c.append("")
+		c.append("; %s" % self.shortName)
 		c.appendValue(self, "adsi")
 		c.appendValue(self, "callwaiting")
 		c.appendValue(self, "callwaitingcallerid")
@@ -60,5 +62,3 @@ class CfgOptZapPhone(CfgOptSingle):
 		c.appendValue(self, "transfer")
 		c.appendValue(self, "cancallforward")
 		c.appendValue(self, "callreturn")
-
-		c.append("")
