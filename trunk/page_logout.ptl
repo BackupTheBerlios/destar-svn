@@ -38,4 +38,4 @@ def _q_index(request):
 	request.session.user = ''
 	request.session.phone = ''
 	request.session.level = 0
-	return request.redirect('/')
+	return request.redirect('/login')

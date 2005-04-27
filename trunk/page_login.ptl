@@ -61,7 +61,7 @@ def notLoggedIn [plain] ():
 
 
 def _q_index [plain] (request):
-	header(_q_title)
+	header(_q_desc)
 	res = loginForm(request)
 
 	if type(res) != types.TupleType:
@@ -73,7 +73,7 @@ def _q_index [plain] (request):
 				request.session.user  = obj.name
 				request.session.level = int(obj.level)
 				request.session.phone = obj.phone
-				return request.redirect(str('info'))
+				return request.redirect(str('../user/info'))
 
 		# Now search for a phone entry with proper extension/voicemail pin
 		for obj in backend.getConfiglets(group="Phones"):
@@ -81,6 +81,6 @@ def _q_index [plain] (request):
 				request.session.user  = obj.name
 				request.session.level = 1
 				request.session.phone = obj.name
-				return request.redirect(str('info'))
+				return request.redirect(str('../user/info'))
 		notLoggedIn()
 	footer()
