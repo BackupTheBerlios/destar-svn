@@ -22,11 +22,12 @@ from Templates import *
 from ConfigHelper import *
 
 
-_q_parent = 'page_config'
-_q_title  = _("Phones")
-_q_desc   = _("Configure phone and their settings")
-_q_link   = 'phones'
-_q_level  = 3
+_q_parent  = 'page_config'
+_q_title   = _("Phones")
+_q_desc    = _("Phones and their settings")
+_q_link    = 'phones'
+_q_menupos = 20
+_q_level   = 3
 
 
 def _q_access(request):
@@ -35,6 +36,6 @@ def _q_access(request):
 
 
 def _q_index [plain] (request):
-	header(_q_title)
+	header(_q_desc)
 	presentConfiglets('Phones')
 	footer()

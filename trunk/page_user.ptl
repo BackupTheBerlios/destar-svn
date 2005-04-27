@@ -72,7 +72,7 @@ def loggedIn [plain] (request):
 
 
 def _q_index [plain] (request):
-	header(_('User info'))
+	header(_q_desc)
 	loggedIn(request)
 	'<h3>'
 	htmltext(_('Future plans'))
