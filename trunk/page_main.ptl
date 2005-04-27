@@ -23,9 +23,10 @@ import sys, os, quixote, backend
 from quixote.util import StaticDirectory
 
 
-_q_exports = ['pages']
+_q_exports = ['static']
 _q_parent  = ''
 _q_title   = _("Main menu")
+_q_desc    = _("DeStar main page")
 _q_level   = 0
 
 
@@ -161,11 +162,11 @@ def _q_exception_handler [plain] (request, exc):
 
 # Our main page
 def _q_index [plain] (request):
-	header(_q_title)
-	'Test'
+	header(_q_desc)
+	'This page is empty. Please select one option from the menu on the left side.'
 	footer()
 
 
 # Out static things like images and style-sheets:
-pages = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','pages')), list_directory=1)
-# pages = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','pages')), list_directory=1, cache_time=60*60)
+static = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','static')), list_directory=1)
+# pages = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','static')), list_directory=1, cache_time=60*60)
