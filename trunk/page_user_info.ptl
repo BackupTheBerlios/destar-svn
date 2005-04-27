@@ -1,0 +1,78 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+import backend, manager
+import time
+
+_q_parent  = 'page_user'
+_q_title   = _("User Info")
+_q_desc    = _("Your access rights in DeStar")
+_q_link    = 'info'
+_q_menupos = 10
+_q_level   = 0
+
+
+def _q_access(request):
+        if request.session.level < _q_level:
+		cantAccessPage()
+
+
+def _q_index [plain] (request):
+	header(_q_desc)
+
+	'<p>'
+	if request.session.user:
+		htmltext(_('You are now logged in as user'))
+		" '<b>"
+		request.session.user
+		"</b>'. "
+		htmltext(_("Your access level is"))
+		" %d." % request.session.level
+	else:
+		htmltext(_("You are not logged in."))
+	' '
+	htmltext(_('You can do'))
+	":</p><ul>"
+	if request.session.level >= 0:
+		"<li>"
+		htmltext(_('access all public accessible info pages'))
+		"</li>"
+	if request.session.level >= 1 and request.session.phone:
+		"<li>"
+		htmltext(_('change your personal phone settings'))
+		"</li>"
+	if request.session.level >= 2:
+		"<li>"
+		htmltext(_('change phone settings of other people'))
+		"</li>"
+	if request.session.level >= 3:
+		"<li>"
+		htmltext(_('configure the PBX'))
+		"</li>"
+	if request.session.level >= 4:
+		"<li>"
+		htmltext(_('access debug pages to help program DeStar'))
+		"</li>"
+	"</ul><p>"
+	htmltext(_("Have fun!"))
+	"</p>"
+
+	footer()
