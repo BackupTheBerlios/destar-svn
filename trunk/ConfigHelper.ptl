@@ -20,6 +20,7 @@
 
 from Templates import *
 from quixote.form2 import *
+from quixote.html import htmlescape
 import backend
 import types, string
 
@@ -57,24 +58,26 @@ def presentEditableConfiglets [plain] (configlets):
                 n = 0
                 for o in configlets:
                         '<tr>'
-                        '<td><a href="../edit/%s"><img src="/pages/edit.gif" border="0" alt="Edit"></a></td>' % o._id
+                        '<td><a href="../edit/%s"><img src="/static/edit.gif" border="0" alt="Edit"></a></td>' % o._id
                         if n<len(configlets)-1:
-                                '<td><a href="../down/%s"><img src="/pages/down.gif" border="0" alt="Move down"></a></td>' % o._id
+                                '<td><a href="../down/%s"><img src="/static/down.gif" border="0" alt="Move down"></a></td>' % o._id
                         else:
                                 '<td>&nbsp;</td>'
                         if n>0:
-                                '<td><a href="../up/%s"><img src="/pages/up.gif" border="0" alt="Move up"></a></td>' % o._id
+                                '<td><a href="../up/%s"><img src="/static/up.gif" border="0" alt="Move up"></a></td>' % o._id
                         else:
                                 '<td>&nbsp;</td>'
                         wrap = True
                         for f in o.row():
                                 if wrap:
-                                        f = '<a href="../edit/%s">%s</a>' % (o._id, f)
+                                        '<td><a href="../edit/%s">%s</a></td>' % (o._id, htmlescape(f))
                                         wrap = False
-                                '<td>%s</td>' % f
+				else:
+	                                '<td>%s</td>' % htmlescape(f)
                         '</tr>'
                         n = n + 1
                 '</table>'
+
 
 def presentAddableConfiglets [plain] (group, configlets):
         # Show addable configlets
@@ -111,7 +114,7 @@ def lookupConfiglets(request,component):
         return configletsForm(request,
                 obj,
                 title = _("New") + " " + obj.shortName,
-                exitPath = "../" + obj.group.lower(),
+                exitPath = "../" + obj.groupName.lower(),
                 actionCallback=__addit__,
                 new=True)
 
@@ -210,23 +213,27 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		elif v.type=="text":
 			form.add(TextWidget,   v.name, _v, t, v.hint, r, True, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
 		elif v.type=="choice":
-			if not v.__dict__.has_key("options"):
-				if v.name=="permission":
-					v.options = backend.getChoice(clazz="CfgPermDial")
-				elif v.name=="phone":
-					v.options = backend.getChoice(clazz="CfgPhone")
-				elif v.name=="aa":
-					v.options = backend.getChoice(clazz="CfgAppAA")
-				if v.optional:
-					v.options.insert(0, ('',''))
-			if not v.options:
+			if type(v.options) == types.FunctionType:
+				v.options = v.options()
+			#if not v.__dict__.has_key("options"):
+			#	if v.name=="permission":
+			#		v.options = backend.getChoice(clazz="CfgPermDial")
+			#	elif v.name=="phone":
+			#		v.options = backend.getChoice(clazz="CfgPhone")
+			#	elif v.name=="mailbox":
+			#		v.options = backend.getChoice(clazz="CfgPhone")
+			#	elif v.name=="aa":
+			#		v.options = backend.getChoice(clazz="CfgAppAA")
+			if v.optional:
+				v.options.insert(0, ('',''))
+			elif not v.options:
 				return errorpage(_("Required '%s' not found") % v.name)
 			form.add(SingleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=v.options)
 		elif v.type=="mchoice":
 			# TODO: much of this code should NOT by in a *.ptl file
 			if not v.__dict__.has_key("options") and v.name=="include":
 				v.options = [('','')]
-				for c in backend.getConfiglets(group="CfgPermDeny"):
+				for c in backend.getConfiglets(groupName="CfgPermDeny"):
 					try:
 						desc = c.desc
 					except AttributeError:
