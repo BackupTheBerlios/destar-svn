@@ -37,6 +37,12 @@ except IOError:
 translation.install()
 
 
+def encoding():
+	"Returns the string used in the HTTP Header 'Content-Type: text/html; charset=...'"
+	# TODO Detect right-to-left languages and return the proper string
+	return "UTF-8"
+
+
 # Some test code
 if __name__ == '__main__':
 	print _("This menu will contain all sorts of administration stuff:")

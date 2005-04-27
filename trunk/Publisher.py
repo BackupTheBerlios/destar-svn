@@ -52,7 +52,7 @@ request.session.level        User level (0=disabled/not logged in
 
 
 from quixote.publish import Publisher
-import configlets, backend
+import configlets, backend, language
 import time
 
 sessions = {}
@@ -104,6 +104,7 @@ class DeStarPublisher(Publisher):
 
 	def filter_output(self, request, output):
 		output = Publisher.filter_output(self, request, output)
-		if not request.get_path().startswith('/pages/'):
-			request.response.set_header('Content-Type','text/html; charset=UTF-8')
+		resp = request.response
+		if resp.get_header('Content-Type') in (None, 'text/html'):
+			resp.set_header('Content-Type','text/html; charset=%s' % language.encoding() )
 		return output
