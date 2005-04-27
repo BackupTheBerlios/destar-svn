@@ -24,8 +24,8 @@ import os, grp, backend, string
 
 _q_parent  = 'page_main'
 _q_title   = _("Configuration")
-_q_desc    = _("Modify PBX configuration")
-_q_menupos = 20
+_q_desc    = _("Modify Asterisk configuration")
+_q_menupos = 30
 _q_level   = 3
 
 
@@ -83,7 +83,7 @@ def configurationTips [plain] (request):
 			"Phones/",
 			[_("Configuration"), _("Phones")] )
 
-	if not backend.countConfiglets("Trunk"):
+	if not backend.countConfiglets("Trunks"):
 		configurationTip(
 			_("You should create a trunk (connection to a Phone company or VOIP Provider). Without a trunk you can only make calls between local phones."),
 			"trunks/",
@@ -119,7 +119,7 @@ def showConfigurables [plain] (head):
 
 
 def _q_index [plain] (request):
-	header(_q_title)
+	header(_q_desc)
 	configurationTips(request)
 	if tipped:
 		showConfigurables(htmltext(_('Other things you can configure:')))
