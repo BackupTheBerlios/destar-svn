@@ -19,8 +19,6 @@
 
 
 from configlets import *
-import language
-
 
 
 countries = {
@@ -346,7 +344,7 @@ class CfgOptSettings(CfgOptSingle):
 		c = AstConf("zaptel.conf")
 		c.setSection("")
 		c.destar_comment = False
-		c.append("loadzone=%s" % zapcountry)
+		c.append("loadzone = %s" % zapcountry)
 		if self.country != 'us':
 			c.append("loadzone = us")
 			c.append("defaultzone = %s" % zapcountry)
