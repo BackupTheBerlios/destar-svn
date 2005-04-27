@@ -153,7 +153,6 @@ def initializeAsteriskConfig():
 	c.setSection("channels")
 	c.append("immediate=no")
 	c.append("overlapdial=yes")
-	c.append("cancallforward=no")
 
 
 	c = AstConf("macros.inc")
@@ -346,9 +345,7 @@ def createAsteriskConfig(prepareOnly=False):
 	for fn,cnf in configlets.asterisk_configfiles:
 		ok = True
 		# zaptel.conf can't have CONF_TAG at the top, so no need to search for it
-		if fn=='zaptel.conf':
-			continue
-		if os.path.exists(cnf.fn):
+		if fn != 'zaptel.conf' and os.path.exists(cnf.fn):
 			f = open(cnf.fn, "r")
 			s = f.readline()
 			if s != configlets.CONF_TAG:
@@ -389,7 +386,7 @@ def backupAsteriskConfig(fn):
 # The following functions work on the pure class definitions.
 #
 # They fish out the configlets by checking if they have the two members
-# class.group and class.shortName. Only configlets that contains both of
+# class.groupName and class.shortName. Only configlets that contains both of
 # them are considered "ready for prime time", sheer descendance on Cfg isn't
 # enought. That way CfgPerm, CfgPhone, CfgTrunk etc won't get listed.
 #
@@ -405,7 +402,7 @@ def configletsList(grp=None):
 	  ...
 	]
 
-	When 'group' is specified, then only return configlets of this
+	When 'groupName' is specified, then only return configlets of this
 	group."""
 
 
@@ -413,7 +410,7 @@ def configletsList(grp=None):
 	for s in globals():
 		obj = globals()[s]
 		try:
-			g,n = obj.group, obj.shortName
+			g,n = obj.groupName, obj.shortName
 			if grp and grp != g: continue
 			res.append(obj)
 		except AttributeError:
@@ -436,7 +433,7 @@ def configletsGrouped():
 	for obj in globals():
 		obj = globals()[obj]
 		try:
-			g,n = obj.group, obj.shortName
+			g,n = obj.groupName, obj.shortName
 			res.setdefault(g,[]).append(obj)
 		except AttributeError:
 			pass
@@ -489,7 +486,7 @@ def moveConfigletUp(id):
 	obj = configlets.config_entries[id]
 	id2 = id-1
 	while id2 >= 0:
-		if configlets.config_entries[id2].group==obj.group:
+		if configlets.config_entries[id2].groupName==obj.groupName:
 			configlets.config_entries[id] = configlets.config_entries[id2]
 			configlets.config_entries[id2] = obj
 			return obj
@@ -505,7 +502,7 @@ def moveConfigletDown(id):
 	obj = configlets.config_entries[id]
 	id2 = id+1
 	while id2 < len(configlets.config_entries):
-		if configlets.config_entries[id2].group==obj.group:
+		if configlets.config_entries[id2].groupName==obj.groupName:
 			configlets.config_entries[id] = configlets.config_entries[id2]
 			configlets.config_entries[id2] = obj
 			return obj
@@ -530,17 +527,17 @@ def fixupConfiglets():
 
 
 
-def countConfiglets(group=None, clazz=None):
+def countConfiglets(groupName=None, clazz=None):
 	"Returns the count of all configlets in a given 'group'."
 
 
 	if not __loaded: loadPythonConfig()
 	n = 0
 	for s in configlets.config_entries:
-		#print s.group
-		if group and s.group == group:
+		#print s.groupName
+		if groupName and s.groupName == groupName:
 			n = n + 1
-		elif clazz and s.__class__.__name__==clazz:
+		elif clazz and s.__class__.__name__ == clazz:
 			n = n + 1
 	return n
 
@@ -564,7 +561,7 @@ def getConfiglets(group=None, name=None):
 	for obj in configlets.config_entries:
 		obj._id = n
 		n = n + 1
-		if obj.group == group:
+		if obj.groupName == group:
 			a.append(obj)
 		if obj.shortName==name or obj.__class__.__name__==name:
 			a.append(obj)
@@ -637,7 +634,10 @@ def getChoice(clazz, key='name',val='name'):
 	if not __loaded: loadPythonConfig()
 	a = []
 	n = 0
-	obj2 = globals()[clazz]
+	try:
+		obj2 = globals()[clazz]
+	except KeyError:
+		return a
 	for obj in configlets.config_entries:
 		obj._id = n
 		n = n + 1
@@ -645,6 +645,7 @@ def getChoice(clazz, key='name',val='name'):
 			a.append( (obj.__dict__[val],obj.__dict__[key]) )
 	return a
 
+configlets.__getChoice = getChoice
 
 
 
@@ -658,8 +659,8 @@ def lookupPhone(phones, channel):
 
 	#print "lookupPhone", channel
 	for p in phones:
-		#print p.channel()
-		if channel==p.channel():
+		#print p.channelString()
+		if channel==p.channelString():
 			return p
 	return None
 
@@ -685,12 +686,15 @@ def determineStateOfPhones():
 	other  = []
 	for p in configlets.config_entries:
 		try:
-			chan = p.channel()
+			chan = p.channelString()
 		except AttributeError:
+			#print "no channel in", p
+			continue
+		except TypeError:
+			#print "type error in ", p
 			continue
 
 
-		#print p.name
 		p._states = []
 		p._state = Holder()
 		t = 0
@@ -716,7 +720,7 @@ def determineStateOfPhones():
 			else:
 				p._state.State = 'Unknown'
 
-		if p.group=="Phones":
+		if p.groupName=="Phones":
 			phones.append(p)
 		else:
 			other.append(p)
