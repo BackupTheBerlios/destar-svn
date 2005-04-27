@@ -27,7 +27,6 @@ class CfgOptRtp(CfgOptSingle):
 	variables = [VarType("rtpstart",
 			     type="int",
 			     title=_("Start of RTP port area"),
-			     hint="hint",
 			     default=16384),
 		     VarType("rtpend",
 			     type="int",
