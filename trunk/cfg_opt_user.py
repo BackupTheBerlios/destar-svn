@@ -24,15 +24,20 @@ from configlets import *
 class CfgOptUser(CfgOpt):
 
 	shortName = _("DeStar user")
-	variables = [VarType("name",   title=_("Name"), len=15),
-		     VarType("secret", title=_("Password"), len=15),
-		     VarType("pc",     title=_("Associated IP address of PC"), len=15, optional=True),
-		     VarType("phone",  title=_("Associated phone"), type="choice", optional=True),
-		     VarType("level",  title=_("Type"), type="choice",
-				options=( ("0",_("disabled")),
-					  ("1",_("User")),
-					  ("2",_("Administrator")),
-				          ("3",_("Configurator")) )),
+	groupName = 'Users'
+	variables = [
+		VarType("name",   title=_("Name"), len=15),
+		VarType("secret", title=_("Password"), len=15),
+		VarType("pc",     title=_("Associated IP address of PC"), len=15, optional=True),
+		VarType("phone",  title=_("Associated phone"), type="choice", optional=True,
+		                  options=getChoice("CfgPhone")),
+		VarType("mailbox",title=_("Associated mailbox"), type="choice", optional=True,
+		                  options=getChoice("CfgMailbox")),
+		VarType("level",  title=_("Type"), type="choice",
+		                  options=( ("0",_("disabled")),
+		                            ("1",_("User")),
+		                            ("2",_("Administrator")),
+		                            ("3",_("Configurator")) )),
 		     ]
 
 	def createAsteriskConfig(self):
