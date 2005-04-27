@@ -19,6 +19,7 @@
 
 
 from Templates import *
+from ConfigHelper import LabelWidget
 from quixote.form2 import *
 from quixote.html import htmlescape
 import os, backend, configlets
@@ -54,7 +55,9 @@ def tryToWriteConfig [plain] (configEntries):
 
 	errors = False
 	for file,cnf,ok in configEntries:
-		if not ok:
+		if ok:
+			cnf.write()
+		else:
 			if not errors:
 				htmltext(_("There are some config files from your previous configuration that weren't created by DeStar."))
 				'<ul>'
@@ -68,7 +71,6 @@ def tryToWriteConfig [plain] (configEntries):
 		'.</p>'
 	else:
 		'<p>'
-		print "writing"
 		htmltext(_("Wrote configuration"))
 		'.</p>'
 	footer()
@@ -105,34 +107,29 @@ def _q_index [plain] (request):
 	configEntries = backend.createAsteriskConfig(True)
 	configEntries.sort()
 
-	form = Form(attrs={"id":"configForm"})
-	print "Form", form.attrs
-	form.add(CheckboxWidget, '_all',  True, title=_("All files"))
+	writeForm = Form(attrs={"id":"writeFrom"})
+	writeForm.add(SubmitWidget, '_write', _("Write"))
+
+	showForm = Form(attrs={"id":"showForm"})
+	showForm.add(LabelWidget, '_label', title=_("Show configuration instead of writing"))
 	for file,cnf,ok in configEntries:
-		form.add(CheckboxWidget, file, False, title=file)
-	form.add(SubmitWidget, '_show',  _("Show config"), render_br=False)
-	form.add(SubmitWidget, '_write', _("Write config"), render_br=False)
+		showForm.add(CheckboxWidget, file, False, title=file)
+	showForm.add(SubmitWidget, '_show', _("Show"))
 
-	if not form.is_submitted() or form.has_errors():
-		header(_("Select config files"))
-		form.render()
+	if not writeForm.is_submitted() and not showForm.is_submitted():
+		header(_(_q_desc))
+		writeForm.render()
+		showForm.render()
 
-	if form['_all']:
-		entries = configEntries
-	else:
+	if writeForm['_write']:
+		header(_q_desc)
+		tryToWriteConfig(configEntries)
+	elif showForm['_show']:
+		header(_("Configuration files"))
 		entries = []
 		for file,cnf,ok in configEntries:
-			if form[file]:
+			if showForm[file]:
 				entries.append( (file,cnf,ok) )
-	
-	if not entries:
-		header(_q_desc)
-		_("No config files selected :-(")
-	elif form['_show']:
-		header(_("Show config files"))
 		showHtmlConfig(entries)
-	elif form['_write']:
-		header(_q_desc)
-		tryToWriteConfig(entries)
 
 	footer()
