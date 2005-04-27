@@ -21,27 +21,24 @@
 from configlets import *
 
 
-class CfgTrunkZapTDM(CfgTrunk):
+class CfgTrunkZap(CfgTrunk):
 
-	shortName = _("PSTN using zaptel-tdm")
+	shortName = _("Standard ZAP trunk")
 	variables = [
-		VarType("name",  title=_("Name"), len=35),
-		VarType("channel", title=_("Zaptel channel number"), type="rostring", default=1, len=2),
-		VarType("sigtype", title=_("Signalling type"), type="choice", options=[('ks', 'kewlstart'),('ls','loopstart')]),
+		VarType("name",       title=_("Name"), len=35),
+		VarType("channel",    title=_("Zaptel channel number"), type="string", len=5),
+		VarType("signalling", title=_("Signalling type"), type="choice",
+		                      options=[('fxs_ls','loopstart'),('fxs_ks', 'kewlstart')]),
+		VarType("group",      title=_("Callout group"), type="int", default=1),
 
-		VarType("Outbound",  title=_("Calls to the PSTN network"), type="label"),
-		VarType("ext",   title=_("Outgoing prefix"), optional=True, len=6),
+		VarType("Outbound",   title=_("Calls to the PSTN network"), type="label"),
+		VarType("ext",        title=_("Outgoing prefix"), optional=True, len=6),
 		]
-
-
-	def isAddable(self):
-		return False
-	isAddable = classmethod(isAddable)
 
 
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		useContext("in-pstn")
+		#useContext("in-pstn")
 
 
 	def createAsteriskConfig(self):
@@ -49,20 +46,22 @@ class CfgTrunkZapTDM(CfgTrunk):
 
 		# Create config for chan_zap:
 		c = AstConf("zapata.conf")
-		c.append("signalling=fxs_%s" % self.sigtype)
-		c.append("callerid=")
-		#prefix = ""
-		c.append("group=1")
-		# TODO?
-		c.append("context=in-pstn")
-		c.append("channel=%d" % self.channel)
+		c.append("context=default")
+		c.appendValue(self, "signalling")
+		c.appendValue(self, "group")
+		c.appendValue(self, "channel")
+		c.append("")
 
-		# Write dialout entry:
+		# Write special dialout entry
+		# TODO: we should not have ONE dialout entry, but several of them,
+		# e.g. for local calls, national calls, foreign calls etc
 		if self.ext:
 			c = AstConf("extensions.conf")
 			c.setSection("default")
-			c.appendExten("_%s." % self.ext, "Dial(Zap/%d/${EXTEN:%d},60)" % (self.channel,len(self.ext)))
+			c.appendExten("%s" % self.ext, "Dial(Zap/%s/${EXTEN:%d},60,T)" % (self.channel,len(self.ext)))
 
-	
-	def zapType(self):
-		return 'fxo'
+		c = AstConf("zaptel.conf")
+		c.setSection("")
+		c.destar_comment = False
+		c.append("fxs%s=%s" % (self.signalling[4:], self.channel))
+		c.append("")
