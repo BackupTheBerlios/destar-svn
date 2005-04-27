@@ -22,11 +22,12 @@ from Templates import *
 from ConfigHelper import *
 
 
-_q_parent = 'page_config'
-_q_title  = _("Applications")
-_q_desc   = _("PBX extensions that aren't phones")
-_q_link   = 'applications'
-_q_level  = 3
+_q_parent  = 'page_config'
+_q_title   = _("Applications")
+_q_desc    = _("Special Asterisk Applications")
+_q_link    = 'applications'
+_q_menupos = 40
+_q_level   = 3
 
 
 def _q_access(request):
@@ -35,6 +36,6 @@ def _q_access(request):
 
 
 def _q_index [plain] (request):
-	header(_q_title)
+	header(_q_desc)
 	presentConfiglets('Applications')
 	footer()
