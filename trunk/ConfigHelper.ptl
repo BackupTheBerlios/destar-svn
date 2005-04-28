@@ -215,16 +215,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		elif v.type=="choice":
 			if type(v.options) == types.FunctionType:
 				v.options = v.options()
-			#if not v.__dict__.has_key("options"):
-			#	if v.name=="permission":
-			#		v.options = backend.getChoice(clazz="CfgPermDial")
-			#	elif v.name=="phone":
-			#		v.options = backend.getChoice(clazz="CfgPhone")
-			#	elif v.name=="mailbox":
-			#		v.options = backend.getChoice(clazz="CfgPhone")
-			#	elif v.name=="aa":
-			#		v.options = backend.getChoice(clazz="CfgAppAA")
-			if v.optional:
+			if v.optional and v.options[0][0]:
 				v.options.insert(0, ('',''))
 			elif not v.options:
 				return errorpage(_("Required '%s' not found") % v.name)
