@@ -144,6 +144,8 @@ def initializeAsteriskConfig():
 	c.append("allow=ilbc")
 
 
+	needModule("res_crypto")
+	needModule("chan_iax2")
 	c = AstConf("iax.conf")
 	c.append("language=%s" % getSetting('language', 'en'))
 
@@ -631,7 +633,8 @@ def getChoice(clazz, key='name',val='name'):
 	'clazz' is the classname the configlet must have."""
 
 
-	if not __loaded: loadPythonConfig()
+	if not __loaded:
+		loadPythonConfig()
 	a = []
 	n = 0
 	try:
@@ -642,7 +645,7 @@ def getChoice(clazz, key='name',val='name'):
 		obj._id = n
 		n = n + 1
 		if isinstance(obj, obj2):
-			a.append( (obj.__dict__[val],obj.__dict__[key]) )
+			a.append( (obj.__dict__[val], obj.__dict__[key]) )
 	return a
 
 configlets.__getChoice = getChoice
