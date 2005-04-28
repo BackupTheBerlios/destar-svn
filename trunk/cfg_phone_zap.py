@@ -32,8 +32,9 @@ class CfgPhoneZap(CfgPhone):
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
-		VarType("Outbound",   title=_("Calls from the phone"), type="label"),
-		VarType("callerid",   title=_("Caller-Id"), optional=True),
+		VarType("Outbound",     title=_("Calls from the phone"), type="label"),
+		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
+		VarType("calleridname", title=_("Caller-Id Name"), optional=True),
 
 		VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
 		VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
@@ -49,10 +50,14 @@ class CfgPhoneZap(CfgPhone):
 		# Create config for chan_zap:
 		c = AstConf("zapata.conf")
 		c.append("signalling=fxo_%s" % self.sigtype)
-		if self.callerid:
-			c.appendValue(self, "callerid")
-		else: # must add an empty value, because it may be set elsewhere
-			c.append("callerid=")
+
+		if self.calleridname and self.calleridnum:
+			c.append('callerid="%s" <%s>' % (self.calleridname, self.calleridnum))
+		elif self.calleridname:
+			c.append('callerid="%s"' % self.calleridname)
+		elif self.calleridnum:
+			c.append('callerid=%s' % self.calleridnum)
+
 		c.append("group=1")
 		# TODO?
 		c.append("context=default")
