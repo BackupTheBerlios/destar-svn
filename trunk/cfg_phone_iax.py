@@ -24,24 +24,25 @@ from configlets import *
 class CfgPhoneIax(CfgPhone):
 
 	shortName = _("Normal IAX phone")
-	variables = [VarType("name",            title=_("Name"), len=15),
-			VarType("secret",       title=_("Password"), optional=True, len=6),
-			VarType("host",         title=_("IP address of phone"), optional=True, len=15),
+	variables = [
+		VarType("name",            title=_("Name"), len=15),
+		VarType("secret",       title=_("Password"), optional=True, len=6),
+		VarType("host",         title=_("IP address of phone"), optional=True, len=15),
 
-			VarType("Inbound",      title=_("Calls to the phone"), type="label"),
-			VarType("ext",	        title=_("Extension"), optional=True, len=6),
-			VarType("did",	        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
+		VarType("Inbound",      title=_("Calls to the phone"), type="label"),
+		VarType("ext",	        title=_("Extension"), optional=True, len=6),
+		VarType("did",	        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
-			VarType("Outbound",     title=_("Calls from the phone"), type="label"),
-			VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
-			VarType("calleridname", title=_("Caller-Id Name"), optional=True),
+		VarType("Outbound",     title=_("Calls from the phone"), type="label"),
+		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
+		VarType("calleridname", title=_("Caller-Id Name"), optional=True),
 
-			VarType("Voicemail",    title=_("Voicemail settings"), type="label"),
-			VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
-			VarType("usemwi",       title=_("Signal waiting mail"), type="bool", optional=True),
-			VarType("pin",	        title=_("Voicemail PIN"), optional=True, len=6),
-			VarType("notransfer",   title=_("can this peer transfer natively or not ?"), type="bool")
-			]
+		VarType("Voicemail",    title=_("Voicemail settings"), type="label"),
+		VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
+		VarType("usemwi",       title=_("Signal waiting mail"), type="bool", optional=True),
+		VarType("pin",	        title=_("Voicemail PIN"), optional=True, len=6),
+		VarType("notransfer",   title=_("can this peer transfer natively or not ?"), type="bool")
+		]
 	technology = "IAX2"
 														    
 	def createAsteriskConfig(self):
