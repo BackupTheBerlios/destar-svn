@@ -89,7 +89,9 @@ import medusa
 
 # 'quixote' is a web application framework
 try:
-	from quixote import enable_ptl
+	import quixote
+	if quixote.__version__ < "1.1" or quixote.__version__ >= "2.0":
+		raise ImportError
 except ImportError:
 	print _("Error:"), _("please install Quixote 1.x")
 	import sys
@@ -97,7 +99,6 @@ except ImportError:
 
 # 'Publisher.py' contains our session management, 'page_main' contains
 # the start page.
-#enable_ptl()
 import Publisher
 pub = medusa.Server("page_main", port=8080, publisher=Publisher.DeStarPublisher)
 
