@@ -58,7 +58,7 @@ def print_usage():
 
 try:
 	opts,args = getopt.getopt(sys.argv[1:],'dhp:v', 
-		['fg','foreground','help','pid=', 'version'])
+		['daemonize','help','pid=', 'version'])
 except getopt.GetoptError:
 	print "DeStar: Command-line parsing error. Aborting."
 	print_usage()
@@ -107,10 +107,8 @@ pub = Server.Server("page_main", port=8080, publisher=Publisher.DeStarPublisher)
 
 # only daemonize after binding to the port. This makes error handling saner
 if be_daemon:
+	quixote.config.DISPLAY_EXCEPTIONS = 'plain'
 	daemonize.daemonize(stdout='/var/log/asterisk/destar.log', stderr='/var/log/asterisk/destar.err', pidfile=pid_file)
-
-
-quixote.config.DISPLAY_EXCEPTIONS = 'plain'
 
 try:
 	pub.run()
