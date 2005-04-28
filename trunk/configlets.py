@@ -513,6 +513,19 @@ def getSetting(name, default=None):
 
 
 def getChoice(clazz):
+	"""
+	Here we actually use a trick. In the configlets, the variables[]
+	get's build once at configlets load-time. While the configlets are
+	in the middle of being loaded, you can't really iterate in
+	configlets.config_entries to get a list of, say, all Phones. So this
+	iteration needs to be postponed. We do this with a lambda function.
+
+	This getChoice() uses __getChoice(), which is not defined here in
+	configlets. It comes from backend.py. But because backend.py imports
+	us, we don't import backend.py. Therefore, backend.py "implants"
+	this helper function with "configlets._getChoice = getChoice".
+	"""
+
 	return (lambda : __getChoice(clazz=clazz))
 
 
