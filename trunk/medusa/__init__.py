@@ -13,5 +13,3 @@ took over maintenance of the Medusa package.
 
 Medusa is available at http://www.amk.ca/python/code/medusa .
 """
-
-from server import Server
