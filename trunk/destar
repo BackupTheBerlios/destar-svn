@@ -31,7 +31,7 @@ An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
 
 import sys, getopt
 import daemonize
-be_daemon = True
+be_daemon = False
 pid_file = '/var/run/destar.pid'
 
 
@@ -53,11 +53,11 @@ def print_usage():
 	print ""
 	print "Options:"
 	print "  -p <pid> --pid=<pid>: use <pid> to store the daemon's PID"
-	print "  %s -f|--fg|--foreground: don't daemonize" % program
+	print "  -d|--daemonize: run in the background"
 
 
 try:
-	opts,args = getopt.getopt(sys.argv[1:],'fhp:v', 
+	opts,args = getopt.getopt(sys.argv[1:],'dhp:v', 
 		['fg','foreground','help','pid=', 'version'])
 except getopt.GetoptError:
 	print "DeStar: Command-line parsing error. Aborting."
@@ -65,8 +65,8 @@ except getopt.GetoptError:
 	exit(2)
 
 for opt,val in opts:
-	if opt in  ('-f', '--fg', '--foreground'):
-		be_daemon=False
+	if opt in  ('-d', '--daemonize'):
+		be_daemon=True
 	if opt in  ('-h', '--help'):
 		print_usage()
 		sys.exit(0)
@@ -109,6 +109,8 @@ pub = Server.Server("page_main", port=8080, publisher=Publisher.DeStarPublisher)
 if be_daemon:
 	daemonize.daemonize(stdout='/var/log/asterisk/destar.log', stderr='/var/log/asterisk/destar.err', pidfile=pid_file)
 
+
+quixote.config.DISPLAY_EXCEPTIONS = 'plain'
 
 try:
 	pub.run()

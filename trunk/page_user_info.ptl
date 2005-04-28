@@ -49,6 +49,7 @@ def _q_index [plain] (request):
 	else:
 		htmltext(_("You are not logged in."))
 	' '
+	1/0
 	htmltext(_('You can do'))
 	":</p><ul>"
 	if request.session.level >= 0:
