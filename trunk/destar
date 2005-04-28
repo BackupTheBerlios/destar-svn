@@ -90,7 +90,7 @@ import medusa
 # 'quixote' is a web application framework
 try:
 	import quixote
-	if quixote.__version__ < "1.1" or quixote.__version__ >= "2.0":
+	if quixote.__version__ < "1.0" or quixote.__version__ >= "2.0":
 		raise ImportError
 except ImportError:
 	print _("Error:"), _("please install Quixote 1.x")
@@ -99,8 +99,8 @@ except ImportError:
 
 # 'Publisher.py' contains our session management, 'page_main' contains
 # the start page.
-import Publisher
-pub = medusa.Server("page_main", port=8080, publisher=Publisher.DeStarPublisher)
+import Server, Publisher
+pub = Server.Server("page_main", port=8080, publisher=Publisher.DeStarPublisher)
 
 
 

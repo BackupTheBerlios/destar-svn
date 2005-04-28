@@ -16,7 +16,7 @@ except:
 	print "You need Quixote 1.x, not Quixote 0.6"
 	sys.exit(1)
 from quixote.publish import Publisher
-import http_server, xmlrpc_handler
+from medusa import http_server, xmlrpc_handler
 from quixote.http_request import HTTPRequest
 from quixote.errors import PublishError
 
