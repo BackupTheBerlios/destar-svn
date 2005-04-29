@@ -24,14 +24,11 @@ from configlets import *
 class CfgOptRtp(CfgOptSingle):
 
 	shortName = _("RTP options")
-	variables = [VarType("rtpstart",
-			     type="int",
-			     title=_("Start of RTP port area"),
-			     default=16384),
-		     VarType("rtpend",
-			     type="int",
-			     title=_("End of RTP port area"),
-			     default=16482)]
+	variables = [
+			VarType("rtpstart", type="int", title=_("Start of RTP port area"), default=16384),
+			VarType("rtpend",   type="int", title=_("End of RTP port area"),   default=16482),
+			VarType("rtpchecksums", type="bool", title=_("Check UDP checksums of RTP packets"), default=True),
+		]
 
 	def row(self):
 		return (self.shortName, "%d - %d" % (self.rtpstart, self.rtpend))
@@ -50,3 +47,4 @@ class CfgOptRtp(CfgOptSingle):
 		c = AstConf("rtp.conf")
 		c.appendValue(self, "rtpstart")
 		c.appendValue(self, "rtpend")
+		c.appendValue(self, "rtpchecksums")
