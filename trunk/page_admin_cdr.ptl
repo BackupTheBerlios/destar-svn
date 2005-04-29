@@ -17,6 +17,15 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+# ToDo:
+# - improve the appearance and usability
+# - show the "navigation" buttons only when they are needed
+# - use the current date in the "To:" option
+# - glosary of the CDR terms, see README.cdr of asterisk
+
+# - improve the code and change the name of some variable
+# - ...
+
 
 from Templates import *
 from quixote.form2 import *
@@ -37,50 +46,156 @@ def _q_access(request):
 def _q_test():
 	return cdrutils.db
 
+def     generateYearsNumbers():
+        years = range(2004,2006)
+        return years
 
-def cdrShowResults [html] (where=[]):
-        cursor = cdrutils.select(order=[str('answer DESC')], where=where, limit=20)
-        row = cursor.fetchone()
-        if row:
-                '<table><tr>'
-                for s in row.keys():
-                        '<th>'
-                        s
-                        '</th>'
-                '</tr>'
-                while row:
-                        '<tr>'
-                        for s in row:
-                                '<td>'
-                                s
-                                '</td>'
-                        '</tr>'
-                        row = cursor.fetchone()
-                '</table>'
+def	generateMonthsNumbers():
+	months = range(1,13)
+	for i in range(0,9) :
+		months[i] = "0%s" % months[i]
+	return months
 
+def	generateDaysNumbers():
+	days = range(1,32)
+	for i in range(0,9) :
+		days[i] = "0%s" % days[i]
+	return days
+	
+def 	generateOptionSelect():
+	option = range (20,60,10)
+	return option
 
 def cdrForm [plain] (request, srcextension="", dstextension="" ):
+
+	monthsnumbers = [ '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12' ]
+	monthsnames = [ _('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('Augost'), _('September'), _('October'), _('November'), _('December') ]
+
 	form = Form()
-	form.add(StringWidget, "srcextension",  "%s" % srcextension, title=htmltext(_("Source ")))
-	form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")))
-	form.add(SubmitWidget, '_submit', _("Search"), render_br=False)
 	
+	form.add(StringWidget, "srcextension",  "%s" % srcextension, title=htmltext(_("Source ")), render_br=True )
+	form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")), render_br=True)
+
+        form.add_checkbox('searchBetweenDates',title= _("Search Between Dates"), render_br=True)
+
+	form.add_single_select('fromyear', title=_('From:'), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False )
+	form.add_single_select('frommonth', options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False )
+	form.add_single_select('fromday', options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers() ), render_br=True )
+	
+	form.add_single_select('toyear', title=_('To:'), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False)
+	form.add_single_select('tomonth', options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False)
+	form.add_single_select('today', options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers()  ), render_br=True)
+	
+	form.add_single_select('linesToShow', title=_('Number of records to show:'),options=zip( generateOptionSelect() , range(20,60,10), generateOptionSelect() ))	
+	
+	form.add(SubmitWidget, '_submit', _("Search"), render_br=True)
+	form.add(SubmitWidget, '_newest', _("Newest"), render_br=False)
+	form.add(SubmitWidget, '_newer', _("Newer"), render_br=False)
+	form.add(SubmitWidget, '_older', _("Older"), render_br=False)
+       	form.add(SubmitWidget, '_oldest', _("Oldest"), render_br=False)
+
 	where = []
 	
 	def render [html] ():
-		form.render()
-		cdrShowResults(where)
+
+		name = form.get_submit()
+		
+		cursor = cdrutils.count(where = where)
+		total = cursor
+
+		global q
+		global p
+
+		p = form["linesToShow"]
+
+		if (name == '_submit' or name == '_newest'): 
+			q = 0
 	
+		elif name == '_newer': 
+			q = q-form["linesToShow"]
+			if q < 0:
+				q=0
+							
+					
+		elif name == '_older': 
+			if q >= total:
+				q = total - total % p
+			else:
+				q+=form["linesToShow"]
+			
+		elif name == '_oldest': 
+			q = total - total % p
+						
+		else : 
+			p = 20
+			q = 0
+			
+		form.render()
+		cdrShowResults(where, p, q, total)
+
 	if not form.is_submitted() or form.has_errors():
 		return render()
 	
 	if form["srcextension"]:
-		where.append("src = '%s'" % form["srcextension"])
+		where.append("src like '%s'" % form["srcextension"])
 	if form["dstextension"]:
-		where.append("dst = '%s'" % form["dstextension"])
+		where.append("dst like '%s'" % form["dstextension"])
+			
+	if form["searchBetweenDates"]:
+	
+		fromdate = "%s-%s-%s" % (form["fromyear"], form["frommonth"], form["fromday"])
+		where.append ("date(start) >= date('%s')" % fromdate )
+	
+		todate = "%s-%s-%s" % (form["toyear"], form["tomonth"], form["today"])
+		where.append ("date(end) <= date('%s')" % todate)
 	
 	return render()
 
+def	cdrShowResults [html] (where=[], limit, offset, total = 0):
+        
+	if total == 0:
+		'--No records to Show--'
+	else:
+	
+		cursor = cdrutils.select(order=[str('start DESC ')], where = where, limit = limit, offset = offset)
+	
+		row = cursor.fetchone()
+		if row and int(offset) >= 0 and int(offset) <= total:
+		
+			f = offset + limit
+			if total >= f:			
+				_('Showing records from %s to %s of %s <br><br>' %(offset+1, f, total))
+			else:
+				_('Showing records from %s to %s of %s <br><br>' %(offset+1, total, total))
+					
+                	'<table border="1"><tr>'
+                	for s in row.keys():
+				'<th>'
+				s
+				'</th>'
+                	'</tr>'
+		
+                	while row:
+	                	'<tr>'
+				items = row.items()
+                        	for c,s in items:
+					if c=="disposition" and s==4:
+						s="Answered"
+					if c=="disposition" and s==1:
+						s="Not answered"
+					if c=="disposition" and s==3:
+						s="Busy"
+					if c=="start":
+						finalDate=s
+					'<td><center>'
+					if s=="1969-12-31 19:00:00":
+						'-'
+					else: 
+						s
+        	                       	'</center></td>'
+				'</tr>'
+				row = cursor.fetchone()
+                	'</table>'
 
 def _q_index [plain] (request):
 	header(_q_desc)

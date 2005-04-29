@@ -38,7 +38,7 @@ except:
 
 
 def select(
-		fields=['src as desde','dst','answer','billsec','amaflags','disposition'],
+		fields=['src','dst','answer','billsec','amaflags','disposition'],
 		groupby=[],
 		having=[],
 		where=[],
@@ -76,6 +76,33 @@ def select(
 	cursor.execute( ' '.join(sql) )
 	return cursor
 
+def count(
+		where=[],
+		groupby=[],
+		having=[],
+	):
+	cursor = db.cursor()
+
+	sql = ['SELECT count(*)']
+	sql.append('FROM cdr')
+
+	if where:
+		sql.append('WHERE ')
+		sql.append( ' AND '.join(where) )
+
+	if groupby:
+		sql.append('GROUP BY')
+		sql.append( ','.join(groupby) )
+
+	if having:
+		sql.append('HAVING')
+		sql.append( ','.join(having) )
+	
+	cursor.execute( ' '.join(sql) )
+	resultRow = cursor.fetchone()
+	result = int(resultRow[0])
+
+	return result
 
 if __name__ == "__main__":
 	cu = select()

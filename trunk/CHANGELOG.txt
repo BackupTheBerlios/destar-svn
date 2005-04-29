@@ -1,3 +1,6 @@
+2005-04-28
+* some CDR improvement
+
 2005-04-04
 
 * Big infrastructural change. Basically, we will have one page_*.ptl file
