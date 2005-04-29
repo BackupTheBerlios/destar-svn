@@ -16,7 +16,7 @@ clean:
 
 
 release:
-	svn export . destar-$(DATE) 
+	svn export svn+ssh://svn.berlios.de/svnroot/repos/destar/trunk destar-$(DATE) 
 	tar cjf destar-$(DATE).tar.bz2 destar-$(DATE)
 	scp destar-$(DATE).tar.bz2 holgerschurig@shell.berlios.de:/home/groups/ftp/pub/destar/
 	rm -rf destar-$(DATE) destar-$(DATE).tar.bz2
