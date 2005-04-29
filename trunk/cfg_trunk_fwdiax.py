@@ -40,7 +40,7 @@ class CfgTrunkFwdIax(CfgTrunk):
 
 		VarType("Outbound", title=_("Calls to FWD"), type="label"),
 		VarType("ext",      title=_("Extension"), optional=True, len=6),
-		VarType("context",  title=_("Context"), default="out-pstn", optional=True, hide=True),
+		VarType("context",  title=_("Context"), default="default", optional=True, hide=True),
 		VarType("callerid", title=_("Caller-Id Name"), optional=True),
 
 		VarType("Inbound",  title=_("Calls from FWD"), type="label"),
@@ -80,7 +80,6 @@ class CfgTrunkFwdIax(CfgTrunk):
 
 		if not c.hasSection("iaxfwd"):
 			c.setSection("iaxfwd")
-			c.setSection("iaxfwd")
 			c.append("type=user")
 			# TODO?
 			c.append("context=in-iaxfwd")
@@ -90,4 +89,4 @@ class CfgTrunkFwdIax(CfgTrunk):
 		if self.phone:
 			c = AstConf("extensions.conf")
 			c.setSection("in-iaxfwd")
-			c.appendExten(self.ext, "Goto(phones,%s,1)" % self.phone)
+			c.appendExten(self.fwdid, "Goto(phones,%s,1)" % self.phone)
