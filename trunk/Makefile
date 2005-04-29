@@ -5,6 +5,8 @@ PAGES_DIR=$(DESTDIR)/usr/share/destar/static
 SBINDIR=$(DESTDIR)/usr/sbin
 MANDIR=$(DESTDIR)/usr/share/man/man8
 
+# set SYS_MEDUSA to 1 to use system copy of medusa
+SYS_MEDUSA=0
 
 clean:
 	find -name "*.pyc" -o \
@@ -28,7 +30,14 @@ msgfmt:
 
 install:
 	install -d $(PYDIR)
-	cp -a *.py *.ptl misc medusa $(PYDIR)
+	#cp -a *.py *.ptl misc medusa $(PYDIR)
+	install *.py *.ptl $(PYDIR)/
+	install -d $(PYDIR)/misc
+	install misc/*.py $(PYDIR)/misc/
+ifneq ($(SYS_MEDUSA),1)
+	install -d $(PYDIR)/medusa
+	install medusa/*.py $(PYDIR)/medusa/
+endif
 	install -m 755 destar $(PYDIR)/destar.py
 	install -d $(PAGES_DIR)
 	cp -a static/* $(PAGES_DIR)
