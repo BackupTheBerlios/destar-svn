@@ -213,13 +213,14 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		elif v.type=="text":
 			form.add(TextWidget,   v.name, _v, t, v.hint, r, True, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
 		elif v.type=="choice":
-			if type(v.options) == types.FunctionType:
-				v.options = v.options()
-			if v.optional and v.options[0][0]:
-				v.options.insert(0, ('',''))
-			elif not v.options:
+			opts = v.options
+			if type(opts) == types.FunctionType:
+				opts = opts()
+			if v.optional and opts[0][0]:
+				opts.insert(0, ('',''))
+			elif not opts:
 				return errorpage(_("Required '%s' not found") % v.name)
-			form.add(SingleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=v.options)
+			form.add(SingleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=opts)
 		elif v.type=="mchoice":
 			# TODO: much of this code should NOT by in a *.ptl file
 			if not v.__dict__.has_key("options") and v.name=="include":
