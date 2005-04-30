@@ -67,9 +67,8 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			if self.callerid:
 				c.appendExten(ext, "SetCIDName(%s)" % self.callerid)
 			c.appendExten(ext, "SetCIDNum(%s)" % self.id)
-			#c.appendExten(ext, "Dial(SIP/%s:%s@%s/${EXTEN:%d},60,r)" % (self.id, self.pw, self.host, len(self.ext)))
 			c.appendExten(ext, "Dial(SIP/${EXTEN:%d}@%s,60,r)" % (len(self.ext), self.host))
-			#c.appendExten(ext, "Busy")
+			c.appendExten(ext, "Congestion")
 		if self.phone and self.contextin:
 			c.setSection(self.contextin)
 			c.appendExten("s", "Goto(default,%s,1)" % self.phone)
@@ -79,12 +78,21 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
 
 		if not c.hasSection(self.name):
-			c.setSection(self.name)
-			c.append("type=friend")
-			c.append("context=in-siptrunk")
-			c.append("auth=md5")
-			c.append("host=%s" % self.host)
+			c.setSection("out-%s" % self.name)
+			c.append("type=user")
+			c.append("username=%s" % self.id)
 			c.append("secret=%s" % self.pw)
+			c.append("host=%s" % self.host)
+			c.append("context=out-siptrunk")
+			c.append("auth=md5")
+			c.append("canreinvite=no")
+			if self.nat:
+				c.append("nat=yes")
+
+			c.setSection("in-%s" % self.name)
+			c.append("type=peer")
+			c.append("host=%s" % self.host)
+			c.append("context=in-siptrunk")
 			c.append("canreinvite=no")
 			if self.nat:
 				c.append("nat=yes")
