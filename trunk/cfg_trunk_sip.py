@@ -33,13 +33,16 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		VarType("pw",         title=_("SIP password"), len=15),
 		VarType("host",       title=_("SIP host"), len=25),
 		VarType("nat",      title=_("Is the trunk behind NAT ?"), type="bool"),
+
 		VarType("Outbound",   title=_("Calls to SIP trunk"), type="label"),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
-		VarType("context",    title=_("Context"), default="out-pstn", optional=True, hide=True),
+		VarType("context",    title=_("Context"), default="default", optional=True, hide=True),
 		VarType("callerid",   title=_("Caller-Id Name"), optional=True),
+
 		VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
-		VarType("extin",      title=_("Extension to ring"), optional=True, len=4),
-		VarType("contextin",  title=_("Context"), optional=True, hide=True, default="in-pstn")
+		VarType("phone",      title=_("Phone to ring"), optional=True, type="choice",
+		                    options=getChoice("CfgPhone")),
+		VarType("contextin",  title=_("Context"), optional=True, hide=True, default="in-siptrunk")
 		]
 
 	technology = "SIP"
@@ -48,7 +51,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 	def fixup(self):
 		CfgTrunk.fixup(self)
 		useContext(self.context)
-		useContext("in-siptrunk")
+		useContext(self.contextin)
 
 
 	def createAsteriskConfig(self):
@@ -59,16 +62,17 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		if self.ext:
 			needModule("app_setcidname")
 			needModule("app_setcidnum")
-			ext = "_%s." % self.ext
+			ext = "_%sX." % self.ext
 			c.setSection(self.context)
 			if self.callerid:
 				c.appendExten(ext, "SetCIDName(%s)" % self.callerid)
 			c.appendExten(ext, "SetCIDNum(%s)" % self.id)
-			c.appendExten(ext, "Dial(SIP/%s:%s@%s/${EXTEN:%d},60,r)" % (self.id, self.pw, self.host, len(self.ext)))
+			#c.appendExten(ext, "Dial(SIP/%s:%s@%s/${EXTEN:%d},60,r)" % (self.id, self.pw, self.host, len(self.ext)))
+			c.appendExten(ext, "Dial(SIP/${EXTEN:%d}@%s,60,r)" % (len(self.ext), self.host))
 			#c.appendExten(ext, "Busy")
-		if self.extin and self.contextin:
+		if self.phone and self.contextin:
 			c.setSection(self.contextin)
-			c.appendExten("s", "Goto(default,%s,1)" % self.extin)
+			c.appendExten("s", "Goto(default,%s,1)" % self.phone)
 
 		c = AstConf("sip.conf")
 		c.setSection("general")
@@ -80,8 +84,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			c.append("context=in-siptrunk")
 			c.append("auth=md5")
 			c.append("host=%s" % self.host)
-			c.append("secret= %s" % self.pw)
+			c.append("secret=%s" % self.pw)
+			c.append("canreinvite=no")
 			if self.nat:
 				c.append("nat=yes")
-				c.append("canreinvite=no")
-			
