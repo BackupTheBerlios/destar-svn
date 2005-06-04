@@ -30,6 +30,7 @@
 from Templates import *
 from quixote.form2 import *
 import cdrutils
+import time
 
 
 _q_parent = 'page_admin'
@@ -47,7 +48,7 @@ def _q_test():
 	return cdrutils.db
 
 def     generateYearsNumbers():
-        years = range(2004,2006)
+        years = range(2004,time.localtime()[0]+1)
         return years
 
 def	generateMonthsNumbers():
@@ -71,28 +72,44 @@ def cdrForm [plain] (request, srcextension="", dstextension="" ):
 	monthsnumbers = [ '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12' ]
 	monthsnames = [ _('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('Augost'), _('September'), _('October'), _('November'), _('December') ]
 
+	localtime = time.localtime()
+	
+	localyear = localtime[0]
+	
+	# fix the month value for those smaller than 10 (january ... september) 1 -> 01, 2 ->02 
+	if localtime[1] < 10:
+		localmonth = '0%s' % localtime[1] 
+	else:
+		localmonth = localtime[1]
+	
+	#the same for the day
+	if localtime[2] < 10:
+		localday = '0%s' % localtime[2]
+	else:
+		localday = localtime[2]
+
 	form = Form()
 	
 	form.add(StringWidget, "srcextension",  "%s" % srcextension, title=htmltext(_("Source ")), render_br=True )
 	form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")), render_br=True)
 
-        form.add_checkbox('searchBetweenDates',title= _("Search Between Dates"), render_br=True)
+        form.add_checkbox('searchBetweenDates',title= _("Enable the search between dates"), render_br=True)
 
-	form.add_single_select('fromyear', title=_('From:'), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False )
+	form.add_single_select('fromyear', title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From:')), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False )
 	form.add_single_select('frommonth', options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False )
 	form.add_single_select('fromday', options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers() ), render_br=True )
 	
-	form.add_single_select('toyear', title=_('To:'), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False)
-	form.add_single_select('tomonth', options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False)
-	form.add_single_select('today', options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers()  ), render_br=True)
+	form.add_single_select('toyear', value=localyear, title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To:')), options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False)
+	form.add_single_select('tomonth', value=localmonth, options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False)
+	form.add_single_select('today', value=localday, options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers()  ), render_br=True)
 	
 	form.add_single_select('linesToShow', title=_('Number of records to show:'),options=zip( generateOptionSelect() , range(20,60,10), generateOptionSelect() ))	
 	
 	form.add(SubmitWidget, '_submit', _("Search"), render_br=True)
-	form.add(SubmitWidget, '_newest', _("Newest"), render_br=False)
-	form.add(SubmitWidget, '_newer', _("Newer"), render_br=False)
-	form.add(SubmitWidget, '_older', _("Older"), render_br=False)
-       	form.add(SubmitWidget, '_oldest', _("Oldest"), render_br=False)
+	form.add(SubmitWidget, '_newest', htmltext("|<"), render_br=False)
+	form.add(SubmitWidget, '_newer', htmltext("<<"), render_br=False)
+	form.add(SubmitWidget, '_older', htmltext(">>"), render_br=False)
+       	form.add(SubmitWidget, '_oldest', htmltext(">|"), render_br=False)
 
 	where = []
 	
