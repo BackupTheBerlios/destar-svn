@@ -20,6 +20,7 @@
 
 
 from configlets import *
+import panelutils
 
 
 class CfgPhoneSip(CfgPhone):
@@ -37,12 +38,21 @@ class CfgPhoneSip(CfgPhone):
 		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
 		VarType("calleridname", title=_("Caller-Id Name"), optional=True),
 
+		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+                VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
+
 		VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
 		VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
 		VarType("usemwi",     title=_("Signal waiting mail"), type="bool", optional=True),
 		VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
 	]
 	technology = "SIP"
+
+	def fixup(self):
+		if panelutils.isConfigured() == 1:
+			for v in self.variables:
+				if v.name == "panelLab" or v.name == "panel":
+					v.hide = False
 
 	def createAsteriskConfig(self):
 		needModule("chan_sip")
@@ -69,3 +79,5 @@ class CfgPhoneSip(CfgPhone):
 			sip.append("nat=yes")
 		self.createExtensionConfig()
 		self.createVoicemailConfig(sip)
+		if self.panel:
+			panelutils.createExtButton(self)

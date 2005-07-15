@@ -19,6 +19,7 @@
 
 
 from configlets import *
+import panelutils
 
 
 class CfgTrunkZap(CfgTrunk):
@@ -35,6 +36,9 @@ class CfgTrunkZap(CfgTrunk):
 		VarType("ext",        title=_("Outgoing prefix"), optional=True, len=6),
 		VarType("context",    title=_("Context"), default="default", optional=True, hide=True),
 
+		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+                VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
+
 		VarType("Inbound",    title=_("Incoming calls"), type="label"),
 		VarType("phone",      title=_("Phone to ring"), optional=True, type="choice",
 		                               options=getChoice("CfgPhone")),
@@ -46,6 +50,10 @@ class CfgTrunkZap(CfgTrunk):
 		CfgTrunk.fixup(self)
 		useContext(self.context)
 		useContext(self.contextin)
+		if panelutils.isConfigured() == 1:
+			for v in self.variables:
+				if v.name == "panelLab" or v.name == "panel":
+					v.hide = False
 
 
 	def createAsteriskConfig(self):
@@ -79,4 +87,6 @@ class CfgTrunkZap(CfgTrunk):
 			c.setSection(self.contextin)
 			c.appendExten("s", "Goto(default,%s,1)" % self.phone)
 
+		if self.panel:
+			panelutils.createTrunkButton(self)
 

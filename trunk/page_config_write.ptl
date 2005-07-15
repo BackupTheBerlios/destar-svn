@@ -22,7 +22,7 @@ from Templates import *
 from ConfigHelper import LabelWidget
 from quixote.form2 import *
 from quixote.html import htmlescape
-import os, backend, configlets
+import os, backend, configlets, panelutils
 
 
 _q_parent  = 'page_config'
@@ -51,7 +51,6 @@ def tryToWriteConfig [plain] (configEntries):
 		group = 'asterisk' # TODO
 		htmltext(_("Could not create /etc/asterisk/destar_cfg.py. Make sure the directory is writable for group %s") % group)
 		'.</p>'
-
 
 	errors = False
 	for file,cnf,ok in configEntries:
@@ -131,5 +130,10 @@ def _q_index [plain] (request):
 			if showForm[file]:
 				entries.append( (file,cnf,ok) )
 		showHtmlConfig(entries)
+
+	# Move the panel buttons file if present
+	if panelutils.isConfigured():
+		panelutils.moveButFile()
+		panelutils.restartPanelDaemon()
 
 	footer()

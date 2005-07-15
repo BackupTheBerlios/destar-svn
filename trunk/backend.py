@@ -525,8 +525,7 @@ def fixupConfiglets():
 
 	for obj in configlets.config_entries:
 		obj.fixup()
-
-
+	
 
 
 def countConfiglets(groupName=None, clazz=None):

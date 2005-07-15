@@ -19,6 +19,7 @@
 
 
 from configlets import *
+import panelutils
 
 
 class CfgPhoneIax(CfgPhone):
@@ -37,6 +38,9 @@ class CfgPhoneIax(CfgPhone):
 		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
 		VarType("calleridname", title=_("Caller-Id Name"), optional=True),
 
+		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+                VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
+
 		VarType("Voicemail",    title=_("Voicemail settings"), type="label"),
 		VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
 		VarType("usemwi",       title=_("Signal waiting mail"), type="bool", optional=True),
@@ -44,7 +48,13 @@ class CfgPhoneIax(CfgPhone):
 		VarType("notransfer",   title=_("can this peer transfer natively or not ?"), type="bool")
 		]
 	technology = "IAX2"
-														    
+
+	def fixup(self):
+		if panelutils.isConfigured() == 1:
+			for v in self.variables:
+				if v.name == "panelLab" or v.name == "panel":
+					v.hide = False
+
 	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_iax2")
@@ -62,6 +72,7 @@ class CfgPhoneIax(CfgPhone):
 		elif self.calleridnum:
 			iax.append('callerid=%s' % self.calleridnum)
 		iax.appendValue("notransfer=%s", self.notransfer)
-														    
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)
+		if self.panel:
+			panelutils.createExtButton(self)
