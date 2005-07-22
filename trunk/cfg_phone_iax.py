@@ -74,5 +74,5 @@ class CfgPhoneIax(CfgPhone):
 		iax.appendValue("notransfer=%s", self.notransfer)
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)
-		if self.panel:
+		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createExtButton(self)

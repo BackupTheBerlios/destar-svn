@@ -79,5 +79,5 @@ class CfgPhoneSip(CfgPhone):
 			sip.append("nat=yes")
 		self.createExtensionConfig()
 		self.createVoicemailConfig(sip)
-		if self.panel:
+		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createExtButton(self)
