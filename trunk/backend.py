@@ -139,9 +139,6 @@ def initializeAsteriskConfig():
 	c.append("maxexpirey=3600")
 	c.append("defaultexpirey=3600")
 	c.append("disallow=all")
-	c.append("allow=alaw")
-	c.append("allow=ulaw")
-	c.append("allow=ilbc")
 
 
 	needModule("res_crypto")

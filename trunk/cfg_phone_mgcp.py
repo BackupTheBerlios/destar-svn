@@ -40,6 +40,10 @@ class CfgPhoneMGCP(CfgPhone):
 			VarType("calleridnum",  title=_("Caller-Id-number"), optional=True),
 			VarType("calleridname",	title=_("Caller-Id-Name"), optional=True),
 
+			VarType("Call Group",   title=_("Call group"), type="label"),
+			VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=False, default=False), 
+			VarType("callgroup",  title=_("Call group number"), optional=True),
+
 			VarType("Voicemail",    title=_("Voicemail settings"), type="label", len=6),
 			VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
 			VarType("usemwi",       title=_("Signal waiting mail"), type="bool", optional=True),
@@ -65,6 +69,10 @@ class CfgPhoneMGCP(CfgPhone):
 			mgcp.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
 			mgcp.append('callerid=%s' % self.calleridnum)
+
+		if self.enablecallgroup:
+			mgcp.append('callgroup=%s' % self.callgroup)
+			mgcp.append('pickupgroup=%s' % self.callgroup)
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(mgcp)

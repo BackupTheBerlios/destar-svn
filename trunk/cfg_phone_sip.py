@@ -33,10 +33,18 @@ class CfgPhoneSip(CfgPhone):
 		VarType("nat",        title=_("Is the trunk behind NAT ?"), type="bool", optional=True),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
+		VarType("dtmfmode",    title=_("DTMF mode:"), type="choice",
+                	options=( ("rfc2833",_("RFC 2833 (RTP)")),
+                        	  ("inband",_("In Band (only with ulaw/alaw)")),
+                                  ("info",_("SIP INFO")) ), default="info"),
 
 		VarType("Outbound"  ,   title=_("Calls from the phone"), type="label"),
 		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
-		VarType("calleridname", title=_("Caller-Id Name"), optional=True),
+		VarType("calleridname", title=_("Caller-Id Name"), optional=True),		
+		
+		VarType("Call Group",   title=_("Call group"), type="label"),
+		VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=True, default=False), 
+		VarType("callgroup",  title=_("Call group number"), optional=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
@@ -65,7 +73,7 @@ class CfgPhoneSip(CfgPhone):
 		sip.append("host=dynamic")
 		if self.host:
 			sip.appendValue(self, "host", "defaultip")
-		sip.append("dtmfmode=info")
+		sip.append("dtmfmode=%s" % self.dtmfmode)
 		sip.append("canreinvite=no")
 
 		if self.calleridname and self.calleridnum:
@@ -74,6 +82,11 @@ class CfgPhoneSip(CfgPhone):
 			sip.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
 			sip.append('callerid=%s' % self.calleridnum)
+
+		if self.enablecallgroup:
+			sip.append('callgroup=%s' % self.callgroup)
+			sip.append('pickupgroup=%s' % self.callgroup)
+
 
 		if self.nat:
 			sip.append("nat=yes")

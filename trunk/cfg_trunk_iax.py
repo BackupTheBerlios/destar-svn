@@ -19,6 +19,7 @@
 
 
 from configlets import *
+import panelutils
 
 
 class CfgTrunkIaxtrunk(CfgTrunk):
@@ -34,22 +35,30 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		VarType("host",       title=_("IAX host"), len=25),
 
 		VarType("Outbound",   title=_("Calls to IAX trunk"), type="label"),
-		VarType("ext",        title=_("Extension"), optional=True, len=6),
-		VarType("context",    title=_("Context"), default="out-pstn", optional=True, hide=True),
+		VarType("ext",        title=_("Outgoing Prefix"), optional=True, len=6),
 		VarType("callerid",   title=_("Caller-Id Name"), optional=True),
 
 		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
-		VarType("extin",      title=_("Extension to ring"), optional=True, len=4),
-		VarType("contextin",  title=_("Context"), optional=True, hide=True, default="in-pstn")
+		VarType("phone",      title=_("Extension to ring"), type="choice",
+		                               options=getChoice("CfgPhone")),
+		
+		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+                VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
 		]
 
 	technology = "IAX2"
 
+        def checkConfig(self):
+                res = CfgTrunk.checkConfig(self)
+                if res:
+                        return res
 
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		useContext(self.context)
-		useContext("in-iaxtrunk")
+		if panelutils.isConfigured() == 1:
+			for v in self.variables:
+				if v.name == "panelLab" or v.name == "panel":
+					v.hide = False
 
 
 	def createAsteriskConfig(self):
@@ -61,16 +70,17 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			needModule("app_setcidname")
 			needModule("app_setcidnum")
 			ext = "_%s." % self.ext
-			c.setSection(self.context)
+			context = "out-%s" % self.name
+			c.setSection(context)
 			if self.callerid:
 				c.appendExten(ext, "SetCIDName(%s)" % self.callerid)
 			c.appendExten(ext, "SetCIDNum(%s)" % self.id)
 			c.appendExten(ext, "Dial(IAX2/%s:%s@%s/${EXTEN:%d},60,r)" % (self.id, self.pw, self.host, len(self.ext)))
 			#c.appendExten(ext, "Busy")
-		if self.extin and self.contextin:
-			c.setSection(self.contextin)
-			c.appendExten("s", "Goto(default,%s,1)" % self.extin)
-
+		if self.phone:
+			contextin = "in-%s" % self.name
+			c.setSection(contextin)
+			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
 		c = AstConf("iax.conf")
 		c.setSection("general")
 		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
@@ -78,7 +88,10 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
-			c.append("context=in-iaxtrunk")
+			contextin = "in-%s" % self.name
+			c.append("context=%s" % contextin)
 			c.append("auth=md5")
 			c.append("host=%s" % self.host)
 			c.append("secret= %s" % self.pw)
+		if panelutils.isConfigured() == 1 and self.panel:
+			panelutils.createTrunkButton(self)

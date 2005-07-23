@@ -34,22 +34,24 @@ class CfgTrunkZap(CfgTrunk):
 		VarType("Outbound",   title=_("Calls to the PSTN network"), type="label"),
 		VarType("group",      title=_("Callout group"), type="int", default=1),
 		VarType("ext",        title=_("Outgoing prefix"), optional=True, len=6),
-		VarType("context",    title=_("Context"), default="default", optional=True, hide=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
 
 		VarType("Inbound",    title=_("Incoming calls"), type="label"),
-		VarType("phone",      title=_("Phone to ring"), optional=True, type="choice",
+		VarType("phone",      title=_("Phone to ring"), type="choice",
 		                               options=getChoice("CfgPhone")),
-		VarType("contextin",  title=_("Context"), optional=True, hide=True, default="in-zaptrunk")
 		]
+
+	def checkConfig(self):
+                res = CfgTrunk.checkConfig(self)
+                if res:
+                        return res
+
 
 
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		useContext(self.context)
-		useContext(self.contextin)
 		if panelutils.isConfigured() == 1:
 			for v in self.variables:
 				if v.name == "panelLab" or v.name == "panel":
@@ -69,7 +71,8 @@ class CfgTrunkZap(CfgTrunk):
 		c = AstConf("zapata.conf")
 		c.append("")
 		c.append("; Zaptel Trunk %s" % self.name)
-		c.append("context=%s" % self.contextin)
+		contextin = "in-%s" % self.name
+		c.append("context=%s" % contextin)
 		c.appendValue(self, "signalling")
 		c.appendValue(self, "group")
 		c.appendValue(self, "channel")
@@ -80,13 +83,15 @@ class CfgTrunkZap(CfgTrunk):
 		# e.g. for local calls, national calls, foreign calls etc
 		c = AstConf("extensions.conf")
 		if self.ext:
-			c.setSection(self.context)
-			c.appendExten("%s" % self.ext, "Dial(Zap/%s/${EXTEN:%d},60,T)" % (self.channel,len(self.ext)))
+			ext = "_%s." % self.ext
+			context = "out-%s" % self.name
+			c.setSection(context)
+			c.appendExten("%s" % ext, "Dial(Zap/%s/${EXTEN:%d},60,T)" % (self.channel,len(self.ext)))
+		if self.phone:
+			contextin = "in-%s" % self.name
+			c.setSection(contextin)
+			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
 
-		if self.phone and self.contextin:
-			c.setSection(self.contextin)
-			c.appendExten("s", "Goto(default,%s,1)" % self.phone)
-
-		if self.panel:
+		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)
 

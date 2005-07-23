@@ -41,6 +41,10 @@ class CfgPhoneIax(CfgPhone):
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
 
+		VarType("Call Group",   title=_("Call group"), type="label"),
+		VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=False, default=False), 
+		VarType("callgroup",  title=_("Call group number"), optional=True),
+
 		VarType("Voicemail",    title=_("Voicemail settings"), type="label"),
 		VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
 		VarType("usemwi",       title=_("Signal waiting mail"), type="bool", optional=True),
@@ -71,6 +75,11 @@ class CfgPhoneIax(CfgPhone):
 			iax.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
 			iax.append('callerid=%s' % self.calleridnum)
+		
+		if self.enablecallgroup:
+			iax.append('callgroup=%s' % self.callgroup)
+			iax.append('pickupgroup=%s' % self.callgroup)
+
 		iax.appendValue("notransfer=%s", self.notransfer)
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)

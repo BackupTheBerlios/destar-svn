@@ -155,7 +155,7 @@ def createExtButton(self):
 
 def createTrunkButton(self):
 	p = AstConf("op_buttons.cfg")
-	p.setSection("ZAP/%s" % (self.channel) )
+	p.setSection("%s/%s" % (self.technology, self.channel) )
 	p.append("Position=n")
 	p.append("Label=%s" % self.name)
 

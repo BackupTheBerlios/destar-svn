@@ -37,5 +37,12 @@ def _q_access(request):
 
 def _q_index [plain] (request):
 	header(_q_desc)
+	import configlets
+	phones = False
+	for obj in configlets.config_entries:
+		if obj.groupName == 'Phones':
+			phones = True
+	if not phones:
+		_('You should add at least one phone to configure trunks')
 	presentConfiglets('Trunks')
 	footer()

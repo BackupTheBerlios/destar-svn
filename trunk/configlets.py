@@ -608,6 +608,18 @@ class CfgTrunk(Cfg):
 	def channel(self):
 		return "%s/%s" % (self.technology, self.name)
 
+	def isAddable(self):
+		"We can only add this object if we have at least one other phone defined."
+
+		# BUG: it does somehow not work to simply write for obj in config_entries,
+		# despite the "from configlets import *" above
+		import configlets
+		for obj in configlets.config_entries:
+			if obj.groupName == 'Phones':
+				return True
+		return False
+	isAddable = classmethod(isAddable)
+	# BUG: if the choosed phone is deleted, we have a problem
 
 
 
