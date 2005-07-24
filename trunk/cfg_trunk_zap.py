@@ -41,6 +41,10 @@ class CfgTrunkZap(CfgTrunk):
 		VarType("Inbound",    title=_("Incoming calls"), type="label"),
 		VarType("phone",      title=_("Phone to ring"), type="choice",
 		                               options=getChoice("CfgPhone")),
+		
+		VarType("Gains",      title=_("Reception and Transmission Gains"), type="label"),
+		VarType("rxgain",     title=_("Reception gain (in dB)"), optional=True, default="0.0"),
+		VarType("txgain",     title=_("Transmission gain (in dB)"), optional=True, default="0.0"),
 		]
 
 	def checkConfig(self):
@@ -76,6 +80,8 @@ class CfgTrunkZap(CfgTrunk):
 		c.appendValue(self, "signalling")
 		c.appendValue(self, "group")
 		c.appendValue(self, "channel")
+		c.appendValue(self, "rxgain")
+		c.appendValue(self, "txgain")
 		c.append("")
 
 		# Write special dialout entry
