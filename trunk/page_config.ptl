@@ -80,7 +80,7 @@ def configurationTips [plain] (request):
 	if not backend.countConfiglets("Phones"):
 		configurationTip(
 			_("You should create a phone. Without defined phones you can't make and receive calls."),
-			"Phones/",
+			"phones/",
 			[_("Configuration"), _("Phones")] )
 
 	if not backend.countConfiglets("Trunks"):

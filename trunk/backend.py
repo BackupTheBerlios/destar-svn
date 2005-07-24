@@ -642,6 +642,8 @@ def getChoice(clazz, key='name',val='name'):
 		n = n + 1
 		if isinstance(obj, obj2):
 			a.append( (obj.__dict__[val], obj.__dict__[key]) )
+	if a == [] :
+		a.append( ('','') )
 	return a
 
 configlets.__getChoice = getChoice
