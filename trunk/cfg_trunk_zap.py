@@ -36,16 +36,17 @@ class CfgTrunkZap(CfgTrunk):
 		VarType("ext",        title=_("Outgoing prefix"), optional=True, len=6),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
+                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
 
 		VarType("Inbound",    title=_("Incoming calls"), type="label"),
 		VarType("phone",      title=_("Phone to ring"), type="choice",
 		                               options=getChoice("CfgPhone")),
 		
 		VarType("Gains",      title=_("Reception and Transmission Gains"), type="label"),
-		VarType("rxgain",     title=_("Reception gain (in dB)"), optional=True, default="0.0"),
-		VarType("txgain",     title=_("Transmission gain (in dB)"), optional=True, default="0.0"),
+		VarType("rxgain",     title=_("Reception gain"), hint=_("in dB"), optional=True, default="0.0"),
+		VarType("txgain",     title=_("Transmission gain"), hint=_("in dB"), optional=True, default="0.0"),
 		]
+	technology = "ZAP"
 
 	def checkConfig(self):
                 res = CfgTrunk.checkConfig(self)
@@ -60,6 +61,10 @@ class CfgTrunkZap(CfgTrunk):
 			for v in self.variables:
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
+		if not self.rxgain:
+			self.rxgain = "0.0"
+		if not self.txgain: 
+			self.txgain = "0.0"
 
 
 	def createAsteriskConfig(self):
@@ -77,11 +82,12 @@ class CfgTrunkZap(CfgTrunk):
 		c.append("; Zaptel Trunk %s" % self.name)
 		contextin = "in-%s" % self.name
 		c.append("context=%s" % contextin)
+		c.append("callerid=asreceived")
 		c.appendValue(self, "signalling")
-		c.appendValue(self, "group")
-		c.appendValue(self, "channel")
 		c.appendValue(self, "rxgain")
 		c.appendValue(self, "txgain")
+		c.appendValue(self, "group")
+		c.appendValue(self, "channel")
 		c.append("")
 
 		# Write special dialout entry

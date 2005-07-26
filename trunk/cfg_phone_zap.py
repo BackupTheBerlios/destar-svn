@@ -19,6 +19,7 @@
 
 
 from configlets import *
+import panelutils
 
 
 class CfgPhoneZap(CfgPhone):
@@ -31,6 +32,9 @@ class CfgPhoneZap(CfgPhone):
 	                              options=[('ls','loopstart'),('ks', 'kewlstart')]),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
+		
+		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+                VarType("panel",      title=_("Show this phone in the panel"), type="bool", hide=True),
 
 		VarType("Outbound",     title=_("Calls from the phone"), type="label"),
 		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
@@ -46,6 +50,14 @@ class CfgPhoneZap(CfgPhone):
 		VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
 	]
 	technology = "ZAP"
+
+
+	def fixup(self):
+		CfgPhone.fixup(self)
+		if panelutils.isConfigured() == 1:
+			for v in self.variables:
+				if v.name == "panelLab" or v.name == "panel":
+					v.hide = False
 
 
 	def createAsteriskConfig(self):
@@ -65,6 +77,8 @@ class CfgPhoneZap(CfgPhone):
 		c.append("group=1")
 		# TODO?
 		c.append("context=default")
+		c.append("txgain=0.0")
+		c.append("rxgain=0.0")
 		c.append("channel=%s" % self.channel)
 		c.append("")
 
@@ -81,6 +95,8 @@ class CfgPhoneZap(CfgPhone):
 		self.createExtensionConfig()
 		self.createVoicemailConfig(c)
 	
+		if panelutils.isConfigured() == 1 and self.panel:
+			panelutils.createTrunkButton(self)
 
 	def channelString(self):
 		return "%s/%s" % (self.technology, self.channel)

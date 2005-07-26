@@ -43,7 +43,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		                               options=getChoice("CfgPhone")),
 		
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
+                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
 		]
 
 	technology = "IAX2"
