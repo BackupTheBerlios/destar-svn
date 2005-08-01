@@ -38,7 +38,11 @@ except:
 
 
 def select(
-		fields=['src','dst','answer','billsec','amaflags','disposition'],
+		fields=['src as %s' % _("Source"),
+			'dst as %s' % _("Destination"),
+			'answer as %s' % _("Time_of_answer"),
+			'billsec as %s' % _("Duration"),
+			'disposition as %s' % _("Result")],
 		groupby=[],
 		having=[],
 		where=[],

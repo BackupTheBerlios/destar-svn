@@ -63,14 +63,24 @@ def	generateDaysNumbers():
 		days[i] = "0%s" % days[i]
 	return days
 	
-def 	generateOptionSelect():
-	option = range (20,60,10)
+def 	generateOptionSelect(text=False):
+	option = range (0,110,10)
+	if text:
+		option[0]=_("All")
 	return option
 
-def cdrForm [plain] (request, srcextension="", dstextension="" ):
+fields=[('src',_("Source")),
+	('dst',_("Destination")),
+	('answer',_("Time_of_answer")),
+	('billsec',_("Duration")),
+	('disposition',_("Result"))]
+
+operands=['=','<>','<=','<','>=','>']
+	
+def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", duration="" ):
 
 	monthsnumbers = [ '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12' ]
-	monthsnames = [ _('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('Augost'), _('September'), _('October'), _('November'), _('December') ]
+	monthsnames = [ _('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('August'), _('September'), _('October'), _('November'), _('December') ]
 
 	localtime = time.localtime()
 	
@@ -90,21 +100,25 @@ def cdrForm [plain] (request, srcextension="", dstextension="" ):
 
 	form = Form()
 	
-	form.add(StringWidget, "srcextension",  "%s" % srcextension, title=htmltext(_("Source ")), render_br=True )
-	form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")), render_br=True)
+	form.add(StringWidget, "srcextension",  "%s" % srcextension, title=htmltext(_("Source ")),hint=htmltext(_("Wildcards: % is the 'zero or more characters' wildcard, and _ is the 'exactly one character' wildcard")), render_br=True )
+	form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")),hint=htmltext(_("You can use the same wildcards as above")), render_br=True)
+	form.add(OptionSelectWidget, "durationoperand",  "%s" % duration, title=htmltext(_("Duration")), options=zip(operands,operands,operands),render_br=False)
+	form.add(StringWidget, "duration",  "%s" % duration, hint=htmltext(_("In seconds")),render_br=True)
+	form.add(StringWidget, "mincost",  "%s" % mincost, title=htmltext(_("Cost per minute")), render_br=True)
+	form.add(OptionSelectWidget,'linesToShow', title=_('Number of records to show:'),options=zip( generateOptionSelect(), generateOptionSelect(text=True), generateOptionSelect() ), value=20)	
+	form.add(OptionSelectWidget, 'orderby', title=_('Order by:'),options=fields, render_br=False,value='answer')	
+	form.add_radiobuttons('order', title=_(''),options=[('DESC',_("Desc.")),('ASC',_("Asc."))],value='DESC')	
+	form.add_checkbox('searchBetweenDates',title= _("Search between the following dates"), render_br=True)
 
-        form.add_checkbox('searchBetweenDates',title= _("Enable the search between dates"), render_br=True)
-
-	form.add_single_select('fromyear', title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;From:')), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False )
+	form.add_single_select('fromyear', title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Start:')), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False )
 	form.add_single_select('frommonth', options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False )
 	form.add_single_select('fromday', options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers() ), render_br=True )
 	
-	form.add_single_select('toyear', value=localyear, title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To:')), options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False)
+	form.add_single_select('toyear', value=localyear, title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;End:')), options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False)
 	form.add_single_select('tomonth', value=localmonth, options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False)
 	form.add_single_select('today', value=localday, options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers()  ), render_br=True)
 	
-	form.add_single_select('linesToShow', title=_('Number of records to show:'),options=zip( generateOptionSelect() , range(20,60,10), generateOptionSelect() ))	
-	
+
 	form.add(SubmitWidget, '_submit', _("Search"), render_br=True)
 	form.add(SubmitWidget, '_newest', htmltext("|<"), render_br=False)
 	form.add(SubmitWidget, '_newer', htmltext("<<"), render_br=False)
@@ -124,8 +138,11 @@ def cdrForm [plain] (request, srcextension="", dstextension="" ):
 		global p
 
 		p = form["linesToShow"]
-
-		if (name == '_submit' or name == '_newest'): 
+		
+		if p == 0:
+			p = total
+		
+		if (name == True or name == '_submit' or name == '_newest'): 
 			q = 0
 	
 		elif name == '_newer': 
@@ -142,13 +159,20 @@ def cdrForm [plain] (request, srcextension="", dstextension="" ):
 			
 		elif name == '_oldest': 
 			q = total - total % p
-						
+			
+		elif p == total:
+			q = 0
 		else : 
 			p = 20
 			q = 0
+		
+		if form["mincost"]:
+			mincost=int(form["mincost"])
+		else:
+			mincost = 0
 			
 		form.render()
-		cdrShowResults(where, p, q, total)
+		cdrShowResults(where, p, q, total,form["orderby"],form["order"],mincost)
 
 	if not form.is_submitted() or form.has_errors():
 		return render()
@@ -157,6 +181,8 @@ def cdrForm [plain] (request, srcextension="", dstextension="" ):
 		where.append("src like '%s'" % form["srcextension"])
 	if form["dstextension"]:
 		where.append("dst like '%s'" % form["dstextension"])
+	if form["duration"]:
+		where.append("billsec %s '%s'" % (form["durationoperand"],form["duration"]))
 			
 	if form["searchBetweenDates"]:
 	
@@ -168,14 +194,16 @@ def cdrForm [plain] (request, srcextension="", dstextension="" ):
 	
 	return render()
 
-def	cdrShowResults [html] (where=[], limit, offset, total = 0):
-        
+def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", order="DESC", mincost=0):
 	if total == 0:
 		'--No records to Show--'
 	else:
+		orderby = '%s %s' % (field, order)	
+		cursor = cdrutils.select(order=[str(orderby)], where = where, limit = limit, offset = offset)
 	
-		cursor = cdrutils.select(order=[str('start DESC ')], where = where, limit = limit, offset = offset)
-	
+		totalcost = 0
+		totalmin = 0
+		
 		row = cursor.fetchone()
 		if row and int(offset) >= 0 and int(offset) <= total:
 		
@@ -188,31 +216,54 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0):
                 	'<table border="1"><tr>'
                 	for s in row.keys():
 				'<th>'
-				s
+				_(s)
 				'</th>'
+			'<th>'
+			_('Duration_in_minutes')
+			'</th>'
+			'<th>'
+			_('Cost_of_call')
+			'</th>'
                 	'</tr>'
 		
                 	while row:
 	                	'<tr>'
 				items = row.items()
                         	for c,s in items:
-					if c=="disposition" and s==4:
-						s="Answered"
-					if c=="disposition" and s==1:
-						s="Not answered"
-					if c=="disposition" and s==3:
-						s="Busy"
-					if c=="start":
+					if c==_("Result") and s==4:
+						s=_("Answered")
+					if c==_("Result") and s==1:
+						s=_("Not answered")
+					if c==_("Result") and s==3:
+						s=_("Busy")
+					if c==_("Result") and s==2:
+						s=_("Failed")
+					if c==_("start"):
 						finalDate=s
+					if c==_("Duration"):
+						min = (s % 60) and ((s / 60) + 1) or (s / 60)
+						totalmin += min
+						cost = min * mincost
+						totalcost += cost
 					'<td><center>'
 					if s=="1969-12-31 19:00:00":
 						'-'
 					else: 
 						s
         	                       	'</center></td>'
+				'<td><center>'
+				min
+				'</center></td>'
+				'<td><center>'
+				cost
+				'</center></td>'
 				'</tr>'
+
 				row = cursor.fetchone()
-                	'</table>'
+                	'</table><br><br>'
+		_('Total Duration of shown calls: %s min.' % totalmin)
+		'<br><br>'
+		_('Total Cost of shown calls: %s' % totalcost)
 
 def _q_index [plain] (request):
 	header(_q_desc)
