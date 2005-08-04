@@ -74,7 +74,7 @@ class CfgPhoneIax(CfgPhone):
 		elif self.calleridname:
 			iax.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
-			iax.append('callerid=%s' % self.calleridnum)
+			iax.append('callerid=<%s>' % self.calleridnum)
 		
 		if self.enablecallgroup:
 			iax.append('callgroup=%s' % self.callgroup)

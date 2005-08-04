@@ -31,9 +31,9 @@ msgfmt:
 install:
 	install -d $(PYDIR)
 	#cp -a *.py *.ptl misc medusa $(PYDIR)
-	install *.py *.ptl $(PYDIR)/
+	install -m 644 *.py *.ptl $(PYDIR)/
 	install -d $(PYDIR)/misc
-	install misc/*.py $(PYDIR)/misc/
+	install -m 644 misc/*.py $(PYDIR)/misc/
 ifneq ($(SYS_MEDUSA),1)
 	install -d $(PYDIR)/medusa
 	install medusa/*.py $(PYDIR)/medusa/

@@ -81,7 +81,7 @@ class CfgPhoneSip(CfgPhone):
 		elif self.calleridname:
 			sip.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
-			sip.append('callerid=%s' % self.calleridnum)
+			sip.append('callerid=<%s>' % self.calleridnum)
 
 		if self.enablecallgroup:
 			sip.append('callgroup=%s' % self.callgroup)

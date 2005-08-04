@@ -41,7 +41,9 @@ class AsteriskConfigFile:
 
 
 	def __init__(self, fn):
-		if fn.find('/')==-1:
+		if fn == 'zaptel.conf':
+			fn = os.path.join("/etc", fn)
+		elif fn.find('/')==-1:
 			fn = os.path.join(CONF_DIR, fn)
 		self.fn       = fn
 		self.sections = {}		# dictionary of sections

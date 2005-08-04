@@ -68,7 +68,7 @@ class CfgPhoneMGCP(CfgPhone):
 		elif self.calleridname:
 			mgcp.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
-			mgcp.append('callerid=%s' % self.calleridnum)
+			mgcp.append('callerid=<%s>' % self.calleridnum)
 
 		if self.enablecallgroup:
 			mgcp.append('callgroup=%s' % self.callgroup)

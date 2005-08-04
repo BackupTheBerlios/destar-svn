@@ -346,5 +346,4 @@ class CfgOptSettings(CfgOptSingle):
 		c.destar_comment = False
 		c.append("loadzone = %s" % zapcountry)
 		if self.country != 'us':
-			c.append("loadzone = us")
 			c.append("defaultzone = %s" % zapcountry)
