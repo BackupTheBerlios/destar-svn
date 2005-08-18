@@ -317,6 +317,7 @@ class VarType(Holder):
 		self.__dict__.setdefault("write", "admin")
 		#self.__dict__.setdefault("default", "")
 		self.__dict__.setdefault("hide", False)
+		self.__dict__.setdefault("render_br", True)
 	
 
 
@@ -390,7 +391,7 @@ class Cfg(Holder):
 				if v.__dict__.has_key("default"):
 					#print "set",v.name,"to default",v.default
 					_v = v.default
-				elif v.type in ["string","rostring","choice","mchoice"]:
+				elif v.type in ["string","rostring","choice","mchoice","radio"]:
 					#print "set",v.name,"to ''"
 					_v = ""
 				elif v.type=="int":
@@ -484,7 +485,7 @@ class Cfg(Holder):
 			if _v == None:
 				continue
 			#print v.name,v.type,_v
-			if v.type in ("string","rostring","choice","mchoice"):
+			if v.type in ("string","rostring","choice","mchoice","radio"):
 				cont = '"%s"' % _v
 			elif v.type=="text":
 				cont = '"""%s"""' % _v
