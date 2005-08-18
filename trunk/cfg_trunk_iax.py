@@ -34,16 +34,14 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		VarType("pw",         title=_("IAX password"), len=15),
 		VarType("host",       title=_("IAX host"), len=25),
 
-		VarType("Outbound",   title=_("Calls to IAX trunk"), type="label"),
-		VarType("ext",        title=_("Outgoing Prefix"), optional=True, len=6),
-		VarType("callerid",   title=_("Caller-Id Name"), optional=True),
-
-		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
-		VarType("phone",      title=_("Extension to ring"), type="choice",
-		                               options=getChoice("CfgPhone")),
-		
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
+
+		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
+		VarType("contextin",      title=_("Go to"), type="radio",
+		                               options=[('phone',_("Phone")),('autoatt',_("Auto-Attendant"))]),
+		VarType("phone",      title=_("Extension to ring"), type="choice", optional=True,
+		                               options=getChoice("CfgPhone")),
 		]
 
 	technology = "IAX2"
@@ -52,6 +50,8 @@ class CfgTrunkIaxtrunk(CfgTrunk):
                 res = CfgTrunk.checkConfig(self)
                 if res:
                         return res
+		if self.contextin == 'phone' and not self.phone:
+			return ('phone',_("You should select a phone to ring to"))
 
 	def fixup(self):
 		CfgTrunk.fixup(self)
@@ -59,6 +59,16 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			for v in self.variables:
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
+		import configlets
+		for obj in configlets.config_entries:
+			if obj.__class__.__name__ == 'CfgOptAutoatt':
+				alreadyappended = False
+				for v in self.variables:	
+					if v.name == obj.name:
+						alreadyappended = True
+				if not alreadyappended:
+					self.variables.append(VarType("%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("%sdate" % obj.name, title=_("Time"), hint=_("00:00-23:59|mon-sun|1-31|jan-dic"), len=50, optional=True))
 
 
 	def createAsteriskConfig(self):
@@ -66,32 +76,24 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		needModule("chan_iax2")
 
 		c = AstConf("extensions.conf")
-		if self.ext:
-			needModule("app_setcidname")
-			needModule("app_setcidnum")
-			ext = "_%s." % self.ext
-			context = "out-%s" % self.name
-			c.setSection(context)
-			if self.callerid:
-				c.appendExten(ext, "SetCIDName(%s)" % self.callerid)
-			c.appendExten(ext, "SetCIDNum(%s)" % self.id)
-			c.appendExten(ext, "Dial(IAX2/%s:%s@%s/${EXTEN:%d},60,r)" % (self.id, self.pw, self.host, len(self.ext)))
-			#c.appendExten(ext, "Busy")
-		if self.phone:
-			contextin = "in-%s" % self.name
-			c.setSection(contextin)
+		self.dial = "IAX2/%s:%s@%s/${ARG1}" % (self.id, self.pw, self.host)
+		contextin = "in-%s" % self.name
+		c.setSection(contextin)
+		if self.contextin == 'phone' and self.phone:
 			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
+		elif self.contextin == 'autoatt' and self.autoatt:
+			c.appendExten("s", "Goto(%s,s,1)" % self.autoatt)
+
 		c = AstConf("iax.conf")
 		c.setSection("general")
 		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
-
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
-			contextin = "in-%s" % self.name
 			c.append("context=%s" % contextin)
 			c.append("auth=md5")
 			c.append("host=%s" % self.host)
 			c.append("secret= %s" % self.pw)
+		
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)

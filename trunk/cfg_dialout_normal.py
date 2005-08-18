@@ -30,7 +30,7 @@ class CfgDialoutNormal(CfgDialout):
 	variables = [
 		VarType("name",   title=_("Name"), len=15),
 		VarType("pattern", title=_("Pattern"), len=15),
-		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=25),
+		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=300),
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		
 		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True),
@@ -69,17 +69,16 @@ class CfgDialoutNormal(CfgDialout):
 	def createAsteriskConfig(self):
 		c = AstConf("macros.inc")
 		c.setSection("macro-%s" % self.name)
-		c.append("; params: exten,timeout")
-		if self.secret:
-			c.appendExten("s","Authenticate(%s)" % self.secret)
-		c.appendExten("s","AbsoluteTimeout(${ARG2})")
+		c.append("; params: exten,secret,timeout")
+		c.appendExten("s","Authenticate(${ARG2})")
+		c.appendExten("s","AbsoluteTimeout(${ARG3})")
 		import configlets
 		for obj in configlets.config_entries:
 			if obj.groupName == 'Trunks':
 				if self.__getitem__(obj.name) and self.__getitem__("%sprice" % obj.name):
 					c.appendExten("s","ResetCDR")	
 					c.appendExten("s","SetAccount(%s)" % self.__getitem__("%sprice" % obj.name))	
-					c.appendExten("s","Dial(%s,%d|TtL(${ARG2}:10000))" % (obj.technology,self.ringtime))
+					c.appendExten("s","Dial(%s,%d|TtL(${ARG3}:10000))" % (obj.dial,self.ringtime))
 		c.appendExten("s","Congestion(5)")
 		c.appendExten("s","Goto(2)")
 		c.appendExten("T","ResetCDR(w)")

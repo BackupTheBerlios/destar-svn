@@ -516,7 +516,7 @@ def getSetting(name, default=None):
 
 
 def getChoice(clazz):
-"""
+	"""
 	Here we actually use a trick. In the configlets, the variables[]
 	get's build once at configlets load-time. While the configlets are
 	in the middle of being loaded, you can't really iterate in
