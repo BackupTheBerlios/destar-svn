@@ -26,7 +26,7 @@ class CfgOptAutoatt(CfgOpt):
 
 	shortName = _("Auto attendant")
 	description = _("""Basic auto-attendant. Plays a sound file a number of times and then dials an extension.""")
-	groupName = 'Options'
+	groupName = 'Auto_Attendants'
 		
 	variables = [
 		VarType("name",	  title=_("Name"), len=15),
