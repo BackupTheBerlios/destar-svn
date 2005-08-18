@@ -516,7 +516,7 @@ def getSetting(name, default=None):
 
 
 def getChoice(clazz):
-	"""
+"""
 	Here we actually use a trick. In the configlets, the variables[]
 	get's build once at configlets load-time. While the configlets are
 	in the middle of being loaded, you can't really iterate in
@@ -698,3 +698,25 @@ class CfgApp(Cfg):
 	of software that has a number and that you can dial)."""
 
 	groupName ="Applications"
+	
+class CfgDialout(Cfg):
+	"""Base class for dialout entries."""
+
+	groupName = "Dialout"
+
+
+	def __init__(self,**kw):
+		Cfg.__init__(self,**kw)
+
+
+	def head(self):
+		return (_("Extension"), _("Name"), _("Type"))
+
+
+	def row(self):
+		try:
+			ext = self.pattern
+		except AttributeError:
+			ext = _('None')
+		return (ext, self.name, self.shortName)
+
