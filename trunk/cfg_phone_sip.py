@@ -38,10 +38,6 @@ class CfgPhoneSip(CfgPhone):
                         	  ("inband",_("In Band (only with ulaw/alaw)")),
                                   ("info",_("SIP INFO")) ), default="info"),
 
-		VarType("Outbound"  ,   title=_("Calls from the phone"), type="label"),
-		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
-		VarType("calleridname", title=_("Caller-Id Name"), optional=True),		
-		
 		VarType("Call Group",   title=_("Call group"), type="label"),
 		VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=True, default=False), 
 		VarType("callgroup",  title=_("Call group number"), optional=True),
@@ -53,6 +49,11 @@ class CfgPhoneSip(CfgPhone):
 		VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
 		VarType("usemwi",     title=_("Signal waiting mail"), type="bool", optional=True),
 		VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
+		
+		VarType("Outbound"  ,   title=_("Calls from the phone"), type="label"),
+		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
+		VarType("calleridname", title=_("Caller-Id Name"), optional=True),		
+		VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label"),
 	]
 	technology = "SIP"
 
@@ -61,6 +62,16 @@ class CfgPhoneSip(CfgPhone):
 			for v in self.variables:
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
+		import configlets
+		for obj in configlets.config_entries:
+			if obj.groupName == 'Dialout':
+				alreadyappended = False
+				for v in self.variables:	
+					if v.name == obj.name:
+						alreadyappended = True
+				if not alreadyappended:
+					self.variables.append(VarType("%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("%spassword" % obj.name, title=_("Password:"), len=50, optional=True))
 
 	def createAsteriskConfig(self):
 		needModule("chan_sip")
