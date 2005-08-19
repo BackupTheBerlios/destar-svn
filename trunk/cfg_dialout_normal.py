@@ -72,18 +72,24 @@ class CfgDialoutNormal(CfgDialout):
 	def createAsteriskConfig(self):
 		c = AstConf("macros.inc")
 		c.setSection("macro-%s" % self.name)
-		c.append("; params: exten,secret")
-		c.appendExten("s","GotoIf(${ARG2}?2:3)")
+		c.append("; params: exten,secret,timeout")
+		c.appendExten("s","GotoIf($[${ARG2} = -]?3:2)")
 		c.appendExten("s","Authenticate(${ARG2})")
+		c.appendExten("s","GotoIf($[${ARG3} = 0]?4:7)")
+		c.appendExten("s",'SetVar(timeout=0)')
+		c.appendExten("s",'SetVar(options=Tt)')
+		c.appendExten("s",'Goto(9)')
+		c.appendExten("s",'SetVar(timeout=%d)' % self.maxtime)
+		c.appendExten("s",'SetVar(options=TtL(%d:10000))' % self.maxtime)
 		import configlets
 		for obj in configlets.config_entries:
 			if obj.groupName == 'Trunks':
 				try:
 					if self.__getitem__("trunk_"+obj.name) and self.__getitem__("trunk_%s_price" % obj.name):
 						c.appendExten("s","ResetCDR")	
-						c.appendExten("s","AbsoluteTimeout(%d)" % self.maxtime)
+						c.appendExten("s","AbsoluteTimeout(${timeout})")
 						c.appendExten("s","SetAccount(%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
-						c.appendExten("s","Dial(%s,%d|TtL(%d:10000))" % (obj.dial,self.ringtime,self.maxtime))
+						c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 				except KeyError:
 					pass
 		c.appendExten("s","Congestion(5)")

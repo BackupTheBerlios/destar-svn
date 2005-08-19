@@ -54,6 +54,7 @@ class CfgPhoneSip(CfgPhone):
 		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
 		VarType("calleridname", title=_("Caller-Id Name"), optional=True),		
 		VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
+		VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True, default=True,hide=True),
 	]
 	technology = "SIP"
 
@@ -76,7 +77,7 @@ class CfgPhoneSip(CfgPhone):
 					self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
 		if dialouts:
 			for v in self.variables:
-				if v.name == "Dialout":
+				if v.name == "Dialout" or v.name=="timeout":
 					v.hide = False
 			
 		
@@ -115,6 +116,7 @@ class CfgPhoneSip(CfgPhone):
 		c = AstConf("extensions.conf")
 		c.setSection("out-%s" % self.name)
 		c.append("include=>phones")
+		timeout = not self.timeout and "0" or "1"
 		import configlets
 		for obj in configlets.config_entries:
 			if obj.__class__.__name__ == 'CfgDialoutNormal':
@@ -122,9 +124,9 @@ class CfgPhoneSip(CfgPhone):
 					if self.__getitem__("dialout_"+obj.name):
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)
 						if secret:
-							c.append("exten=>%s,1,Macro(%s,{EXTEN},%s)" % (obj.pattern,obj.name,secret))	
+							c.append("exten=>%s,1,Macro(%s,{EXTEN},%s,%s)" % (obj.pattern,obj.name,secret,timeout))	
 						else:
-							c.append("exten=>%s,1,Macro(%s,{EXTEN})" % (obj.pattern,obj.name))	
+							c.append("exten=>%s,1,Macro(%s,{EXTEN},-,%s)" % (obj.pattern,obj.name,timeout))	
 				except KeyError:
 					pass
 						

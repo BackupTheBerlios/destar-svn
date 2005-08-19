@@ -1,3 +1,6 @@
+2005-08-19
+* Added "enable time restriction" option to cfg_phone_sip 
+
 2005-08-18
 * Added initial support for radio-buttons
 * Added initial support for:
