@@ -1,5 +1,6 @@
 2005-08-19
 * Added "enable time restriction" option to cfg_phone_sip 
+* cfg_opt_logger.py: fixed the facility's single_select 
 
 2005-08-18
 * Added initial support for radio-buttons

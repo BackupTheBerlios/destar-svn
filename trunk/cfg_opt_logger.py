@@ -29,6 +29,13 @@ class CfgOptLogger(CfgOptSingle):
 	        ('debug',   _("Debug output")),
 	      ]
 
+	facility_options = ("","auth", "authpriv", "cron", "daemon",
+		"ftp", "kern", "lpr", "mail",
+	 	"mark", "news", "security", "syslog",
+	 	"user", "uucp", "local0", "local1",
+	 	"local2", "local3", "local4", "local5",
+		"local6", "local7")
+
 	shortName   = _("Logger options")
 	description = _("Asterisk can emit many events to it's console or a log file, Here you can make it more (or less) verbose:")
 	variables   = [VarType("console",
@@ -47,12 +54,7 @@ class CfgOptLogger(CfgOptSingle):
 				title=_("Log to syslog via facility"),
 				type="choice",
 				optional=True,
-				options=("","auth", "authpriv", "cron", "daemon",
-					 "ftp", "kern", "lpr", "mail",
-					 "mark", "news", "security", "syslog",
-					 "user", "uucp", "local0", "local1",
-					 "local2", "local3", "local4", "local5",
-					 "local6", "local7")),
+				options=zip(facility_options, facility_options)),
 		       VarType("syslog",
 				title=_("What kind of messages to log"),
 				type="mchoice",
