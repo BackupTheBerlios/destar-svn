@@ -53,7 +53,7 @@ class CfgPhoneSip(CfgPhone):
 		VarType("Outbound"  ,   title=_("Calls from the phone"), type="label"),
 		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
 		VarType("calleridname", title=_("Caller-Id Name"), optional=True),		
-		VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label"),
+		VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
 	]
 	technology = "SIP"
 
@@ -63,16 +63,23 @@ class CfgPhoneSip(CfgPhone):
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
 		import configlets
+		dialouts=False
 		for obj in configlets.config_entries:
 			if obj.groupName == 'Dialout':
+				dialouts=True
 				alreadyappended = False
 				for v in self.variables:	
-					if v.name == obj.name:
+					if v.name == "dialout_"+obj.name:
 						alreadyappended = True
 				if not alreadyappended:
-					self.variables.append(VarType("%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("%spassword" % obj.name, title=_("Password:"), len=50, optional=True))
-
+					self.variables.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
+		if dialouts:
+			for v in self.variables:
+				if v.name == "Dialout":
+					v.hide = False
+			
+		
 	def createAsteriskConfig(self):
 		needModule("chan_sip")
 
@@ -85,6 +92,7 @@ class CfgPhoneSip(CfgPhone):
 		if self.host:
 			sip.appendValue(self, "host", "defaultip")
 		sip.append("dtmfmode=%s" % self.dtmfmode)
+		sip.append("context=out-%s" % self.name)
 		sip.append("canreinvite=no")
 
 		if self.calleridname and self.calleridnum:
@@ -98,10 +106,28 @@ class CfgPhoneSip(CfgPhone):
 			sip.append('callgroup=%s' % self.callgroup)
 			sip.append('pickupgroup=%s' % self.callgroup)
 
-
 		if self.nat:
 			sip.append("nat=yes")
+
 		self.createExtensionConfig()
 		self.createVoicemailConfig(sip)
+		
+		c = AstConf("extensions.conf")
+		c.setSection("out-%s" % self.name)
+		c.append("include=>phones")
+		import configlets
+		for obj in configlets.config_entries:
+			if obj.__class__.__name__ == 'CfgDialoutNormal':
+				try:
+					if self.__getitem__("dialout_"+obj.name):
+						secret = self.__getitem__("dialout_%s_secret" % obj.name)
+						if secret:
+							c.append("exten=>%s,1,Macro(%s,{EXTEN},%s)" % (obj.pattern,obj.name,secret))	
+						else:
+							c.append("exten=>%s,1,Macro(%s,{EXTEN})" % (obj.pattern,obj.name))	
+				except KeyError:
+					pass
+						
+
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createExtButton(self)

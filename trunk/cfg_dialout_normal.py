@@ -34,24 +34,27 @@ class CfgDialoutNormal(CfgDialout):
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		
 		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True),
-		VarType("defaulttrunk", title=_("Default trunk:"), type="choice", optional=True, options=getChoice("CfgTrunk"))
+		VarType("defaulttrunk", title=_("Default trunk:"), type="choice", optional=True, options=getChoice("CfgTrunk"),hide=True)
 		     ]
 	
 	def fixup(self):
 		Cfg.fixup(self)
 		import configlets
+		trunks=False
 		for obj in configlets.config_entries:
 			if obj.groupName == 'Trunks':
+				trunks=True
 				alreadyappended = False
 				for v in self.variables:	
-					if v.name == "Trunks":
-						v.hide = False
-					if v.name == obj.name:
+					if v.name == "trunk_"+obj.name:
 						alreadyappended = True
 				if not alreadyappended:
-					self.variables.append(VarType("%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("%sprice" % obj.name, title=_("Price for this pattern"), len=10, optional=True))
-
+					self.variables.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), len=10, optional=True))
+		if trunks:
+			for v in self.variables:	
+				if v.name == "Trunks" or v.name=="defaulttrunk":
+					v.hide = False
 
 	def isAddable(self):
 		"We can only add this object if we have at least one trunk defined."
@@ -69,16 +72,20 @@ class CfgDialoutNormal(CfgDialout):
 	def createAsteriskConfig(self):
 		c = AstConf("macros.inc")
 		c.setSection("macro-%s" % self.name)
-		c.append("; params: exten,secret,timeout")
+		c.append("; params: exten,secret")
+		c.appendExten("s","GotoIf(${ARG2}?2:3)")
 		c.appendExten("s","Authenticate(${ARG2})")
-		c.appendExten("s","AbsoluteTimeout(${ARG3})")
 		import configlets
 		for obj in configlets.config_entries:
 			if obj.groupName == 'Trunks':
-				if self.__getitem__(obj.name) and self.__getitem__("%sprice" % obj.name):
-					c.appendExten("s","ResetCDR")	
-					c.appendExten("s","SetAccount(%s)" % self.__getitem__("%sprice" % obj.name))	
-					c.appendExten("s","Dial(%s,%d|TtL(${ARG3}:10000))" % (obj.dial,self.ringtime))
+				try:
+					if self.__getitem__("trunk_"+obj.name) and self.__getitem__("trunk_%s_price" % obj.name):
+						c.appendExten("s","ResetCDR")	
+						c.appendExten("s","AbsoluteTimeout(%d)" % self.maxtime)
+						c.appendExten("s","SetAccount(%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
+						c.appendExten("s","Dial(%s,%d|TtL(%d:10000))" % (obj.dial,self.ringtime,self.maxtime))
+				except KeyError:
+					pass
 		c.appendExten("s","Congestion(5)")
 		c.appendExten("s","Goto(2)")
 		c.appendExten("T","ResetCDR(w)")

@@ -38,10 +38,11 @@ class CfgTrunkIaxtrunk(CfgTrunk):
                 VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
 
 		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
-		VarType("contextin",      title=_("Go to"), type="radio",
+		VarType("contextin",      title=_("Go to"), type="radio", hide=True, default='phone',
 		                               options=[('phone',_("Phone")),('autoatt',_("Auto_Attendant"))]),
-		VarType("phone",      title=_("Extension to ring"), type="choice", optional=True,
+		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
 		                               options=getChoice("CfgPhone")),
+		VarType("dial", hide=True, len=50),
 		]
 
 	technology = "IAX2"
@@ -60,29 +61,49 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
 		import configlets
+		autoatts=False
 		for obj in configlets.config_entries:
 			if obj.__class__.__name__ == 'CfgOptAutoatt':
+				autoatts=True
 				alreadyappended = False
 				for v in self.variables:	
-					if v.name == obj.name:
+					if v.name == "autoatt_"+obj.name:
 						alreadyappended = True
 				if not alreadyappended:
-					self.variables.append(VarType("%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("%sdate" % obj.name, title=_("Time"), hint=_("00:00-23:59|mon-sun|1-31|jan-dic"), len=50, optional=True))
-
+					self.variables.append(VarType("autoatt_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("autoatt_%s_time" % obj.name, title=_("Time"), hint=_("00:00-23:59|mon-sun|1-31|jan-dic"), len=50, optional=True))
+		if autoatts:
+			for v in self.variables:
+				if v.name == "contextin":
+					v.hide = False
+				if v.name == "phone":
+					v.optional = True
 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_iax2")
-
-		c = AstConf("extensions.conf")
+		#Dial part to use on dialout macro
 		self.dial = "IAX2/%s:%s@%s/${ARG1}" % (self.id, self.pw, self.host)
+		#What to do with incoming calls
+		c = AstConf("extensions.conf")
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
 		if self.contextin == 'phone' and self.phone:
 			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
-		elif self.contextin == 'autoatt' and self.autoatt:
-			c.appendExten("s", "Goto(%s,s,1)" % self.autoatt)
+		elif self.contextin == 'autoatt':
+			import configlets
+			for obj in configlets.config_entries:
+				if obj.__class__.__name__ == 'CfgOptAutoatt':
+					try:
+						autoatt = self.__getitem__("autoatt_%s" % obj.name)
+						if autoatt:
+							time = self.__getitem__("autoatt_%s_time" % obj.name)
+							if time:
+								c.append("include=>%s|%s" % (obj.name,time))
+							else:
+								c.append("include=>%s" % obj.name)
+					except KeyError:
+						pass
 
 		c = AstConf("iax.conf")
 		c.setSection("general")
