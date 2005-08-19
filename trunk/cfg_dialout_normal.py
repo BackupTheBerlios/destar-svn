@@ -45,7 +45,7 @@ class CfgDialoutNormal(CfgDialout):
 			if obj.groupName == 'Trunks':
 				trunks=True
 				alreadyappended = False
-				for v in self.variables:	
+				for v in self.variables:
 					if v.name == "trunk_"+obj.name:
 						alreadyappended = True
 				if not alreadyappended:

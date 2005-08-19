@@ -54,7 +54,7 @@ class CfgPhoneSip(CfgPhone):
 		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
 		VarType("calleridname", title=_("Caller-Id Name"), optional=True),		
 		VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
-		VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True, default=True,hide=True),
+		VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
 	]
 	technology = "SIP"
 
@@ -83,6 +83,7 @@ class CfgPhoneSip(CfgPhone):
 		
 	def createAsteriskConfig(self):
 		needModule("chan_sip")
+		needModule("app_authenticate")
 
 		sip = AstConf("sip.conf")
 		sip.setSection(self.name)

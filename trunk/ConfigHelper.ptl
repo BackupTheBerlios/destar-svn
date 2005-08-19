@@ -101,7 +101,7 @@ def presentConfiglets [plain] (group):
 
 def __addit__(obj):
 	backend.addConfiglet(obj)
-
+	backend.fixupConfiglets()
 
 def lookupConfiglets(request,component):
         if not component:
@@ -109,6 +109,7 @@ def lookupConfiglets(request,component):
 
         try:
                 obj = backend.newConfiglet(component)
+		backend.fixupConfiglets()
         except KeyError:
                 return errorpage("%s %s" % (_("Object does not exist"),component))
         return configletsForm(request,
@@ -194,6 +195,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 	if request.form.has_key('_delete'):
 		print "-->delete"
 		backend.deleteConfiglet(obj._id)
+		backend.fixupConfiglets()
 		return request.redirect(exitPath)
 
 
