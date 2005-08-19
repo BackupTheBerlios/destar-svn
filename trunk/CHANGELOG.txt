@@ -1,3 +1,9 @@
+2005-08-18
+* Added initial support for radio-buttons
+* Added initial support for:
+  - auto-attendants
+  - dialout-entries
+
 2005-04-28
 * some CDR improvement
 
