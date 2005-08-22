@@ -44,8 +44,15 @@ def _q_index [plain] (request):
 		" '<b>"
 		request.session.user
 		"</b>'. "
-		htmltext(_("Your access level is"))
-		" %d." % request.session.level
+		if request.session.level:
+			htmltext(_("Your access level is "))
+			levels=[_("disabled"),
+				_("User"),
+				_("Administrator"),
+				_("Configurator")]
+			"'%s'. " % levels[request.session.level]
+		else:
+			htmltext(_("Your account is disabled. "))
 	else:
 		htmltext(_("You are not logged in."))
 	' '

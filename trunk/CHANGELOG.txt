@@ -1,6 +1,7 @@
 2005-08-22
 * Added a message when there is nothing to write (empty destar_cfg.py)
 * Added a warning message if there is not destar_cfg.py
+* Re-added "Phone Features or Settings" by migrating old code from UserUI.ptl and UserPage.ptl to page_user_features.ptl
 
 2005-08-19
 * Added "enable time restriction" option to cfg_phone_sip 
