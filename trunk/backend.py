@@ -57,7 +57,10 @@ def loadPythonConfig():
 		try:
 			execfile(fn)
 		except IOError:
-			execfile(DESTAR_CFG)
+			try:
+				execfile(DESTAR_CFG)
+			except IOError:
+				print _("Warning: There is no %s or %s file yet." % (fn,DESTAR_CFG))
 	except NameError:
 		pass
 
@@ -318,13 +321,13 @@ def createAsteriskConfig(prepareOnly=False):
 	if not __loaded: loadPythonConfig()
 
 	if not configlets.config_entries:
-		return
+		return [] 
 	initializeAsteriskConfig()
 	# First write the options
 	for c in configlets.config_entries:
 		if isinstance(c, CfgOpt):
 			c.createAsteriskConfig()
-	# The the rest
+	# Then the rest
 	for c in configlets.config_entries:
 		if not isinstance(c, CfgOpt):
 			c.createAsteriskConfig()

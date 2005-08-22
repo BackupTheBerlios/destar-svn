@@ -1,3 +1,7 @@
+2005-08-22
+* Added a message when there is nothing to write (empty destar_cfg.py)
+* Added a warning message if there is not destar_cfg.py
+
 2005-08-19
 * Added "enable time restriction" option to cfg_phone_sip 
 * cfg_opt_logger.py: fixed the facility's single_select 
