@@ -1,3 +1,6 @@
+2005-08-23
+* Added 'new' and 'old' voicemail messages on page_user_state.ptl 
+
 2005-08-22
 * Added a message when there is nothing to write (empty destar_cfg.py)
 * Added a warning message if there is not destar_cfg.py

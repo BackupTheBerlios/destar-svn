@@ -611,7 +611,15 @@ def setVar(family, key, val):
 	else:
 		conn.action('Command', Command='database del %s %s' % (family,key))
 
-
+def checkMailBox(ext):
+	vmstate = {}
+	for s in conn.action('MailboxCount', Mailbox=ext):
+		if s.startswith('NewMessages: '):
+			vmstate['New'] = s[13:]
+		if s.startswith('OldMessages: '):
+			vmstate['Old'] = s[13:]
+	return vmstate
+	
 if __name__ == '__main__':
 	connect()
 	if not isConnected():
