@@ -1,0 +1,127 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from quixote.form2 import *
+import backend, manager, configlets
+import time,types
+
+_q_parent  = 'page_user'
+_q_title   = _("Phone State")
+_q_desc    = _("Status of your phone")
+_q_link    = 'state'
+_q_menupos = 10
+_q_level   = 1
+
+
+def _q_access(request):
+        if request.session.level < _q_level:
+		cantAccessPage()
+
+def phoneState [plain] (obj):
+	(phones, other) = backend.determineStateOfPhones()
+	
+	state = copy.copy(obj._state.__dict__)
+
+	# TODO: use CSS
+	'<table border=1 cellpadding=2 cellspacing=0>'
+
+	try:
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('State')), _(state['State']) )
+		del state['State']
+	except KeyError:
+		pass
+
+	# Last updated
+	try:
+		t = state['LastUpdate']
+		if t:
+			'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Last updated')), backend.time2HMS(time.time()-t))
+		del state['LastUpdate']
+	except KeyError:
+		pass
+
+	# TODO: Hangup cause
+
+	'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Name')), obj.name)
+
+	'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Extension')), obj.ext)
+
+	try:
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Registration status')), _(state['PeerStatus']) )
+		del state['PeerStatus']
+	except KeyError:
+		pass
+
+	try:
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Channel ID')), _(state['Channel']) )
+		del state['Channel']
+	except KeyError:
+		pass
+
+	try:
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Called extension')), _(state['Extension']) )
+		del state['Extension']
+	except KeyError:
+		pass
+
+	try:
+		'<tr><td>%s:</td><td>%s(%s)</td></tr>' % ( htmltext(_('Application')), state['Application'], state['AppData'] )
+		del state['Application']
+		del state['AppData']
+	except KeyError:
+		pass
+
+	try:
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Context')), _(state['Context']) )
+		del state['Context']
+	except KeyError:
+		pass
+
+	try:
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Caller ID')), _(state['Callerid']) )
+		del state['Callerid']
+	except KeyError:
+		pass
+
+	k = state.keys()
+	if k:
+		'<tr><td>%s</td><td>' % htmltext(_("Other state"))
+		k.sort()
+		for s in k:
+			if s in ['Event', 'Peer', 'Cause', 'Priority', 'Uniqueid']: continue
+			val = state[s]
+			'%s: %s<br />' % (s, val)
+
+		'</td></tr>'
+
+	'</table>'
+
+def _q_index [plain] (request):
+	header(_q_desc)
+	if request.session.phone:
+		phone = backend.getConfiglet(name=request.session.phone)
+		phoneState(phone)
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("You don't have an associated phone"))
+		'</span></p>'
+	footer()
+
