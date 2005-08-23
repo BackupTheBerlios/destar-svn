@@ -471,6 +471,13 @@ def addConfiglet(obj):
 
 
 
+def updateConfiglet(obj):
+	"""Updates the configlet 'obj' in configlets.config_entries."""
+
+
+	configlets.config_entries[int(obj._id)] = obj
+
+
 
 def deleteConfiglet(id):
 	"""Deletes the configlet with index 'id' from configlets.config_entries."""

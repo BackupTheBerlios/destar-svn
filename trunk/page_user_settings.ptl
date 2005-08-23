@@ -24,9 +24,9 @@ import backend, manager, configlets
 import time,types
 
 _q_parent  = 'page_user'
-_q_title   = _("Phone Features")
-_q_desc    = _("Set your phone's call features")
-_q_link    = 'features'
+_q_title   = _("Phone Settings")
+_q_desc    = _("Set your phone settings")
+_q_link    = 'settings'
 _q_menupos = 10
 _q_level   = 1
 
@@ -35,44 +35,60 @@ def _q_access(request):
         if request.session.level < _q_level:
 		cantAccessPage()
 
-def phoneFeaturesForm(request, obj, exitPath=".."):
+def phoneSettingsForm(request, phone, exitPath=".."):
 
 	if request.form.has_key('_cancel'):
 		return request.redirect(exitPath)
 	form = Form()
 
-#	vm   = int(manager.getVar('VM',   obj.ext, True))
-	dnd  = manager.getVar('DND',  obj.name, False)
-	dsec = int(manager.getVar('DSEC', obj.name, 45))
-	cfim = manager.getVar('CFIM', obj.name, '')
-	cfbs = manager.getVar('CFBS', obj.name, '')
+#	vm   = int(manager.getVar('VM',   phone.ext, True))
+	dnd  = manager.getVar('DND',  phone.name, False)
+	dsec = int(manager.getVar('DSEC', phone.name, 45))
+	cfim = manager.getVar('CFIM', phone.name, '')
+	cfbs = manager.getVar('CFBS', phone.name, '')
 
 	phones = backend.getChoice("CfgPhone")
 	if type(phones) == types.FunctionType:
 		phones = phones()
-	phones.remove( (obj.name,obj.name) )
+	phones.remove( (phone.name,phone.name) )
 	phones.insert(0, ('',''))
 
 	form.add(CheckboxWidget,     "dnd",  dnd,          title=_("Enable 'do not disturb'"))
 	form.add(SingleSelectWidget, "cfim", cfim, phones, title=_("Immediate call forwarding to"))
-	form.add(IntWidget,          "dsec", dsec,         title=_("Seconds of incoming ring time"), maxlength=3, size=3)
 	form.add(SingleSelectWidget, "cfbs", cfbs, phones, title=_("Forward call when busy/unavailable to"))
+	form.add(IntWidget,          "dsec", dsec,         title=_("Seconds of incoming ring time"), maxlength=3, size=3)
 #	form.add(CheckboxWidget,     "vm",   vm,           title=_("Use voice mailbox"))
+	form.add(StringWidget,       "pin", phone.pin, title=_("Voicemail pin"), len=10)
+	try:
+		if phone.secret:
+			form.add(StringWidget,  "secret", phone.secret, title=_("Extension Password"), len=10)
+	except AttributeError:
+		pass
 	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)
 	form.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
 
 	if not form.is_submitted() or form.has_errors():
 		return form.render()
 
-#	manager.setVar('VM',   obj.ext, form['vm'])
-	manager.setVar('DND',  obj.ext, form['dnd'])
-	manager.setVar('DSEC', obj.ext, form['dsec'])
-	manager.setVar('CFIM', obj.ext, form['cfim'] or '')
-	manager.setVar('CFBS', obj.ext, form['cfbs'] or '')
-	manager.setVar('DND',  obj.name, form['dnd'])
-	manager.setVar('DSEC', obj.name, form['dsec'])
-	manager.setVar('CFIM', obj.name, form['cfim'] or '')
-	manager.setVar('CFBS', obj.name, form['cfbs'] or '')
+#	manager.setVar('VM',   phone.ext, form['vm'])
+	manager.setVar('DND',  phone.ext, form['dnd'])
+	manager.setVar('DSEC', phone.ext, form['dsec'])
+	manager.setVar('CFIM', phone.ext, form['cfim'] or '')
+	manager.setVar('CFBS', phone.ext, form['cfbs'] or '')
+	manager.setVar('DND',  phone.name, form['dnd'])
+	manager.setVar('DSEC', phone.name, form['dsec'])
+	manager.setVar('CFIM', phone.name, form['cfim'] or '')
+	manager.setVar('CFBS', phone.name, form['cfbs'] or '')
+
+	if form["pin"]:
+		phone.pin = form["pin"]
+	try:
+		if form["secret"]:
+			phone.secret = form["secret"]
+	except KeyError:	
+		pass
+	backend.updateConfiglet(phone)
+	backend.createPythonConfig()
 
 	return request.redirect(exitPath)
 
@@ -88,9 +104,9 @@ def _q_index [plain] (request):
 		'<p><span class="errornotice">'
 		htmltext(_("The manager access is not working!"))
 		'</span></p>'
-	elif request.session.phone:
+	elif request.session.phone: 
 		phone = backend.getConfiglet(name=request.session.phone)
-		phoneFeaturesForm(request,phone)
+		phoneSettingsForm(request,phone)
 	else:
 		'<p><span class="errornotice">'
 		htmltext(_("You don't have an associated phone"))

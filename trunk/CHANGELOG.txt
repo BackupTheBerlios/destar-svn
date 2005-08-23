@@ -1,7 +1,8 @@
 2005-08-22
 * Added a message when there is nothing to write (empty destar_cfg.py)
 * Added a warning message if there is not destar_cfg.py
-* Re-added "Phone Features or Settings" by migrating old code from UserUI.ptl and UserPage.ptl to page_user_features.ptl
+* Re-added "Phone Features or Settings" by migrating old code from UserUI.ptl and UserPage.ptl to page_user_settings.ptl, and added options to change voicemail pin and extension password.
+* Changed page_login password from StringWidget to Passwordwidget.
 
 2005-08-19
 * Added "enable time restriction" option to cfg_phone_sip 
