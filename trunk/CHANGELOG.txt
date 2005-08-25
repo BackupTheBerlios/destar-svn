@@ -1,3 +1,7 @@
+2005-08-25
+* Added misc/page_admin_systemstatus.ptl to show cpu load, memory info, etc.
+* fixed a missing 'Programmer' user type on page_user.ptl and page_user_info.ptl
+
 2005-08-23
 * Added 'new' and 'old' voicemail messages on page_user_state.ptl 
 

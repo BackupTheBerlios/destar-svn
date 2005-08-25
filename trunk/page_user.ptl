@@ -46,7 +46,8 @@ def loggedIn [plain] (request):
 			levels=[_("disabled"),
 				_("User"),
 				_("Administrator"),
-				_("Configurator")]
+				_("Configurator"),
+				_("Programmer")]
 			"'%s'. " % levels[request.session.level]
 		else:
 			htmltext(_("Your account is disabled. "))
