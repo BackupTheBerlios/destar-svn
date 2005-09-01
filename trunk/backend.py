@@ -306,13 +306,13 @@ def initializeAsteriskConfig():
 	c.append("exten => T,3,Hangup")
 
 
-def createAsteriskConfig(prepareOnly=False):
+def createAsteriskConfig():
 	"""This creates all the Asterisk config files in /etc/asterisk.
 
 	First, we create an in-memory representation of all config files
 	to create. Then we check if any of the config files is already
-	in use, but not by Asterisk. We return an array of strings with
-	all file names that cannot overwritten.
+	in use, but not by Asterisk. We make a backupof all file names 
+	that cannot be overwritten.
 
 	Only when all config files are safe to write, we creat all of
 	them at once."""
@@ -320,6 +320,8 @@ def createAsteriskConfig(prepareOnly=False):
 
 	if not __loaded: loadPythonConfig()
 
+	createPythonConfig()
+	
 	if not configlets.config_entries:
 		return [] 
 	initializeAsteriskConfig()
@@ -345,20 +347,27 @@ def createAsteriskConfig(prepareOnly=False):
 	# test if all config files are OK to be written or overwritten
 	res = []
 	for fn,cnf in configlets.asterisk_configfiles:
-		ok = True
 		# zaptel.conf can't have CONF_TAG at the top, so no need to search for it
 		if fn != 'zaptel.conf' and os.path.exists(cnf.fn):
 			f = open(cnf.fn, "r")
 			s = f.readline()
 			if s != configlets.CONF_TAG:
-				#print "cnf.fn is not safe"
-				ok = False
-		res.append( (fn,cnf,ok) )
-	if not ok or prepareOnly: return res
+				# Backup file not created by us
+				try:
+					backupAsteriskConfig(fn)
+				except OSError:
+					print _("Error backing up %s") % fn 
+		res.append( (fn,cnf) )
 	
-	# if we had no errors, write all stuff out
+	# write all stuff out
 	for _fn,cnf in configlets.asterisk_configfiles:
 		cnf.write()
+	
+	# Move the panel buttons file if present
+	if panelutils.isConfigured():
+		panelutils.moveButFile()
+		panelutils.restartPanelDaemon()
+
 	return res
 
 
@@ -779,5 +788,8 @@ if __name__ == "__main__":
 	createAsteriskConfig()
 
 def reloadAsterisk():
-	"""This reload the Asterisk PBX."""
-        return commands.getoutput('/usr/sbin/asterisk -rx reload')
+	"""This reloads the Asterisk PBX."""
+	createAsteriskConfig()
+	import manager
+	s = manager.reloadAsterisk()
+	return "<br/>".join(s)

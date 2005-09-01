@@ -19,6 +19,7 @@
 
 
 from configlets import *
+import panelutils
 
 
 class CfgTrunkSiptrunk(CfgTrunk):
@@ -32,17 +33,18 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		VarType("id",         title=_("SIP username"),   len=15),
 		VarType("pw",         title=_("SIP password"), len=15),
 		VarType("host",       title=_("SIP host"), len=25),
-		VarType("nat",      title=_("Is the trunk behind NAT ?"), type="bool"),
+		VarType("forward",      title=_("Enable forward address type?"), type="bool"),
+		VarType("nat",      title=_("Is the trunk behind NAT?"), type="bool"),
 
-		VarType("Outbound",   title=_("Calls to SIP trunk"), type="label"),
-		VarType("ext",        title=_("Extension"), optional=True, len=6),
-		VarType("context",    title=_("Context"), default="default", optional=True, hide=True),
-		VarType("callerid",   title=_("Caller-Id Name"), optional=True),
+		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
 
 		VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
-		VarType("phone",      title=_("Phone to ring"), optional=True, type="choice",
-		                    options=getChoice("CfgPhone")),
-		VarType("contextin",  title=_("Context"), optional=True, hide=True, default="in-siptrunk")
+		VarType("contextin",      title=_("Go to"), type="radio", hide=True, default='phone',
+		                               options=[('phone',_("Phone")),('autoatt',_("Auto_Attendant"))]),
+		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
+		                               options=getChoice("CfgPhone")),
+		VarType("dial", hide=True, len=50),
 		]
 
 	technology = "SIP"
@@ -50,49 +52,55 @@ class CfgTrunkSiptrunk(CfgTrunk):
 
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		useContext(self.context)
-		useContext(self.contextin)
-
-
+		
+        def checkConfig(self):
+                res = CfgTrunk.checkConfig(self)
+                
 	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_sip")
 
+		#Dial part to use on dialout macro
+		self.dial = "SIP/${ARG1}@%s" % (self.host)
+		if self.forward:
+			self.dial += "/{$ARG1}" 
+		
+		#What to do with incoming calls
 		c = AstConf("extensions.conf")
-		if self.ext:
-			needModule("app_setcidname")
-			needModule("app_setcidnum")
-			ext = "_%sX." % self.ext
-			c.setSection(self.context)
-			if self.callerid:
-				c.appendExten(ext, "SetCIDName(%s)" % self.callerid)
-			c.appendExten(ext, "SetCIDNum(%s)" % self.id)
-			c.appendExten(ext, "Dial(SIP/${EXTEN:%d}@%s,60,r)" % (len(self.ext), self.host))
-			c.appendExten(ext, "Congestion")
-		if self.phone and self.contextin:
-			c.setSection(self.contextin)
-			c.appendExten("s", "Goto(default,%s,1)" % self.phone)
+		contextin = "in-%s" % self.name
+		c.setSection(contextin)
+		if self.contextin == 'phone' and self.phone:
+			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
+		elif self.contextin == 'autoatt':
+			import configlets
+			for obj in configlets.config_entries:
+				if obj.__class__.__name__ == 'CfgOptAutoatt':
+					try:
+						autoatt = self.__getitem__("autoatt_%s" % obj.name)
+						if autoatt:
+							time = self.__getitem__("autoatt_%s_time" % obj.name)
+							if time:
+								c.append("include=>%s|%s" % (obj.name,time))
+							else:
+								c.append("include=>%s" % obj.name)
+					except KeyError:
+						pass
 
 		c = AstConf("sip.conf")
 		c.setSection("general")
 		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
 
 		if not c.hasSection(self.name):
-			c.setSection("out-%s" % self.name)
-			c.append("type=user")
+			c.setSection(self.name)
+			c.append("type=friend")
 			c.append("username=%s" % self.id)
 			c.append("secret=%s" % self.pw)
 			c.append("host=%s" % self.host)
-			c.append("context=out-siptrunk")
+			c.append("context=%s" % contextin)
 			c.append("auth=md5")
 			c.append("canreinvite=no")
 			if self.nat:
 				c.append("nat=yes")
 
-			c.setSection("in-%s" % self.name)
-			c.append("type=peer")
-			c.append("host=%s" % self.host)
-			c.append("context=in-siptrunk")
-			c.append("canreinvite=no")
-			if self.nat:
-				c.append("nat=yes")
+		if panelutils.isConfigured() == 1 and self.panel:
+			panelutils.createTrunkButton(self)

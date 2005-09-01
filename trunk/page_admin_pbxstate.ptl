@@ -22,12 +22,12 @@ from Templates import *
 import backend, manager
 import time
 
-_q_parent  = 'page_user'
-_q_title   = _("Asterisk State")
-_q_desc    = _("Status of Asterisk")
+_q_parent  = 'page_admin'
+_q_title   = _("PBX State")
+_q_desc    = _("Status of Asterisk/DeStar PBX")
 _q_link    = 'pbxstate'
 _q_menupos = 10
-_q_level   = 1
+_q_level   = 2
 
 
 def _q_access(request):

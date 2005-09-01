@@ -102,6 +102,7 @@ def presentConfiglets [plain] (group):
 def __addit__(obj):
 	backend.addConfiglet(obj)
 	backend.fixupConfiglets()
+	backend.createAsteriskConfig()
 
 def lookupConfiglets(request,component):
         if not component:

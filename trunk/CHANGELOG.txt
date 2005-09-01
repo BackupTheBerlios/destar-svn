@@ -1,3 +1,10 @@
+2005-09-01
+* cfg_dialout_normal.py: Fixed wrong Goto
+* configlets.py: continued support for auto-attendants on CfgTrunk
+* Changed page_user_pbxstate.ptl to page_admin_pbxstate.ptl for usability reasons
+* Changed writing concept: now asterisk files are written with every little change
+* Changed page_config_write.ptl to page_config_viewconf.ptl. Now the backups are created without asking.
+
 2005-08-25
 * Added misc/page_admin_systemstatus.ptl to show cpu load, memory info, etc.
 * fixed a missing 'Programmer' user type on page_user.ptl and page_user_info.ptl

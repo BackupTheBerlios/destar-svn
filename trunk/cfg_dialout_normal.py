@@ -93,7 +93,7 @@ class CfgDialoutNormal(CfgDialout):
 				except KeyError:
 					pass
 		c.appendExten("s","Congestion(5)")
-		c.appendExten("s","Goto(2)")
+		c.appendExten("s","Goto(9)")
 		c.appendExten("T","ResetCDR(w)")
 		c.appendExten("T","NoCDR")
 		c.appendExten("T","Hangup")

@@ -19,7 +19,7 @@
 
 
 import sys, os, types, sha, binascii, time
-
+import panelutils
 
 CONF_DIR = "/etc/asterisk"
 CONF_TAG = "; Automatically created by DESTAR\n"
@@ -595,17 +595,12 @@ class CfgTrunk(Cfg):
 		Cfg.__init__(self,**kw)
 
 
-
 	def head(self):
-		return (_("Extension"), _("Name"), _("Type"))
+		return (_("Name"), _("Type"), _("Dial Command"))
 
 
 	def row(self):
-		try:
-			ext = self.ext
-		except AttributeError:
-			ext = _('None')
-		return (ext, self.name, self.shortName)
+		return (self.name, self.shortName, self.dial)
 
 
 	def channel(self):
@@ -624,6 +619,37 @@ class CfgTrunk(Cfg):
 	isAddable = classmethod(isAddable)
 	# BUG: if the choosed phone is deleted, we have a problem
 
+	def checkConfig(self):
+                res = Cfg.checkConfig(self)
+                if res:
+                        return res
+		if self.contextin == 'phone' and not self.phone:
+			return ('phone',_("You should select a phone to ring to"))
+
+	def fixup(self):
+		Cfg.fixup(self)
+		if panelutils.isConfigured() == 1:
+			for v in self.variables:
+				if v.name == "panelLab" or v.name == "panel":
+					v.hide = False
+		import configlets
+		autoatts=False
+		for obj in configlets.config_entries:
+			if obj.__class__.__name__ == 'CfgOptAutoatt':
+				autoatts=True
+				alreadyappended = False
+				for v in self.variables:	
+					if v.name == "autoatt_"+obj.name:
+						alreadyappended = True
+				if not alreadyappended:
+					self.variables.append(VarType("autoatt_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("autoatt_%s_time" % obj.name, title=_("Time"), hint=_("00:00-23:59|mon-sun|1-31|jan-dic"), len=50, optional=True))
+		if autoatts:
+			for v in self.variables:
+				if v.name == "contextin":
+					v.hide = False
+				if v.name == "phone":
+					v.optional = True
 
 
 class CfgPhone(Cfg):

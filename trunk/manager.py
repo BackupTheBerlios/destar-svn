@@ -620,6 +620,9 @@ def checkMailBox(ext):
 			vmstate['Old'] = s[13:]
 	return vmstate
 	
+def reloadAsterisk():
+	return conn.action('Command', Command='reload')
+
 if __name__ == '__main__':
 	connect()
 	if not isConnected():

@@ -46,40 +46,14 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		]
 
 	technology = "IAX2"
-
-        def checkConfig(self):
-                res = CfgTrunk.checkConfig(self)
-                if res:
-                        return res
-		if self.contextin == 'phone' and not self.phone:
-			return ('phone',_("You should select a phone to ring to"))
-
+	
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		if panelutils.isConfigured() == 1:
-			for v in self.variables:
-				if v.name == "panelLab" or v.name == "panel":
-					v.hide = False
-		import configlets
-		autoatts=False
-		for obj in configlets.config_entries:
-			if obj.__class__.__name__ == 'CfgOptAutoatt':
-				autoatts=True
-				alreadyappended = False
-				for v in self.variables:	
-					if v.name == "autoatt_"+obj.name:
-						alreadyappended = True
-				if not alreadyappended:
-					self.variables.append(VarType("autoatt_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("autoatt_%s_time" % obj.name, title=_("Time"), hint=_("00:00-23:59|mon-sun|1-31|jan-dic"), len=50, optional=True))
-		if autoatts:
-			for v in self.variables:
-				if v.name == "contextin":
-					v.hide = False
-				if v.name == "phone":
-					v.optional = True
+		
+        def checkConfig(self):
+                res = CfgTrunk.checkConfig(self)
 
-	def createAsteriskConfig(self):
+       	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_iax2")
 		#Dial part to use on dialout macro
