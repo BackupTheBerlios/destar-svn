@@ -102,27 +102,7 @@ class CfgPhoneIax(CfgPhone):
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)
-
-		c = AstConf("extensions.conf")
-		c.setSection("out-%s" % self.name)
-		c.append("include=>phones")
-
-		try:
-			timeoutvalue = not self.timeout and "0" or "1"
-		except AttributeError:
-			timeoutvalue=0
-		import configlets
-		for obj in configlets.config_entries:
-			if obj.__class__.__name__ == 'CfgDialoutNormal':
-				try:
-					if self.__getitem__("dialout_"+obj.name):
-						secret = self.__getitem__("dialout_%s_secret" % obj.name)
-						if secret:
-							c.append("exten=>%s,1,Macro(%s,{EXTEN},%s,%s)" % (obj.pattern,obj.name,secret,timeoutvalue))	
-						else:
-							c.append("exten=>%s,1,Macro(%s,{EXTEN},-,%s)" % (obj.pattern,obj.name,timeoutvalue))	
-				except KeyError:
-					pass
+		self.createOutgoingContext()
 
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createExtButton(self)
