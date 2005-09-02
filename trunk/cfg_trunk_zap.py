@@ -30,21 +30,21 @@ class CfgTrunkZap(CfgTrunk):
 		VarType("channel",    title=_("Zaptel channel number"), type="string", len=5),
 		VarType("signalling", title=_("Signalling type"), type="choice",
 		                      options=[('fxs_ls','loopstart'),('fxs_ks', 'kewlstart')]),
-
-		VarType("Outbound",   title=_("Calls to the PSTN network"), type="label"),
-		VarType("group",      title=_("Callout group"), type="int", default=1),
-		VarType("ext",        title=_("Outgoing prefix"), optional=True, len=6),
+		VarType("group",      title=_("Callout group"), type="int", default=1, optional=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
 
-		VarType("Inbound",    title=_("Incoming calls"), type="label"),
-		VarType("phone",      title=_("Phone to ring"), type="choice",
-		                               options=getChoice("CfgPhone")),
-		
 		VarType("Gains",      title=_("Reception and Transmission Gains"), type="label"),
 		VarType("rxgain",     title=_("Reception gain"), hint=_("in dB"), optional=True, default="0.0"),
 		VarType("txgain",     title=_("Transmission gain"), hint=_("in dB"), optional=True, default="0.0"),
+	
+		VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
+		VarType("contextin",      title=_("Go to"), type="radio", hide=True, default='phone',
+		                               options=[('phone',_("Phone")),('autoatt',_("Auto_Attendant"))]),
+		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
+		                               options=getChoice("CfgPhone")),
+		VarType("dial", hide=True, len=50),
 		]
 	technology = "ZAP"
 
@@ -53,14 +53,8 @@ class CfgTrunkZap(CfgTrunk):
                 if res:
                         return res
 
-
-
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		if panelutils.isConfigured() == 1:
-			for v in self.variables:
-				if v.name == "panelLab" or v.name == "panel":
-					v.hide = False
 		if not self.rxgain:
 			self.rxgain = "0.0"
 		if not self.txgain: 
@@ -86,23 +80,37 @@ class CfgTrunkZap(CfgTrunk):
 		c.appendValue(self, "signalling")
 		c.appendValue(self, "rxgain")
 		c.appendValue(self, "txgain")
-		c.appendValue(self, "group")
+		if self.group:
+			c.appendValue(self, "group")
 		c.appendValue(self, "channel")
 		c.append("")
 
-		# Write special dialout entry
-		# TODO: we should not have ONE dialout entry, but several of them,
-		# e.g. for local calls, national calls, foreign calls etc
+		#Dial part to use on dialout macro
+		if self.group:
+			self.dial = "Zap/g%d%/${ARG1}" % (self.group)
+		else:
+			self.dial = "Zap/%s/${ARG1}" % (self.channel)
+		
+		#What to do with incoming calls
 		c = AstConf("extensions.conf")
-		if self.ext:
-			ext = "_%s." % self.ext
-			context = "out-%s" % self.name
-			c.setSection(context)
-			c.appendExten("%s" % ext, "Dial(Zap/%s/${EXTEN:%d},60,T)" % (self.channel,len(self.ext)))
-		if self.phone:
-			contextin = "in-%s" % self.name
-			c.setSection(contextin)
+		c.setSection(contextin)
+		if self.contextin == 'phone' and self.phone:
 			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
+		elif self.contextin == 'autoatt':
+			import configlets
+			for obj in configlets.config_entries:
+				if obj.__class__.__name__ == 'CfgOptAutoatt':
+					try:
+						autoatt = self.__getitem__("autoatt_%s" % obj.name)
+						if autoatt:
+							time = self.__getitem__("autoatt_%s_time" % obj.name)
+							if time:
+								c.append("include=>%s|%s" % (obj.name,time))
+							else:
+								c.append("include=>%s" % obj.name)
+					except KeyError:
+						pass
+
 
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)

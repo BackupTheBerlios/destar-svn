@@ -1,6 +1,6 @@
 2005-09-01
 * cfg_dialout_normal.py: Fixed wrong Goto
-* configlets.py: continued support for auto-attendants on CfgTrunk
+* configlets.py: continued support for auto-attendants on CfgTrunk, cfg_trunk_zap, iax and sip.
 * Changed page_user_pbxstate.ptl to page_admin_pbxstate.ptl for usability reasons
 * Changed writing concept: now asterisk files are written with every little change
 * Changed page_config_write.ptl to page_config_viewconf.ptl. Now the backups are created without asking.

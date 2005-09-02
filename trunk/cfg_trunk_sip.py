@@ -55,6 +55,8 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		
         def checkConfig(self):
                 res = CfgTrunk.checkConfig(self)
+                if res:
+                        return res
                 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")
