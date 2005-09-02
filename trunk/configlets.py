@@ -611,8 +611,8 @@ class CfgTrunk(Cfg):
 
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
-		import configlets
-		for obj in configlets.config_entries:
+		global config_entries
+		for obj in config_entries:
 			if obj.groupName == 'Phones':
 				return True
 		return False
@@ -632,9 +632,9 @@ class CfgTrunk(Cfg):
 			for v in self.variables:
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
-		import configlets
+		global config_entries
 		autoatts=False
-		for obj in configlets.config_entries:
+		for obj in config_entries:
 			if obj.__class__.__name__ == 'CfgOptAutoatt':
 				autoatts=True
 				alreadyappended = False
@@ -651,6 +651,26 @@ class CfgTrunk(Cfg):
 				if v.name == "phone":
 					v.optional = True
 
+	def createIncomingContext(self): 
+		c = AstConf("extensions.conf")
+		contextin = "in-%s" % self.name
+		c.setSection(contextin)
+		if self.contextin == 'phone' and self.phone:
+			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
+		elif self.contextin == 'autoatt':
+			global config_entries
+			for obj in config_entries:
+				if obj.__class__.__name__ == 'CfgOptAutoatt':
+					try:
+						autoatt = self.__getitem__("autoatt_%s" % obj.name)
+						if autoatt:
+							time = self.__getitem__("autoatt_%s_time" % obj.name)
+							if time:
+								c.append("include=>%s|%s" % (obj.name,time))
+							else:
+								c.append("include=>%s" % obj.name)
+					except KeyError:
+						pass
 
 class CfgPhone(Cfg):
 	"""Base class for all phone devices."""

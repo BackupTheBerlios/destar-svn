@@ -87,30 +87,12 @@ class CfgTrunkZap(CfgTrunk):
 
 		#Dial part to use on dialout macro
 		if self.group:
-			self.dial = "Zap/g%d%/${ARG1}" % (self.group)
+			self.dial = "Zap/g%d/${ARG1}" % (self.group)
 		else:
 			self.dial = "Zap/%s/${ARG1}" % (self.channel)
 		
 		#What to do with incoming calls
-		c = AstConf("extensions.conf")
-		c.setSection(contextin)
-		if self.contextin == 'phone' and self.phone:
-			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
-		elif self.contextin == 'autoatt':
-			import configlets
-			for obj in configlets.config_entries:
-				if obj.__class__.__name__ == 'CfgOptAutoatt':
-					try:
-						autoatt = self.__getitem__("autoatt_%s" % obj.name)
-						if autoatt:
-							time = self.__getitem__("autoatt_%s_time" % obj.name)
-							if time:
-								c.append("include=>%s|%s" % (obj.name,time))
-							else:
-								c.append("include=>%s" % obj.name)
-					except KeyError:
-						pass
-
+		self.createIncomingContext()
 
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)

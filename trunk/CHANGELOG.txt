@@ -1,3 +1,6 @@
+2005-09-02
+* Improved some code of cfg_trunks with inheritance.
+
 2005-09-01
 * cfg_dialout_normal.py: Fixed wrong Goto
 * configlets.py: continued support for auto-attendants on CfgTrunk, cfg_trunk_zap, iax and sip.

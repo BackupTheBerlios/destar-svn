@@ -61,33 +61,15 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		#Dial part to use on dialout macro
 		self.dial = "IAX2/%s:%s@%s/${ARG1}" % (self.id, self.pw, self.host)
 		#What to do with incoming calls
-		c = AstConf("extensions.conf")
-		contextin = "in-%s" % self.name
-		c.setSection(contextin)
-		if self.contextin == 'phone' and self.phone:
-			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
-		elif self.contextin == 'autoatt':
-			import configlets
-			for obj in configlets.config_entries:
-				if obj.__class__.__name__ == 'CfgOptAutoatt':
-					try:
-						autoatt = self.__getitem__("autoatt_%s" % obj.name)
-						if autoatt:
-							time = self.__getitem__("autoatt_%s_time" % obj.name)
-							if time:
-								c.append("include=>%s|%s" % (obj.name,time))
-							else:
-								c.append("include=>%s" % obj.name)
-					except KeyError:
-						pass
-
+		self.createIncomingContext()
+		
 		c = AstConf("iax.conf")
 		c.setSection("general")
 		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
-			c.append("context=%s" % contextin)
+			c.append("context=in-%s" % self.name)
 			c.append("auth=md5")
 			c.append("host=%s" % self.host)
 			c.append("secret= %s" % self.pw)
