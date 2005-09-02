@@ -36,10 +36,6 @@ class CfgPhoneMGCP(CfgPhone):
 			VarType("forward",	title=_("Enable Call forward"), type="bool", optional=True),
 			VarType("did",          title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
-			VarType("Outbound",     title=_("Calls from the phone"), type="label"),
-			VarType("calleridnum",  title=_("Caller-Id-number"), optional=True),
-			VarType("calleridname",	title=_("Caller-Id-Name"), optional=True),
-
 			VarType("Call Group",   title=_("Call group"), type="label"),
 			VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=False, default=False), 
 			VarType("callgroup",  title=_("Call group number"), optional=True),
@@ -48,9 +44,33 @@ class CfgPhoneMGCP(CfgPhone):
 			VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
 			VarType("usemwi",       title=_("Signal waiting mail"), type="bool", optional=True),
 			VarType("pin",          title=_("Voicemail PIN"), optional=True, len=6),
-			]
+
+			VarType("Outbound",     title=_("Calls from the phone"), type="label"),
+			VarType("calleridnum",  title=_("Caller-Id-Number"), optional=True),
+			VarType("calleridname",	title=_("Caller-Id-Name"), optional=True),
+			VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
+			VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
+		]
 
 	technology = "MGCP"
+
+	def fixup(self):
+		import configlets
+		dialouts=False
+		for obj in configlets.config_entries:
+			if obj.groupName == 'Dialout':
+				dialouts=True
+				alreadyappended = False
+				for v in self.variables:	
+					if v.name == "dialout_"+obj.name:
+						alreadyappended = True
+				if not alreadyappended:
+					self.variables.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
+		if dialouts:
+			for v in self.variables:
+				if v.name == "Dialout" or v.name=="timeout":
+					v.hide = False
 
 	def createAsteriskConfig(self):
 		needModule("chan_mgcp")
@@ -62,6 +82,7 @@ class CfgPhoneMGCP(CfgPhone):
 		mgcp.append("threewaycalling=%s" % self.threeway)
 		mgcp.append("callwaiting=no")
 		mgcp.append("nat=%s" % self.nat)
+		mgcp.append("context=out-%s" % self.name)
 		mgcp.append("cancallforward=%s" % self.forward)
 		if self.calleridname and self.calleridnum:
 			mgcp.append('callerid="%s" <%s>' % (self.calleridname, self.calleridnum))
@@ -76,3 +97,24 @@ class CfgPhoneMGCP(CfgPhone):
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(mgcp)
+
+		c = AstConf("extensions.conf")
+		c.setSection("out-%s" % self.name)
+		c.append("include=>phones")
+		try:
+			timeoutvalue = not self.timeout and "0" or "1"
+		except AttributeError:
+			timeoutvalue=0
+		import configlets
+		for obj in configlets.config_entries:
+			if obj.__class__.__name__ == 'CfgDialoutNormal':
+				try:
+					if self.__getitem__("dialout_"+obj.name):
+						secret = self.__getitem__("dialout_%s_secret" % obj.name)
+						if secret:
+							c.append("exten=>%s,1,Macro(%s,{EXTEN},%s,%s)" % (obj.pattern,obj.name,secret,timeoutvalue))	
+						else:
+							c.append("exten=>%s,1,Macro(%s,{EXTEN},-,%s)" % (obj.pattern,obj.name,timeoutvalue))	
+				except KeyError:
+					pass
+
