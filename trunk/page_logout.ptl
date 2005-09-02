@@ -37,5 +37,5 @@ def _q_index(request):
 	# TODO: move this into Publisher.py
 	request.session.user = ''
 	request.session.phone = ''
-	request.session.level = 0
-	return request.redirect('/login')
+	request.session.level = -1
+	return request.redirect('/user/info/')
