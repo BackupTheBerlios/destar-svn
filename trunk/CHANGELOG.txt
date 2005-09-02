@@ -2,6 +2,7 @@
 * Improved some code of cfg_trunks with inheritance.
 * Improved page_logout.ptl behavior a bit.
 * Improved some code of cfg_phones with inheritance.
+* Added support for gsm, g729 and g723.1 codecs in sip audio options
 
 2005-09-01
 * cfg_dialout_normal.py: Fixed wrong Goto

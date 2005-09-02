@@ -94,4 +94,4 @@ class CfgPhoneSip(CfgPhone):
 		self.createExtensionConfig()
 		self.createVoicemailConfig(sip)
 		self.createOutgoingContext()
-		self.craetePanelConfig()
+		self.createPanelConfig()

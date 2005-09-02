@@ -30,6 +30,11 @@ class CfgOptSipAudio(CfgOptSingle):
 		VarType("alaw", title=_("Allow alaw codec"), optional=True, type="bool"),
 		VarType("ulaw", title=_("Allow ulaw codec"), optional=True, type="bool"),
 		VarType("ilbc", title=_("Allow ilbc codec"), optional=True, type="bool"),
+		VarType("gsm", title=_("Allow gsm codec"), optional=True, type="bool"),
+		VarType("g729", title=_("Allow g729 codec"), optional=True, type="bool",
+			hint=_("g729 pass-thru unless license obtained")),
+		VarType("g723", title=_("Allow g723.1 codec"), optional=True, type="bool",
+			hint=_("g723.1 pass-thru")),
 	]
 
 	def checkConfig(self):
@@ -62,4 +67,9 @@ class CfgOptSipAudio(CfgOptSingle):
 			c.append("allow=ulaw")
 		if self.ilbc:
 			c.append("allow=ilbc")
-
+		if self.gsm:
+			c.append("allow=gsm")
+		if self.g729:
+			c.append("allow=g729")
+		if self.g723:
+			c.append("allow=g723.1")
