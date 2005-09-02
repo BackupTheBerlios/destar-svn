@@ -503,7 +503,12 @@ class Cfg(Holder):
 		python_cfg.append("")
 		return python_cfg
 
-
+	def createPanelConfig(self):
+		try:
+			if panelutils.isConfigured() == 1 and self.panel:
+				panelutils.createExtButton(self)
+		except AttributeError:
+			pass
 
 
 #######################################################################
@@ -699,9 +704,33 @@ class CfgPhone(Cfg):
 		return "%s/%s" % (self.technology, self.name)
 
 
-	def fixup(self):
+	def fixup(self, fixuppanel=True):
 		Cfg.fixup(self)
 		useContext("phones")
+
+		if fixuppanel:
+			if panelutils.isConfigured() == 1:
+				for v in self.variables:
+					if v.name == "panelLab" or v.name == "panel":
+						v.hide = False
+
+		global config_entries
+		dialouts=False
+		for obj in config_entries:
+			if obj.groupName == 'Dialout':
+				dialouts=True
+				alreadyappended = False
+				for v in self.variables:	
+					if v.name == "dialout_"+obj.name:
+						alreadyappended = True
+				if not alreadyappended:
+					self.variables.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
+		if dialouts:
+			for v in self.variables:
+				if v.name == "Dialout" or v.name=="timeout":
+					v.hide = False
+
 
 
 	def createDialEntry(self, extensions, exten):
@@ -746,8 +775,8 @@ class CfgPhone(Cfg):
 			timeoutvalue = not self.timeout and "0" or "1"
 		except AttributeError:
 			timeoutvalue=0
-		import configlets
-		for obj in configlets.config_entries:
+		global config_entries
+		for obj in config_entries:
 			if obj.__class__.__name__ == 'CfgDialoutNormal':
 				try:
 					if self.__getitem__("dialout_"+obj.name):

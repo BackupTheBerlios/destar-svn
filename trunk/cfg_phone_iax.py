@@ -54,27 +54,7 @@ class CfgPhoneIax(CfgPhone):
 	technology = "IAX2"
 
 	def fixup(self):
-		if panelutils.isConfigured() == 1:
-			for v in self.variables:
-				if v.name == "panelLab" or v.name == "panel":
-					v.hide = False
-
-		import configlets
-		dialouts=False
-		for obj in configlets.config_entries:
-			if obj.groupName == 'Dialout':
-				dialouts=True
-				alreadyappended = False
-				for v in self.variables:	
-					if v.name == "dialout_"+obj.name:
-						alreadyappended = True
-				if not alreadyappended:
-					self.variables.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
-		if dialouts:
-			for v in self.variables:
-				if v.name == "Dialout" or v.name=="timeout":
-					v.hide = False
+		CfgPhone.fixup(self)			
 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")
@@ -103,7 +83,4 @@ class CfgPhoneIax(CfgPhone):
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)
 		self.createOutgoingContext()
-
-		if panelutils.isConfigured() == 1 and self.panel:
-			panelutils.createExtButton(self)
-
+		self.craetePanelConfig()
