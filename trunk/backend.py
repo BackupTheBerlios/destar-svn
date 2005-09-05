@@ -133,9 +133,12 @@ def initializeAsteriskConfig():
 	c.append('#include "macros.inc"')
 
 	c.setSection("default")
-	c.append("include=phones")
-	c.appendExten("t","Hangup")
+	c.append("; This context should not be used directly")
+	c.appendExten("s","Hangup")
+	c.appendExten("i","Hangup")
 
+	c.setSection("phones")
+	c.append("include=apps")
 
 	c = AstConf("sip.conf")
 	c.append("language=%s" % getSetting('language', 'en'))
@@ -792,4 +795,6 @@ def reloadAsterisk():
 	createAsteriskConfig()
 	import manager
 	s = manager.reloadAsterisk()
+	if panelutils.isConfigured():
+		panelutils.restartPanelDaemon()
 	return "<br/>".join(s)

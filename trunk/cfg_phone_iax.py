@@ -83,4 +83,4 @@ class CfgPhoneIax(CfgPhone):
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)
 		self.createOutgoingContext()
-		self.craetePanelConfig()
+		self.createPanelConfig()

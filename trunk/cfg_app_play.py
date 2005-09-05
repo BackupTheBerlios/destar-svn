@@ -26,7 +26,7 @@ class CfgAppPlay(CfgApp):
 	shortName   = _("Play sound")
 	description = _("""Play a soundfile.""")
 	variables   = [VarType("ext",      title=_("Extension"), len=6),
-                       VarType("filename", title=_("File name"))]
+                       VarType("filename", title=_("File name"), hint=_("Don't specify an extension"))]
 
 
 	def checkConfig(self):
@@ -40,9 +40,8 @@ class CfgAppPlay(CfgApp):
 		needModule("app_playback")
 
 		c = AstConf("extensions.conf")
-		c.setSection("default")
+		c.setSection("apps")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
-		# TODO don't write extension or display error if user added extension
 		c.appendExten(self.ext, "Playback(%s,skip)" % self.filename)
 		c.appendExten(self.ext, "Hangup")

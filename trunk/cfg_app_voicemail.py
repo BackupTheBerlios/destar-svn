@@ -24,17 +24,21 @@ from configlets import *
 class CfgAppVoiceMail(CfgApp):
 
 	shortName   = _("Voicemail dialog")
-	#description = _("""The echo test immediately plays back what you speek. You can
-	#		   use this to find out how much echo you have.""")
-	variables   = [VarType("ext", title=_("Extension"), len=6)]
+	description = _("""Extension to enter the voicemail system.""")
+	variables   = [ VarType("ext", title=_("Extension"), len=6),
+			VarType("mailbox", title=_("Ask for user mailbox?"), type="bool", optional=True),
+			]
 
 	def createAsteriskConfig(self):
 		needModule("res_adsi")
 		needModule("app_voicemail")
 
 		c = AstConf("extensions.conf")
-		c.setSection("default")
+		c.setSection("apps")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
-		c.appendExten(self.ext, "VoiceMailMain")
+		if not self.mailbox:
+			c.appendExten(self.ext, "VoiceMailMain(${CALLERIDNUM})")
+		else:
+			c.appendExten(self.ext, "VoiceMailMain")
 		c.appendExten(self.ext, "Hangup")

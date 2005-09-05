@@ -24,14 +24,12 @@ from configlets import *
 class CfgAppDirectory(CfgApp):
 
 	shortName   = _("Directory")
-	description = _("""The application allows you to dial by name.""")
-	variables   = [VarType("ext", title=_("Extension"), len=6),
-		       VarType("vmcontext", title=_("Voicemail Context"), default="default", len=15),
-		       VarType("context", title=_("Context"), len=15)]
+	description = _("""This application allows you to dial by name.""")
+	variables   = [VarType("ext", title=_("Extension"), len=6)]
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection(self.context)
-		c.appendExten(self.ext, "Directory(%s)" % self.vmcontext)
+		c.setSection("apps")
+		c.appendExten(self.ext, "Directory(default)")
 		c.appendExten(self.ext, "Hangup")
 

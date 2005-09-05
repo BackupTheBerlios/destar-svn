@@ -66,7 +66,7 @@ def change_conf (dir, code, name, mgr_name):
 			line = re.sub("(?<=web_hostname=).*",name,line)
 			line = re.sub("(?<=flash_dir=).*","%s/static/panel/" % os.getcwd(),line)
 			line = re.sub("(?<=security_code=).*",code,line)
-			line = re.sub("(?<=conference_context=).*","default",line)
+			line = re.sub("(?<=conference_context=).*","apps",line)
 			conf.write(line)
 		setConfigured(dir)
 	except IOError:
@@ -151,13 +151,32 @@ def createExtButton(self):
 	p = AstConf("op_buttons.cfg")
 	p.setSection("%s/%s" % (self.technology, self.name) )
 	p.append("Position=n")
+	p.append("Icon=1")
+	p.append("Extension=%s" % self.ext)
 	p.append("Label=%s" % self.name)
 
 def createTrunkButton(self):
 	p = AstConf("op_buttons.cfg")
 	p.setSection("%s/%s" % (self.technology, self.channel) )
 	p.append("Position=n")
+	p.append("Icon=2")
+	p.append("Extension=-1")
 	p.append("Label=%s" % self.name)
+
+def createMeetmeButton(self):
+	p = AstConf("op_buttons.cfg")
+	p.setSection(self.confno)
+	p.append("Position=n")
+	p.append("Icon=5")
+	p.append('Label="%s %s"' % (_("Meetme"),self.confno))
+
+def createParkButton(self):
+	p = AstConf("op_buttons.cfg")
+	p.setSection("%s%s" % (_("PARK"),self.ext))
+	p.append("Position=n")
+	p.append("Icon=3")
+	p.append("Extension=%s" % self.ext)
+	p.append('Label="%s %s"' % (_("Park"),self.ext))
 
 def startPanelDaemon():
         os.popen('%s/op_server.pl -d' % getDir())

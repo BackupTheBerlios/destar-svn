@@ -53,7 +53,7 @@ class CfgAppRecord(CfgApp):
 		needModule("app_record")
 
 		c = AstConf("extensions.conf")
-		c.setSection("default")
+		c.setSection("apps")
 		c.appendExten(self.ext, "AbsoluteTimeout(20)")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")

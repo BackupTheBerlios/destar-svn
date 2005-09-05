@@ -25,11 +25,16 @@ class CfgAppMusic(CfgApp):
 
 	shortName   = _("Listen to music-on-hold")
 	description = _("Play Play Music On Hold until you hang up.")
-	variables   = [VarType("ext", title=_("Extension"), len=6)]
+	variables   = [ VarType("ext", title=_("Extension"), len=6),
+			VarType("moh",	  title=_("Music-on-hold class"), type="choice", optional=True,
+			options=getChoice("CfgOptMusic"))]
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection("default")
+		c.setSection("apps")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
-		c.appendExten(self.ext, "MusicOnHold")
+		if self.moh:
+			c.appendExten(self.ext, "MusicOnHold(%s)" % self.moh)
+		else: 
+			c.appendExten(self.ext, "MusicOnHold")

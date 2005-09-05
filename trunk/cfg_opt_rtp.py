@@ -40,7 +40,7 @@ class CfgOptRtp(CfgOptSingle):
 			return ret
 
 		if self.rtpstart > self.rtpend:
-			return ("rtpend", _("must be higher as start value"))
+			return ("rtpend", _("must be higher than start value"))
 
 
 	def createAsteriskConfig(self):

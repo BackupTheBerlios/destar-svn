@@ -34,7 +34,7 @@ class CfgAppSayTime(CfgApp):
 		needModule("app_sayunixtime")
 
 		c = AstConf("extensions.conf")
-		c.setSection("default")
+		c.setSection("apps")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		c.appendExten(self.ext, "SayUnixTime(,,%s)" % self.what)

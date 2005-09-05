@@ -32,7 +32,7 @@ class CfgAppMilliwatt(CfgApp):
 		needModule("app_milliwatt")
 
 		c = AstConf("extensions.conf")
-		c.setSection("default")
+		c.setSection("apps")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Milliwatt")
 		c.appendExten(self.ext, "Hangup")

@@ -1,6 +1,7 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2005 by Holger Schurig
+# Destar has Copyright (C) 2005 by Holger Schurig
+# This file has Copyright (C) 2005 by Alejandro Rios
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,33 +20,19 @@
 
 
 from configlets import *
-import panelutils
-
-class CfgAppParking(CfgApp):
-
-	shortName   = _("Park calls")
-	description = _("""NOT YET WORKING""")
-	variables   = [VarType("ext",    title=_("Extension"), len=6),
-		       VarType("places", title=_("Parking places"), type="int", default=9, len=2)]
-
-	def fixup(self):
-		CfgApp.fixup(self)
-		useContext("parkedcalls")
 
 
+class CfgOptPickup(CfgOptSingle):
+
+	shortName = _("Pickup Extension")
+	description = _("Extension to dial to pick-up a call in the same group.")
+	variables = [VarType("ext", title=_("Extension"), len=6)
+		    ]
+
+	def row(self):
+		return (self.shortName, self.ext)
+		
 	def createAsteriskConfig(self):
 		c = AstConf("features.conf")
-		c.setSection("general")
-
-		c.append("parkext=%s" % self.ext)
-		c.append("context=apps")
-		# parkingtime
-		first = int(self.ext)+1
-		c.append("parkpos=%d-%d" % (first, first + self.places))
-		# transferdigittimeout
-
-		#c = AstConf("extensions.conf")
-		#c.setSection("apps")
-		#c.appendExten(self.ext, "Park(%s)" % self.ext)
-		
-		panelutils.createParkButton(self)
+        	c.setSection("general")
+		c.append("pickupexten=%s" % self.ext)

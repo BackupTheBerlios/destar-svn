@@ -503,13 +503,7 @@ class Cfg(Holder):
 		python_cfg.append("")
 		return python_cfg
 
-	def createPanelConfig(self):
-		try:
-			if panelutils.isConfigured() == 1 and self.panel:
-				panelutils.createExtButton(self)
-		except AttributeError:
-			pass
-
+	
 
 #######################################################################
 #
@@ -787,6 +781,13 @@ class CfgPhone(Cfg):
 							c.append("exten=>%s,1,Macro(%s,{EXTEN},-,%s)" % (obj.pattern,obj.name,timeoutvalue))	
 				except KeyError:
 					pass
+	
+	def createPanelConfig(self):
+		try:
+			if panelutils.isConfigured() == 1 and self.panel:
+				panelutils.createExtButton(self)
+		except AttributeError:
+			pass
 
 class CfgApp(Cfg):
 	"""Base class for all applications (an application is a piece

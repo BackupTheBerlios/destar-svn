@@ -32,7 +32,7 @@ class CfgAppEcho(CfgApp):
 		needModule("app_echo")
 
 		c = AstConf("extensions.conf")
-		c.setSection("default")
+		c.setSection("apps")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		c.appendExten(self.ext, "Playback(demo-echotest,skip)")

@@ -1,3 +1,12 @@
+2005-09-05
+* Changed applications context from "default" to "apps".
+* Added cfg_opt_pickup.py to set pickup extension
+* Added cfg_app_callfw.py to set call forwarding
+* Added cfg_app_dnd.py to set 'do not disturb'
+* Made some improvements on several cfg_app_*
+* cfg_phone_sip.py, cfg_phone_iax.py: Fixed typo.
+* paneltils.py: fixed and added some buttons
+
 2005-09-02
 * Improved some code of cfg_trunks with inheritance.
 * Improved page_logout.ptl behavior a bit.
