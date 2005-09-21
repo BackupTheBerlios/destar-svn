@@ -73,7 +73,7 @@ class CfgDialoutNormal(CfgDialout):
 		c = AstConf("macros.inc")
 		c.setSection("macro-%s" % self.name)
 		c.append("; params: exten,secret,timeout")
-		c.appendExten("s","GotoIf($[${ARG2} = -]?3:2)")
+		c.appendExten("s","GotoIf($[${ARG2} = n]?3:2)")
 		c.appendExten("s","Authenticate(${ARG2})")
 		c.appendExten("s","GotoIf($[${ARG3} = 0]?4:7)")
 		c.appendExten("s",'SetVar(timeout=0)')

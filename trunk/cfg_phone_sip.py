@@ -80,9 +80,11 @@ class CfgPhoneSip(CfgPhone):
 		if self.calleridname and self.calleridnum:
 			sip.append('callerid="%s" <%s>' % (self.calleridname, self.calleridnum))
 		elif self.calleridname:
-			sip.append('callerid="%s"' % self.calleridname)
+			sip.append('callerid="%s" <%s>' % (self.calleridname, self.ext))
 		elif self.calleridnum:
-			sip.append('callerid=<%s>' % self.calleridnum)
+			sip.append('callerid="%s" <%s>' % (self.name,self.calleridnum))
+		else:
+			sip.append('callerid="%s" <%s>' % (self.name,self.ext))
 
 		if self.enablecallgroup:
 			sip.append('callgroup=%s' % self.callgroup)

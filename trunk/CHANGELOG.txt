@@ -1,3 +1,7 @@
+2005-09-21
+* Fixed bug on cfg_dialout_normal.py and configlets.py related to a GotoIf command.
+* cfg_phone_sip.py: force a well formed caller-id. 
+
 2005-09-05
 * Changed applications context from "default" to "apps".
 * Added cfg_opt_pickup.py to set pickup extension
