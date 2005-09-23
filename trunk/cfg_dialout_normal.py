@@ -34,7 +34,7 @@ class CfgDialoutNormal(CfgDialout):
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		
 		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True),
-		VarType("defaulttrunk", title=_("Default trunk:"), type="choice", optional=True, options=getChoice("CfgTrunk"),hide=True)
+	#	VarType("defaulttrunk", title=_("Default trunk:"), type="choice", optional=True, options=getChoice("CfgTrunk"),hide=True)
 		     ]
 	
 	def fixup(self):
@@ -50,7 +50,7 @@ class CfgDialoutNormal(CfgDialout):
 						alreadyappended = True
 				if not alreadyappended:
 					self.variables.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), len=10, optional=True))
+					self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), type="int", len=10, default=0))
 		if trunks:
 			for v in self.variables:	
 				if v.name == "Trunks" or v.name=="defaulttrunk":
@@ -74,6 +74,7 @@ class CfgDialoutNormal(CfgDialout):
 		c.setSection("macro-%s" % self.name)
 		c.append("; params: exten,secret,timeout")
 		c.appendExten("s","GotoIf($[${ARG2} = n]?3:2)")
+		needModule("app_authenticate")
 		c.appendExten("s","Authenticate(${ARG2})")
 		c.appendExten("s","GotoIf($[${ARG3} = 0]?4:7)")
 		c.appendExten("s",'SetVar(timeout=0)')
@@ -81,6 +82,7 @@ class CfgDialoutNormal(CfgDialout):
 		c.appendExten("s",'Goto(9)')
 		c.appendExten("s",'SetVar(timeout=%d)' % self.maxtime)
 		c.appendExten("s",'SetVar(options=TtL(%d:10000))' % self.maxtime)
+		#TODO: add this trunks sorted by price and with a default one.
 		import configlets
 		for obj in configlets.config_entries:
 			if obj.groupName == 'Trunks':
@@ -88,7 +90,7 @@ class CfgDialoutNormal(CfgDialout):
 					if self.__getitem__("trunk_"+obj.name) and self.__getitem__("trunk_%s_price" % obj.name):
 						c.appendExten("s","ResetCDR")	
 						c.appendExten("s","AbsoluteTimeout(${timeout})")
-						c.appendExten("s","SetAccount(%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
+						c.appendExten("s","SetAccount(%d)" % self.__getitem__("trunk_%s_price" % obj.name))	
 						c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 				except KeyError:
 					pass

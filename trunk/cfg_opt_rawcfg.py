@@ -37,7 +37,9 @@ class CfgOptRawCfg(CfgOpt):
 			file += '.conf'
 		c = AstConf(file)
 		c.setSection(self.sect)
-		c.append(self.txt)
+		contents=self.txt.split("\n")
+		for line in contents:
+			c.append(line)
 
 	def row(self):
 		return (self.shortName, "%s %s:%s" % (self.name, self.file, self.sect))

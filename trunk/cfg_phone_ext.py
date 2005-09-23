@@ -24,11 +24,11 @@ from configlets import *
 class CfgPhoneExtension(CfgPhone):
 
 	shortName = _("Extension")
+	description = _("Set an 'alias' extension to a phone")
 	variables = [
 		VarType("name",     title=_("Name"), len=15),
 
-		VarType("ext",      title=_("Extension"), optional=True, len=6),
-		VarType("did",      title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
+		VarType("ext",      title=_("Extension"), hint=_("This can be used to set operator(o) or fax(fax) extensions."), optional=True, len=6),
 
 		VarType("Outbound", title=_("Calls to the extension"), type="label"),
 		VarType("phone",    title=_("Real phone to ring"), type="choice",

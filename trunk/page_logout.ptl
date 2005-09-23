@@ -31,7 +31,8 @@ _q_level   = 1
 def _q_access(request):
         if request.session.level < _q_level:
 		cantAccessPage()
-
+	if request.session.level == 4:
+		return request.redirect('/user/info/')
 
 def _q_index(request):
 	# TODO: move this into Publisher.py

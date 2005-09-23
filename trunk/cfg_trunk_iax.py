@@ -39,7 +39,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 
 		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
 		VarType("contextin",      title=_("Go to"), type="radio", hide=True, default='phone',
-		                               options=[('phone',_("Phone")),('autoatt',_("Auto_Attendant"))]),
+		                               options=[('phone',_("Phone")),('ivr',_("IVR"))]),
 		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
 		                               options=getChoice("CfgPhone")),
 		VarType("dial", hide=True, len=50),

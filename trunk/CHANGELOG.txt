@@ -1,3 +1,9 @@
+2005-09-23
+* Big change: created class CfgIVR, changed cfg_opt_autoatt.py to cfg_ivr_autoatt and added cfg_ivr_raw.py since many people could have a weird custom auto-attendant and we want to use it on other parts of the program.
+* Changed DID's to work with new trunk and auto-attendant scheme. Now we can declare DID's per trunk and route then to a phone or auto-attendant.
+* Improved cfg_phone_ext.py
+* page_logout.ptl: don't let the programmer user logout (TODO: hide 'logout' on the menu).
+
 2005-09-21
 * Fixed bug on cfg_dialout_normal.py and configlets.py related to a GotoIf command.
 * cfg_phone_sip.py: force a well formed caller-id. 

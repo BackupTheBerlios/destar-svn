@@ -22,11 +22,11 @@
 from configlets import * 
 import os
 
-class CfgOptAutoatt(CfgOpt):
+class CfgIVRAutoatt(CfgIVR):
 
 	shortName = _("Auto attendant")
-	description = _("""Basic auto-attendant. Plays a sound file a number of times and then dials an extension.""")
-	groupName = 'Auto_Attendants'
+	description = _("""Basic auto-attendant.""")
+	groupName = 'IVRs'
 		
 	variables = [
 		VarType("name",	  title=_("Name"), len=15),
@@ -39,9 +39,7 @@ class CfgOptAutoatt(CfgOpt):
 			options=getChoice("CfgPhone")),
 		VarType("phones", title=_("Allow calling to all extensions?"), type="bool", optional=True, default=True),
 		
-		VarType("dids", title=_("Include dids?"), type="bool", optional=True, default=False),
 	]
-	#TODO: check for dids first
 
 	def isAddable(self):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
@@ -60,8 +58,6 @@ class CfgOptAutoatt(CfgOpt):
 	def createAsteriskConfig(self):
 		s = AstConf("extensions.conf")
 		s.setSection(self.name)
-		if self.dids:
-			s.append("include=dids")
 		if self.phones:
 			s.append("include=phones")
 		if self.timeout:

@@ -632,18 +632,18 @@ class CfgTrunk(Cfg):
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
 		global config_entries
-		autoatts=False
+		ivrs=False
 		for obj in config_entries:
-			if obj.__class__.__name__ == 'CfgOptAutoatt':
-				autoatts=True
+			if obj.groupName == 'IVRs':
+				ivrs=True
 				alreadyappended = False
 				for v in self.variables:	
-					if v.name == "autoatt_"+obj.name:
+					if v.name == "ivr_"+obj.name:
 						alreadyappended = True
 				if not alreadyappended:
-					self.variables.append(VarType("autoatt_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("autoatt_%s_time" % obj.name, title=_("Time"), hint=_("00:00-23:59|mon-sun|1-31|jan-dic"), len=50, optional=True))
-		if autoatts:
+					self.variables.append(VarType("ivr_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+					self.variables.append(VarType("ivr_%s_time" % obj.name, title=_("Time"), hint=_("00:00-23:59|mon-sun|1-31|jan-dic"), len=50, optional=True))
+		if ivrs:
 			for v in self.variables:
 				if v.name == "contextin":
 					v.hide = False
@@ -656,14 +656,14 @@ class CfgTrunk(Cfg):
 		c.setSection(contextin)
 		if self.contextin == 'phone' and self.phone:
 			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
-		elif self.contextin == 'autoatt':
+		elif self.contextin == 'ivr':
 			global config_entries
 			for obj in config_entries:
-				if obj.__class__.__name__ == 'CfgOptAutoatt':
+				if obj.groupName == 'IVRs':
 					try:
-						autoatt = self.__getitem__("autoatt_%s" % obj.name)
-						if autoatt:
-							time = self.__getitem__("autoatt_%s_time" % obj.name)
+						ivr = self.__getitem__("ivr_%s" % obj.name)
+						if ivr:
+							time = self.__getitem__("ivr_%s_time" % obj.name)
 							if time:
 								c.append("include=>%s|%s" % (obj.name,time))
 							else:
@@ -815,4 +815,20 @@ class CfgDialout(Cfg):
 		except AttributeError:
 			ext = _('None')
 		return (ext, self.name, self.shortName)
+
+class CfgIVR(Cfg):
+	"""Base class for IVRs."""
+
+	groupName = "IVRs"
+
+
+	def __init__(self,**kw):
+		Cfg.__init__(self,**kw)
+
+	def head(self):
+		return (_("Name"),_("Info"))
+
+
+	def row(self):
+		return (self.shortName,self.name)
 
