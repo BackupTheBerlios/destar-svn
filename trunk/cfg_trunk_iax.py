@@ -30,18 +30,25 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 
 	variables	= [
 		VarType("name",       title=_("Name"), len=15, default="iaxtrunk"),
-		VarType("id",         title=_("IAX username"),   len=6),
-		VarType("pw",         title=_("IAX password"), len=15),
 		VarType("host",       title=_("IAX host"), len=25),
+		VarType("bandwidth",  title=_("Bandwith"), type="choice", len=25,
+				options=[('low',_("Low")),('high', _("High"))]
+			),
+                VarType("trunk",      title=_("Enable trunking?"), type="bool", hide=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
 
 		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
-		VarType("contextin",      title=_("Go to"), type="radio", hide=True, default='phone',
+                VarType("authrsa",      title=_("Enable RSA auth?"), type="bool"),
+		VarType("inkeys",    title=_("Public key from remote server"), len=15),
+		VarType("outkey",    title=_("Private local key"), len=15),
+		VarType("contextin",      title=_("Go to"), type="radio", default='phone',
 		                               options=[('phone',_("Phone")),('ivr',_("IVR"))]),
-		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
+		VarType("phone",      title=_("Extension to ring"), type="choice", optional=True,
 		                               options=getChoice("CfgPhone")),
+		VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
+		                               options=getChoice("CfgIVR")),
 		VarType("dial", hide=True, len=50),
 		]
 
@@ -56,23 +63,26 @@ class CfgTrunkIaxtrunk(CfgTrunk):
                         return res
 
        	def createAsteriskConfig(self):
-		needModule("res_crypto")
-		needModule("chan_iax2")
 		#Dial part to use on dialout macro
-		self.dial = "IAX2/%s:%s@%s/${ARG1}" % (self.id, self.pw, self.host)
+		self.dial = "IAX2/%s/${ARG1}" % self.host
 		#What to do with incoming calls
 		self.createIncomingContext()
 		
 		c = AstConf("iax.conf")
-		c.setSection("general")
-		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
-			c.append("context=in-%s" % self.name)
-			c.append("auth=md5")
 			c.append("host=%s" % self.host)
-			c.append("secret= %s" % self.pw)
-		
+			c.append("username=%s" % self.name)
+			c.append("context=in-%s" % self.name)
+			c.append("bandwidth=%s" % self.bandwidth)
+			c.append("qualify=yes")
+			if self.trunk:
+				c.append("trunk= yes")
+			if self.authrsa and self.inkeys and self.outkey:		
+				c.append("auth=rsa")
+				c.append("inkeys=%s" % self.inkeys)
+				c.append("outkey=%s" % self.outkey)
+
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)

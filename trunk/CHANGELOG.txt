@@ -1,3 +1,6 @@
+2005-10-12
+* cfg_trunk_iax.py: changes based on several tests with two asterisk/destar machines.
+
 2005-09-26
 * Changed config menu order. patch from santiago.
 * Makefile: little change to allow all developers make a release easier.
