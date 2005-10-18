@@ -29,7 +29,7 @@ class CfgDialoutNormal(CfgDialout):
 	groupName = 'Dialout'
 	variables = [
 		VarType("name",   title=_("Name"), len=15),
-		VarType("pattern", title=_("Pattern"), len=15),
+		VarType("pattern", title=_("Pattern"), len=55),
 		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=300),
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		
@@ -50,7 +50,7 @@ class CfgDialoutNormal(CfgDialout):
 						alreadyappended = True
 				if not alreadyappended:
 					self.variables.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), type="int", len=10, default=0))
+					self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), optional=True, len=10, default=0))
 		if trunks:
 			for v in self.variables:	
 				if v.name == "Trunks" or v.name=="defaulttrunk":
@@ -87,10 +87,16 @@ class CfgDialoutNormal(CfgDialout):
 		for obj in configlets.config_entries:
 			if obj.groupName == 'Trunks':
 				try:
+					if self.__getitem__("trunk_"+obj.name) and not self.__getitem__("trunk_%s_price" % obj.name):
+						c.appendExten("s","ResetCDR")	
+						c.appendExten("s","AbsoluteTimeout(${timeout})")
+						c.appendExten("s","SetAccount(0)")	
+						c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
+
 					if self.__getitem__("trunk_"+obj.name) and self.__getitem__("trunk_%s_price" % obj.name):
 						c.appendExten("s","ResetCDR")	
 						c.appendExten("s","AbsoluteTimeout(${timeout})")
-						c.appendExten("s","SetAccount(%d)" % self.__getitem__("trunk_%s_price" % obj.name))	
+						c.appendExten("s","SetAccount(%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
 						c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 				except KeyError:
 					pass
