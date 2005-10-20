@@ -724,7 +724,15 @@ class CfgPhone(Cfg):
 			for v in self.variables:
 				if v.name == "Dialout" or v.name=="timeout":
 					v.hide = False
-
+	
+		queues=False
+		for obj in config_entries:
+			if obj.__class__.__name__ == 'CfgPhoneQueue':
+				queues=True
+		if queues:
+			for v in self.variables:
+				if v.name == "QueueLab" or v.name == "queues":
+					v.hide = False
 
 
 	def createDialEntry(self, extensions, exten):
@@ -760,6 +768,16 @@ class CfgPhone(Cfg):
 				pin = ""
 			options = "tz=cest"
 			vm.append("%s=%s,%s,,%s" % (self.ext, pin, self.name, options))
+	
+	def createQueuesConfig(self):
+		try:
+			if self.queues:
+				c = AstConf("queues.conf")
+				for queue in self.queues.split(','):
+					c.setSection(queue)
+					c.append("member => %s/%s" % (self.technology,self.name))
+		except AttributeError:
+			pass
 
 	def createOutgoingContext(self):
 		c = AstConf("extensions.conf")

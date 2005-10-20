@@ -178,6 +178,14 @@ def createParkButton(self):
 	p.append("Extension=%s" % self.ext)
 	p.append('Label="%s %s"' % (_("Park"),self.ext))
 
+def createQueueButton(self):
+	p = AstConf("op_buttons.cfg")
+	p.setSection(self.name)
+	p.append("Position=n")
+	p.append("Icon=3")
+	p.append("Extension=-1")
+	p.append("Label=%s" % self.name)
+
 def startPanelDaemon():
         os.popen('%s/op_server.pl -d' % getDir())
 

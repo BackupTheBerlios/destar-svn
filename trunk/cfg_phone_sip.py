@@ -32,7 +32,6 @@ class CfgPhoneSip(CfgPhone):
 		VarType("host",       title=_("IP address of phone"), optional=True, len=15),
 		VarType("nat",        title=_("Is the trunk behind NAT ?"), type="bool", optional=True),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
-		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 		VarType("dtmfmode",    title=_("DTMF mode:"), type="choice",
                 	options=( ("rfc2833",_("RFC 2833 (RTP)")),
                         	  ("inband",_("In Band (only with ulaw/alaw)")),
@@ -41,6 +40,10 @@ class CfgPhoneSip(CfgPhone):
 		VarType("Call Group",   title=_("Call group"), type="label"),
 		VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=True, default=False), 
 		VarType("callgroup",  title=_("Call group number"), optional=True),
+
+		VarType("QueueLab",   title=_("Call Queues"), type="label", hide=True),
+		VarType("queues",  title=_("Agent of queues:"), type="mchoice", optional=True,
+			options=getChoice("CfgPhoneQueue"), hide=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True),
@@ -97,3 +100,4 @@ class CfgPhoneSip(CfgPhone):
 		self.createVoicemailConfig(sip)
 		self.createOutgoingContext()
 		self.createPanelConfig()
+		self.createQueuesConfig()
