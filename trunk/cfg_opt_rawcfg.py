@@ -25,9 +25,9 @@ class CfgOptRawCfg(CfgOpt):
 
 	shortName = _("Raw config file snippet")
 	variables = [
-		VarType("name", title=_("Name"), len=15),
+		VarType("name", title=_("Name"), len=25),
 		VarType("file", title=_("File name"), len=15),
-		VarType("sect", title=_("Section/Context"), len=15),
+		VarType("sect", title=_("Section/Context"), len=35),
 		VarType("txt",  title=_("Contents"), type="text", size=8, cols=40),
 	]
 

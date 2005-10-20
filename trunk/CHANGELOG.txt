@@ -1,6 +1,7 @@
 2005-10-19
 * cfg_trunk_iax.py: improved authentication part. 
 * Added initial support for call queues.
+* cfg_opt_rawcfg.py: little change to let some fields bigger.
 
 2005-10-18
 * cfg_dialout_normal.py: validate trunk_price
