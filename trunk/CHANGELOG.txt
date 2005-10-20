@@ -4,7 +4,7 @@
 * cfg_opt_rawcfg.py: little change to let some fields bigger.
 * backend.py: make sure the destar_cfg.py file gets updated before writing config files.
 * Improved cfg_ivr_autoatt.py with playback pause and timed jump to extension.
-* page_user_settings.ptl: modified a bit the way features are stored on astdb (This needs more testing).
+* page_user_settings.ptl,cfg_app_callfw.py: modified a bit the way features are stored on astdb (This needs more testing).
 
 2005-10-18
 * cfg_dialout_normal.py: validate trunk_price

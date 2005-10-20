@@ -31,7 +31,7 @@ class CfgAppCallFW(CfgApp):
 		       ]
 	
 	def row(self):
-		return ("%s / %s" % (self.set,self.unset),self.shortName, self.type)
+		return ("%s / %s" % (self.set,self.ext),self.shortName, self.type)
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
