@@ -23,7 +23,7 @@ from Templates import *
 
 _q_parent  = 'page_main'
 _q_title   = _("Administration")
-_q_desc    = _("Perform administrative to the PBX and users phones")
+_q_desc    = _("Perform administrative actions to PBX and extensions")
 _q_menupos = 20
 _q_level   = 2
 
@@ -35,21 +35,4 @@ def _q_access(request):
 
 def _q_index [plain] (request):
 	header(_q_desc)
-	'<p>'
-	htmltext(_('This menu will contain all sorts of administration stuff:'))
-	'</p>'
-	'<ul>'
-	for s in (htmltext(_('Administrator login capability')),
-		  htmltext(_('Disable phone numbers, e.g. 0900 services')),
-		  htmltext(_('Upload MP3s with Music-On-Hold')),
-		  htmltext(_('See made calls of all users')),
-		  htmltext(_('See received calls of all users')),
-		  htmltext(_('Convert CDR (call details recordings) into Euro and Cent')),
-		  htmltext(_('Various statistics')),
-		  htmltext(_('Maintain public phone directory')),
-	):
-		'<li>'
-		s
-		'</li>'
-	'</ul>'
 	footer()

@@ -46,22 +46,29 @@ def showHtmlConfig [plain] (configEntries):
 	'<div id="config">\n'
 	for file, cfg in configEntries:
 		'\n<div id="configFile">'
+		'<p>'
 		file
+		'</p>'
 		'</div>\n'
 		'<div id="configContents">\n'
 		if cfg.destar_comment:
+			'<p>'
 			configlets.CONF_TAG
-			'<br />\n'
+			'</p>'
 		for sect in cfg.order:
 			if sect:
 				'<div id="configSection">'
+				'<p>'
 				'['
 				sect
 				']'
+				'</p>'
 				'</div>\n'
+			'<p>'
 			for l in cfg.sections[sect]:
 				htmlescape(l)
 				'<br />\n'
+			'</p>'
 		'</div>\n'
 	'</div>\n'
 
@@ -92,6 +99,8 @@ def _q_index [plain] (request):
 			showHtmlConfig(entries)
 	else:
 			header(_("Nothing to Show"))
+			'<p>'
 			_("There is nothing configured yet.")
+			'</p>'
 	footer()
 	

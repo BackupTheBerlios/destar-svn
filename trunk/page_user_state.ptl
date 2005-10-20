@@ -41,7 +41,8 @@ def phoneState [plain] (obj):
 	state = copy.copy(obj._state.__dict__)
 
 	# TODO: use CSS
-	'<table border=1 cellpadding=2 cellspacing=0>'
+	'<table border=0 cellspacing="1">'
+	'<tbody>'
 
 	try:
 		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('State')), _(state['State']) )
@@ -124,6 +125,7 @@ def phoneState [plain] (obj):
 		except KeyError:
 			pass
 
+	'</tbody>'
 	'</table>'
 
 		

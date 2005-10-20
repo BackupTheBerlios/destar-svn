@@ -38,7 +38,9 @@ tipped = False
 def configurationTip [plain] (tip, url, label):
 	global tipped
 	if not tipped:
+		'<p>'
 		htmltext(_('Configuration tips'))
+		'</p>'
 		'<ul>'
 	tipped = True
 	'<li>'
@@ -104,11 +106,11 @@ def configurationTips [plain] (request):
 def showConfigurables [plain] (head):
 	'<p>'
 	head
-	':</p><table id="subcategories">'
+	':</p><table id="subcategories"><thead>'
 	'<tr>'
 	for s in (htmltext(_('Configured')), htmltext(_('Category'))):
 		'<th>%s</th>' % s
-	'</tr>'
+	'</thead></tr>'
 
 	for group in backend.configletsGrouped():
 		'<tr>'

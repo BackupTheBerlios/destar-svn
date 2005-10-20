@@ -48,13 +48,15 @@ def presentEditableConfiglets [plain] (configlets):
         if configlets:
                 # Show currently defined configlets
                 '<table id="configureditems">'
+                '<thead>'
                 '<tr>'
-                '<th>E</th>'
-                '<th>D</th>'
-                '<th>U</th>'
+                '<th>%s</th>' % _("E")
+                '<th>%s</th>' % _("D")
+                '<th>%s</th>' % _("U")
                 for f in configlets[0].head():
                         '<th>%s</th>' % htmltext(_(f))
                 '</tr>'
+                '</thead>'
                 n = 0
                 for o in configlets:
                         '<tr>'
@@ -87,6 +89,7 @@ def presentAddableConfiglets [plain] (group, configlets):
                 if not o.isAddable():
                         continue
                 if not head:
+			'<br/><br/>'
                         '<div class="addmore"><h3>%s %s</h3><ul>' % (htmltext(_("Add more")), group) 
                         head = True
                 '<li><a href="../add/%s">%s</a></li>' % (o.__name__, o.shortName)

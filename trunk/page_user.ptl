@@ -58,23 +58,23 @@ def loggedIn [plain] (request):
 	":</p><ul>"
 	if request.session.level >= 0:
 		"<li>"
-		htmltext(_('access all public accessible info pages'))
+		htmltext(_('Access all public accessible info pages'))
 		"</li>"
 	if request.session.level >= 1 and request.session.phone:
 		"<li>"
-		htmltext(_('change your personal phone settings'))
+		htmltext(_('Change your personal phone settings'))
 		"</li>"
 	if request.session.level >= 2:
 		"<li>"
-		htmltext(_('change phone settings of other people'))
+		htmltext(_('Change phone settings of other people'))
 		"</li>"
 	if request.session.level >= 3:
 		"<li>"
-		htmltext(_('configure the PBX'))
+		htmltext(_('Configure the PBX'))
 		"</li>"
 	if request.session.level >= 4:
 		"<li>"
-		htmltext(_('access debug pages to help program DeStar'))
+		htmltext(_('Access debug pages to help program DeStar'))
 		"</li>"
 	"</ul>"
 
@@ -82,25 +82,4 @@ def loggedIn [plain] (request):
 def _q_index [plain] (request):
 	header(_q_desc)
 	loggedIn(request)
-	'<h3>'
-	htmltext(_('Future plans'))
-	'</h3>'
-	'<p>'
-	htmltext(_('This menu will contain all sorts of phone user specific stuff:'))
-	'</p>'
-	'<ul>'
-	for s in (htmltext(_('Phone status (number of voicemails, call forwarding etc)')),
-		  htmltext(_('Set DND (do-not-disturb)')),
-		  htmltext(_('Set CFIM (call-forwarding)')),
-		  htmltext(_('Set CFBS (call-forward if busy/unavailable)')),
-		  htmltext(_('See last n calls made')),
-		  htmltext(_('See last n calls received')),
-		  htmltext(_('Maintain personal phone directory')),
-		  htmltext(_('Initiate call from the web')),
-		  htmltext(_('Maintain voice mailbox (listen, delete, forward, change texts)')),
-	):
-		'<li>'
-		s
-		'</li>'
-	'</ul>'
 	footer()

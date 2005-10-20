@@ -1,12 +1,17 @@
 2005-10-20
 * Fixed some XHTML warnings.
+* page_admin_cdr.ptl: Fixed bug when showing cost of calls.
+* Fixed phone authentication bugs (password can be phone secret or voicemail pin and don't show 'login' option if user type is "User").
+* Global interface cleaning of "future plans" messages (Redirect to wiki pages instead).
+* Added '<p></p>' tags to several messages that didn't have them.
+* Made some other html improvements (e.g. table headers).
 
 2005-10-19
 * cfg_trunk_iax.py: improved authentication part. 
 * Added initial support for call queues.
-* cfg_opt_rawcfg.py: little change to let some fields bigger.
+* cfg_opt_rawcfg.py: little change to let some fields be bigger.
 * backend.py: make sure the destar_cfg.py file gets updated before writing config files.
-* Improved cfg_ivr_autoatt.py with playback pause and timed jump to extension.
+* Improved cfg_ivr_autoatt.py with playback pause and timed jump to ivr.
 * page_user_settings.ptl,cfg_app_callfw.py: modified a bit the way features are stored on astdb (This needs more testing).
 * Show cost of calls based on "accountcode" field of cdr. This field is filled depending on the price per minute of every trunk/dialout. The field is not meant for that, but this is an aproach to tarification.
 

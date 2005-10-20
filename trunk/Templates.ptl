@@ -139,8 +139,9 @@ class HtmlTable:
 		if a:
 			a.insert(0,'')
 		a = [ "<table%s>" % ' '.join(a) ]
+		a.append('<tbody>')
 		a.extend(self.getRows())
-		a.append('</table>')
+		a.append('</tbody></table>')
 		return ''.join(a)
 
 
@@ -223,11 +224,12 @@ def getMenu():
 			#print "user %d, page %d %s" % (request.session.level, e._q_level, e._q_title)
 			if e._q_level>request.session.level:
 				continue
+			if e._q_title == _("Logout") and request.session.level == 4:
+				continue
 			if e._q_level<0:
 				#print abs(e._q_level), request.session.level
-				if abs(e._q_level) < request.session.level:
+				if abs(e._q_level) <= request.session.level:
 					continue
-			
 			if e._q_link==path[n] or e._q_link==path[n]+'/':
 				submenu = calcMenu('/'.join([root,path[n]]), n+1)
 			else:

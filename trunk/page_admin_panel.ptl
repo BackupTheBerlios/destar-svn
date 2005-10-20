@@ -44,11 +44,13 @@ def _q_index [plain] (request):
 		htmltext(_('Here you can configure the basic features of the "Asterisk Flash Operator Panel" from ')) 
 		'<a href="http://www.asternic.org/">http://wwww.asternic.org</a>.'
 		'</p>'
+		'<p>'
 		htmltext(_('This version of DeStar works with the 0.20 version of the Flash Panel. '))
 		htmltext(_('You should download it from this '))
 		'<a href="http://asternic.org/files/op_panel-0.20.tar.gz">'
 		'link'
 		'</a> and extract it to /usr/local/.'
+		'</p>'
 		'<p>'
 		htmltext(_('You must have perl installed in your path to use the Operator Panel. '))
 		
@@ -147,5 +149,7 @@ def eraseconf [plain] (request):
 	header(_q_desc)
 	panelutils.unsetConfigured()
 	panelutils.fixup()
+	'<p>'
 	_('The configuration has been erased.');
+	'</p>'
 	footer()

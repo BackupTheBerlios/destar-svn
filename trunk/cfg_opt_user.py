@@ -31,8 +31,6 @@ class CfgOptUser(CfgOpt):
 		VarType("pc",     title=_("Associated IP address of PC"), hint=_("Trusted for auto-login"), len=15, optional=True),
 		VarType("phone",  title=_("Associated phone"), type="choice", optional=True,
 		                  options=getChoice("CfgPhone")),
-		#VarType("mailbox",title=_("Associated mailbox"), type="choice", optional=True,
-		#                  options=getChoice("CfgMailbox")),
 		VarType("level",  title=_("Type"), type="choice",
 		                  options=( ("0",_("disabled")),
 		                            ("1",_("User")),

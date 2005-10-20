@@ -192,7 +192,9 @@ def cdrForm [plain] (request, srcextension="", dstextension="", duration="" ):
 
 def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", order="DESC"):
 	if total == 0:
+		'<p>'	
 		'--No records to Show--'
+		'</p>'	
 	else:
 		orderby = '%s %s' % (field, order)	
 		cursor = cdrutils.select(order=[str(orderby)], where = where, limit = limit, offset = offset)
@@ -204,12 +206,14 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", o
 		if row and int(offset) >= 0 and int(offset) <= total:
 		
 			f = offset + limit
-			if total >= f:			
+			'<p>'	
+			if total >= f:		
 				_('Showing records from %s to %s of %s <br><br>') % (offset+1, f, total)
 			else:
 				_('Showing records from %s to %s of %s <br><br>') % (offset+1, total, total)
+			'</p>'	
 					
-                	'<table border="1"><tr>'
+                	'<table border="1" cellspacing="1"><thead><tr>'
                 	for s in row.keys():
 				'<th>'
 				_(s)
@@ -220,7 +224,7 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", o
 			'<th>'
 			_('Cost_of_call')
 			'</th>'
-                	'</tr>'
+                	'</tr></thead><tbody>'
 		
                 	while row:
 	                	'<tr>'
@@ -237,14 +241,16 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", o
 					if c==_("start"):
 						finalDate=s
 					if c==_("Duration"):
+						if not s:
+							s = 0
+						s = int(s)
 						min = (s % 60) and ((s / 60) + 1) or (s / 60)
 						totalmin += min
 					if c==_("Cost_per_Minute"):
-						if not s or s == " ":
-							costpm=0
-						else:
-							costpm = s
-						s = costpm
+						if not s:
+							s=0
+						s = int(s)
+						costpm = s
 					'<td><center>'
 					if s=="1969-12-31 19:00:00":
 						'-'
@@ -262,10 +268,13 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", o
 				'</tr>'
 
 				row = cursor.fetchone()
-                	'</table><br><br>'
+                	'</tbody></table><br/>'
+		'<p>'	
 		_('Total Duration of shown calls: %s min.' % totalmin)
-		'<br><br>'
+		'</p>'	
+		'<p>'	
 		_('Total Cost of shown calls: %s' % totalcost)
+		'</p>'	
 
 def _q_index [plain] (request):
 	header(_q_desc)

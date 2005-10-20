@@ -33,5 +33,7 @@ def _q_access(request):
 
 def _q_index [plain] (request):
 	header(_q_desc)
+	'<div id="dump">'
 	request.dump_html()
+	'</div>'
 	footer()
