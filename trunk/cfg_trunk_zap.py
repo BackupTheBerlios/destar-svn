@@ -44,6 +44,8 @@ class CfgTrunkZap(CfgTrunk):
 		                               options=[('phone',_("Phone")),('ivr',_("IVR"))]),
 		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
 		                               options=getChoice("CfgPhone")),
+		VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
+		                               options=getChoice("CfgIVR")),
 		VarType("dial", hide=True, len=50),
 		]
 	technology = "ZAP"

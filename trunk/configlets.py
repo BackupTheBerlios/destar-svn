@@ -631,46 +631,16 @@ class CfgTrunk(Cfg):
 			for v in self.variables:
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
-		global config_entries
-		ivrs=False
-		for obj in config_entries:
-			if obj.groupName == 'IVRs':
-				ivrs=True
-				alreadyappended = False
-				for v in self.variables:	
-					if v.name == "ivr_"+obj.name:
-						alreadyappended = True
-				if not alreadyappended:
-					self.variables.append(VarType("ivr_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("ivr_%s_time" % obj.name, title=_("Time"), hint=_("00:00-23:59|mon-sun|1-31|jan-dic"), len=50, optional=True))
-		if ivrs:
-			for v in self.variables:
-				if v.name == "contextin":
-					v.hide = False
-				if v.name == "phone":
-					v.optional = True
-
+		
 	def createIncomingContext(self): 
 		c = AstConf("extensions.conf")
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
 		if self.contextin == 'phone' and self.phone:
 			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
-		elif self.contextin == 'ivr':
-			global config_entries
-			for obj in config_entries:
-				if obj.groupName == 'IVRs':
-					try:
-						ivr = self.__getitem__("ivr_%s" % obj.name)
-						if ivr:
-							time = self.__getitem__("ivr_%s_time" % obj.name)
-							if time:
-								c.append("include=>%s|%s" % (obj.name,time))
-							else:
-								c.append("include=>%s" % obj.name)
-					except KeyError:
-						pass
-
+		if self.contextin == 'ivr' and self.ivr:
+			c.appendExten("s", "Goto(%s,s,1)" % self.ivr)
+		
 class CfgPhone(Cfg):
 	"""Base class for all phone devices."""
 
