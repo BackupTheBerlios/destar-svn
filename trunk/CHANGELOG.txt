@@ -5,6 +5,7 @@
 * Global interface cleaning of "future plans" messages (Redirect to wiki pages instead).
 * Added '<p></p>' tags to several messages that didn't have them.
 * Made some other html improvements (e.g. table headers).
+* Added cfg_opt_zappri.py,cfg_trunk_zappri.py: initial support for zap pri trunks.
 
 2005-10-19
 * cfg_trunk_iax.py: improved authentication part. 
