@@ -58,13 +58,13 @@ def presentEditableConfiglets [plain] (configlets):
                 n = 0
                 for o in configlets:
                         '<tr>'
-                        '<td><a href="../edit/%s"><img src="/static/edit.gif" border="0" alt="Edit"></a></td>' % o._id
+                        '<td><a href="../edit/%s"><img src="/static/edit.gif" border="0" alt="Edit" /></a></td>' % o._id
                         if n<len(configlets)-1:
-                                '<td><a href="../down/%s"><img src="/static/down.gif" border="0" alt="Move down"></a></td>' % o._id
+                                '<td><a href="../down/%s"><img src="/static/down.gif" border="0" alt="Move down" /></a></td>' % o._id
                         else:
                                 '<td>&nbsp;</td>'
                         if n>0:
-                                '<td><a href="../up/%s"><img src="/static/up.gif" border="0" alt="Move up"></a></td>' % o._id
+                                '<td><a href="../up/%s"><img src="/static/up.gif" border="0" alt="Move up" /></a></td>' % o._id
                         else:
                                 '<td>&nbsp;</td>'
                         wrap = True

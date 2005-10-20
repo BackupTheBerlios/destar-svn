@@ -156,7 +156,7 @@ def header [html] (title, menu=None, refresh=None):
 		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
 	'<meta name="Author" content="DeStar, made by Holger Schurig" />\n'
 	'<title>Asterisk/DeStar PBX :: %s</title>\n' % title
-	'<link rel="stylesheet" type="text/css" href="/static/layout.css">\n'
+	'<link rel="stylesheet" type="text/css" href="/static/layout.css" />\n'
 	'</head>\n'
 	'<body>\n'
 	#'<body onload="window.resizeTo(800,600);">'
@@ -179,7 +179,9 @@ def header [html] (title, menu=None, refresh=None):
 			else:
 				'<li>&nbsp;</li>\n'
 			if e[3]:
+				'<li>'
 				showMenu(e[3])
+				'</li>'
 		'</ul>\n'
 	showMenu(getMenu())
 	'</div>\n'

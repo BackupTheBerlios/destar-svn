@@ -51,7 +51,7 @@ def showHtmlConfig [plain] (configEntries):
 		'<div id="configContents">\n'
 		if cfg.destar_comment:
 			configlets.CONF_TAG
-			'<br>\n'
+			'<br />\n'
 		for sect in cfg.order:
 			if sect:
 				'<div id="configSection">'
@@ -61,7 +61,7 @@ def showHtmlConfig [plain] (configEntries):
 				'</div>\n'
 			for l in cfg.sections[sect]:
 				htmlescape(l)
-				'<br>\n'
+				'<br />\n'
 		'</div>\n'
 	'</div>\n'
 
