@@ -73,11 +73,12 @@ fields=[('src',_("Source")),
 	('dst',_("Destination")),
 	('answer',_("Time_of_answer")),
 	('billsec',_("Duration")),
-	('disposition',_("Result"))]
+	('disposition',_("Result")),
+	('accountcode',_("Cost_per_Minute"))]
 
 operands=['=','<>','<=','<','>=','>']
 	
-def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", duration="" ):
+def cdrForm [plain] (request, srcextension="", dstextension="", duration="" ):
 
 	monthsnumbers = [ '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12' ]
 	monthsnames = [ _('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('August'), _('September'), _('October'), _('November'), _('December') ]
@@ -104,7 +105,6 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")),hint=htmltext(_("You can use the same wildcards as above")), render_br=True)
 	form.add(OptionSelectWidget, "durationoperand",  "%s" % duration, title=htmltext(_("Duration")), options=zip(operands,operands,operands),render_br=False)
 	form.add(StringWidget, "duration",  "%s" % duration, hint=htmltext(_("In seconds")),render_br=True)
-	form.add(StringWidget, "mincost",  "%s" % mincost, title=htmltext(_("Cost per minute")), render_br=True)
 	form.add(OptionSelectWidget,'linesToShow', title=_('Number of records to show:'),options=zip( generateOptionSelect(), generateOptionSelect(text=True), generateOptionSelect() ), value=20)	
 	form.add(OptionSelectWidget, 'orderby', title=_('Order by:'),options=fields, render_br=False,value='answer')	
 	form.add_radiobuttons('order', title=_(''),options=[('DESC',_("Desc.")),('ASC',_("Asc."))],value='DESC')	
@@ -166,13 +166,9 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 			p = 20
 			q = 0
 		
-		if form["mincost"]:
-			mincost=int(form["mincost"])
-		else:
-			mincost = 0
 			
 		form.render()
-		cdrShowResults(where, p, q, total,form["orderby"],form["order"],mincost)
+		cdrShowResults(where, p, q, total,form["orderby"],form["order"])
 
 	if not form.is_submitted() or form.has_errors():
 		return render()
@@ -194,7 +190,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	
 	return render()
 
-def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", order="DESC", mincost=0):
+def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", order="DESC"):
 	if total == 0:
 		'--No records to Show--'
 	else:
@@ -243,8 +239,12 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", o
 					if c==_("Duration"):
 						min = (s % 60) and ((s / 60) + 1) or (s / 60)
 						totalmin += min
-						cost = min * mincost
-						totalcost += cost
+					if c==_("Cost_per_Minute"):
+						if not s or s == " ":
+							costpm=0
+						else:
+							costpm = s
+						s = costpm
 					'<td><center>'
 					if s=="1969-12-31 19:00:00":
 						'-'
@@ -255,6 +255,8 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="answer", o
 				min
 				'</center></td>'
 				'<td><center>'
+				cost = min * costpm
+				totalcost += cost
 				cost
 				'</center></td>'
 				'</tr>'
