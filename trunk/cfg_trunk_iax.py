@@ -29,20 +29,24 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 	description = _("""Used to setup an IAX trunk to another Asterisk server or an IAX termination.""")
 
 	variables	= [
-		VarType("name",       title=_("Name"), len=15, default="iaxtrunk"),
-		VarType("host",       title=_("IAX host"), len=25),
+		VarType("name",      title=_("Name"), len=15, default="iaxtrunk"),
+		VarType("host",      title=_("IAX host"), len=25),
 		VarType("bandwidth",  title=_("Bandwith"), type="choice", len=25,
 				options=[('low',_("Low")),('high', _("High"))]
 			),
+		
+		VarType("authLabel",   title=_("Authentication"), type="label"),
+		VarType("auth",      title=_("Authentication Method"), type="radio", default="plain",
+		                               options=[('plain',_("Plain text")),('rsa',_("RSA")),('md5',_("MD5"))]),
+		VarType("inkeys",    title=_("Public key from remote server"), len=15, optional=True),
+		VarType("outkey",    title=_("Private local key"), len=15, optional=True),
+
                 VarType("trunk",      title=_("Enable trunking?"), type="bool", hide=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
 
 		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
-                VarType("authrsa",      title=_("Enable RSA auth?"), type="bool"),
-		VarType("inkeys",    title=_("Public key from remote server"), len=15),
-		VarType("outkey",    title=_("Private local key"), len=15),
 		VarType("contextin",      title=_("Go to"), type="radio", default='phone',
 		                               options=[('phone',_("Phone")),('ivr',_("IVR"))]),
 		VarType("phone",      title=_("Extension to ring"), type="choice", optional=True,
@@ -78,11 +82,13 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			c.append("bandwidth=%s" % self.bandwidth)
 			c.append("qualify=yes")
 			if self.trunk:
-				c.append("trunk= yes")
-			if self.authrsa and self.inkeys and self.outkey:		
+				c.append("trunk=yes")
+			if self.auth == "rsa" and self.inkeys and self.outkey:		
 				c.append("auth=rsa")
 				c.append("inkeys=%s" % self.inkeys)
 				c.append("outkey=%s" % self.outkey)
+			elif self.auth == "md5":
+				c.append("auth=md5")
 
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)
