@@ -1,3 +1,12 @@
+2005-10-22
+* Rewrited all op-panel integration to make it more usable and cleaner:
+	- Added cfg_opt_oppanel.py: a configlet to manage the panel configuration.
+	- Now panel html files are not copied but symlinked.
+	- Tested with original tarball and with the .deb package I'm working on.
+	- Initial configuration must be made on panelutils.py and Makefile to make this work.
+	- TODO: make more tests of panel integration and document configuration steps.
+* cfg_opt_manager.py,ConfigHelper.ptl: fixed little bug regarding optional "mchoice" widget.
+
 2005-10-20
 * Fixed some XHTML warnings.
 * page_admin_cdr.ptl: Fixed bug when showing cost of calls.

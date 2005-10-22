@@ -5,6 +5,12 @@ PAGES_DIR=$(DESTDIR)/usr/share/destar/static
 SBINDIR=$(DESTDIR)/usr/sbin
 MANDIR=$(DESTDIR)/usr/share/man/man8
 
+# To use with asternic.org op_panel tarball:
+PANEL_HTML_DIR=/usr/local/op_panel/html
+
+# To use with op-panel .deb package:
+#PANEL_HTML_DIR=/usr/share/op-panel/html
+
 # set SYS_MEDUSA to 1 to use system copy of medusa
 SYS_MEDUSA=0
 
@@ -14,6 +20,8 @@ clean:
 	     -name "*.ptlo" -o \
 	     -name "*.au" | xargs rm -f || true
 
+clean-panel:
+	rm -f $(PAGES_DIR)/panel
 
 release:
 	svn export svn+ssh://svn.berlios.de/svnroot/repos/destar/trunk destar-$(DATE) 
@@ -27,6 +35,8 @@ gettext:
 msgfmt:
 	msgfmt.py destar.po
 
+install-panel:
+	ln -s $(PANEL_HTML_DIR) $(PAGES_DIR)/panel
 
 install:
 	install -d $(PYDIR)

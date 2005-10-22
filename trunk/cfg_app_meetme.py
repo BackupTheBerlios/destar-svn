@@ -29,7 +29,7 @@ class CfgAppMeetme(CfgApp):
 		       	VarType("pin",      title=_("PIN"), optional=True, len=6),
 			
 			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                	VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True)
+                	VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True)
 			]
 
 	def fixup(self):

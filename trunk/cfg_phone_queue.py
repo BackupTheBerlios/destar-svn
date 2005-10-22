@@ -64,7 +64,7 @@ class CfgPhoneQueue(CfgPhone):
 		VarType("monitorfilename",  title=_("Monitor file name"), hint=_("Otherwise it will use ${UNIQUEID}"), len=25, optional=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this queue in the panel"), type="bool", hide=True),
+                VarType("panel",      title=_("Show this queue in the panel"), type="bool", hide=True, optional=True),
 	]
 	technology = "Virtual"
 
@@ -85,6 +85,7 @@ class CfgPhoneQueue(CfgPhone):
 
 		
 	def createAsteriskConfig(self):
+		needModule("res_monitor")
 		needModule("app_queue")
 
 		c = AstConf("queues.conf")

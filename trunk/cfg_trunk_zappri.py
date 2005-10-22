@@ -43,7 +43,7 @@ class CfgTrunkZapPRI(CfgTrunk):
 		VarType("group",      title=_("Callout group"), type="string", optional=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
+                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
 
 		VarType("Gains",      title=_("Reception and Transmission Gains"), type="label"),
 		VarType("rxgain",     title=_("Reception gain"), hint=_("in dB"), optional=True, default="0.0"),

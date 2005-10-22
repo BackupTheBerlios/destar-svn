@@ -23,7 +23,7 @@ from configlets import *
 
 class CfgOptManager(CfgOpt):
 
-	_opt = ("system", "call", "log", "verbose", "command", "agent", "user")
+	_opt = ("","system", "call", "log", "verbose", "command", "agent", "user")
 	shortName = _("Management API access")
 	variables = [VarType("name",   title=_("Name"), len=15),
 		     VarType("secret", title=_("Secret"), len=15, default=generatePassword(8)),
@@ -35,12 +35,6 @@ class CfgOptManager(CfgOpt):
 
 	def fixup(self):
 		CfgOpt.fixup(self)
-		if not self.secret:
-			# TODO: invent a real password by getting bytes
-			# from /dev/urandom and massaging them with
-			# binhex or something like this
-			self.secret = "secret"
-
 
 	def createAsteriskConfig(self):
 		c = AstConf("manager.conf")

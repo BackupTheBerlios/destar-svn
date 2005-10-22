@@ -242,8 +242,9 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 			opts = v.options
 			if type(opts) == types.FunctionType:
 				opts = opts()
-			if v.optional and opts[0][0]:
-				opts.insert(0, ('',''))
+			if v.optional and type(opts) == types.ListType:
+				if opts[0][0]:
+					opts.insert(0, ('',''))
 			elif not opts:
 				return errorpage(_("Required '%s' not found") % v.name)
 			form.add(MultipleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=opts,render_br=v.render_br)

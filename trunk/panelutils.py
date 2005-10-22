@@ -18,193 +18,114 @@
 #
 
 import os, re, commands, shutil
-import backend, manager
+import backend
 from configlets import *
 
-EXT_APPS_CFG = "ext_cfg.py"
+# To use with asternic.org op_panel tarball:
+PANEL_CONF_DIR	= "/usr/local/op_panel"
+PANEL_HTML_DIR	= "/usr/local/op_panel/html"
+PANEL_START_CMD	= "/usr/local/op_panel/op_server.pl -d"
+PANEL_STOP_CMD	= "pkill op_server"
 
 
-def check_dir (dir):
-	op_panel = {}
-	op_panel["flash"] = "%s/html/operator_panel.swf" % dir
-	op_panel["server"] = "%s/op_server.pl" % dir
-	op_panel["serv_cfg"] = "%s/op_server.cfg" % dir
-	try:
-		for file in op_panel.values():
-			open(file)
-		check = 1
-	except IOError, (errno, strerror):
-		check = 0
-	return check
-
-def copy_files_to_webserver (dir):
-	try:
-		os.mkdir("%s/static/panel" % os.getcwd())
-	except OSError:
-		pass
-	for file in os.listdir("%s/html" % dir):
-		try:
-			src = "%s/html/%s" % (dir,file)
-			dst = "%s/static/panel/%s" % (os.getcwd(),file)
-			open(dst,"w").write(open(src).read())
-		except IOError:
-			return 0
-	return 1
-
-def change_conf (dir, code, name, mgr_name):
-	for mgr in backend.getConfiglets(name="CfgOptManager"):
-		if mgr.name == mgr_name:
-			secret = mgr.secret
-	try:
-		conf =  open("%s/op_server.cfg" % dir,"r+")
-		lines = conf.readlines()
-		conf.seek(0)
-		for line in lines:
-			line = re.sub("(?<=manager_host=).*","localhost",line)
-			line = re.sub("(?<=manager_user=).*",mgr_name,line)
-			line = re.sub("(?<=manager_secret=).*",secret,line)
-			line = re.sub("(?<=web_hostname=).*",name,line)
-			line = re.sub("(?<=flash_dir=).*","%s/static/panel/" % os.getcwd(),line)
-			line = re.sub("(?<=security_code=).*",code,line)
-			line = re.sub("(?<=conference_context=).*","apps",line)
-			conf.write(line)
-		setConfigured(dir)
-	except IOError:
-		return -1
-	return 1
+# Configuration to use with op-panel .deb package:
+#PANEL_CONF_DIR	= "/etc/op-panel"
+#PANEL_HTML_DIR	= "/usr/share/op-panel/html"
+#PANEL_START_CMD	= "invoke-rc.d op-panel start"
+#PANEL_STOP_CMD	= "invoke-rc.d op-panel stop"
 
 def isConfigured ():
-	"""Return a value depending on the panel configuration file."""
+	import configlets
+	configured=0
+	for obj in configlets.config_entries:
+		if obj.__class__.__name__ == 'CfgOptOPPanel':                                
+			configured=1
+			continue
+	return configured
 
-	ret = 0		# return 0 if there is not matching line
-	try:
-		f = open(EXT_APPS_CFG)
-		for l in f.readlines():
-			if re.match("\s*oppanel_configured\s*=\s*1\s*$",l):
-				ret = 1
-			if re.match("\s*oppanel_configured\s*=\s*0\s*$",l):
-				ret = -1 	# -1 if there is a mtaching line with 0
-		f.close()
-	except IOError:
-		pass
-	return ret
+def createManagerConfig(obj):
+	c = AstConf("op_server.cfg")
+	c.setSection("general")
+	c.append("manager_host=127.0.0.1")
+	c.append("manager_user=%s" % obj.manager)
+	manager = backend.getConfiglet(name=obj.manager)
+	c.append("manager_secret=%s" % manager.secret)
 
-def getDir():
-	ret = None
-	try:
-                f = open(EXT_APPS_CFG)
-                for l in f.readlines():
-                        m = re.match("\s*oppanel_dir\s*=\s*(\S*)\s*$",l)
-			if m:
-				ret = m.group(1)
-                f.close()
-        except IOError:
-                pass
-        return ret
+def createDefaultConfig(c):
+	c.append("flash_dir=%s" % PANEL_HTML_DIR)
+	#TODO: put some of the following on cfg_opt_oppanel.py
+	c.append("auth_md5=1")
+	c.append("poll_voicemail=0")
+	c.append("kill_zombies=0")
+	c.append("debug=0")
+	c.append("conference_context=apps")
+	c.append("clid_format=(xxx)xxx-xxxx")
+	c.append("clid_privacy=0")
+	c.append("show_ip=0")
+	c.append("rename_label_agentlogin=0")
+	c.append("rename_label_callbacklogin=0")
+	c.append("rename_label_wildcard=0")
+	c.append("rename_to_agent_name=1")
+	c.append("agent_status=1")
+	c.append("rename_queue_member=0")
+	c.append("change_led_agent=1")
+	c.append("reverse_transfer=0")
+	c.append("clicktodial_insecure=0")
+	c.append('transfer_timeout="%s"' % _("0,No timeout|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 minutes|3000,50 minutes"))
+	c.append("enable_restart = 0")
 
-
-def setConfigured (dir):
-	conf = isConfigured()
-	if conf == 1:
-		return
-	elif conf == -1:
-		try:
-			lines = open(EXT_APPS_CFG).readlines()
-			f = open(EXT_APPS_CFG,'w')
-			for l in lines:
-				if re.match("\s*oppanel_configured\s*=\s*0\s*$",l):
-					l = l.replace('0','1')
-				f.write(l)
-			f.close()
-		except IOError:
-			pass
-	elif conf == 0:
-		try:
-			f = open(EXT_APPS_CFG,'a')
-			f.write("oppanel_configured=1\n")
-			f.write("oppanel_dir=%s\n" % dir )
-			f.close()
-		except IOError:
-			pass
-		
-	
-def unsetConfigured ():
-	conf = isConfigured()
-	if conf == 0 or conf == -1:
-		return
-	elif conf == 1:
-		try:
-			lines = open(EXT_APPS_CFG).readlines()
-			f = open(EXT_APPS_CFG,'w')
-			for l in lines:
-				if re.match("\s*oppanel_configured\s*=\s*1\s*$",l):
-					l = l.replace("1","0")
-				f.write(l)
-			f.close()
-		except IOError:
-			pass
-
-def fixup():
-	backend.fixupConfiglets()
-
-def createExtButton(self):
+def createExtButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection("%s/%s" % (self.technology, self.name) )
+	p.setSection("%s/%s" % (obj.technology, obj.name) )
 	p.append("Position=n")
 	p.append("Icon=1")
-	p.append("Extension=%s" % self.ext)
-	p.append("Label=%s" % self.name)
+	p.append("Extension=%s" % obj.ext)
+	p.append("Label=%s" % obj.name)
 
-def createTrunkButton(self):
+def createTrunkButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection("%s/%s" % (self.technology, self.channel) )
+	p.setSection("%s/%s" % (obj.technology, obj.channel) )
 	p.append("Position=n")
 	p.append("Icon=2")
 	p.append("Extension=-1")
-	p.append("Label=%s" % self.name)
+	p.append("Label=%s" % obj.name)
 
-def createMeetmeButton(self):
+def createMeetmeButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection(self.confno)
+	p.setSection(obj.confno)
 	p.append("Position=n")
 	p.append("Icon=5")
-	p.append('Label="%s %s"' % (_("Meetme"),self.confno))
+	p.append('Label="%s %s"' % (_("Meetme"),obj.confno))
 
-def createParkButton(self):
+def createParkButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection("%s%s" % (_("PARK"),self.ext))
+	p.setSection("%s%s" % (_("PARK"),obj.ext))
 	p.append("Position=n")
 	p.append("Icon=3")
-	p.append("Extension=%s" % self.ext)
-	p.append('Label="%s %s"' % (_("Park"),self.ext))
+	p.append("Extension=%s" % obj.ext)
+	p.append('Label="%s %s"' % (_("Park"),obj.ext))
 
-def createQueueButton(self):
+def createQueueButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection(self.name)
+	p.setSection(obj.name)
 	p.append("Position=n")
 	p.append("Icon=3")
 	p.append("Extension=-1")
-	p.append("Label=%s" % self.name)
+	p.append("Label=%s" % obj.name)
 
 def startPanelDaemon():
-        os.popen('%s/op_server.pl -d' % getDir())
+        return commands.getoutput(PANEL_START_CMD)
 
 def stopPanelDaemon():
-        commands.getoutput('killall op_server.pl')
+        return commands.getoutput(PANEL_STOP_CMD)
 
 def restartPanelDaemon():
-	stopPanelDaemon()
-	startPanelDaemon()
-
-def moveButFile():
-	buttons_file =  "%s/op_buttons.cfg" % CONF_DIR
-	try:
-		if os.access(buttons_file, os.F_OK):
-			shutil.move(buttons_file, getDir())
-	except:
-		print "Can't move the op_buttons.cfg file. Check permissions"
+	s = []
+	s.append(_("Restarting the panel daemon ..."))
+	s.append(stopPanelDaemon())
+	s.append(startPanelDaemon())
+	return s
 
 if isConfigured():
-	print _("Starting the panel daemon ..")
-	startPanelDaemon()
+	restartPanelDaemon()
 

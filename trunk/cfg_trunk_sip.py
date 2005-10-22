@@ -37,7 +37,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		VarType("nat",      title=_("Is the trunk behind NAT?"), type="bool"),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True),
+                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
 
 		VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
 		VarType("contextin",      title=_("Go to"), type="radio", hide=True, default='phone',

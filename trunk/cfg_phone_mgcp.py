@@ -55,7 +55,7 @@ class CfgPhoneMGCP(CfgPhone):
 	technology = "MGCP"
 
 	def fixup(self):
-		CfgPhone.fixup(self,fixuppanel=False)
+		CfgPhone.fixup(self)
 		
 	def createAsteriskConfig(self):
 		needModule("chan_mgcp")

@@ -158,6 +158,10 @@ def initializeAsteriskConfig():
 	c.setSection("channels")
 	c.append("immediate=no")
 	c.append("overlapdial=yes")
+	
+	c = AstConf("op_server.cfg")
+	c.setSection("general")
+	c.append("language=%s" % getSetting('language', 'en'))
 
 
 	c = AstConf("macros.inc")
@@ -366,11 +370,6 @@ def createAsteriskConfig():
 	for _fn,cnf in configlets.asterisk_configfiles:
 		cnf.write()
 	
-	# Move the panel buttons file if present
-	if panelutils.isConfigured():
-		panelutils.moveButFile()
-		panelutils.restartPanelDaemon()
-
 	return res
 
 
@@ -797,5 +796,5 @@ def reloadAsterisk():
 	import manager
 	s = manager.reloadAsterisk()
 	if panelutils.isConfigured():
-		panelutils.restartPanelDaemon()
+		s += panelutils.restartPanelDaemon()
 	return "<br/>".join(s)

@@ -43,6 +43,8 @@ class AsteriskConfigFile:
 	def __init__(self, fn):
 		if fn == 'zaptel.conf':
 			fn = os.path.join("/etc", fn)
+		if fn == 'op_server.cfg' or fn == 'op_buttons.cfg':
+			fn = os.path.join(panelutils.PANEL_CONF_DIR, fn)
 		elif fn.find('/')==-1:
 			fn = os.path.join(CONF_DIR, fn)
 		self.fn       = fn
@@ -668,15 +670,14 @@ class CfgPhone(Cfg):
 		return "%s/%s" % (self.technology, self.name)
 
 
-	def fixup(self, fixuppanel=True):
+	def fixup(self):
 		Cfg.fixup(self)
 		useContext("phones")
 
-		if fixuppanel:
-			if panelutils.isConfigured() == 1:
-				for v in self.variables:
-					if v.name == "panelLab" or v.name == "panel":
-						v.hide = False
+		if panelutils.isConfigured() == 1:
+			for v in self.variables:
+				if v.name == "panelLab" or v.name == "panel":
+					v.hide = False
 
 		global config_entries
 		dialouts=False

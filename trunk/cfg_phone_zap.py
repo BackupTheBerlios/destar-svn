@@ -38,7 +38,7 @@ class CfgPhoneZap(CfgPhone):
 		VarType("callgroup",  title=_("Call group number"), optional=True),
 		
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this phone in the panel"), type="bool", hide=True),
+                VarType("panel",      title=_("Show this phone in the panel"), type="bool", hide=True, optional=True),
 		
 		VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
 		VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),

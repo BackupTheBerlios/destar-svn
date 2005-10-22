@@ -170,5 +170,5 @@ def _q_index [plain] (request):
 
 
 # Out static things like images and style-sheets:
-static = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','static')), list_directory=1)
+static = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','static')), list_directory=1, follow_symlinks=1)
 # pages = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','static')), list_directory=1, cache_time=60*60)

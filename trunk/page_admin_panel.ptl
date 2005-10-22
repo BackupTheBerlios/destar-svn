@@ -28,8 +28,7 @@ _q_title   = _("Operator Panel")
 _q_desc    = _("Asternic Flash Operator Panel")
 _q_link    = 'panel'
 _q_menupos = 90
-_q_level   = 3
-_q_exports = ('eraseconf')
+_q_level   = 2
 
 
 def _q_access(request):
@@ -41,45 +40,8 @@ def _q_index [plain] (request):
 	header(_q_desc)
 	if panelutils.isConfigured() != 1:
 		'<p>'
-		htmltext(_('Here you can configure the basic features of the "Asterisk Flash Operator Panel" from ')) 
-		'<a href="http://www.asternic.org/">http://wwww.asternic.org</a>.'
+		htmltext(_("You don't have a panel configured yet"))
 		'</p>'
-		'<p>'
-		htmltext(_('This version of DeStar works with the 0.20 version of the Flash Panel. '))
-		htmltext(_('You should download it from this '))
-		'<a href="http://asternic.org/files/op_panel-0.20.tar.gz">'
-		'link'
-		'</a> and extract it to /usr/local/.'
-		'</p>'
-		'<p>'
-		htmltext(_('You must have perl installed in your path to use the Operator Panel. '))
-		
-		if check_perl():
-			htmltext(_('It seems that you have perl installed in your path.'))
-			'</p>'
-			'<br/>'
-			managers = backend.getConfiglets(name="CfgOptManager")
-			
-			if len(managers) >0:	
-				panelFeaturesForm(request, managers)
-			else:
-				'<p>'
-				_("You have to configure al least a manager access to use the panel.")
-				_("You can do it now at ")
-				'<a href=/config/add/CfgOptManager>'
-				_("here")
-				'</a>'
-				'</p>'
-		else:
-			'</p>'
-			'<p>'
-			htmltext(_("You don't have perl installed in your path. "))
-			htmltext(_('You can follow the instructions to install perl '))
-			'<a href="http://search.cpan.org/dist/perl/INSTALL">'
-			htmltext(_('here'))
-			'</a>'
-			htmltext(_(' or in your distribution documentation.'))
-			'</p>'
 	else:
 		'<p>'
 		htmltext(_('You have a panel configured '))
@@ -87,69 +49,5 @@ def _q_index [plain] (request):
 		htmltext(_('here'))
 		'</a>'
 		'</p>'
-		'<p>'
-		htmltext(_('If you want to erase this configuration you can click '))
-		'<a href="/admin/panel/eraseconf">'
-		htmltext(_('here'))
-		'</a>'
-		'</p>'
-	'<p>'
-	htmltext(_(''))
-	'</p>'
-
 	footer()
 
-
-def check_perl():
-	perl = os.popen("perl -v")
-	return not perl.close()
-
-
-def panelFeaturesForm [plain] (request, managers, directory="/usr/local/op_panel-0.20"):
-	dir_tit = _("Where are the uncompressed panel files? ")
-	sec_code = _("What is going to be the security code of the panel? ")
-	agent = _("You have to choose a configured manager agent to use the panel")
-	web_name = _("What is the FQDN/IP to access the panel via web? ")
-	mgr_names = []
-	for mgr in managers:
-		mgr_names.append(mgr.name)
-	form = Form()
-	form.add(StringWidget, "directory", "%s" % directory, required=True, title=dir_tit, size=50)
-	form.add(StringWidget, "code", configlets.generatePassword(8), required=True, title=sec_code, size=20)
-	form.add(SingleSelectWidget, "manager", options=mgr_names, verfiy_selection=True, title=agent)
-	form.add(StringWidget, "web_name", "localhost", required=True, title=web_name, size=50)
-	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)
-	
-	def render [html] ():
-		form.render()
-
-	def process():
-		directory = form["directory"]
-		code = form["code"]
-		name = form["web_name"]
-		mgr_name = form["manager"]
-		if panelutils.check_dir(directory):
-			if panelutils.copy_files_to_webserver(directory):
-				panelutils.change_conf(directory, code, name, mgr_name)
-				panelutils.restartPanelDaemon()
-				panelutils.fixup()
-				return _("Asternic Panel configured.")
-			else:
-				return _("Error copying files")
-		else:
-			return _("This is not an asternic panel directory")
-	
-	if form.get_submit():
-		return process()
-
-	return render()
-
-
-def eraseconf [plain] (request):
-	header(_q_desc)
-	panelutils.unsetConfigured()
-	panelutils.fixup()
-	'<p>'
-	_('The configuration has been erased.');
-	'</p>'
-	footer()
