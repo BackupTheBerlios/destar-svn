@@ -1,3 +1,6 @@
+2005-10-24
+* cfg_trunk_iax.py: Oops, Fixed missing 'secret' field.
+
 2005-10-22
 * Rewrited all op-panel integration to make it more usable and cleaner:
 	- Added cfg_opt_oppanel.py: a configlet to manage the panel configuration.

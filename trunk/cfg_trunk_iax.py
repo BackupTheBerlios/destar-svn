@@ -38,8 +38,9 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		VarType("authLabel",   title=_("Authentication"), type="label"),
 		VarType("auth",      title=_("Authentication Method"), type="radio", default="plain",
 		                               options=[('plain',_("Plain text")),('rsa',_("RSA")),('md5',_("MD5"))]),
-		VarType("inkeys",    title=_("Public key from remote server"), len=15, optional=True),
-		VarType("outkey",    title=_("Private local key"), len=15, optional=True),
+		VarType("pw",    title=_("Password"), hint=_("For 'Plain' or 'MD5' only"), len=15, optional=True),
+		VarType("inkeys",    title=_("Public key from remote server"), hint=_("For 'RSA' only"), len=15, optional=True),
+		VarType("outkey",    title=_("Private local key"), hint=_("For 'RSA' only"), len=15, optional=True),
 
                 VarType("trunk",      title=_("Enable trunking?"), type="bool", hide=True),
 
@@ -89,6 +90,9 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 				c.append("outkey=%s" % self.outkey)
 			elif self.auth == "md5":
 				c.append("auth=md5")
+				c.append("secret= %s" % self.pw)
+			elif self.auth == "plain":
+				c.append("secret= %s" % self.pw)
 
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)
