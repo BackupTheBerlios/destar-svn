@@ -368,6 +368,8 @@ def createAsteriskConfig():
 	
 	# write all stuff out
 	for _fn,cnf in configlets.asterisk_configfiles:
+		if _fn == 'op_server.cfg' and panelutils.isConfigured() != 1:
+			continue
 		cnf.write()
 	
 	return res
