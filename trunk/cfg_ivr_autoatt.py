@@ -38,6 +38,7 @@ class CfgIVRAutoatt(CfgIVR):
 		VarType("pause", title=_("Pause between each playback"), optional=True, len=2),
 		VarType("ext",	  title=_("Extension to ring after file playing"), type="choice",
 			options=getChoice("CfgPhone")),
+		VarType("operator",  title=_("Digit to jump that extension directly"), optional=True, len=1),
 		VarType("ivrtime",	  title=_("IVR to jump on special dates"), type="choice",
 			options=getChoice("CfgIVR"), render_br=False, optional=True),
 		VarType("times",   title=_("Times string"),hint=_("i.e. <hours>|<weekdays>|<monthdays>|<months> (comma separated)"),default="", optional=True, len=300),
@@ -83,6 +84,8 @@ class CfgIVRAutoatt(CfgIVR):
 			if self.pause:
 				s.appendExten("s","WaitExten(%s)" % self.pause)
 		s.appendExten("s","Goto(phones,%s,1)" % self.ext)	
+		if self.operator:
+			s.appendExten("%s" % self.operator, "Goto(phones,%s,1)" % self.ext)	
 		s.appendExten("i","Playback(privacy-invalid)")	
 		s.appendExten("i","Goto(phones,%s,1)" % self.ext)	
 		s.appendExten("t","ResetCDR(w)")
