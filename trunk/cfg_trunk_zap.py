@@ -40,7 +40,7 @@ class CfgTrunkZap(CfgTrunk):
 		VarType("txgain",     title=_("Transmission gain"), hint=_("in dB"), optional=True, default="0.0"),
 	
 		VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
-		VarType("contextin",      title=_("Go to"), type="radio", hide=True, default='phone',
+		VarType("contextin",      title=_("Go to"), type="radio", default='phone',
 		                               options=[('phone',_("Phone")),('ivr',_("IVR"))]),
 		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
 		                               options=getChoice("CfgPhone")),
@@ -76,8 +76,7 @@ class CfgTrunkZap(CfgTrunk):
 		c = AstConf("zapata.conf")
 		c.append("")
 		c.append("; Zaptel Trunk %s" % self.name)
-		contextin = "in-%s" % self.name
-		c.append("context=%s" % contextin)
+		c.append("context=in-%s" % self.name)
 		c.append("callerid=asreceived")
 		c.appendValue(self, "signalling")
 		c.appendValue(self, "rxgain")

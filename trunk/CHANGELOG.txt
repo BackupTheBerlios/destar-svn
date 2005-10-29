@@ -2,6 +2,7 @@
 * cfg_trunk_zappbx.py: new zap trunk to call through a PBX
 * cfg_phone_zap.py: typo fixed
 * backend.py: little bug fixed
+* Fixed a problem with the inbounds calls of zap and sip trunks
 
 2005-10-24
 * cfg_trunk_iax.py: Oops, Fixed missing 'secret' field.

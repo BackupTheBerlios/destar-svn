@@ -40,7 +40,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
                 VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
 
 		VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
-		VarType("contextin",      title=_("Go to"), type="radio", hide=True, default='phone',
+		VarType("contextin",      title=_("Go to"), type="radio", default='phone',
 		                               options=[('phone',_("Phone")),('ivr',_("IVR"))]),
 		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
 		                               options=getChoice("CfgPhone")),
