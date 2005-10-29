@@ -1,3 +1,8 @@
+2005-10-28
+* cfg_trunk_zappbx.py: new zap trunk to call through a PBX
+* cfg_phone_zap.py: typo fixed
+* backend.py: little bug fixed
+
 2005-10-24
 * cfg_trunk_iax.py: Oops, Fixed missing 'secret' field.
 
