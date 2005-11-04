@@ -1,5 +1,5 @@
 2005-11-04
-* cfg_phone_queue.py: fixed typo
+* cfg_phone_queue.py: fixed typo, added "join" option.
 
 2005-10-29
 * cfg_ivr_autoatt.py: allow dial a digit to jump to operator's extension during

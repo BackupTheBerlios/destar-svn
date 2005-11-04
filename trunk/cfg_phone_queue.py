@@ -62,6 +62,7 @@ class CfgPhoneQueue(CfgPhone):
 				), 
 			default="gsm"),
 		VarType("monitorfilename",  title=_("Monitor file name"), hint=_("Otherwise it will use ${UNIQUEID}"), len=25, optional=True),
+		VarType("monitorjoin",        title=_("Split file on inbound and outbound channels?"), type="bool"),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this queue in the panel"), type="bool", hide=True, optional=True),
@@ -102,6 +103,8 @@ class CfgPhoneQueue(CfgPhone):
 			c.append("announce-holdtime=%s" % self.anounceholdtime)
 		if self.monitor:
 			c.append("monitor-format=%s" % self.monitorfileformat)
+			if not self.monitorjoin:
+				c.append("monitor-join=yes")
 		
 		extensions = AstConf("extensions.conf")
 		extensions.setSection("phones")
