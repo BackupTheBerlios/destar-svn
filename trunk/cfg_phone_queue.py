@@ -43,10 +43,10 @@ class CfgPhoneQueue(CfgPhone):
 			default="ringall"),
 		VarType("retry",        title=_("How long to wait before trying all the members again?"), optional=True, len=6),
 
-		VarType("Anounces",  title=_("Anounces"), type="label", len=6),
-		VarType("anounce",  title=_("Anounce queue position to caller?"), type="bool"),
-		VarType("anouncefrequency", title=_("How often to announce queue position and/or estimated holdtime to caller"), optional=True, len=6),
-		VarType("anounceholdtime",    title=_("Include estimated hold time in position announcements?"), type="choice",
+		VarType("Announces",  title=_("Announces"), type="label", len=6),
+		VarType("announce",  title=_("Announce queue position to caller?"), type="bool"),
+		VarType("announcefrequency", title=_("How often to announce queue position and/or estimated holdtime to caller"), optional=True, len=6),
+		VarType("announceholdtime",    title=_("Include estimated hold time in position announcements?"), type="choice",
                 	options=( ("yes",_("Yes")),
                         	  ("no",_("No")),
                                   ("once",_("Only Once"))
@@ -81,8 +81,8 @@ class CfgPhoneQueue(CfgPhone):
                 res = CfgPhone.checkConfig(self)
                 if res:
                         return res
-		if self.anounce and not self.anouncefrequency:
-			return ('anouncefrequency',_("You should select a frequency"))
+		if self.announce and not self.announcefrequency:
+			return ('announcefrequency',_("You should select a frequency"))
 
 		
 	def createAsteriskConfig(self):
@@ -98,9 +98,9 @@ class CfgPhoneQueue(CfgPhone):
 			c.appendValue(self, "retry")
 		if self.timeout:
 			c.appendValue(self, "timeout")
-		if self.anounce:
-			c.append("announce-frequency=%s" % self.anouncefrequency)
-			c.append("announce-holdtime=%s" % self.anounceholdtime)
+		if self.announce:
+			c.append("announce-frequency=%s" % self.announcefrequency)
+			c.append("announce-holdtime=%s" % self.announceholdtime)
 		if self.monitor:
 			c.append("monitor-format=%s" % self.monitorfileformat)
 			if not self.monitorjoin:
