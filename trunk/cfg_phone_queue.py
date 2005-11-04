@@ -98,8 +98,8 @@ class CfgPhoneQueue(CfgPhone):
 		if self.timeout:
 			c.appendValue(self, "timeout")
 		if self.anounce:
-			c.append("anounce-frequency=%s" % self.anouncefrequency)
-			c.append("anounce-holdtime=%s" % self.anounceholdtime)
+			c.append("announce-frequency=%s" % self.anouncefrequency)
+			c.append("announce-holdtime=%s" % self.anounceholdtime)
 		if self.monitor:
 			c.append("monitor-format=%s" % self.monitorfileformat)
 		
