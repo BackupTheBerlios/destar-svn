@@ -177,10 +177,11 @@ class ManagerClient(asynchat.async_chat):
 
 
 	def handle_event(self, data):
-		print "handle_event()", "-"*40
+		#print "handle_event()", "-"*40
 		for l in data:
-			print l
-		print
+		#	print l
+			continue
+		#print
 
 
 	def found_terminator(self):
@@ -306,19 +307,21 @@ class ManagerEvents(ManagerClient):
 			exec "self.%s(dict)" % func
 			#print "--> Called", func
 		except AttributeError:
-			print "handle_event(), no method for", func
+			#print "handle_event(), no method for", func
 			for s in data:
 				if not s: continue
-				print "", s
+				#print "", s
+				continue
 			return
 
 		# Complete dump of all channel data
 		for s in channels:
-			print "Channel", s
+			#print "Channel", s
 			obj = channels[s]
 			for item in obj.__dict__:
-				print " ", item, obj[item]
-		print
+				#print " ", item, obj[item]
+				continue
+		#print
 
 
 	def updateChannels(self, dict):
@@ -510,11 +513,12 @@ class ManagerEvents(ManagerClient):
 		reg.LastUpdate = time.time()
 
 		for s in registry:
-			print "Registry", s
+			#print "Registry", s
 			obj = registry[s]
 			for item in obj.__dict__:
-				print " ", item, obj[item]
-		print
+				#print " ", item, obj[item]
+				continue
+		#print
 
 
 	def handle_MessageWaiting(self, dict):
@@ -532,11 +536,12 @@ class ManagerEvents(ManagerClient):
 		msg.LastUpdate = time.time()
 
 		for s in messages:
-			print "Message", s
+			#print "Message", s
 			obj = messages[s]
 			for item in obj.__dict__:
-				print " ", item, obj[item]
-		print
+				#print " ", item, obj[item]
+				continue
+		#print
 
 
 	def handle_Shutdown(self, dict):
