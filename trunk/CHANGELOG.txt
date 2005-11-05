@@ -6,7 +6,7 @@
 * Increased secret field size for all phones.
 * page_admin_pbxstate, page_user_state, misc/page_admin_systemstate: Added refreshing time of 10 seconds.
 * cfg_opt_voicemail.py: added email notification options.
-* configlets.py: removed german timezone for voicemail until a better handling of timezones.
+* configlets.py: removed german timezone for voicemail until a better handling of timezones, validate names with '-' or spaces.
 
 2005-11-04
 * cfg_phone_queue.py: fixed typos, added "join" option.
