@@ -53,8 +53,8 @@ def _q_index [plain] (request):
 		htmltext(_('Doing a reload, result is:'))
 		'</p>'
 
-		'<tt>'
+		'<tt><p>'
 		backend.reloadAsterisk()
-		'</tt>'
+		'</p></tt>'
 
 	footer()

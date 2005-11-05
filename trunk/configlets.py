@@ -737,7 +737,9 @@ class CfgPhone(Cfg):
 				pin = self.pin
 			except:
 				pin = ""
-			options = "tz=cest"
+			#TODO: deal with timezones
+			#options = "tz=cest"
+			options = ""
 			vm.append("%s=%s,%s,,%s" % (self.ext, pin, self.name, options))
 	
 	def createQueuesConfig(self):

@@ -36,14 +36,18 @@ class CfgOptVoicemail(CfgOptSingle):
 		     VarType("maxlogins", title=_("Max number of failed login attempts"), type="int", default=3, len=2),
 		     VarType("skipms", title=_("Seconds to skip forward/backward"), type="int", default=3, len=2),
 
-			# E-Mail settings:
-			# serveremail=asterisk@somedomain
-			# fromstring=Some subject
-			# emailsubject
-			# emailbody
-			# mailcmd
+		     VarType("emailsettings", title=_("E-mail integration settings"), type="label"),
+		     VarType("emailintegration", title=_("Activate email voicemail notifications?"), type="bool"),
+		     VarType("serveremail", title=_("Who the e-mail notification should appear to come from"), hint=_("destar_pbx@yourdomain"), optional=True, len=30),
+		     VarType("fromstring", title=_("Change the From: string"), default=_("The Asterisk/DeStar PBX"), optional=True, len=50),
+		     VarType("emailsubject", title=_("Change email Subject"), default=_("[DeStar PBX]: New message from ${VM_CALLERID} in mailbox ${VM_MAILBOX}"), optional=True, len=80),
+		     VarType("emailbody", title=_("Change email Body"), type="text", 
+				default=_("Dear ${VM_NAME}:\\n\\n\\tjust wanted to let you know you were just left a ${VM_DUR} long message (number ${VM_MSGNUM})\\n\\tin mailbox ${VM_MAILBOX} from ${VM_CALLERID}, on ${VM_DATE}, so you might\\n\\twant to check it when you get a chance. Thanks!\\n\\n\\t\\t\\t--Asterisk/Destar PBX."), 
+				optional=True),
+		     VarType("attach", title=_("Should the email contain the voicemail as an attachment?"), type="bool"),
+		     VarType("mailcmd", title=_("Override the default program to send e-mail"), hint=_("i.e.: /usr/sbin/sendmail -t"), optional=True),
+
 			# pbxskip=yes
-			# attach=yes
 			# charset=iso-8859-1
 		    ]
 
@@ -57,6 +61,21 @@ class CfgOptVoicemail(CfgOptSingle):
 		c.appendValue(self, "silencethreshold")
 		c.appendValue(self, "maxlogins")
 		c.append("skipms=%d" % (self.skipms * 1000))
+
+		if self.emailintegration and self.serveremail:
+			c.appendValue(self,"serveremail")
+			if self.fromstring:
+				c.appendValue(self,"fromstring")
+			if self.emailsubject:
+				c.appendValue(self,"emailsubject")
+			if self.emailbody:
+				emailbody = self.emailbody.replace("\n","\\n")
+				emailbody = emailbody.replace("\t","\\t")
+				c.append("emailbody=%s" % emailbody)
+			if self.attach:
+				c.append("attach=yes")
+			if self.mailcmd:
+				c.appendValue(self,"mailcmd")
 
 		c.setSection("zonemessages")
 		# TODO: find out our own timezone somehow

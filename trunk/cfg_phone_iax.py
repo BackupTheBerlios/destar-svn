@@ -27,7 +27,7 @@ class CfgPhoneIax(CfgPhone):
 	shortName = _("Normal IAX phone")
 	variables = [
 		VarType("name",            title=_("Name"), len=15),
-		VarType("secret",       title=_("Password"), optional=True, len=6),
+		VarType("secret",       title=_("Password"), optional=True, len=15),
 		VarType("host",         title=_("IP address of phone"), optional=True, len=15),
 		VarType("ext",	        title=_("Extension"), optional=True, len=6),
 		VarType("did",	        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),

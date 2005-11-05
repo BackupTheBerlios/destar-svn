@@ -28,7 +28,7 @@ class CfgPhoneSip(CfgPhone):
 	shortName = _("Normal SIP phone")
 	variables = [
 		VarType("name",       title=_("Name"), len=15),
-		VarType("secret",     title=_("Password"), optional=True, len=6),
+		VarType("secret",     title=_("Password"), optional=True, len=15),
 		VarType("host",       title=_("IP address of phone"), optional=True, len=15),
 		VarType("nat",        title=_("Is the trunk behind NAT ?"), type="bool", optional=True),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),

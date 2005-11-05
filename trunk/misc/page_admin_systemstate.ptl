@@ -91,7 +91,7 @@ def systemState [plain] ():
 		
 	
 def _q_index [plain] (request):
-	header(_q_desc)
+	header(_q_desc,refresh=10)
 	systemState()	
 	footer()
 
