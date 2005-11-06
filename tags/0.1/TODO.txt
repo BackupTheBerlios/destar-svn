@@ -1,0 +1,47 @@
+Longer TODO list
+================
+
+A list of milestones achived and planned is also at
+http://www.voip-info.org/tiki-index.php?page=Asterisk+GUI+DeStar
+
+
+Backend
+=======
+
+CfgLineIsdnCapi
+---------------
+
+* assign MSN to phones
+
+
+
+Frontend: General
+=================
+
+* allow help popup-windows
+
+
+Frontend: User
+==============
+
+* display last made calls
+* display last received calls
+* allow to click onto a call to get connected
+* maintain private phone dir
+* dial from private & public phone dir
+* allow to listen/delete voicemails
+
+
+Frontend: Admin
+===============
+
+* allow to upload an MP3 file
+* maintain public phone dir
+
+
+
+Frontend Config
+===============
+
+* Restart Asterisk
+* maybe change date/time ?

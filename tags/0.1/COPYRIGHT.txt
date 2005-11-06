@@ -1,0 +1,33 @@
+COPYRIGHT
+---------
+
+All python code of DeStar is (c) 2005 by
+        Holger Schurig
+        Lindenweg 3
+        61191 Rosbach
+
+        GERMANY
+
+        holgerschurig using the domain gmx point de
+
+
+There are some exceptions:
+
+* destar_cfg.py: this is a *DATA* file, althought it looks like source-code
+* part of the code in the medusa subdirectory 
+* those cfg_*.py files that bear another name on top of their copyright notice 
+
+
+
+COMMERCIAL USE
+--------------
+
+As the GPL says, you can use this code commercially. You don't have to pay
+me. But you have to give the code in source to your customers.
+
+And you have to GPL all the code that links to DeStar. So, if you create
+your own cfg_*.py or other any other file that get's linked, this code has
+to be GPLed as well and has to be given to your customers as well.
+
+You can get an exemption from this if you obtain a commercial license from
+me. Please contact me to settle an agreement.
