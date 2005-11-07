@@ -64,8 +64,8 @@ Project Page:
 
 Users mailing list:
 
-* http://lists.berlios.de/mailman/listinfo/destar-users
-* destar-users@lists.berlios.de 
+* http://lists.berlios.de/mailman/listinfo/destar-user
+* destar-user@lists.berlios.de 
 
 
 Project Wiki:
