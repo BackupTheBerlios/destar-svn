@@ -36,7 +36,7 @@ pid_file = '/var/run/destar.pid'
 
 
 def print_version():
-	print "DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2005 by Holger Schurig.\n"
+	print "DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2005 by Holger Schurig and contributors.\n"
 	print "DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,"
 	print "you are welcome to redistribute it under certain conditions;"
 	print "see the included files GPL-2.txt and COPYRIGHT.txt"

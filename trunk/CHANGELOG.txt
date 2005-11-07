@@ -1,3 +1,8 @@
+2005-11-07
+* Updated README.txt
+* CHANGELOG.txt, destar: added notes about other project contributors.
+* Updated TODO.txt
+
 2005-11-05
 * Statistics Patch from Manuel Alejandro Cerón applied. It implements some
   graphic statistics reports, generated with PyChart 

@@ -15,8 +15,10 @@ There are some exceptions:
 
 * destar_cfg.py: this is a *DATA* file, althought it looks like source-code
 * part of the code in the medusa subdirectory 
-* those cfg_*.py files that bear another name on top of their copyright notice 
+* those files that bear another name on top of their copyright notice 
 
+See http://developer.berlios.de/projects/destar/ to view other project
+members and contributors.
 
 
 COMMERCIAL USE
