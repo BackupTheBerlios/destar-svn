@@ -1,3 +1,6 @@
+2005-11-09
+* Added an initial spanish translation PO file
+
 2005-11-07
 * Updated README.txt
 * CHANGELOG.txt, destar: added notes about other project contributors.
