@@ -17,3 +17,6 @@
 </ul>
 
 <img src="imgs/destar-0.1.png" alt="Destar small screenshot" />
+
+
+<p>NOTE: The Asterisk trademark referred to within this site is the sole property of Digium, Inc.</p>

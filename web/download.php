@@ -21,11 +21,11 @@
 
 <h4>Latest svn snapshot</h4>
 
-<p>To grab the last svn copy:</p>
+<p>SVN copy of the 0.1 version:</p>
+<p><i>svn checkout svn://svn.berlios.de/destar/tags/0.1</i></p>
 
+<p>To grab the last svn copy (development version):</p>
 <p><i>svn checkout svn://svn.berlios.de/destar/trunk</i></p>
 
-<p>Web access to Subversion repository:</p>
-
-<p><i>http://svn.berlios.de/viewcvs/destar/trunk/</i></p>
+<p><a href="http://svn.berlios.de/viewcvs/destar">Web access to Subversion repository</a>.</p>
 

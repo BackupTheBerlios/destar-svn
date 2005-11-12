@@ -13,13 +13,6 @@
 <p>#destar at irc.freenode.net</p>
 
 
-<h3>Bug tracking system:</h3>
-
-<ul>
-<li><a href="http://developer.berlios.de/bugs/?func=addbug&group_id=2112">Submit a Bug.</a></li>
-<li><a href="http://developer.berlios.de/bugs/?func=browse&group_id=2112&set=open">Open Bugs.</a></li>
-</ul>
-
 <h3>Project Wiki:</h3>
 
 <ul>
@@ -27,6 +20,15 @@
 <li><a href="http://openfacts.berlios.de/index-es.phtml?title=DeStar">En español</a>.</li>
 <li><a href="http://openfacts.berlios.de/index-de.phtml?title=DeStar">Deutsch</a>.</li>
 </ul>
+
+
+<h3>Bug tracking system:</h3>
+
+<ul>
+<li><a href="http://developer.berlios.de/bugs/?func=addbug&group_id=2112">Submit a Bug.</a></li>
+<li><a href="http://developer.berlios.de/bugs/?func=browse&group_id=2112&set=open">Open Bugs.</a></li>
+</ul>
+
 
 <h3>Developers mailing list:</h3>
 
