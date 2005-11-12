@@ -13,7 +13,7 @@
 <li>Use of dialout patterns (i.e. local, national, mobile-phones).</li>
 <li><a href="http://www.asternic.org">Asternic Flash Operator Panel</a> integration.</li>
 <li>Call Detail Records search and graphical reports.</li>
-<li>Many application applets incluided: Voice Mail, Meeting Room, Call features, and more.</li>
+<li>Many application applets incluided: Voice Mail, Meeting Room, and more.</li>
 </ul>
 
 <img src="imgs/destar-0.1.png" alt="Destar small screenshot" />
