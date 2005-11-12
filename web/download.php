@@ -16,7 +16,7 @@
 
 <ul>
 <li>On testing or unstable:  <i>#apt-get install destar</i></li>
-<li><a href="http://packages.debian.org/cgi-bin/search_packages.pl?searchon=names&subword=1&version=all&release=all&keywords=destar&sourceid=mozilla-search">Deb file</a>.</li>
+<li><a href="http://packages.debian.org/destar">Deb file</a>.</li>
 </ul>
 
 <h4>Latest svn snapshot</h4>
