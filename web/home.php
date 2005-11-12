@@ -1,13 +1,19 @@
 <h2 id="contentHeading">Welcome</h2>
 
-<p>Destar is a web-based interface to manage the Asterisk BPX. It provides high-level
-abstraction of the Asterisk configuration.</p>
+<p>Destar is a web-based interface to manage the Asterisk BPX.</p>
+<p>It provides high-level abstraction of the Asterisk configuration.</p>
 
-<p>The latest version is: 0.1</p>
+<p>Download the latest version: <a href="/index.php?c=2">destar-0.1</a></p>
 
 <p>Main features:</p>
 <ul>
-<li></li>
+<li>Extensions management: SIP, IAX, Zap, and more.</li>
+<li>Auto-attendants support.</li>
+<li>Trunks management: SIP, IAX, Zap, ZapPRI, and more.</li>
+<li>Use of dialout patterns (i.e. local, national, mobile-phones).</li>
+<li><a href="http://www.asternic.org">Asternic Flash Operator Panel</a> integration.</li>
+<li>Call Detail Records search and graphical reports.</li>
+<li>Many application applets incluided: Voice Mail, Meeting Room, Call features, and more.</li>
 </ul>
 
-<p>Small Screenshot</p>
+<img src="imgs/destar-0.1.png" alt="Destar small screenshot" />
