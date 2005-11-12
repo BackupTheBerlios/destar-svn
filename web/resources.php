@@ -33,6 +33,6 @@
 <h3>Developers mailing list:</h3>
 
 <ul>
-<li>http://lists.berlios.de/mailman/listinfo/destar-dev</li>
+<li><a href="http://lists.berlios.de/mailman/listinfo/destar-dev">List Info (archives, subscriptions)</a>.</li>
 <li>destar-dev@lists.berlios.de</li>
 </ul>

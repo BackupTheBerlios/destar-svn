@@ -10,7 +10,7 @@
 
 #subheader {
         display: inline;
-        color: #36c;
+	color: #339;
         padding: 1.5em 0.5em;
 }
 
@@ -35,14 +35,17 @@ body, textarea, input {
 
 :link {
 	color: #00c;
+	text-decoration: none;
 }
 
 :visited {
 	color: #609;
+	text-decoration: none;
 }
 
 a:active {
 	color: #c00
+	text-decoration: none;
 }
 
 h1 {
