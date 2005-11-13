@@ -8,7 +8,7 @@ Needed Software
 Python
 ------
 
-Get and install Python. I use Python 2.3 for development, but maybe Python
+Get and install Python. We use Python 2.3 for development, but maybe Python
 2.2 would suffice.
 
 
@@ -47,7 +47,7 @@ Install Destar
 
 Run
 
-   # make clean  make install
+   # make clean install
 
 in the directory where you have stored destar.
 
@@ -59,7 +59,7 @@ Stand-alone
 -----------
 
 If you have all the prerequisites, then start the destar script 
-using 'destar' as root. You should see something like:
+running 'destar' as root. You should see something like:
 
    # destar
    warning: Computing default hostname
