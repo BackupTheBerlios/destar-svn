@@ -244,7 +244,7 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="Source", o
 		'--No records to Show--'
 		'</p>'
 	else:
-		orderby = '%s %s' % (field, order)	
+		orderby = '%s %s' % (_(field), order)	
 		cursor = cdrutils.select(order=[str(orderby)], where = where, limit = limit, offset = offset)
 	
 		totalcost = 0

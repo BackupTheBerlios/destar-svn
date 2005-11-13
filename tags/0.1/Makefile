@@ -30,7 +30,7 @@ release:
 	rm -rf destar-$(DATE) destar-$(DATE).tar.bz2
 
 gettext:
-	pygettext.py -d destar *.py *.ptl
+	pygettext -d destar *.py *.ptl
 
 msgfmt:
 	msgfmt.py destar.po
