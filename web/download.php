@@ -15,7 +15,7 @@
 <h4>Debian package</h4>
 
 <ul>
-<li>On testing or unstable:  <i>#apt-get install destar</i></li>
+<li>On testing or unstable:  <i>#apt-get install destar python-sqlite python-pychart</i></li>
 <li><a href="http://packages.debian.org/destar">Deb file</a>.</li>
 </ul>
 
