@@ -8,15 +8,14 @@ Needed Software
 Python
 ------
 
-Get and install Python. I use Python 2.3 for development, but maybe Python
+Get and install Python. We use Python 2.3 for development, but maybe Python
 2.2 would suffice.
+
 
 Quixote
 -------
 
-Then install Quixote 1.x, *NOT* 0.6.1. See the file FRONTEND.txt for the URL
-where you can get it if "apt-get install Quixote" or "emerge Quixote" won't
-work for you.
+Then install Quixote 1.x, *NOT* 0.6.1 nor 2.X.
 
 If you can't find it in your Linux distribution, then download the source
 from http://www.mems-exchange.org/software/quixote/
@@ -33,6 +32,24 @@ pysqlite is not in many distributions, but you can find it at
 http://pysqlite.sourceforge.net/
 
 
+Optional: Pychart
+-----------------
+
+This is needed for generate graphical reports about the number and time of
+the calls made with your PBX. 
+
+You can download it from http://home.gna.org/pychart/ , or get it from your
+distribution.
+
+
+Install Destar
+--------------
+
+Run
+
+   # make clean install
+
+in the directory where you have stored destar.
 
 
 Execution
@@ -41,17 +58,16 @@ Execution
 Stand-alone
 -----------
 
-If you have all the prerequisites, then start the ./destar script in the
-directory where it is stored. You should see something like
+If you have all the prerequisites, then start the destar script 
+running 'destar' as root. You should see something like:
 
-   $ ./destar
+   # destar
    warning: Computing default hostname
    info: Medusa (V1.1) started at Thu Jul 15 09:34:18 2004
         Hostname: mnz66.mn-solutions.de
         Port:8080
 
 Now point your web browser at http://127.0.0.1:8080.
-
 
 
 Via Web-Server

@@ -1,3 +1,6 @@
+2005-11-13
+* Updated INSTALL.txt
+
 2005-11-07
 * Updated README.txt
 * CHANGELOG.txt, destar: added notes about other project contributors.
