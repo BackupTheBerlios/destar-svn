@@ -1,8 +1,8 @@
 <h2 id="contentHeading">About</h2>
 
-<p>DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,
-you are welcome to redistribute it under certain conditions;
-see the included files GPL-2.txt and COPYRIGHT.txt</p>
+<p>DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,</p>
+<p>you are welcome to redistribute it under certain conditions;</p>
+<p>see the included files GPL-2.txt and COPYRIGHT.txt</p>
 
 <p>Main development made initially by Holger Schurig, holgerschurig using
 the domain gmx point de</p>
