@@ -1,3 +1,6 @@
+2005-11-13
+* Updated INSTALL.txt
+
 2005-11-09
 * Added an initial spanish translation PO file
 
