@@ -1,5 +1,7 @@
 <h2 id="contentHeading">Screenshots</h2>
 
+<p>Some few screenshots, expect more soon.</p>
+
 <h3>Sip phone edition</h3>
 <a href="http://destar.berlios.de/imgs/screenshots/sip_phone_edit.png"><img src="imgs/screenshots/thumb_sip_phone_edit.png"/></a>
 

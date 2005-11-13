@@ -1,11 +1,11 @@
 <h2 id="contentHeading">Download Area</h2>
 
-<p>To see the <b>Software Requirements</b> of DeStar, please look at the 
-<a href="http://openfacts.berlios.de/index-en.phtml?title=DeStarInstall">Installation Instructions</a>.<p>
-
 <h3>Get Destar v0.1, for Asterisk 1.0.X</h3>
 
 <h4>Tarball (.tgz) file</h4>
+
+<p>To see the <b>Software Requirements</b> of DeStar, please look at the 
+<a href="http://openfacts.berlios.de/index-en.phtml?title=DeStarInstall">Installation Instructions</a>.<p>
 
 <ul>
 <li><a href="ftp://ftp.berlios.de/pub/destar/destar-0.1.tar.gz">destar-0.1.tar.gz</a></li>
