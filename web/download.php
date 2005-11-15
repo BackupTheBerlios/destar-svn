@@ -7,10 +7,8 @@
 <p>To see the <b>Software Requirements</b> of DeStar, please look at the 
 <a href="http://openfacts.berlios.de/index-en.phtml?title=DeStarInstall">Installation Instructions</a>.<p>
 
-<ul>
-<li><a href="ftp://ftp.berlios.de/pub/destar/destar-0.1.tar.gz">destar-0.1.tar.gz</a></li>
-<li><a href="ftp://ftp.berlios.de/pub/destar/MD5SUMS">MD5SUMS</a></li>
-</ul>
+<p>File: <a href="http://download.berlios.de/destar/destar-0.1.tar.gz">destar-0.1.tar.gz</a></p>
+<p>MD5SUM: 70546ea8cbdec12a8520824ebf415f11</p>
 
 <h4>Debian package</h4>
 
