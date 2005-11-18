@@ -1,0 +1,66 @@
+#!/usr/bin/python
+
+# Michael Schwartz:
+#
+# I wrote a primitive start_destar script. It would be cool if this were an
+# init script. There is probably a better way, but at least this script
+# enables me to restart destar without having to grep for the process id:
+#
+
+import string, os, sys, time
+
+def getPID():
+	pid = -1 
+	line = string.strip(os.popen("ps -ef | grep destar | grep -v grep | grep -v start", "r").read())
+	fields = string.splitfields(line, " ")
+	try:
+                pid = fields[6]
+	except:
+		pass
+	return pid
+
+def start():
+	os.system("nohup ./destar & > /var/log/destar.nohup.out 2> /var/log/destar.nohup.err")
+	time.sleep(1)
+	pid = getPID()
+	if pid == -1:
+		print "Error starting Destar"
+	else:
+		print "Destar started successfully"
+		f = open("/var/run/destar.pid", 'w')
+		f.write(pid)
+		f.close()
+
+def stop():
+	pid = getPID()
+	if pid == -1:
+		print "Destar not running"	
+	else:
+		try:
+			os.system("kill %s" % pid)
+			print "Destar stopped"
+		except:
+			print "Error stopping Destar"
+
+def status():
+	pid = getPID()
+	if pid == -1: print "Destar not running"
+	else: print "Destar running: pid %s" % pid
+
+command = None
+try: 
+	command = sys.argv[1].lower()
+except:
+	pass
+
+if command == "start":
+	start()
+elif command == "stop":
+	stop()
+elif command == "restart":
+	stop()
+	start()
+elif command == "status":
+	status()
+else: print "\nUsage: %s start|stop|restart|status\n" % os.path.basename(sys.argv[0])
+
