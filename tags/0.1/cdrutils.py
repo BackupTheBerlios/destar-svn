@@ -36,14 +36,15 @@ except:
 	if __name__ == "__main__": sys.exit(0)
 	db = None
 
+def N_(message): return message
 
 def select(
-		fields=['src as %s' % _("Source"),
-			'dst as %s' % _("Destination"),
-			'answer as %s' % _("Time_of_answer"),
-			'billsec as %s' % _("Duration"),
-			'disposition as %s' % _("Result"),
-			'accountcode as %s' % _("Cost_per_Minute")],
+		fields=['src as %s' % N_("Source"),
+			'dst as %s' % N_("Destination"),
+			'answer as %s' % N_("Time_of_answer"),
+			'billsec as %s' % N_("Duration"),
+			'disposition as %s' % N_("Result"),
+			'accountcode as %s' % N_("Cost_per_Minute")],
 		groupby=[],
 		having=[],
 		where=[],

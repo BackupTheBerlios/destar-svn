@@ -48,6 +48,8 @@ def _q_access(request):
 def _q_test():
 	return cdrutils.db
 
+def N_(message): return message
+
 def formScript [html] ():
 	'<script language="JavaScript" type="text/javascript"> \n'
 	'<!-- \n'
@@ -244,7 +246,7 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="Source", o
 		'--No records to Show--'
 		'</p>'
 	else:
-		orderby = '%s %s' % (_(field), order)	
+		orderby = '%s %s' % (N_(field), order)	
 		cursor = cdrutils.select(order=[str(orderby)], where = where, limit = limit, offset = offset)
 	
 		totalcost = 0
