@@ -35,6 +35,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		VarType("host",       title=_("SIP host"), len=25),
 		VarType("forward",      title=_("Enable forward address type?"), type="bool"),
 		VarType("nat",      title=_("Is the trunk behind NAT?"), type="bool"),
+		VarType("insecure",      title=_("Bypass auth for incoming calls?"), type="bool"),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
                 VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
@@ -65,7 +66,9 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		needModule("chan_sip")
 
 		#Dial part to use on dialout macro
-		self.dial = "SIP/${ARG1}@%s" % (self.host)
+		#If we use the host it will not use authentication
+		#it's safe to use the peer name 
+		self.dial = "SIP/${ARG1}@%s" % (self.name)
 		if self.forward:
 			self.dial += "/{$ARG1}" 
 		
@@ -87,6 +90,8 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			c.append("canreinvite=no")
 			if self.nat:
 				c.append("nat=yes")
+			if self.insecure:
+				c.append("insecure=very")
 
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)

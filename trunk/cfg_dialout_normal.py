@@ -30,6 +30,7 @@ class CfgDialoutNormal(CfgDialout):
 	variables = [
 		VarType("name",   title=_("Name"), len=15),
 		VarType("pattern", title=_("Pattern"), len=55),
+		VarType("prefix", title=_("Prefix length"), type="int", len=10, default=0),
 		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=300),
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		
