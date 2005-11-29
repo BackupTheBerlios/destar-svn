@@ -28,6 +28,8 @@ class CfgAppDirectory(CfgApp):
 	variables   = [VarType("ext", title=_("Extension"), len=6)]
 
 	def createAsteriskConfig(self):
+		needModule("app_directory")
+	
 		c = AstConf("extensions.conf")
 		c.setSection("apps")
 		c.appendExten(self.ext, "Directory(default)")

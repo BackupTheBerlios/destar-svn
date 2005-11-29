@@ -1,3 +1,12 @@
+2005-11-29
+* Applied patch#722 submitted by xed0 trough berlios site:
+	-Fix Trunk zappri
+	-Load of app_directory module
+* Applied patch sent by Francesco Crescioli:
+	-cfg_trunk_sip.py: use the hostname instead of the peer name
+	-cfg_dialout_normal.py, configlets.py: added prefix support.
+	-added cfg_opt_sip_network.py for some sip network options.
+
 2005-11-20
 * Templates.ptl: Uses XHTML Transitional instead of Strict. Closes bug: #5590
 * page_admin_cdr.ptl, cdrutils,py: use deferred translations with N_() to allow 
