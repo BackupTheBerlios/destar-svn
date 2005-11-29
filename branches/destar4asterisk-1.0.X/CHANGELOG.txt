@@ -1,3 +1,8 @@
+2005-11-20
+* Templates.ptl: Uses XHTML Transitional instead of Strict. Closes bug: #5590
+* page_admin_cdr.ptl, cdrutils,py: use deferred translations with N_() to allow 
+translations in the call details. Closes bug: #5692
+
 2005-11-15
 * Added Dialouts and Trunks graphical reports thanks to Ceronman.
 
