@@ -6,6 +6,8 @@
 	-cfg_trunk_sip.py: use the hostname instead of the peer name
 	-cfg_dialout_normal.py, configlets.py: added prefix support.
 	-added cfg_opt_sip_network.py for some sip network options.
+* page_login display the login form when the user has typed an incorrect
+  username or password
 
 2005-11-20
 * Templates.ptl: Uses XHTML Transitional instead of Strict. Closes bug: #5590

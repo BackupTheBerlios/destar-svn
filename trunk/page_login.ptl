@@ -34,7 +34,7 @@ def _q_access(request):
         if request.session.level < _q_level:
 		cantAccessPage()
 
-def loginForm(request, exitPath="."):
+def loginForm(request, exitPath=".", render=0):
 
 	if request.form.has_key('_cancel'):
 		return request.redirect(exitPath)
@@ -45,18 +45,17 @@ def loginForm(request, exitPath="."):
 	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)
 	form.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
 
-	if not form.is_submitted() or form.has_errors():
+	if not form.is_submitted() or form.has_errors() or render == 1:
 		return form.render()
 
 	return (form['name'], form['pw'])
 
 
-def notLoggedIn [plain] ():
+def notLoggedIn [plain] (request):
 	'<p>'
 	htmltext(_('Invalid username or password'))
+	loginForm(request, render=1)
 	'.</p>'
-
-
 
 
 def _q_index [plain] (request):
@@ -81,5 +80,5 @@ def _q_index [plain] (request):
 				request.session.level = 1
 				request.session.phone = obj.name
 				return request.redirect(str('../user/info'))
-		notLoggedIn()
+		notLoggedIn(request)
 	footer()
