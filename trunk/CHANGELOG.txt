@@ -8,6 +8,7 @@
 	-added cfg_opt_sip_network.py for some sip network options.
 * page_login display the login form when the user has typed an incorrect
   username or password
+* page_user.ptl: Removed user menu entry when the user has not logged in 
 
 2005-11-20
 * Templates.ptl: Uses XHTML Transitional instead of Strict. Closes bug: #5590
