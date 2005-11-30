@@ -1,3 +1,6 @@
+2005-11-30
+* configlets.py: reduce the effect of the parammeters limit avoiding to write the "False" values on the destar_cfg.py file. Closes bug: #5578
+
 2005-11-29
 * Applied patch#722 submitted by xed0 trough berlios site:
 	-Fix Trunk zappri

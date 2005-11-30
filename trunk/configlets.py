@@ -486,7 +486,7 @@ class Cfg(Holder):
 		for v in self.variables:
 			if not self.__dict__.has_key(v.name): continue
 			_v = self.__dict__[v.name]
-			if _v == None:
+			if _v == None or _v == "":
 				continue
 			#print v.name,v.type,_v
 			if v.type in ("string","rostring","choice","mchoice","radio"):
@@ -496,7 +496,10 @@ class Cfg(Holder):
 			elif v.type=="int":
 				cont = _v
 			elif v.type=="bool":
-				cont = ("False","True")[_v]
+				if _v:
+					cont = "True"
+				else:
+					continue
 			elif v.type=="label":
 				continue
 			else:
