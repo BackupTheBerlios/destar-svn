@@ -1,3 +1,7 @@
+2005-12-02
+* page_main.ptl: shows the login form when the user has not logged in
+  in the main page.
+
 2005-11-30
 * configlets.py: reduce the effect of the parammeters limit avoiding to write the "False" values on the destar_cfg.py file. Closes bug: #5578
 
