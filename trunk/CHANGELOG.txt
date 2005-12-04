@@ -1,3 +1,6 @@
+2005-12-04
+* configlets.py: redirect everything on incoming context, except the extensions defined on DIDs. Closes bug #5799.
+
 2005-12-02
 * page_main.ptl: shows the login form when the user has not logged in
   in the main page.

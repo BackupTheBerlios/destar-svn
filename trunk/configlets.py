@@ -644,9 +644,9 @@ class CfgTrunk(Cfg):
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
 		if self.contextin == 'phone' and self.phone:
-			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
+			c.appendExten("_.", "Goto(phones,%s,1)" % self.phone)
 		if self.contextin == 'ivr' and self.ivr:
-			c.appendExten("s", "Goto(%s,s,1)" % self.ivr)
+			c.appendExten("_.", "Goto(%s,s,1)" % self.ivr)
 		
 class CfgPhone(Cfg):
 	"""Base class for all phone devices."""
