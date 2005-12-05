@@ -1,0 +1,166 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 Manuel Alejandro Cerón Estrada <ceronman@gmail.com>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+from Templates import *
+from quixote.form2 import *
+from pychart import *
+import cdrutils
+import time
+import backend
+from StatsHelper import *
+
+_q_parent = 'page_admin'
+_q_title  = _("Dialout Statistics")
+_q_desc   = _("Statistics for Dialout Entries")
+_q_level  = 2
+
+def _q_access(request):
+	if request.session.level < _q_level:
+		cantAccessPage()
+
+def makeForm():
+	form = Form()
+	form.name = "dialoutform"
+	form.add_single_select('year1', 
+							title=htmltext(_('From:')),
+							value="",
+							options=zip(years, 
+										years),
+							render_br=False )
+							
+	form.add_single_select('month1', 
+							options=zip(months, 
+										monthnames,
+										months),
+							render_br=False )
+							
+	form.add_single_select('day1',
+							options=zip(days,
+										daynames,
+										days),
+							render_br=True )
+							
+	form.add_single_select('year2', 
+							title=htmltext(_('To:')),
+							value="",
+							options=zip(years, 
+										years),
+							render_br=False )
+							
+	form.add_single_select('month2', 
+							options=zip(months, 
+										monthnames,
+										months),
+							render_br=False )
+							
+	form.add_single_select('day2',
+							options=zip(days,
+										daynames,
+										days),
+							render_br=True )
+							
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=True)
+	
+	return form
+
+def showResults [plain] (day1, month1, year1, day2, month2, year2):
+	
+	fromdate = "%s-%s-%s" % (year1, month1, day1)
+	todate = "%s-%s-%s" % (year2, month2, day2)
+	where = []
+	where.append ("date(start) >= date('%s')" % fromdate )
+	where.append ("date(end) <= date('%s')" % todate)
+	cursor = cdrutils.select(fields=['src', 'dst', 'disposition', 'accountcode', 'billsec'], where = where)
+		
+	in_calls_per_dialout = []
+	out_calls_per_dialout = []
+	
+	for i in backend.getConfiglets("Dialout"):
+		dialout = CallData()
+		dialout.name = i.name
+		dialout.asignPattern(i.pattern)
+		in_calls_per_dialout.append(dialout)
+		out_calls_per_dialout.append(dialout)
+	
+	in_nomatch = CallData()
+	in_nomatch.name = _("No one Match")
+	
+	out_nomatch = CallData()
+	out_nomatch.name = _("No one Match")
+		
+	row = cursor.fetchone()
+	while row:
+		for c,s in row.items():
+			if c=='src':
+				source = s
+			if c=='dst':
+				destination = s
+			if c=='disposition':
+				disposition = int(s)
+			if c=='accountcode':
+				try:
+					cost = int(s)
+				except ValueError:
+					cost = 0
+			if c=='billsec':
+				seconds = int(s)
+		added = False
+		for i in out_calls_per_dialout:
+			if i.match(source):
+				i.addCall(seconds, cost, disposition)
+				added = True
+		if not added:
+			out_nomatch.addCall(seconds, cost, disposition)
+			
+		added = False	
+		for i in in_calls_per_dialout:
+			if i.match(destination):
+				i.addCall(seconds, cost, disposition)
+				added = True
+		if not added:
+			in_nomatch.addCall(seconds, cost, disposition)
+			
+		row = cursor.fetchone()
+		
+	in_calls_per_dialout.append(in_nomatch)
+	out_calls_per_dialout.append(out_nomatch)
+		
+	dialout_names = [i.name for i in in_calls_per_dialout]
+	htmltext('<h3>%s</h3>' % _('Incomming Calls per Dialout Entry'))
+	makeCallsTable(_("Dialout Name"), in_calls_per_dialout, dialout_names)
+	htmltext('<h3>%s</h3>' % _('Outgoing Calls per Dialout Entry'))
+	makeCallsTable(_("Dialout Name"), out_calls_per_dialout, dialout_names)
+	#makeCallsGraphic(dialout_names, in_calls_per_dialout, _("Incomming calls per Dialout Entry"),_("Dialout Entries"), "graph1.png")
+	#makeGraphic(dialout_names, [i.minutes for i in in_calls_per_dialout], _("Minutes per Dialout Entry"),_("Dialout Entries"), _("Minutes"), "graph2.png")
+	#makeGraphic(dialout_names, [i.cost for i in in_calls_per_dialout], _("cost per Dialout Entry"),_("Dialout Entries"), _("Minutes"), "graph2.png")
+	
+def cdrForm [plain] (request):
+	htmltext("<h3>%s</h3>" % _("Statistics of Calls by Dialout Entry:"))
+	form = makeForm()
+	form.render()
+	
+	if form.is_submitted() and not form.has_errors():
+		htmltext("<h3>%s</h3>" % _("Results"))
+		showResults(form["day1"], form["month1"], form["year1"], form["day2"], form["month2"], form["year2"])
+	
+def _q_index [plain] (request):
+	header(_q_desc)
+	cdrForm(request)
+	footer()
+	
