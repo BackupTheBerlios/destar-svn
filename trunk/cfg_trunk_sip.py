@@ -33,6 +33,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		VarType("id",         title=_("SIP username"),   len=15),
 		VarType("pw",         title=_("SIP password"), len=15),
 		VarType("host",       title=_("SIP host"), len=25),
+		VarType("register",   title=_("Register with remote host?"), type="bool"),
 		VarType("forward",      title=_("Enable forward address type?"), type="bool"),
 		VarType("nat",      title=_("Is the trunk behind NAT?"), type="bool"),
 		VarType("insecure",      title=_("Bypass auth for incoming calls?"), type="bool"),
@@ -68,7 +69,10 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		#Dial part to use on dialout macro
 		#If we use the host it will not use authentication
 		#it's safe to use the peer name 
-		self.dial = "SIP/${ARG1}@%s" % (self.name)
+		if self.register:
+			self.dial = "SIP/${ARG1}@%s" % (self.name)
+		else:
+			self.dial = "SIP/${ARG1}@%s" % (self.host)
 		if self.forward:
 			self.dial += "/{$ARG1}" 
 		
@@ -77,7 +81,8 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		
 		c = AstConf("sip.conf")
 		c.setSection("general")
-		c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
+		if self.register:
+			c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
 
 		if not c.hasSection(self.name):
 			c.setSection(self.name)

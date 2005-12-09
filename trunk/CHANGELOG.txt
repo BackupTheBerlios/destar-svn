@@ -1,3 +1,6 @@
+2005-12-09
+*cfg_trunk_sip: make registration optional.
+
 2005-12-04
 * configlets.py: redirect everything on incoming context, except the extensions defined on DIDs. Closes bug #5799.
 
