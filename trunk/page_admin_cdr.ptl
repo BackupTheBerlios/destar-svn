@@ -140,7 +140,6 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")),hint=htmltext(_("You can use the same wildcards as above")), render_br=True)
 	form.add(OptionSelectWidget, "durationoperand",  "%s" % duration, title=htmltext(_("Duration")), options=zip(operands,operands,operands),render_br=False)
 	form.add(StringWidget, "duration",  "%s" % duration, hint=htmltext(_("In seconds")),render_br=True)
-	form.add(StringWidget, "mincost",  "%s" % mincost, title=htmltext(_("Cost per minute")), render_br=True)
 	form.add(OptionSelectWidget,'linesToShow', title=_('Number of records to show:'),options=zip( generateOptionSelect(), generateOptionSelect(text=True), generateOptionSelect() ), value=20)	
 	form.add_checkbox('searchBetweenDates',title= _("Search between the following dates"), render_br=True)
 	form.add_single_select('fromyear', title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Start:')), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False )
@@ -210,15 +209,10 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 		else : 
 			p = 20
 			q = 0
-		
-		if form["mincost"]:
-			mincost=int(form["mincost"])
-		else:
-			mincost = 0
-			
+				
 		form.render()
 		pageIndex(pagenum, total, p)
-		cdrShowResults(where, p, q, total,form["orderby"],form["order"],mincost)
+		cdrShowResults(where, p, q, total,form["orderby"],form["order"])
 
 	if not form.is_submitted() or form.has_errors():
 		return render()
@@ -240,7 +234,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	
 	return render()
 
-def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="Source", order="DESC", mincost=0):
+def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="Source", order="DESC"):
 	if total == 0:
 		'<p>'
 		'--No records to Show--'
@@ -293,6 +287,11 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="Source", o
 					if c==_("Duration"):
 						min = (s % 60) and ((s / 60) + 1) or (s / 60)
 						totalmin += min
+					if c==_("Cost_per_Minute"):
+						if not s or s == " ":
+							mincost = 0
+						else:
+							mincost = int(s)
 						cost = min * mincost
 						totalcost += cost
 					'<td><center>'

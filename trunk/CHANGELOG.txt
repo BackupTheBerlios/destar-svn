@@ -1,5 +1,7 @@
 2005-12-15
 *cfg_phone_zap: The default group was 1 :s
+*cfg_opt_music: added 'custom' type
+*page_admin_cdr: let cost be calculated from CDR account field set on dialouts.
 
 2005-12-09
 *cfg_trunk_sip: make registration optional.
