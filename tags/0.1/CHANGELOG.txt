@@ -1,3 +1,34 @@
+2005-12-15
+*configlets: fixed Call Forwarding so an extension can only forward to the extensions it can call itself.
+*cfg_phone_zap: The default group was 1 :s.
+*cfg_opt_music: added 'custom' type.
+*page_admin_cdr: let cost be calculated from CDR account field set on dialouts.
+
+2005-12-09
+*cfg_trunk_sip: make registration optional.
+
+2005-12-04
+* configlets.py: redirect everything on incoming context, except the extensions defined on DIDs. Closes bug #5799.
+
+2005-12-02
+* page_main.ptl: shows the login form when the user has not logged in
+  in the main page.
+
+2005-11-30
+* configlets.py: reduce the effect of the parammeters limit avoiding to write the "False" values on the destar_cfg.py file. Closes bug: #5578
+
+2005-11-29
+* Applied patch#722 submitted by xed0 trough berlios site:
+	-Fix Trunk zappri
+	-Load of app_directory module
+* Applied patch sent by Francesco Crescioli:
+	-cfg_trunk_sip.py: use the hostname instead of the peer name
+	-cfg_dialout_normal.py, configlets.py: added prefix support.
+	-added cfg_opt_sip_network.py for some sip network options.
+* page_login display the login form when the user has typed an incorrect
+  username or password
+* page_user.ptl: Removed user menu entry when the user has not logged in 
+
 2005-11-20
 * Templates.ptl: Uses XHTML Transitional instead of Strict. Closes bug: #5590
 * page_admin_cdr.ptl, cdrutils,py: use deferred translations with N_() to allow 

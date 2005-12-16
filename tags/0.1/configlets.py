@@ -709,10 +709,10 @@ class CfgPhone(Cfg):
 
 
 	def createDialEntry(self, extensions, exten):
-		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,%s,%d)" % (
+		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%d)" % (
 			self.technology,
 			self.name,
-			"phones",
+			self.name,
 			int(self.usevm))
 		      )
 
