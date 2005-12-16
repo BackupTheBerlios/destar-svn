@@ -1,3 +1,6 @@
+2005-12-15
+*cfg_phone_zap: The default group was 1 :s
+
 2005-12-09
 *cfg_trunk_sip: make registration optional.
 
