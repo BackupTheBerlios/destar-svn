@@ -1,6 +1,7 @@
 2005-12-15
-*cfg_phone_zap: The default group was 1 :s
-*cfg_opt_music: added 'custom' type
+*configlets: fixed Call Forwarding so an extension can only forward to the extensions it can call itself.
+*cfg_phone_zap: The default group was 1 :s.
+*cfg_opt_music: added 'custom' type.
 *page_admin_cdr: let cost be calculated from CDR account field set on dialouts.
 
 2005-12-09
