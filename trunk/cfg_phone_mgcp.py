@@ -24,6 +24,7 @@ from configlets import *
 class CfgPhoneMGCP(CfgPhone):
 
 	shortName = _("Normal MGCP phone")
+	newObjectTitle = _("New MGCP phone")
 	variables = [VarType("name",            title=_("Name"), len=15, hint=_("""If you haven't configured a name for your phone please use the IP address here.""")),
 			VarType("secret",       title=_("Password"), optional=True, len=15),
 			VarType("host",         title=_("IP address of phone"), len=15),

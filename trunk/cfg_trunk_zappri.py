@@ -26,6 +26,7 @@ import panelutils
 class CfgTrunkZapPRI(CfgTrunk):
 
 	shortName = _("Standard ZAP PRI trunk")
+	newObjectTitle = _("New standard ZAP PRI trunk")
 	variables = [
 		VarType("name",       title=_("Name"), len=35),
 		VarType("signalling", title=_("Signalling type"), type="choice",

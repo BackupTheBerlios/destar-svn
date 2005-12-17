@@ -90,7 +90,7 @@ def presentAddableConfiglets [plain] (group, configlets):
                         continue
                 if not head:
 			'<br/><br/>'
-                        '<div class="addmore"><h3>%s %s</h3><ul>' % (htmltext(_("Add more")), group) 
+                        '<div class="addmore"><h3>Add more %s</h3><ul>' % group   
                         head = True
                 '<li><a href="../add/%s">%s</a></li>' % (o.__name__, o.shortName)
         if head:
@@ -118,7 +118,8 @@ def lookupConfiglets(request,component):
                 return errorpage("%s %s" % (_("Object does not exist"),component))
         return configletsForm(request,
                 obj,
-                title = _("New") + " " + obj.shortName,
+                #title = _("New") + " " + obj.shortName,
+                title = obj.newObjectTitle,
                 exitPath = "../" + obj.groupName.lower(),
                 actionCallback=__addit__,
                 new=True)

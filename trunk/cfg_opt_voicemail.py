@@ -24,6 +24,7 @@ from configlets import *
 class CfgOptVoicemail(CfgOptSingle):
 
 	shortName = _("Voicemail settings")
+	newObjectTitle = _("Voicemail settings")
 	variables = [VarType("recording", title=_("Recording settings"), type="label"),
 		     VarType("format", title=_("File format for voicemail messages"), type="choice",
 		                       options=[('wav49','WAV (common sound format)'),('gsm','GSM (smaller)')], default="wav49"),

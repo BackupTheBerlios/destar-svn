@@ -24,6 +24,7 @@ from configlets import *
 class CfgAppRecord(CfgApp):
 
 	shortName   = _("Record sound")
+	newObjectTitle  = _("New recording extension")
 	description = _("""Allows you to record a sound file. You can hang up, be silent for
 			a second or dial '#' to stop the recording.""")
 	variables   = [

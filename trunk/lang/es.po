@@ -2166,7 +2166,7 @@ msgstr "Usted ha iniciado sesión como el usuario"
 
 #: page_user_info.ptl:48 page_user.ptl:45
 msgid "Your access level is "
-msgstr "Su nivel de acceso es"
+msgstr "Su nivel de acceso es "
 ""
 
 #: page_user_info.ptl:53 page_user.ptl:50

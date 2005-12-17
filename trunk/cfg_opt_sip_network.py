@@ -26,6 +26,7 @@ from configlets import *
 class CfgOptSipNetwork(CfgOptSingle):
 
 	shortName = _("SIP Network Options")
+	newObjectTitle = _("SIP Network Options")
 	variables = [
 		VarType("doBind",	title=_("Bind specific address?"), type="bool"),
 		VarType("bindaddr",	title=_("Bind address"), len=25),

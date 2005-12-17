@@ -25,6 +25,7 @@ import panelutils
 class CfgTrunkSiptrunk(CfgTrunk):
 
 	shortName   = _("Standard SIP Trunk")
+	newObjectTitle  = _("New standard SIP trunk")
 
 	description = _("""Used to setup a SIP trunk to a SIP provider or a different SIP server.""")
 

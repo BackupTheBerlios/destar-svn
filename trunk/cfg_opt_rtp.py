@@ -24,6 +24,7 @@ from configlets import *
 class CfgOptRtp(CfgOptSingle):
 
 	shortName = _("RTP options")
+	newObjectTitle= _("RTP options")
 	variables = [
 			VarType("rtpstart", type="int", title=_("Start of RTP port area"), default=16384),
 			VarType("rtpend",   type="int", title=_("End of RTP port area"),   default=16482),

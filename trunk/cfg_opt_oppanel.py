@@ -25,6 +25,7 @@ from configlets import *
 class CfgOptOPPanel(CfgOptSingle):
 
 	shortName = _("Operator Panel")
+	newObjectTitle= _("Operator Panel")
 	description = _("Configure Asternic Flash Operator Panel")
 	groupName = 'Options'
 	

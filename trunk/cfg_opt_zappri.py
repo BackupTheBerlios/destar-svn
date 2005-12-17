@@ -26,6 +26,7 @@ import panelutils
 class CfgOptZapPRI(CfgOpt):
 
 	shortName = _("Zaptel configuration for PRI")
+	newObjectTitle = _("Zaptel configuration for PRI")
 	variables = [
 		VarType("name",       title=_("Name"), len=35),
 		VarType("span",    title=_("Zaptel span"), hint=_("i.e. 1 if 1st card"), type="string", len=5),

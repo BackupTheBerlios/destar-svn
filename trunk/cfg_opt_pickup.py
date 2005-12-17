@@ -25,6 +25,7 @@ from configlets import *
 class CfgOptPickup(CfgOptSingle):
 
 	shortName = _("Pickup Extension")
+	newObjectTitle= _("Pickup Extension")
 	description = _("Extension to dial to pick-up a call in the same group.")
 	variables = [VarType("ext", title=_("Extension"), len=6)
 		    ]

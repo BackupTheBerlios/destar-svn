@@ -24,6 +24,7 @@ from configlets import *
 class CfgAppEcho(CfgApp):
 
 	shortName   = _("Echo test")
+	newObjectTitle  = _("New Echo test extension")
 	description = _("""The echo test immediately plays back what you speek. You can
 			   use this to find out how much echo you have.""")
 	variables   = [VarType("ext", title=_("Extension"), len=6)]

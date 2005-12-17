@@ -26,6 +26,7 @@ import panelutils
 class CfgPhoneSip(CfgPhone):
 
 	shortName = _("Normal SIP phone")
+	newObjectTitle = _("New SIP phone")
 	variables = [
 		VarType("name",       title=_("Name"), len=15),
 		VarType("secret",     title=_("Password"), optional=True, len=15),

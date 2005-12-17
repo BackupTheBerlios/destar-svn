@@ -25,6 +25,7 @@ import panelutils
 class CfgPhoneIax(CfgPhone):
 
 	shortName = _("Normal IAX phone")
+	newObjectTitle = _("New IAX phone")
 	variables = [
 		VarType("name",            title=_("Name"), len=15),
 		VarType("secret",       title=_("Password"), optional=True, len=15),

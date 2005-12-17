@@ -24,6 +24,7 @@ from configlets import *
 class CfgTrunkIaxtel(CfgTrunk):
 
 	shortName   = _("VOIP-Provider Iaxtel")
+	newObjectTitle  = _("New VOIP-Provider Iaxtel trunk")
 
 	description = _("""You can register free of charge at
 			http://www.iaxtel.com and get an IAXtel number  where

@@ -24,6 +24,7 @@ from configlets import *
 class CfgOptRawCfg(CfgOpt):
 
 	shortName = _("Raw config file snippet")
+	newObjectTitle= _("New raw config file snippet")
 	variables = [
 		VarType("name", title=_("Name"), len=25),
 		VarType("file", title=_("File name"), len=15),

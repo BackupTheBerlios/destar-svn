@@ -24,6 +24,7 @@ from configlets import *
 class CfgAppMilliwatt(CfgApp):
 
 	shortName   = _("Milliwatt test")
+	newObjectTitle  = _("New milliwatt test extension")
 	description = _("""Generate a Constant 1000Hz tone at 0dbm (mu-law). Used for
 			measuring.""")
 	variables   = [VarType("ext", title=_("Extension"), len=6)]

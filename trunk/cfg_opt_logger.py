@@ -37,6 +37,7 @@ class CfgOptLogger(CfgOptSingle):
 		"local6", "local7")
 
 	shortName   = _("Logger options")
+	newObjectTitle  = _("Logger options")
 	description = _("Asterisk can emit many events to it's console or a log file, Here you can make it more (or less) verbose:")
 	variables   = [VarType("console",
 				title=_("Console output"),

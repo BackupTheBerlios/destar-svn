@@ -25,6 +25,7 @@ import panelutils
 class CfgTrunkZapPBX(CfgTrunk):
 
 	shortName = _("PBX ZAP trunk")
+	newObjectTitle = _("New PBX ZAP trunk")
 	variables = [
 		VarType("name",       title=_("Name"), len=35),
 		VarType("channel",    title=_("Zaptel channel number"), type="string", len=5),

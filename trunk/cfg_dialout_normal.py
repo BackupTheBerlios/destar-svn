@@ -25,6 +25,7 @@ from configlets import *
 class CfgDialoutNormal(CfgDialout):
 
 	shortName = _("Normal dialout entry")
+	newObjectTitle= _("New normal dialout entry")
 	description = _("""Used to route calls through trunks""")
 	groupName = 'Dialout'
 	variables = [

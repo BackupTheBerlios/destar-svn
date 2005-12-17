@@ -25,6 +25,7 @@ import panelutils
 class CfgTrunkZap(CfgTrunk):
 
 	shortName = _("Standard ZAP trunk")
+	newObjectTitle = _("New standard ZAP trunk")
 	variables = [
 		VarType("name",       title=_("Name"), len=35),
 		VarType("channel",    title=_("Zaptel channel number"), type="string", len=5),

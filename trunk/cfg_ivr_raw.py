@@ -25,6 +25,7 @@ from configlets import *
 class CfgIVRRaw(CfgIVR):
 
 	shortName = _("Raw IVR")
+	newObjectTitle= _("New raw IVR")
 	variables = [
 		VarType("name", title=_("Name"), len=15),
 		VarType("txt",  title=_("Contents"), type="text", size=8, cols=40),

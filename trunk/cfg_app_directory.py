@@ -24,6 +24,7 @@ from configlets import *
 class CfgAppDirectory(CfgApp):
 
 	shortName   = _("Directory")
+	newObjectTitle  = _("New Directory")
 	description = _("""This application allows you to dial by name.""")
 	variables   = [VarType("ext", title=_("Extension"), len=6)]
 

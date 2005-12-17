@@ -24,6 +24,7 @@ from configlets import *
 class CfgOptMusic(CfgOpt):
 
 	shortName = _("Background music directory")
+	newObjectTitle= _("New background music directory")
 	variables = [VarType("name", title=_("Name"), len=15),
 		     VarType("type", title=_("Type"), type="choice", options=("mp3", "quietmp3","mp3nb","quietmp3nb","custom")),
 		     VarType("dir",  title=_("Directory"))]

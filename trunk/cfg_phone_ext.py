@@ -24,6 +24,7 @@ from configlets import *
 class CfgPhoneExtension(CfgPhone):
 
 	shortName = _("Extension")
+	newObjectTitle = _("New extension")
 	description = _("Set an 'alias' extension to a phone")
 	variables = [
 		VarType("name",     title=_("Name"), len=15),

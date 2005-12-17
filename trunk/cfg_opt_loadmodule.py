@@ -24,6 +24,7 @@ from configlets import *
 class CfgOptModule(CfgOpt):
 	
 	shortName = _("Load module")
+	newObjectTitle= _("Load module")
 	variables = [VarType("name", title=_("Module to load"), len=20)]
 
 

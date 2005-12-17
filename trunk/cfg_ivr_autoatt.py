@@ -25,6 +25,7 @@ import os
 class CfgIVRAutoatt(CfgIVR):
 
 	shortName = _("Auto attendant")
+	newObjectTitle= _("New auto attendant")
 	description = _("""Basic auto-attendant.""")
 	groupName = 'IVRs'
 		

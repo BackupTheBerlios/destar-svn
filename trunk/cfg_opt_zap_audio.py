@@ -24,6 +24,7 @@ from configlets import *
 class CfgOptZapAudio(CfgOptSingle):
 
 	shortName = _("Zaptel Audio Options")
+	newObjectTitle = _("Zaptel Audio Options")
 	variables = [
 		VarType("relaxdtmf", title=_("Be sloppy when detecting DTMF"), type="bool"),
 		VarType("echocancel", title=_("Echo cancel samples"), type="choice",

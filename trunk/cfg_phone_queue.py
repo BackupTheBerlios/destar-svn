@@ -26,6 +26,7 @@ import panelutils
 class CfgPhoneQueue(CfgPhone):
 
 	shortName = _("Normal Call Queue")
+	newObjectTitle = _("New Call Queue")
 	variables = [
 		VarType("name",       title=_("Name"), len=15),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),

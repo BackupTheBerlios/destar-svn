@@ -24,6 +24,7 @@ from configlets import *
 class CfgTrunkFwdIax(CfgTrunk):
 
 	shortName   = _("VOIP-Provider FreeworldDialup (IAX)")
+	newObjectTitle   = _("New VOIP-Provider FreeworldDialup (IAX) trunk")
 
 	description = _("""You can register free of charge at
 			http://freeworlddialup.com and get an FWD Id where

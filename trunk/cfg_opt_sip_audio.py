@@ -25,6 +25,7 @@ from configlets import *
 class CfgOptSipAudio(CfgOptSingle):
 
 	shortName = _("SIP Audio Options")
+	newObjectTitle = _("SIP Audio Options")
 	variables = [
 		VarType("Codecs"  ,   title=_("Codecs to use"), optional=True, type="label"),
 		VarType("alaw", title=_("Allow alaw codec"), optional=True, type="bool"),

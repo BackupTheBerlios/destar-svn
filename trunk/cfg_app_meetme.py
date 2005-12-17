@@ -24,6 +24,7 @@ import panelutils
 class CfgAppMeetme(CfgApp):
 
 	shortName   = _("Meeting room")
+	newObjectTitle  = _("New meeting room")
 	variables   = [	VarType("ext",      title=_("Extension"), len=6),
 		       	VarType("confno",   title=_("Conference number"), hint=_("If empty, will be the same as the extension"), optional=True, len=6),
 		       	VarType("pin",      title=_("PIN"), optional=True, len=6),

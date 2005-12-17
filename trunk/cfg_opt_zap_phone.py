@@ -24,6 +24,7 @@ from configlets import *
 class CfgOptZapPhone(CfgOptSingle):
 
 	shortName = _("Zaptel Phone Options")
+	newObjectTitle = _("Zaptel Phone Options")
 	variables = [
 		VarType("adsi", title=_("Use ADSI for menu phones"), type="bool"),
 		VarType("callwaiting", title=_("Signal a waiting call"), type="bool"),

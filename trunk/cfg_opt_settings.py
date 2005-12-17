@@ -313,6 +313,7 @@ countries_lookup.sort()
 class CfgOptSettings(CfgOptSingle):
 
 	shortName = _("General settings")
+	newObjectTitle= _("General settings")
 	variables = [VarType("country",
 			title=_("Country"),
 			hint=_("The country is used for generating dialtone, ringtone, busytone etc"),

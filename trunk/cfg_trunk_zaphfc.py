@@ -24,6 +24,7 @@ from configlets import *
 class CfgTrunkZapHFC(CfgTrunk):
 
 	shortName = _("ISDN using zaphfc")
+	newObjectTitle = _("New ISDN using zaphfc trunk")
 	variables = [
 		VarType("name",  title=_("Name"), len=35),
 		VarType("mode",  title=_("Mode of NTBA"), type="choice",

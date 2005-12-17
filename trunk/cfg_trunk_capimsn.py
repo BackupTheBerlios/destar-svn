@@ -24,6 +24,7 @@ from configlets import *
 class CfgTrunkCapiMSN(CfgTrunk):
 
 	shortName = _("ISDN using CAPI, incoming")
+	newObjectTitle = _("New incoming ISDN using CAPI")
 	variables = [
 		VarType("name",      title=_("Name"), len=15),
 

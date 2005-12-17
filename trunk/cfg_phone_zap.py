@@ -25,6 +25,7 @@ import panelutils
 class CfgPhoneZap(CfgPhone):
 
 	shortName = _("Normal ZAP phone")
+	newObjectTitle = _("New ZAP phone")
 	variables = [
 		VarType("name",       title=_("Name"), len=35),
 		VarType("channel",    title=_("Zaptel channel number"), type="string", len=5),

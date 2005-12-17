@@ -24,6 +24,7 @@ from configlets import *
 class CfgOptUser(CfgOpt):
 
 	shortName = _("DeStar user")
+	newObjectTitle = _("New DeStar user")
 	groupName = 'Users'
 	variables = [
 		VarType("name",   title=_("Name"), len=15),

@@ -25,6 +25,7 @@ class CfgAppCallFW(CfgApp):
 
 	shortName   = _("Call forwarding")
 	description = _("Extensions to set/unset call forwarding.")
+	newObjectTitle = _("New extensions to set/unset call forwarding") 
 	variables   = [ VarType("type", title=_("Type"), type="choice", options=( ("CFIM", _("Call Forwarding Unconditional")), ("CFBS",_("Call Forwarding if Busy/Unavailable")) )),
 			VarType("set",      title=_("Setting preffix"), len=6, default="*21*"),
 			VarType("ext",   title=_("Unsetting extension"), len=6, default="#21#")

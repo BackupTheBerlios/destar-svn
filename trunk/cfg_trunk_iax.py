@@ -25,6 +25,7 @@ import panelutils
 class CfgTrunkIaxtrunk(CfgTrunk):
 
 	shortName   = _("Standard IAX Trunk")
+	newObjectTitle  = _("New standard IAX trunk")
 
 	description = _("""Used to setup an IAX trunk to another Asterisk server or an IAX termination.""")
 
