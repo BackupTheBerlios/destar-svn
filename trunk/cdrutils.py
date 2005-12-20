@@ -40,6 +40,7 @@ def N_(message): return message
 
 def select(
 		fields=['src as %s' % N_("Source"),
+			'clid as %s' % N_("Caller_ID"),
 			'dst as %s' % N_("Destination"),
 			'answer as %s' % N_("Time_of_answer"),
 			'billsec as %s' % N_("Duration"),

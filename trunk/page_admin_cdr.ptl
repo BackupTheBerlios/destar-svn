@@ -111,7 +111,7 @@ def 	generateOptionSelect(text=False):
 	
 operands=['=','<>','<=','<','>=','>']
 	
-def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", duration="" ):
+def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", duration="", clid="" ):
 
 	monthsnumbers = [ '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12' ]
 	monthsnames = [ _('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('August'), _('September'), _('October'), _('November'), _('December') ]
@@ -137,6 +137,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	form.name = "searchform"
 	
 	form.add(StringWidget, "srcextension",  "%s" % srcextension, title=htmltext(_("Source ")),hint=htmltext(_("Wildcards: % is the 'zero or more characters' wildcard, and _ is the 'exactly one character' wildcard")), render_br=True )
+	form.add(StringWidget, "clid",  "%s" % clid, title=htmltext(_("Caller ID")),hint=htmltext(_("Wildcards: % is the 'zero or more characters' wildcard, and _ is the 'exactly one character' wildcard")), render_br=True )
 	form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")),hint=htmltext(_("You can use the same wildcards as above")), render_br=True)
 	form.add(OptionSelectWidget, "durationoperand",  "%s" % duration, title=htmltext(_("Duration")), options=zip(operands,operands,operands),render_br=False)
 	form.add(StringWidget, "duration",  "%s" % duration, hint=htmltext(_("In seconds")),render_br=True)
@@ -219,6 +220,8 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	
 	if form["srcextension"]:
 		where.append("src like '%s'" % form["srcextension"])
+	if form["clid"]:
+		where.append("clid like '%s'" % form["clid"])
 	if form["dstextension"]:
 		where.append("dst like '%s'" % form["dstextension"])
 	if form["duration"]:

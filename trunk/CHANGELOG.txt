@@ -1,3 +1,6 @@
+2005-12-19
+* Added "CallerID" field on CDR form and results.
+
 2005-12-17
 * Added a title for new objects in each configlet to make a little 
   improvement in i18n.
