@@ -174,7 +174,7 @@ def initializeAsteriskConfig():
 	c.append(";")
 	c.append("; test for CFIM (Call Forwarding Immediate)")
 	c.append("exten=s,1,DBget(temp=CFIM/${MACRO_EXTEN})")
-	c.append("exten=s,2,Goto(${ARG2},${temp})")
+	c.append("exten=s,2,Goto(${ARG2},${temp},1)")
 
 	c.append("; no CFIM")
 	c.append("exten=s,102,DBGet(temp=DND/${MACRO_EXTEN})")
@@ -197,7 +197,7 @@ def initializeAsteriskConfig():
 	c.append("exten=s,208,SetVar(vmopt=u)")
 	c.append("exten=s,209,Noop")
 	c.append("exten=s,210,DBGet(temp=CFBS/${MACRO_EXTEN})")
-	c.append("exten=s,211,Goto(${ARG2},${temp})")
+	c.append("exten=s,211,Goto(${ARG2},${temp},1)")
 
 	c.append("; no CFIM, no DND, no DSEC (dial seconds)")
 	c.append("exten=s,304,SetVar(dsec=45)")

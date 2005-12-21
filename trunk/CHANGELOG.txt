@@ -1,4 +1,7 @@
 2005-12-19
+*backend.py: fixed bug on CFIM/CFBS, still needs more testing.
+
+2005-12-19
 * Added "CallerID" field on CDR form and results.
 
 2005-12-17
