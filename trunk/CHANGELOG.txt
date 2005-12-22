@@ -1,5 +1,6 @@
 2005-12-22
 *cfg_phone_queue.py: fixed bug #5885: MoH fails in calls from PSTN placed directly on queues.
+*configletx.py: is recommended to use _X. instead of _.
 
 2005-12-19
 *backend.py: fixed bug on CFIM/CFBS, still needs more testing.
