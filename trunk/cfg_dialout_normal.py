@@ -31,9 +31,10 @@ class CfgDialoutNormal(CfgDialout):
 	variables = [
 		VarType("name",   title=_("Name"), len=15),
 		VarType("pattern", title=_("Pattern"), len=55),
-		VarType("prefix", title=_("Prefix length"), type="int", len=10, default=0),
+		VarType("prefix", title=_("Prefix length"), len=10, optional=True),
 		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=300),
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
+		VarType("qlookup", title=_("Search on quick dial list?"), type="bool"),
 		
 		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True),
 	#	VarType("defaulttrunk", title=_("Default trunk:"), type="choice", optional=True, options=getChoice("CfgTrunk"),hide=True)
@@ -75,13 +76,23 @@ class CfgDialoutNormal(CfgDialout):
 		c = AstConf("macros.inc")
 		c.setSection("macro-%s" % self.name)
 		c.append("; params: exten,secret,timeout")
-		c.appendExten("s","GotoIf($[${ARG2} = n]?3:2)")
 		needModule("app_authenticate")
-		c.appendExten("s","Authenticate(${ARG2})")
-		c.appendExten("s","GotoIf($[${ARG3} = 0]?4:7)")
-		c.appendExten("s",'SetVar(timeout=0)')
-		c.appendExten("s",'SetVar(options=Tt)')
-		c.appendExten("s",'Goto(9)')
+		if self.qlookup:
+			c.appendExten("s","DBget(dest=QUICKDIALLIST/GLOBAL/${ARG1})",e="Goto(3)")
+			c.appendExten("s",'SetVar(ARG1=${dest})')
+			c.appendExten("s","GotoIf($[${ARG2} = n]?5:4)")
+			c.appendExten("s","Authenticate(${ARG2})")
+			c.appendExten("s","GotoIf($[${ARG3} = 0]?6:9)")
+			c.appendExten("s",'SetVar(timeout=0)')
+			c.appendExten("s",'SetVar(options=Tt)')
+			c.appendExten("s",'Goto(11)')
+		else:
+			c.appendExten("s","GotoIf($[${ARG2} = n]?3:2)")
+			c.appendExten("s","Authenticate(${ARG2})")
+			c.appendExten("s","GotoIf($[${ARG3} = 0]?4:7)")
+			c.appendExten("s",'SetVar(timeout=0)')
+			c.appendExten("s",'SetVar(options=Tt)')
+			c.appendExten("s",'Goto(9)')
 		c.appendExten("s",'SetVar(timeout=%d)' % self.maxtime)
 		c.appendExten("s",'SetVar(options=TtL(%d:10000))' % self.maxtime)
 		#TODO: add this trunks sorted by price and with a default one.

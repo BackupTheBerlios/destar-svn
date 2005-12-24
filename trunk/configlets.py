@@ -761,6 +761,9 @@ class CfgPhone(Cfg):
 		c = AstConf("extensions.conf")
 		c.setSection("out-%s" % self.name)
 		c.append("include=>phones")
+		c.appendExten("i","Playback(privacy-invalid)")
+		c.appendExten("_**XX","DBget(dest=QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:2})", e="Playback(privacy-invalid)")
+		c.appendExten("_**XX","Goto(${dest},1)")
 		try:
 			timeoutvalue = not self.timeout and "0" or "1"
 		except AttributeError:
@@ -771,10 +774,14 @@ class CfgPhone(Cfg):
 				try:
 					if self.__getitem__("dialout_"+obj.name):
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)
+						if obj.prefix:
+							prefix=int(obj.prefix)
+						else: 
+							prefix = 0
 						if secret:
-							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},%s,%s)" % (obj.pattern,obj.name,obj.prefix,secret,timeoutvalue))	
+							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},%s,%s)" % (obj.pattern,obj.name,prefix,secret,timeoutvalue))	
 						else:
-							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},n,%s)" % (obj.pattern,obj.name,obj.prefix,timeoutvalue))	
+							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},n,%s)" % (obj.pattern,obj.name,prefix,timeoutvalue))	
 				except KeyError:
 					pass
 	

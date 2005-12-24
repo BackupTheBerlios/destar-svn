@@ -92,11 +92,15 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2):
 	out_calls_per_dialout = []
 	
 	for i in backend.getConfiglets("Dialout"):
-		dialout = CallData()
-		dialout.name = i.name
-		dialout.asignPattern(i.pattern)
-		in_calls_per_dialout.append(dialout)
-		out_calls_per_dialout.append(dialout)
+		indialout = CallData()
+		indialout.name = i.name
+		indialout.asignPattern(i.pattern)
+		in_calls_per_dialout.append(indialout)
+		
+		outdialout = CallData()
+		outdialout.name = i.name
+		outdialout.asignPattern(i.pattern)
+		out_calls_per_dialout.append(outdialout)
 	
 	in_nomatch = CallData()
 	in_nomatch.name = _("No one Match")
@@ -122,7 +126,7 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2):
 				seconds = int(s)
 		added = False
 		for i in out_calls_per_dialout:
-			if i.match(source):
+			if i.match(destination):
 				i.addCall(seconds, cost, disposition)
 				added = True
 		if not added:
@@ -130,7 +134,7 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2):
 			
 		added = False	
 		for i in in_calls_per_dialout:
-			if i.match(destination):
+			if i.match(source):
 				i.addCall(seconds, cost, disposition)
 				added = True
 		if not added:

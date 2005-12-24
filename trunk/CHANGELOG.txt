@@ -1,3 +1,7 @@
+2005-12-23
+* Added initial support for global and private quick dial lists.
+* page_admin_dialoutsstats.ptl: Fixed confusion between inbound and outbound.
+
 2005-12-22
 *cfg_phone_queue.py: fixed bug #5885: MoH fails in calls from PSTN placed directly on queues.
 *configletx.py: is recommended to use _X. instead of _.
