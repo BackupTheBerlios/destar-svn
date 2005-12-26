@@ -1,0 +1,415 @@
+2005-12-23
+* Added initial support for global and private quick dial lists.
+* page_admin_dialoutsstats.ptl: Fixed confusion between inbound and outbound.
+
+2005-12-22
+*cfg_phone_queue.py: fixed bug #5885: MoH fails in calls from PSTN placed directly on queues.
+*configletx.py: is recommended to use _X. instead of _.
+
+2005-12-19
+*backend.py: fixed bug on CFIM/CFBS, still needs more testing.
+
+2005-12-19
+* Added "CallerID" field on CDR form and results.
+
+2005-12-17
+* Added a title for new objects in each configlet to make a little 
+  improvement in i18n.
+
+2005-12-15
+*configlets: fixed Call Forwarding so an extension can only forward to the extensions it can call itself.
+*cfg_phone_zap: The default group was 1 :s.
+*cfg_opt_music: added 'custom' type.
+*page_admin_cdr: let cost be calculated from CDR account field set on dialouts.
+
+2005-12-09
+*cfg_trunk_sip: make registration optional.
+
+2005-12-04
+* configlets.py: redirect everything on incoming context, except the extensions defined on DIDs. Closes bug #5799.
+
+2005-12-02
+* page_main.ptl: shows the login form when the user has not logged in
+  in the main page.
+
+2005-11-30
+* configlets.py: reduce the effect of the parammeters limit avoiding to write the "False" values on the destar_cfg.py file. Closes bug: #5578
+
+2005-11-29
+* Applied patch#722 submitted by xed0 trough berlios site:
+	-Fix Trunk zappri
+	-Load of app_directory module
+* Applied patch sent by Francesco Crescioli:
+	-cfg_trunk_sip.py: use the hostname instead of the peer name
+	-cfg_dialout_normal.py, configlets.py: added prefix support.
+	-added cfg_opt_sip_network.py for some sip network options.
+* page_login display the login form when the user has typed an incorrect
+  username or password
+* page_user.ptl: Removed user menu entry when the user has not logged in 
+
+2005-11-20
+* Templates.ptl: Uses XHTML Transitional instead of Strict. Closes bug: #5590
+* page_admin_cdr.ptl, cdrutils,py: use deferred translations with N_() to allow 
+translations in the call details. Closes bug: #5692
+
+2005-11-15
+* Added Dialouts and Trunks graphical reports thanks to Ceronman.
+
+2005-11-13
+* Updated INSTALL.txt
+
+2005-11-09
+* Added an initial spanish translation PO file
+
+2005-11-07
+* Updated README.txt
+* CHANGELOG.txt, destar: added notes about other project contributors.
+* Updated TODO.txt
+
+2005-11-05
+* Statistics Patch from Manuel Alejandro Cerón applied. It implements some
+  graphic statistics reports, generated with PyChart 
+  http://home.gna.org/pychart/
+* page_config_reload.py: added missing '<p></p>' tags.
+* Increased secret field size for all phones.
+* page_admin_pbxstate, page_user_state, misc/page_admin_systemstate: Added refreshing time of 10 seconds.
+* cfg_opt_voicemail.py: added email notification options.
+* configlets.py: removed german timezone for voicemail until a better handling of timezones, validate names with '-' or spaces.
+* manager.py: lesss output to reduce cpu load.
+
+2005-11-04
+* cfg_phone_queue.py: fixed typos, added "join" option.
+
+2005-10-29
+* cfg_ivr_autoatt.py: allow dial a digit to jump to operator's extension during
+the file playback.
+
+2005-10-28
+* cfg_trunk_zappbx.py: new zap trunk to call through a PBX
+* cfg_phone_zap.py: typo fixed
+* backend.py: little bug fixed
+* Fixed a problem with the inbounds calls of zap and sip trunks
+
+2005-10-24
+* cfg_trunk_iax.py: Oops, Fixed missing 'secret' field.
+
+2005-10-22
+* Rewrited all op-panel integration to make it more usable and cleaner:
+	- Added cfg_opt_oppanel.py: a configlet to manage the panel configuration.
+	- Now panel html files are not copied but symlinked.
+	- Tested with original tarball and with the .deb package I'm working on.
+	- Initial configuration must be made on panelutils.py and Makefile to make this work.
+	- TODO: make more tests of panel integration and document configuration steps.
+* cfg_opt_manager.py,ConfigHelper.ptl: fixed little bug regarding optional "mchoice" widget.
+
+2005-10-20
+* Fixed some XHTML warnings.
+* page_admin_cdr.ptl: Fixed bug when showing cost of calls.
+* Fixed phone authentication bugs (password can be phone secret or voicemail pin and don't show 'login' option if user type is "User").
+* Global interface cleaning of "future plans" messages (Redirect to wiki pages instead).
+* Added '<p></p>' tags to several messages that didn't have them.
+* Made some other html improvements (e.g. table headers).
+* Added cfg_opt_zappri.py,cfg_trunk_zappri.py: initial support for zap pri trunks.
+
+2005-10-19
+* cfg_trunk_iax.py: improved authentication part. 
+* Added initial support for call queues.
+* cfg_opt_rawcfg.py: little change to let some fields be bigger.
+* backend.py: make sure the destar_cfg.py file gets updated before writing config files.
+* Improved cfg_ivr_autoatt.py with playback pause and timed jump to ivr.
+* page_user_settings.ptl,cfg_app_callfw.py: modified a bit the way features are stored on astdb (This needs more testing).
+* Show cost of calls based on "accountcode" field of cdr. This field is filled depending on the price per minute of every trunk/dialout. The field is not meant for that, but this is an aproach to tarification.
+
+2005-10-18
+* cfg_dialout_normal.py: validate trunk_price
+
+2005-10-12
+* cfg_trunk_iax.py: changes based on several tests with two asterisk/destar machines.
+
+2005-09-26
+* Changed config menu order. patch from santiago.
+* Makefile: little change to allow all developers make a release easier.
+
+2005-09-23
+* Big change: created class CfgIVR, changed cfg_opt_autoatt.py to cfg_ivr_autoatt and added cfg_ivr_raw.py since many people could have a weird custom auto-attendant and we want to use it on other parts of the program.
+* Changed DID's to work with new trunk and auto-attendant scheme. Now we can declare DID's per trunk and route then to a phone or auto-attendant.
+* Improved cfg_phone_ext.py
+* page_logout.ptl: don't let the programmer user logout (TODO: hide 'logout' on the menu).
+
+2005-09-21
+* Fixed bug on cfg_dialout_normal.py and configlets.py related to a GotoIf command.
+* cfg_phone_sip.py: force a well formed caller-id. 
+
+2005-09-05
+* Changed applications context from "default" to "apps".
+* Added cfg_opt_pickup.py to set pickup extension
+* Added cfg_app_callfw.py to set call forwarding
+* Added cfg_app_dnd.py to set 'do not disturb'
+* Made some improvements on several cfg_app_*
+* cfg_phone_sip.py, cfg_phone_iax.py: Fixed typo.
+* paneltils.py: fixed and added some buttons
+
+2005-09-02
+* Improved some code of cfg_trunks with inheritance.
+* Improved page_logout.ptl behavior a bit.
+* Improved some code of cfg_phones with inheritance.
+* Added support for gsm, g729 and g723.1 codecs in sip audio options
+
+2005-09-01
+* cfg_dialout_normal.py: Fixed wrong Goto
+* configlets.py: continued support for auto-attendants on CfgTrunk, cfg_trunk_zap, iax and sip.
+* Changed page_user_pbxstate.ptl to page_admin_pbxstate.ptl for usability reasons
+* Changed writing concept: now asterisk files are written with every little change
+* Changed page_config_write.ptl to page_config_viewconf.ptl. Now the backups are created without asking.
+* "Standardized" common options in the phones, they appear in the same order
+* Added dialout support for iax, zap and mgcp phones
+* "notransfer" iax option is wrote in the asterisk config files
+
+2005-08-25
+* Added misc/page_admin_systemstatus.ptl to show cpu load, memory info, etc.
+* fixed a missing 'Programmer' user type on page_user.ptl and page_user_info.ptl
+
+2005-08-23
+* Added 'new' and 'old' voicemail messages on page_user_state.ptl 
+
+2005-08-22
+* Added a message when there is nothing to write (empty destar_cfg.py)
+* Added a warning message if there is not destar_cfg.py
+* Re-added "Phone Features or Settings" by migrating old code from UserUI.ptl and UserPage.ptl to page_user_settings.ptl, and added options to change voicemail pin and extension password.
+* Changed page_login password from StringWidget to Passwordwidget.
+* Re-added "Phone State" by migrating old code from UserUI.ptl and UserPage.ptl to page_user_state.ptl
+
+2005-08-19
+* Added "enable time restriction" option to cfg_phone_sip 
+* cfg_opt_logger.py: fixed the facility's single_select 
+
+2005-08-18
+* Added initial support for radio-buttons
+* Added initial support for:
+  - auto-attendants
+  - dialout-entries
+
+2005-04-28
+* some CDR improvement
+
+2005-04-04
+
+* Big infrastructural change. Basically, we will have one page_*.ptl file
+  for each generated page. In main_page.ptl became quite complex because of
+  all sorts of RTTI-voodoo to Pythons dictionary that I now do. But the
+  other page_*.ptl files are now usually much simpler.
+  * makes *Page.ptl and *UI.ptl obsolete
+  * allows the navition menu to be automatically generated
+* beefed up the configuration tips, e.g. with hints about config file
+  writability
+* move config file backup into it's own page_config_backup.ptl
+
+2005-03-17
+
+* beginnings of fxo/fxs support (e.g. for TDM400P)
+
+2005-03-10
+
+* fix callerid
+
+2005-02-17
+
+* changed the encoding to UTF-8, change HTML a bit so that it is nearer to
+  HTML-4.0.1-strict conformance.
+
+2005-02-04
+
+* beginning of Flash Operator Panel integration
+
+2005-01-27
+
+* some more CDR code
+
+2004-09-02
+
+* added cfg_opt_rawcfg, to allow arbitrary config file snippets
+* removed l_amaflags and l_disposition from cdrutils.py, this will
+  make it easier later to have different database backends
+
+2004-08-19
+
+* enabled parking app
+* fixed layout with integer-widgets
+* added checks to load module option, record- and playback app
+* added format options to playback app
+* updated cfg_opt_rtp.py while writing http://openfacts.berlios.de/index-en.phtml?title=DeStarConfiglets
+* don't ask zaptel.conf to be backed up
+* make all 4 configuration tips appear after a fresh install
+
+2004-08-18
+
+* moved development to http://developer.berlios.de/projects/destar/
+* the dialplan is now much simpler
+* fixed cfg_line_iaxtrunk.py, it does no longer break
+* homogenized display of telco lines
+* added multiple incoming MSN capability to ISDN over CAPI
+* one MSN can only be assigned once
+* put functionality into User -> Phone settings
+
+2004-08-16
+
+* fixed tab/whitespace fixed config file creation for IAX voicemailbox
+* added notransfer to CfgPhoneIAX, delete canreinvite from the same
+* don't return None menu if there is no CDR
+* backend.py: make getConfiglet known in configlets.py, so that configlets can use it, too
+* cfg_line_fwdiax.py: added default name, don't use hard-coded SIP technology
+* ConfigUI.py: bug fix
+* don't break if pysqlite is there, but no cdr.db
+
+2004-08-13
+
+* finished login/logout capability
+* different default configuration
+* added configuration tips for first-time starters
+* backend.countConfiglets() can now count specific object types
+* new configlets.generatePassword() 'function' (callable class)
+* nicer cfg_opt_manager.py, generate secure passwords
+* removed or disabled some unfinished configlets
+* again fiddled with the CSS
+
+
+2004-08-12
+
+* added CfgOptUser as well as beginnings of session object
+  with auto-login-based-on-ip-feature
+* added logout code (login has to be done via auto-login feature
+  so far)
+* moved UI logic for the user page into ui/User.ptl
+* Admin.ptl and Users.ptl print some of the TODO-items as teasers :-)
+* incorporated Medusa into the code base
+* fixed bug in the menu calculation, multi-choice widgets
+* allow configlets to be retrieved by their .name propery
+
+2004-08-09
+
+* fixed parking config
+* centralized channel state calculations
+* added Asterisk Status to User menu
+* added individual phone status to Asterisk Status
+
+
+2004-08-08
+
+* basic support for DND, CFIM, CFBS
+* virtual phones added, first one is CfgPhoneExt for additional extensions
+
+
+2004-08-06
+
+* manager.py now automatically reconnects when Asterisk does a restart
+* fixed bug when parsing event messages
+* allow setAttr to grow the html grid
+* add option for auto-refresh
+* again rewrote the manager interface
+* allow configlet.key = val
+* cfg_app_park now adds a self-parking extension
+* fixed up/down moving of Configlets
+* the backend now checks that we don't have two thingies with the same name
+  or extension
+* added cfg_app_saytime
+* got rid of my own Widget.py module, now we're back to original Quixote
+
+
+2004-08-05
+
+* even more changes to the layout :-)
+* fixed HTML layout of PBX state
+* got rid of manager.isconnected
+* manager does no longer hang for some seconds when Asterisk is down
+* manager re-connects if Asterisk get's up again
+* now the checkConfig() method of the configlets works
+
+
+2004-07-30
+
+* started to revamp basic template & CSS
+* dynamically generated left menu
+* fixed up&down buttons
+
+
+2004-07-26
+
+* always try to connect to the manager whenever the status page is called
+* added some phone pictures I'll use later
+
+
+2004-07-22
+
+* added name field to all Phones and all Lines, we need this for the
+  status box
+* added technology variable to all Lines
+* added channel() method to all Phones and Lines
+* added User.ptl
+* added HtmlTable based on PyHtmlTables into Templates
+* let Admin.ptl use the new cdrtools, limit display to the last 30 entries
+* hide context from phone forms
+* cdrutils.cdrSelect() -> cdrutils.select()
+* added manager.py and made it handle manager commands and events. For
+  the latter, you have to subclass ManagerClient and redefine handle_event()
+
+
+2004-07-20
+
+* added simple CDR display, still VERY crude, don't use it if you have
+  thousand of CDR records
+* fixed creation of manager.conf
+* new configlets.context_entries where I store all the used contexts, with
+  configlets.useContext() to add entries to it, usually in the fixup()
+  method
+* NeedModule -> needModule
+* store full path in instances of AsteriskConfigFile.fn
+* better function doc strings in backend.py
+* backup config files before overwriting if the config file is not from us
+* groupCount -> countConfiglets
+* fixUp -> fixup
+* CfgPhoneIax got voicemail settings as well, because they are now put into
+  CfgPhone as methods
+* CfgOptLogger got syslog abilities
+
+
+2004-07-19
+
+* beginnings of voicemail, already in CfgSipPhone
+* introducation of Cfg.fixup() to do post-load setup, e.g. only unhide the
+  DID entry in Phones if one of the Lines actually support DID
+* allow entries to be moved up and down
+* fixed writing into destar_cfg.py
+* fixed loading of destar_cfg.py, especially when the cfg file did not
+  define all configlet variables because it was written with an older
+  version of DeStar
+* niced up CfgOptLogger
+* CfgAppParking now uses features.conf as does Asterisk CVS
+
+
+2004-07-15
+
+* add delete and cancel button to forms
+* big restructure of code: we now have individual cfg_*.py
+  that are read dynamically, so you can drop in your own
+* backend.py is pretty much what asterisk.py used to be
+* beginnings of context/permission support
+* enhanced CfgLineCapi
+* better docs in the *.txt files
+* somewhat nicer forms
+
+
+2004-07-12
+
+* added Labels to forms
+* support for phone permissions (via Asterisk contexts)
+* support for disable phone numbers
+
+
+2004-07-09
+
+* you can now add & edit configurables
+* nicer layout for error messages in the form
+* disabled german translations for now
+* added preliminary sidemenu
+* now you can even write your configuration
+* new IaxPhone configurable

@@ -1,0 +1,2557 @@
+# translation of destar.po to Spanish
+# Copyright (C) 2005 ORGANIZATION.
+# Alejandro Rios PeNa <alejandro.rios@avatar.com.co>, 2004.
+# Alejandro Rios PeNa <alejandro.rios@avatar.com.co>, 2005.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: destar 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-06 13:07+0700\n"
+"PO-Revision-Date: 2005-10-25 21:52-0500\n"
+"Last-Translator: Santiago José Ruano Rincón <santiago@avatar.com.co>\n"
+"Language-Team: Spanish <destar-dev@lists.berlios.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
+
+#: backend.py:63
+#, python-format
+msgid "Warning: There is no %s or %s file yet."
+msgstr "Advertencia: Aún no existe el archivo %s o %s."
+
+#: backend.py:366
+#, python-format
+msgid "Error backing up %s"
+msgstr "Hubo problemas haciendo el backup de %s"
+
+#: cdrutils.py:41 page_admin_cdr.ptl:72
+msgid "Source"
+msgstr "Origen"
+
+#: cdrutils.py:42 page_admin_cdr.ptl:73 page_admin_cdr.ptl:105
+msgid "Destination"
+msgstr "Destino"
+
+#: cdrutils.py:43 page_admin_cdr.ptl:74
+msgid "Time_of_answer"
+msgstr "Hora_de_la_respuesta"
+""
+
+#: cdrutils.py:44 page_admin_cdr.ptl:75 page_admin_cdr.ptl:106
+#: page_admin_cdr.ptl:243
+msgid "Duration"
+msgstr "Duracion"
+""
+
+#: cdrutils.py:45 page_admin_cdr.ptl:76 page_admin_cdr.ptl:233
+#: page_admin_cdr.ptl:235 page_admin_cdr.ptl:237 page_admin_cdr.ptl:239
+msgid "Result"
+msgstr "Resultado"
+
+#: cdrutils.py:46 page_admin_cdr.ptl:77 page_admin_cdr.ptl:249
+msgid "Cost_per_Minute"
+msgstr "Costo_por_Minuto"
+
+#: cfg_app_callfw.py:26
+msgid "Call forwarding"
+msgstr "Habilitar reenvío de llamadas"
+
+#: cfg_app_callfw.py:27
+msgid "Extensions to set/unset call forwarding."
+msgstr "Extensión para programar/desprogramar la redirección de llamadas."
+
+#: cfg_app_callfw.py:28 cfg_opt_music.py:28 cfg_opt_user.py:34
+#: configlets.py:419 configlets.py:600 configlets.py:658 configlets.py:798
+msgid "Type"
+msgstr "Tipo"
+
+#: cfg_app_callfw.py:28
+msgid "Call Forwarding Unconditional"
+msgstr "Reenvío de llamadas incondicional"
+
+#: cfg_app_callfw.py:28
+msgid "Call Forwarding if Busy/Unavailable"
+msgstr "Redirigir llamadas si está ocupado o no disponible"
+
+#: cfg_app_callfw.py:29
+msgid "Setting preffix"
+msgstr "Prefijo de salida"
+
+#: cfg_app_callfw.py:30 cfg_app_dnd.py:30
+msgid "Unsetting extension"
+msgstr "Extension para desprogramar"
+
+#: cfg_app_conference.py:26
+msgid "Conference room"
+msgstr "Sala de Conferencias"
+
+#: cfg_app_conference.py:27 cfg_app_directory.py:28 cfg_app_echo.py:29
+#: cfg_app_meetme.py:27 cfg_app_milliwatt.py:29 cfg_app_music.py:28
+#: cfg_app_parking.py:28 cfg_app_play.py:28 cfg_app_record.py:30
+#: cfg_app_saytime.py:27 cfg_app_voicemail.py:28 cfg_opt_pickup.py:29
+#: cfg_phone_ext.py:26 cfg_phone_ext.py:31 cfg_phone_iax.py:32
+#: cfg_phone_mgcp.py:30 cfg_phone_queue.py:31 cfg_phone_sip.py:34
+#: cfg_phone_zap.py:33 cfg_trunk_fwdiax.py:42 cfg_trunk_iaxtel.py:38
+#: configlets.py:419 configlets.py:658 configlets.py:798
+#: page_user_state.ptl:66 page_user_state.ptl:81 UserUI.ptl:93 UserUI.ptl:108
+msgid "Extension"
+msgstr "Extensión"
+
+#: cfg_app_conference.py:28 cfg_app_meetme.py:28
+msgid "Conference number"
+msgstr "Número de Conferencia"
+
+#: cfg_app_directory.py:26 cfg_opt_music.py:29
+msgid "Directory"
+msgstr "Directorio"
+
+#: cfg_app_directory.py:27
+msgid "This application allows you to dial by name."
+msgstr "Esta aplicación le permite marcar deletreando el nombre."
+
+#: cfg_app_dnd.py:26
+msgid "Set/Unset DND"
+msgstr "Habilitar/Deshabilitar No Molestar"
+
+#: cfg_app_dnd.py:27
+msgid "Extensions to set/unset 'Do Not Disturb'."
+msgstr "Extensión para programar/desprogramar 'No molestar'."
+
+#: cfg_app_dnd.py:29
+msgid "Setting extension"
+msgstr "Extensión para programar"
+
+#: cfg_app_dnd.py:42 configlets.py:455
+msgid "Extension already in use"
+msgstr "La extensión ya está en uso"
+
+#: cfg_app_echo.py:26
+msgid "Echo test"
+msgstr "Prueba de Eco"
+
+#: cfg_app_echo.py:27
+msgid ""
+"The echo test immediately plays back what you speek. You can\n"
+"\t\t\t   use this to find out how much echo you have."
+msgstr ""
+"La prueba de eco reproduce inmediatamente lo que usted está hablando. Puede "
+"usarla para determinar la cantidad de eco que está experimentando."
+
+#: cfg_app_meetme.py:26
+msgid "Meeting room"
+msgstr "Acceso a conferencia"
+
+#: cfg_app_meetme.py:28
+msgid "If empty, will be the same as the extension"
+msgstr "Si se omite, será igual al número de la extensión"
+
+#: cfg_app_meetme.py:29
+msgid "PIN"
+msgstr "PIN"
+
+#: cfg_app_meetme.py:31 cfg_opt_oppanel.py:27 cfg_phone_iax.py:39
+#: cfg_phone_queue.py:66 cfg_phone_sip.py:48 cfg_phone_zap.py:40
+#: cfg_trunk_iax.py:47 cfg_trunk_sip.py:39 cfg_trunk_zappri.py:45
+#: cfg_trunk_zap.py:35 page_admin_panel.ptl:27
+msgid "Operator Panel"
+msgstr "Pánel de Operadora"
+
+#: cfg_app_meetme.py:32 cfg_trunk_iax.py:48 cfg_trunk_sip.py:40
+#: cfg_trunk_zappri.py:46 cfg_trunk_zap.py:36
+msgid "Show this trunk in the panel"
+msgstr "Mostrar esta troncal en el pánel de operadora"
+
+#: cfg_app_milliwatt.py:26
+msgid "Milliwatt test"
+msgstr "Prueba de mWatt"
+
+#: cfg_app_milliwatt.py:27
+msgid ""
+"Generate a Constant 1000Hz tone at 0dbm (mu-law). Used for\n"
+"\t\t\tmeasuring."
+msgstr "Generar un tono constante de 0dbm(ley-mu). Usado para mediciones."
+
+#: cfg_app_music.py:26
+msgid "Listen to music-on-hold"
+msgstr "Escuchar música en espera"
+
+#: cfg_app_music.py:27
+msgid "Play Play Music On Hold until you hang up."
+msgstr "Reproducir música en espera hasta que cuelge."
+
+#: cfg_app_music.py:29 cfg_ivr_autoatt.py:34 cfg_phone_queue.py:33
+msgid "Music-on-hold class"
+msgstr "Tipo de Música en Espera"
+
+#: cfg_app_parking.py:26
+msgid "Park calls"
+msgstr "Parqueo de llamadas"
+
+#: cfg_app_parking.py:27
+msgid "Call Parking extension"
+msgstr "Extensión para el parqueo de llamadas"
+
+#: cfg_app_parking.py:29
+msgid "Parking places"
+msgstr "Sitios de parqueo"
+
+#: cfg_app_play.py:26
+msgid "Play sound"
+msgstr "Reproducir sonido"
+
+#: cfg_app_play.py:27
+msgid "Play a soundfile."
+msgstr "Reproducir archivo de sonido."
+
+#: cfg_app_play.py:29 cfg_app_record.py:31 cfg_opt_rawcfg.py:29
+msgid "File name"
+msgstr "Nombre de archivo"
+
+#: cfg_app_play.py:29
+msgid "Don't specify an extension"
+msgstr "Por favor no especifique una extensión"
+
+#: cfg_app_play.py:37 cfg_app_record.py:49 cfg_opt_loadmodule.py:39
+msgid "Please don't specify an extension"
+msgstr "Por favor no especifique una extensión"
+
+#: cfg_app_record.py:26
+msgid "Record sound"
+msgstr "Grabar sonido"
+
+#: cfg_app_record.py:27
+msgid ""
+"Allows you to record a sound file. You can hang up, be silent for\n"
+"\t\t\ta second or dial '#' to stop the recording."
+msgstr ""
+"Permite grabar un arhivo de sonido. Usted puede colgar, hacer silencio por "
+"un segundo, o marcar # para detener la grabación."
+
+#: cfg_app_record.py:32
+msgid "Sound format"
+msgstr "Formato de sonido"
+
+#: cfg_app_record.py:33
+msgid "GSM compression"
+msgstr "Compresión GSM"
+
+#: cfg_app_record.py:34
+msgid "PCM format 'ulaw'"
+msgstr "Formato PCM-ley mu"
+
+#: cfg_app_record.py:35
+msgid "alaw"
+msgstr "ley-a"
+
+#: cfg_app_record.py:36
+msgid "vox"
+msgstr "vox"
+
+#: cfg_app_record.py:37
+msgid "WAV-File with Microsoft PCM, 16 bit, mono 8000 Hz"
+msgstr "Archivo WAV con PCM Microsoft, 16 bit, mono 8000 Hz"
+
+#: cfg_app_record.py:38
+msgid "WAV-File with GSM 6.10 compression, mono 8000 Hz"
+msgstr "Archivo WAV con compresión GSM 6.10, mono 8000 Hz"
+
+#: cfg_app_saytime.py:26
+msgid "Say time"
+msgstr "Decir la hora"
+
+#: cfg_app_saytime.py:29
+msgid "Time"
+msgstr "Hora"
+
+#: cfg_app_saytime.py:30
+msgid "Date"
+msgstr "Fecha"
+
+#: cfg_app_saytime.py:31
+msgid "Date and Time"
+msgstr "Fecha y Hora"
+
+#: cfg_app_voicemail.py:26
+msgid "Voicemail dialog"
+msgstr "Diálogo de correo de voz"
+
+#: cfg_app_voicemail.py:27
+msgid "Extension to enter the voicemail system."
+msgstr "Extensión para entrar al sistema de correo de voz."
+
+#: cfg_app_voicemail.py:29
+msgid "Ask for user mailbox?"
+msgstr "¿Solicitar el buzón de mensajes del usuario?"
+
+#: cfg_dialout_normal.py:27
+msgid "Normal dialout entry"
+msgstr "Destino normal"
+
+#: cfg_dialout_normal.py:28
+msgid "Used to route calls through trunks"
+msgstr "Usado para enrutar las llamadas a través de las troncales"
+
+#: cfg_dialout_normal.py:31 cfg_ivr_autoatt.py:32 cfg_ivr_raw.py:29
+#: cfg_opt_manager.py:28 cfg_opt_music.py:27 cfg_opt_oppanel.py:32
+#: cfg_opt_rawcfg.py:28 cfg_opt_user.py:29 cfg_opt_zappri.py:30
+#: cfg_phone_ext.py:29 cfg_phone_iax.py:29 cfg_phone_mgcp.py:27
+#: cfg_phone_queue.py:30 cfg_phone_sip.py:30 cfg_phone_zap.py:29
+#: cfg_trunk_capimsn.py:28 cfg_trunk_capi.py:31 cfg_trunk_fwdiax.py:37
+#: cfg_trunk_iax.py:32 cfg_trunk_iaxtel.py:33 cfg_trunk_sip.py:32
+#: cfg_trunk_zaphfc.py:28 cfg_trunk_zappri.py:30 cfg_trunk_zap.py:29
+#: configlets.py:551 configlets.py:600 configlets.py:658 configlets.py:798
+#: configlets.py:818 page_user_state.ptl:64 UserUI.ptl:91
+msgid "Name"
+msgstr "Nombre"
+
+#: cfg_dialout_normal.py:32
+msgid "Pattern"
+msgstr "Patrón"
+
+#: cfg_dialout_normal.py:33
+msgid "Maximum call time in seconds"
+msgstr "Tamaño máximo de las llamadas en segundos"
+
+#: cfg_dialout_normal.py:34
+msgid "Ringing time in seconds"
+msgstr "Duración del timbre en segundos"
+
+#: cfg_dialout_normal.py:36
+msgid "Trunks to use for routing this dialout entry"
+msgstr "Troncales usadas para enrutar este destino"
+
+#: cfg_dialout_normal.py:52 configlets.py:692
+#, python-format
+msgid "%s"
+msgstr "%s"
+
+#: cfg_dialout_normal.py:53
+msgid "Price for this pattern"
+msgstr "Precio para este patrón"
+
+#: cfg_ivr_autoatt.py:27
+msgid "Auto attendant"
+msgstr "Operadora automática"
+
+#: cfg_ivr_autoatt.py:28
+msgid "Basic auto-attendant."
+msgstr "Operadora automática básica"
+
+#: cfg_ivr_autoatt.py:33
+msgid "Max. time for incoming calls in seconds"
+msgstr "Máximo tiempo para llamadas en segundo"
+
+#: cfg_ivr_autoatt.py:33
+msgid "(0 or empty means no time restriction)"
+msgstr "(0 o vacío significa no restricción de tiempo)"
+
+#: cfg_ivr_autoatt.py:36
+msgid "File to play in the background"
+msgstr "Archivo para reproducir en el fondo"
+
+#: cfg_ivr_autoatt.py:37
+msgid "How many times should it be played?"
+msgstr "Cuantas veces debe ser reproducido?"
+
+#: cfg_ivr_autoatt.py:38
+msgid "Pause between each playback"
+msgstr "Pausa entre cada reproducción"
+
+#: cfg_ivr_autoatt.py:39
+msgid "Extension to ring after file playing"
+msgstr "Extensión a timbrar después de reproducir el archivo"
+
+#: cfg_ivr_autoatt.py:41
+msgid "IVR to jump on special dates"
+msgstr "IVR a saltar en fechas especiales"
+
+#: cfg_ivr_autoatt.py:43
+msgid "Times string"
+msgstr "Patrón de horario"
+
+#: cfg_ivr_autoatt.py:43
+msgid "i.e. <hours>|<weekdays>|<monthdays>|<months> (comma separated)"
+msgstr ""
+"ej. <horas>|<días de las semana>|<días del mes>|<mes> (separados por comas)"
+
+#: cfg_ivr_autoatt.py:44
+msgid "Allow calling to all extensions?"
+msgstr "¿Permitir llamar a todas las extensiones?"
+
+#: cfg_ivr_autoatt.py:61
+msgid "File should be played at least one time"
+msgstr "El archivo debe ser reproducido al menos una vez"
+
+#: cfg_ivr_autoatt.py:63
+msgid "Please specify dates"
+msgstr "Por favor, especifique fechas"
+
+#: cfg_ivr_raw.py:27
+msgid "Raw IVR"
+msgstr ""
+
+#: cfg_ivr_raw.py:30 cfg_opt_rawcfg.py:31
+msgid "Contents"
+msgstr "Contenido"
+
+#: cfg_opt_did.py:26
+msgid "Direct inward dialing (DID) number"
+msgstr "Número de DID (Direct Inward Dialing)"
+
+#: cfg_opt_did.py:28
+msgid "Used to route a DID to an extension or Auto-Attendant."
+msgstr "Usado para enrutar un DID a una extensión u operadora automática"
+
+#: cfg_opt_did.py:31
+msgid "DID"
+msgstr "DID"
+
+#: cfg_opt_did.py:32
+msgid "From Trunk:"
+msgstr "De la troncal:"
+
+#: cfg_opt_did.py:34 cfg_trunk_iax.py:51 cfg_trunk_sip.py:43
+#: cfg_trunk_zappri.py:53 cfg_trunk_zap.py:43
+msgid "Go to"
+msgstr "Ir a"
+
+#: cfg_opt_did.py:35 cfg_trunk_iax.py:52 cfg_trunk_sip.py:44
+#: cfg_trunk_zappri.py:54 cfg_trunk_zap.py:44
+msgid "Phone"
+msgstr "Teléfono"
+
+#: cfg_opt_did.py:35 cfg_trunk_iax.py:52 cfg_trunk_sip.py:44
+#: cfg_trunk_zappri.py:54 cfg_trunk_zap.py:44
+msgid "IVR"
+msgstr "IVR"
+
+#: cfg_opt_did.py:36 cfg_trunk_capimsn.py:32 cfg_trunk_fwdiax.py:47
+#: cfg_trunk_iaxtel.py:43
+msgid "Phone to ring"
+msgstr "Teléfono a timbrar"
+
+#: cfg_opt_did.py:38 cfg_trunk_iax.py:55 cfg_trunk_sip.py:47
+#: cfg_trunk_zappri.py:57 cfg_trunk_zap.py:47
+msgid "IVR to jump to"
+msgstr "saltar a IVR"
+
+#: cfg_opt_did.py:40
+msgid "Change Caller*Id to:"
+msgstr "Cambiar el Identificador de llamante a:"
+
+#: cfg_opt_did.py:64
+msgid "DID already in use for that trunk."
+msgstr "DID ya está en uso para esta troncal"
+
+#: cfg_opt_enum.py:26
+msgid "ENUM search domain"
+msgstr "Dominio de búsqueda de ENUM"
+
+#: cfg_opt_enum.py:27
+msgid "Domain to search for ENUM entries"
+msgstr "Dominio para buscar entradas de ENUM"
+
+#: cfg_opt_loadmodule.py:26
+msgid "Load module"
+msgstr "Cargar Módulo"
+
+#: cfg_opt_loadmodule.py:27
+msgid "Module to load"
+msgstr "Módulo a cargar"
+
+#: cfg_opt_logger.py:25
+msgid "Errors"
+msgstr "Errores"
+
+#: cfg_opt_logger.py:26
+msgid "Warnings"
+msgstr "Advertencias"
+
+#: cfg_opt_logger.py:27
+msgid "Notifications"
+msgstr "Notificaciones"
+
+#: cfg_opt_logger.py:28
+msgid "Verbose messages"
+msgstr "Mensajes de información"
+
+#: cfg_opt_logger.py:29
+msgid "Debug output"
+msgstr "Salida de depuración"
+
+#: cfg_opt_logger.py:39
+msgid "Logger options"
+msgstr "Opciones de registro de mensajes"
+
+#: cfg_opt_logger.py:40
+msgid ""
+"Asterisk can emit many events to it's console or a log file, Here you can "
+"make it more (or less) verbose:"
+msgstr ""
+"Asterisk puede emitir muchos eventos a su consola o a un archivo de "
+"registro, aquí usted puede manipular el nivel de detalle:"
+
+#: cfg_opt_logger.py:42
+msgid "Console output"
+msgstr "Salida de Consola"
+
+#: cfg_opt_logger.py:48
+msgid "Output in /var/log/asterisk/messages"
+msgstr "Salida en: /var/log/asterisk/messages"
+
+#: cfg_opt_logger.py:54
+msgid "Log to syslog via facility"
+msgstr "Registrar en el archivo syslog a través del recurso"
+
+#: cfg_opt_logger.py:59
+msgid "What kind of messages to log"
+msgstr "Clase de mensajes a registrar"
+
+#: cfg_opt_manager.py:27 page_config.ptl:80
+msgid "Management API access"
+msgstr "Acceso del API de Gestión"
+
+#: cfg_opt_manager.py:29
+msgid "Secret"
+msgstr "Contraseña"
+
+#: cfg_opt_manager.py:30
+msgid "IP disable mask"
+msgstr "Deshabilitar máscara IP"
+
+#: cfg_opt_manager.py:31
+msgid "IP enable mask"
+msgstr "Habilitar máscara IP"
+
+#: cfg_opt_manager.py:32
+msgid "Read"
+msgstr "Leer"
+
+#: cfg_opt_manager.py:33
+msgid "Write"
+msgstr "Escribir"
+
+#: cfg_opt_music.py:26
+msgid "Background music directory"
+msgstr "Directorio de música de fondo"
+
+#: cfg_opt_oppanel.py:28
+msgid "Configure Asternic Flash Operator Panel"
+msgstr "Configurar el Pánel de Operadora Asternic"
+
+#: cfg_opt_oppanel.py:33
+msgid "FQDN/IP to access the panel via web"
+msgstr "Nombre de domino para acceder al pánel via web"
+
+#: cfg_opt_oppanel.py:34
+msgid "Security Code"
+msgstr "Código de seguridad"
+
+#: cfg_opt_oppanel.py:35
+msgid "Manager agent"
+msgstr "Agente de gestión"
+
+#: cfg_opt_oppanel.py:37
+msgid "Frequency in seconds to poll for sip and iax status"
+msgstr "Frecuencia en segundos para refrescar el estado de los canales SIP e IAX"
+
+#: cfg_opt_pickup.py:27
+msgid "Pickup Extension"
+msgstr "Extensión para toma de llamadas"
+
+#: cfg_opt_pickup.py:28
+msgid "Extension to dial to pick-up a call in the same group."
+msgstr "Extensión a marcar para tomar una llamada del grupo"
+
+#: cfg_opt_rawcfg.py:26
+msgid "Raw config file snippet"
+msgstr "Archivo de configuración original fragmentado"
+
+#: cfg_opt_rawcfg.py:30
+msgid "Section/Context"
+msgstr "Sección/Contexto"
+
+#: cfg_opt_rtp.py:26
+msgid "RTP options"
+msgstr "Opciones RTP"
+
+#: cfg_opt_rtp.py:28
+msgid "Start of RTP port area"
+msgstr "Inicio del rango de puertos RTP"
+
+#: cfg_opt_rtp.py:29
+msgid "End of RTP port area"
+msgstr "Fin del rango de puertos RTP"
+
+#: cfg_opt_rtp.py:30
+msgid "Check UDP checksums of RTP packets"
+msgstr "Comprobar los checksums UDP de los paquetes RTP"
+
+#: cfg_opt_rtp.py:43
+msgid "must be higher than start value"
+msgstr "debe ser al menos tan alto como el valor de inicio"
+""
+
+#: cfg_opt_settings.py:25
+msgid "Austria"
+msgstr "Austria"
+
+#: cfg_opt_settings.py:37
+msgid "Australia"
+msgstr "Australia"
+
+#: cfg_opt_settings.py:52
+msgid "Belgium"
+msgstr "Bélgica"
+
+#: cfg_opt_settings.py:64
+msgid "Brazil"
+msgstr "Brasil"
+
+#: cfg_opt_settings.py:75
+msgid "Chile"
+msgstr "Chile"
+
+#: cfg_opt_settings.py:86
+msgid "Germany"
+msgstr "Alemania"
+
+#: cfg_opt_settings.py:98
+msgid "Spain"
+msgstr "España"
+
+#: cfg_opt_settings.py:110
+msgid "Finland"
+msgstr "Finlandia"
+
+#: cfg_opt_settings.py:121
+msgid "France"
+msgstr "Francia"
+
+#: cfg_opt_settings.py:132
+msgid "Greece"
+msgstr "Grecia"
+
+#: cfg_opt_settings.py:143
+msgid "India"
+msgstr "India"
+
+#: cfg_opt_settings.py:155
+msgid "Italy"
+msgstr "Italia"
+
+#: cfg_opt_settings.py:166
+msgid "Japan"
+msgstr "Japón"
+
+#: cfg_opt_settings.py:178
+msgid "Netherlands"
+msgstr "Holanda"
+
+#: cfg_opt_settings.py:189
+msgid "Norway"
+msgstr "Noruega"
+
+#: cfg_opt_settings.py:200
+msgid "New Zealand"
+msgstr "Nueva Zelanda"
+
+#: cfg_opt_settings.py:211
+msgid "Poland"
+msgstr "Polonia"
+
+#: cfg_opt_settings.py:222
+msgid "Portugal"
+msgstr "Portugal"
+
+#: cfg_opt_settings.py:233
+msgid "Russia"
+msgstr "Rusia"
+
+#: cfg_opt_settings.py:244
+msgid "Sweden"
+msgstr "Suecia"
+
+#: cfg_opt_settings.py:255
+msgid "Taiwan"
+msgstr "Taiwan"
+
+#: cfg_opt_settings.py:267
+msgid "United Kingdom"
+msgstr "Reino Unido"
+
+#: cfg_opt_settings.py:285
+msgid "United States / North America"
+msgstr "Estados Unidos / Norteamérica"
+
+#: cfg_opt_settings.py:296
+msgid "South Africa"
+msgstr "Sur Africa"
+
+#: cfg_opt_settings.py:315
+msgid "General settings"
+msgstr "Preferencias generales"
+
+#: cfg_opt_settings.py:317
+msgid "Country"
+msgstr "País"
+
+#: cfg_opt_settings.py:318
+msgid "The country is used for generating dialtone, ringtone, busytone etc"
+msgstr "El País se utiliza para generar el tono de marcado, timbre, tono de invitación a marcar, etc."
+
+#: cfg_opt_settings.py:322
+msgid "language"
+msgstr "idioma"
+
+#: cfg_opt_settings.py:323
+msgid "The language is used for voice prompts"
+msgstr "El lenguaje se usa para los diálogos de voz"
+
+#: cfg_opt_sip_audio.py:27
+msgid "SIP Audio Options"
+msgstr "Opciones de audio de SIP"
+
+#: cfg_opt_sip_audio.py:29
+msgid "Codecs to use"
+msgstr "Codecs a usar"
+
+#: cfg_opt_sip_audio.py:30
+msgid "Allow alaw codec"
+msgstr "Permitir códec Ley A"
+
+#: cfg_opt_sip_audio.py:31
+msgid "Allow ulaw codec"
+msgstr "Permitir códec Ley U"
+
+#: cfg_opt_sip_audio.py:32
+msgid "Allow ilbc codec"
+msgstr "Permitir códec ilbc"
+
+#: cfg_opt_sip_audio.py:33
+msgid "Allow gsm codec"
+msgstr "Permitir códec gsm"
+
+#: cfg_opt_sip_audio.py:34
+msgid "Allow g729 codec"
+msgstr "Permitir códec g729"
+
+#: cfg_opt_sip_audio.py:35
+msgid "g729 pass-thru unless license obtained"
+msgstr "Sólo reenvío y no trascodificación de g729 a menos que se obtenga una licencia"
+
+#: cfg_opt_sip_audio.py:36
+msgid "Allow g723.1 codec"
+msgstr "Permitir códec g723.1"
+
+#: cfg_opt_sip_audio.py:37
+msgid "g723.1 pass-thru"
+msgstr "Paso directo de g723.1"
+
+#: cfg_opt_sip_audio.py:45
+msgid "You should choose at least one codec"
+msgstr "Usted debe seleccionar al menos un códec"
+
+#: cfg_opt_user.py:26 page_config.ptl:68
+msgid "DeStar user"
+msgstr "Usuario DeStar"
+
+#: cfg_opt_user.py:30 cfg_phone_iax.py:30 cfg_phone_mgcp.py:28
+#: cfg_phone_sip.py:31 cfg_trunk_iax.py:41
+msgid "Password"
+msgstr "Contraseña"
+
+#: cfg_opt_user.py:31
+msgid "Associated IP address of PC"
+msgstr "Dirección IP asociada al PC"
+
+#: cfg_opt_user.py:31
+msgid "Trusted for auto-login"
+msgstr "Confiable para inicio de sesión automático"
+
+#: cfg_opt_user.py:32
+msgid "Associated phone"
+msgstr "Teléfono Asociado"
+
+#: cfg_opt_user.py:35 page_user_info.ptl:49 page_user.ptl:46
+msgid "disabled"
+msgstr "Deshabilitado"
+
+#: cfg_opt_user.py:36 Missing.ptl:29 page_user_info.ptl:50 page_user.ptl:25
+#: page_user.ptl:47
+msgid "User"
+msgstr "Usuario"
+
+#: cfg_opt_user.py:37 page_user_info.ptl:51 page_user.ptl:48
+msgid "Administrator"
+msgstr "Administrador"
+
+#: cfg_opt_user.py:38 page_user_info.ptl:52 page_user.ptl:49
+msgid "Configurator"
+msgstr "Configurador"
+
+#: cfg_opt_voicemail.py:26 cfg_phone_iax.py:42 cfg_phone_mgcp.py:43
+#: cfg_phone_sip.py:51 cfg_phone_zap.py:43
+msgid "Voicemail settings"
+msgstr "Configuración de correo de voz"
+
+#: cfg_opt_voicemail.py:27
+msgid "Recording settings"
+msgstr "Configuración de grabación"
+
+#: cfg_opt_voicemail.py:28
+msgid "File format for voicemail messages"
+msgstr "Formato de archivo para los correos de voz"
+
+#: cfg_opt_voicemail.py:30
+msgid "Maximal message length (in seconds)"
+msgstr "Tamaño máximo de los mensajes (en segundos)"
+
+#: cfg_opt_voicemail.py:31
+msgid "Minimal message length (in seconds)"
+msgstr "Tamaño mínimo de los mensajes (en segundos)"
+
+#: cfg_opt_voicemail.py:32
+msgid "Seconds of silence to end the recording"
+msgstr "Segundos de silencio para la grabación"
+
+#: cfg_opt_voicemail.py:33
+msgid ""
+"Silence threshold (what we consider silence, the lower, the more sensitive)"
+msgstr ""
+"Umbral de silencio (lo que consideramos silencio;entre más bajo, más "
+"sensible)"
+
+#: cfg_opt_voicemail.py:35
+msgid "Playback settings"
+msgstr "Configuración de Reproducción"
+
+#: cfg_opt_voicemail.py:36
+msgid "Max number of failed login attempts"
+msgstr "Máximo número de intentos de inicio de sesión"
+
+#: cfg_opt_voicemail.py:37
+msgid "Seconds to skip forward/backward"
+msgstr "Segundos para saltar retroceso/avance"
+
+#: cfg_opt_zap_audio.py:26
+msgid "Zaptel Audio Options"
+msgstr "Opciones de audio de Zaptel"
+
+#: cfg_opt_zap_audio.py:28
+msgid "Be sloppy when detecting DTMF"
+msgstr ""
+
+#: cfg_opt_zap_audio.py:29
+msgid "Echo cancel samples"
+msgstr ""
+
+#: cfg_opt_zap_audio.py:31
+msgid "Cancel echo even on bridged calls"
+msgstr ""
+
+#: cfg_opt_zap_audio.py:32
+msgid "Do early echo training"
+msgstr ""
+
+#: cfg_opt_zap_phone.py:26
+msgid "Zaptel Phone Options"
+msgstr "Opciones de teléfono Zaptel"
+
+#: cfg_opt_zap_phone.py:28
+msgid "Use ADSI for menu phones"
+msgstr ""
+
+#: cfg_opt_zap_phone.py:29
+msgid "Signal a waiting call"
+msgstr ""
+
+#: cfg_opt_zap_phone.py:30
+msgid "Send callerid during call waiting indication"
+msgstr ""
+
+#: cfg_opt_zap_phone.py:31
+msgid "Suspend a call temporarily via a hook flash"
+msgstr ""
+
+#: cfg_opt_zap_phone.py:32
+msgid "Allow call transfer"
+msgstr "Habilitar trasferencia de llamadas"
+
+#: cfg_opt_zap_phone.py:33
+msgid "Allow call forwards"
+msgstr "Habilitar reenvío de llamadas"
+
+#: cfg_opt_zap_phone.py:34
+msgid "Read caller number with *69"
+msgstr ""
+
+#: cfg_opt_zappri.py:28
+msgid "Zaptel configuration for PRI"
+msgstr "Configuración de Zaptel para PRI"
+
+#: cfg_opt_zappri.py:31
+msgid "Zaptel span"
+msgstr "Span Zaptel"
+
+#: cfg_opt_zappri.py:31
+msgid "i.e. 1 if 1st card"
+msgstr "ej. 1 es la primera tarjeta"
+
+#: cfg_opt_zappri.py:32
+msgid "Zaptel timing parameter"
+msgstr "Parámetro de temporización de Zaptel"
+
+#: cfg_opt_zappri.py:32
+msgid "Read zaptel documentation"
+msgstr "Lea la documentación de zaptel"
+
+#: cfg_opt_zappri.py:33
+msgid "Line Build Out (dB)"
+msgstr ""
+
+#: cfg_opt_zappri.py:33
+msgid ""
+"Power level based on distance from the card to the service provider's "
+"gateway."
+msgstr ""
+
+#: cfg_opt_zappri.py:35
+msgid "0: 0 db (CSU) / 0-133 feet (DSX-1)"
+msgstr "0:0 db (CSU) / 0 a 133 pies (DSX-1)"
+
+#: cfg_opt_zappri.py:36
+msgid "1: 133-266 feet (DSX-1)"
+msgstr "1: 133 a 266 pies (DSX-1)"
+
+#: cfg_opt_zappri.py:37
+msgid "2: 266-399 feet (DSX-1)"
+msgstr "2: 266 a 399 pies (DSX-1)"
+
+#: cfg_opt_zappri.py:38
+msgid "3: 399-533 feet (DSX-1)"
+msgstr "3: 399 a 533 pies (DSX-1)"
+
+#: cfg_opt_zappri.py:39
+msgid "4: 533-655 feet (DSX-1)"
+msgstr "4: 533 a 655 pies (DSX-1)"
+
+#: cfg_opt_zappri.py:40
+msgid "5: -7.5db (CSU)"
+msgstr "5: -7.5db (CSU)"
+
+#: cfg_opt_zappri.py:41
+msgid "6: -15db (CSU)"
+msgstr "6: -15db (CSU)"
+
+#: cfg_opt_zappri.py:42
+msgid "7: -22.5db (CSU)"
+msgstr "7: -22.5db (CSU)"
+
+#: cfg_opt_zappri.py:44
+msgid "Framing"
+msgstr ""
+
+#: cfg_opt_zappri.py:45
+msgid "D4 (T1)"
+msgstr "D4 (T1)"
+
+#: cfg_opt_zappri.py:45
+msgid "ESF (T1)"
+msgstr "ESF (T1)"
+
+#: cfg_opt_zappri.py:45
+msgid "CSS (E1)"
+msgstr "CSS (E1)"
+
+#: cfg_opt_zappri.py:45
+msgid "CAS (E1)"
+msgstr "CAS (E1)"
+
+#: cfg_opt_zappri.py:46
+msgid "Coding"
+msgstr "Codificación"
+
+#: cfg_opt_zappri.py:47
+msgid "AMI (T1/E1)"
+msgstr "AMI (T1/E1)"
+
+#: cfg_opt_zappri.py:47
+msgid "B8ZF (T1)"
+msgstr "B8ZF (T1)"
+
+#: cfg_opt_zappri.py:47
+msgid "HDB3 (E1)"
+msgstr "HDB3 (E1)"
+
+#: cfg_opt_zappri.py:49 cfg_trunk_zappri.py:42
+msgid "Channels"
+msgstr "Canales"
+
+#: cfg_opt_zappri.py:49 cfg_trunk_zappri.py:42
+msgid "i.e. 1-15,17-31"
+msgstr "ej. 1-15,17-31"
+
+#: cfg_opt_zappri.py:50
+msgid "Signaling channel"
+msgstr "Canal de señalización"
+
+#: cfg_opt_zappri.py:50
+msgid "i.e. 16"
+msgstr "ej. 16"
+
+#: cfg_opt_zap_trunk.py:26
+msgid "Zaptel Trunk Options"
+msgstr "Opciones de troncal Zaptel"
+
+#: cfg_opt_zap_trunk.py:28
+msgid "Try to detect busy signal to detect if remove site hung up"
+msgstr ""
+
+#: cfg_opt_zap_trunk.py:29
+msgid "Wait how many busy signals before hanging up"
+msgstr ""
+
+#: cfg_phone_ext.py:27
+msgid "Set an 'alias' extension to a phone"
+msgstr "Establecer una extensión \"alias\" al teléfono"
+
+#: cfg_phone_ext.py:31
+msgid "This can be used to set operator(o) or fax(fax) extensions."
+msgstr "Esto puede usarse para configurar extensiones de operadora (o) o fax (fax)"
+
+#: cfg_phone_ext.py:33
+msgid "Calls to the extension"
+msgstr "Llamadas a la extensión"
+
+#: cfg_phone_ext.py:34
+msgid "Real phone to ring"
+msgstr "Teléfono a timbrar"
+
+#: cfg_phone_iax.py:27
+msgid "Normal IAX phone"
+msgstr "Teléfono IAX estándar"
+
+#: cfg_phone_iax.py:31 cfg_phone_mgcp.py:29 cfg_phone_sip.py:32
+msgid "IP address of phone"
+msgstr "Direción IP del teléfono"
+
+#: cfg_phone_iax.py:33 cfg_phone_mgcp.py:37 cfg_phone_zap.py:34
+msgid "Allow direct dialling from outside?"
+msgstr "¿Permitir llamadas directas desde el exterior?"
+
+#: cfg_phone_iax.py:35 cfg_phone_mgcp.py:39 cfg_phone_sip.py:40
+#: cfg_phone_zap.py:36
+msgid "Call group"
+msgstr "Grupo de llamada"
+
+#: cfg_phone_iax.py:36 cfg_phone_mgcp.py:40 cfg_phone_sip.py:41
+#: cfg_phone_zap.py:37
+msgid "Enable call group"
+msgstr "Habilitar el grupo de llamadas"
+
+#: cfg_phone_iax.py:37 cfg_phone_mgcp.py:41 cfg_phone_sip.py:42
+#: cfg_phone_zap.py:38
+msgid "Call group number"
+msgstr "Número del grupo de llamadas"
+
+#: cfg_phone_iax.py:40 cfg_phone_sip.py:49
+msgid "Show this extension in the panel"
+msgstr "Mostrar esta extensión en el pánel"
+
+#: cfg_phone_iax.py:43 cfg_phone_mgcp.py:44 cfg_phone_sip.py:52
+#: cfg_phone_zap.py:44
+msgid "Use voicemail"
+msgstr "Usar correo de voz"
+
+#: cfg_phone_iax.py:44 cfg_phone_mgcp.py:45 cfg_phone_sip.py:53
+#: cfg_phone_zap.py:45
+msgid "Signal waiting mail"
+msgstr "Correo de espera de señal"
+
+#: cfg_phone_iax.py:45 cfg_phone_mgcp.py:46 cfg_phone_sip.py:54
+#: cfg_phone_zap.py:46
+msgid "Voicemail PIN"
+msgstr "PIN de correo de voz"
+
+#: cfg_phone_iax.py:46
+msgid "Disable IAX transfer"
+msgstr "Deshabilitar la transferencia IAX"
+
+#: cfg_phone_iax.py:48 cfg_phone_mgcp.py:48 cfg_phone_sip.py:56
+#: cfg_phone_zap.py:48
+msgid "Calls from the phone"
+msgstr "Llamadas desde el teléfono"
+
+#: cfg_phone_iax.py:49 cfg_phone_sip.py:57 cfg_phone_zap.py:49
+msgid "Caller-Id Number"
+msgstr "Identificador de Llamante"
+
+#: cfg_phone_iax.py:50 cfg_phone_sip.py:58 cfg_phone_zap.py:50
+#: cfg_trunk_fwdiax.py:44 cfg_trunk_iaxtel.py:40
+msgid "Caller-Id Name"
+msgstr "Nombre del Identificador de llamante"
+
+#: cfg_phone_iax.py:51 cfg_phone_mgcp.py:51 cfg_phone_sip.py:59
+#: cfg_phone_zap.py:51
+msgid "Allowed dialout-entries"
+msgstr "Destinos permitidos"
+
+#: cfg_phone_iax.py:52 cfg_phone_mgcp.py:52 cfg_phone_sip.py:60
+#: cfg_phone_zap.py:52
+msgid "Enable time restriction?"
+msgstr "¿Habilitar la restricción de tiempo?"
+
+#: cfg_phone_mgcp.py:26
+msgid "Normal MGCP phone"
+msgstr "Teléfono MGCP estándar"
+
+#: cfg_phone_mgcp.py:27
+msgid ""
+"If you haven't configured a name for your phone please use the IP address "
+"here."
+msgstr ""
+"Si usted no ha configurado un nombre para su teléfono, por favor use la "
+"dirección IP aquí."
+
+#: cfg_phone_mgcp.py:33
+msgid "NAT"
+msgstr "NAT"
+
+#: cfg_phone_mgcp.py:34
+msgid "Three way calling"
+msgstr "Llamada de tres vías"
+
+#: cfg_phone_mgcp.py:35
+msgid "Enable Call transfer"
+msgstr "Habilitar trasferencia de llamadas"
+
+#: cfg_phone_mgcp.py:36
+msgid "Enable Call forward"
+msgstr "Habilitar reenvío de llamadas"
+
+#: cfg_phone_mgcp.py:49
+msgid "Caller-Id-Number"
+msgstr "Número del Identificador de Llamante"
+
+#: cfg_phone_mgcp.py:50
+msgid "Caller-Id-Name"
+msgstr "Identificador de Llamante"
+
+#: cfg_phone_queue.py:28
+msgid "Normal Call Queue"
+msgstr "Cola de llamadas normal"
+
+#: cfg_phone_queue.py:32
+msgid "Timeout"
+msgstr "Tiempo límite"
+
+#: cfg_phone_queue.py:35
+msgid "Strategy:"
+msgstr "Estrategia:"
+
+#: cfg_phone_queue.py:36
+msgid "Ring all - ring all available channels until one answers"
+msgstr "Timbrar a todos los canales disponibles hasta que alguno conteste"
+
+#: cfg_phone_queue.py:37
+msgid "Round robin - take turns ringing each available interface"
+msgstr "Timbrar uno por uno en cada canal disponible"
+
+#: cfg_phone_queue.py:38
+msgid ""
+"Least recent - ring interface which was least recently called by this queue"
+msgstr "Timbrar a la extensión que lleve más tiempo sin contestar"
+
+#: cfg_phone_queue.py:39
+msgid "Fewest calls - ring the one with fewest completed calls from this queue"
+msgstr "Timbrar a la extensión que menos llamadas haya contestado"
+
+#: cfg_phone_queue.py:40
+msgid "Random - ring random interface"
+msgstr "Timbrar en forma aleatoria"
+
+#: cfg_phone_queue.py:41
+msgid "Round robin with memory - remember where we left off last ring pass"
+msgstr "Timbrar uno por uno, empezando donde se quedó en la última vuelta"
+
+#: cfg_phone_queue.py:44
+msgid "How long to wait before trying all the members again?"
+msgstr "¿Cuanto tiempo esperar antes de intentar timbrar de nuevo?"
+
+#: cfg_phone_queue.py:46
+msgid "Anounces"
+msgstr "Anuncios"
+
+#: cfg_phone_queue.py:47
+msgid "Anounce queue position to caller?"
+msgstr "¿Anunciar la posición en la cola al llamante?"
+
+#: cfg_phone_queue.py:48
+msgid ""
+"How often to announce queue position and/or estimated holdtime to caller"
+msgstr "Frecuencia de anuncio de la posición en la cola y el tiempo estimado de contestación"
+
+#: cfg_phone_queue.py:49
+msgid "Include estimated hold time in position announcements?"
+msgstr "¿Incluir el tiempo estimado de contestación en los anuncios de posición?"
+
+#: cfg_phone_queue.py:50
+msgid "Yes"
+msgstr "Sí"
+
+#: cfg_phone_queue.py:51
+msgid "No"
+msgstr "No"
+
+#: cfg_phone_queue.py:52
+msgid "Only Once"
+msgstr "Sólo una vez"
+
+#: cfg_phone_queue.py:56
+msgid "Monitoring"
+msgstr "Monitoreo"
+
+#: cfg_phone_queue.py:57
+msgid "Monitor answered calls?"
+msgstr "¿Monitorear la llamadas contestadas?"
+
+#: cfg_phone_queue.py:58
+msgid "Monitor file format"
+msgstr "Formato del archivo de monitoreo"
+
+#: cfg_phone_queue.py:59
+msgid "GSM"
+msgstr "GSM"
+
+#: cfg_phone_queue.py:60
+msgid "WAV"
+msgstr "WAV"
+
+#: cfg_phone_queue.py:61
+msgid "WAV49"
+msgstr "WAV49"
+
+#: cfg_phone_queue.py:64
+msgid "Monitor file name"
+msgstr "Nombre de archivo de monitoreo"
+
+#: cfg_phone_queue.py:64
+msgid "Otherwise it will use ${UNIQUEID}"
+msgstr "De lo contrario, se usará ${UNIQUEID}"
+
+#: cfg_phone_queue.py:67
+msgid "Show this queue in the panel"
+msgstr "Mostrar esta cola en el pánel"
+
+#: cfg_phone_queue.py:84
+msgid "You should select a frequency"
+msgstr "Usted debe seleccionar al menos una frecuencia"
+
+#: cfg_phone_sip.py:28
+msgid "Normal SIP phone"
+msgstr "Teléfono SIP estándar"
+
+#: cfg_phone_sip.py:33
+msgid "Is the trunk behind NAT ?"
+msgstr "¿Está la troncal tras un NAT?"
+
+#: cfg_phone_sip.py:35
+msgid "DTMF mode:"
+msgstr "Modo DTMF:"
+
+#: cfg_phone_sip.py:36
+msgid "RFC 2833 (RTP)"
+msgstr "RFC 2833 (RTP)"
+
+#: cfg_phone_sip.py:37
+msgid "In Band (only with ulaw/alaw)"
+msgstr "En Banda (sólo con Ley U/Ley A)"
+
+#: cfg_phone_sip.py:38
+msgid "SIP INFO"
+msgstr "INFO SIP"
+
+#: cfg_phone_sip.py:44
+msgid "Call Queues"
+msgstr "Cola de llamadas"
+
+#: cfg_phone_sip.py:45
+msgid "Agent of queues:"
+msgstr "Agente de colas:"
+
+#: cfg_phone_zap.py:27
+msgid "Normal ZAP phone"
+msgstr "Teléfono ZAP normal"
+
+#: cfg_phone_zap.py:30 cfg_trunk_zap.py:30
+msgid "Zaptel channel number"
+msgstr "Número del canal Zaptel"
+
+#: cfg_phone_zap.py:31 cfg_trunk_zappri.py:31 cfg_trunk_zap.py:31
+msgid "Signalling type"
+msgstr "Tipo de señalización"
+
+#: cfg_phone_zap.py:41
+msgid "Show this phone in the panel"
+msgstr "Mostrar esta extensión en el pánel"
+
+#: cfg_trunk_capimsn.py:26
+msgid "ISDN using CAPI, incoming"
+msgstr "RDSI (ISDN) usando CAPI, entrada"
+
+#: cfg_trunk_capimsn.py:30
+msgid "Calls from the ISDN network"
+msgstr "Llamadas desde la red RDSI"
+
+#: cfg_trunk_capimsn.py:31 cfg_trunk_capi.py:34 cfg_trunk_zaphfc.py:34
+msgid "Subscriber number"
+msgstr "Número de Suscriptor"
+
+#: cfg_trunk_capimsn.py:70
+msgid "MSN already assigned"
+msgstr "El MSN ya ha sido asignado"
+
+#: cfg_trunk_capi.py:29
+msgid "ISDN using CAPI, outgoing"
+msgstr "RDSI (ISDN) usando CAPI, salida"
+
+#: cfg_trunk_capi.py:33 cfg_trunk_zaphfc.py:33
+msgid "Calls to the ISDN network"
+msgstr "Llamadas a la red RDSI"
+
+#: cfg_trunk_capi.py:35 cfg_trunk_zaphfc.py:35
+msgid "Outgoing prefix"
+msgstr "Prefijo de salida"
+
+#: cfg_trunk_fwdiax.py:26
+msgid "VOIP-Provider FreeworldDialup (IAX)"
+msgstr "Proveedor VoIP, FreeworldDialup (IAX)"
+
+#: cfg_trunk_fwdiax.py:28
+msgid ""
+"You can register free of charge at\n"
+"\t\t\thttp://freeworlddialup.com and get an FWD Id where\n"
+"\t\t\tpeople can call you. These calls are is free of charge, too.\n"
+"\n"
+"\t\t\tWhen you've an account, you must enable FWD's IAX support at\n"
+"\t\t\thttp://www.freeworlddialup.com/advanced/iax to use this\n"
+"\t\t\tthis 'phone line'."
+msgstr ""
+"Usted puede registrarse gratuitamente en\n"
+"\t\t\thttp://freeworlddialup.com y obtener un identificador de FWD a donde \n"
+"\t\t\tlas otras personas lo pueden contactar. Estas llamadas son gratuitas "
+"también.\n"
+"\n"
+"\t\t\tCuando usted tiene una cuenta, debe habilitar el soporte IAX para FWD "
+"en \n"
+"\t\t\thttp://www.freeworlddialup.com/advanced/iax para usar esta\n"
+"\t\t\t'línea telefónica'."
+
+#: cfg_trunk_fwdiax.py:38
+msgid "FWD number"
+msgstr "Número de FWD"
+
+#: cfg_trunk_fwdiax.py:39
+msgid "FWD password"
+msgstr "Contraseña de FWD"
+
+#: cfg_trunk_fwdiax.py:41
+msgid "Calls to FWD"
+msgstr "Llamadas a FWD"
+
+#: cfg_trunk_fwdiax.py:43 cfg_trunk_iaxtel.py:39 page_user_state.ptl:94
+#: UserUI.ptl:121
+msgid "Context"
+msgstr "Contexto"
+
+#: cfg_trunk_fwdiax.py:46
+msgid "Calls from FWD"
+msgstr "Llamadas desde FWD"
+
+#: cfg_trunk_iax.py:27
+msgid "Standard IAX Trunk"
+msgstr "Troncal IAX estándar"
+""
+
+#: cfg_trunk_iax.py:29
+msgid ""
+"Used to setup an IAX trunk to another Asterisk server or an IAX termination."
+msgstr ""
+"Se usa para configurar una troncal IAX a otro servidor Asterisk o a una "
+"terminación IAX."
+
+#: cfg_trunk_iax.py:33
+msgid "IAX host"
+msgstr "Equipo IAX"
+
+#: cfg_trunk_iax.py:34
+msgid "Bandwith"
+msgstr "Ancho de banda"
+
+#: cfg_trunk_iax.py:35
+msgid "Low"
+msgstr "Bajo"
+
+#: cfg_trunk_iax.py:35
+msgid "High"
+msgstr "Alto"
+
+#: cfg_trunk_iax.py:38
+msgid "Authentication"
+msgstr "Autenticación"
+
+#: cfg_trunk_iax.py:39
+msgid "Authentication Method"
+msgstr "Método de autenticación"
+
+#: cfg_trunk_iax.py:40
+msgid "Plain text"
+msgstr "Texto plano"
+
+#: cfg_trunk_iax.py:40
+msgid "RSA"
+msgstr "RSA"
+
+#: cfg_trunk_iax.py:40
+msgid "MD5"
+msgstr "MD5"
+
+#: cfg_trunk_iax.py:41
+msgid "For 'Plain' or 'MD5' only"
+msgstr "Sólo para \"Texto plano\" o \"RSA\""
+
+#: cfg_trunk_iax.py:42
+msgid "Public key from remote server"
+msgstr "Llave pública del servidor remoto"
+
+#: cfg_trunk_iax.py:42 cfg_trunk_iax.py:43
+msgid "For 'RSA' only"
+msgstr "Sólo para \"RSA\""
+
+#: cfg_trunk_iax.py:43
+msgid "Private local key"
+msgstr "Llave privada local"
+
+#: cfg_trunk_iax.py:45
+msgid "Enable trunking?"
+msgstr "¿Habilitar trunking?"
+
+#: cfg_trunk_iax.py:50
+msgid "Calls from IAX trunk"
+msgstr "Llamadas desde troncal IAX"
+
+#: cfg_trunk_iax.py:53 cfg_trunk_sip.py:45 cfg_trunk_zappri.py:55
+#: cfg_trunk_zap.py:45
+msgid "Extension to ring"
+msgstr "Extensión a timbrar"
+
+#: cfg_trunk_iaxtel.py:26
+msgid "VOIP-Provider Iaxtel"
+msgstr "IAXTEL del Proveedor de VoIP"
+
+#: cfg_trunk_iaxtel.py:28
+msgid ""
+"You can register free of charge at\n"
+"\t\t\thttp://www.iaxtel.com and get an IAXtel number  where\n"
+"\t\t\tpeople can call you. These calls are free of charge, too.'."
+msgstr ""
+"Usted puede registrarse gratuitamente en\n"
+"\t\t\thttp://www.iaxtel.com y obtener un número IAX donde \n"
+"\t\t\tlas otras personas lo pueden contactar. Estas llamadas son gratuitas "
+"también."
+
+#: cfg_trunk_iaxtel.py:34
+msgid "IAXTEL number"
+msgstr "Número IAXTEL"
+
+#: cfg_trunk_iaxtel.py:35
+msgid "IAXTEL password"
+msgstr "Contraseña IAXTEL"
+
+#: cfg_trunk_iaxtel.py:37
+msgid "Calls to IAXTEL"
+msgstr "Llamadas a IAXTEL"
+
+#: cfg_trunk_iaxtel.py:42
+msgid "Calls from IAXTEL"
+msgstr "Llamadas desde IAXTEL"
+
+#: cfg_trunk_sip.py:27
+msgid "Standard SIP Trunk"
+msgstr "Troncal SIP estándar"
+
+#: cfg_trunk_sip.py:29
+msgid "Used to setup a SIP trunk to a SIP provider or a different SIP server."
+msgstr ""
+"Se usa para configurar una troncal SIP a un proveedor SIP o a un servidor "
+"SIP diferente."
+
+#: cfg_trunk_sip.py:33
+msgid "SIP username"
+msgstr "Nombre de Usuario SIP"
+
+#: cfg_trunk_sip.py:34
+msgid "SIP password"
+msgstr "Contraseña SIP"
+
+#: cfg_trunk_sip.py:35
+msgid "SIP host"
+msgstr "Equipo SIP"
+
+#: cfg_trunk_sip.py:36
+msgid "Enable forward address type?"
+msgstr "¿Permitir reenvío de tipo de dirección?"
+
+#: cfg_trunk_sip.py:37
+msgid "Is the trunk behind NAT?"
+msgstr "¿Está la troncal tras un NAT?"
+
+#: cfg_trunk_sip.py:42 cfg_trunk_zappri.py:52 cfg_trunk_zap.py:42
+msgid "Calls from SIP trunk"
+msgstr "Llamadas desde una troncal SIP"
+
+#: cfg_trunk_zaphfc.py:26
+msgid "ISDN using zaphfc"
+msgstr "RDSI usando zaphfc"
+
+#: cfg_trunk_zaphfc.py:29
+msgid "Mode of NTBA"
+msgstr "Modo de NTBA"
+
+#: cfg_trunk_zaphfc.py:31
+msgid "Number of cards"
+msgstr "Número de tarjetas"
+
+#: cfg_trunk_zappri.py:28
+msgid "Standard ZAP PRI trunk"
+msgstr "Troncal ZAP PRI estándar"
+
+#: cfg_trunk_zappri.py:32
+msgid "PRI signalling, CPE side"
+msgstr "Señalización del PRI, lado del consumidor"
+
+#: cfg_trunk_zappri.py:32
+msgid "PRI signalling, Network side"
+msgstr ""
+
+#: cfg_trunk_zappri.py:33
+msgid "Switch type"
+msgstr ""
+
+#: cfg_trunk_zappri.py:43 cfg_trunk_zap.py:33
+msgid "Callout group"
+msgstr "Grupo de llamadas de salida"
+
+#: cfg_trunk_zappri.py:48 cfg_trunk_zap.py:38
+msgid "Reception and Transmission Gains"
+msgstr ""
+
+#: cfg_trunk_zappri.py:49 cfg_trunk_zap.py:39
+msgid "Reception gain"
+msgstr ""
+
+#: cfg_trunk_zappri.py:49 cfg_trunk_zappri.py:50 cfg_trunk_zap.py:39
+#: cfg_trunk_zap.py:40
+msgid "in dB"
+msgstr "En dB"
+
+#: cfg_trunk_zappri.py:50 cfg_trunk_zap.py:40
+msgid "Transmission gain"
+msgstr ""
+
+#: cfg_trunk_zappri.py:86
+msgid "Group already in use"
+msgstr "El grupo ya está en uso"
+
+#: cfg_trunk_zap.py:27
+msgid "Standard ZAP trunk"
+msgstr "Troncal ZAP estándar"
+
+#: configlets.py:428 configlets.py:665 configlets.py:805
+msgid "None"
+msgstr "Ningúno(a)"
+
+#: configlets.py:465
+msgid "Name already in use"
+msgstr "El nombre ya esta en uso"
+
+#: configlets.py:551 configlets.py:818
+msgid "Info"
+msgstr "Información"
+
+#: configlets.py:600
+msgid "Dial Command"
+msgstr "Comando Marcar"
+
+#: configlets.py:628
+msgid "You should select a phone to ring to"
+msgstr "Usted debe seleccionar un teléfono para timbrar"
+
+#: configlets.py:693
+msgid "Password:"
+msgstr "Contraseña:"
+
+#: language.py:48
+msgid "This menu will contain all sorts of administration stuff:"
+msgstr "Este menú tendrá todo tipo de funciones administrativas:"
+
+#: panelutils.py:74
+msgid ""
+"0,No timeout|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 minutes|"
+"3000,50 minutes"
+msgstr ""
+"0,Sin tiempo límite|300,5 minutos|600,10 minutos|1200,20 minutos|2400,40 "
+"minutos|3000,50 minutos"
+
+#: panelutils.py:98
+msgid "Meetme"
+msgstr ""
+
+#: panelutils.py:102
+msgid "PARK"
+msgstr ""
+
+#: panelutils.py:106
+msgid "Park"
+msgstr ""
+
+#: panelutils.py:124
+msgid "Restarting the panel daemon ..."
+msgstr ""
+
+#: ConfigHelper.ptl:53
+msgid "E"
+msgstr "E"
+
+#: ConfigHelper.ptl:54
+msgid "D"
+msgstr "D"
+
+#: ConfigHelper.ptl:55
+msgid "U"
+msgstr "U"
+
+#: ConfigHelper.ptl:93
+msgid "Add more"
+msgstr "Añadir más"
+
+#: ConfigHelper.ptl:112 UserPage.ptl:64
+msgid "Invalid URL"
+msgstr "URL inválida"
+
+#: ConfigHelper.ptl:118 page_config_edit.ptl:43
+msgid "Object does not exist"
+msgstr "No hay objeto configurable con ese nombre"
+
+#: ConfigHelper.ptl:121 page_user_state.ptl:118
+msgid "New"
+msgstr "Nuevo(a)"
+
+#: ConfigHelper.ptl:228 ConfigHelper.ptl:249 ConfigHelper.ptl:256
+#, python-format
+msgid "Required '%s' not found"
+msgstr "No se encuentra el '%s' requerido"
+
+#: ConfigHelper.ptl:271 page_login.ptl:45 page_user_settings.ptl:67
+#: UserUI.ptl:48 UserUI.ptl:156
+msgid "Submit"
+msgstr "Enviar"
+
+#: ConfigHelper.ptl:274
+msgid "Update"
+msgstr "Actualizar"
+
+#: ConfigHelper.ptl:275
+msgid "Delete"
+msgstr "Eliminar"
+
+#: ConfigHelper.ptl:281 page_login.ptl:46 page_user_settings.ptl:68
+#: UserUI.ptl:49 UserUI.ptl:157
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: Missing.ptl:32
+msgid "Admin"
+msgstr "Administración"
+
+#: Missing.ptl:35 Options.ptl:30 page_config.ptl:26 page_config.ptl:68
+#: page_config.ptl:80 page_config.ptl:86 page_config.ptl:92
+msgid "Configuration"
+msgstr "Configuración"
+
+#: Missing.ptl:40
+msgid "Page missing"
+msgstr "Página no encontrada"
+
+#: Missing.ptl:41
+msgid "This page is on my TODO list :-)"
+msgstr "Está página está en desarrollo"
+
+#: Options.ptl:30 page_config_options.ptl:26 page_config.ptl:68
+#: page_config.ptl:80
+msgid "Options"
+msgstr "Opciones"
+
+#: page_admin_cdr.ptl:37
+msgid "Call Details"
+msgstr "Registro de llamadas"
+
+#: page_admin_cdr.ptl:38
+msgid "Get statistics about made and received calls"
+msgstr ""
+
+#: page_admin_cdr.ptl:69
+msgid "All"
+msgstr "Todo"
+
+#: page_admin_cdr.ptl:84
+msgid "January"
+msgstr "Enero"
+
+#: page_admin_cdr.ptl:84
+msgid "February"
+msgstr "Febrero"
+
+#: page_admin_cdr.ptl:84
+msgid "March"
+msgstr "Marzo"
+
+#: page_admin_cdr.ptl:84
+msgid "April"
+msgstr "Abril"
+
+#: page_admin_cdr.ptl:84
+msgid "May"
+msgstr "Mayo"
+
+#: page_admin_cdr.ptl:84
+msgid "June"
+msgstr "Junio"
+
+#: page_admin_cdr.ptl:84
+msgid "July"
+msgstr "Julio"
+
+#: page_admin_cdr.ptl:84
+msgid "August"
+msgstr "Agosto"
+
+#: page_admin_cdr.ptl:84
+msgid "September"
+msgstr "Septiembre"
+
+#: page_admin_cdr.ptl:84
+msgid "October"
+msgstr "Octubre"
+
+#: page_admin_cdr.ptl:84
+msgid "November"
+msgstr "Noviembre"
+
+#: page_admin_cdr.ptl:84
+msgid "December"
+msgstr "Diciembre"
+
+#: page_admin_cdr.ptl:104
+msgid "Source "
+msgstr "Origen"
+
+#: page_admin_cdr.ptl:104
+#, python-format
+msgid ""
+"Wildcards: % is the 'zero or more characters' wildcard, and _ is the "
+"'exactly one character' wildcard"
+msgstr ""
+
+#: page_admin_cdr.ptl:105
+msgid "You can use the same wildcards as above"
+msgstr ""
+
+#: page_admin_cdr.ptl:107
+msgid "In seconds"
+msgstr "En segundos"
+
+#: page_admin_cdr.ptl:108
+msgid "Number of records to show:"
+msgstr "Número de registros a mostrar:"
+
+#: page_admin_cdr.ptl:109
+msgid "Order by:"
+msgstr "Ordenar por:"
+
+#: page_admin_cdr.ptl:110
+msgid " "
+msgstr " "
+
+#: page_admin_cdr.ptl:110
+msgid "Desc."
+msgstr "Desc."
+
+#: page_admin_cdr.ptl:110
+msgid "Asc."
+msgstr "Asc."
+
+#: page_admin_cdr.ptl:111
+msgid "Search between the following dates"
+msgstr ""
+
+#: page_admin_cdr.ptl:113
+msgid "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Start:"
+msgstr "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inicio:"
+
+#: page_admin_cdr.ptl:117
+msgid "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;End:"
+msgstr "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fin:"
+
+#: page_admin_cdr.ptl:122
+msgid "Search"
+msgstr "Buscar"
+
+#: page_admin_cdr.ptl:211 page_admin_cdr.ptl:213
+#, python-format
+msgid "Showing records from %s to %s of %s <br><br>"
+msgstr ""
+
+#: page_admin_cdr.ptl:222
+msgid "Duration_in_minutes"
+msgstr "Duración_en_minutos"
+
+#: page_admin_cdr.ptl:225
+msgid "Cost_of_call"
+msgstr "Costo_de_llamada"
+
+#: page_admin_cdr.ptl:234
+msgid "Answered"
+msgstr "Contestada"
+
+#: page_admin_cdr.ptl:236
+msgid "Not answered"
+msgstr "No contestada"
+
+#: page_admin_cdr.ptl:238
+msgid "Busy"
+msgstr "Ocupado"
+
+#: page_admin_cdr.ptl:240
+msgid "Failed"
+msgstr "Falló"
+
+#: page_admin_cdr.ptl:241
+msgid "start"
+msgstr "inicio"
+
+#: page_admin_cdr.ptl:273
+#, python-format
+msgid "Total Duration of shown calls: %s min."
+msgstr ""
+
+#: page_admin_cdr.ptl:276
+#, python-format
+msgid "Total Cost of shown calls: %s"
+msgstr ""
+
+#: page_admin_panel.ptl:28
+msgid "Asternic Flash Operator Panel"
+msgstr "Pánel de Operadora Flash Asternic"
+
+#: page_admin_panel.ptl:43
+msgid "You don't have a panel configured yet"
+msgstr "Usted no tiene un pánel configurado en este momento."
+
+#: page_admin_panel.ptl:47
+msgid "You have a panel configured "
+msgstr ""
+
+#: page_admin_panel.ptl:49
+msgid "here"
+msgstr "aquí"
+
+#: page_admin_pbxstate.ptl:26 UserPage.ptl:105
+msgid "PBX State"
+msgstr "Estado de la PBX"
+
+#: page_admin_pbxstate.ptl:27
+msgid "Status of Asterisk/DeStar PBX"
+msgstr ""
+
+#: page_admin_pbxstate.ptl:80 page_config_reload.ptl:44
+#: page_user_settings.ptl:105 page_user_state.ptl:138 UserUI.ptl:216
+msgid "Asterisk is not running!"
+msgstr "¡Asterisk no está corriendo!"
+
+#: page_admin_pbxstate.ptl:85 page_config_reload.ptl:49
+#: page_user_settings.ptl:110 page_user_state.ptl:143 UserUI.ptl:221
+msgid "The manager access is not working!"
+msgstr "¡El acceso de gestión no está funcionando!"
+
+#: page_admin.ptl:25
+msgid "Administration"
+msgstr "Administración"
+
+#: page_admin.ptl:26
+msgid "Perform administrative actions to PBX and extensions"
+msgstr "Realizar acciones de adminstración a la PBX y extensiones"
+
+#: page_config_add.ptl:26
+msgid "Add a new configlet"
+msgstr "Añadir un nuevo configlet"
+
+#: page_config_applications.ptl:26
+msgid "Applications"
+msgstr "Aplicaciones"
+
+#: page_config_applications.ptl:27
+msgid "Special Asterisk Applications"
+msgstr "Aplicaciones especiales de Asterisk"
+
+#: page_config_backup.ptl:27
+msgid "Backup a config file"
+msgstr "Hacer copia de seguridad de un archivo de configuración"
+
+#: page_config_backup.ptl:44
+#, python-format
+msgid "I had a problem backing up %s"
+msgstr "Hubo problemas haciendo el backup de %s"
+
+#: page_config_dialout.ptl:27
+msgid "Dialout"
+msgstr "Destino"
+
+#: page_config_dialout.ptl:28
+msgid "Dialout entries for outgoing calls"
+msgstr "Destinos para llamadas salientes"
+
+#: page_config_down.ptl:26
+msgid "Moves a configlet one position down"
+msgstr ""
+
+#: page_config_down.ptl:41 page_config_up.ptl:41
+#, python-format
+msgid "Could not swap id's %s and %s"
+msgstr "No es posible intercambiar id's %s y %s"
+
+#: page_config_edit.ptl:27
+msgid "Edit a configlet"
+msgstr "Editar un configlet"
+
+#: page_config_ivrs.ptl:27
+msgid "IVRs"
+msgstr "IVRs"
+
+#: page_config_ivrs.ptl:28
+msgid "Interactive Voice Response menus for the PBX."
+msgstr ""
+
+#: page_config_options.ptl:27
+msgid "DeStar and Asterisk options and parameters"
+msgstr "DeStar y Asterisk"
+
+#: page_config_phones.ptl:26 page_config.ptl:86
+msgid "Phones"
+msgstr "Teléfonos"
+
+#: page_config_phones.ptl:27
+msgid "Phones and their settings"
+msgstr "Teléfonos y sus configuraciones"
+
+#: page_config.ptl:27
+msgid "Modify Asterisk configuration"
+msgstr "Modificar la configuración de Asterisk"
+
+#: page_config.ptl:42
+msgid "Configuration tips"
+msgstr "Pistas para la configuración"
+
+#: page_config.ptl:66
+msgid ""
+"You should create a user with type 'Configurator'. Without this user, "
+"everyone connecting to DeStar can configure everything."
+msgstr ""
+
+#: page_config.ptl:72
+#, python-format
+msgid ""
+"You should enable write access to the directory /etc/asterisk. Without the "
+"ability to modify the configuration files DeStar would be pretty useless. "
+"You should 'chmod g+rwx' this directory and set it's group to one of '%s'."
+msgstr ""
+
+#: page_config.ptl:78
+msgid ""
+"You should create a management API entry. Without this entry, DeStar can't "
+"control the Asterisk PBX software."
+msgstr ""
+
+#: page_config.ptl:84
+msgid ""
+"You should create a phone. Without defined phones you can't make and receive "
+"calls."
+msgstr ""
+
+#: page_config.ptl:90
+msgid ""
+"You should create a trunk (connection to a Phone company or VOIP Provider). "
+"Without a trunk you can only make calls between local phones."
+msgstr ""
+
+#: page_config.ptl:92 page_config_trunks.ptl:26
+msgid "Trunks"
+msgstr "Troncales"
+
+#: page_config.ptl:96
+#, python-format
+msgid ""
+"You should enable write access to /etc/zaptel.conf. Without write access to "
+"this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 "
+"cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set "
+"it's group to one of '%s'."
+msgstr ""
+
+#: page_config.ptl:101
+#, python-format
+msgid ""
+"You should enable write access to the %s directory. Without the ability to "
+"modify the Asternic Flash Operator Panel configuration files DeStar won't be "
+"integrated whit the panel."
+msgstr ""
+
+#: page_config.ptl:116
+msgid "Configured"
+msgstr "Configurado"
+
+#: page_config.ptl:116
+msgid "Category"
+msgstr "Categoría"
+
+#: page_config.ptl:132
+msgid "Other things you can configure:"
+msgstr "Otras cosas que puede configurar:"
+
+#: page_config.ptl:134
+msgid "You can configure the following things"
+msgstr "Usted puede configurar las siguientes cosas"
+
+#: page_config_reload.ptl:27
+msgid "Apply Changes"
+msgstr "Aplicar Cambios"
+
+#: page_config_reload.ptl:28
+msgid "Reload Asterisk/DeStar PBX"
+msgstr "Recargar la PBX Asterisk/Destar"
+
+#: page_config_reload.ptl:53
+msgid "Doing a reload, result is:"
+msgstr "Reiniciando, el resultado es:"
+
+#: page_config_trunks.ptl:27
+msgid "Telephone company lines and VoIP-Trunks"
+msgstr "Líneas de la compañía de teléfono y troncales VoIP"
+
+#: page_config_trunks.ptl:46
+msgid "You should add at least one phone to configure trunks"
+msgstr "Usted debe añadir al menos un teléfono para configurar troncales"
+
+#: page_config_up.ptl:26
+msgid "Moves a configlet one position up"
+msgstr ""
+
+#: page_config_users.ptl:26
+msgid "Users"
+msgstr "Usuarios"
+
+#: page_config_users.ptl:27
+msgid "Users and Mailboxes"
+msgstr "Usuarios y Buzónes de mensajes"
+
+#: page_config_viewconf.ptl:29
+msgid "View Configuration"
+msgstr "Mirar configuración"
+
+#: page_config_viewconf.ptl:30
+msgid "Show Asterisk configuration files"
+msgstr "Mostrar los archivos de configuración de Asterisk"
+
+#: page_config_viewconf.ptl:87
+msgid "Show"
+msgstr "Mostrar"
+
+#: page_config_viewconf.ptl:94
+msgid "Asterisk configuration files"
+msgstr "Archivos de configuración de Asterisk"
+
+#: page_config_viewconf.ptl:101
+msgid "Nothing to Show"
+msgstr "Nada para mostrar"
+
+#: page_config_viewconf.ptl:103
+msgid "There is nothing configured yet."
+msgstr "No existe configuración en el momento"
+
+#: page_debug.ptl:25
+msgid "Debug"
+msgstr "Depuración"
+
+#: page_debug.ptl:26
+msgid "Various functions to debug DeStar, mostly useful for programmers"
+msgstr ""
+
+#: page_debug_values.ptl:25
+msgid "Values"
+msgstr "Valores"
+
+#: page_debug_values.ptl:26
+msgid "Dumps all values in the HTTP request"
+msgstr ""
+
+#: page_login.ptl:27 UserPage.ptl:111
+msgid "Login"
+msgstr "Inicio de Sesión"
+
+#: page_login.ptl:28
+msgid "Login into DeStar"
+msgstr "Iniciar sesión en DeStar"
+
+#: page_login.ptl:43 UserUI.ptl:154
+msgid "User or phone name/number"
+msgstr "Nombre/Número del teléfono o usuario"
+
+#: page_login.ptl:44 UserUI.ptl:155
+msgid "Password or PIN"
+msgstr "Contraseña o PIN"
+
+#: page_login.ptl:56 UserUI.ptl:167
+msgid "Invalid username or password"
+msgstr "Nombre de usuario o Contraseña incorrectos"
+
+#: page_logout.ptl:25 Templates.ptl:227
+msgid "Logout"
+msgstr "Cerrar Sesión"
+""
+
+#: page_logout.ptl:26
+msgid "Logout and become a guest user"
+msgstr ""
+
+#: page_main.ptl:28
+msgid "Main menu"
+msgstr "Principal "
+
+#: page_main.ptl:29
+msgid "DeStar main page"
+msgstr "Página Principal de Destar"
+
+#: page_main.ptl:137
+msgid "Access Denied"
+msgstr "Acceso Denegado"
+
+#: page_main.ptl:139
+msgid "You don't have access to this page."
+msgstr "Usted no tiene acceso a esta ubicación."
+
+#: page_user_info.ptl:26
+msgid "User Info"
+msgstr "Información del Usuario"
+
+#: page_user_info.ptl:27
+msgid "Your access rights in DeStar"
+msgstr "Sus privilegios de acceso en Destar"
+
+#: page_user_info.ptl:43 page_user.ptl:40 UserUI.ptl:174
+msgid "You are now logged in as user"
+msgstr "Usted ha iniciado sesión como el usuario"
+
+#: page_user_info.ptl:48 page_user.ptl:45
+msgid "Your access level is "
+msgstr "Su nivel de acceso es "
+""
+
+#: page_user_info.ptl:53 page_user.ptl:50
+msgid "Programmer"
+msgstr "Programador"
+
+#: page_user_info.ptl:56 page_user.ptl:53
+msgid "Your account is disabled. "
+msgstr ""
+
+#: page_user_info.ptl:58 page_user.ptl:55 UserUI.ptl:181
+msgid "You are not logged in."
+msgstr "Usted no ha iniciado una sesión."
+
+#: page_user_info.ptl:60 page_user.ptl:57 UserUI.ptl:183
+msgid "You can do"
+msgstr "Usted tiene privilegios para"
+
+#: page_user_info.ptl:64 UserUI.ptl:187
+msgid "access all public accessible info pages"
+msgstr "Acceder a todas las páginas de información públicas"
+
+#: page_user_info.ptl:68 UserUI.ptl:191
+msgid "change your personal phone settings"
+msgstr "Cambiar la configuración de su teléfono personal"
+
+#: page_user_info.ptl:72 UserUI.ptl:195
+msgid "change phone settings of other people"
+msgstr "Cambiar la configuración de teléfono de otros usuarios"
+
+#: page_user_info.ptl:76 UserUI.ptl:199
+msgid "configure the PBX"
+msgstr "Configurar la PBX"
+
+#: page_user_info.ptl:80 UserUI.ptl:203
+msgid "access debug pages to help program DeStar"
+msgstr ""
+"acceder a páginas de registro o log de DeStar para ayudar con su desarrollo"
+
+#: page_user_info.ptl:83 UserUI.ptl:206
+msgid "Have fun!"
+msgstr "¡Diviértase!"
+
+#: page_user.ptl:26
+msgid "Perform tasks allowed by users"
+msgstr "Realizar tareas permitidas por el usuario"
+
+#: page_user.ptl:61
+msgid "Access all public accessible info pages"
+msgstr "Acceder a todas las páginas de información públicas"
+
+#: page_user.ptl:65
+msgid "Change your personal phone settings"
+msgstr "Cambiar la configuración de su teléfono personal"
+
+#: page_user.ptl:69
+msgid "Change phone settings of other people"
+msgstr "Cambiar la configuración de teléfono de otros usuarios"
+
+#: page_user.ptl:73
+msgid "Configure the PBX"
+msgstr "Configurar la PBX"
+
+#: page_user.ptl:77
+msgid "Access debug pages to help program DeStar"
+msgstr "Acceder a páginas de registro o log de DeStar para ayudar con su desarrollo"
+
+#: page_user_settings.ptl:27
+msgid "Phone Settings"
+msgstr "Configuración del teléfono"
+
+#: page_user_settings.ptl:28
+msgid "Set your phone settings"
+msgstr "Cambiar la configuración de su teléfono personal"
+
+#: page_user_settings.ptl:56 UserUI.ptl:43
+msgid "Enable 'do not disturb'"
+msgstr "Habilitar 'no molestar"
+
+#: page_user_settings.ptl:57 UserUI.ptl:44
+msgid "Immediate call forwarding to"
+msgstr "Redirección inmediata de llamadas a"
+
+#: page_user_settings.ptl:58 UserUI.ptl:46
+msgid "Forward call when busy/unavailable to"
+msgstr "Si está ocupado/indisponible, redireccionar a"
+
+#: page_user_settings.ptl:59
+msgid "Seconds of incoming ring time"
+msgstr "Tiempo de timbre en segundos"
+
+#: page_user_settings.ptl:61
+msgid "Voicemail pin"
+msgstr "PIN del correo de voz"
+
+#: page_user_settings.ptl:64
+msgid "Extension Password"
+msgstr "Contraseña de la extensión"
+
+#: page_user_settings.ptl:95
+msgid "Could not create destar configuration file."
+msgstr "No fue posible crear el archivo de configuración de destar"
+
+#: page_user_settings.ptl:117 page_user_state.ptl:150
+msgid "You don't have an associated phone"
+msgstr "Usted no tiene un teléfono asociado"
+
+#: page_user_state.ptl:27
+msgid "Phone State"
+msgstr "Estado del Teléfono"
+
+#: page_user_state.ptl:28
+msgid "Status of your phone"
+msgstr ""
+
+#: page_user_state.ptl:48 UserUI.ptl:75
+msgid "State"
+msgstr "Estado"
+
+#: page_user_state.ptl:57 UserUI.ptl:84
+msgid "Last updated"
+msgstr "Última Actualización"
+
+#: page_user_state.ptl:69 UserUI.ptl:96
+msgid "Registration status"
+msgstr "Estado de Registro"
+
+#: page_user_state.ptl:69 UserUI.ptl:96
+msgid "PeerStatus"
+msgstr "Estado del teléfono"
+
+#: page_user_state.ptl:75 UserUI.ptl:102
+msgid "Channel ID"
+msgstr "Identificación del Canal"
+
+#: page_user_state.ptl:75 UserUI.ptl:102
+msgid "Channel"
+msgstr "Canal"
+
+#: page_user_state.ptl:81 UserUI.ptl:108
+msgid "Called extension"
+msgstr "Extensión llamada"
+
+#: page_user_state.ptl:87 UserUI.ptl:114
+msgid "Application"
+msgstr "Aplicación"
+
+#: page_user_state.ptl:100 UserUI.ptl:127
+msgid "Caller ID"
+msgstr "Identificador de Llamante"
+
+#: page_user_state.ptl:100 UserUI.ptl:127
+msgid "Callerid"
+msgstr "Identificador de llamante"
+
+#: page_user_state.ptl:107 UserUI.ptl:134
+msgid "Other state"
+msgstr "Otro estado"
+
+#: page_user_state.ptl:118
+msgid "New Voicemail Messages"
+msgstr "Nuevos mensajes de voz"
+
+#: page_user_state.ptl:123
+msgid "Old Voicemail Messages"
+msgstr "Mensajes de voz antiguos"
+
+#: page_user_state.ptl:123
+msgid "Old"
+msgstr "Antiguo"
+
+#: Templates.ptl:248
+msgid "Error"
+msgstr "Error"
+
+#: Templates.ptl:256
+msgid "You don't have access to this page"
+msgstr "Usted no tiene acceso a esta ubicación"
+
+#: UserPage.ptl:30
+msgid "Asterisk state"
+msgstr "Estado de Asterisk"
+
+#: UserPage.ptl:33
+msgid "User info"
+msgstr "Información del Usuario"
+
+#: UserPage.ptl:38
+msgid "Phone state"
+msgstr "Estado del Teléfono"
+
+#: UserPage.ptl:40 UserPage.ptl:68
+msgid "Phone settings"
+msgstr "Configuración del teléfono"
+
+#: UserPage.ptl:74
+msgid "Phone status"
+msgstr "Estado del teléfono"
+
+#: UserPage.ptl:83
+msgid "User functions"
+msgstr "Funciones del Usuario"
+
+#: UserPage.ptl:85
+msgid "This menu will contain all sorts of phone user specific stuff:"
+msgstr "Este menú tendrá todo tipo de funciones para el usuario de teléfono:"
+
+#: UserPage.ptl:88
+msgid "Phone status (number of voicemails, call forwarding etc)"
+msgstr "Estado del teléfono (número de correos de voz, redirección de llamadas, etc)"
+
+#: UserPage.ptl:89
+msgid "Set DND (do-not-disturb)"
+msgstr "Habilitar DND (no-molestar)"
+
+#: UserPage.ptl:90
+msgid "Set CFIM (call-forwarding)"
+msgstr "Habilitar CFIM (redirección-de-llamadas)"
+
+#: UserPage.ptl:91
+msgid "Set CFBS (call-forward if busy/unavailable)"
+msgstr "Habilitar CFBS (redirigir-si-ocupado/indisponible)"
+
+#: UserPage.ptl:92
+msgid "See last n calls made"
+msgstr "Ver últimas n llamadas hechas"
+
+#: UserPage.ptl:93
+msgid "See last n calls received"
+msgstr "Ver las últimas n llamadas recibidas"
+
+#: UserPage.ptl:94
+msgid "Maintain personal phone directory"
+msgstr "Mantenimiento del directorio telefónico personal"
+
+#: UserPage.ptl:95
+msgid "Initiate call from the web"
+msgstr "Instanciar llamada desde la web"
+
+#: UserPage.ptl:96
+msgid "Maintain voice mailbox (listen, delete, forward, change texts)"
+msgstr "Mantenimiento del correo de voz"
+
+#: UserPage.ptl:137
+msgid "Logged in"
+msgstr "Sesión iniciada"
+
+#: UserPage.ptl:157
+msgid "Wrong phone id"
+msgstr "Identificador de teléfono incorrecto"
+
+#: UserUI.ptl:45
+msgid "Seconds of ring time"
+msgstr "Tiempo de timbre en segundos"
+
+#: UserUI.ptl:47
+msgid "Use voice mailbox"
+msgstr "Usar correo de voz"
+
+#: UserUI.ptl:178
+msgid "Your access level is"
+msgstr "Su nivel de acceso es"
+
+#~ msgid "Administrator login capability"
+#~ msgstr "Inicio de sesión del administrador"
+
+#~ msgid "Disable phone numbers, e.g. 0900 services"
+#~ msgstr "Restringir llamadas a ciertos números"
+
+#~ msgid "Upload MP3s with Music-On-Hold"
+#~ msgstr "Cargar MP3s para música-en-epera"
+
+#~ msgid "See made calls of all users"
+#~ msgstr "Ver todas las llamadas hechas"
+
+#~ msgid "See received calls of all users"
+#~ msgstr "Ver todas las llamadas recibidas"
+
+#~ msgid "Convert CDR (call details recordings) into Euro and Cent"
+#~ msgstr "Convertir CDR a monedas"
+
+#~ msgid "Various statistics"
+#~ msgstr "Estadísticas varias"
+
+#~ msgid "Maintain public phone directory"
+#~ msgstr "Gestionar directorio público de teléfonos"
+
+#~ msgid "Edit Telco Lines"
+#~ msgstr "Editar Líneas "
+
+#~ msgid "Action missing"
+#~ msgstr "Función aún no implementada"
+
+#~ msgid "File name missing"
+#~ msgstr "Nombre de archivo no encontrado"
+
+#~ msgid "Reloading Asterisk"
+#~ msgstr "Recargando Asterisk"
+
+#~ msgid "Reload done"
+#~ msgstr "Recarga realizada"
+
+#~ msgid "Watch output below"
+#~ msgstr "Ver salida a continuación"
+
+#~ msgid ""
+#~ "There are some config files from your previous configuration that "
+#~ "weren't\n"
+#~ "\tcreated by DeStar. Click on the links to backup them."
+#~ msgstr ""
+#~ "Hay algunos archivos de su configuración previa que no fueron creados por "
+#~ "DeStar. Haga clic en los enlaces para hacer una copia de seguridad de los "
+#~ "mismos."
+
+#~ msgid "Because of this, I did not touch any of you config files"
+#~ msgstr ""
+#~ "Por esta razón, no se hizo ningún cambio en sus archivos de configuración"
+
+#~ msgid "You should create a telco line"
+#~ msgstr "Usted debe crear una Línea de Proveedor o Telco"
+
+#~ msgid "Edit TelCo Lines"
+#~ msgstr "Editar Líneas de Proveedor"
+
+#~ msgid "Log in"
+#~ msgstr "Iniciar Sesión"
+
+#~ msgid "Request values"
+#~ msgstr "Valores de Petición"
+
+#~ msgid ""
+#~ "DeStar will allow you to configure and maintain your Asterisk PBX. "
+#~ "Currently, only the "
+#~ msgstr ""
+#~ "Destar le permitirá configurar y mantener su PBX Asterisk. Actualmente, "
+#~ "sólo la "
+
+#~ msgid ""
+#~ " is somewhat usable. Feel free to add features by submitting patches to "
+#~ "holgerschurig using-the-domain gmx point de.i"
+#~ msgstr ""
+#~ " esta implementada en un grado usable. Siéntase libre de agregar nuevas "
+#~ "funciones enviando parches a holgerschurig con el dominio gmx punto de."
+
+#~ msgid "You can get more information about DeStar at"
+#~ msgstr "Usted puede obtener más información sobre DeStar en"
+
+#~ msgid "It's home page"
+#~ msgstr "Su página web"
+
+#~ msgid "The VOIP Wiki entryfor DeStar"
+#~ msgstr "La entrada en el wiki de VoIP-info para DeStar"
+
+#~ msgid "The project page for developers on Berlios"
+#~ msgstr "LA página del proyecto para desarrolladores en BerliOS"
+
+#~ msgid "Page not found"
+#~ msgstr "Página no encontrada"
+
+#~ msgid "This page does not exist"
+#~ msgstr "Esta página no existe"
+
+#~ msgid "NOT YET WORKING"
+#~ msgstr "Aún no está implementado completamente"
+
+#~ msgid "IAX Trunk"
+#~ msgstr "Troncal IAXTEL"
+
+#~ msgid "IAX username"
+#~ msgstr "Nombre de Usuario IAX"
+
+#~ msgid "IAX password"
+#~ msgstr "Contraseña IAX"
+
+#~ msgid "Calls to IAX trunk"
+#~ msgstr "Llamadas a troncal IAX"
+
+#~ msgid "Calls to SIP trunk"
+#~ msgstr "llamadas a una troncal SIP"
+
+#~ msgid "Additional Extension"
+#~ msgstr "Extensión adicional"
+
+#~ msgid "Calls to the phone"
+#~ msgstr "Llamadas hacia el teléfono"
+
+#~ msgid "can this peer transfer natively or not ?"
+#~ msgstr "¿Este terminal puede transferir en forma nativa o no?"
