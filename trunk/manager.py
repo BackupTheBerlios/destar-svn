@@ -616,6 +616,13 @@ def setVar(family, key, val):
 	else:
 		conn.action('Command', Command='database del %s %s' % (family,key))
 
+def getVarFamily(family):
+	varlist = []
+	for s in conn.action('Command', Command='database show %s' % family):
+		if s.startswith("/%s" % family):
+			varlist.append(s[len(family)+2:])
+	return varlist
+
 def checkMailBox(ext):
 	vmstate = {}
 	for s in conn.action('MailboxCount', Mailbox=ext):

@@ -1,4 +1,8 @@
-2005-12-23
+2005-12-27
+* Added page_user_quickdiallist.ptl to show the global and private quick dial list.
+* cfg_phone_zap: Made zap group optional.
+
+2005-12-24
 * Added initial support for global and private quick dial lists.
 * page_admin_dialoutsstats.ptl: Fixed confusion between inbound and outbound.
 
