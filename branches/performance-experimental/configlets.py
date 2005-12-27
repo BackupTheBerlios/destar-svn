@@ -376,7 +376,14 @@ class Cfg(Holder):
 						self.__dict__[v.name] = v.default
 				except:
 					self.__dict__[v.name] = v.default
-
+	
+	def __getattr__(self, name):
+		self.fixup()
+		
+		if self.__dict__.has_key(name):
+			return self.__dict__[name]
+		else:
+			raise AttributeError, name
 
 	def fixup(self):
 		"""Each configlet's fixup() method get's called after the

@@ -1,3 +1,9 @@
+2005-12-26
+* Removed backend.fixupConfiglets() from backend.py
+* Added __getattr__ method to Cfg class in configlets.py
+* Now each configlet will fixup it self in a "intelligent" way each time that an attribute is needed.
+* A LOT of performance improvement.
+
 2005-12-23
 * Added initial support for global and private quick dial lists.
 * page_admin_dialoutsstats.ptl: Fixed confusion between inbound and outbound.

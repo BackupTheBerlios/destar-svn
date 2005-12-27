@@ -64,9 +64,7 @@ def loadPythonConfig():
 	except NameError:
 		pass
 
-	fixupConfiglets()
-
-	__loaded = True
+__loaded = True
 
 
 
@@ -531,23 +529,6 @@ def moveConfigletDown(id):
 		id2 = id2 + 1
 	return None
 
-
-
-def fixupConfiglets():
-	"""Calls the fixup() method for all configlets. This should be done
-	whenever the configlets get loaded, added, deleted or modified. This
-	way, configlets can react on the presence of other configlets.
-
-	Example: if a trunk with DID (direct inward dialling) is present,
-	then the DID settings in the phone configuration configlets can be
-	unhidden."""
-
-
-	for obj in configlets.config_entries:
-		obj.fixup()
-	
-
-
 def countConfiglets(groupName=None, clazz=None):
 	"Returns the count of all configlets in a given 'group'."
 
@@ -625,9 +606,6 @@ def getConfiglet(id=None, name=None):
 # Configlets can't import the Backend (because the Backend loads/imports
 # the configlets. So we make this method manually known in the configlets module.
 configlets.getConfiglet = getConfiglet
-
-
-
 
 def getConfig(clazz, name, default=None):
 	"""This searches for the first found configlet with the class
