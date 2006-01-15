@@ -1,3 +1,6 @@
+2006-01-14
+* cfg_trunk_zappri.py: Fixed wrong 'channels' instead of 'channel'.
+
 2005-12-27
 * Added page_user_quickdiallist.ptl to show the global and private quick dial list.
 * cfg_phone_zap: Made zap group optional.

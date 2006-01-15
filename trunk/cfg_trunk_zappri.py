@@ -135,7 +135,7 @@ class CfgTrunkZapPRI(CfgTrunk):
 		if self.group:
 			self.dial = "Zap/g%s/${ARG1}" % (self.group)
 		else:
-			self.dial = "Zap/%s/${ARG1}" % (self.channels)
+			self.dial = "Zap/%s/${ARG1}" % (self.channel)
 		
 		#What to do with incoming calls
 		self.createIncomingContext()
