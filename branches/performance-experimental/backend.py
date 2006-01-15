@@ -64,7 +64,7 @@ def loadPythonConfig():
 	except NameError:
 		pass
 
-__loaded = True
+	__loaded = True
 
 
 

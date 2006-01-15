@@ -1,3 +1,6 @@
+2006-01-14
+* backend.py: Fixed missing identation.
+
 2005-12-26
 * Removed backend.fixupConfiglets() from backend.py
 * Added __getattr__ method to Cfg class in configlets.py
