@@ -542,7 +542,7 @@ def getConfiglets(group=None, name=None):
 	if group is not None: 
 		result += configlets.configlet_tree.getConfigletsByGroup(group)
 	if name is not None:
-		result += configlets.configlet_tree.getConfigletsByName(group)
+		result += configlets.configlet_tree.getConfigletsByName(name)
 	return result
 
 

@@ -340,6 +340,7 @@ class ConfigletTree:
 	#TODO: Make this as fast as getConfigletsByGroup
 	def getConfigletsByName(self, name):
 		result = []
+		print '******', name
 		for obj in self:
 			if obj.shortName == name or obj.__class__.__name__ == name:
 				result.append(obj)
@@ -357,8 +358,11 @@ class ConfigletTree:
 		
 	def getConfiglet(self, _id):
 		for obj in self:
-			if obj._id == _id:
-				return obj
+			try:
+				if obj._id == int(_id):
+					return obj
+			except:
+				pass
 		return None
 		
 	def getConfigletByName(self, name):
