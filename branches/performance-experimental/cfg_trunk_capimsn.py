@@ -43,7 +43,7 @@ class CfgTrunkCapiMSN(CfgTrunk):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		for obj in configlets.config_entries:
+		for obj in configlets.configlet_tree:
 			if obj.__class__.__name__ == 'CfgTrunkCapi':
 				return True
 		return False

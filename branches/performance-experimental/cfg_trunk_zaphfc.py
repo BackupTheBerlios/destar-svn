@@ -41,11 +41,6 @@ class CfgTrunkZapHFC(CfgTrunk):
 		CfgTrunk.fixup(self)
 		useContext("in-pstn")
 
-		#import configlets
-		#for obj in configlets.config_entries:
-		#	if isinstance(obj, configlets.CfgPhone):
-		#		print obj.__class__.__name__
-
 
 	def createAsteriskConfig(self):
 		needModule("chan_zap")
@@ -83,7 +78,7 @@ class CfgTrunkZapHFC(CfgTrunk):
 			# in the [in-pstn] context.
 			c = AstConf("extensions.conf")
 			c.setSection("in-pstn")
-			for p in config_entries:
+			for p in configlet_tree:
 				if not isinstance(p, Phone): continue
 				if not p.did: continue
 				#c.appendExten("%s%s" % (self.msn,p.ext), "Macro(exten-std,SIP/%s)" % p.name)

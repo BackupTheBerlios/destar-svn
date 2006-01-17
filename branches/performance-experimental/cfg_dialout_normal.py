@@ -44,16 +44,15 @@ class CfgDialoutNormal(CfgDialout):
 		Cfg.fixup(self)
 		import configlets
 		trunks=False
-		for obj in configlets.config_entries:
-			if obj.groupName == 'Trunks':
-				trunks=True
-				alreadyappended = False
-				for v in self.variables:
-					if v.name == "trunk_"+obj.name:
-						alreadyappended = True
-				if not alreadyappended:
-					self.variables.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), optional=True, len=10, default=0))
+		for obj in configlets.configlet_tree['Trunks']:
+			trunks=True
+			alreadyappended = False
+			for v in self.variables:
+				if v.name == "trunk_"+obj.name:
+					alreadyappended = True
+			if not alreadyappended:
+				self.variables.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+				self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), optional=True, len=10, default=0))
 		if trunks:
 			for v in self.variables:	
 				if v.name == "Trunks" or v.name=="defaulttrunk":
@@ -64,11 +63,7 @@ class CfgDialoutNormal(CfgDialout):
 
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
-		import configlets
-		for obj in configlets.config_entries:
-			if obj.groupName == 'Trunks':
-				return True
-		return False
+		return len(configlet_tree['Trunks']) > 0
 	isAddable = classmethod(isAddable)
 
 
@@ -97,22 +92,21 @@ class CfgDialoutNormal(CfgDialout):
 		c.appendExten("s",'SetVar(options=TtL(%d:10000))' % self.maxtime)
 		#TODO: add this trunks sorted by price and with a default one.
 		import configlets
-		for obj in configlets.config_entries:
-			if obj.groupName == 'Trunks':
-				try:
-					if self.__getitem__("trunk_"+obj.name) and not self.__getitem__("trunk_%s_price" % obj.name):
-						c.appendExten("s","ResetCDR")	
-						c.appendExten("s","AbsoluteTimeout(${timeout})")
-						c.appendExten("s","SetAccount(0)")	
-						c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
+		for obj in configlets.configlet_tree['Trunks']:
+			try:
+				if self.__getitem__("trunk_"+obj.name) and not self.__getitem__("trunk_%s_price" % obj.name):
+					c.appendExten("s","ResetCDR")	
+					c.appendExten("s","AbsoluteTimeout(${timeout})")
+					c.appendExten("s","SetAccount(0)")	
+					c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 
-					if self.__getitem__("trunk_"+obj.name) and self.__getitem__("trunk_%s_price" % obj.name):
-						c.appendExten("s","ResetCDR")	
-						c.appendExten("s","AbsoluteTimeout(${timeout})")
-						c.appendExten("s","SetAccount(%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
-						c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
-				except KeyError:
-					pass
+				if self.__getitem__("trunk_"+obj.name) and self.__getitem__("trunk_%s_price" % obj.name):
+					c.appendExten("s","ResetCDR")	
+					c.appendExten("s","AbsoluteTimeout(${timeout})")
+					c.appendExten("s","SetAccount(%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
+					c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
+			except KeyError:
+				pass
 		c.appendExten("s","Congestion(5)")
 		c.appendExten("s","Goto(9)")
 		c.appendExten("T","ResetCDR(w)")

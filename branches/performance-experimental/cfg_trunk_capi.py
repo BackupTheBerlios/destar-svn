@@ -66,7 +66,7 @@ class CfgTrunkCapi(CfgTrunk):
 		# BUG: it does somehow not work to simply write 'for msn in config_entries',
                 # despite the "from configlets import *" above
 		import configlets
-		for msn in configlets.config_entries:
+		for msn in configlets.configlet_tree:
 			if msn.__class__.__name__ != "CfgTrunkCapiMSN": continue
 			msn_arr.append(msn.msn)
 		if msn_arr:

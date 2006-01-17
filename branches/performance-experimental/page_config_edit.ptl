@@ -35,6 +35,7 @@ def _q_access(request):
 
 
 def _q_lookup(request, component):
+	print '****', component
 	obj = backend.getConfiglet(component)
 	if obj:
 		return configletsForm(request, obj, _(obj.shortName), exitPath = "../" + obj.groupName.lower())

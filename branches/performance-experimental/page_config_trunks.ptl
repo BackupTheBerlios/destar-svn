@@ -39,7 +39,7 @@ def _q_index [plain] (request):
 	header(_q_desc)
 	import configlets
 	phones = False
-	for obj in configlets.config_entries:
+	for obj in configlets.configlet_tree:
 		if obj.groupName == 'Phones':
 			phones = True
 	if not phones:

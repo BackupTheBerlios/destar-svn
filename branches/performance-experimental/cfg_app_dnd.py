@@ -36,7 +36,7 @@ class CfgAppDND(CfgApp):
 	
 	def checkConfig(self):
 		import configlets
-		for o in configlets.config_entries:
+		for o in configlets.configlet_tree:
 			if o==self: continue
 			try:
 				if o.ext == self.set or o.ext == self.unset:

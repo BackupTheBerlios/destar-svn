@@ -146,7 +146,7 @@ class AsteriskConfigFile:
 				self.append("%s=no" % name)
 		else:
 			print "invalid type ", val
-			raise Error
+			raise Exception
 
 
 asterisk_configfiles = []
@@ -267,6 +267,112 @@ def useContext(ctx):
 
 #########################################################################
 
+class ConfigletTree:
+	
+	def __init__(self):
+		self.groups = {}
+		self.name = ''
+	
+	def __getitem__(self, key):
+		if self.groups.has_key(key):
+			return self.groups[key]
+		else: return []
+
+	def __setitem__(self, key, val):
+		self.groups[key] = val
+		
+	def __iter__(self):
+		for group in self.groups.values():
+			for element in group:
+				yield element
+				
+	def __str__(self):
+		stringname = ''
+		for element in self:
+			stringname += str(element) + ', '
+		return stringname[:-2]
+	
+	def __len__(self):
+		length = 0
+		for i in self.groups.values():
+			length += len(i)
+		return length
+			
+	def updateConfiglet(self, obj):
+		configlet_list = self.groups[obj.groupName]
+		
+		
+		for i in range(len(configlet_list)):
+			if configlet_list[i]._id == obj._id:
+				configlet_list[i] = obj
+				
+	def deleteConfiglet(self, _id):
+		for group in self.groups.values():
+			for i in range(len(group)):
+				if group[i]._id == _id:
+					del group[i]
+					
+	def moveConfigletUp(_id):
+		obj = self.getConfiglet(_id)
+		configlet_list = self.groups[obj.groupName]
+		
+		for i in range(len(configlet_list)):
+			if configlet_list[i]._id == obj._id and i > 0:
+				configlet_list[i] = configlet_list[i-1]
+				configlet_list[i-1] = obj
+				return obj
+		return None
+		
+	def moveConfigletDown(_id):
+		obj = self.getConfiglet(_id)
+		configlet_list = self.groups[obj.groupName]
+		
+		for i in range(len(configlet_list)):
+			if configlet_list[i]._id == obj._id and i < (len(configlet_list) -1):
+				configlet_list[i] = configlet_list[i+1]
+				configlet_list[i+1] = obj
+				return obj
+		return None
+	
+	def getConfigletsByGroup(self, groupName):
+		return self[groupName]
+	
+	#TODO: Make this as fast as getConfigletsByGroup
+	def getConfigletsByName(self, name):
+		result = []
+		for obj in self:
+			if obj.shortName == name or obj.__class__.__name__ == name:
+				result.append(obj)
+		return result
+
+	def getConfigletsByClass(self, _class):
+		result = []
+		for obj in self:
+			if isinstance(obj, _class):
+				result.append(obj)
+		return result
+
+	def empty(self):
+		return len(self)==0
+		
+	def getConfiglet(self, _id):
+		for obj in self:
+			if obj._id == _id:
+				return obj
+		return None
+		
+	def getConfigletByName(self, name):
+		for obj in self:
+			if obj.name == name:
+				return obj
+		return None
+		
+	def addConfiglet(self, configlet):
+		if not self.groups.has_key(configlet.groupName):
+			self.groups[configlet.groupName] = list()
+		self.groups[configlet.groupName].append(configlet)
+	
+
 class Holder(object):
 	"""
 	This is a simple wrapper class so that you can write
@@ -324,7 +430,7 @@ class VarType(Holder):
 
 
 
-config_entries = []
+configlet_tree = ConfigletTree()
 
 class Cfg(Holder):
 	"""Base class for all configlets.
@@ -349,16 +455,16 @@ class Cfg(Holder):
 
 	def __init__(self,autoAdd=True,**kw):
 		"""Stores values from '*kw' into self.__dict__ and add the
-		newly instantiated object into configlets.config_entries if
+		newly instantiated object into configlets.configlet_tree if
 		'autoAdd' says so."""
 
 		Holder.__init__(self,**kw)
 
 		# Store the object into global array
-		global config_entries
+		global configlet_tree
 		if autoAdd:
-			self._id = len(config_entries)
-			config_entries.append(self)
+			self._id = len(configlet_tree)
+			configlet_tree.addConfiglet(self)
 
 		for v in self.variables:
 			# Labels don't have values. We set 'optional' to True
@@ -455,7 +561,7 @@ class Cfg(Holder):
 
 		# Make sure we don't add two thingies with the same extension
 		if self.__dict__.has_key('ext'):
-			for o in config_entries:
+			for o in configlet_tree:
 				if o==self: continue
 				try:
 					if o.ext == self.ext:
@@ -467,7 +573,7 @@ class Cfg(Holder):
 		if self.__dict__.has_key('name'):
 			if self.name.find("-") > 1 or self.name.find(" ") > 1:
 				return ("name", _("Name should not contain '-' or spaces"))
-			for o in config_entries:
+			for o in configlet_tree:
 				if o==self: continue
 				try:
 					if o.name == self.name:
@@ -533,7 +639,7 @@ def getChoice(clazz):
 	Here we actually use a trick. In the configlets, the variables[]
 	get's build once at configlets load-time. While the configlets are
 	in the middle of being loaded, you can't really iterate in
-	configlets.config_entries to get a list of, say, all Phones. So this
+	configlets.configlet_tree to get a list of, say, all Phones. So this
 	iteration needs to be postponed. We do this with a lambda function.
 
 	This getChoice() uses __getChoice(), which is not defined here in
@@ -579,18 +685,18 @@ class CfgOptSingle(CfgOpt):
 	def isAddable(self, clazz=None):
 		"""Allow Options to be added exactly once. We'll enforce this
 		by looking if the current class is already contained in
-		config_entries[].
+		configlet_tree.
 
 		If  a child class, e.g.  CfgOptZapAudio.isAddable(), wants
 		to call us, then 'self' is no longer CfgOptZapAudio, but it
 		is CfgOptSingle. This is because of the classMethod
 		attribute of isAddable. So we have an optional parameter
 		'clazz' where the child class can tell us which class should
-		be unique in the config_entries."""
+		be unique in the configlet_tree."""
 
 		if not clazz:
 			clazz = self
-		for o in config_entries:
+		for o in configlet_tree:
 			#print o.__class__, clazz
 			if o.__class__ == clazz: return False
 		return True
@@ -622,13 +728,13 @@ class CfgTrunk(Cfg):
 	def isAddable(self):
 		"We can only add this object if we have at least one other phone defined."
 
-		# BUG: it does somehow not work to simply write for obj in config_entries,
+		# BUG: it does somehow not work to simply write for obj in configlet_tree,
 		# despite the "from configlets import *" above
-		global config_entries
-		for obj in config_entries:
-			if obj.groupName == 'Phones':
-				return True
-		return False
+		global configlet_tree
+		if len(configlet_tree['Phones']) > 0:
+			return True
+		else:
+			return False
 	isAddable = classmethod(isAddable)
 	# BUG: if the choosed phone is deleted, we have a problem
 
@@ -691,25 +797,26 @@ class CfgPhone(Cfg):
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
 
-		global config_entries
+		global configlet_tree
 		dialouts=False
-		for obj in config_entries:
-			if obj.groupName == 'Dialout':
-				dialouts=True
-				alreadyappended = False
-				for v in self.variables:	
-					if v.name == "dialout_"+obj.name:
-						alreadyappended = True
-				if not alreadyappended:
-					self.variables.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-					self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
+		
+		for obj in configlet_tree['Dialout']:
+			dialouts=True
+			alreadyappended = False
+			for v in self.variables:	
+				if v.name == "dialout_"+obj.name:
+					alreadyappended = True
+			if not alreadyappended:
+				self.variables.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+				self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
+				
 		if dialouts:
 			for v in self.variables:
 				if v.name == "Dialout" or v.name=="timeout":
 					v.hide = False
 	
 		queues=False
-		for obj in config_entries:
+		for obj in configlet_tree:
 			if obj.__class__.__name__ == 'CfgPhoneQueue':
 				queues=True
 		if queues:
@@ -775,8 +882,8 @@ class CfgPhone(Cfg):
 			timeoutvalue = not self.timeout and "0" or "1"
 		except AttributeError:
 			timeoutvalue=0
-		global config_entries
-		for obj in config_entries:
+		global configlet_tree
+		for obj in configlet_tree:
 			if obj.__class__.__name__ == 'CfgDialoutNormal':
 				try:
 					if self.__getitem__("dialout_"+obj.name):

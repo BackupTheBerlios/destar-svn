@@ -48,7 +48,7 @@ def loadPythonConfig():
 	global __loaded
 
 	# Forget all config options
-	configlets.config_entries = []
+	configlets.configlet_tree = configlets.ConfigletTree()
 
 	# Try to read destar_cfg.py from Asterisk directory
 	# if this doesn't work, read it from current directory
@@ -81,7 +81,7 @@ def createPythonConfig(f=None):
 	"""
 
 
-	if not configlets.config_entries:
+	if configlets.configlet_tree.empty():
 		return
 
 	if not f:
@@ -89,7 +89,7 @@ def createPythonConfig(f=None):
 
 	f.write("# -*- coding: iso-latin-1 -*-\n")
 	f.write("# You should execfile() this config\n\n")
-	for c in configlets.config_entries:
+	for c in configlets.configlet_tree:
 		a = c.createPythonConfig()
 		for s in a:
 			f.write("%s\n" % s)
@@ -327,15 +327,15 @@ def createAsteriskConfig():
 
 	createPythonConfig()
 	
-	if not configlets.config_entries:
+	if configlets.configlet_tree.empty():
 		return [] 
 	initializeAsteriskConfig()
 	# First write the options
-	for c in configlets.config_entries:
+	for c in configlets.configlet_tree:
 		if isinstance(c, CfgOpt):
 			c.createAsteriskConfig()
 	# Then the rest
-	for c in configlets.config_entries:
+	for c in configlets.configlet_tree:
 		if not isinstance(c, CfgOpt):
 			c.createAsteriskConfig()
 
@@ -462,11 +462,13 @@ def configletsGrouped():
 # Some of them are fairly simply, but are here to have very little backend
 # functionality in Config.ptl or other frontend parts.
 #
+# **** TODO: This functions are no longer necessary, and now are used as stub
+#            only
 
 
 def newConfiglet(clazz):
 	"""Create a new configlet with the class name 'clazz'. This new
-	configlet is not added configlist.config_entries, you have to do
+	configlet is not added configlist.configlet_tree, you have to do
 	this manually with addConfiglet()."""
 
 	return globals()[clazz](autoAdd=False)
@@ -475,26 +477,26 @@ def newConfiglet(clazz):
 
 
 def addConfiglet(obj):
-	"""Adds the configlet 'obj' to configlets.config_entries."""
+	"""Adds the configlet 'obj' to configlets.configlet_tree."""
 
 
-	configlets.config_entries.append(obj)
+	configlets.configlet_tree.addConfiglet(obj)
 
 
 
 def updateConfiglet(obj):
-	"""Updates the configlet 'obj' in configlets.config_entries."""
+	"""Updates the configlet 'obj' in configlets.configlet_tree."""
 
 
-	configlets.config_entries[int(obj._id)] = obj
+	configlets.configlet_tree.updateConfiglet(obj)
 
 
 
 def deleteConfiglet(id):
-	"""Deletes the configlet with index 'id' from configlets.config_entries."""
+	"""Deletes the configlet with index 'id' from configlets.configlet_tree."""
 
 
-	del configlets.config_entries[int(id)]
+	configlets.configlet_tree.deleteConfiglet(int(id))
 
 
 
@@ -502,49 +504,25 @@ def deleteConfiglet(id):
 def moveConfigletUp(id):
 	if not __loaded: loadPythonConfig()
 
-	id = int(id)
-	obj = configlets.config_entries[id]
-	id2 = id-1
-	while id2 >= 0:
-		if configlets.config_entries[id2].groupName==obj.groupName:
-			configlets.config_entries[id] = configlets.config_entries[id2]
-			configlets.config_entries[id2] = obj
-			return obj
-		id2 = id2 - 1
-	return None
+	return confglets.configlet_tree.moveConfigletUp(id)
 
 
 
 def moveConfigletDown(id):
 	if not __loaded: loadPythonConfig()
 
-	id = int(id)
-	obj = configlets.config_entries[id]
-	id2 = id+1
-	while id2 < len(configlets.config_entries):
-		if configlets.config_entries[id2].groupName==obj.groupName:
-			configlets.config_entries[id] = configlets.config_entries[id2]
-			configlets.config_entries[id2] = obj
-			return obj
-		id2 = id2 + 1
-	return None
+	return confglets.configlet_tree.moveConfigletDown(id)
 
 def countConfiglets(groupName=None, clazz=None):
 	"Returns the count of all configlets in a given 'group'."
 
 
 	if not __loaded: loadPythonConfig()
-	n = 0
-	for s in configlets.config_entries:
-		#print s.groupName
-		if groupName and s.groupName == groupName:
-			n = n + 1
-		elif clazz and s.__class__.__name__ == clazz:
-			n = n + 1
-	return n
-
-
-
+	if groupName is not None:
+		return len(configlets.configlet_tree[groupName])
+	if clazz is not None:
+		return len(configlets.configlet_tree.getConfigletsByName(clazz))
+	return len(configlets.configlet_tree)
 
 def getConfiglets(group=None, name=None):
 	"""Return a list of all configlets in a given 'group', with a given
@@ -558,21 +536,20 @@ def getConfiglets(group=None, name=None):
 
 
 	if not __loaded: loadPythonConfig()
-	a = []
-	n = 0
-	for obj in configlets.config_entries:
-		obj._id = n
-		n = n + 1
-		if obj.groupName == group:
-			a.append(obj)
-		if obj.shortName==name or obj.__class__.__name__==name:
-			a.append(obj)
-	return a
+	
+	result = []
+	
+	if group is not None: 
+		result += configlets.configlet_tree.getConfigletsByGroup(group)
+	if name is not None:
+		result += configlets.configlet_tree.getConfigletsByName(group)
+	return result
 
 
 
+# TODO: examine the real utility of this three next functions
 
-def getConfiglet(id=None, name=None):
+def getConfiglet(_id=None, name=None):
 	"""This returns a configlet by the 'id'. The id is not set
 	in stone, but is only valid from one getConfiglets() call
 	to the next."""
@@ -580,56 +557,42 @@ def getConfiglet(id=None, name=None):
 
 	if not __loaded: loadPythonConfig()
 
-	if name:
-		n = 0
-		for obj in configlets.config_entries:
-			try:
-				if obj.name == name:
-					obj._id = n
-					return obj
-			except AttributeError:
-				pass
-			n = n + 1
-		return None
+	if name is not None:
+		return configlets.configlet_tree.getConfigletByName(name)
+	if _id is not None:
+		return configlets.configlet_tree.getConfiglet(_id)
 
-	# If we have no name and no id, we can't do better:
-	if id==None:
-		return None
-
-	try:
-		obj = configlets.config_entries[int(id)]
-		obj._id = id
-		return obj
-	except:
-		return None
 
 # Configlets can't import the Backend (because the Backend loads/imports
 # the configlets. So we make this method manually known in the configlets module.
 configlets.getConfiglet = getConfiglet
 
+
+# FIXME: What an ugly function!!!
 def getConfig(clazz, name, default=None):
 	"""This searches for the first found configlet with the class
 	'clazz'. If found, it looks if this configlet has the attribute name
 	and returns it value or some default."""
 
-	for obj in configlets.config_entries:
-		if obj.__class__.__name__==clazz:
-			return getattr(obj, name, default)
+	obj = configlets.configlet_tree.getConfigletsByName(clazz)
+	if obj is not None and len(obj) > 0:
+		obj = obj[0]
+		return getattr(obj, name, default)
 	return default
+
 # Configlets can't import the Backend (because the Backend loads/imports
 # the configlets. So we make this method manually known in the configlets module.
 configlets.getConfig = getConfig
 
-
-
-
+# FIXME: here is a mix of backend and frontend stuff, needs to be refactored
+# FIXME: this is an ugly function too
 def getChoice(clazz, key='name',val='name'):
 	"""This is used to generate a list of tuples which we later use
 	in the select widgets of type "choice" or "mchoice".
 
 	'clazz' is the classname the configlet must have."""
 
-
+	# TODO: this sould be changed for something like CheckConfig
 	if not __loaded:
 		loadPythonConfig()
 	a = []
@@ -638,13 +601,13 @@ def getChoice(clazz, key='name',val='name'):
 		obj2 = globals()[clazz]
 	except KeyError:
 		return a
-	for obj in configlets.config_entries:
-		obj._id = n
-		n = n + 1
-		if isinstance(obj, obj2):
-			a.append( (obj.__dict__[val], obj.__dict__[key]) )
+
+	for obj in configlets.configlet_tree.getConfigletsByClass(obj2):
+		a.append( (obj.__dict__[val], obj.__dict__[key]) )
+		
 	if a == [] :
 		a.append( ('','') )
+		
 	return a
 
 configlets.__getChoice = getChoice
@@ -686,7 +649,7 @@ def determineStateOfPhones():
 
 	phones = []
 	other  = []
-	for p in configlets.config_entries:
+	for p in configlets.configlet_tree:
 		try:
 			chan = p.channelString()
 		except AttributeError:
