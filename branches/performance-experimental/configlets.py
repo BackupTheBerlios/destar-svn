@@ -311,8 +311,9 @@ class ConfigletTree:
 			for i in range(len(group)):
 				if group[i]._id == _id:
 					del group[i]
+					return
 					
-	def moveConfigletUp(_id):
+	def moveConfigletUp(self, _id):
 		obj = self.getConfiglet(_id)
 		configlet_list = self.groups[obj.groupName]
 		
@@ -323,7 +324,7 @@ class ConfigletTree:
 				return obj
 		return None
 		
-	def moveConfigletDown(_id):
+	def moveConfigletDown(self, _id):
 		obj = self.getConfiglet(_id)
 		configlet_list = self.groups[obj.groupName]
 		
@@ -340,7 +341,6 @@ class ConfigletTree:
 	#TODO: Make this as fast as getConfigletsByGroup
 	def getConfigletsByName(self, name):
 		result = []
-		print '******', name
 		for obj in self:
 			if obj.shortName == name or obj.__class__.__name__ == name:
 				result.append(obj)

@@ -1,4 +1,7 @@
 2006-01-16
+* Various bug fixes
+
+2006-01-16
 * configlets.py: A tree is now used to store configlets instead the old plain list. The class ConfigletTree is used for that purpose. Tree's branches represent groups.
 * backend.py: All the old config_entries references has been replaced by references to the new tree, configlet_tree. In the future many of this functions could be deleted, some are still in the code only as stub
 * All files with references to the config_entries list has been changed.

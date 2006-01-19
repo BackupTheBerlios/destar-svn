@@ -91,7 +91,6 @@ class DeStarPublisher(Publisher):
 				session.user  = "programmer"
 				session.level = 4
 			else:
-				print users
 				for user in users:
 					if user.pc == ip:
 						session.user = user.name

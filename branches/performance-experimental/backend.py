@@ -84,13 +84,14 @@ def createPythonConfig(f=None):
 	if configlets.configlet_tree.empty():
 		return
 
-	if not f:
+	if f is None:
 		f = open(os.path.join(configlets.CONF_DIR,DESTAR_CFG),"w")
 
 	f.write("# -*- coding: iso-latin-1 -*-\n")
 	f.write("# You should execfile() this config\n\n")
 	for c in configlets.configlet_tree:
 		a = c.createPythonConfig()
+		print a
 		for s in a:
 			f.write("%s\n" % s)
 
@@ -504,14 +505,14 @@ def deleteConfiglet(id):
 def moveConfigletUp(id):
 	if not __loaded: loadPythonConfig()
 
-	return confglets.configlet_tree.moveConfigletUp(id)
+	return configlets.configlet_tree.moveConfigletUp(id)
 
 
 
 def moveConfigletDown(id):
 	if not __loaded: loadPythonConfig()
 
-	return confglets.configlet_tree.moveConfigletDown(id)
+	return configlets.configlet_tree.moveConfigletDown(id)
 
 def countConfiglets(groupName=None, clazz=None):
 	"Returns the count of all configlets in a given 'group'."
