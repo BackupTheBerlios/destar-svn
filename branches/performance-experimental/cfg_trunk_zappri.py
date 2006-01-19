@@ -40,7 +40,7 @@ class CfgTrunkZapPRI(CfgTrunk):
 					('ni1', 'Old National ISDN 1')
 					],
 				default="euroisdn"),
-		VarType("channel",    title=_("Channels"), hint=_("i.e. 1-15,17-31"), type="string", len=20),
+		VarType("channels",    title=_("Channels"), hint=_("i.e. 1-15,17-31"), type="string", len=20),
 		VarType("group",      title=_("Callout group"), type="string", optional=True),
 
 		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
@@ -128,7 +128,7 @@ class CfgTrunkZapPRI(CfgTrunk):
 		c.appendValue(self, "switchtype")
 		c.appendValue(self, "rxgain")
 		c.appendValue(self, "txgain")
-		c.appendValue(self, "channel")
+		c.appendValue(self, "channels")
 		c.append("")
 
 		#Dial part to use on dialout macro

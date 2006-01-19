@@ -1,4 +1,7 @@
 2006-01-16
+* cfg_trunk_zappri.py: Changed channel attribute for channels.
+
+2006-01-16
 * Various bug fixes
 
 2006-01-16

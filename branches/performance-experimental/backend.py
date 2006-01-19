@@ -91,7 +91,6 @@ def createPythonConfig(f=None):
 	f.write("# You should execfile() this config\n\n")
 	for c in configlets.configlet_tree:
 		a = c.createPythonConfig()
-		print a
 		for s in a:
 			f.write("%s\n" % s)
 
