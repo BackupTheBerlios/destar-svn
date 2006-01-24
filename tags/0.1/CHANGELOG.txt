@@ -1,3 +1,10 @@
+2005-12-19
+*backend.py: fixed bug on CFIM/CFBS, still needs more testing.
+
+2005-12-17
+* Added a title for new objects in each configlet to make a little 
+  improvement in i18n.
+
 2005-12-15
 *configlets: fixed Call Forwarding so an extension can only forward to the extensions it can call itself.
 *cfg_phone_zap: The default group was 1 :s.
