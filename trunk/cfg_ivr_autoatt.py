@@ -75,7 +75,7 @@ class CfgIVRAutoatt(CfgIVR):
 			if self.times:
 				times=self.times.split(',')
 				for t in times:
-					s.appendExten("s","GotoIf(%s?%s,s,1)" % (t,self.ivrtime))
+					s.appendExten("s","GotoIfTime(%s?%s,s,1)" % (t,self.ivrtime))
 		if self.timeout:
 			s.appendExten("s","Absolutetimeout(%s)" % self.timeout)
 		if self.moh:
