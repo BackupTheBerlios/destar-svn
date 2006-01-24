@@ -27,10 +27,10 @@ class CfgPhoneZap(CfgPhone):
 	shortName = _("Normal ZAP phone")
 	variables = [
 		VarType("name",       title=_("Name"), len=35),
-		VarType("channel",    title=_("Zaptel channel number"), type="string", len=5),
+		VarType("channels",    title=_("Zaptel channel number"), type="string", len=5),
 		VarType("sigtype",    title=_("Signalling type"), type="choice",
 	                              options=[('ls','loopstart'),('ks', 'kewlstart')]),
-		VarType("group",      title=_("Group"), type="int", default=1),
+		VarType("group",      title=_("Group"), type="int", default=1, optional=True),
 		VarType("ext",        title=_("Extension"), optional=True, len=6),
 		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
 
@@ -73,16 +73,17 @@ class CfgPhoneZap(CfgPhone):
 			c.append('callerid=%s' % self.calleridnum)
 		c.append("context=out-%s" % self.name)
 
-		c.appendValue(self, "group")
+		if self.group:
+			c.appendValue(self, "group")
 		c.append("txgain=0.0")
 		c.append("rxgain=0.0")
-		c.append("channel=%s" % self.channel)
+		c.append("channel=%s" % self.channels)
 		c.append("")
 
 		c = AstConf("zaptel.conf")
 		c.setSection("")
 		c.destar_comment = False
-		c.append("fxo%s=%s" % (self.sigtype, self.channel))
+		c.append("fxo%s=%s" % (self.sigtype, self.channels))
 		c.append("")
 
 		if self.enablecallgroup:
@@ -95,13 +96,13 @@ class CfgPhoneZap(CfgPhone):
 		self.createPanelConfig()
 
 	def channelString(self):
-		return "%s/%s" % (self.technology, self.channel)
+		return "%s/%s" % (self.technology, self.channels)
 
 
 	def createDialEntry(self, extensions, ext):
 		ret = extensions.appendExten(ext, "Macro(dial-std-exten,%s/%s,%s,%d)" % (
 			self.technology,
-			self.channel,
+			self.channels,
 			"phones",
 			int(self.usevm))
 		      )
