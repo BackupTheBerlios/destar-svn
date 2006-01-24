@@ -28,7 +28,7 @@ class CfgTrunkZap(CfgTrunk):
 	newObjectTitle = _("New standard ZAP trunk")
 	variables = [
 		VarType("name",       title=_("Name"), len=35),
-		VarType("channel",    title=_("Zaptel channel number"), type="string", len=5),
+		VarType("channels",    title=_("Zaptel channel number"), type="string", len=5),
 		VarType("signalling", title=_("Signalling type"), type="choice",
 		                      options=[('fxs_ls','loopstart'),('fxs_ks', 'kewlstart')]),
 		VarType("group",      title=_("Callout group"), type="int", default=1, optional=True),
@@ -70,7 +70,7 @@ class CfgTrunkZap(CfgTrunk):
 		c = AstConf("zaptel.conf")
 		c.setSection("")
 		c.destar_comment = False
-		c.append("fxs%s=%s" % (self.signalling[4:], self.channel))
+		c.append("fxs%s=%s" % (self.signalling[4:], self.channels))
 		c.append("")
 
 		# Create config for chan_zap:
@@ -84,14 +84,14 @@ class CfgTrunkZap(CfgTrunk):
 		c.appendValue(self, "txgain")
 		if self.group:
 			c.appendValue(self, "group")
-		c.appendValue(self, "channel")
+		c.append("channel=%s" % self.channels)
 		c.append("")
 
 		#Dial part to use on dialout macro
 		if self.group:
 			self.dial = "Zap/g%d/${ARG1}" % (self.group)
 		else:
-			self.dial = "Zap/%s/${ARG1}" % (self.channel)
+			self.dial = "Zap/%s/${ARG1}" % (self.channels)
 		
 		#What to do with incoming calls
 		self.createIncomingContext()

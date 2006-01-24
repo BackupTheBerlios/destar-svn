@@ -128,7 +128,7 @@ class CfgTrunkZapPRI(CfgTrunk):
 		c.appendValue(self, "switchtype")
 		c.appendValue(self, "rxgain")
 		c.appendValue(self, "txgain")
-		c.appendValue(self, "channels")
+		c.append("channel=%s" % self.channels)
 		c.append("")
 
 		#Dial part to use on dialout macro
