@@ -31,7 +31,8 @@ class CfgDialoutNormal(CfgDialout):
 	variables = [
 		VarType("name",   title=_("Name"), len=15),
 		VarType("pattern", title=_("Pattern"), len=55),
-		VarType("prefix", title=_("Prefix length"), len=10, optional=True),
+		VarType("rmprefix", title=_("Remove Prefix of length"), len=10, default="0"),
+                VarType("addprefix", title=_("Add Prefix"), len=10, optional=True, default=""),
 		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=300),
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		VarType("qlookup", title=_("Search on quick dial list?"), type="bool"),

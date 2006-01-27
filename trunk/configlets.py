@@ -774,14 +774,10 @@ class CfgPhone(Cfg):
 				try:
 					if self.__getitem__("dialout_"+obj.name):
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)
-						if obj.prefix:
-							prefix=int(obj.prefix)
-						else: 
-							prefix = 0
 						if secret:
-							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},%s,%s)" % (obj.pattern,obj.name,prefix,secret,timeoutvalue))	
-						else:
-							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},n,%s)" % (obj.pattern,obj.name,prefix,timeoutvalue))	
+                                                        c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
+                                                else:
+                                                        c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue))
 				except KeyError:
 					pass
 	
