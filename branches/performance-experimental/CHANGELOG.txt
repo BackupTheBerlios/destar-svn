@@ -1,3 +1,7 @@
+2006-01-28
+* configlets.py fixed bug with ConfigletTree.getConfigletByName()
+* various fixups added.
+
 2006-01-16
 * cfg_trunk_zappri.py: Changed channel attribute for channels.
 
@@ -88,7 +92,7 @@ translations in the call details. Closes bug: #5692
 * Updated TODO.txt
 
 2005-11-05
-* Statistics Patch from Manuel Alejandro Cerón applied. It implements some
+* Statistics Patch from Manuel Alejandro Cerï¿½n applied. It implements some
   graphic statistics reports, generated with PyChart 
   http://home.gna.org/pychart/
 * page_config_reload.py: added missing '<p></p>' tags.

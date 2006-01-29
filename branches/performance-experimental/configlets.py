@@ -367,8 +367,11 @@ class ConfigletTree:
 		
 	def getConfigletByName(self, name):
 		for obj in self:
-			if obj.name == name:
-				return obj
+			try:
+				if obj.name == name:
+					return obj
+			except:
+				pass
 		return None
 		
 	def addConfiglet(self, configlet):
@@ -455,6 +458,7 @@ class Cfg(Holder):
 	#shortName = "Cfg class (do not use directly)"
 	#group     = "Generic option"
 	variables  = []
+	references = []
 
 
 	def __init__(self,autoAdd=True,**kw):
