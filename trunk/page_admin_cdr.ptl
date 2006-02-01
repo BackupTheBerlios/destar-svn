@@ -38,6 +38,7 @@ _q_parent = 'page_admin'
 _q_title  = _("Call Details")
 _q_desc   = _("Get statistics about made and received calls")
 _q_level  = 2
+_q_menupos = 20
 
 
 def _q_access(request):

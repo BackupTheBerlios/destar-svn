@@ -24,16 +24,22 @@
 
 from Templates import *
 from quixote.form2 import *
-from pychart import *
 import cdrutils
 import time
 from StatsHelper import *
 
+pychart_exists = True
+try:	
+	from pychart import *
+except ImportError:
+	pychart_exists = False
+	
 
 _q_parent = 'page_admin'
 _q_title  = _("Calls Statistics")
 _q_desc   = _("Calls Statistics")
 _q_level  = 2
+_q_menupos = 30
 
 def _q_access(request):
 	if request.session.level < _q_level:
@@ -214,6 +220,9 @@ def cdrForm [plain] (request):
 	
 def _q_index [plain] (request):
 	header(_q_desc)
-	cdrForm(request)
+	if pychart_exists:
+		cdrForm(request)
+	else:
+		_("You need to install pychart and use a cdr with sqlite to get these statistics")
 	footer()
 	

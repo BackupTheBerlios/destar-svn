@@ -19,7 +19,11 @@
 
 from Templates import *
 from quixote.form2 import *
-from pychart import *
+try:
+        from pychart import *
+except ImportError:
+        print "Note: You should install python-pychart to generate statistics"
+
 import re
 import cdrutils
 import time
