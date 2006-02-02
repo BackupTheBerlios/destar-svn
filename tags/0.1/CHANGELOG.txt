@@ -1,3 +1,6 @@
+2005-02-01
+* page_admin_reports.ptl: fixed bug with pychart
+
 2006-01-24
 *cfg_phone_queue.py: fixed bug #5885: MoH fails in calls from PSTN placed directly on queues.
 *configlets.py: is recommended to use _X. instead of _.
