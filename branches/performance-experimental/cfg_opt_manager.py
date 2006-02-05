@@ -34,9 +34,6 @@ class CfgOptManager(CfgOpt):
 		     VarType("write",  title=_("Write"), type="mchoice", optional=True, options=_opt, default=','.join(_opt)),
 		    ]
 
-	def fixup(self):
-		CfgOpt.fixup(self)
-
 	def createAsteriskConfig(self):
 		c = AstConf("manager.conf")
 		

@@ -28,7 +28,28 @@ class CfgDialoutNormal(CfgDialout):
 	newObjectTitle= _("New normal dialout entry")
 	description = _("""Used to route calls through trunks""")
 	groupName = 'Dialout'
-	variables = [
+	
+	# def fixup(self):
+		# Cfg.fixup(self)
+		# import configlets
+		# trunks=False
+		# for obj in configlets.configlet_tree['Trunks']:
+			# trunks=True
+			# alreadyappended = False
+			# for v in self.variables:
+				# if v.name == "trunk_"+obj.name:
+					# alreadyappended = True
+			# if not alreadyappended:
+				# self.variables.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+				# self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), optional=True, len=10, default=0))
+		# if trunks:
+			# for v in self.variables:	
+				# if v.name == "Trunks" or v.name=="defaulttrunk":
+					# v.hide = False
+					
+	def createVariables(self):
+		self.variables = []
+		self.variables = [
 		VarType("name",   title=_("Name"), len=15),
 		VarType("pattern", title=_("Pattern"), len=55),
 		VarType("prefix", title=_("Prefix length"), len=10, optional=True),
@@ -36,24 +57,11 @@ class CfgDialoutNormal(CfgDialout):
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		VarType("qlookup", title=_("Search on quick dial list?"), type="bool"),
 		
-		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True),
-	#	VarType("defaulttrunk", title=_("Default trunk:"), type="choice", optional=True, options=getChoice("CfgTrunk"),hide=True)
-		     ]
-	
-	def fixup(self):
-		Cfg.fixup(self)
-		import configlets
-		trunks=False
-		for obj in configlets.configlet_tree['Trunks']:
-			trunks=True
-			alreadyappended = False
-			for v in self.variables:
-				if v.name == "trunk_"+obj.name:
-					alreadyappended = True
-			if not alreadyappended:
-				self.variables.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-				self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), optional=True, len=10, default=0))
-		if trunks:
+		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True)
+		]
+
+		if varlist_manager.hasTrunks() > 0:
+			self.variables += varlist_manager.getTrunks()
 			for v in self.variables:	
 				if v.name == "Trunks" or v.name=="defaulttrunk":
 					v.hide = False

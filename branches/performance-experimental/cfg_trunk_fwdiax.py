@@ -52,10 +52,10 @@ class CfgTrunkFwdIax(CfgTrunk):
 	technology = "IAX2"
 
 
-	def fixup(self):
-		CfgTrunk.fixup(self)
-		useContext(self.context)
-		useContext("in-iaxfwd")
+	# def fixup(self):
+		# CfgTrunk.fixup(self)
+		# useContext(self.context)
+		# useContext("in-iaxfwd")
 
 
 	def createAsteriskConfig(self):

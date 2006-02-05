@@ -33,12 +33,12 @@ class CfgAppMeetme(CfgApp):
                 	VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True)
 			]
 
-	def fixup(self):
-		Cfg.fixup(self)
-		if panelutils.isConfigured() == 1:
-			for v in self.variables:
-				if v.name == "panelLab" or v.name == "panel":
-					v.hide = False
+#	def fixup(self):
+#		Cfg.fixup(self)
+#		if panelutils.isConfigured() == 1:
+#			for v in self.variables:
+#				if v.name == "panelLab" or v.name == "panel":
+#					v.hide = False
 
 	def createAsteriskConfig(self):
 		needModule("app_meetme")

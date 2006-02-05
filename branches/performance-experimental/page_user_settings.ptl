@@ -111,7 +111,7 @@ def _q_index [plain] (request):
 		'</span></p>'
 	elif request.session.phone: 
 		phone = backend.getConfiglet(name=request.session.phone)
-		phone.fixup()
+		#phone.fixup()
 		phoneSettingsForm(request,phone)
 	else:
 		'<p><span class="errornotice">'

@@ -43,9 +43,9 @@ class CfgTrunkCapi(CfgTrunk):
 		return "%s[contr1/%s]" % (self.technology, self.msn)
 
 
-	def fixup(self):
-		CfgTrunk.fixup(self)
-		useContext("in-capi")
+	# def fixup(self):
+		# CfgTrunk.fixup(self)
+		# useContext("in-capi")
 
 
 	def createAsteriskConfig(self):

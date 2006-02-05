@@ -458,7 +458,6 @@ class Cfg(Holder):
 	#shortName = "Cfg class (do not use directly)"
 	#group     = "Generic option"
 	variables  = []
-	references = []
 
 
 	def __init__(self,autoAdd=True,**kw):
@@ -470,8 +469,8 @@ class Cfg(Holder):
 
 		# Store the object into global array
 		global configlet_tree
+		self._id = len(configlet_tree)
 		if autoAdd:
-			self._id = len(configlet_tree)
 			configlet_tree.addConfiglet(self)
 
 		for v in self.variables:
@@ -491,13 +490,16 @@ class Cfg(Holder):
 				except:
 					self.__dict__[v.name] = v.default
 	
-	def __getattr__(self, name):
-		self.fixup()
-		
-		if self.__dict__.has_key(name):
-			return self.__dict__[name]
-		else:
-			raise AttributeError, name
+	# def __getattr__(self, name):
+		# self.fixup()
+		# 
+		# if self.__dict__.has_key(name):
+			# return self.__dict__[name]
+		# else:
+			# raise AttributeError, name
+			
+	def createVariables(self):
+		pass
 
 	def fixup(self):
 		"""Each configlet's fixup() method get's called after the
@@ -505,7 +507,7 @@ class Cfg(Holder):
 
 		global context_entries
 		context_entries = []
-
+ 
 		# Make sure all variables are set:
 		for v in self.variables:
 			if not self.__dict__.has_key(v.name):
@@ -610,12 +612,18 @@ class Cfg(Holder):
 			if _v == None or _v == "":
 				continue
 			#print v.name,v.type,_v
+			if v.__dict__.has_key("default") and _v==v.default:
+				continue
 			if v.type in ("string","rostring","choice","mchoice","radio"):
 				cont = '"%s"' % _v
 			elif v.type=="text":
 				cont = '"""%s"""' % _v
 			elif v.type=="int":
-				cont = _v
+				if _v == 0:
+					print v.name
+					continue
+				else:
+					cont = _v
 			elif v.type=="bool":
 				if _v:
 					cont = "True"
@@ -711,6 +719,37 @@ class CfgOptSingle(CfgOpt):
 	isAddable = classmethod(isAddable)
 
 
+class VarListManager:
+
+	def __init__(self):
+		self.trunks = []
+		self.dialouts = []
+		
+	def hasTrunks(self):
+		return len(self.trunks)>0
+		
+	def getTrunks(self):
+		return self.trunks
+		
+	def updateTrunks(self):
+		self.trunks = []
+		for obj in configlet_tree['Trunks']:
+			self.trunks.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+			self.trunks.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), type="int", optional=True, len=10, default=0))
+
+	def hasDialouts(self):
+		return len(self.dialouts)>0
+
+	def getDialouts(self):
+		return self.dialouts
+
+	def updateDialouts(self):
+		for obj in configlet_tree['Dialout']:
+			self.dialouts.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+			self.dialouts.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
+
+varlist_manager = VarListManager()
+
 
 class CfgTrunk(Cfg):
 	"""Base class for external lines."""
@@ -753,12 +792,12 @@ class CfgTrunk(Cfg):
 		if self.contextin == 'phone' and not self.phone:
 			return ('phone',_("You should select a phone to ring to"))
 
-	def fixup(self):
-		Cfg.fixup(self)
-		if panelutils.isConfigured() == 1:
-			for v in self.variables:
-				if v.name == "panelLab" or v.name == "panel":
-					v.hide = False
+	# def fixup(self):
+		# Cfg.fixup(self)
+		# if panelutils.isConfigured() == 1:
+			# for v in self.variables:
+				# if v.name == "panelLab" or v.name == "panel":
+					# v.hide = False
 		
 	def createIncomingContext(self): 
 		c = AstConf("extensions.conf")
@@ -796,41 +835,41 @@ class CfgPhone(Cfg):
 		return "%s/%s" % (self.technology, self.name)
 
 
-	def fixup(self):
-		Cfg.fixup(self)
-		useContext("phones")
-
-		if panelutils.isConfigured() == 1:
-			for v in self.variables:
-				if v.name == "panelLab" or v.name == "panel":
-					v.hide = False
-
-		global configlet_tree
-		dialouts=False
-		
-		for obj in configlet_tree['Dialout']:
-			dialouts=True
-			alreadyappended = False
-			for v in self.variables:	
-				if v.name == "dialout_"+obj.name:
-					alreadyappended = True
-			if not alreadyappended:
-				self.variables.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-				self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
-				
-		if dialouts:
-			for v in self.variables:
-				if v.name == "Dialout" or v.name=="timeout":
-					v.hide = False
-	
-		queues=False
-		for obj in configlet_tree:
-			if obj.__class__.__name__ == 'CfgPhoneQueue':
-				queues=True
-		if queues:
-			for v in self.variables:
-				if v.name == "QueueLab" or v.name == "queues":
-					v.hide = False
+	# def fixup(self):
+		# Cfg.fixup(self)
+		# useContext("phones")
+# 
+		# if panelutils.isConfigured() == 1:
+			# for v in self.variables:
+				# if v.name == "panelLab" or v.name == "panel":
+					# v.hide = False
+# 
+		# global configlet_tree
+		# dialouts=False
+		# 
+		# for obj in configlet_tree['Dialout']:
+			# dialouts=True
+			# alreadyappended = False
+			# for v in self.variables:	
+				# if v.name == "dialout_"+obj.name:
+					# alreadyappended = True
+			# if not alreadyappended:
+				# self.variables.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
+				# self.variables.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
+				# 
+		# if dialouts:
+			# for v in self.variables:
+				# if v.name == "Dialout" or v.name=="timeout":
+					# v.hide = False
+	# 
+		# queues=False
+		# for obj in configlet_tree:
+			# if obj.__class__.__name__ == 'CfgPhoneQueue':
+				# queues=True
+		# if queues:
+			# for v in self.variables:
+				# if v.name == "QueueLab" or v.name == "queues":
+					# v.hide = False
 
 
 	def createDialEntry(self, extensions, exten):

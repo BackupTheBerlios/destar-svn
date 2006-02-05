@@ -56,12 +56,12 @@ class CfgTrunkZap(CfgTrunk):
                 if res:
                         return res
 
-	def fixup(self):
-		CfgTrunk.fixup(self)
-		if not self.rxgain:
-			self.rxgain = "0.0"
-		if not self.txgain: 
-			self.txgain = "0.0"
+	# def fixup(self):
+		# CfgTrunk.fixup(self)
+		# if not self.rxgain:
+			# self.rxgain = "0.0"
+		# if not self.txgain: 
+			# self.txgain = "0.0"
 
 
 	def createAsteriskConfig(self):

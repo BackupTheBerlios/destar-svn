@@ -29,9 +29,6 @@ class CfgAppParking(CfgApp):
 	variables   = [VarType("ext",    title=_("Extension"), len=6),
 		       VarType("places", title=_("Parking places"), type="int", default=9, len=2)]
 
-	def fixup(self):
-		CfgApp.fixup(self)
-
 	def createAsteriskConfig(self):
 		c = AstConf("features.conf")
 		c.setSection("general")

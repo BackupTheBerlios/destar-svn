@@ -54,9 +54,9 @@ class CfgTrunkCapiMSN(CfgTrunk):
 		return (self.msn, self.name, self.shortName)
 
 
-	def fixup(self):
-		CfgTrunk.fixup(self)
-		useContext("in-capi")
+	# def fixup(self):
+		# CfgTrunk.fixup(self)
+		# useContext("in-capi")
 
 
 	def checkConfig(self):

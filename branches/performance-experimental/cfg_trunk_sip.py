@@ -55,13 +55,13 @@ class CfgTrunkSiptrunk(CfgTrunk):
 	technology = "SIP"
 
 
-	def fixup(self):
-		CfgTrunk.fixup(self)
-		
-        def checkConfig(self):
-                res = CfgTrunk.checkConfig(self)
-                if res:
-                        return res
+	# def fixup(self):
+		# CfgTrunk.fixup(self)
+		# 
+        # def checkConfig(self):
+                # res = CfgTrunk.checkConfig(self)
+                # if res:
+                        # return res
                 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")

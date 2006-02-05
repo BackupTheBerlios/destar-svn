@@ -48,7 +48,6 @@ def createManagerConfig(obj):
 	c.setSection("general")
 	c.append("manager_host=127.0.0.1")
 	c.append("manager_user=%s" % obj.manager)
-	print '********', obj.manager
 	manager = backend.getConfiglet(name=obj.manager)
 	c.append("manager_secret=%s" % manager.secret)
 

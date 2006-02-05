@@ -37,9 +37,9 @@ class CfgTrunkZapHFC(CfgTrunk):
 		]
 
 
-	def fixup(self):
-		CfgTrunk.fixup(self)
-		useContext("in-pstn")
+	# def fixup(self):
+		# CfgTrunk.fixup(self)
+		# useContext("in-pstn")
 
 
 	def createAsteriskConfig(self):

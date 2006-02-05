@@ -63,6 +63,18 @@ def loadPythonConfig():
 				print _("Warning: There is no %s or %s file yet." % (fn,DESTAR_CFG))
 	except NameError:
 		pass
+		
+	configlets.varlist_manager.updateTrunks()
+	configlets.varlist_manager.updateDialouts()
+	# for i in configlets.varlist_manager.getDialouts():
+		# for j in configlets.varlist_manager.getDialouts():
+			# if j is i: continue
+			# if j.name == i.name:
+				# print j.name
+	for obj in configlets.configlet_tree:
+		obj.createVariables()
+	for obj in configlets.configlet_tree:
+		obj.fixup()
 
 	__loaded = True
 

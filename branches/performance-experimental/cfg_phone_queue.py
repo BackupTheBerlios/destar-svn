@@ -27,57 +27,66 @@ class CfgPhoneQueue(CfgPhone):
 
 	shortName = _("Normal Call Queue")
 	newObjectTitle = _("New Call Queue")
-	variables = [
-		VarType("name",       title=_("Name"), len=15),
-		VarType("ext",        title=_("Extension"), optional=True, len=6),
-		VarType("timeout",    title=_("Timeout"), optional=True, len=6),
-		VarType("moh",	  title=_("Music-on-hold class"), type="choice", optional=True,
-			options=getChoice("CfgOptMusic")),
-		VarType("strategy",    title=_("Strategy:"), type="choice",
-                	options=( ("ringall",_("Ring all - ring all available channels until one answers")),
-                        	  ("roundrobin",_("Round robin - take turns ringing each available interface")),
-                                  ("leastrecent",_("Least recent - ring interface which was least recently called by this queue")), 
-                                  ("fewestcalls",_("Fewest calls - ring the one with fewest completed calls from this queue")), 
-                                  ("random",_("Random - ring random interface")), 
-                                  ("rrmemory",_("Round robin with memory - remember where we left off last ring pass")) 
-				), 
-			default="ringall"),
-		VarType("retry",        title=_("How long to wait before trying all the members again?"), optional=True, len=6),
-
-		VarType("Announces",  title=_("Announces"), type="label", len=6),
-		VarType("announce",  title=_("Announce queue position to caller?"), type="bool"),
-		VarType("announcefrequency", title=_("How often to announce queue position and/or estimated holdtime to caller"), optional=True, len=6),
-		VarType("announceholdtime",    title=_("Include estimated hold time in position announcements?"), type="choice",
-                	options=( ("yes",_("Yes")),
-                        	  ("no",_("No")),
-                                  ("once",_("Only Once"))
-				), 
-			default="no"),
-
-		VarType("Monitoring",  title=_("Monitoring"), type="label", len=6),
-		VarType("monitor",        title=_("Monitor answered calls?"), type="bool"),
-		VarType("monitorfileformat",    title=_("Monitor file format"), type="choice",
-                	options=( ("gsm",_("GSM")),
-                        	  ("wav",_("WAV")),
-                                  ("wav49",_("WAV49"))
-				), 
-			default="gsm"),
-		VarType("monitorfilename",  title=_("Monitor file name"), hint=_("Otherwise it will use ${UNIQUEID}"), len=25, optional=True),
-		VarType("monitorjoin",        title=_("Split file on inbound and outbound channels?"), type="bool"),
-
-		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this queue in the panel"), type="bool", hide=True, optional=True),
-	]
 	technology = "Virtual"
-
-	def fixup(self):
-		Cfg.fixup(self)
-		useContext("phones")
-
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("name",       title=_("Name"), len=15),
+			VarType("ext",        title=_("Extension"), optional=True, len=6),
+			VarType("timeout",    title=_("Timeout"), optional=True, len=6),
+			VarType("moh",	  title=_("Music-on-hold class"), type="choice", optional=True,
+				options=getChoice("CfgOptMusic")),
+			VarType("strategy",    title=_("Strategy:"), type="choice",
+						options=( ("ringall",_("Ring all - ring all available channels until one answers")),
+								  ("roundrobin",_("Round robin - take turns ringing each available interface")),
+									  ("leastrecent",_("Least recent - ring interface which was least recently called by this queue")), 
+									  ("fewestcalls",_("Fewest calls - ring the one with fewest completed calls from this queue")), 
+									  ("random",_("Random - ring random interface")), 
+									  ("rrmemory",_("Round robin with memory - remember where we left off last ring pass")) 
+					), 
+				default="ringall"),
+			VarType("retry",        title=_("How long to wait before trying all the members again?"), optional=True, len=6),
+	
+			VarType("Announces",  title=_("Announces"), type="label", len=6),
+			VarType("announce",  title=_("Announce queue position to caller?"), type="bool"),
+			VarType("announcefrequency", title=_("How often to announce queue position and/or estimated holdtime to caller"), optional=True, len=6),
+			VarType("announceholdtime",    title=_("Include estimated hold time in position announcements?"), type="choice",
+						options=( ("yes",_("Yes")),
+								  ("no",_("No")),
+									  ("once",_("Only Once"))
+					), 
+				default="no"),
+	
+			VarType("Monitoring",  title=_("Monitoring"), type="label", len=6),
+			VarType("monitor",        title=_("Monitor answered calls?"), type="bool"),
+			VarType("monitorfileformat",    title=_("Monitor file format"), type="choice",
+						options=( ("gsm",_("GSM")),
+								  ("wav",_("WAV")),
+									  ("wav49",_("WAV49"))
+					), 
+				default="gsm"),
+			VarType("monitorfilename",  title=_("Monitor file name"), hint=_("Otherwise it will use ${UNIQUEID}"), len=25, optional=True),
+			VarType("monitorjoin",        title=_("Split file on inbound and outbound channels?"), type="bool"),
+	
+			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+					VarType("panel",      title=_("Show this queue in the panel"), type="bool", hide=True, optional=True),
+		]
+		if varlist_manager.hasDialouts() > 0:
+			self.variables += varlist_manager.getDialouts()
+			for v in self.variables:
+				if v.name == "Dialout" or v.name=="timeout":
+					v.hide = False
+					
+		queues = len(configlet_tree.getConfigletsByName('CfgPhoneQueue'))
+		if queues > 0:
+			for v in self.variables:
+				if v.name == "QueueLab" or v.name == "queues":
+					v.hide = False
 		if panelutils.isConfigured() == 1:
 			for v in self.variables:
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
+
 	def checkConfig(self):
                 res = CfgPhone.checkConfig(self)
                 if res:

@@ -29,11 +29,11 @@ class CfgPermDeny(CfgPerm):
 		     VarType("deny", 	   title=_("Deny calls to this extension(s)"))]
 		
 
-	def fixup(self):
-		CfgPerm.fixup(self)
-		useContext(self.name)
-		for i in self.include.split(","):
-			useContext(i.strip())
+#	def fixup(self):
+#		CfgPerm.fixup(self)
+#		useContext(self.name)
+#		for i in self.include.split(","):
+#			useContext(i.strip())
 
 
 	def createAsteriskConfiglet(self):

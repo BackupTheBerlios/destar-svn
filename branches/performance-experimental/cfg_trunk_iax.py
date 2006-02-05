@@ -59,9 +59,6 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		]
 
 	technology = "IAX2"
-	
-	def fixup(self):
-		CfgTrunk.fixup(self)
 		
         def checkConfig(self):
                 res = CfgTrunk.checkConfig(self)
