@@ -28,24 +28,6 @@ class CfgDialoutNormal(CfgDialout):
 	newObjectTitle= _("New normal dialout entry")
 	description = _("""Used to route calls through trunks""")
 	groupName = 'Dialout'
-	
-	# def fixup(self):
-		# Cfg.fixup(self)
-		# import configlets
-		# trunks=False
-		# for obj in configlets.configlet_tree['Trunks']:
-			# trunks=True
-			# alreadyappended = False
-			# for v in self.variables:
-				# if v.name == "trunk_"+obj.name:
-					# alreadyappended = True
-			# if not alreadyappended:
-				# self.variables.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-				# self.variables.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), optional=True, len=10, default=0))
-		# if trunks:
-			# for v in self.variables:	
-				# if v.name == "Trunks" or v.name=="defaulttrunk":
-					# v.hide = False
 					
 	def createVariables(self):
 		self.variables = []

@@ -1,3 +1,6 @@
+2006-02-07
+* Changed the metadata specification ('variables' list) from class definition to createVariables() method in all configlets
+
 2006-02-04
 * fixup() method has been removed from all configlets except from Cfg base class
 * configlets.py: VarListManager class has been added. This class will be used to store referential integrity functionality. VarListManager. This class also serves to improve performance avoiding repetitive loops arround configlets groups.

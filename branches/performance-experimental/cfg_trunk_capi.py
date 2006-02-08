@@ -28,25 +28,19 @@ class CfgTrunkCapi(CfgTrunk):
 
 	shortName = _("ISDN using CAPI, outgoing")
 	newObjectTitle = _("New outgoing ISDN using CAPI")
-	variables = [
-		VarType("name",      title=_("Name"), len=15),
-
-		VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
-		VarType("msn",       title=_("Subscriber number"), len=15),
-		VarType("ext",       title=_("Outgoing prefix"), optional=True, len=6),
-		]
-
 	technology = "CAPI"
-
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("name",      title=_("Name"), len=15),
+			VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
+			VarType("msn",       title=_("Subscriber number"), len=15),
+			VarType("ext",       title=_("Outgoing prefix"), optional=True, len=6),
+		]
+		useContext("in-capi")
 
 	def channel(self):
 		return "%s[contr1/%s]" % (self.technology, self.msn)
-
-
-	# def fixup(self):
-		# CfgTrunk.fixup(self)
-		# useContext("in-capi")
-
 
 	def createAsteriskConfig(self):
 		needModule("chan_capi")

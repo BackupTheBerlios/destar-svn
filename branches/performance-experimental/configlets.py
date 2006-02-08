@@ -498,6 +498,12 @@ class Cfg(Holder):
 		# else:
 			# raise AttributeError, name
 			
+	def lookPanel(self):
+		if panelutils.isConfigured() == 1:
+			for v in self.variables:
+				if v.name == "panelLab" or v.name == "panel":
+					v.hide = False
+			
 	def createVariables(self):
 		pass
 
@@ -792,13 +798,6 @@ class CfgTrunk(Cfg):
 		if self.contextin == 'phone' and not self.phone:
 			return ('phone',_("You should select a phone to ring to"))
 
-	# def fixup(self):
-		# Cfg.fixup(self)
-		# if panelutils.isConfigured() == 1:
-			# for v in self.variables:
-				# if v.name == "panelLab" or v.name == "panel":
-					# v.hide = False
-		
 	def createIncomingContext(self): 
 		c = AstConf("extensions.conf")
 		contextin = "in-%s" % self.name

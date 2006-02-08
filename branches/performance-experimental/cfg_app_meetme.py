@@ -25,20 +25,16 @@ class CfgAppMeetme(CfgApp):
 
 	shortName   = _("Meeting room")
 	newObjectTitle  = _("New meeting room")
-	variables   = [	VarType("ext",      title=_("Extension"), len=6),
+	
+	def createVariables(self):
+		self.variables   = [	VarType("ext",      title=_("Extension"), len=6),
 		       	VarType("confno",   title=_("Conference number"), hint=_("If empty, will be the same as the extension"), optional=True, len=6),
 		       	VarType("pin",      title=_("PIN"), optional=True, len=6),
-			
-			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                	VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True)
-			]
-
-#	def fixup(self):
-#		Cfg.fixup(self)
-#		if panelutils.isConfigured() == 1:
-#			for v in self.variables:
-#				if v.name == "panelLab" or v.name == "panel":
-#					v.hide = False
+				VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True)
+		]
+				
+		self.lookPanel()
 
 	def createAsteriskConfig(self):
 		needModule("app_meetme")

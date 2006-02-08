@@ -25,17 +25,17 @@ class CfgTrunkCapiMSN(CfgTrunk):
 
 	shortName = _("ISDN using CAPI, incoming")
 	newObjectTitle = _("New incoming ISDN using CAPI")
-	variables = [
-		VarType("name",      title=_("Name"), len=15),
-
-		VarType("Inbound",   title=_("Calls from the ISDN network"), type="label"),
-		VarType("msn",       title=_("Subscriber number"), len=15),
-		VarType("phone",     title=_("Phone to ring"), type="choice",
-		                     options=getChoice("CfgPhone")),
-		]
-
 	technology = "CAPI"
-
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("name",      title=_("Name"), len=15),
+			VarType("Inbound",   title=_("Calls from the ISDN network"), type="label"),
+			VarType("msn",       title=_("Subscriber number"), len=15),
+			VarType("phone",     title=_("Phone to ring"), type="choice",
+								 options=getChoice("CfgPhone")),
+		]
+		useContext("in-capi")
 
 	def isAddable(self):
 		"We can only add this object if we have at least one outgoing CAPI channel defined."
@@ -52,12 +52,6 @@ class CfgTrunkCapiMSN(CfgTrunk):
 
 	def row(self):
 		return (self.msn, self.name, self.shortName)
-
-
-	# def fixup(self):
-		# CfgTrunk.fixup(self)
-		# useContext("in-capi")
-
 
 	def checkConfig(self):
 		res = CfgTrunk.checkConfig(self)

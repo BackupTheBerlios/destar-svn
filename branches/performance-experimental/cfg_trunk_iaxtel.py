@@ -30,7 +30,12 @@ class CfgTrunkIaxtel(CfgTrunk):
 			http://www.iaxtel.com and get an IAXtel number  where
 			people can call you. These calls are free of charge, too.'.""")
 
-	variables   = [
+	
+
+	technology = "IAX2"
+	
+	def createVariables(self):
+		self.variables   = [
 		VarType("name",     title=_("Name"), len=15),
 		VarType("iaxtelid", title=_("IAXTEL number"),   len=6),
 		VarType("iaxtelpw", title=_("IAXTEL password"), len=15),
@@ -43,16 +48,9 @@ class CfgTrunkIaxtel(CfgTrunk):
 		VarType("Inbound",  title=_("Calls from IAXTEL"), type="label"),
 		VarType("phone",    title=_("Phone to ring"), optional=True, type="choice",
 		                    options=getChoice("CfgPhone"))
-		       ]
-
-	technology = "IAX2"
-
-
-	# def fixup(self):
-		# CfgTrunk.fixup(self)
-		# useContext(self.context)
-		# useContext("in-iaxtel")
-
+		]
+		useContext(self.context)
+		useContext("in-iaxtel")
 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")

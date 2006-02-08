@@ -27,7 +27,10 @@ class CfgTrunkZapPRI(CfgTrunk):
 
 	shortName = _("Standard ZAP PRI trunk")
 	newObjectTitle = _("New standard ZAP PRI trunk")
-	variables = [
+	technology = "ZAP"
+	
+	def createVariables(self):
+		self.variables = [
 		VarType("name",       title=_("Name"), len=35),
 		VarType("signalling", title=_("Signalling type"), type="choice",
 			      options=[('pri_cpe',_('PRI signalling, CPE side')),('pri_net', _('PRI signalling, Network side'))]),
@@ -59,7 +62,6 @@ class CfgTrunkZapPRI(CfgTrunk):
 		                               options=getChoice("CfgIVR")),
 		VarType("dial", hide=True, len=50),
 		]
-	technology = "ZAP"
 
 	def isAddable(self):
 		"""We can only add this configlet if we have at least one
@@ -89,12 +91,12 @@ class CfgTrunkZapPRI(CfgTrunk):
 					pass
 
 
-	# def fixup(self):
-		# CfgTrunk.fixup(self)
-		# if not self.rxgain:
-			# self.rxgain = "0.0"
-		# if not self.txgain: 
-			# self.txgain = "0.0"
+	def fixup(self):
+		CfgTrunk.fixup(self)
+		if not self.rxgain:
+			self.rxgain = "0.0"
+		if not self.txgain: 
+			self.txgain = "0.0"
 
 
 	def createAsteriskConfig(self):
