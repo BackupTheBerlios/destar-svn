@@ -1,4 +1,7 @@
-2005-02-01
+2006-02-12
+* configlets.py: createPythonConfig() doesn't writes unnecessary lines anymore. Hope.
+
+2006-02-01
 * page_admin_reports.ptl: fixed bug with pychart
 
 2006-01-24
