@@ -479,6 +479,8 @@ class Cfg(Holder):
 		self._id = len(configlet_tree)
 		if autoAdd:
 			configlet_tree.addConfiglet(self)
+		else:
+			self.createVariables();
 
 		for v in self.variables:
 			# Labels don't have values. We set 'optional' to True
@@ -487,15 +489,7 @@ class Cfg(Holder):
 			if v.type=="label":
 				v.optional = True
 				continue
-
-			# When we have a default value, then store the value
-			# but don't overwrite an old value
-			if v.__dict__.has_key("default") and v.default:
-				try:
-					if not self.__dict__[v.name]:
-						self.__dict__[v.name] = v.default
-				except:
-					self.__dict__[v.name] = v.default
+					
 	def lookPanel(self):
 		if panelutils.isConfigured() == 1:
 			for v in self.variables:

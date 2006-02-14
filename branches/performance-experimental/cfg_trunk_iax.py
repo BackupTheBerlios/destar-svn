@@ -26,10 +26,11 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 
 	shortName   = _("Standard IAX Trunk")
 	newObjectTitle  = _("New standard IAX trunk")
-
 	description = _("""Used to setup an IAX trunk to another Asterisk server or an IAX termination.""")
-
-	variables	= [
+	technology = "IAX2"
+	
+	def createVariables(self):
+		self.variables	= [
 		VarType("name",      title=_("Name"), len=15, default="iaxtrunk"),
 		VarType("host",      title=_("IAX host"), len=25),
 		VarType("bandwidth",  title=_("Bandwith"), type="choice", len=25,
@@ -57,15 +58,13 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		                               options=getChoice("CfgIVR")),
 		VarType("dial", hide=True, len=50),
 		]
+	
+	def checkConfig(self):
+		res = CfgTrunk.checkConfig(self)
+		if res:
+			return res
 
-	technology = "IAX2"
-		
-        def checkConfig(self):
-                res = CfgTrunk.checkConfig(self)
-                if res:
-                        return res
-
-       	def createAsteriskConfig(self):
+	def createAsteriskConfig(self):
 		#Dial part to use on dialout macro
 		self.dial = "IAX2/%s/${ARG1}" % self.host
 		#What to do with incoming calls

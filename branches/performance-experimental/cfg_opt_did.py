@@ -28,7 +28,8 @@ class CfgOptDID(CfgOpt):
 
 	description = _("""Used to route a DID to an extension or Auto-Attendant.""")
 
-	variables	= [
+	def createVariables(self):
+		self.variables	= [
 		VarType("did",       title=_("DID"), len=15),
 		VarType("trunk",     title=_("From Trunk:"), type="choice",
 		                     options=getChoice("CfgTrunk")),

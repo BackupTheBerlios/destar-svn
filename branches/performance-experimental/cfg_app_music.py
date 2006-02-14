@@ -26,7 +26,9 @@ class CfgAppMusic(CfgApp):
 	shortName   = _("Listen to music-on-hold")
 	newObjectTitle  = _("New music-on-hold extension")
 	description = _("Play Play Music On Hold until you hang up.")
-	variables   = [ VarType("ext", title=_("Extension"), len=6),
+	
+	def createVariables(self):
+		self.variables   = [ VarType("ext", title=_("Extension"), len=6),
 			VarType("moh",	  title=_("Music-on-hold class"), type="choice", optional=True,
 			options=getChoice("CfgOptMusic"))]
 

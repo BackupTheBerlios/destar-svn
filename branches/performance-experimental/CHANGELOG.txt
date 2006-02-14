@@ -1,3 +1,9 @@
+2006-02-14:
+* cfg_dialgout_normal.py: fixed bug with isAddable method
+* configlets.py: a 'variables' creation is performed in Cfg constructor
+* cfg_opt_oppanel.py, cfg_trunk_iax.py, cfg_ivr_autoatt.py, cfg_app_music.py,  cfg_opt_user.py: added createVariables() method
+* backend.py: fixed bug with fixupConfiglets() fuctions and recreation of variables in VarListManager.
+
 2006-02-13
 * configlets.py: fixed bug in ConfigletTree.hasConfiglet() method.
 * configlets.py: Removed debugger break point in Cfg.createPythonConfig() method.

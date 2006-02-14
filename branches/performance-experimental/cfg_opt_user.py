@@ -26,7 +26,9 @@ class CfgOptUser(CfgOpt):
 	shortName = _("DeStar user")
 	newObjectTitle = _("New DeStar user")
 	groupName = 'Users'
-	variables = [
+	
+	def createVariables(self):
+		self.variables = [
 		VarType("name",   title=_("Name"), len=15),
 		VarType("secret", title=_("Password"), len=15),
 		VarType("pc",     title=_("Associated IP address of PC"), hint=_("Trusted for auto-login"), len=15, optional=True),
