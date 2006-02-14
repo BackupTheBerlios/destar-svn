@@ -643,6 +643,9 @@ class CfgTrunk(Cfg):
 		c = AstConf("extensions.conf")
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
+		if self.clid:
+			needModule("app_setcidname")
+			d.appendExten("_X.","SetCIDName(%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			c.appendExten("_X.", "Goto(phones,%s,1)" % self.phone)
 		if self.contextin == 'ivr' and self.ivr:

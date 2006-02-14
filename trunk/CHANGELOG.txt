@@ -1,4 +1,5 @@
 2006-02-13
+*Applied patch sent by <juan.coronado@avatar.com.co> with some improvements. Closes #6389.
 *Fixed small but anoying bug on dialout timeout.
 
 2006-01-31

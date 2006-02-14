@@ -55,6 +55,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		                               options=getChoice("CfgPhone")),
 		VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
 		                               options=getChoice("CfgIVR")),
+		VarType("clid",       title=_("Change Caller*Id to:"), len=25, optional=True),
 		VarType("dial", hide=True, len=50),
 		]
 
