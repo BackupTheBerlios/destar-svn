@@ -1,3 +1,6 @@
+2006-02-13
+*Fixed small but anoying bug on dialout timeout.
+
 2006-01-31
 * page_admin_callsstats.ptl, page_admin_dialoutsstats.ptl,  page_admin_trunksstats.ptl,
   StatsHelper.ptl: fixed bug #6182.
