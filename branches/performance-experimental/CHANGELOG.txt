@@ -1,4 +1,9 @@
 2006-02-13
+* configlets.py: fixed bug in ConfigletTree.hasConfiglet() method.
+* configlets.py: Removed debugger break point in Cfg.createPythonConfig() method.
+* configlets.py: fixed bug in CfgTrunk.fixup() method.
+
+2006-02-13
 * backend.py: added fixupConfiglets() function again. This time fixupConfiglet is much faster than previous version. This fuction is used at loadPythonConfig() and createPythonConfig()
 * configlets.py: added hasConfiglet() method to ConfigletTree class. Removed  __getattr__() method form Cfg. fixup() method is back in CfgPhone, now is smaller and faster.
 * added createVariables() method to CfgPermDial, CfgPermDeny and CfgOptRtp classes.

@@ -354,7 +354,11 @@ class ConfigletTree:
 		return result
 		
 	def hasConfiglet(self, _class):
-		return ( len(self.getConfigletByClass(_class)) > 0)
+		for obj in self:
+			if obj.__class__.__name__ == _class: 
+				return True
+		return false
+			
 
 	def empty(self):
 		return len(self)==0
@@ -606,10 +610,7 @@ class Cfg(Holder):
 
 		python_cfg = []
 		python_cfg.append("%s(" % self.__class__.__name__)
-		import pdb
-		if self.__class__.__name__ == 'CfgOptRtp':
-			pdb.set_trace()
-		
+
 		for v in self.variables:
 			if not self.__dict__.has_key(v.name): continue
 			_v = self.__dict__[v.name]
@@ -765,6 +766,7 @@ class CfgTrunk(Cfg):
 		Cfg.__init__(self,**kw)
 
 	def fixup(self):
+		Cfg.fixup(self)
 		self.lookPanel()
 
 
