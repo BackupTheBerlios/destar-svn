@@ -1,3 +1,9 @@
+2006-02-13
+* backend.py: added fixupConfiglets() function again. This time fixupConfiglet is much faster than previous version. This fuction is used at loadPythonConfig() and createPythonConfig()
+* configlets.py: added hasConfiglet() method to ConfigletTree class. Removed  __getattr__() method form Cfg. fixup() method is back in CfgPhone, now is smaller and faster.
+* added createVariables() method to CfgPermDial, CfgPermDeny and CfgOptRtp classes.
+
+
 2006-02-07
 * Changed the metadata specification ('variables' list) from class definition to createVariables() method in all configlets
 

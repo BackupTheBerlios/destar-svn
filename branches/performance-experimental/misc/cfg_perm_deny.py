@@ -24,16 +24,17 @@ from language import _
 
 class CfgPermDeny(CfgPerm):
 	shortName = _("Deny outgoing calls")
-	variables = [VarType("name",       title=_("Name"), len=15),
+	
+	def createVariables(self):
+		self.variables = [VarType("name",       title=_("Name"), len=15),
 		     VarType("include",    title=_("Include other permission(s)"), optional=True),
 		     VarType("deny", 	   title=_("Deny calls to this extension(s)"))]
-		
-
-#	def fixup(self):
-#		CfgPerm.fixup(self)
-#		useContext(self.name)
-#		for i in self.include.split(","):
-#			useContext(i.strip())
+	
+	def fixup(self):
+		CfgPerm.fixup(self)
+		useContext(self.name)
+		for i in self.include.split(","):
+			useContext(i.strip())
 
 
 	def createAsteriskConfiglet(self):

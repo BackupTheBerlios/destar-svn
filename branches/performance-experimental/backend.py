@@ -71,16 +71,15 @@ def loadPythonConfig():
 			# if j is i: continue
 			# if j.name == i.name:
 				# print j.name
+	fixupConfiglets()
+
+	__loaded = True
+
+def fixupConfiglets():
 	for obj in configlets.configlet_tree:
 		obj.createVariables()
 	for obj in configlets.configlet_tree:
 		obj.fixup()
-
-	__loaded = True
-
-
-
-
 
 def createPythonConfig(f=None):
 	"""This writes /etc/asterisk/destar_cfg.py.
@@ -92,9 +91,10 @@ def createPythonConfig(f=None):
 		createPythonConfig(sys.stdout)
 	"""
 
-
 	if configlets.configlet_tree.empty():
 		return
+	
+	fixupConfiglets()
 
 	if f is None:
 		f = open(os.path.join(configlets.CONF_DIR,DESTAR_CFG),"w")

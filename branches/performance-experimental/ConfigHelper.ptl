@@ -284,5 +284,4 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 	if form.has_errors():
 		return render()
 	saveConfig()
-	#obj.fixup()
 	return request.redirect(exitPath)

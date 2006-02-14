@@ -24,18 +24,19 @@ from language import _
 
 class CfgPermDial(CfgPerm):
 	shortName = _("Dial permission")
-	variables = [VarType("name",       title=_("Name")),
+	
+	def createVariables(self):
+		self.variables = [VarType("name",       title=_("Name")),
 		     VarType("desc",       title=_("Description"), optional=True),
 		     VarType("ignorepat",  title=_("Keep dialtone for numbers starting with"), optional=True),
 		     VarType("include",    title=_("Include other permission(s)"), optional=True),
 		    ]
 
-
-#	def fixup(self):
-#		CfgPerm.fixup(self)
-#		useContext(self.name)
-#		for i in self.include.split(","):
-#			useContext(i.strip())
+	def fixup(self):
+		CfgPerm.fixup(self)
+		useContext(self.name)
+		for i in self.include.split(","):
+			useContext(i.strip())
 
 
 	def createAsteriskConfiglet(self):
