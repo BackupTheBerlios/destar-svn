@@ -80,6 +80,9 @@ class CfgIVRAutoatt(CfgIVR):
 			s.appendExten("s","Absolutetimeout(%s)" % self.timeout)
 		if self.moh:
 			s.appendExten("s","Setmusiconhold(%s)" % self.moh)
+                        s.appendExten("s","SetVar(DOPT=m)")
+                else:
+                        s.appendExten("s","SetVar(DOPT=r)")
 		for i in range(self.repeat):
 			s.appendExten("s","Background(%s)" % self.backgroundfile)	
 			if self.pause:

@@ -1,3 +1,6 @@
+2006-02-15
+*Added Dial options so that when SetMusicOnHold is used, Dial is passed the 'm' option.
+
 2006-02-13
 *Applied patch sent by <juan.coronado@avatar.com.co> with some improvements. Closes #6389.
 *Fixed small but anoying bug on dialout timeout.
