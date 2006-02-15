@@ -35,6 +35,9 @@ class CfgTrunkCapiMSN(CfgTrunk):
 			VarType("phone",     title=_("Phone to ring"), type="choice",
 								 options=getChoice("CfgPhone")),
 		]
+		
+	def fixup(self):
+		CfgTrunk.fixup(self)
 		useContext("in-capi")
 
 	def isAddable(self):

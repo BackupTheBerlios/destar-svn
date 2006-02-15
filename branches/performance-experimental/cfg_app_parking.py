@@ -26,7 +26,9 @@ class CfgAppParking(CfgApp):
 	shortName   = _("Park calls")
 	newObjectTitle  = _("New call parking extension")
 	description = _("Call Parking extension")
-	variables   = [VarType("ext",    title=_("Extension"), len=6),
+	
+	def createVariables(self):
+		self.variables   = [VarType("ext",    title=_("Extension"), len=6),
 		       VarType("places", title=_("Parking places"), type="int", default=9, len=2)]
 
 	def createAsteriskConfig(self):

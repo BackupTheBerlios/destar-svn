@@ -1,4 +1,8 @@
 2006-02-14:
+* cfg_dialout_normal.py, cfg_phone_iax.py, cfg_app_meetme.py, cfg_app_record.py, cfg_opt_sip_network.py, cfg_phone_ext.py, cfg_opt_voicemail.py, cfg_app_parking.py, cfg_opt_zap_trunk.py, cfg_app_quickdial_phone.py, cfg_opt_logger.py, cfg_app_dnd.py, cfg_app_conference.py, cfg_app_saytime.py, cfg_opt_pickup.py, cfg_trunk_capimsn.py, cfg_app_echo.py, cfg_phone_zap.py, misc/cfg_app_phraserecording.py, misc/cfg_app_aa.py, cfg_opt_rawcfg.py, cfg_ivr_autoatt.py, cfg_opt_music.py, cfg_trunk_fwdiax.py, cfg_app_voicemail.py, cfg_opt_settings.py, cfg_phone_sip.py, cfg_app_quickdial_global.py, cfg_opt_manager.pycfg_opt_sip_audio.py, cfg_trunk_capi.py, cfg_app_directory.py, cfg_app_play.py, cfg_app_milliwatt.py, cfg_ivr_raw.py, cfg_trunk_iaxtel.py, cfg_phone_queue.py, cfg_phone_mgcp.py, cfg_opt_did.py, cfg_opt_enum.py, cfg_opt_zappri.py, cfg_opt_zap_audio.py, cfg_opt_zap_phone.py, cfg_app_callfw.py: Added createVariables method
+* some bug fixes
+
+2006-02-14:
 * cfg_dialgout_normal.py: fixed bug with isAddable method
 * configlets.py: a 'variables' creation is performed in Cfg constructor
 * cfg_opt_oppanel.py, cfg_trunk_iax.py, cfg_ivr_autoatt.py, cfg_app_music.py,  cfg_opt_user.py: added createVariables() method

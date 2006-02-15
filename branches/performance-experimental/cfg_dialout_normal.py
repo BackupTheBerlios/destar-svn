@@ -42,6 +42,7 @@ class CfgDialoutNormal(CfgDialout):
 		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True)
 		]
 
+		Cfg.fixup(self)
 		if varlist_manager.hasTrunks() > 0:
 			self.variables += varlist_manager.getTrunks()
 			for v in self.variables:	
@@ -52,7 +53,7 @@ class CfgDialoutNormal(CfgDialout):
 		"We can only add this object if we have at least one trunk defined."
 		import configlets
 		return (len(configlets.configlet_tree['Trunks']) > 0)
-		#return True
+
 	isAddable = classmethod(isAddable)
 
 

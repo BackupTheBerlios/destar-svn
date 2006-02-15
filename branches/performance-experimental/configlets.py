@@ -481,6 +481,7 @@ class Cfg(Holder):
 			configlet_tree.addConfiglet(self)
 		else:
 			self.createVariables();
+			self.fixup();
 
 		for v in self.variables:
 			# Labels don't have values. We set 'optional' to True

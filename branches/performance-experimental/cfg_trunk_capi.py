@@ -37,6 +37,9 @@ class CfgTrunkCapi(CfgTrunk):
 			VarType("msn",       title=_("Subscriber number"), len=15),
 			VarType("ext",       title=_("Outgoing prefix"), optional=True, len=6),
 		]
+		
+	def fixup(self):
+		CfgTrunk.fixup(self)
 		useContext("in-capi")
 
 	def channel(self):

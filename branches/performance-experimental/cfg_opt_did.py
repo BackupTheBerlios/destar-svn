@@ -45,7 +45,8 @@ class CfgOptDID(CfgOpt):
 	def isAddable(self):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
-		return len(configlet_tree['Trunks']) > 0
+		import configlets
+		return len(configlets.configlet_tree['Trunks']) > 0
 	isAddable = classmethod(isAddable)
 
         def checkConfig(self):

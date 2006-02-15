@@ -26,7 +26,9 @@ class CfgAppPlay(CfgApp):
 	shortName   = _("Play sound")
 	newObjectTitle  = _("Play sound")
 	description = _("""Play a soundfile.""")
-	variables   = [VarType("ext",      title=_("Extension"), len=6),
+	
+	def createVariables(self):
+		self.variables   = [VarType("ext",      title=_("Extension"), len=6),
                        VarType("filename", title=_("File name"), hint=_("Don't specify an extension"))]
 
 

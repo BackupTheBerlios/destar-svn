@@ -26,9 +26,11 @@ class CfgAppVoiceMail(CfgApp):
 	shortName   = _("Voicemail dialog")
 	newObjectTitle  = _("New voicemail dialog")
 	description = _("""Extension to enter the voicemail system.""")
-	variables   = [ VarType("ext", title=_("Extension"), len=6),
+	
+	def createVariables(self):
+		self.variables   = [ VarType("ext", title=_("Extension"), len=6),
 			VarType("mailbox", title=_("Ask for user mailbox?"), type="bool", optional=True),
-			]
+		]
 
 	def createAsteriskConfig(self):
 		needModule("res_adsi")

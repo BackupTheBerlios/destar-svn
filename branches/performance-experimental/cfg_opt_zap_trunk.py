@@ -25,11 +25,13 @@ class CfgOptZapTrunk(CfgOptSingle):
 
 	shortName = _("Zaptel Trunk Options")
 	newObjectTitle = _("Zaptel Trunk Options")
-	variables = [
-		VarType("busydetect", title=_("Try to detect busy signal to detect if remove site hung up"), type="bool"),
-		VarType("busycount",  title=_("Wait how many busy signals before hanging up"), type="int", default=5),
-		#VarType("callprogress", title=_("?"), type="bool"),
-	]
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("busydetect", title=_("Try to detect busy signal to detect if remove site hung up"), type="bool"),
+			VarType("busycount",  title=_("Wait how many busy signals before hanging up"), type="int", default=5),
+			#VarType("callprogress", title=_("?"), type="bool"),
+		]
 
 
 	def isAddable(self):

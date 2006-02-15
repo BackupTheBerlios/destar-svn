@@ -25,7 +25,9 @@ class CfgAppSayTime(CfgApp):
 
 	shortName   = _("Say time")
 	newObjectTitle  = _("Say time")
-	variables   = [VarType("ext", title=_("Extension"), len=6),
+	
+	def createVariables(self):
+		self.variables   = [VarType("ext", title=_("Extension"), len=6),
 		       VarType("what", title=("Say what"), type="choice", options=[
 				("kM"   , _("Time")),
 				("dbY"  , _("Date")),

@@ -136,7 +136,6 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 	'actionCallback' is a callable that get's executed after the configlet has been saved.
 	'new': is True if we create a new object, False if we're just editing an object.
 	'menu': is the menu on the left side."""
-	
 
 	def render_desc():
 		"""Just renders the description. Substitutes an empty line

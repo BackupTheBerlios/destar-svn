@@ -25,7 +25,9 @@ class CfgOptEnum(CfgOpt):
 
 	shortName = _("ENUM search domain")
 	newObjectTitle= _("New ENUM search domain")
-	variables = [VarType("search", title=_("Domain to search for ENUM entries"))]
+	
+	def createVariables(self):
+		self.variables = [VarType("search", title=_("Domain to search for ENUM entries"))]
 
 	def createAsteriskConfig(self):
 		c = AstConf("enum.conf")

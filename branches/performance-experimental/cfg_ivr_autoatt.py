@@ -52,7 +52,7 @@ class CfgIVRAutoatt(CfgIVR):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		return len(configlet_tree['Phones']) > 0
+		return len(configlets.configlet_tree['Phones']) > 0
 	isAddable = classmethod(isAddable)
 
 	def checkConfig(self):

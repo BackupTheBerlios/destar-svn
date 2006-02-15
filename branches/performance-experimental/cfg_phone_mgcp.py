@@ -54,14 +54,13 @@ class CfgPhoneMGCP(CfgPhone):
 			VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
 			VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
 		]
-		
 		if varlist_manager.hasDialouts() > 0:
 			self.variables += varlist_manager.getDialouts()
 			for v in self.variables:
 				if v.name == "Dialout" or v.name=="timeout":
 					v.hide = False
 					
-		queues = len(configlet_tree.getConfigletsbyName('CfgPhoneQueue'))
+		queues = len(configlet_tree.getConfigletsByName('CfgPhoneQueue'))
 		if queues > 0:
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":

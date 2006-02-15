@@ -49,6 +49,9 @@ class CfgTrunkIaxtel(CfgTrunk):
 		VarType("phone",    title=_("Phone to ring"), optional=True, type="choice",
 		                    options=getChoice("CfgPhone"))
 		]
+		
+	def fixup(self):
+		CfgTrunk.fixup(self)
 		useContext(self.context)
 		useContext("in-iaxtel")
 

@@ -27,7 +27,10 @@ class CfgAppMilliwatt(CfgApp):
 	newObjectTitle  = _("New milliwatt test extension")
 	description = _("""Generate a Constant 1000Hz tone at 0dbm (mu-law). Used for
 			measuring.""")
-	variables   = [VarType("ext", title=_("Extension"), len=6)]
+			
+	def createVariables(self):
+		self.variables   = [VarType("ext", title=_("Extension"), len=6)]
+		
 
 	def createAsteriskConfig(self):
 		needModule("app_milliwatt")

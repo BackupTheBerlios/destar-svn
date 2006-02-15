@@ -25,7 +25,9 @@ class CfgAppAA(CfgApp):
 
 	shortName   = _("Auto-Attendant")
 	description = _("""Create a greeting that listens for IVR""")
-	variables   = [VarType("name",      title=_("Auto Attendant Name")),
+				  
+	def createVariables(self):
+		self.variables   = [VarType("name",      title=_("Auto Attendant Name")),
                        VarType("greeting",  title=_("Greeting File name")),
                        VarType("context",   title=_("Context")),
 		      ]

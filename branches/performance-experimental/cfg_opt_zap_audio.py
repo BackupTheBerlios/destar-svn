@@ -25,13 +25,15 @@ class CfgOptZapAudio(CfgOptSingle):
 
 	shortName = _("Zaptel Audio Options")
 	newObjectTitle = _("Zaptel Audio Options")
-	variables = [
-		VarType("relaxdtmf", title=_("Be sloppy when detecting DTMF"), type="bool"),
-		VarType("echocancel", title=_("Echo cancel samples"), type="choice",
-	                              options=["0 (no echo cancel)", "16", "32", "64", "128", "256"], default="128"),
-		VarType("echocancelwhenbridged", title=_("Cancel echo even on bridged calls"), type="bool"),
-		VarType("echotraining", title=_("Do early echo training"), type="bool"),
-	]
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("relaxdtmf", title=_("Be sloppy when detecting DTMF"), type="bool"),
+			VarType("echocancel", title=_("Echo cancel samples"), type="choice",
+									  options=["0 (no echo cancel)", "16", "32", "64", "128", "256"], default="128"),
+			VarType("echocancelwhenbridged", title=_("Cancel echo even on bridged calls"), type="bool"),
+			VarType("echotraining", title=_("Do early echo training"), type="bool"),
+		]
 
 
 	def isAddable(self):
