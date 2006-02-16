@@ -38,7 +38,7 @@ class CfgPhoneExtension(CfgPhone):
 			VarType("phone",    title=_("Real phone to ring"), type="choice",
 								options=getChoice("CfgPhone")),
 		]
-		if varlist_manager.hasDialouts() > 0:
+		if varlist_manager.hasDialouts():
 			self.variables += varlist_manager.getDialouts()
 			for v in self.variables:
 				if v.name == "Dialout" or v.name=="timeout":

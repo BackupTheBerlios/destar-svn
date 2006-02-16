@@ -744,6 +744,7 @@ class VarListManager:
 		return self.dialouts
 
 	def updateDialouts(self):
+		self.dialouts = []
 		for obj in configlet_tree['Dialout']:
 			self.dialouts.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
 			self.dialouts.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))

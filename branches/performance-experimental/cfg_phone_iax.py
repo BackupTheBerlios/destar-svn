@@ -54,7 +54,7 @@ class CfgPhoneIax(CfgPhone):
 			VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
 			VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
 		]
-		if varlist_manager.hasDialouts() > 0:
+		if varlist_manager.hasDialouts():
 			self.variables += varlist_manager.getDialouts()
 			for v in self.variables:
 				if v.name == "Dialout" or v.name=="timeout":
