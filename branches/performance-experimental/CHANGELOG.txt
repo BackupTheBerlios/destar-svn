@@ -1,4 +1,5 @@
 2006-02-16:
+* Fixed typo en configlets.py
 * configlets.py: fixed bug with duplecated dialout entries in VarListManager.updateDialouts() method
 * cfg_phone_iax.py, cfg_phone_sip.py, cfg_phone_mgcp.py, cfg_phone_queue.py, cfg_phone_zap.py, cfg_phone_ext.py: changed if varlist_manager.hasDialouts() > 0 with if varlist_manager.hasDialouts()
 

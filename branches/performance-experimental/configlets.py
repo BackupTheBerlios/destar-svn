@@ -357,7 +357,7 @@ class ConfigletTree:
 		for obj in self:
 			if obj.__class__.__name__ == _class: 
 				return True
-		return false
+		return False
 			
 
 	def empty(self):
