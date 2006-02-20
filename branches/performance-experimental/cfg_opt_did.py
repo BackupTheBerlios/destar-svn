@@ -41,6 +41,15 @@ class CfgOptDID(CfgOpt):
 		                     options=getChoice("CfgIVR")),
 		VarType("clid",       title=_("Change Caller*Id to:"), len=25, optional=True),
 		]
+		
+	def createDependencies(self):
+		try:
+			if not self.trunk=="":
+				import configlets
+				trunk = configlets.configlet_tree.getConfigletByName(self.trunk)
+				trunk.dependencies.append(Dependency(self, "trunk"))
+		except:
+			pass
 	
 	def isAddable(self):
 		# BUG: it does somehow not work to simply write for obj in config_entries,

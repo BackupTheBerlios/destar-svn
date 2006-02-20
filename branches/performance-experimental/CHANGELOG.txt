@@ -1,3 +1,11 @@
+2006-02-19:
+* configlets.py: Cfg.__getattr__() method is back due to AttributeExceptions in VarListManager.updateTrunks()
+* configlets.py: added Cfg.updateDependencies() method
+* configlets.py: added Cfg.dependencies field
+* configlets.py: added Dependency Class
+* ConfigHelper.ptl: added dependency renaming in configletsForm().saveConfig()
+* cfg_opt_did.py: added createDependencies() method for testing.
+
 2006-02-16:
 * Fixed typo en configlets.py
 * configlets.py: fixed bug with duplecated dialout entries in VarListManager.updateDialouts() method

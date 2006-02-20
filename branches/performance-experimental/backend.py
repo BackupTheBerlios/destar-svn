@@ -74,6 +74,7 @@ def fixupConfiglets():
 		obj.createVariables()
 	for obj in configlets.configlet_tree:
 		obj.fixup()
+		obj.createDependencies()
 
 def createPythonConfig(f=None):
 	"""This writes /etc/asterisk/destar_cfg.py.

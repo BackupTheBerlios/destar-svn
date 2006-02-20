@@ -465,6 +465,7 @@ class Cfg(Holder):
 	#shortName = "Cfg class (do not use directly)"
 	#group     = "Generic option"
 	variables  = []
+	dependencies = []
 
 
 	def __init__(self,autoAdd=True,**kw):
@@ -490,12 +491,27 @@ class Cfg(Holder):
 			if v.type=="label":
 				v.optional = True
 				continue
-					
+				
+	def __getattr__(self, field):
+		self.createVariables()
+		self.fixup()
+		if self.__dict__.has_key(field):
+			return self.__dict__[field]
+		else:
+			raise AttributeError
+				
 	def lookPanel(self):
 		if panelutils.isConfigured() == 1:
 			for v in self.variables:
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
+					
+	def updateDependencies(self, new_name):
+		for dep in self.dependencies:
+				dep.rename(new_name)
+					
+	def createDependencies(self):
+		pass
 			
 	def createVariables(self):
 		pass
@@ -718,6 +734,15 @@ class CfgOptSingle(CfgOpt):
 		return True
 	isAddable = classmethod(isAddable)
 
+
+class Dependency:
+	def __init__(self, configlet, field, _type="Existence"):
+		self.configlet = configlet
+		self.field = field
+		self.dependency_type = _type
+		self.message = _("This is a Dependency")
+	def rename(self, new_name):
+		self.configlet.__dict__[self.field] = new_name
 
 class VarListManager:
 
