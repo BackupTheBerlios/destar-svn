@@ -222,9 +222,10 @@ def initializeAsteriskConfig():
 	c.append(";")
 	c.setSection("macro-voicemail")
 	c.append("exten => s,1,Answer")
-	c.append("exten => s,2,Wait(1)")
-	c.append("exten => s,3,VoiceMail2(${ARG1})")
-	c.append(";exten => s,104,Macro(dial-result,3)")
+	c.append("exten => s,2,AbsoluteTimeout(240)")
+	c.append("exten => s,3,Wait(1)")
+	c.append("exten => s,4,VoiceMail2(${ARG1})")
+	c.append(";exten => s,105,Macro(dial-result,3)")
 
 	c.append(";exten => h,1,Macro(dial-result)")
 	c.append(";exten => t,1,Macro(dial-result)")

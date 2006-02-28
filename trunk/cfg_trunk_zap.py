@@ -40,7 +40,7 @@ class CfgTrunkZap(CfgTrunk):
 		VarType("rxgain",     title=_("Reception gain"), hint=_("in dB"), optional=True, default="0.0"),
 		VarType("txgain",     title=_("Transmission gain"), hint=_("in dB"), optional=True, default="0.0"),
 	
-		VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
+		VarType("Inbound",    title=_("Calls from ZAP trunk"), type="label"),
 		VarType("contextin",      title=_("Go to"), type="radio", default='phone',
 		                               options=[('phone',_("Phone")),('ivr',_("IVR"))]),
 		VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,

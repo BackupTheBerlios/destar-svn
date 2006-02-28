@@ -107,10 +107,13 @@ class CfgTrunkZapPRI(CfgTrunk):
 		c.append("; Zaptel Trunk %s" % self.name)
 		if self.group:
 			c.appendValue(self, "group")
+		c.appendValue(self, "signalling")
+		c.appendValue(self, "switchtype")
+		c.append("pridialplan=unknown")
 		contextin = "in-%s" % self.name
 		c.append("context=%s" % contextin)
-		c.append("callerid=asreceived")
 		c.append("usecallerid=yes")
+		c.append("callerid=asreceived")
 		c.append("hidecallerid=no")
 		c.append("callwaiting=no")
 		c.append("usecallingpres=yes")
@@ -125,8 +128,6 @@ class CfgTrunkZapPRI(CfgTrunk):
 		c.append("relaxdtmf=yes")
 		c.append("immediate=no")
 		c.append("busydetect=no")
-		c.appendValue(self, "signalling")
-		c.appendValue(self, "switchtype")
 		c.appendValue(self, "rxgain")
 		c.appendValue(self, "txgain")
 		c.append("channel=%s" % self.channels)
@@ -142,5 +143,13 @@ class CfgTrunkZapPRI(CfgTrunk):
 		self.createIncomingContext()
 
 		if panelutils.isConfigured() == 1 and self.panel:
-			panelutils.createTrunkButton(self)
-
+			p = AstConf("op_buttons.cfg")
+                        chgrp = self.channels.split(',')
+                        for gr in chgrp:
+                                gr_start_end = gr.split('-')
+                                for ch in range(int(gr_start_end[0]),int(gr_start_end[1])+1):
+                                        p.setSection("%s/%d" % (self.technology, ch) )
+                                        p.append("Position=n")
+                                        p.append("Icon=2")
+                                        p.append("Extension=-1")
+                                        p.append("Label=%s-%d" % (self.name,ch))

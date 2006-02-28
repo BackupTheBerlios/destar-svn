@@ -1,3 +1,14 @@
+2006-02-28
+*configlets.py: again receive 's' exten on CreateIncomingContext, added mail field for voicemail notifications.
+*backend.py: Added timeout to macro-voicemail.
+*cfg_phone_zap.py: updated createDialEntry.
+*cfg_opt_music.py: increased 'Directory' field lenght.
+*cfg_trunk_zap.py: fixed typo.
+*cfg_phone_sip.py: added mail field for voicemail notifications.
+*cfg_trunk_zappri.py: changed order of some parammeters, fixed error on panel button creation when several channels are specified.
+*cfg_opt_zap_audio.py: Added some usefull default options.
+
+
 2006-02-23
 *Added page_admin_phonestats.ptl: initial implementation for extension estatistics (still buggy).
 *Added misc/debian/cfg_opt_networking.py: debian specific network configuration.

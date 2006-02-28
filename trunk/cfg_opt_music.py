@@ -27,7 +27,7 @@ class CfgOptMusic(CfgOpt):
 	newObjectTitle= _("New background music directory")
 	variables = [VarType("name", title=_("Name"), len=15),
 		     VarType("type", title=_("Type"), type="choice", options=("mp3", "quietmp3","mp3nb","quietmp3nb","custom")),
-		     VarType("dir",  title=_("Directory"))]
+		     VarType("dir",  title=_("Directory"), len=255)]
 
 	def createAsteriskConfig(self):
 		c = AstConf("musiconhold.conf")

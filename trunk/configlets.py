@@ -646,10 +646,13 @@ class CfgTrunk(Cfg):
 		if self.clid:
 			needModule("app_setcidname")
 			d.appendExten("_X.","SetCIDName(%s)" %  self.clid)
+			d.appendExten("s","SetCIDName(%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			c.appendExten("_X.", "Goto(phones,%s,1)" % self.phone)
+			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
 		if self.contextin == 'ivr' and self.ivr:
 			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
+			c.appendExten("s", "Goto(%s,s,1)" % self.ivr)
 		
 class CfgPhone(Cfg):
 	"""Base class for all phone devices."""
@@ -748,7 +751,10 @@ class CfgPhone(Cfg):
 			#TODO: deal with timezones
 			#options = "tz=cest"
 			options = ""
-			vm.append("%s=%s,%s,,%s" % (self.ext, pin, self.name, options))
+			if self.email:
+				vm.append("%s=%s,%s,%s,%s" % (self.ext, pin, self.name, self.email, options))
+			else:
+				vm.append("%s=%s,%s,,%s" % (self.ext, pin, self.name, options))
 	
 	def createQueuesConfig(self):
 		try:

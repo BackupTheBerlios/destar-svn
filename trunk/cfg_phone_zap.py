@@ -101,9 +101,9 @@ class CfgPhoneZap(CfgPhone):
 
 
 	def createDialEntry(self, extensions, ext):
-		ret = extensions.appendExten(ext, "Macro(dial-std-exten,%s/%s,%s,%d)" % (
+		ret = extensions.appendExten(ext, "Macro(dial-std-exten,%s/%s,out-%s,%d)" % (
 			self.technology,
 			self.channels,
-			"phones",
+			self.name,
 			int(self.usevm))
 		      )

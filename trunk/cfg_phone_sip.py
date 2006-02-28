@@ -53,6 +53,7 @@ class CfgPhoneSip(CfgPhone):
 		VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
 		VarType("usemwi",     title=_("Signal waiting mail"), type="bool", optional=True),
 		VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
+		VarType("email",      title=_("Voicemail email"), optional=True, len=60),
 		
 		VarType("Outbound"  ,   title=_("Calls from the phone"), type="label"),
 		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
