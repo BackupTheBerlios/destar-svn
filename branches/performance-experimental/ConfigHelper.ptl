@@ -172,7 +172,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 			#print 1,_v
 			obj.__dict__[v.name] = _v
 			if v.name == 'name':
-				obj.updateDependencies(_v)
+				obj.renameDependencies(_v)
 		if withCallback and actionCallback:
 			actionCallback(obj)
 			
@@ -189,6 +189,47 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		if ret:
 			form.set_error(ret[0],ret[1])
 		obj.__dict__ = backup
+		
+	def showDependencies [html]():
+		header(title, menu)
+		#render_desc()
+		form2 = Form()
+		form2.add(SubmitWidget, '_cascade_delete', _("Cascade Delete"), render_br=False)
+		form2.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
+		'<h2>'
+		_("Warning")
+		'</h2>'
+		'<p>'
+		_("The following configlets depends on this object in a direct or indirect way:")
+		'</p>'
+		'<table>'
+		for dep in obj.getFullDependencies():
+			if dep.dependency_type == "existence":
+				dep_type = _("Hard Dependencie:")
+				color = 'red'
+			else:
+				dep_type = _("Soft Dependencie:")
+				color = 'green'
+			'<tr>'
+			'<td><span style="color:%s">%s</span></td>' % (color, dep_type)
+			for cell in dep.configlet.row():
+				'<td>'
+				'<a href="../edit/%s">%s</a>' % (dep.configlet._id, cell)
+				'</td>'
+			'</tr>'
+		'</table>'
+		'<h4>Note:</h4>'
+		'<p>'
+		'<span style="color:red">'
+		_("Hard dependencie: The dependent object can not exist if this object is deleted")
+		'<br />'
+		'</span>'
+		'<span style="color:green">'
+		_("Soft dependencie. The dependent object still can exist if this object is deleted")
+		'</span>'
+		'</p>'
+		form2.render()
+		footer()
 
 
 	form = Form()
@@ -198,8 +239,11 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		return request.redirect(exitPath)
 	if request.form.has_key('_delete'):
 		print "-->delete"
-		backend.deleteConfiglet(obj._id)
-		return request.redirect(exitPath)
+		if obj.hasDependencies():
+			return showDependencies()
+		else:
+			backend.deleteConfiglet(obj._id)
+			return request.redirect(exitPath)
 
 
 	do_update = False

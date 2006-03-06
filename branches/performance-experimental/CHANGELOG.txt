@@ -1,3 +1,8 @@
+2006-03-5:
+* configlets.py: Added getFullDependencies() method to Cfg
+* configlets.py: Added hasDependencies() method to Cfg
+* ConfigHelper.ptl: Added showDependencie function to configletsForm
+
 2006-02-19:
 * configlets.py: Cfg.__getattr__() method is back due to AttributeExceptions in VarListManager.updateTrunks()
 * configlets.py: added Cfg.updateDependencies() method

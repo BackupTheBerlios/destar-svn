@@ -506,9 +506,19 @@ class Cfg(Holder):
 				if v.name == "panelLab" or v.name == "panel":
 					v.hide = False
 					
-	def updateDependencies(self, new_name):
+	def renameDependencies(self, new_name):
 		for dep in self.dependencies:
 				dep.rename(new_name)
+				
+	def hasDependencies(self):
+		return len(self.dependencies) > 0
+
+	def getFullDependencies(self):
+		dep_list = []
+		for dep in self.dependencies:
+			if not dep in dep_list:
+				dep_list.append(dep)
+		return dep_list
 					
 	def createDependencies(self):
 		pass
@@ -736,7 +746,7 @@ class CfgOptSingle(CfgOpt):
 
 
 class Dependency:
-	def __init__(self, configlet, field, _type="Existence"):
+	def __init__(self, configlet, field, _type="existence"):
 		self.configlet = configlet
 		self.field = field
 		self.dependency_type = _type
