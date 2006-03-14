@@ -54,7 +54,7 @@ def print_usage():
 	print ""
 	print "Options:"
 	print "  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID"
-	print "  -d | --daemonize: run in the background on port <port> (default: 8080)"
+	print "  -d | --daemonize: run in the background"
 	print "  -r <port> | --port=<port>: run on port <port> (default: 8080)"
 
 
@@ -69,7 +69,6 @@ except getopt.GetoptError:
 for opt,val in opts:
 	if opt in  ('-d', '--daemonize'):
 		be_daemon=True
-		deamon_port = val
 	if opt in  ('-h', '--help'):
 		print_usage()
 		sys.exit(0)
