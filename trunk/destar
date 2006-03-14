@@ -32,6 +32,7 @@ An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
 import sys, getopt, panelutils
 import daemonize
 be_daemon = False
+rport = 8080
 pid_file = '/var/run/destar.pid'
 
 
@@ -52,13 +53,14 @@ def print_usage():
 	print "  %s -v|--version: only print version information" % program
 	print ""
 	print "Options:"
-	print "  -p <pid> --pid=<pid>: use <pid> to store the daemon's PID"
-	print "  -d|--daemonize: run in the background"
+	print "  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID"
+	print "  -d | --daemonize: run in the background on port <port> (default: 8080)"
+	print "  -r <port> | --port=<port>: run on port <port> (default: 8080)"
 
 
 try:
-	opts,args = getopt.getopt(sys.argv[1:],'dhp:v', 
-		['daemonize','help','pid=', 'version'])
+	opts,args = getopt.getopt(sys.argv[1:],'dhpr:v', 
+		['daemonize=','help','pid=', 'port', 'version'])
 except getopt.GetoptError:
 	print "DeStar: Command-line parsing error. Aborting."
 	print_usage()
@@ -67,11 +69,14 @@ except getopt.GetoptError:
 for opt,val in opts:
 	if opt in  ('-d', '--daemonize'):
 		be_daemon=True
+		deamon_port = val
 	if opt in  ('-h', '--help'):
 		print_usage()
 		sys.exit(0)
 	if opt in ('-p', '--pid'):
 		pid_file = val
+	if opt in ('-r', '--port'):
+		rport = val
 	if opt in ('-v', '--version'):
 		print_version()
 		sys.exit(0)
@@ -100,7 +105,7 @@ except ImportError:
 # 'Publisher.py' contains our session management, 'page_main' contains
 # the start page.
 import Server, Publisher
-pub = Server.Server("page_main", port=8080, publisher=Publisher.DeStarPublisher)
+pub = Server.Server("page_main", port=int(rport), publisher=Publisher.DeStarPublisher)
 
 
 

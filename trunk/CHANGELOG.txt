@@ -1,3 +1,7 @@
+2006-03-14
+*destar: added -r <port>|--port=<port> option on command line.
+*cfg_opt_zap_audio.py: Added some usefull default options.
+
 2006-02-28
 *configlets.py: again receive 's' exten on CreateIncomingContext, added mail field for voicemail notifications.
 *backend.py: Added timeout to macro-voicemail.

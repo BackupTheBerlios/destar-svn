@@ -80,6 +80,8 @@ class CfgTrunkZap(CfgTrunk):
 		c.append("; Zaptel Trunk %s" % self.name)
 		c.append("context=in-%s" % self.name)
 		c.append("callerid=asreceived")
+                c.append("busydetect=yes")
+                c.append("busycount=8")
 		c.appendValue(self, "signalling")
 		c.appendValue(self, "rxgain")
 		c.appendValue(self, "txgain")
