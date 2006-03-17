@@ -203,8 +203,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		_("The following configlets depends on this object in a direct or indirect way:")
 		'</p>'
 		'<table>'
-		for dep in obj.getFullDependencies():
-			if dep.dependency_type == "existence":
+		for dep in obj.dependencies:
+			if dep.dependency_type == "hard":
 				dep_type = _("Hard Dependencie:")
 				color = 'red'
 			else:
@@ -235,15 +235,16 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 	form = Form()
 
 	if request.form.has_key('_cancel'):
-		print "-->cancel"
 		return request.redirect(exitPath)
 	if request.form.has_key('_delete'):
-		print "-->delete"
 		if obj.hasDependencies():
 			return showDependencies()
 		else:
 			backend.deleteConfiglet(obj._id)
 			return request.redirect(exitPath)
+	if request.form.has_key('_cascade_delete'):
+		backend.deleteConfiglet(obj._id)
+		return request.redirect(exitPath)
 
 
 	do_update = False

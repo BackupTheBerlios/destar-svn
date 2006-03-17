@@ -310,6 +310,8 @@ class ConfigletTree:
 		for group in self.groups.values():
 			for i in range(len(group)):
 				if group[i]._id == _id:
+					for dep in group[i].dependencies:
+						self.deleteConfiglet(dep.configlet._id)
 					del group[i]
 					return
 					
@@ -492,6 +494,8 @@ class Cfg(Holder):
 				v.optional = True
 				continue
 				
+		self.dependencies = []
+				
 	def __getattr__(self, field):
 		self.createVariables()
 		self.fixup()
@@ -499,7 +503,7 @@ class Cfg(Holder):
 			return self.__dict__[field]
 		else:
 			raise AttributeError
-				
+
 	def lookPanel(self):
 		if panelutils.isConfigured() == 1:
 			for v in self.variables:
@@ -509,22 +513,18 @@ class Cfg(Holder):
 	def renameDependencies(self, new_name):
 		for dep in self.dependencies:
 				dep.rename(new_name)
-				
+
 	def hasDependencies(self):
 		return len(self.dependencies) > 0
 
-	def getFullDependencies(self):
-		dep_list = []
-		for dep in self.dependencies:
-			if not dep in dep_list:
-				dep_list.append(dep)
-		return dep_list
-					
 	def createDependencies(self):
 		pass
 			
 	def createVariables(self):
 		pass
+		
+	def clearDependencies(self):
+		self.dependencies = []
 
 	def fixup(self):
 		"""Each configlet's fixup() method get's called after the
@@ -746,7 +746,7 @@ class CfgOptSingle(CfgOpt):
 
 
 class Dependency:
-	def __init__(self, configlet, field, _type="existence"):
+	def __init__(self, configlet, field, _type="hard"):
 		self.configlet = configlet
 		self.field = field
 		self.dependency_type = _type

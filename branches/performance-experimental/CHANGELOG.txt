@@ -1,3 +1,10 @@
+2006-03-17
+* ConfigHelper.ptl: Fixed bug with cascade delete button.
+* ConfigHelper.ptl: Fixed bug with dependencies types
+* configlets.py: Added Cfg.ClearDependencies method
+* configlets.py: Changed ConfigletTree.deleteConfiglet method
+
+
 2006-03-5:
 * configlets.py: Added getFullDependencies() method to Cfg
 * configlets.py: Added hasDependencies() method to Cfg
