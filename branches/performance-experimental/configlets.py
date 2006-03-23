@@ -9,12 +9,12 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA	02111-1307	USA
 #
 
 
@@ -47,10 +47,10 @@ class AsteriskConfigFile:
 			fn = os.path.join(panelutils.PANEL_CONF_DIR, fn)
 		elif fn.find('/')==-1:
 			fn = os.path.join(CONF_DIR, fn)
-		self.fn       = fn
+		self.fn		  = fn
 		self.sections = {}		# dictionary of sections
-		self.order    = []		# ordered list of sections
-		self.dirty    = False		# nothing to write yet
+		self.order	  = []		# ordered list of sections
+		self.dirty	  = False		# nothing to write yet
 		self.extpriority = 1
 		self.section  = "general"
 		self.destar_comment = True
@@ -223,13 +223,13 @@ def needModule(mod):
 				"format_wav",
 				"format_wav_gsm",
 				],
-			res =   [ "res_musiconhold",
+			res =	[ "res_musiconhold",
 				  "res_features" ],
-			cdr =   [ ],
+			cdr =	[ ],
 			chan =	[ ],
 			app =	[
 				"app_db",
-				"app_dial",	# needs res_musiconhold, res_parking
+				"app_dial", # needs res_musiconhold, res_parking
 				"app_macro",
 				"app_playback",
 				],
@@ -310,7 +310,7 @@ class ConfigletTree:
 		for group in self.groups.values():
 			for i in range(len(group)):
 				if group[i]._id == _id:
-					for dep in group[i].dependencies:
+					for dep in group[i].dependent_objs:
 						self.deleteConfiglet(dep.configlet._id)
 					del group[i]
 					return
@@ -385,7 +385,7 @@ class ConfigletTree:
 		
 	def addConfiglet(self, configlet):
 		if not self.groups.has_key(configlet.groupName):
-			self.groups[configlet.groupName] = list()
+			self.groups[configlet.groupName] = []
 		self.groups[configlet.groupName].append(configlet)
 	
 
@@ -394,7 +394,7 @@ class Holder(object):
 	This is a simple wrapper class so that you can write
 
 	 foo = Holder(bar = 1,
-	            baz = "test")
+				baz = "test")
 	instead of
 
 	 foo["bar"] = 1
@@ -423,7 +423,14 @@ class Holder(object):
 		return "<configlets.Holder object: " + self.__dict__.__repr__()
 
 
-
+class DepType(Holder):
+	"""We use this class to store meta-information about dependendencies"""
+	
+	def __init__(self,name,**kw):
+		Holder.__init__(self,**kw)
+		self.name = name
+		self.__dict__.setdefault("type","hard")
+		self.__dict__.setdefault("message", _("This is a Dependency"))
 
 class VarType(Holder):
 	"""We use this class to store meta-information about configuration variables"""
@@ -448,6 +455,11 @@ class VarType(Holder):
 
 configlet_tree = ConfigletTree()
 
+class DependentObject:
+	def __init__(self, configlet, dependency):
+		self.configlet = configlet
+		self.dependency = dependency
+
 class Cfg(Holder):
 	"""Base class for all configlets.
 
@@ -465,8 +477,9 @@ class Cfg(Holder):
 	(to keep 'name' available for actual data)."""
 
 	#shortName = "Cfg class (do not use directly)"
-	#group     = "Generic option"
+	#group	   = "Generic option"
 	variables  = []
+	dependent_objs = []
 	dependencies = []
 
 
@@ -494,6 +507,7 @@ class Cfg(Holder):
 				v.optional = True
 				continue
 				
+		self.dependent_objs = []
 		self.dependencies = []
 				
 	def __getattr__(self, field):
@@ -511,20 +525,28 @@ class Cfg(Holder):
 					v.hide = False
 					
 	def renameDependencies(self, new_name):
-		for dep in self.dependencies:
+		for dep in self.dependent_objs:
 				dep.rename(new_name)
 
 	def hasDependencies(self):
-		return len(self.dependencies) > 0
+		return len(self.dependent_objs) > 0
 
 	def createDependencies(self):
-		pass
-			
+		for dep in self.dependencies:
+			if self.__dict__.has_key(dep.name):
+				obj_name = self.__dict__[dep.name]
+				import configlets
+				obj = configlets.configlet_tree.getConfigletByName(obj_name)
+				if obj is None:
+					return
+				dependent_obj = DependentObject(self, dep)
+				obj.dependent_objs.append(dependent_obj)
+
 	def createVariables(self):
-		pass
+		variables = []
 		
 	def clearDependencies(self):
-		self.dependencies = []
+		self.dependent_objs = []
 
 	def fixup(self):
 		"""Each configlet's fixup() method get's called after the
@@ -729,7 +751,7 @@ class CfgOptSingle(CfgOpt):
 		by looking if the current class is already contained in
 		configlet_tree.
 
-		If  a child class, e.g.  CfgOptZapAudio.isAddable(), wants
+		If	a child class, e.g.	 CfgOptZapAudio.isAddable(), wants
 		to call us, then 'self' is no longer CfgOptZapAudio, but it
 		is CfgOptSingle. This is because of the classMethod
 		attribute of isAddable. So we have an optional parameter
@@ -743,16 +765,6 @@ class CfgOptSingle(CfgOpt):
 			if o.__class__ == clazz: return False
 		return True
 	isAddable = classmethod(isAddable)
-
-
-class Dependency:
-	def __init__(self, configlet, field, _type="hard"):
-		self.configlet = configlet
-		self.field = field
-		self.dependency_type = _type
-		self.message = _("This is a Dependency")
-	def rename(self, new_name):
-		self.configlet.__dict__[self.field] = new_name
 
 class VarListManager:
 
@@ -826,9 +838,9 @@ class CfgTrunk(Cfg):
 	# BUG: if the choosed phone is deleted, we have a problem
 
 	def checkConfig(self):
-                res = Cfg.checkConfig(self)
-                if res:
-                        return res
+		res = Cfg.checkConfig(self)
+		if res:
+			return res
 		if self.contextin == 'phone' and not self.phone:
 			return ('phone',_("You should select a phone to ring to"))
 
@@ -883,7 +895,7 @@ class CfgPhone(Cfg):
 			self.name,
 			self.name,
 			int(self.usevm))
-		      )
+			  )
 
 	def createExtensionConfig(self):
 		needModule("res_adsi")
@@ -945,9 +957,9 @@ class CfgPhone(Cfg):
 						else: 
 							prefix = 0
 						if secret:
-							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},%s,%s)" % (obj.pattern,obj.name,prefix,secret,timeoutvalue))	
+							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},%s,%s)" % (obj.pattern,obj.name,prefix,secret,timeoutvalue)) 
 						else:
-							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},n,%s)" % (obj.pattern,obj.name,prefix,timeoutvalue))	
+							c.append("exten=>%s,1,Macro(%s,${EXTEN:%d},n,%s)" % (obj.pattern,obj.name,prefix,timeoutvalue)) 
 				except KeyError:
 					pass
 	

@@ -1,3 +1,13 @@
+2006-03-23
+* configlets.py: Changed spaces with tabs
+* configlets.py: Added DepType class
+* configlets.py: Replaced Dependency class with DependentObject
+* configlets.py: added dependet_objs to Cfg
+* configlets.py: added generic createDependencies() method to Cfg
+* ConfigHelper.ptl: showDependencies function from configletsForm now displays dependency description
+* cfg_opt_did.py: changed spaces with tabs and improved identation
+* cfg_opt_did.py: added Dependency Descriptors
+
 2006-03-17
 * ConfigHelper.ptl: Fixed bug with cascade delete button.
 * ConfigHelper.ptl: Fixed bug with dependencies types

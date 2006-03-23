@@ -203,8 +203,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		_("The following configlets depends on this object in a direct or indirect way:")
 		'</p>'
 		'<table>'
-		for dep in obj.dependencies:
-			if dep.dependency_type == "hard":
+		for dep in obj.dependent_objs:
+			if dep.dependency.type == "hard":
 				dep_type = _("Hard Dependencie:")
 				color = 'red'
 			else:
@@ -216,7 +216,11 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 				'<td>'
 				'<a href="../edit/%s">%s</a>' % (dep.configlet._id, cell)
 				'</td>'
+			'<td>'
+			dep.dependency.message
+			'</td>'
 			'</tr>'
+			
 		'</table>'
 		'<h4>Note:</h4>'
 		'<p>'
