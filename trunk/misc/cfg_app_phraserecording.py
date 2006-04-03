@@ -27,7 +27,9 @@ class CfgAppPhraseRecordingMenu(CfgApp):
 
 	shortName   = _("Phrase recording menu")
 	description = _("""NOT YET WORKING""")
-	variables   = [VarType("ext",    title=_("Extension"), len=6)]
+		
+	def createVariables(self):
+		self.variables   = [VarType("ext",    title=_("Extension"), len=6)]
 
 	def createAsteriskConfiglet(self):
 		c = AstConf("extensions.conf")

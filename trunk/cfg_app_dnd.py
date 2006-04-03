@@ -26,7 +26,9 @@ class CfgAppDND(CfgApp):
 	shortName   = _("Set/Unset DND")
 	newObjectTitle  = _("New extensions to Set/Unset Do not disturb")
 	description = _("Extensions to set/unset 'Do Not Disturb'.")
-	variables   = [ 
+	
+	def createVariables(self):
+		self.variables   = [ 
 			VarType("set",      title=_("Setting extension"), len=6, default="*78"),
 			VarType("unset",   title=_("Unsetting extension"), len=6, default="*79")
 		       ]
@@ -36,7 +38,7 @@ class CfgAppDND(CfgApp):
 	
 	def checkConfig(self):
 		import configlets
-		for o in configlets.config_entries:
+		for o in configlets.configlet_tree:
 			if o==self: continue
 			try:
 				if o.ext == self.set or o.ext == self.unset:

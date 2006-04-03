@@ -1,6 +1,30 @@
+2006-04-03
+*Merged changes from branches/performance-experimental to trunk ("Ave María, dame puntería" :P).
+
+2006-03-23
+* configlets.py: Changed spaces with tabs
+* configlets.py: Added DepType class
+* configlets.py: Replaced Dependency class with DependentObject
+* configlets.py: added dependet_objs to Cfg
+* configlets.py: added generic createDependencies() method to Cfg
+* ConfigHelper.ptl: showDependencies function from configletsForm now displays dependency description
+* cfg_opt_did.py: changed spaces with tabs and improved identation
+* cfg_opt_did.py: added Dependency Descriptors
+
+2006-03-17
+* ConfigHelper.ptl: Fixed bug with cascade delete button.
+* ConfigHelper.ptl: Fixed bug with dependencies types
+* configlets.py: Added Cfg.ClearDependencies method
+* configlets.py: Changed ConfigletTree.deleteConfiglet method
+
 2006-03-14
 *destar: added -r <port>|--port=<port> option on command line.
 *cfg_opt_zap_audio.py: Added some usefull default options.
+
+2006-03-5:
+* configlets.py: Added getFullDependencies() method to Cfg
+* configlets.py: Added hasDependencies() method to Cfg
+* ConfigHelper.ptl: Added showDependencie function to configletsForm
 
 2006-02-28
 *configlets.py: again receive 's' exten on CreateIncomingContext, added mail field for voicemail notifications.
@@ -12,33 +36,87 @@
 *cfg_trunk_zappri.py: changed order of some parammeters, fixed error on panel button creation when several channels are specified.
 *cfg_opt_zap_audio.py: Added some usefull default options.
 
-
 2006-02-23
 *Added page_admin_phonestats.ptl: initial implementation for extension estatistics (still buggy).
 *Added misc/debian/cfg_opt_networking.py: debian specific network configuration.
 *Added cfg_phone_epygi.py: remote extension on a Quadro Epygi PBX.
 
-2006-02-15
+2006-02-19:
+* configlets.py: Cfg.__getattr__() method is back due to AttributeExceptions in VarListManager.updateTrunks()
+* configlets.py: added Cfg.updateDependencies() method
+* configlets.py: added Cfg.dependencies field
+* configlets.py: added Dependency Class
+* ConfigHelper.ptl: added dependency renaming in configletsForm().saveConfig()
+* cfg_opt_did.py: added createDependencies() method for testing.
+
+2006-02-16:
+* Fixed typo en configlets.py
+* configlets.py: fixed bug with duplecated dialout entries in VarListManager.updateDialouts() method
+* cfg_phone_iax.py, cfg_phone_sip.py, cfg_phone_mgcp.py, cfg_phone_queue.py, cfg_phone_zap.py, cfg_phone_ext.py: changed if varlist_manager.hasDialouts() > 0 with if varlist_manager.hasDialouts()
+
+2006-02-15:
+* cfg_dialout_normal.py, cfg_phone_iax.py, cfg_app_meetme.py, cfg_app_record.py, cfg_opt_sip_network.py, cfg_phone_ext.py, cfg_opt_voicemail.py, cfg_app_parking.py, cfg_opt_zap_trunk.py, cfg_app_quickdial_phone.py, cfg_opt_logger.py, cfg_app_dnd.py, cfg_app_conference.py, cfg_app_saytime.py, cfg_opt_pickup.py, cfg_trunk_capimsn.py, cfg_app_echo.py, cfg_phone_zap.py, misc/cfg_app_phraserecording.py, misc/cfg_app_aa.py, cfg_opt_rawcfg.py, cfg_ivr_autoatt.py, cfg_opt_music.py, cfg_trunk_fwdiax.py, cfg_app_voicemail.py, cfg_opt_settings.py, cfg_phone_sip.py, cfg_app_quickdial_global.py, cfg_opt_manager.pycfg_opt_sip_audio.py, cfg_trunk_capi.py, cfg_app_directory.py, cfg_app_play.py, cfg_app_milliwatt.py, cfg_ivr_raw.py, cfg_trunk_iaxtel.py, cfg_phone_queue.py, cfg_phone_mgcp.py, cfg_opt_did.py, cfg_opt_enum.py, cfg_opt_zappri.py, cfg_opt_zap_audio.py, cfg_opt_zap_phone.py, cfg_app_callfw.py: Added createVariables method
+* some bug fixes
 *Added Dial options so that when SetMusicOnHold is used, Dial is passed the 'm' option.
+
+2006-02-14:
+* cfg_dialgout_normal.py: fixed bug with isAddable method
+* configlets.py: a 'variables' creation is performed in Cfg constructor
+* cfg_opt_oppanel.py, cfg_trunk_iax.py, cfg_ivr_autoatt.py, cfg_app_music.py,  cfg_opt_user.py: added createVariables() method
+* backend.py: fixed bug with fixupConfiglets() fuctions and recreation of variables in VarListManager.
 
 2006-02-13
 *Applied patch sent by <juan.coronado@avatar.com.co> with some improvements. Closes #6389.
 *Fixed small but anoying bug on dialout timeout.
+* configlets.py: fixed bug in ConfigletTree.hasConfiglet() method.
+* configlets.py: Removed debugger break point in Cfg.createPythonConfig() method.
+* configlets.py: fixed bug in CfgTrunk.fixup() method.
+* backend.py: added fixupConfiglets() function again. This time fixupConfiglet is much faster than previous version. This fuction is used at loadPythonConfig() and createPythonConfig()
+* configlets.py: added hasConfiglet() method to ConfigletTree class. Removed  __getattr__() method form Cfg. fixup() method is back in CfgPhone, now is smaller and faster.
+* added createVariables() method to CfgPermDial, CfgPermDeny and CfgOptRtp classes.
+
+2006-02-07
+* Changed the metadata specification ('variables' list) from class definition to createVariables() method in all configlets
+
+2006-02-04
+* fixup() method has been removed from all configlets except from Cfg base class
+* configlets.py: VarListManager class has been added. This class will be used to store referential integrity functionality. VarListManager. This class also serves to improve performance avoiding repetitive loops arround configlets groups.
+* New method createVariables added to some configlets. This methods manages metadata information stored in the 'variables' field. Now the metadata creation and synchronization is separated: syncronization is performed via fixup() and metadata creation is performed via createVariables(). createConfiglets creates all 'variables' from zero.
+* WARNING. this changes are incomplete, some destar functionality is broken.
 
 2006-01-31
 * page_admin_callsstats.ptl, page_admin_dialoutsstats.ptl,  page_admin_trunksstats.ptl,
   StatsHelper.ptl: fixed bug #6182.
 * Added a menu position to the pages about cdr and statistics
 
+2006-01-28
+* configlets.py fixed bug with ConfigletTree.getConfigletByName()
+* various fixups added.
+
 2006-01-27
 * Added useful prefix handling for dialouts :)
 
+2006-01-16
+* cfg_trunk_zappri.py: Changed channel attribute for channels.
+* Various bug fixes
+* configlets.py: A tree is now used to store configlets instead the old plain list. The class ConfigletTree is used for that purpose. Tree's branches represent groups.
+* backend.py: All the old config_entries references has been replaced by references to the new tree, configlet_tree. In the future many of this functions could be deleted, some are still in the code only as stub
+* All files with references to the config_entries list has been changed.	
+* All references to config_entries has been replaced by configlet_tree, the tree structure
+
 2006-01-14
 * cfg_trunk_zappri.py: Fixed wrong 'channels' instead of 'channel'.
+* backend.py: Fixed missing identation.
 
 2005-12-27
 * Added page_user_quickdiallist.ptl to show the global and private quick dial list.
 * cfg_phone_zap: Made zap group optional.
+
+2005-12-26
+* Removed backend.fixupConfiglets() from backend.py
+* Added __getattr__ method to Cfg class in configlets.py
+* Now each configlet will fixup it self in a "intelligent" way each time that an attribute is needed.
+* A LOT of performance improvement.
 
 2005-12-24
 * Added initial support for global and private quick dial lists.
@@ -50,8 +128,6 @@
 
 2005-12-19
 *backend.py: fixed bug on CFIM/CFBS, still needs more testing.
-
-2005-12-19
 * Added "CallerID" field on CDR form and results.
 
 2005-12-17
@@ -109,7 +185,7 @@ translations in the call details. Closes bug: #5692
 * Updated TODO.txt
 
 2005-11-05
-* Statistics Patch from Manuel Alejandro Cerón applied. It implements some
+* Statistics Patch from Manuel Alejandro Cerï¿½n applied. It implements some
   graphic statistics reports, generated with PyChart 
   http://home.gna.org/pychart/
 * page_config_reload.py: added missing '<p></p>' tags.

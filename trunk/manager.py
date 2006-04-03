@@ -586,6 +586,7 @@ def connect(username=None,password=None):
 				break
 	if not username and not password:
 		# We couldn't log in
+		print "***** manager cant login"
 		return
 
 	conn = ManagerEvents(username,password)

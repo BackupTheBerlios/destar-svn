@@ -26,10 +26,12 @@ class CfgAppGlobalQuickDial(CfgApp):
 	shortName   = _("Global Quick Dial List")
 	description = _("Extensions to add/remove from global quick dial list. The add extension will be of the form prefix+2_digits_key+*+final_destination. The remove extension will be of the form prefix+2_digits_key. The global list only works if the calling estension has been assigned a dialout with the quick dial lookup option activated.")
 	newObjectTitle = _("New extensions to add/remove from global quick dial list") 
-	variables   = [
-			VarType("pin", title=_("Password"), len=20, optional=True),
-			VarType("set",      title=_("Setting prefix"), hint=_("don't use ** because it is for private quick dial list"), len=6, default="*9"),
-			VarType("ext",   title=_("Unsetting prefix"), len=6, default="#9#")
+	
+	def createVariables(self):
+		self.variables   = [
+				VarType("pin", title=_("Password"), len=20, optional=True),
+				VarType("set",      title=_("Setting prefix"), hint=_("don't use ** because it is for private quick dial list"), len=6, default="*9"),
+				VarType("ext",   title=_("Unsetting prefix"), len=6, default="#9#")
 		       ]
 	
 	def row(self):

@@ -28,8 +28,9 @@ class CfgIVRAutoatt(CfgIVR):
 	newObjectTitle= _("New auto attendant")
 	description = _("""Basic auto-attendant.""")
 	groupName = 'IVRs'
-		
-	variables = [
+	
+	def createVariables(self):
+		self.variables = [
 		VarType("name",	  title=_("Name"), len=25),
 		VarType("timeout",   title=_("Max. time for incoming calls in seconds"), hint=_("(0 or empty means no time restriction)"), optional=True, len=10,default=0),
 		VarType("moh",	  title=_("Music-on-hold class"), type="choice", optional=True,
@@ -45,16 +46,13 @@ class CfgIVRAutoatt(CfgIVR):
 		VarType("times",   title=_("Times string"),hint=_("i.e. <hours>|<weekdays>|<monthdays>|<months> (comma separated)"),default="", optional=True, len=300),
 		VarType("phones", title=_("Allow calling to all extensions?"), type="bool"),
 		
-	]
+		]
 
 	def isAddable(self):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		for obj in configlets.config_entries:
-			if obj.groupName == 'Phones':
-				return True
-		return False
+		return len(configlets.configlet_tree['Phones']) > 0
 	isAddable = classmethod(isAddable)
 
 	def checkConfig(self):

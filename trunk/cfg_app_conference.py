@@ -25,7 +25,9 @@ class CfgAppConference(CfgApp):
 
 	shortName   = _("Conference room")
 	newObjectTitle  = _("New conference room")
-	variables   = [VarType("ext",      title=_("Extension"), len=6),
+	
+	def createVariables(self):
+		self.variables   = [VarType("ext",      title=_("Extension"), len=6),
 		       VarType("confno",   title=_("Conference number"))]
 
 	def createAsteriskConfig(self):

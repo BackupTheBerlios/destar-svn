@@ -27,7 +27,10 @@ class CfgTrunkZapPRI(CfgTrunk):
 
 	shortName = _("Standard ZAP PRI trunk")
 	newObjectTitle = _("New standard ZAP PRI trunk")
-	variables = [
+	technology = "ZAP"
+	
+	def createVariables(self):
+		self.variables = [
 		VarType("name",       title=_("Name"), len=35),
 		VarType("signalling", title=_("Signalling type"), type="choice",
 			      options=[('pri_cpe',_('PRI signalling, CPE side')),('pri_net', _('PRI signalling, Network side'))]),
@@ -60,7 +63,6 @@ class CfgTrunkZapPRI(CfgTrunk):
 		VarType("clid",       title=_("Change Caller*Id to:"), len=25, optional=True),
 		VarType("dial", hide=True, len=50),
 		]
-	technology = "ZAP"
 
 	def isAddable(self):
 		"""We can only add this configlet if we have at least one
@@ -69,7 +71,7 @@ class CfgTrunkZapPRI(CfgTrunk):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		for obj in configlets.config_entries:
+		for obj in configlets.configlet_tree:
 			if obj.__class__.__name__ == 'CfgOptZapPRI':
 				return True
 		return False 
@@ -80,7 +82,7 @@ class CfgTrunkZapPRI(CfgTrunk):
                 if res:
                         return res
 		import configlets
-		for obj in configlets.config_entries:
+		for obj in configlets.configlet_tree:
 			if obj.__class__.__name__ == 'CfgTrunkZapPRI':
 				if obj==self: continue
 				try:

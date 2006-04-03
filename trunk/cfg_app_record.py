@@ -27,18 +27,20 @@ class CfgAppRecord(CfgApp):
 	newObjectTitle  = _("New recording extension")
 	description = _("""Allows you to record a sound file. You can hang up, be silent for
 			a second or dial '#' to stop the recording.""")
-	variables   = [
-		VarType("ext",      title=_("Extension"), len=6),
-		VarType("filename", title=_("File name")),
-		VarType("format",   title=_("Sound format"), type="choice",
-			options=(("gsm", _("GSM compression")),
-				 ("ulaw",_("PCM format 'ulaw'")),
-				 ("alaw",_("alaw")),
-                                 ("vox", _("vox")),
-                                 ("wav", _("WAV-File with Microsoft PCM, 16 bit, mono 8000 Hz")),
-                                 ("WAV", _("WAV-File with GSM 6.10 compression, mono 8000 Hz")),
-                                ),
-			default="WAV")
+			
+	def createVariables(self):
+		self.variables   = [
+			VarType("ext",      title=_("Extension"), len=6),
+			VarType("filename", title=_("File name")),
+			VarType("format",   title=_("Sound format"), type="choice",
+				options=(("gsm", _("GSM compression")),
+					 ("ulaw",_("PCM format 'ulaw'")),
+					 ("alaw",_("alaw")),
+									 ("vox", _("vox")),
+									 ("wav", _("WAV-File with Microsoft PCM, 16 bit, mono 8000 Hz")),
+									 ("WAV", _("WAV-File with GSM 6.10 compression, mono 8000 Hz")),
+									),
+				default="WAV")
 		]
 
 

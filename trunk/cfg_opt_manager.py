@@ -23,19 +23,18 @@ from configlets import *
 
 class CfgOptManager(CfgOpt):
 
-	_opt = ("","system", "call", "log", "verbose", "command", "agent", "user")
 	shortName = _("Management API access")
 	newObjectTitle= _("New management API access")
-	variables = [VarType("name",   title=_("Name"), len=15),
+	
+	def createVariables(self):
+		_opt = ("","system", "call", "log", "verbose", "command", "agent", "user")
+		self.variables = [VarType("name",   title=_("Name"), len=15),
 		     VarType("secret", title=_("Secret"), len=15, default=generatePassword(8)),
 		     VarType("deny",   title=_("IP disable mask"), len=31, default="0.0.0.0/0.0.0.0"),
 		     VarType("permit", title=_("IP enable mask"), len=31,   default="127.0.0.1/255.255.255.0"),
 		     VarType("read",   title=_("Read"),  type="mchoice", optional=True, options=_opt),
 		     VarType("write",  title=_("Write"), type="mchoice", optional=True, options=_opt, default=','.join(_opt)),
 		    ]
-
-	def fixup(self):
-		CfgOpt.fixup(self)
 
 	def createAsteriskConfig(self):
 		c = AstConf("manager.conf")

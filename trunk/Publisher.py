@@ -86,7 +86,7 @@ class DeStarPublisher(Publisher):
 			session.level = 0
 
 			users = backend.getConfiglets(name="CfgOptUser")
-			if not users:
+			if len(users) == 0:
 				# be Admin if there are no users configured
 				session.user  = "programmer"
 				session.level = 4

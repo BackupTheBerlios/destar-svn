@@ -37,7 +37,7 @@ PANEL_STOP_CMD	= "pkill op_server"
 def isConfigured ():
 	import configlets
 	configured=0
-	for obj in configlets.config_entries:
+	for obj in configlets.configlet_tree:
 		if obj.__class__.__name__ == 'CfgOptOPPanel':                                
 			configured=1
 			continue

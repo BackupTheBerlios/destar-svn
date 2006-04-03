@@ -26,17 +26,29 @@ class CfgPhoneExtension(CfgPhone):
 	shortName = _("Extension")
 	newObjectTitle = _("New extension")
 	description = _("Set an 'alias' extension to a phone")
-	variables = [
-		VarType("name",     title=_("Name"), len=15),
-
-		VarType("ext",      title=_("Extension"), hint=_("This can be used to set operator(o) or fax(fax) extensions."), optional=True, len=6),
-
-		VarType("Outbound", title=_("Calls to the extension"), type="label"),
-		VarType("phone",    title=_("Real phone to ring"), type="choice",
-		                    options=getChoice("CfgPhone")),
-		     ]
-
 	technology = "virtual"
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("name",     title=_("Name"), len=15),
+	
+			VarType("ext",      title=_("Extension"), hint=_("This can be used to set operator(o) or fax(fax) extensions."), optional=True, len=6),
+	
+			VarType("Outbound", title=_("Calls to the extension"), type="label"),
+			VarType("phone",    title=_("Real phone to ring"), type="choice",
+								options=getChoice("CfgPhone")),
+		]
+		if varlist_manager.hasDialouts():
+			self.variables += varlist_manager.getDialouts()
+			for v in self.variables:
+				if v.name == "Dialout" or v.name=="timeout":
+					v.hide = False
+					
+		queues = len(configlet_tree.getConfigletsByName('CfgPhoneQueue'))
+		if queues > 0:
+			for v in self.variables:
+				if v.name == "QueueLab" or v.name == "queues":
+					v.hide = False
 
 
 	def isAddable(self):
@@ -45,7 +57,7 @@ class CfgPhoneExtension(CfgPhone):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		for obj in configlets.config_entries:
+		for obj in configlets.configlet_tree:
 			if obj.groupName == 'Phones':
 				return True
 		return False

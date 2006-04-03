@@ -27,7 +27,9 @@ class CfgAppEcho(CfgApp):
 	newObjectTitle  = _("New Echo test extension")
 	description = _("""The echo test immediately plays back what you speek. You can
 			   use this to find out how much echo you have.""")
-	variables   = [VarType("ext", title=_("Extension"), len=6)]
+			   
+	def createVariables(self):
+		self.variables   = [VarType("ext", title=_("Extension"), len=6)]
 
 	def createAsteriskConfig(self):
 		needModule("app_echo")

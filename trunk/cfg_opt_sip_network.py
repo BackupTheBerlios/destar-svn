@@ -27,15 +27,17 @@ class CfgOptSipNetwork(CfgOptSingle):
 
 	shortName = _("SIP Network Options")
 	newObjectTitle = _("SIP Network Options")
-	variables = [
-		VarType("doBind",	title=_("Bind specific address?"), type="bool"),
-		VarType("bindaddr",	title=_("Bind address"), len=25),
-		VarType("extintnet",	title=_("External/Internal IP"), type="label"),
-		VarType("setExt",	title=_("Force external ip/internel network?"),	type="bool"),
-		VarType("extip",	title=_("External ip"), len=25),
-		VarType("intnet",	title=_("Internal network"), len=25),
-		VarType("intnetmask",	title=_("Netmask"), len=25),
-	]
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("doBind",	title=_("Bind specific address?"), type="bool"),
+			VarType("bindaddr",	title=_("Bind address"), len=25),
+			VarType("extintnet",	title=_("External/Internal IP"), type="label"),
+			VarType("setExt",	title=_("Force external ip/internel network?"),	type="bool"),
+			VarType("extip",	title=_("External ip"), len=25),
+			VarType("intnet",	title=_("Internal network"), len=25),
+			VarType("intnetmask",	title=_("Netmask"), len=25),
+		]
 
 	def checkConfig(self):
 		res = CfgOpt.checkConfig(self)
@@ -49,7 +51,7 @@ class CfgOptSipNetwork(CfgOptSingle):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		for obj in configlets.config_entries:
+		for obj in configlets.configlet_tree:
 			if obj.__class__.__name__ in ('CfgPhoneSip','CfgTrunkSip'):
 				return CfgOptSingle.isAddable(self)
 		return False

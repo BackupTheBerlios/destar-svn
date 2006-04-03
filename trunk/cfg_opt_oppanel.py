@@ -28,15 +28,16 @@ class CfgOptOPPanel(CfgOptSingle):
 	newObjectTitle= _("Operator Panel")
 	description = _("Configure Asternic Flash Operator Panel")
 	groupName = 'Options'
-	
-	variables = [
+	 
+	def createVariables(self):
+		self.variables = [
 		VarType("name", title=_("Name"), len=15, default="oppanel"),
 		VarType("web_hostname", title=_("FQDN/IP to access the panel via web"), len=15, optional=True),
 		VarType("security_code", title=_("Security Code"), len=15, default=generatePassword(8)),
 		VarType("manager", title=_("Manager agent"), type="choice",
 		                  options=getChoice("CfgOptManager")),
 		VarType("poll_interval", title=_("Frequency in seconds to poll for sip and iax status"), len=10, default="60"),
-		     ]
+		]
 
 	def createAsteriskConfig(self):
 		c = AstConf("op_server.cfg")

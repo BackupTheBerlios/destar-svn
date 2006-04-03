@@ -25,26 +25,23 @@ class CfgTrunkZapHFC(CfgTrunk):
 
 	shortName = _("ISDN using zaphfc")
 	newObjectTitle = _("New ISDN using zaphfc trunk")
-	variables = [
-		VarType("name",  title=_("Name"), len=35),
-		VarType("mode",  title=_("Mode of NTBA"), type="choice",
-		                 options=("p2p","p2mp"), default="p2mp"),
-		VarType("cards", title=_("Number of cards"), type="int", default=1, len=2),
-
-		VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
-		VarType("msn",   title=_("Subscriber number"), len=15),
-		VarType("ext",   title=_("Outgoing prefix"), optional=True, len=6),
-		]
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("name",  title=_("Name"), len=35),
+			VarType("mode",  title=_("Mode of NTBA"), type="choice",
+							 options=("p2p","p2mp"), default="p2mp"),
+			VarType("cards", title=_("Number of cards"), type="int", default=1, len=2),
+	
+			VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
+			VarType("msn",   title=_("Subscriber number"), len=15),
+			VarType("ext",   title=_("Outgoing prefix"), optional=True, len=6),
+			]
 
 
 	def fixup(self):
 		CfgTrunk.fixup(self)
 		useContext("in-pstn")
-
-		#import configlets
-		#for obj in configlets.config_entries:
-		#	if isinstance(obj, configlets.CfgPhone):
-		#		print obj.__class__.__name__
 
 
 	def createAsteriskConfig(self):
@@ -83,7 +80,7 @@ class CfgTrunkZapHFC(CfgTrunk):
 			# in the [in-pstn] context.
 			c = AstConf("extensions.conf")
 			c.setSection("in-pstn")
-			for p in config_entries:
+			for p in configlet_tree:
 				if not isinstance(p, Phone): continue
 				if not p.did: continue
 				#c.appendExten("%s%s" % (self.msn,p.ext), "Macro(exten-std,SIP/%s)" % p.name)

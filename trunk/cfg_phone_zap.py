@@ -26,38 +26,47 @@ class CfgPhoneZap(CfgPhone):
 
 	shortName = _("Normal ZAP phone")
 	newObjectTitle = _("New ZAP phone")
-	variables = [
-		VarType("name",       title=_("Name"), len=35),
-		VarType("channels",    title=_("Zaptel channel number"), type="string", len=5),
-		VarType("sigtype",    title=_("Signalling type"), type="choice",
-	                              options=[('ls','loopstart'),('ks', 'kewlstart')]),
-		VarType("group",      title=_("Group"), type="int", default=1, optional=True),
-		VarType("ext",        title=_("Extension"), optional=True, len=6),
-		VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
-
-		VarType("Call Group",   title=_("Call group"), type="label"),
-		VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=False, default=False), 
-		VarType("callgroup",  title=_("Call group number"), optional=True),
-		
-		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this phone in the panel"), type="bool", hide=True, optional=True),
-		
-		VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
-		VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
-		VarType("usemwi",     title=_("Signal waiting mail"), type="bool", optional=True),
-		VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
-
-		VarType("Outbound",     title=_("Calls from the phone"), type="label"),
-		VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
-		VarType("calleridname", title=_("Caller-Id Name"), optional=True),
-		VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
-		VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
-	]
 	technology = "ZAP"
-
-
-	def fixup(self):
-		CfgPhone.fixup(self)
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("name",       title=_("Name"), len=35),
+			VarType("channels",    title=_("Zaptel channel number"), type="string", len=5),
+			VarType("sigtype",    title=_("Signalling type"), type="choice",
+									  options=[('ls','loopstart'),('ks', 'kewlstart')]),
+			VarType("group",      title=_("Group"), type="int", default=1),
+			VarType("ext",        title=_("Extension"), optional=True, len=6),
+			VarType("did",        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
+	
+			VarType("Call Group",   title=_("Call group"), type="label"),
+			VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=False, default=False), 
+			VarType("callgroup",  title=_("Call group number"), optional=True),
+			
+			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+					VarType("panel",      title=_("Show this phone in the panel"), type="bool", hide=True, optional=True),
+			
+			VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
+			VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
+			VarType("usemwi",     title=_("Signal waiting mail"), type="bool", optional=True),
+			VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
+	
+			VarType("Outbound",     title=_("Calls from the phone"), type="label"),
+			VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
+			VarType("calleridname", title=_("Caller-Id Name"), optional=True),
+			VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
+			VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
+		]
+		if varlist_manager.hasDialouts():
+			self.variables += varlist_manager.getDialouts()
+			for v in self.variables:
+				if v.name == "Dialout" or v.name=="timeout":
+					v.hide = False
+					
+		queues = len(configlet_tree.getConfigletsByName('CfgPhoneQueue'))
+		if queues > 0:
+			for v in self.variables:
+				if v.name == "QueueLab" or v.name == "queues":
+					v.hide = False
 
 	def createAsteriskConfig(self):
 		needModule("chan_zap")

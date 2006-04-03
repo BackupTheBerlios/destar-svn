@@ -25,12 +25,14 @@ class CfgPhoneMGCP(CfgPhone):
 
 	shortName = _("Normal MGCP phone")
 	newObjectTitle = _("New MGCP phone")
-	variables = [VarType("name",            title=_("Name"), len=15, hint=_("""If you haven't configured a name for your phone please use the IP address here.""")),
+	technology = "MGCP"
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("name",            title=_("Name"), len=15, hint=_("""If you haven't configured a name for your phone please use the IP address here.""")),
 			VarType("secret",       title=_("Password"), optional=True, len=15),
 			VarType("host",         title=_("IP address of phone"), len=15),
-			VarType("ext",          title=_("Extension"), optional=True, len=6
-	
-			),
+			VarType("ext",          title=_("Extension"), optional=True, len=6),
 			VarType("nat",          title=_("NAT"), type="bool", optional=True),
 			VarType("threeway",     title=_("Three way calling"), type="bool", optional=True),
 			VarType("transfer",     title=_("Enable Call transfer"), type="bool", optional=True),
@@ -52,11 +54,17 @@ class CfgPhoneMGCP(CfgPhone):
 			VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
 			VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
 		]
-
-	technology = "MGCP"
-
-	def fixup(self):
-		CfgPhone.fixup(self)
+		if varlist_manager.hasDialouts():
+			self.variables += varlist_manager.getDialouts()
+			for v in self.variables:
+				if v.name == "Dialout" or v.name=="timeout":
+					v.hide = False
+					
+		queues = len(configlet_tree.getConfigletsByName('CfgPhoneQueue'))
+		if queues > 0:
+			for v in self.variables:
+				if v.name == "QueueLab" or v.name == "queues":
+					v.hide = False
 		
 	def createAsteriskConfig(self):
 		needModule("chan_mgcp")

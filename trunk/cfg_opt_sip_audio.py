@@ -26,17 +26,19 @@ class CfgOptSipAudio(CfgOptSingle):
 
 	shortName = _("SIP Audio Options")
 	newObjectTitle = _("SIP Audio Options")
-	variables = [
-		VarType("Codecs"  ,   title=_("Codecs to use"), optional=True, type="label"),
-		VarType("alaw", title=_("Allow alaw codec"), optional=True, type="bool"),
-		VarType("ulaw", title=_("Allow ulaw codec"), optional=True, type="bool"),
-		VarType("ilbc", title=_("Allow ilbc codec"), optional=True, type="bool"),
-		VarType("gsm", title=_("Allow gsm codec"), optional=True, type="bool"),
-		VarType("g729", title=_("Allow g729 codec"), optional=True, type="bool",
-			hint=_("g729 pass-thru unless license obtained")),
-		VarType("g723", title=_("Allow g723.1 codec"), optional=True, type="bool",
-			hint=_("g723.1 pass-thru")),
-	]
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("Codecs"  ,   title=_("Codecs to use"), optional=True, type="label"),
+			VarType("alaw", title=_("Allow alaw codec"), optional=True, type="bool"),
+			VarType("ulaw", title=_("Allow ulaw codec"), optional=True, type="bool"),
+			VarType("ilbc", title=_("Allow ilbc codec"), optional=True, type="bool"),
+			VarType("gsm", title=_("Allow gsm codec"), optional=True, type="bool"),
+			VarType("g729", title=_("Allow g729 codec"), optional=True, type="bool",
+				hint=_("g729 pass-thru unless license obtained")),
+			VarType("g723", title=_("Allow g723.1 codec"), optional=True, type="bool",
+				hint=_("g723.1 pass-thru")),
+		]
 
 	def checkConfig(self):
 		res = CfgOpt.checkConfig(self)
@@ -53,7 +55,7 @@ class CfgOptSipAudio(CfgOptSingle):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		for obj in configlets.config_entries:
+		for obj in configlets.configlet_tree:
 			if obj.__class__.__name__ in ('CfgPhoneSip','CfgTrunkSip'):
 				return CfgOptSingle.isAddable(self)
 		return False

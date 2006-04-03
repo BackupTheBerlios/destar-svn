@@ -28,25 +28,22 @@ class CfgTrunkCapi(CfgTrunk):
 
 	shortName = _("ISDN using CAPI, outgoing")
 	newObjectTitle = _("New outgoing ISDN using CAPI")
-	variables = [
-		VarType("name",      title=_("Name"), len=15),
-
-		VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
-		VarType("msn",       title=_("Subscriber number"), len=15),
-		VarType("ext",       title=_("Outgoing prefix"), optional=True, len=6),
-		]
-
 	technology = "CAPI"
-
-
-	def channel(self):
-		return "%s[contr1/%s]" % (self.technology, self.msn)
-
-
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("name",      title=_("Name"), len=15),
+			VarType("Outbound",  title=_("Calls to the ISDN network"), type="label"),
+			VarType("msn",       title=_("Subscriber number"), len=15),
+			VarType("ext",       title=_("Outgoing prefix"), optional=True, len=6),
+		]
+		
 	def fixup(self):
 		CfgTrunk.fixup(self)
 		useContext("in-capi")
 
+	def channel(self):
+		return "%s[contr1/%s]" % (self.technology, self.msn)
 
 	def createAsteriskConfig(self):
 		needModule("chan_capi")
@@ -66,7 +63,7 @@ class CfgTrunkCapi(CfgTrunk):
 		# BUG: it does somehow not work to simply write 'for msn in config_entries',
                 # despite the "from configlets import *" above
 		import configlets
-		for msn in configlets.config_entries:
+		for msn in configlets.configlet_tree:
 			if msn.__class__.__name__ != "CfgTrunkCapiMSN": continue
 			msn_arr.append(msn.msn)
 		if msn_arr:

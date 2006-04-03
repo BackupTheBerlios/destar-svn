@@ -26,7 +26,9 @@ class CfgAppDirectory(CfgApp):
 	shortName   = _("Directory")
 	newObjectTitle  = _("New Directory")
 	description = _("""This application allows you to dial by name.""")
-	variables   = [VarType("ext", title=_("Extension"), len=6)]
+	
+	def createVariables(self):
+		self.variables   = [VarType("ext", title=_("Extension"), len=6)]
 
 	def createAsteriskConfig(self):
 		needModule("app_directory")

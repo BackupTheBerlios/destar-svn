@@ -25,15 +25,17 @@ class CfgOptZapPhone(CfgOptSingle):
 
 	shortName = _("Zaptel Phone Options")
 	newObjectTitle = _("Zaptel Phone Options")
-	variables = [
-		VarType("adsi", title=_("Use ADSI for menu phones"), type="bool"),
-		VarType("callwaiting", title=_("Signal a waiting call"), type="bool"),
-		VarType("callwaitingcallerid", title=_("Send callerid during call waiting indication"), type="bool"),
-		VarType("threewaycalling", title=_("Suspend a call temporarily via a hook flash"), type="bool"),
-		VarType("transfer", title=_("Allow call transfer"), type="bool", default=True),
-		VarType("cancallforward", title=_("Allow call forwards"), type="bool", default=True),
-		VarType("callreturn", title=_("Read caller number with *69"), type="bool", default=True),
-	]
+	
+	def createVariables(self):
+		self.variables = [
+			VarType("adsi", title=_("Use ADSI for menu phones"), type="bool"),
+			VarType("callwaiting", title=_("Signal a waiting call"), type="bool"),
+			VarType("callwaitingcallerid", title=_("Send callerid during call waiting indication"), type="bool"),
+			VarType("threewaycalling", title=_("Suspend a call temporarily via a hook flash"), type="bool"),
+			VarType("transfer", title=_("Allow call transfer"), type="bool", default=True),
+			VarType("cancallforward", title=_("Allow call forwards"), type="bool", default=True),
+			VarType("callreturn", title=_("Read caller number with *69"), type="bool", default=True),
+		]
 
 
 	def isAddable(self):
@@ -43,7 +45,7 @@ class CfgOptZapPhone(CfgOptSingle):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		for obj in configlets.config_entries:
+		for obj in configlets.configlet_tree:
 			if obj.__class__.__name__ == 'CfgPhoneZap':
 				return CfgOptSingle.isAddable(self)
 		return False

@@ -25,7 +25,9 @@ class CfgOptRtp(CfgOptSingle):
 
 	shortName = _("RTP options")
 	newObjectTitle= _("RTP options")
-	variables = [
+
+	def createVariables(self):
+		self.variables = [
 			VarType("rtpstart", type="int", title=_("Start of RTP port area"), default=16384),
 			VarType("rtpend",   type="int", title=_("End of RTP port area"),   default=16482),
 			VarType("rtpchecksums", type="bool", title=_("Check UDP checksums of RTP packets"), default=True),

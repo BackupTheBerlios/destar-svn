@@ -104,7 +104,6 @@ def presentConfiglets [plain] (group):
 
 def __addit__(obj):
 	backend.addConfiglet(obj)
-	backend.fixupConfiglets()
 	backend.createAsteriskConfig()
 
 def lookupConfiglets(request,component):
@@ -113,7 +112,6 @@ def lookupConfiglets(request,component):
 
         try:
                 obj = backend.newConfiglet(component)
-		backend.fixupConfiglets()
         except KeyError:
                 return errorpage("%s %s" % (_("Object does not exist"),component))
         return configletsForm(request,
@@ -138,7 +136,6 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 	'actionCallback' is a callable that get's executed after the configlet has been saved.
 	'new': is True if we create a new object, False if we're just editing an object.
 	'menu': is the menu on the left side."""
-	
 
 	def render_desc():
 		"""Just renders the description. Substitutes an empty line
@@ -174,6 +171,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 				_v = ','.join(_v)
 			#print 1,_v
 			obj.__dict__[v.name] = _v
+			if v.name == 'name':
+				obj.renameDependencies(_v)
 		if withCallback and actionCallback:
 			actionCallback(obj)
 			
@@ -190,17 +189,65 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		if ret:
 			form.set_error(ret[0],ret[1])
 		obj.__dict__ = backup
+		
+	def showDependencies [html]():
+		header(title, menu)
+		#render_desc()
+		form2 = Form()
+		form2.add(SubmitWidget, '_cascade_delete', _("Cascade Delete"), render_br=False)
+		form2.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
+		'<h2>'
+		_("Warning")
+		'</h2>'
+		'<p>'
+		_("The following configlets depends on this object in a direct or indirect way:")
+		'</p>'
+		'<table>'
+		for dep in obj.dependent_objs:
+			if dep.dependency.type == "hard":
+				dep_type = _("Hard Dependencie:")
+				color = 'red'
+			else:
+				dep_type = _("Soft Dependencie:")
+				color = 'green'
+			'<tr>'
+			'<td><span style="color:%s">%s</span></td>' % (color, dep_type)
+			for cell in dep.configlet.row():
+				'<td>'
+				'<a href="../edit/%s">%s</a>' % (dep.configlet._id, cell)
+				'</td>'
+			'<td>'
+			dep.dependency.message
+			'</td>'
+			'</tr>'
+			
+		'</table>'
+		'<h4>Note:</h4>'
+		'<p>'
+		'<span style="color:red">'
+		_("Hard dependencie: The dependent object can not exist if this object is deleted")
+		'<br />'
+		'</span>'
+		'<span style="color:green">'
+		_("Soft dependencie. The dependent object still can exist if this object is deleted")
+		'</span>'
+		'</p>'
+		form2.render()
+		footer()
 
 
 	form = Form()
 
 	if request.form.has_key('_cancel'):
-		print "-->cancel"
 		return request.redirect(exitPath)
 	if request.form.has_key('_delete'):
-		print "-->delete"
+		if obj.hasDependencies():
+			return showDependencies()
+		else:
+			backend.deleteConfiglet(obj._id)
+			return request.redirect(exitPath)
+	if request.form.has_key('_cascade_delete'):
 		backend.deleteConfiglet(obj._id)
-		backend.fixupConfiglets()
 		return request.redirect(exitPath)
 
 
@@ -287,5 +334,4 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 	if form.has_errors():
 		return render()
 	saveConfig()
-	obj.fixup()
 	return request.redirect(exitPath)
