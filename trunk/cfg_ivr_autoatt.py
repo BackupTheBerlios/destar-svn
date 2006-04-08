@@ -31,22 +31,77 @@ class CfgIVRAutoatt(CfgIVR):
 	
 	def createVariables(self):
 		self.variables = [
-		VarType("name",	  title=_("Name"), len=25),
-		VarType("timeout",   title=_("Max. time for incoming calls in seconds"), hint=_("(0 or empty means no time restriction)"), optional=True, len=10,default=0),
-		VarType("moh",	  title=_("Music-on-hold class"), type="choice", optional=True,
-			options=getChoice("CfgOptMusic")),
-		VarType("backgroundfile",   title=_("File to play in the background"),default="beep"),
-		VarType("repeat", title=_("How many times should it be played?"), default=1, len=2, type="int"),
-		VarType("pause", title=_("Pause between each playback"), optional=True, len=2),
-		VarType("ext",	  title=_("Extension to ring after file playing"), type="choice",
-			options=getChoice("CfgPhone")),
-		VarType("operator",  title=_("Digit to jump that extension directly"), optional=True, len=1),
-		VarType("ivrtime",	  title=_("IVR to jump on special dates"), type="choice",
-			options=getChoice("CfgIVR"), render_br=False, optional=True),
-		VarType("times",   title=_("Times string"),hint=_("i.e. <hours>|<weekdays>|<monthdays>|<months> (comma separated)"),default="", optional=True, len=300),
-		VarType("phones", title=_("Allow calling to all extensions?"), type="bool"),
-		
-		]
+			VarType("name",
+					title=_("Name"),
+					len=25),
+
+			VarType("timeout",
+					title=_("Max. time for incoming calls in seconds"),
+					hint=_("(0 or empty means no time restriction)"),
+					optional=True,
+					len=10,
+					default=0),
+
+			VarType("moh",
+					title=_("Music-on-hold class"),
+					type="choice",
+					optional=True,
+					options=getChoice("CfgOptMusic")),
+
+			VarType("backgroundfile",
+					title=_("File to play in the background"),
+					default="beep"),
+
+			VarType("repeat",
+					title=_("How many times should it be played?"),
+					default=1,
+					len=2,
+					type="int"),
+
+			VarType("pause",
+					title=_("Pause between each playback"),
+					optional=True,len=2),
+
+			VarType("ext",
+					title=_("Extension to ring after file playing"),
+					type="choice",
+					options=getChoice("CfgPhone")),
+
+			VarType("operator",
+					title=_("Digit to jump that extension directly"),
+					optional=True,
+					len=1),
+
+			VarType("ivrtime",
+					title=_("IVR to jump on special dates"),
+					type="choice",
+					options=getChoice("CfgIVR"),
+					render_br=False,
+					optional=True),
+
+			VarType("times",
+					title=_("Times string"),
+					hint=_("i.e. <hours>|<weekdays>|<monthdays>|<months> (comma separated)"),
+					default="",
+					optional=True,
+					len=300),
+
+			VarType("phones",
+					title=_("Allow calling to all extensions?"),
+					type="bool"),]
+
+		self.dependencies = [
+			DepType("moh", 
+					type="hard",
+					message = _("This is a Dependency")),
+			DepType("ext", 
+					type="hard",
+					message = _("This is a Dependency")),
+			DepType("ivrtime", 
+					type="hard",
+					message = _("This is a Dependency"))]
+
+
 
 	def isAddable(self):
 		# BUG: it does somehow not work to simply write for obj in config_entries,

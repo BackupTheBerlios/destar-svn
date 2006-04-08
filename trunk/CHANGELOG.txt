@@ -1,3 +1,6 @@
+2006-04-08
+* cfg_ivr_autoatt.py: this configlets depends on the moh, an ext and an ivr.
+
 2006-04-03
 *Merged changes from branches/performance-experimental to trunk ("Ave María, dame puntería" :P).
 
