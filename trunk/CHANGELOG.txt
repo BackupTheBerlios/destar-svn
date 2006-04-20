@@ -1,8 +1,11 @@
+2006-04-20
+* cfg_dialout_normal.py: added support for dynamically generated dependencies. This is for "trunk_*" like dependencies.
+
 2006-04-08
 * cfg_ivr_autoatt.py: this configlets depends on the moh, an ext and an ivr.
 
 2006-04-03
-*Merged changes from branches/performance-experimental to trunk ("Ave María, dame puntería" :P).
+*Merged changes from branches/performance-experimental to trunk ("Ave Marï¿½a, dame punterï¿½a" :P).
 
 2006-03-23
 * configlets.py: Changed spaces with tabs

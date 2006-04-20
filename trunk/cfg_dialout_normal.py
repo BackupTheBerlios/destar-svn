@@ -30,12 +30,11 @@ class CfgDialoutNormal(CfgDialout):
 	groupName = 'Dialout'
 					
 	def createVariables(self):
-		self.variables = []
 		self.variables = [
 		VarType("name",   title=_("Name"), len=15),
 		VarType("pattern", title=_("Pattern"), len=55),
 		VarType("rmprefix", title=_("Remove Prefix of length"), len=10, default="0"),
-                VarType("addprefix", title=_("Add Prefix"), len=10, optional=True, default=""),
+		VarType("addprefix", title=_("Add Prefix"), len=10, optional=True, default=""),
 		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=300),
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		VarType("qlookup", title=_("Search on quick dial list?"), type="bool"),
@@ -49,6 +48,26 @@ class CfgDialoutNormal(CfgDialout):
 			for v in self.variables:	
 				if v.name == "Trunks" or v.name=="defaulttrunk":
 					v.hide = False
+					
+					
+		self.dependencies = []
+		for var in self.__dict__.keys():
+			if var.startswith('trunk_'):
+				self.dependencies.append(
+					DepType(var,
+							type="hard",
+							message = _("This is a Dependency")))
+							
+	def createDependencies(self):
+		for dep in self.dependencies:
+			if self.__dict__.has_key(dep.name):
+				obj_name = dep.name[6:] # get the name after "trunk_"
+				import configlets
+				obj = configlets.configlet_tree.getConfigletByName(obj_name)
+				if obj is None:
+					return
+				dependent_obj = DependentObject(self, dep)
+				obj.dependent_objs.append(dependent_obj)
 
 	def isAddable(self):
 		"We can only add this object if we have at least one trunk defined."
