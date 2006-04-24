@@ -29,31 +29,102 @@ class CfgPhoneIax(CfgPhone):
 	technology = "IAX2"
 	def createVariables(self):
 		self.variables = [
-			VarType("name",            title=_("Name"), len=15),
-			VarType("secret",       title=_("Password"), optional=True, len=15),
-			VarType("host",         title=_("IP address of phone"), optional=True, len=15),
-			VarType("ext",	        title=_("Extension"), optional=True, len=6),
-			VarType("did",	        title=_("Allow direct dialling from outside?"), type="bool", hide=True, default=False),
+			VarType("name",
+					title=_("Name"),
+					len=15),
+
+			VarType("secret",
+					title=_("Password"),
+					optional=True,
+					len=15),
+
+			VarType("host",
+					title=_("IP address of phone"),
+					optional=True,
+					len=15),
+
+			VarType("ext",
+					title=_("Extension"),
+					optional=True,
+					len=6),
+
+			VarType("did",
+					title=_("Allow direct dialling from outside?"),
+					type="bool",
+					hide=True,
+					default=False),
 	
-			VarType("Call Group",   title=_("Call group"), type="label"),
-			VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=False, default=False), 
-			VarType("callgroup",  title=_("Call group number"), optional=True),
+			VarType("Call Group",
+					title=_("Call group"),
+					type="label"),
+
+			VarType("enablecallgroup",
+					title=_("Enable call group"),
+					type="bool",
+					optional=False,
+					default=False), 
+
+			VarType("callgroup",
+					title=_("Call group number"),
+					optional=True),
 	
-			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-					VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True, optional=True),
+			VarType("panelLab",
+					title=_("Operator Panel"),
+					type="label",
+					hide=True),
+
+			VarType("panel",
+					title=_("Show this extension in the panel"),
+					type="bool",
+					hide=True,
+					optional=True),
 	
-			VarType("Voicemail",    title=_("Voicemail settings"), type="label"),
-			VarType("usevm",        title=_("Use voicemail"), type="bool", optional=True),
-			VarType("usemwi",       title=_("Signal waiting mail"), type="bool", optional=True),
-			VarType("pin",	        title=_("Voicemail PIN"), optional=True, len=6),
-			VarType("notransfer",   title=_("Disable IAX transfer"), type="bool"),
+			VarType("Voicemail",
+					title=_("Voicemail settings"),
+					type="label"),
+
+			VarType("usevm",
+					title=_("Use voicemail"),
+					type="bool",
+					optional=True),
+
+			VarType("usemwi",
+					title=_("Signal waiting mail"),
+					type="bool",
+					optional=True),
+
+			VarType("pin",
+					title=_("Voicemail PIN"),
+					optional=True,
+					len=6),
+
+			VarType("notransfer",
+					title=_("Disable IAX transfer"),
+					type="bool"),
 	
-			VarType("Outbound",     title=_("Calls from the phone"), type="label"),
-			VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
-			VarType("calleridname", title=_("Caller-Id Name"), optional=True),
-			VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
-			VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
-		]
+			VarType("Outbound",
+					title=_("Calls from the phone"),
+					type="label"),
+
+			VarType("calleridnum",
+					title=_("Caller-Id Number"),
+					optional=True),
+
+			VarType("calleridname",
+					title=_("Caller-Id Name"),
+					optional=True),
+
+			VarType("Dialout",
+					title=_("Allowed dialout-entries"),
+					type="label",
+					hide=True),
+
+			VarType("timeout",
+					title=_("Enable time restriction?"),
+					type="bool",
+					optional=True,
+					hide=True),]
+
 		if varlist_manager.hasDialouts():
 			self.variables += varlist_manager.getDialouts()
 			for v in self.variables:
@@ -65,6 +136,17 @@ class CfgPhoneIax(CfgPhone):
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":
 					v.hide = False
+
+	def createDependencies(self):
+		for dep in self.dependencies:
+			if self.__dict__.has_key(dep.name):
+				obj_name = dep.name[8:] # get the name after "dialout_"
+				import configlets
+				obj = configlets.configlet_tree.getConfigletByName(obj_name)
+				if obj is None:
+					return
+				dependent_obj = DependentObject(self, dep)
+				obj.dependent_objs.append(dependent_obj)
 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")

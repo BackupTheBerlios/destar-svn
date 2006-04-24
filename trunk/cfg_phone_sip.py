@@ -20,7 +20,6 @@
 
 
 from configlets import *
-import panelutils
 
 
 class CfgPhoneSip(CfgPhone):

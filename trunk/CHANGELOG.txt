@@ -1,7 +1,8 @@
 2006-04-24
 * configlets.py: fixed rename line
 * panelutils.py: fixed trunk section name
-* cfg_phone_sip.py: phones depends on the dialout_* vars
+* cfg_phone_*.py: phones depends on the dialout_* vars
+
 
 2006-04-20
 * cfg_dialout_normal.py: added support for dynamically generated dependencies. This is for "trunk_*" like dependencies.

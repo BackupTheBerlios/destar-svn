@@ -30,14 +30,24 @@ class CfgPhoneExtension(CfgPhone):
 	
 	def createVariables(self):
 		self.variables = [
-			VarType("name",     title=_("Name"), len=15),
+			VarType("name",
+					title=_("Name"),
+					len=15),
 	
-			VarType("ext",      title=_("Extension"), hint=_("This can be used to set operator(o) or fax(fax) extensions."), optional=True, len=6),
+			VarType("ext",
+					title=_("Extension"),
+					hint=_("This can be used to set operator(o) or fax(fax) extensions."),
+					optional=True, len=6),
 	
-			VarType("Outbound", title=_("Calls to the extension"), type="label"),
-			VarType("phone",    title=_("Real phone to ring"), type="choice",
-								options=getChoice("CfgPhone")),
-		]
+			VarType("Outbound",
+					title=_("Calls to the extension"),
+					type="label"),
+
+			VarType("phone",
+					title=_("Real phone to ring"),
+					type="choice",
+					options=getChoice("CfgPhone")),]
+
 		if varlist_manager.hasDialouts():
 			self.variables += varlist_manager.getDialouts()
 			for v in self.variables:
@@ -49,6 +59,17 @@ class CfgPhoneExtension(CfgPhone):
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":
 					v.hide = False
+
+	def createDependencies(self):
+		for dep in self.dependencies:
+			if self.__dict__.has_key(dep.name):
+				obj_name = dep.name[8:] # get the name after "dialout_"
+				import configlets
+				obj = configlets.configlet_tree.getConfigletByName(obj_name)
+				if obj is None:
+					return
+				dependent_obj = DependentObject(self, dep)
+				obj.dependent_objs.append(dependent_obj)
 
 
 	def isAddable(self):
