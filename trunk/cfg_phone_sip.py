@@ -31,39 +31,122 @@ class CfgPhoneSip(CfgPhone):
 	
 	def createVariables(self):
 		self.variables = [
-			VarType("name",       title=_("Name"), len=15),
-			VarType("secret",     title=_("Password"), optional=True, len=15),
-			VarType("host",       title=_("IP address of phone"), optional=True, len=15),
-			VarType("nat",        title=_("Is the trunk behind NAT ?"), type="bool", optional=True),
-			VarType("ext",        title=_("Extension"), optional=True, len=6),
-			VarType("dtmfmode",    title=_("DTMF mode:"), type="choice",
-						options=( ("rfc2833",_("RFC 2833 (RTP)")),
-								  ("inband",_("In Band (only with ulaw/alaw)")),
-									  ("info",_("SIP INFO")) ), default="info"),
+			VarType("name",
+				title=_("Name"),
+				len=15),
+
+			VarType("secret",
+					title=_("Password"),
+					optional=True,
+					len=15),
+
+			VarType("host",
+					title=_("IP address of phone"),
+					optional=True,
+					len=15),
+					
+			VarType("nat",
+					title=_("Is the trunk behind NAT ?"),
+					type="bool",
+					optional=True),
+
+			VarType("ext",
+					title=_("Extension"),
+					optional=True,
+					len=6),
+					
+			VarType("dtmfmode",
+					title=_("DTMF mode:"),
+					type="choice",
+					options=(
+						("rfc2833",_("RFC 2833 (RTP)")),
+						("inband",_("In Band (only with ulaw/alaw)")),
+						("info",_("SIP INFO")) ), default="info"),
 	
-			VarType("Call Group",   title=_("Call group"), type="label"),
-			VarType("enablecallgroup", title=_("Enable call group"), type="bool", optional=True, default=False), 
-			VarType("callgroup",  title=_("Call group number"), optional=True),
-	
-			VarType("QueueLab",   title=_("Call Queues"), type="label", hide=True),
-			VarType("queues",  title=_("Agent of queues:"), type="mchoice", optional=True,
-				options=getChoice("CfgPhoneQueue"), hide=True),
-	
-			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-					VarType("panel",      title=_("Show this extension in the panel"), type="bool", hide=True, optional=True),
-	
-			VarType("Voicemail",  title=_("Voicemail settings"), type="label", len=6),
-			VarType("usevm",      title=_("Use voicemail"), type="bool", optional=True),
-			VarType("usemwi",     title=_("Signal waiting mail"), type="bool", optional=True),
-			VarType("pin",        title=_("Voicemail PIN"), optional=True, len=6),
-			VarType("email",      title=_("Voicemail email"), optional=True, len=60),
+			VarType("Call Group",
+					title=_("Call group"),
+					type="label"),
 			
-			VarType("Outbound"  ,   title=_("Calls from the phone"), type="label"),
-			VarType("calleridnum",  title=_("Caller-Id Number"), optional=True),
-			VarType("calleridname", title=_("Caller-Id Name"), optional=True),		
-			VarType("Dialout"  ,   title=_("Allowed dialout-entries"), type="label",hide=True),
-			VarType("timeout",     title=_("Enable time restriction?"), type="bool", optional=True,hide=True),
-		]
+			VarType("enablecallgroup",
+					title=_("Enable call group"),
+					type="bool",
+					optional=True,
+					default=False), 
+					
+			VarType("callgroup",
+					title=_("Call group number"),
+					optional=True),
+	
+			VarType("QueueLab",
+					title=_("Call Queues"),
+					type="label",
+					hide=True),
+			
+			VarType("queues",
+					title=_("Agent of queues:"),
+					type="mchoice",
+					optional=True,
+					options=getChoice("CfgPhoneQueue"),
+					hide=True),
+	
+			VarType("panelLab",
+					title=_("Operator Panel"),
+					type="label",
+					hide=True),
+			
+			VarType("panel",
+					title=_("Show this extension in the panel"),
+					type="bool",
+					hide=True,
+					optional=True),
+	
+			VarType("Voicemail",
+					title=_("Voicemail settings"),
+					type="label",
+					len=6),
+					
+			VarType("usevm",
+					title=_("Use voicemail"),
+					type="bool",
+					optional=True),
+			
+			VarType("usemwi",
+					title=_("Signal waiting mail"),
+					type="bool",
+					optional=True),
+			
+			VarType("pin",
+					title=_("Voicemail PIN"),
+					optional=True,
+					len=6),
+			
+			VarType("email",
+					title=_("Voicemail email"),
+					optional=True,
+					len=60),
+			
+			VarType("Outbound",
+					title=_("Calls from the phone"),
+					type="label"),
+			
+			VarType("calleridnum",
+					title=_("Caller-Id Number"),
+					optional=True),
+			
+			VarType("calleridname",
+					title=_("Caller-Id Name"),
+					optional=True),
+			
+			VarType("Dialout",
+					title=_("Allowed dialout-entries"),
+					type="label",
+					hide=True),
+					
+			VarType("timeout",
+					title=_("Enable time restriction?"),
+					type="bool",
+					optional=True,
+					hide=True),]
 		
 		if varlist_manager.hasDialouts():
 			self.variables += varlist_manager.getDialouts()
@@ -76,6 +159,25 @@ class CfgPhoneSip(CfgPhone):
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":
 					v.hide = False
+
+		self.dependencies = []
+		for var in self.__dict__.keys():
+			if var.startswith('dialout_'):
+				self.dependencies.append(
+					DepType(var,
+							type="hard",
+							message = _("This is a Dependency")))
+
+	def createDependencies(self):
+		for dep in self.dependencies:
+			if self.__dict__.has_key(dep.name):
+				obj_name = dep.name[8:] # get the name after "dialout_"
+				import configlets
+				obj = configlets.configlet_tree.getConfigletByName(obj_name)
+				if obj is None:
+					return
+				dependent_obj = DependentObject(self, dep)
+				obj.dependent_objs.append(dependent_obj)
 
 	def createAsteriskConfig(self):
 		needModule("chan_sip")
