@@ -1,3 +1,6 @@
+2006-04-27:
+* configlets.py: fixed bug with Cfg.renameDependencies()
+
 2006-04-24
 * configlets.py: fixed rename line
 * panelutils.py: fixed trunk section name

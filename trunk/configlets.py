@@ -526,7 +526,7 @@ class Cfg(Holder):
 					
 	def renameDependencies(self, new_name):
 		for dep in self.dependent_objs:
-				dep.configlet.name = new_name
+				dep.configlet.__dict__[dep.dependency.name] = new_name
 
 	def hasDependencies(self):
 		return len(self.dependent_objs) > 0
