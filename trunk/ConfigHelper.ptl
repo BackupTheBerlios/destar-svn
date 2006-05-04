@@ -172,6 +172,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 			#print 1,_v
 			obj.__dict__[v.name] = _v
 			if v.name == 'name':
+				backend.fixupConfiglets()
 				obj.renameDependencies(_v)
 		if withCallback and actionCallback:
 			actionCallback(obj)

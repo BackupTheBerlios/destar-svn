@@ -1,3 +1,5 @@
+2006-05-03:
+* ConfigHelper.ptl: fixed bug with renaming configlets with dynamic dependencies
 2006-04-27:
 * configlets.py: fixed bug with Cfg.renameDependencies()
 
