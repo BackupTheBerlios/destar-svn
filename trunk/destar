@@ -94,7 +94,7 @@ import medusa
 # 'quixote' is a web application framework
 try:
 	import quixote
-	if quixote.__version__ < "1.0" or quixote.__version__ >= "2.0":
+	if quixote.__version__ < "1.2" or quixote.__version__ >= "2.0":
 		raise ImportError
 except ImportError:
 	print _("Error:"), _("please install Quixote 1.x")
