@@ -28,6 +28,8 @@ An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
 
 
 
+import language
+language.setLanguage('en')
 
 import sys, getopt, panelutils
 import daemonize
@@ -83,10 +85,6 @@ for opt,val in opts:
 
 print_version()
 
-
-
-# 'language' implements our gettext based internationalization
-import language
 
 # 'medusa' is a stand-alone web server
 import medusa

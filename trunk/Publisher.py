@@ -48,6 +48,7 @@ request.session.level        User level (0=disabled/not logged in
                                          2=PBX Administrator
                                          3=PBX Configurator
                                          4=Programmer
+request.session.language     User language
 """
 
 
@@ -75,6 +76,7 @@ class DeStarPublisher(Publisher):
 				firstaccess=t,
 				user=None,
 				phone='',
+				language='en',
 				level=-1,		# Try to auto-login, based on IP
 			))
 
@@ -90,14 +92,17 @@ class DeStarPublisher(Publisher):
 				# be Admin if there are no users configured
 				session.user  = "programmer"
 				session.level = 4
+				session.language = 'en'
 			else:
 				for user in users:
 					if user.pc == ip:
 						session.user = user.name
 						session.level = int(user.level)
 						session.phone = user.phone
+						session.language = user.language
 						break
-
+						
+		language.setLanguage(session.language)				
 		session.lastaccess = t
 		request.session = session
 

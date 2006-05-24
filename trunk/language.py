@@ -28,20 +28,43 @@
 #
 
 
-import os, gettext
-try:
-	# TODO: here we should have sub-directories for the languages
-	translation = gettext.GNUTranslations(open('destar.mo','rb'))
-except IOError:
-	translation = gettext.NullTranslations()
-translation.install()
+import os, fnmatch, re, gettext
 
+def listLanguages():
+	try:
+	
+	 names = fnmatch.filter(os.listdir('lang/'), '*.gmo')
+	except IOError:
+	 names = []
+	d = dict([('en','en.gmo')] + [(re.sub(r'(.*)\.gmo',r'\1',x),x) for x in names]) 
+	return d
+
+def setLanguage(lang):
+	"Set the language via gnuttext"
+	if languages.has_key(lang):
+		l = 'lang/' + languages[lang]
+	else:
+		l = 'lang/en.gmo'
+	try:
+	 translation = gettext.GNUTranslations(open(l,'rb'))
+	except IOError:
+	 translation = gettext.NullTranslations()
+	translation.install()
+
+def desactivateGettext():
+	global _
+	def _(message): return message
+
+def activateGettext():
+	global _
+	del _
+
+languages = listLanguages()
 
 def encoding():
 	"Returns the string used in the HTTP Header 'Content-Type: text/html; charset=...'"
 	# TODO Detect right-to-left languages and return the proper string
 	return "UTF-8"
-
 
 # Some test code
 if __name__ == '__main__':

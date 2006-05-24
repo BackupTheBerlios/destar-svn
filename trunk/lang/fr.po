@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-10 14:30+0200\n"
-"PO-Revision-Date: 2006-05-10 14:44+0200\n"
-"Last-Translator: Anthony PIRON <anthony.piron@skynet.be>\n"
+"POT-Creation-Date: 2006-05-22 16:28+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -241,15 +241,17 @@ msgid ""
 "calling estension has been assigned a dialout with the quick dial lookup "
 "option activated."
 msgstr ""
-"Extensions pour ajouter/supprimer de la liste de numérotation rapid. L'extension ajoutée "
-"sera de la forme prefix+2_digits_key+*+final_destination. L'extension supprimée "
-"sera de la forme prefix+2_digits_key. La liste globale fonctionne seulement si "
-"l'extension appelée a été assignée à un appel vers l'extérieur avec l'option recherche de "
+"Extensions pour ajouter/supprimer de la liste de numérotation rapid. "
+"L'extension ajoutée sera de la forme prefix+2_digits_key+*"
+"+final_destination. L'extension supprimée sera de la forme prefix"
+"+2_digits_key. La liste globale fonctionne seulement si l'extension appelée "
+"a été assignée à un appel vers l'extérieur avec l'option recherche de "
 "numérotation rapide activée"
 
 #: cfg_app_quickdial_global.py:28
 msgid "New extensions to add/remove from global quick dial list"
-msgstr "Nouvelle extension à ajouter/supprimer de la liste de numérotation rapide"
+msgstr ""
+"Nouvelle extension à ajouter/supprimer de la liste de numérotation rapide"
 
 #: cfg_app_quickdial_global.py:32 cfg_opt_user.py:32 cfg_phone_epygi.py:40
 #: cfg_phone_iax.py:37 cfg_phone_mgcp.py:37 cfg_phone_sip.py:38
@@ -263,7 +265,9 @@ msgstr "Prefix d'activation"
 
 #: cfg_app_quickdial_global.py:33
 msgid "don't use ** because it is for private quick dial list"
-msgstr "N'utilisez pas ** car c'est réservé pour la liste privée de numérotation rapide"
+msgstr ""
+"N'utilisez pas ** car c'est réservé pour la liste privée de numérotation "
+"rapide"
 
 #: cfg_app_quickdial_global.py:34 cfg_app_quickdial_phone.py:33
 msgid "Unsetting prefix"
@@ -282,20 +286,25 @@ msgid ""
 "extension has an assigned dialout entry which pattern matches the final "
 "destination."
 msgstr ""
-"Extensions pour ajouter/supprimer de la liste de numérotation rapid. L'extension ajoutée "
-"sera de la forme prefix+2_digits_key+*+final_destination. L'extension supprimée "
-"sera de la forme prefix+2_digits_key. La liste personnelle de numérotation rapide "
-"fonctionne pour toutes les extensions, en numérotant **+2_digits_key et seulement si "
-"l'extension est associée à une entrée d'appel vers l'extérieur dont le pattern matche la "
-"destination finale"
+"Extensions pour ajouter/supprimer de la liste de numérotation rapid. "
+"L'extension ajoutée sera de la forme prefix+2_digits_key+*"
+"+final_destination. L'extension supprimée sera de la forme prefix"
+"+2_digits_key. La liste personnelle de numérotation rapide fonctionne pour "
+"toutes les extensions, en numérotant **+2_digits_key et seulement si "
+"l'extension est associée à une entrée d'appel vers l'extérieur dont le "
+"pattern matche la destination finale"
 
 #: cfg_app_quickdial_phone.py:28
 msgid "New extensions to add/remove from personal quick dial list"
-msgstr "Nouvelle extension pour ajouter/supprimer de la liste personnelle de numérotation rapide"
+msgstr ""
+"Nouvelle extension pour ajouter/supprimer de la liste personnelle de "
+"numérotation rapide"
 
 #: cfg_app_quickdial_phone.py:32
 msgid "don't use ** because it is for accesing the quick dial list"
-msgstr "N'utilisez pas ** car c'est réservé à l'accès de la liste de numérotation rapide"
+msgstr ""
+"N'utilisez pas ** car c'est réservé à l'accès de la liste de numérotation "
+"rapide"
 
 #: cfg_app_record.py:26
 msgid "Record sound"
@@ -310,7 +319,8 @@ msgid ""
 "Allows you to record a sound file. You can hang up, be silent for\n"
 "\t\t\ta second or dial '#' to stop the recording."
 msgstr ""
-"Vous autorise à enregistre un fichier de son. Vous pouvez raccrocher, être silentieux pour\n"
+"Vous autorise à enregistre un fichier de son. Vous pouvez raccrocher, être "
+"silentieux pour\n"
 "\t\t\tune seconde ou composer '#' pour arrêter l'enregistrement"
 
 #: cfg_app_record.py:35
@@ -483,7 +493,9 @@ msgstr "Spécification de temps"
 
 #: cfg_ivr_autoatt.py:84
 msgid "i.e. <hours>|<weekdays>|<monthdays>|<months> (comma separated)"
-msgstr "par exemple, <heure>|<jour de la semaine>|jour du mois>|<mois> (séparé par des virgule)"
+msgstr ""
+"par exemple, <heure>|<jour de la semaine>|jour du mois>|<mois> (séparé par "
+"des virgule)"
 
 #: cfg_ivr_autoatt.py:90
 msgid "Allow calling to all extensions?"
@@ -596,8 +608,8 @@ msgid ""
 "Asterisk can emit many events to it's console or a log file, Here you can "
 "make it more (or less) verbose:"
 msgstr ""
-"Asterisk peut émettre beaucoups d'événements sur sa console ou un fichier de log, ici vous pouvez "
-"le rendre plus ou moins verbeux :"
+"Asterisk peut émettre beaucoups d'événements sur sa console ou un fichier de "
+"log, ici vous pouvez le rendre plus ou moins verbeux :"
 
 #: cfg_opt_logger.py:30
 msgid "Errors"
@@ -837,7 +849,9 @@ msgstr "Pays"
 
 #: cfg_opt_settings.py:321
 msgid "The country is used for generating dialtone, ringtone, busytone etc"
-msgstr "Le pays est utilisé pour générer les signaux d'appel, les sonneries, les signaux d'occupation, etc."
+msgstr ""
+"Le pays est utilisé pour générer les signaux d'appel, les sonneries, les "
+"signaux d'occupation, etc."
 
 #: cfg_opt_settings.py:325
 msgid "language"
@@ -993,7 +1007,8 @@ msgstr "Secondes de silence à la fin de l'enregistrement"
 msgid ""
 "Silence threshold (what we consider silence, the lower, the more sensitive)"
 msgstr ""
-"Seuil de silence (ce que nous considérons du silence, le plus bas est le plus sensible)"
+"Seuil de silence (ce que nous considérons du silence, le plus bas est le "
+"plus sensible)"
 
 #: cfg_opt_voicemail.py:38
 msgid "Playback settings"
@@ -1037,7 +1052,9 @@ msgstr "Changer le sujet de l'e-mail"
 
 #: cfg_opt_voicemail.py:46
 msgid "[DeStar PBX]: New message from ${VM_CALLERID} in mailbox ${VM_MAILBOX}"
-msgstr "[DeStar PBX]: Nouveau message de ${VM_CALLERID} dans la boite à message ${VM_MAILBOX}"
+msgstr ""
+"[DeStar PBX]: Nouveau message de ${VM_CALLERID} dans la boite à message "
+"${VM_MAILBOX}"
 
 #: cfg_opt_voicemail.py:47
 msgid "Change email Body"
@@ -1050,10 +1067,11 @@ msgid ""
 "from ${VM_CALLERID}, on ${VM_DATE}, so you might\\n\\twant to check it when "
 "you get a chance. Thanks!\\n\\n\\t\\t\\t--Asterisk/Destar PBX."
 msgstr ""
-"Cher ${VM_NAME}:\\n\\n\\tJe vous notifie que vous avez à l'instant reçu un messsage "
-"de longueur ${VM_DUR} (nombre ${VM_MSGNUM})\\n\\t dans la boite à message ${VM_MAILBOX} "
-"provenant de ${VM_CALLERID}, à la date du ${VM_DATE}. Vous pouvez\\n\\t l'écouter dès "
-"à présent. Merci!\\n\\n\\t\\t\\t--Asterisk/Destar PBX."
+"Cher ${VM_NAME}:\\n\\n\\tJe vous notifie que vous avez à l'instant reçu un "
+"messsage de longueur ${VM_DUR} (nombre ${VM_MSGNUM})\\n\\t dans la boite à "
+"message ${VM_MAILBOX} provenant de ${VM_CALLERID}, à la date du ${VM_DATE}. "
+"Vous pouvez\\n\\t l'écouter dès à présent. Merci!\\n\\n\\t\\t\\t--Asterisk/"
+"Destar PBX."
 
 #: cfg_opt_voicemail.py:50
 msgid "Should the email contain the voicemail as an attachment?"
@@ -1101,7 +1119,8 @@ msgstr "Signale les appels en attente"
 
 #: cfg_opt_zap_phone.py:33
 msgid "Send callerid during call waiting indication"
-msgstr "Envoi l'identifiant de l'appelant durant les indications d'appels en attente"
+msgstr ""
+"Envoi l'identifiant de l'appelant durant les indications d'appels en attente"
 
 #: cfg_opt_zap_phone.py:34
 msgid "Suspend a call temporarily via a hook flash"
@@ -1358,7 +1377,9 @@ msgstr "Active une extension 'Alias' vers un téléphone"
 
 #: cfg_phone_ext.py:39
 msgid "This can be used to set operator(o) or fax(fax) extensions."
-msgstr "Ceci peut être utilisé pour activer une extension d'opérateur(o) ou de fax(fax)."
+msgstr ""
+"Ceci peut être utilisé pour activer une extension d'opérateur(o) ou de fax"
+"(fax)."
 
 #: cfg_phone_ext.py:43
 msgid "Calls to the extension"
@@ -1401,7 +1422,8 @@ msgid ""
 "If you haven't configured a name for your phone please use the IP address "
 "here."
 msgstr ""
-"Si vous n'avez pas configuré un nom pour votre téléphone, utilisez une adresse IP "
+"Si vous n'avez pas configuré un nom pour votre téléphone, utilisez une "
+"adresse IP "
 
 #: cfg_phone_mgcp.py:51
 msgid "NAT"
@@ -1455,11 +1477,14 @@ msgstr "Caroussel - fait sonner chaque interface disponible à son tour"
 msgid ""
 "Least recent - ring interface which was least recently called by this queue"
 msgstr ""
-"Le moins récent - fait sonner l'interface qui a été le moins récement appelée dans cette file"
+"Le moins récent - fait sonner l'interface qui a été le moins récement "
+"appelée dans cette file"
 
 #: cfg_phone_queue.py:59
 msgid "Fewest calls - ring the one with fewest completed calls from this queue"
-msgstr "Le moins d'appels - fait sonner celle avec le moins d'appel complétés sur cette file"
+msgstr ""
+"Le moins d'appels - fait sonner celle avec le moins d'appel complétés sur "
+"cette file"
 
 #: cfg_phone_queue.py:60
 msgid "Random - ring random interface"
@@ -1467,11 +1492,15 @@ msgstr "Au hasard - fait sonner une interface au hasard"
 
 #: cfg_phone_queue.py:61
 msgid "Round robin with memory - remember where we left off last ring pass"
-msgstr "Caroussel avec mémoire - se souvient qui a laissé passer lors du dernier passage"
+msgstr ""
+"Caroussel avec mémoire - se souvient qui a laissé passer lors du dernier "
+"passage"
 
 #: cfg_phone_queue.py:65
 msgid "How long to wait before trying all the members again?"
-msgstr "Combien de temps faut-il attendre avant de réessayer tous les membre de nouveau ?"
+msgstr ""
+"Combien de temps faut-il attendre avant de réessayer tous les membre de "
+"nouveau ?"
 
 #: cfg_phone_queue.py:70
 msgid "Announces"
@@ -1484,7 +1513,9 @@ msgstr "Annonce la position dans la file à l'appelant ?"
 #: cfg_phone_queue.py:79
 msgid ""
 "How often to announce queue position and/or estimated holdtime to caller"
-msgstr "Combien de fois annoncer la position dans la liste et/ou le temps d'attente estimé à l'appelant"
+msgstr ""
+"Combien de fois annoncer la position dans la liste et/ou le temps d'attente "
+"estimé à l'appelant"
 
 #: cfg_phone_queue.py:84
 msgid "Include estimated hold time in position announcements?"
@@ -1641,7 +1672,8 @@ msgstr ""
 "\t\t\thttp://freeworlddialup.com et recevoir un identifiant via\n"
 "\t\t\tle quel on peut vous appeler. Ces appels sont gratuits également.\n"
 "\n"
-"\t\t\tSi vous avez un compte, vous devez activer le support IAX chez FWD sur\n"
+"\t\t\tSi vous avez un compte, vous devez activer le support IAX chez FWD "
+"sur\n"
 "\t\t\thttp://www.freeworlddialup.com/advanced/iax pour utiliser celui-ci\n"
 "\t\t\tsur cette ligne de téléphone."
 
@@ -1677,7 +1709,8 @@ msgstr "Nouveau canal IAX standard"
 msgid ""
 "Used to setup an IAX trunk to another Asterisk server or an IAX termination."
 msgstr ""
-"Utilisé pour configurer un canal IAX vers un autre serveur Asterisk ou un point d'accès IAX."
+"Utilisé pour configurer un canal IAX vers un autre serveur Asterisk ou un "
+"point d'accès IAX."
 
 #: cfg_trunk_iax.py:35
 msgid "IAX host"
@@ -1788,7 +1821,9 @@ msgstr "Nouveau canal SIP standard"
 
 #: cfg_trunk_sip.py:30
 msgid "Used to setup a SIP trunk to a SIP provider or a different SIP server."
-msgstr "Utilisé pour configurer un canal SIP vers un fournisseur SIP ou un serveur sip différent."
+msgstr ""
+"Utilisé pour configurer un canal SIP vers un fournisseur SIP ou un serveur "
+"sip différent."
 
 #: cfg_trunk_sip.py:36
 msgid "SIP username"
@@ -1952,7 +1987,7 @@ msgstr "Commande d'appel"
 msgid "You should select a phone to ring to"
 msgstr "Sélectionner un téléphone à faire sonner"
 
-#: language.py:64
+#: language.py:64 language.py:71
 msgid "This menu will contain all sorts of administration stuff:"
 msgstr "Ce menu contient toutes sortes de composants d'administration"
 
@@ -1961,8 +1996,8 @@ msgid ""
 "0,No timeout|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 minutes|"
 "3000,50 minutes"
 msgstr ""
-"0,pas de minuterie|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 minutes|"
-"3000,50 minutes"
+"0,pas de minuterie|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 "
+"minutes|3000,50 minutes"
 
 #: panelutils.py:98
 msgid "Meetme"
@@ -1992,50 +2027,50 @@ msgstr ""
 msgid "U"
 msgstr ""
 
-#: ConfigHelper.ptl:111
+#: ConfigHelper.ptl:111 ConfigHelper.ptl:113
 msgid "Invalid URL"
 msgstr "URL invalide"
 
-#: ConfigHelper.ptl:116 page_config_edit.ptl:43
+#: ConfigHelper.ptl:116 page_config_edit.ptl:43 ConfigHelper.ptl:118
 msgid "Object does not exist"
 msgstr "L'objet n'existe pas"
 
-#: ConfigHelper.ptl:198
+#: ConfigHelper.ptl:198 ConfigHelper.ptl:200
 msgid "Cascade Delete"
 msgstr "Suppression en cascade"
 
 #: ConfigHelper.ptl:199 ConfigHelper.ptl:330 page_login.ptl:45
-#: page_user_settings.ptl:68
+#: page_user_settings.ptl:68 ConfigHelper.ptl:201 ConfigHelper.ptl:332
 msgid "Cancel"
 msgstr "Annuler"
 
-#: ConfigHelper.ptl:201
+#: ConfigHelper.ptl:201 ConfigHelper.ptl:203
 msgid "Warning"
 msgstr "Avertissement"
 
-#: ConfigHelper.ptl:204
+#: ConfigHelper.ptl:204 ConfigHelper.ptl:206
 msgid ""
 "The following configlets depends on this object in a direct or indirect way:"
 msgstr ""
-"L'outil de configuration suivant depend de cet objet de façon directe ou indirecte :"
+"L'outil de configuration suivant depend de cet objet de façon directe ou "
+"indirecte :"
 
-#: ConfigHelper.ptl:209
+#: ConfigHelper.ptl:209 ConfigHelper.ptl:211
 msgid "Hard Dependencie:"
 msgstr "Dépendance forte:"
 
-#: ConfigHelper.ptl:212
+#: ConfigHelper.ptl:212 ConfigHelper.ptl:214
 msgid "Soft Dependencie:"
 msgstr "Dépendance faible"
 
-#: ConfigHelper.ptl:229
+#: ConfigHelper.ptl:229 ConfigHelper.ptl:231
 msgid ""
 "Hard dependencie: The dependent object can not exist if this object is "
 "deleted"
 msgstr ""
-"Dépendance forte : L'objet dépendant ne peut pas si l'objet est "
-"supprimé"
+"Dépendance forte : L'objet dépendant ne peut pas si l'objet est supprimé"
 
-#: ConfigHelper.ptl:233
+#: ConfigHelper.ptl:233 ConfigHelper.ptl:235
 msgid ""
 "Soft dependencie. The dependent object still can exist if this object is "
 "deleted"
@@ -2044,6 +2079,7 @@ msgstr ""
 "supprimé"
 
 #: ConfigHelper.ptl:277 ConfigHelper.ptl:298 ConfigHelper.ptl:305
+#: ConfigHelper.ptl:279 ConfigHelper.ptl:300 ConfigHelper.ptl:307
 #, python-format
 msgid "Required '%s' not found"
 msgstr "'%s' requis non trouvé"
@@ -2051,14 +2087,15 @@ msgstr "'%s' requis non trouvé"
 #: ConfigHelper.ptl:320 page_admin_callsstats.ptl:69
 #: page_admin_dialoutsstats.ptl:85 page_admin_phonestats.ptl:83
 #: page_admin_trunksstats.ptl:84 page_login.ptl:44 page_user_settings.ptl:67
+#: ConfigHelper.ptl:322
 msgid "Submit"
 msgstr "Soumettre"
 
-#: ConfigHelper.ptl:323
+#: ConfigHelper.ptl:323 ConfigHelper.ptl:325
 msgid "Update"
 msgstr "Mise à jour"
 
-#: ConfigHelper.ptl:324
+#: ConfigHelper.ptl:324 ConfigHelper.ptl:326
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -2183,7 +2220,8 @@ msgstr "Résultat"
 msgid ""
 "You need to install pychart and use a cdr with sqlite to get these statistics"
 msgstr ""
-"Vous devez installer puchart et utiliser un cdr en sqlite pour avoir ces statistiques"
+"Vous devez installer puchart et utiliser un cdr en sqlite pour avoir ces "
+"statistiques"
 
 #: page_admin_cdr.ptl:38
 msgid "Call Details"
@@ -2575,8 +2613,8 @@ msgid ""
 "You should create a user with type 'Configurator'. Without this user, "
 "everyone connecting to DeStar can configure everything."
 msgstr ""
-"Vous devez créer un utilisateur de type 'Configurateur'. Sans cet utilisateur, "
-"tout le monde se connectant sur DeStar peut modifier tout."
+"Vous devez créer un utilisateur de type 'Configurateur'. Sans cet "
+"utilisateur, tout le monde se connectant sur DeStar peut modifier tout."
 
 #: page_config.ptl:72
 #, python-format
@@ -2585,32 +2623,35 @@ msgid ""
 "ability to modify the configuration files DeStar would be pretty useless. "
 "You should 'chmod g+rwx' this directory and set it's group to one of '%s'."
 msgstr ""
-"Vous devez authoriser l'accès en écriture au répertoire /etc/asterisk. Sans cette "
-"possibilité de modification des fichiers de configuration DeStar est inutilisable. "
-"Vous devez 'chmod g+rwx' ce répertoire et mettre son groupe à un de '%s'."
+"Vous devez authoriser l'accès en écriture au répertoire /etc/asterisk. Sans "
+"cette possibilité de modification des fichiers de configuration DeStar est "
+"inutilisable. Vous devez 'chmod g+rwx' ce répertoire et mettre son groupe à "
+"un de '%s'."
 
 #: page_config.ptl:78
 msgid ""
 "You should create a management API entry. Without this entry, DeStar can't "
 "control the Asterisk PBX software."
-msgstr "Vous devez créer une entrée API de gestion. Sans cette entrée, DeStar ne peut pas "
-"contrôler le logiciel de PBX Asterisk."
+msgstr ""
+"Vous devez créer une entrée API de gestion. Sans cette entrée, DeStar ne "
+"peut pas contrôler le logiciel de PBX Asterisk."
 
 #: page_config.ptl:84
 msgid ""
 "You should create a phone. Without defined phones you can't make and receive "
 "calls."
 msgstr ""
-"Vous devez créer un téléphone. Sans téléphones définis vous ne pouvez pas effecuer et recevoir "
-" des appels."
+"Vous devez créer un téléphone. Sans téléphones définis vous ne pouvez pas "
+"effecuer et recevoir  des appels."
 
 #: page_config.ptl:90
 msgid ""
 "You should create a trunk (connection to a Phone company or VOIP Provider). "
 "Without a trunk you can only make calls between local phones."
 msgstr ""
-"Vous devriez créer un canal (connection vers une compagnie de téléphone ou un fournisseur VOIP). "
-"Sans un canl vous pouvez seulement effectuer des appels entre téléphones locaux."
+"Vous devriez créer un canal (connection vers une compagnie de téléphone ou "
+"un fournisseur VOIP). Sans un canl vous pouvez seulement effectuer des "
+"appels entre téléphones locaux."
 
 #: page_config.ptl:92 page_config_trunks.ptl:26
 msgid "Trunks"
@@ -2625,9 +2666,9 @@ msgid ""
 "it's group to one of '%s'."
 msgstr ""
 "Vous devez autoriser l'écriture sur /etc/zaptel.conf. Sans l'accès à ce "
-"fichier vous ne serez pas à même de configurer les produits Zaptel, entre autres cartes FXO/FXS, cartes T1/E1, "
-"cartes ZapHFC ISDN, etc. Vous devez 'chmod g+rw' ce fichier et mettre "
-"son groupe à un de '%s'."
+"fichier vous ne serez pas à même de configurer les produits Zaptel, entre "
+"autres cartes FXO/FXS, cartes T1/E1, cartes ZapHFC ISDN, etc. Vous devez "
+"'chmod g+rw' ce fichier et mettre son groupe à un de '%s'."
 
 #: page_config.ptl:101
 #, python-format
@@ -2636,9 +2677,9 @@ msgid ""
 "modify the Asternic Flash Operator Panel configuration files DeStar won't be "
 "integrated whit the panel."
 msgstr ""
-"Vous devriez activer l'accès en écriture au répertoire %s. Sans cette capacité à "
-"modifer les fichiers de configuration du panneau Asternic Flash Operator, celui ne pourra pas"
-"être intégré au panneau."
+"Vous devriez activer l'accès en écriture au répertoire %s. Sans cette "
+"capacité à modifer les fichiers de configuration du panneau Asternic Flash "
+"Operator, celui ne pourra pasêtre intégré au panneau."
 
 #: page_config.ptl:116
 msgid "Configured"
@@ -2718,7 +2759,8 @@ msgstr "Débug"
 
 #: page_debug.ptl:26
 msgid "Various functions to debug DeStar, mostly useful for programmers"
-msgstr "Diverse fonctions pour débugguer DeStar, la plupart utiles aux développeurs"
+msgstr ""
+"Diverse fonctions pour débugguer DeStar, la plupart utiles aux développeurs"
 
 #: page_debug_values.ptl:25
 msgid "Values"
@@ -3012,3 +3054,15 @@ msgstr "Erreur"
 #: Templates.ptl:263
 msgid "You don't have access to this page"
 msgstr "Vous n'avez pas accès à cette page"
+
+#: destar:98
+msgid "Error:"
+msgstr ""
+
+#: destar:98
+msgid "please install Quixote 1.x"
+msgstr ""
+
+#: ConfigHelper.ptl:95
+msgid "Add more"
+msgstr "Ajouter plus de/d' "

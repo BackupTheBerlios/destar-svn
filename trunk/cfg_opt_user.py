@@ -17,9 +17,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-
+import language
 from configlets import *
-
 
 class CfgOptUser(CfgOpt):
 
@@ -39,6 +38,10 @@ class CfgOptUser(CfgOpt):
 		                            ("1",_("User")),
 		                            ("2",_("Administrator")),
 		                            ("3",_("Configurator")) )),
+		VarType("language", title=_("Language"), type="choice",
+				    options=( ("en","en"),
+				    	      ("es","es"),
+					      ("fr","fr") )),
 		     ]
 
 	def createAsteriskConfig(self):

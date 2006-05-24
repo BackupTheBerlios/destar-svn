@@ -75,7 +75,9 @@ def presentEditableConfiglets [plain] (configlets):
                                         '<td><a href="../edit/%s">%s</a></td>' % (o._id, htmlescape(f))
                                         wrap = False
 				else:
-	                                '<td>%s</td>' % htmlescape(f)
+					if f == "":
+						f = " "
+	                                '<td>%s</td>' % htmlescape(_(f))
                         '</tr>'
                         n = n + 1
                 '</table>'
@@ -90,9 +92,9 @@ def presentAddableConfiglets [plain] (group, configlets):
                         continue
                 if not head:
 			'<br/><br/>'
-                        '<div class="addmore"><h3>Add more %s</h3><ul>' % group   
+                        '<div class="addmore"><h3>%s %s</h3><ul>' % (_("Add more"),_(group))   
                         head = True
-                '<li><a href="../add/%s">%s</a></li>' % (o.__name__, o.shortName)
+                '<li><a href="../add/%s">%s</a></li>' % (o.__name__, _(o.shortName))
         if head:
                 '</ul></div>'
 

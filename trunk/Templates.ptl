@@ -26,7 +26,6 @@ import os, sys, copy
 
 
 
-
 class HtmlTable:
 
 	class TwoDimensionalArray:
@@ -159,7 +158,7 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
 		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
 	'<meta name="Author" content="DeStar, made by Holger Schurig" />\n'
 	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
-	'<title>Asterisk/DeStar PBX :: %s</title>\n' % title
+	'<title>Asterisk/DeStar PBX :: %s</title>\n' % _(title)
 	'<link rel="stylesheet" type="text/css" href="/static/layout.css" />\n'
 	
 	if scripts:
@@ -184,7 +183,7 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
 		'<ul>\n'
 		for e in menu:
 			if e[1]:
-				'<li><a href="%s">%s</a></li>\n' % (e[1],e[2])
+				'<li><a href="%s">%s</a></li>\n' % (e[1],_(e[2]))
 			else:
 				'<li>&nbsp;</li>\n'
 			if e[3]:
@@ -200,7 +199,7 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
 	'<div id="content">\n'
 
 	if title:
-		'<h2 id="contentHeading">%s</h2>\n' % title
+		'<h2 id="contentHeading">%s</h2>\n' % _(title)
 
 	
 def footer [html] ():

@@ -22,7 +22,6 @@ from Templates import *
 from quixote.form2 import *
 import types, backend
 
-
 _q_parent  = 'page_main'
 _q_title   = _("Login")
 _q_desc    = _("Login into DeStar")
@@ -71,6 +70,7 @@ def _q_index [plain] (request):
 				request.session.user  = obj.name
 				request.session.level = int(obj.level)
 				request.session.phone = obj.phone
+				request.session.language = obj.language
 				return request.redirect(str('../user/info'))
 
 		# Now search for a phone entry with proper extension/voicemail pin
@@ -79,6 +79,7 @@ def _q_index [plain] (request):
 				request.session.user  = obj.name
 				request.session.level = 1
 				request.session.phone = obj.name
+				request.session.language = 'en'
 				return request.redirect(str('../user/info'))
 		notLoggedIn(request)
 	footer()
