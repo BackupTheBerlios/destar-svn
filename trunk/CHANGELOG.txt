@@ -2,6 +2,9 @@
 * Deleted some unused/not-supported-anymore files from misc directory.
 * Added debian init.d file on misc/debian.
 * backend.py: Updated VoiceMail2 to newer VoiceMail.
+* Shiny new looking style, thanks to Avatar Ltd. (TODO: test with several browsers).
+* Fixed path on language.py.
+* Fixed quixote version message.
 
 2006-05-24
 * Applied Patch #1073, thanks to Anthony:

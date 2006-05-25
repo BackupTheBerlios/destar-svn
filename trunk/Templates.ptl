@@ -26,6 +26,7 @@ import os, sys, copy
 
 
 
+
 class HtmlTable:
 
 	class TwoDimensionalArray:
@@ -151,16 +152,24 @@ class HtmlTable:
 def header [html] (title, menu=None, refresh=None, scripts=None):
 
 	# Boilerplate
-	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n'
-	'<html xmlns="http://www.w3.org/1999/xhtml">\n'
-	'<head>\n'
-	if refresh:
-		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
-	'<meta name="Author" content="DeStar, made by Holger Schurig" />\n'
-	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />'
-	'<title>Asterisk/DeStar PBX :: %s</title>\n' % _(title)
-	'<link rel="stylesheet" type="text/css" href="/static/layout.css" />\n'
-	
+   	'<html xmlns="http://www.w3.org/1999/xhtml">\n'
+  	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n'
+   	'<head>\n'
+   	if refresh:
+   		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
+  	'<title>iCom: %s</title>\n' % title
+  	'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n'
+  	'<style type="text/css" media="screen, tv, projection">\n'
+  	'	@import url("/static/css/general.css");\n' 
+  	'	@import url("/static/css/Menu.css");\n'
+  	'</style>\n'
+  	'<!--[if lte IE 6]>\n'
+  	'<style type="text/css" media="screen, tv, projection">\n'
+  	'	@import "/static/css/Menu4IE.css";\n'
+  	'	body { behavior:url("/static/css/ADxMenu.htc"); }\n'
+  	'</style>\n'
+  	'<![endif]-->\n'
+ 
 	if scripts:
 		for sc in scripts:
 			sc()
@@ -171,42 +180,58 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
 
 
 	# Header
-	'<h1 id="nameheader"><a href="/" class="header">De<em>Star</em></a></h1>\n'
+ 	'<div id="wrapper">\n'
+ 	'	<div id="header">\n'
+ 	'		<h1>DeStar/Asterisk PBX</h1>\n'
+
 	
 	# Side menu
 	# e[0]: priority, only needed for sorting, discarded
 	# e[1]: Textual link
 	# e[2]: link
 	# e[3]: submenu
-	'<div id="navigation" class="nav">\n'
-	def showMenu [html] (menu):
-		'<ul>\n'
-		for e in menu:
-			if e[1]:
-				'<li><a href="%s">%s</a></li>\n' % (e[1],_(e[2]))
-			else:
-				'<li>&nbsp;</li>\n'
-			if e[3]:
-				'<li>'
-				showMenu(e[3])
-				'</li>'
-		'</ul>\n'
-	showMenu(getMenu())
-	'</div>\n'
-
-
-	# Content
-	'<div id="content">\n'
+ 	'<div id="menu" class="nav">\n'
+ 	'<ul id=menuList >\n'
+ 	def showMenu [html] (menu, submenu=False):
+  		for e in menu:
+ 			'<li>\n'
+  			if e[1]:
+ 				if not submenu:
+ 					'<a href="%s"><span>%s</span></a>\n' % (e[1],e[2])
+ 				else:
+ 					'<a href="%s">%s</a>\n' % (e[1],e[2])
+  			else:
+  				'<li>&nbsp;</li>\n'
+  			if e[3]:
+ 				'<ul>\n'
+ 				showMenu(e[3], True)
+ 				'</ul>\n'
+ 			'</li>\n'
+  	showMenu(getMenu())
+ 	'</ul>\n'
+  	'</div>\n'
+ 	'	</div>\n' #header
+  
+  
+  	# Content
+ 	'<div id="mainContent">\n'
+ 	'			<div id="contentNav">\n'
+ 	'\n'			
+ 	'			</div>\n'
 
 	if title:
-		'<h2 id="contentHeading">%s</h2>\n' % _(title)
+		'<h2 id="contentHeading">%s</h2>\n' % title
 
 	
 def footer [html] ():
 	'</div>\n'
-	#'<div id="footer">\n'
-	#'<p><a href="http://www.holgerschurig.de/destar.html"> DeStar Homepage</a></p>\n'
-	#'</div>'
+	'<div id="footer">\n'
+	'	<p>De<em>Star</em> version 0.2<br />\n'
+	'	<a href="http://destar.berlios.de">http://destar.berlios.de</a></p>\n'
+	'</div>\n'
+
+	'</div>\n'
+
 	'</body>\n'
 	'</html>\n'
 
@@ -214,9 +239,7 @@ def footer [html] ():
 def getMenu():
 	request = get_request()
 	path = request.environ['PATH_INFO']
-	#print "path:", path
 	path = path[1:].split('/')
-	#print "path:", path
 
 	stack = get_publisher().get_namespace_stack()
 
@@ -226,21 +249,24 @@ def getMenu():
 			obj = stack[n]
 		except IndexError:
 			return
-		#print obj
+		try:
+			prueba = obj._q_menu
+		except AttributeError:
+			return
 		for e in obj._q_menu:
-			#print "user %d, page %d %s" % (request.session.level, e._q_level, e._q_title)
 			if e._q_level>request.session.level:
 				continue
-			if e._q_title == _("Logout") and request.session.level == 4:
-				continue
 			if e._q_level<0:
-				#print abs(e._q_level), request.session.level
-				if abs(e._q_level) <= request.session.level:
-					continue
-			if e._q_link==path[n] or e._q_link==path[n]+'/':
-				submenu = calcMenu('/'.join([root,path[n]]), n+1)
-			else:
-				submenu = []
+				if e._q_title == _("Logout") and request.session.level == 4:
+	                                continue
+				if e._q_level<0:
+	                                if abs(e._q_level) <= request.session.level:			
+	                                	continue
+			submenu = []
+			if e._q_parent == sys.modules['page_main']:
+				for sub in e._q_menu:
+					parent_name = sub._q_parent.__name__[5:]
+					submenu.append( (sub._q_menupos, '/'.join([root,parent_name,sub._q_link]), sub._q_title, []) )
 
 			m.append( (e._q_menupos, '/'.join([root,e._q_link]), e._q_title, submenu) )
 		m.sort()

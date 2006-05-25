@@ -95,7 +95,7 @@ try:
 	if quixote.__version__ < "1.2" or quixote.__version__ >= "2.0":
 		raise ImportError
 except ImportError:
-	print _("Error:"), _("please install Quixote 1.x")
+	print _("Error:"), _("please install Quixote > 1.2  and < 2.0")
 	import sys
 	sys.exit(1)
 

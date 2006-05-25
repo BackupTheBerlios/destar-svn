@@ -30,12 +30,13 @@
 
 import os, fnmatch, re, gettext
 
+CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
+
 def listLanguages():
 	try:
-	
-	 names = fnmatch.filter(os.listdir('lang/'), '*.gmo')
+		names = fnmatch.filter(os.listdir(CONFIGLETS_DIR+'/lang/'), '*.gmo')
 	except IOError:
-	 names = []
+	 	names = []
 	d = dict([('en','en.gmo')] + [(re.sub(r'(.*)\.gmo',r'\1',x),x) for x in names]) 
 	return d
 
