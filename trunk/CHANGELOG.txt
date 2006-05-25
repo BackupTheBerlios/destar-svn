@@ -1,8 +1,12 @@
 2006-05-25
+* Deleted some unused/not-supported-anymore files from misc directory.
+* Added debian init.d file on misc/debian.
+* backend.py: Updated VoiceMail2 to newer VoiceMail.
+
+2006-05-24
 * Applied Patch #1073, thanks to Anthony:
 	- Better language support, by user prefers.
 	- Unittest for translations.
-* Deleted some unused/not-supported-anymore files from misc directory.
 * Destar checks for quixote >= 1.2 and < 2.0. Closing Bug #7314.
 * Added first french l10n version, fr.po (Patch #1042). Thanks to Anthony.
 * Using xgettext instead of pygettext in Makefile. Closing Bug #7425. Thanks to Anthony.
