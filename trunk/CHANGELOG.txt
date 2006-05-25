@@ -1,5 +1,16 @@
+2006-05-25
+* Applied Patch #1073, thanks to Anthony:
+	- Better language support, by user prefers.
+	- Unittest for translations.
+* Deleted some unused/not-supported-anymore files from misc directory.
+* Destar checks for quixote >= 1.2 and < 2.0. Closing Bug #7314.
+* Added first french l10n version, fr.po (Patch #1042). Thanks to Anthony.
+* Using xgettext instead of pygettext in Makefile. Closing Bug #7425. Thanks to Anthony.
+
 2006-05-03:
 * ConfigHelper.ptl: fixed bug with renaming configlets with dynamic dependencies
+* Zap phone group is optional 
+
 2006-04-27:
 * configlets.py: fixed bug with Cfg.renameDependencies()
 
@@ -8,7 +19,6 @@
 * panelutils.py: fixed trunk section name
 * cfg_phone_*.py: phones depends on the dialout_* vars
 
-
 2006-04-20
 * cfg_dialout_normal.py: added support for dynamically generated dependencies. This is for "trunk_*" like dependencies.
 
@@ -16,7 +26,7 @@
 * cfg_ivr_autoatt.py: this configlets depends on the moh, an ext and an ivr.
 
 2006-04-03
-*Merged changes from branches/performance-experimental to trunk ("Ave Mar�a, dame punter�a" :P).
+*Merged changes from branches/performance-experimental to trunk ("Ave Maria, dame punteria" :P).
 
 2006-03-23
 * configlets.py: Changed spaces with tabs
