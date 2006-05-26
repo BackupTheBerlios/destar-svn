@@ -136,13 +136,13 @@
 				}
 					#menu li:hover>a span
 					{
-						color:#990000;
+						color:#f89833;
 						background:url("../imgs/menu-f2.gif") right top no-repeat;
 						display:block;
 					}
 			#menu a:hover span
 			{
-				color:#990000;
+				color:#f89833;
 			}		
 				#menu li li a
 				{

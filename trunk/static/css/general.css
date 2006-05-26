@@ -43,6 +43,7 @@ body
 				margin:0;
 				padding:14px 0 9px 26px;
 				float:left;
+				color:white;
 			}
 			#loginNavigation
 			{
@@ -116,7 +117,7 @@ body
 				{
 					font-size:20px;
 					font-weight:normal;
-					color:#990000;
+					color:#e37e12;
 					margin-top:0px;
 					margin-bottom:10px;
 				}
@@ -164,7 +165,7 @@ body
 				}
 					#mainContent a:hover
 					{
-						color:#990000;
+						color:#e37e12;
 					}
 				/*Forms definitions*/
 				#mainContent form,
@@ -189,7 +190,7 @@ body
 						#mainContent form.quixote table thead th
 						{
 							background:#E7C3C3;
-							color:#990000;
+							color:#e37e12;
 							font-size:11px;
 						}
 						#mainContent table tbody td,
@@ -225,7 +226,7 @@ body
 					{
 						font-family:Arial, Helvetica, sans-serif;
 						font-size:12px;
-						color:red;
+						color:#faae60;
 						padding:1px 3px 1px 3px;
 						margin-left:0;
 						margin-right:0;
@@ -251,9 +252,9 @@ body
 						#mainContent form input.btn01,
 						#mainContent form.quixote div.submit div.SubmitWidget div.content
 						{
-							border-color:#9A0202;
-							background:#E7C3C3;
-							color:#990000;
+							border-color:#faae60;
+							background:#fdce9d;
+							color:#e37e12;
 						}
 						#mainContent form input.btn02,
 						{
@@ -287,14 +288,14 @@ body
 							padding:2px 10px 5px 0;
 							background:url("../imgs/text-btn_f2.gif") right top no-repeat;
 							display:block;
-							color:#990000;
+							color:#e37e12;
 						}*/
 /**********************************/
 
 form.quixote .errornotice {
 	margin-bottom: 1em;
 	font-weight: bold;
-	color: #f00;
+	color: #e37e12;
 	float: left;
 }
 
@@ -305,7 +306,7 @@ form.quixote .title {
 }
 
 form.quixote .required {
-	color: #f00;
+	color: #e37e12;
 	padding: 0.4em;
 }
 
@@ -318,7 +319,7 @@ form.quixote .content {
 }
 
 form.quixote .content .error {
-	color: #f00;
+	color: #e37e12;
 	display: inline;
 	font-weight: bold;
 	margin-left: 1em;
@@ -366,7 +367,7 @@ form.quixote br {
 				#footer p em
 				{
 					font-style:normal;
-					color:#990000;
+					color:#e37e12;
 				}
 				#footer p a
 				{

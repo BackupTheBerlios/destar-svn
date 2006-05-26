@@ -1,3 +1,6 @@
+2006-05-26
+* Final changes to initial new style.
+
 2006-05-25
 * Deleted some unused/not-supported-anymore files from misc directory.
 * Added debian init.d file on misc/debian.
