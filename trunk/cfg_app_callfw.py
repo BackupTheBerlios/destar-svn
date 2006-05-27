@@ -25,26 +25,28 @@ class CfgAppCallFW(CfgApp):
 
 	shortName   = _("Call forwarding")
 	description = _("Extensions to set/unset call forwarding.")
-	newObjectTitle = _("New extensions to set/unset call forwarding") 
-				   
+	newObjectTitle = _("New extensions to set/unset call forwarding")
+
 	def createVariables(self):
-		self.variables   = [ VarType("type", title=_("Type"), type="choice", options=( ("CFIM", _("Call Forwarding Unconditional")), ("CFBS",_("Call Forwarding if Busy/Unavailable")) )),
+		self.variables = [ 
+			VarType("pbx",	  title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+			VarType("type", title=_("Type"), type="choice", options=( ("CFIM", _("Call Forwarding Unconditional")), ("CFBS",_("Call Forwarding if Busy/Unavailable")) )),
 			VarType("set",      title=_("Setting preffix"), len=6, default="*21*"),
 			VarType("ext",   title=_("Unsetting extension"), len=6, default="#21#")
-		       ]
+		       	]
 	
 	def row(self):
-		return ("%s / %s" % (self.set,self.ext),self.shortName, self.type)
+		return ("%s / %s" % (self.set,self.ext),"%s %s" % (self.shortName, self.type), self.pbx)
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
-		c.appendExten("_%sX." % self.set, "DBput(%s/${CALLERIDNUM}=${EXTEN:%d})" % (self.type, len(self.set)))
+		c.setSection(self.pbx)
+		c.appendExten("_%sX." % self.set, "DBput(%s/%s/${CALLERIDNUM}=${EXTEN:%d})" % (self.type, self.pbx,len(self.set)))
 		if self.type == "CFIM":
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-unconditional)")
 		else:
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-on-busy)")
 		c.appendExten("_%sX." % self.set, "Hangup")
-		c.appendExten("%s" % self.ext, "DBdel(%s/${CALLERIDNUM})" % self.type)
+		c.appendExten("%s" % self.ext, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type,self.pbx))
 		c.appendExten("%s" % self.ext, "Playback(call-fwd-cancelled)")
 		c.appendExten("%s" % self.ext, "Hangup")

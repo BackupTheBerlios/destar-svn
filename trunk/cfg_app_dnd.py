@@ -28,13 +28,14 @@ class CfgAppDND(CfgApp):
 	description = _("Extensions to set/unset 'Do Not Disturb'.")
 	
 	def createVariables(self):
-		self.variables   = [ 
+		self.variables   = [
+			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")), 
 			VarType("set",      title=_("Setting extension"), len=6, default="*78"),
 			VarType("unset",   title=_("Unsetting extension"), len=6, default="*79")
 		       ]
 
 	def row(self):
-		return ("%s / %s" % (self.set,self.unset), self.shortName)
+		return ("%s / %s" % (self.set,self.unset), self.shortName, self.pbx)
 	
 	def checkConfig(self):
 		import configlets
@@ -48,11 +49,11 @@ class CfgAppDND(CfgApp):
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
-		c.appendExten("%s" % self.set, "DBput(DND/${CALLERIDNUM})")
+		c.setSection(self.pbx)
+		c.appendExten("%s" % self.set, "DBput(DND/%s/${CALLERIDNUM})" % self.pbx)
 		c.appendExten("%s" % self.set, "Playback(do-not-disturb)")
 		c.appendExten("%s" % self.set, "Hangup")
-		c.appendExten("%s" % self.unset, "DBdel(DND/${CALLERIDNUM})")
+		c.appendExten("%s" % self.unset, "DBdel(DND/%s/${CALLERIDNUM})" % self.pbx)
 		c.appendExten("%s" % self.unset, "Playback(do-not-disturb)")
 		c.appendExten("%s" % self.unset, "Playback(cancelled)")
 		c.appendExten("%s" % self.unset, "Hangup")
