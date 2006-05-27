@@ -4,6 +4,7 @@
 	- Changed "phones" context to "pbx-name" context.
 	- Modified macro-dial-std-exten to support several pbx.
 	- Modified all configlet main classes to allow virtual pbxs.
+	- Applied new scheme to cfg_phone_sip.py (other phones are pending).
 
 2006-05-25
 * Deleted some unused/not-supported-anymore files from misc directory.

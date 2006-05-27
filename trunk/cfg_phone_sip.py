@@ -30,6 +30,11 @@ class CfgPhoneSip(CfgPhone):
 	
 	def createVariables(self):
 		self.variables = [
+			VarType("pbx",    
+				title=_("Virtual PBX"), 
+				type="choice", 
+				options=getChoice("CfgOptPBX")),
+
 			VarType("name",
 				title=_("Name"),
 				len=15),
@@ -146,7 +151,9 @@ class CfgPhoneSip(CfgPhone):
 					type="bool",
 					optional=True,
 					hide=True),]
-		
+
+		technology = "SIP"	
+
 		if varlist_manager.hasDialouts():
 			self.variables += varlist_manager.getDialouts()
 			for v in self.variables:
@@ -178,6 +185,17 @@ class CfgPhoneSip(CfgPhone):
 				dependent_obj = DependentObject(self, dep)
 				obj.dependent_objs.append(dependent_obj)
 
+	def isAddable(self):
+		"We can only add this object if we have at least one pbx defined."
+
+		# BUG: it does somehow not work to simply write for obj in config_entries,
+		# despite the "from configlets import *" above
+		import configlets
+		if len(configlets.configlet_tree.getConfigletsByName('CfgOptPBX')) > 0:
+			return True
+		return False
+	isAddable = classmethod(isAddable)
+
 	def createAsteriskConfig(self):
 		needModule("chan_sip")
 		needModule("app_authenticate")
@@ -194,12 +212,8 @@ class CfgPhoneSip(CfgPhone):
 		sip.append("context=out-%s" % self.name)
 		sip.append("canreinvite=no")
 
-		if self.calleridname and self.calleridnum:
-			sip.append('callerid="%s" <%s>' % (self.calleridname, self.calleridnum))
 		elif self.calleridname:
 			sip.append('callerid="%s" <%s>' % (self.calleridname, self.ext))
-		elif self.calleridnum:
-			sip.append('callerid="%s" <%s>' % (self.name,self.calleridnum))
 		else:
 			sip.append('callerid="%s" <%s>' % (self.name,self.ext))
 
