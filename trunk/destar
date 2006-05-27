@@ -82,6 +82,13 @@ for opt,val in opts:
 		print_version()
 		sys.exit(0)
 
+# Validate parameters to give better errors:
+try:
+	rport_num = int(rport)
+except ValueError:
+	print "Error: rport (-r <num>/--port=<num> must be a number)"
+	print_usage()
+	sys.exit(2)
 
 print_version()
 
