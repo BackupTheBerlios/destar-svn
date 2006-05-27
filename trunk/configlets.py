@@ -853,8 +853,14 @@ class CfgTrunk(Cfg):
 			d.appendExten("_X.","SetCIDName(%s)" %  self.clid)
 			d.appendExten("s","SetCIDName(%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
-			c.appendExten("_X.", "Goto(phones,%s,1)" % self.phone)
-			c.appendExten("s", "Goto(phones,%s,1)" % self.phone)
+			global configlet_tree
+			obj = configlet_tree.getConfigletByName(self.phone)
+			try:
+				pbx = obj.pbx
+			except AttributeError:
+				pass
+			c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone))
+			c.appendExten("s", "Goto(%s,%s,1)" % (pbx,self.phone))
 		if self.contextin == 'ivr' and self.ivr:
 			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
 			c.appendExten("s", "Goto(%s,s,1)" % self.ivr)
@@ -871,15 +877,17 @@ class CfgPhone(Cfg):
 
 
 	def head(self):
-		return (_("Type"), _("Extension"), _("Name"))
+		return (_("Type"), _("Extension"), _("Name"), _("Virtual PBX"))
 
 
 	def row(self):
 		try:
 			ext = self.ext
+			pbx = self.pbx
 		except AttributeError:
 			ext = _('None')
-		return (self.shortName, ext, self.name)
+			pbx = _('None')
+		return (self.shortName, ext, self.name, pbx)
 
 
 	def channelString(self):
@@ -888,40 +896,53 @@ class CfgPhone(Cfg):
 
 	def fixup(self):
 		Cfg.fixup(self)
-		useContext("phones")
+		try:
+			useContext(self.pbx)
+		except AttributeError:
+			useContext("phones")
 		self.lookPanel()
 		if configlet_tree.hasConfiglet('CfgPhoneQueue'):
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":
 					v.hide = False
 
-	def createDialEntry(self, extensions, exten):
-		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%d)" % (
+	def createDialEntry(self, extensions, exten, pbx, ext):
+		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%d,%s,%s)" % (
 			self.technology,
 			self.name,
 			self.name,
-			int(self.usevm))
-			  )
+			int(self.usevm),
+			ext,
+			pbx
+			))
 
 	def createExtensionConfig(self):
 		needModule("res_adsi")
 		needModule("app_voicemail")
+		needModule("app_setcdruserfield")
 		extensions = AstConf("extensions.conf")
-		extensions.setSection("phones")
+                try:
+                        pbx = self.pbx
+                except AttributeError:
+                        pbx = "phones"
+                extensions.setSection(pbx)
 		if self.ext:
-			self.createDialEntry(extensions, self.ext)
-		self.createDialEntry(extensions, self.name);
-
+                        extensions.appendExten(self.ext,"SetCDRUserField(%s-%s)" % (pbx,self.name))
+                        self.createDialEntry(extensions, self.ext, pbx, self.ext)
+                        extensions.appendExten(self.name,"SetCDRUserField(%s-%s)" % (pbx,self.name))
+                        self.createDialEntry(extensions, self.name, pbx, self.ext)
+                else:
+                        self.createDialEntry(extensions, self.name, pbx);
 
 	def createVoicemailConfig(self, conf):
 		if self.ext and self.usevm:
 			needModule("res_adsi")
 			needModule("app_voicemail")
 			if self.usemwi:
-				conf.append("mailbox=%s@default" % self.ext)
+				conf.append("mailbox=%s@%s" % (self.ext,self.pbx))
 
 			vm = AstConf("voicemail.conf")
-			vm.setSection("default")
+			vm.setSection(self.pbx)
 			try:
 				pin = self.pin
 			except:
@@ -947,7 +968,11 @@ class CfgPhone(Cfg):
 	def createOutgoingContext(self):
 		c = AstConf("extensions.conf")
 		c.setSection("out-%s" % self.name)
-		c.append("include=>phones")
+		try:
+			pbx = self.pbx
+		except AttributeError:
+			pbx = "phones"
+		c.append("include=>%s" % pbx)
 		c.appendExten("i","Playback(privacy-invalid)")
 		c.appendExten("_**XX","DBget(dest=QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:2})", e="Playback(privacy-invalid)")
 		c.appendExten("_**XX","Goto(${dest},1)")
@@ -960,6 +985,10 @@ class CfgPhone(Cfg):
 			if obj.__class__.__name__ == 'CfgDialoutNormal':
 				try:
 					if self.__getitem__("dialout_"+obj.name):
+						c.appendExten("%s" % obj.pattern,"SetCDRUserField(%s-%s)" % (self.pbx,self.name))
+						c.appendExten("%s" % obj.pattern,"Set(CDR(virtualpbx)=%s)" % (self.pbx))
+						if self.calleridnum:
+							c.appendExten("%s" % obj.pattern,"SetCIDNum(%s)" % self.calleridnum)
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)
 						if secret:
                                                         c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
@@ -980,6 +1009,13 @@ class CfgApp(Cfg):
 	of software that has a number and that you can dial)."""
 
 	groupName ="Applications"
+
+	def head(self):
+		return (_("Extension"), _("Type"), _("Virtual PBX"))
+
+	def row(self):
+		return (self.ext, self.shortName, self.pbx)
+ 
 	
 class CfgDialout(Cfg):
 	"""Base class for dialout entries."""

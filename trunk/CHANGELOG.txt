@@ -1,7 +1,9 @@
 2006-05-26
 * Final changes to initial new style.
 ** Added virtual/hosted pbx feature.
-	- backend.py: change "phones" context to "pbx-name" context, modified macro-dial-std-exten to support several pbx.
+	- Changed "phones" context to "pbx-name" context.
+	- Modified macro-dial-std-exten to support several pbx.
+	- Modified all configlet main classes to allow virtual pbxs.
 
 2006-05-25
 * Deleted some unused/not-supported-anymore files from misc directory.
