@@ -1,3 +1,8 @@
+2006-05-27
+* Fixed some typos.
+* Removed function useContext from configlets.py.
+* Now sip phones need to have an extension (it's safer this way).
+
 2006-05-26
 * Final changes to initial new style.
 ** Added virtual/hosted pbx feature.

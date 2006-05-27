@@ -254,19 +254,6 @@ def needModule(mod):
 
 #########################################################################
 
-context_entries = []
-
-def useContext(ctx):
-	"""Use this function to remember all contexts that are in use."""
-
-	if ctx not in context_entries:
-		context_entries.append(ctx)
-	#print context_entries
-
-
-
-#########################################################################
-
 class ConfigletTree:
 	
 	def __init__(self):
@@ -552,9 +539,6 @@ class Cfg(Holder):
 		"""Each configlet's fixup() method get's called after the
 		modules have been loaded from the config file."""
 
-		global context_entries
-		context_entries = []
- 
 		# Make sure all variables are set:
 		for v in self.variables:
 			if not self.__dict__.has_key(v.name):
@@ -896,10 +880,6 @@ class CfgPhone(Cfg):
 
 	def fixup(self):
 		Cfg.fixup(self)
-		try:
-			useContext(self.pbx)
-		except AttributeError:
-			useContext("phones")
 		self.lookPanel()
 		if configlet_tree.hasConfiglet('CfgPhoneQueue'):
 			for v in self.variables:
@@ -926,13 +906,10 @@ class CfgPhone(Cfg):
                 except AttributeError:
                         pbx = "phones"
                 extensions.setSection(pbx)
-		if self.ext:
-                        extensions.appendExten(self.ext,"SetCDRUserField(%s-%s)" % (pbx,self.name))
-                        self.createDialEntry(extensions, self.ext, pbx, self.ext)
-                        extensions.appendExten(self.name,"SetCDRUserField(%s-%s)" % (pbx,self.name))
-                        self.createDialEntry(extensions, self.name, pbx, self.ext)
-                else:
-                        self.createDialEntry(extensions, self.name, pbx);
+		extensions.appendExten(self.ext,"SetCDRUserField(%s-%s)" % (pbx,self.name))
+		self.createDialEntry(extensions, self.ext, pbx, self.ext)
+		extensions.appendExten(self.name,"SetCDRUserField(%s-%s)" % (pbx,self.name))
+		self.createDialEntry(extensions, self.name, pbx, self.ext)
 
 	def createVoicemailConfig(self, conf):
 		if self.ext and self.usevm:

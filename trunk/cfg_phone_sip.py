@@ -56,7 +56,6 @@ class CfgPhoneSip(CfgPhone):
 
 			VarType("ext",
 					title=_("Extension"),
-					optional=True,
 					len=6),
 					
 			VarType("dtmfmode",
@@ -210,7 +209,7 @@ class CfgPhoneSip(CfgPhone):
 		sip.append("context=out-%s" % self.name)
 		sip.append("canreinvite=no")
 
-		elif self.calleridname:
+		if self.calleridname:
 			sip.append('callerid="%s" <%s>' % (self.calleridname, self.ext))
 		else:
 			sip.append('callerid="%s" <%s>' % (self.name,self.ext))

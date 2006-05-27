@@ -107,7 +107,7 @@ class CfgOptDID(CfgOpt):
 			obj = configlets.configlet_tree.getConfigletByName(self.phone)
 			try:
 				c.appendExten(self.did,"Goto(%s,%s,1)" %  (obj.pbx,self.phone))
-			escept AttributeError:
+			except AttributeError:
 				pass
 		elif self.contextin == 'ivr' and self.ivr:
 			c.appendExten(self.did,"Goto(%s,s,1)" % self.ivr)
