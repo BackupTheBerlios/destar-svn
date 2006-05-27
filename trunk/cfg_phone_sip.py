@@ -152,8 +152,6 @@ class CfgPhoneSip(CfgPhone):
 					optional=True,
 					hide=True),]
 
-		technology = "SIP"	
-
 		if varlist_manager.hasDialouts():
 			self.variables += varlist_manager.getDialouts()
 			for v in self.variables:

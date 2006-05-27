@@ -103,7 +103,12 @@ class CfgOptDID(CfgOpt):
 			needModule("app_setcidname")
 			c.appendExten(self.did,"SetCIDName(%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
-			c.appendExten(self.did,"Goto(phones,%s,1)" %  self.phone)
+			import configlets
+			obj = configlets.configlet_tree.getConfigletByName(self.phone)
+			try:
+				c.appendExten(self.did,"Goto(%s,%s,1)" %  (obj.pbx,self.phone))
+			escept AttributeError:
+				pass
 		elif self.contextin == 'ivr' and self.ivr:
 			c.appendExten(self.did,"Goto(%s,s,1)" % self.ivr)
 
