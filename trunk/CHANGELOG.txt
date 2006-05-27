@@ -3,6 +3,9 @@
 * Removed function useContext from configlets.py.
 * Now sip phones need to have an extension (it's safer this way).
 * Added cfg_app_callfw and cfg_app_dnd to virtual pbx boilerplate.
+* Deleted depricated contrib/destarctl file.
+* Moved TIPS.txt to misc.
+* Added cfg_opt_pbx.py and page_config_pbx.ptl to handle virtual pbx configlets.
 
 2006-05-26
 * Final changes to initial new style.
