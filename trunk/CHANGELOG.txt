@@ -1,6 +1,7 @@
 2006-05-28
 * configlets.py, backend.py: removed some modules.
 * page_admin_cdr.ptl, cdrutils.py: started Sqlite3 transition.
+* page_admin_callsstats.ptl, StatsHelper.ptl: transition to sqlite3.
 
 2006-05-27
 * Fixed some typos.

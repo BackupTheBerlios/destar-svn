@@ -147,7 +147,7 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 				[i.failed for i in calls])
 
 	chart_object.set_defaults(area.T, 
-								size = (640, 480),
+								size = (510, 280),
 								x_coord = category_coord.T(data, 0))
 	
 	chart_object.set_defaults(bar_plot.T,
@@ -165,9 +165,9 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 	ar.draw(can)
 	can.close()
 	
-	htmltext('<h4>')
+	htmltext('<br/><br/><h3>')
 	htmltext(title)
-	htmltext('</h4>')
+	htmltext('</h3>')
 	
 	htmltext('<p>')
 	htmltext('<img alt="table" src="/graphs/%s">' % filename)
@@ -185,7 +185,7 @@ def makeGraphic [plain] (names, values, title, labelx, labely, filename):
 	data = zip(names, values)
 
 	chart_object.set_defaults(area.T, 
-								size = (640, 480),
+								size = (510, 280),
 								x_coord = category_coord.T(data, 0))
 	
 	chart_object.set_defaults(bar_plot.T,
@@ -200,9 +200,9 @@ def makeGraphic [plain] (names, values, title, labelx, labely, filename):
 	ar.draw(can)
 	can.close()
 	
-	htmltext('<h4>')
+	htmltext('<br/><br/><h3>')
 	htmltext(title)
-	htmltext('</h4>')
+	htmltext('</h3>')
 	
 	htmltext('<p>')
 	htmltext('<img alt="table" src="/graphs/%s">' % filename)

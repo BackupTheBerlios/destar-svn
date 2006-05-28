@@ -765,7 +765,7 @@ class VarListManager:
 		self.trunks = []
 		for obj in configlet_tree['Trunks']:
 			self.trunks.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
-			self.trunks.append(VarType("trunk_%s_price" % obj.name, title=_("Price for this pattern"), type="int", optional=True, len=10, default=0))
+			self.trunks.append(VarType("trunk_%s_price" % obj.name, title=_("Price/Account_code for this pattern"), type="int", optional=True, len=10, default=0))
 
 	def hasDialouts(self):
 		return len(self.dialouts)>0
