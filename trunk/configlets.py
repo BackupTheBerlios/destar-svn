@@ -218,7 +218,6 @@ def needModule(mod):
 				"format_ilbc",
 				"format_jpeg",
 				"format_pcm",
-				"format_pcm_alaw",
 				"format_vox",
 				"format_wav",
 				"format_wav_gsm",

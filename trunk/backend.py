@@ -149,7 +149,6 @@ def initializeAsteriskConfig():
 	c.append("disallow=all")
 
 
-	needModule("res_crypto")
 	needModule("chan_iax2")
 	c = AstConf("iax.conf")
 	c.append("language=%s" % getSetting('language', 'en'))

@@ -1,3 +1,7 @@
+2006-05-28
+* configlets.py, backend.py: removed some modules.
+* page_admin_cdr.ptl, cdrutils.py: started Sqlite3 transition.
+
 2006-05-27
 * Fixed some typos.
 * Removed function useContext from configlets.py.

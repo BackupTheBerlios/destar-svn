@@ -22,30 +22,32 @@ import sys, os
 
 
 try:
-	import sqlite
+	from pysqlite2 import dbapi2 as sqlite
 except ImportError:
-	print "Note: you should install python-sqlite to have CDR functionality"
+	print "Note: you should install python-pysqlite2 to have CDR functionality"
 
 try:
-	db_fn = "/var/log/asterisk/cdr.db"
+	db_fn = "/var/log/asterisk/master.db"
 	if not os.access(db_fn, os.O_RDWR):
 		raise ImportError
-	db = sqlite.connect(db_fn, autocommit=False, command_logfile=sys.stdout)
+	db = sqlite.connect(db_fn, isolation_level="IMMEDIATE")
 except:
-	print "Note: you don't seem to have access to /var/log/asterisk/cdr.db yet"
+	print "Note: you don't seem to have access to /var/log/asterisk/master.db yet"
 	if __name__ == "__main__": sys.exit(0)
 	db = None
 
 def N_(message): return message
 
 def select(
-		fields=['src as %s' % N_("Source"),
+		fields=['start as %s' % N_("Time_of_start"),
+			'src as %s' % N_("Source"),
 			'clid as %s' % N_("Caller_ID"),
 			'dst as %s' % N_("Destination"),
 			'answer as %s' % N_("Time_of_answer"),
 			'billsec as %s' % N_("Duration"),
 			'disposition as %s' % N_("Result"),
-			'accountcode as %s' % N_("Cost_per_Minute")],
+			'pbx as %s' % N_("PBX"),
+			'accountcode as %s' % N_("Account_code")],
 		groupby=[],
 		having=[],
 		where=[],
