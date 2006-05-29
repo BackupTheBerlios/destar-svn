@@ -33,6 +33,7 @@ class CfgOptUser(CfgOpt):
 		VarType("pc",     title=_("Associated IP address of PC"), hint=_("Trusted for auto-login"), len=15, optional=True),
 		VarType("phone",  title=_("Associated phone"), type="choice", optional=True,
 		                  options=getChoice("CfgPhone")),
+		VarType("pbx",	  title=_("Associated Virtual PBX"), type="choice", optional=True, options=getChoice("CfgOptPBX")),
 		VarType("level",  title=_("Type"), type="choice",
 		                  options=( ("0",_("disabled")),
 		                            ("1",_("User")),
