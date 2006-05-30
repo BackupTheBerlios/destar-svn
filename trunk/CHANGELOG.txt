@@ -1,3 +1,6 @@
+2006-05-29
+* Added initial cdr_sqlite3_custom.conf support.
+
 2006-05-28
 * configlets.py, backend.py: removed some modules.
 * page_admin_cdr.ptl, cdrutils.py: started Sqlite3 transition.

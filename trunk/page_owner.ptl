@@ -31,6 +31,8 @@ _q_level   = 2
 def _q_access(request):
         if request.session.level < _q_level:
 		cantAccessPage()
+        if not request.session.pbx:
+		cantAccessPage()
 
 
 def _q_index [plain] (request):
