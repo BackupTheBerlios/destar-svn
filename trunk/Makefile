@@ -56,3 +56,5 @@ endif
 	install -d $(MANDIR)
 	gzip -9 <misc/destar.8 >$(MANDIR)/destar.8.gz
 	chmod 0644 $(MANDIR)/destar.8.gz
+	install -d $(PYDIR)/lang
+	install -m 644 lang/* $(PYDIR)/lang/

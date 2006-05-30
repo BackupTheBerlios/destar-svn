@@ -27,11 +27,13 @@ class CfgAppMeetme(CfgApp):
 	newObjectTitle  = _("New meeting room")
 	
 	def createVariables(self):
-		self.variables   = [	VarType("ext",      title=_("Extension"), len=6),
+		self.variables   = [	VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+			VarType("ext",      title=_("Extension"), len=6),
 		       	VarType("confno",   title=_("Conference number"), hint=_("If empty, will be the same as the extension"), optional=True, len=6),
 		       	VarType("pin",      title=_("PIN"), optional=True, len=6),
-				VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True)
+			
+			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
+	                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True)
 		]
 	
 	def fixup(self):
@@ -41,7 +43,7 @@ class CfgAppMeetme(CfgApp):
 		needModule("app_meetme")
 
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		# 'd' -- dynamically add conference
@@ -52,10 +54,13 @@ class CfgAppMeetme(CfgApp):
 
 		c = AstConf("meetme.conf")
 		c.setSection("rooms")
-		if self.pin:
-			c.append("conf=%s,%s" % (self.confno, self.pin))
-		else:
-			c.append("conf=%s" % self.confno)
+		try:
+			if self.pin:
+				c.append("conf=%s,%s" % (self.confno, self.pin))
+			else:
+				c.append("conf=%s" % self.confno)
+		except AttributeError:
+			pass
 		
 		try:
 			if panelutils.isConfigured() == 1 and self.panel:

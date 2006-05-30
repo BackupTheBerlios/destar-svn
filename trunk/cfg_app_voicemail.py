@@ -28,7 +28,8 @@ class CfgAppVoiceMail(CfgApp):
 	description = _("""Extension to enter the voicemail system.""")
 	
 	def createVariables(self):
-		self.variables   = [ VarType("ext", title=_("Extension"), len=6),
+		self.variables   = [ VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+			VarType("ext", title=_("Extension"), len=6),
 			VarType("mailbox", title=_("Ask for user mailbox?"), type="bool", optional=True),
 		]
 
@@ -37,11 +38,11 @@ class CfgAppVoiceMail(CfgApp):
 		needModule("app_voicemail")
 
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		if not self.mailbox:
-			c.appendExten(self.ext, "VoiceMailMain(${CALLERIDNUM})")
+			c.appendExten(self.ext, "VoiceMailMain(${CALLERIDNUM}@%s)" % self.pbx)
 		else:
-			c.appendExten(self.ext, "VoiceMailMain")
+			c.appendExten(self.ext, "VoiceMailMain(@%s)" % self.pbx)
 		c.appendExten(self.ext, "Hangup")
