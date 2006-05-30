@@ -6,10 +6,10 @@ SBINDIR=$(DESTDIR)/usr/sbin
 MANDIR=$(DESTDIR)/usr/share/man/man8
 
 # To use with asternic.org op_panel tarball:
-PANEL_HTML_DIR=/usr/local/op_panel/html
+#PANEL_HTML_DIR=/usr/local/op_panel/html
 
 # To use with op-panel .deb package:
-#PANEL_HTML_DIR=/usr/share/op-panel/html
+PANEL_HTML_DIR=/usr/share/op-panel/html
 
 # set SYS_MEDUSA to 1 to use system copy of medusa
 SYS_MEDUSA=0

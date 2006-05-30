@@ -28,8 +28,9 @@ class CfgAppPlay(CfgApp):
 	description = _("""Play a soundfile.""")
 	
 	def createVariables(self):
-		self.variables   = [VarType("ext",      title=_("Extension"), len=6),
-                       VarType("filename", title=_("File name"), hint=_("Don't specify an extension"))]
+		self.variables   = [ VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+				VarType("ext",      title=_("Extension"), len=6),
+                       		VarType("filename", title=_("File name"), hint=_("Don't specify an extension"))]
 
 
 	def checkConfig(self):
@@ -43,7 +44,7 @@ class CfgAppPlay(CfgApp):
 		needModule("app_playback")
 
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		c.appendExten(self.ext, "Playback(%s,skip)" % self.filename)

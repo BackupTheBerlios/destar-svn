@@ -28,13 +28,15 @@ class CfgAppDirectory(CfgApp):
 	description = _("""This application allows you to dial by name.""")
 	
 	def createVariables(self):
-		self.variables   = [VarType("ext", title=_("Extension"), len=6)]
+		self.variables   = [ 	VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+					VarType("ext", title=_("Extension"), len=6)
+					]
 
 	def createAsteriskConfig(self):
 		needModule("app_directory")
 	
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Directory(default)")
 		c.appendExten(self.ext, "Hangup")
 

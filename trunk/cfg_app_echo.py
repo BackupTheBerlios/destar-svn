@@ -29,13 +29,14 @@ class CfgAppEcho(CfgApp):
 			   use this to find out how much echo you have.""")
 			   
 	def createVariables(self):
-		self.variables   = [VarType("ext", title=_("Extension"), len=6)]
+		self.variables   = [VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+				VarType("ext", title=_("Extension"), len=6)]
 
 	def createAsteriskConfig(self):
 		needModule("app_echo")
 
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		c.appendExten(self.ext, "Playback(demo-echotest,skip)")

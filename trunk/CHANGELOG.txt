@@ -1,5 +1,10 @@
+2006-05-30
+* Changed menu distribution.
+* Modified to allow virtual pbx: cfg_app_directory, cfg_app_play, cg_app_echo, cfg_app_record, cfg_app_music.
+
 2006-05-29
 * Added initial cdr_sqlite3_custom.conf support.
+* Modified cfg_appmeetme and cfg_app_voicemail to allow virtual pbxs.
 
 2006-05-28
 * configlets.py, backend.py: removed some modules.

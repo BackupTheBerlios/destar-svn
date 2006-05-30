@@ -990,7 +990,11 @@ class CfgApp(Cfg):
 		return (_("Extension"), _("Type"), _("Virtual PBX"))
 
 	def row(self):
-		return (self.ext, self.shortName, self.pbx)
+		try:
+			pbx = self.pbx
+		except AttributeError:
+			pbx = _('None')
+		return (self.ext, self.shortName, pbx)
  
 	
 class CfgDialout(Cfg):

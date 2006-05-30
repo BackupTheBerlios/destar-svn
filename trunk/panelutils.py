@@ -22,17 +22,17 @@ import backend
 from configlets import *
 
 # To use with asternic.org op_panel tarball:
-PANEL_CONF_DIR	= "/usr/local/op_panel"
-PANEL_HTML_DIR	= "/usr/local/op_panel/html"
-PANEL_START_CMD	= "/usr/local/op_panel/op_server.pl -d"
-PANEL_STOP_CMD	= "pkill op_server"
+#PANEL_CONF_DIR	= "/usr/local/op_panel"
+#PANEL_HTML_DIR	= "/usr/local/op_panel/html"
+#PANEL_START_CMD	= "/usr/local/op_panel/op_server.pl -d"
+#PANEL_STOP_CMD	= "pkill op_server"
 
 
 # Configuration to use with op-panel .deb package:
-#PANEL_CONF_DIR	= "/etc/op-panel"
-#PANEL_HTML_DIR	= "/usr/share/op-panel/html"
-#PANEL_START_CMD	= "invoke-rc.d op-panel start"
-#PANEL_STOP_CMD	= "invoke-rc.d op-panel stop"
+PANEL_CONF_DIR	= "/etc/op-panel"
+PANEL_HTML_DIR	= "/usr/share/op-panel/html"
+PANEL_START_CMD	= "invoke-rc.d op-panel start"
+PANEL_STOP_CMD	= "invoke-rc.d op-panel stop"
 
 def isConfigured ():
 	import configlets

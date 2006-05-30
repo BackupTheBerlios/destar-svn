@@ -28,13 +28,14 @@ class CfgAppMusic(CfgApp):
 	description = _("Play Play Music On Hold until you hang up.")
 	
 	def createVariables(self):
-		self.variables   = [ VarType("ext", title=_("Extension"), len=6),
+		self.variables   = [ VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+			VarType("ext", title=_("Extension"), len=6),
 			VarType("moh",	  title=_("Music-on-hold class"), type="choice", optional=True,
 			options=getChoice("CfgOptMusic"))]
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		if self.moh:

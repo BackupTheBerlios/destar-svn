@@ -22,7 +22,7 @@ from Templates import *
 import os, backend
 
 
-_q_parent = 'page_config'
+_q_parent = 'page_admin'
 _q_title  = ''
 _q_desc   = _("Backup a config file")
 _q_link   = 'backup'

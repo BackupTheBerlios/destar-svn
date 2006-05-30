@@ -1,6 +1,7 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2005 Manuel Alejandro Cerón Estrada <ceronman@gmail.com>
+# Destar has Copyright (C) 2005 by Holger Schurig
+# This file has Copyright (C) 2005 by Alejandro Rios P.
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,31 +20,31 @@
 
 from Templates import *
 from quixote.form2 import *
+from pychart import *
 import cdrutils
 import time
 import backend
 from StatsHelper import *
 
-pychart_exists = True
-try:	
-	from pychart import *
-except ImportError:
-	pychart_exists = False
-
-
-_q_parent = 'page_admin'
-_q_title  = _("Dialout Statistics")
-_q_desc   = _("Statistics for Dialout Entries")
-_q_level  = 2
-_q_menupos = 31
+_q_parent = 'page_stats'
+_q_title  = _("Extension Statistics")
+_q_desc   = _("Statistics for an Extension")
+_q_level  = 3
 
 def _q_access(request):
 	if request.session.level < _q_level:
 		cantAccessPage()
 
+def _q_test():
+	return cdrutils.db
+
 def makeForm():
 	form = Form()
-	form.name = "dialoutform"
+	form.name = "extensionform"
+	form.add(StringWidget, "ext", value="", title=htmltext(_("Extension")), render_br=True )
+
+        form.add(StringWidget, "clid",  value="", title=htmltext(_("Caller ID")), render_br=True )
+ 
 	form.add_single_select('year1', 
 							title=htmltext(_('From:')),
 							value="",
@@ -86,28 +87,28 @@ def makeForm():
 	
 	return form
 
-def showResults [plain] (day1, month1, year1, day2, month2, year2):
+def showResults [plain] (day1, month1, year1, day2, month2, year2, ext, clid):
 	
 	fromdate = "%s-%s-%s" % (year1, month1, day1)
 	todate = "%s-%s-%s" % (year2, month2, day2)
 	where = []
 	where.append ("date(start) >= date('%s')" % fromdate )
 	where.append ("date(end) <= date('%s')" % todate)
+	if clid:
+		where.append ("src = '%s' or dst = '%s' or clid like '<%s>' or clid like '%%%s%%'" % (ext,ext,ext,clid))
+	else:
+		where.append ("src = '%s' or dst = '%s' or clid like '<%s>'" % (ext,ext,ext))
 	cursor = cdrutils.select(fields=['src', 'dst', 'disposition', 'accountcode', 'billsec'], where = where)
 		
 	in_calls_per_dialout = []
 	out_calls_per_dialout = []
 	
 	for i in backend.getConfiglets("Dialout"):
-		indialout = CallData()
-		indialout.name = i.name
-		indialout.asignPattern(i.pattern)
-		in_calls_per_dialout.append(indialout)
-		
-		outdialout = CallData()
-		outdialout.name = i.name
-		outdialout.asignPattern(i.pattern)
-		out_calls_per_dialout.append(outdialout)
+		dialout = CallData()
+		dialout.name = i.name
+		dialout.asignPattern(i.pattern)
+		in_calls_per_dialout.append(dialout)
+		out_calls_per_dialout.append(dialout)
 	
 	in_nomatch = CallData()
 	in_nomatch.name = _("No one Match")
@@ -133,7 +134,7 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2):
 				seconds = int(s)
 		added = False
 		for i in out_calls_per_dialout:
-			if i.match(destination):
+			if i.match(source):
 				i.addCall(seconds, cost, disposition)
 				added = True
 		if not added:
@@ -141,7 +142,7 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2):
 			
 		added = False	
 		for i in in_calls_per_dialout:
-			if i.match(source):
+			if i.match(destination):
 				i.addCall(seconds, cost, disposition)
 				added = True
 		if not added:
@@ -162,20 +163,16 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2):
 	#makeGraphic(dialout_names, [i.cost for i in in_calls_per_dialout], _("cost per Dialout Entry"),_("Dialout Entries"), _("Minutes"), "graph2.png")
 	
 def cdrForm [plain] (request):
-	htmltext("<h3>%s</h3>" % _("Statistics of Calls by Dialout Entry:"))
+	htmltext("<h3>%s</h3>" % _("Statistics of Extension Calls by Dialout Entry:"))
 	form = makeForm()
 	form.render()
 	
 	if form.is_submitted() and not form.has_errors():
 		htmltext("<h3>%s</h3>" % _("Results"))
-		showResults(form["day1"], form["month1"], form["year1"], form["day2"], form["month2"], form["year2"])
+		showResults(form["day1"], form["month1"], form["year1"], form["day2"], form["month2"], form["year2"], form["ext"], form["clid"])
 	
 def _q_index [plain] (request):
 	header(_q_desc)
-	if pychart_exists:
-		cdrForm(request)
-	else:
-		_("You need to install pychart and use a cdr with sqlite to get these statistics")
-
+	cdrForm(request)
 	footer()
 	

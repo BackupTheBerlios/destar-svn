@@ -30,6 +30,7 @@ class CfgAppRecord(CfgApp):
 			
 	def createVariables(self):
 		self.variables   = [
+			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 			VarType("ext",      title=_("Extension"), len=6),
 			VarType("filename", title=_("File name")),
 			VarType("format",   title=_("Sound format"), type="choice",
@@ -56,7 +57,7 @@ class CfgAppRecord(CfgApp):
 		needModule("app_record")
 
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "AbsoluteTimeout(20)")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")

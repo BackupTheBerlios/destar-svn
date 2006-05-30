@@ -23,7 +23,7 @@ import backend
 import manager
 
 
-_q_parent  = 'page_config'
+_q_parent  = 'page_admin'
 _q_title   = _("Apply Changes")
 _q_desc    = _("Reload Asterisk/DeStar PBX")
 _q_link    = 'reload'
