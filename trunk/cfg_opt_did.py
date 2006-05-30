@@ -100,6 +100,7 @@ class CfgOptDID(CfgOpt):
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
 		c.setSection("in-%s" % self.trunk)
+		c.appendExten(self.did,"Set(CDR(intrunk)=%s)" %  self.trunk)
 		if self.clid:
 			needModule("app_setcidname")
 			c.appendExten(self.did,"SetCIDName(%s)" %  self.clid)

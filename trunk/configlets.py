@@ -831,10 +831,12 @@ class CfgTrunk(Cfg):
 		c = AstConf("extensions.conf")
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
+		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name)
+		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name)
 		if self.clid:
 			needModule("app_setcidname")
-			d.appendExten("_X.","SetCIDName(%s)" %  self.clid)
-			d.appendExten("s","SetCIDName(%s)" %  self.clid)
+			c.appendExten("_X.","SetCIDName(%s)" %  self.clid)
+			c.appendExten("s","SetCIDName(%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			global configlet_tree
 			obj = configlet_tree.getConfigletByName(self.phone)
@@ -905,9 +907,9 @@ class CfgPhone(Cfg):
                 except AttributeError:
                         pbx = "phones"
                 extensions.setSection(pbx)
-		extensions.appendExten(self.ext,"SetCDRUserField(%s-%s)" % (pbx,self.name))
+		extensions.appendExten(self.ext,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.ext, pbx, self.ext)
-		extensions.appendExten(self.name,"SetCDRUserField(%s-%s)" % (pbx,self.name))
+		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.name, pbx, self.ext)
 
 	def createVoicemailConfig(self, conf):
@@ -961,8 +963,9 @@ class CfgPhone(Cfg):
 			if obj.__class__.__name__ == 'CfgDialoutNormal':
 				try:
 					if self.__getitem__("dialout_"+obj.name):
-						c.appendExten("%s" % obj.pattern,"SetCDRUserField(%s-%s)" % (self.pbx,self.name))
-						c.appendExten("%s" % obj.pattern,"Set(CDR(virtualpbx)=%s)" % (self.pbx))
+						c.appendExten("%s" % obj.pattern,"Set(CDR(pbx)=%s)" % (self.pbx))
+						c.appendExten("%s" % obj.pattern,"Set(CDR(userfield)=%s)" % (self.name))
+						c.appendExten("%s" % obj.pattern,"Set(CDR(dialout)=%s)" % (obj.name))
 						if self.calleridnum:
 							c.appendExten("%s" % obj.pattern,"SetCIDNum(%s)" % self.calleridnum)
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)

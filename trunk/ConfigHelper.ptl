@@ -225,7 +225,9 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 			'</tr>'
 			
 		'</table>'
-		'<h4>Note:</h4>'
+		'<br />'
+		'<br />'
+		'<h3>Note:</h3>'
 		'<p>'
 		'<span style="color:red">'
 		_("Hard dependencie: The dependent object can not exist if this object is deleted")

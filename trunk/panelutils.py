@@ -31,8 +31,8 @@ from configlets import *
 # Configuration to use with op-panel .deb package:
 PANEL_CONF_DIR	= "/etc/op-panel"
 PANEL_HTML_DIR	= "/usr/share/op-panel/html"
-PANEL_START_CMD	= "invoke-rc.d op-panel start"
-PANEL_STOP_CMD	= "invoke-rc.d op-panel stop"
+PANEL_START_CMD	= "/etc/init.d/op-panel start"
+PANEL_STOP_CMD	= "/etc/init.d/op-panel stop"
 
 def isConfigured ():
 	import configlets

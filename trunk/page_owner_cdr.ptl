@@ -275,13 +275,6 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_
 					'<td><center>'
 					if row[fieldIndex] == "1969-12-31 19:00:00":
 						'-'
-					elif cursor.description[fieldIndex][0] == _("Result"):
-						results = (0,
-							_("Not answered"),
-							_("Failed"),
-							_("Busy"),
-							_("Answered"))
-						results[int(row[fieldIndex])]
 					elif cursor.description[fieldIndex][0] == _("Duration"):
 						s = int(row[fieldIndex])
 						min = (s % 60) and ((s / 60) + 1) or (s / 60)

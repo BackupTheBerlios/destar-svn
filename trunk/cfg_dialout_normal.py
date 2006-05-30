@@ -104,16 +104,13 @@ class CfgDialoutNormal(CfgDialout):
 		import configlets
 		for obj in configlets.configlet_tree['Trunks']:
 			try:
-				if self.__getitem__("trunk_"+obj.name) and not self.__getitem__("trunk_%s_price" % obj.name):
-					c.appendExten("s","ResetCDR")	
+				if self.__getitem__("trunk_"+obj.name):
 					c.appendExten("s","AbsoluteTimeout(${timeout})")
-					c.appendExten("s","SetAccount(0)")	
-					c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
-
-				if self.__getitem__("trunk_"+obj.name) and self.__getitem__("trunk_%s_price" % obj.name):
-					c.appendExten("s","ResetCDR")	
-					c.appendExten("s","AbsoluteTimeout(${timeout})")
-					c.appendExten("s","SetAccount(%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
+					c.appendExten("s","Set(CDR(outtrunk)=%s)" % obj.name)
+					if self.__getitem__("trunk_%s_price" % obj.name):
+						c.appendExten("s","Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
+					else:
+						c.appendExten("s","Set(CDR(accountcode)=0)")	
 					c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 			except KeyError:
 				pass
