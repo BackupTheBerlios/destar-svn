@@ -39,32 +39,32 @@ pid_file = '/var/run/destar.pid'
 
 
 def print_version():
-	print "DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2005 by Holger Schurig and contributors.\n"
-	print "DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,"
-	print "you are welcome to redistribute it under certain conditions;"
-	print "see the included files GPL-2.txt and COPYRIGHT.txt"
-	print
+	print _("DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2005 by Holger Schurig and contributors.\n\n"\
+	"DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,\n"\
+	"you are welcome to redistribute it under certain conditions;\n"\
+	"see the included files GPL-2.txt and COPYRIGHT.txt\n")
+	
 
 def print_usage():
 	program = "destar"
-	print "DeStar: Asterisk Management web interface"
+	print _("DeStar: Asterisk Management web interface")
 	print
-	print "Usage:"
-	print "  %s [options]: normal execution" % program
-	print "  %s -h|--help: print this text and exit peacefully" % program
-	print "  %s -v|--version: only print version information" % program
+	print _("Usage:")
+	print _("  %s [options]: normal execution") % program
+	print _("  %s -h|--help: print this text and exit peacefully") % program
+	print _("  %s -v|--version: only print version information") % program
 	print ""
-	print "Options:"
-	print "  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID"
-	print "  -d | --daemonize: run in the background"
-	print "  -r <port> | --port=<port>: run on port <port> (default: 8080)"
+	print _("Options:")
+	print _("  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID")
+	print _("  -d | --daemonize: run in the background")
+	print _("  -r <port> | --port=<port>: run on port <port> (default: 8080)")
 
 
 try:
 	opts,args = getopt.getopt(sys.argv[1:],'dhpr:v', 
 		['daemonize=','help','pid=', 'port', 'version'])
 except getopt.GetoptError:
-	print "DeStar: Command-line parsing error. Aborting."
+	print _("DeStar: Command-line parsing error. Aborting.")
 	print_usage()
 	exit(2)
 
@@ -86,7 +86,7 @@ for opt,val in opts:
 try:
 	rport_num = int(rport)
 except ValueError:
-	print "Error: rport (-r <num>/--port=<num> must be a number)"
+	print _("Error: rport (-r <num>/--port=<num> must be a number)")
 	print_usage()
 	sys.exit(2)
 
