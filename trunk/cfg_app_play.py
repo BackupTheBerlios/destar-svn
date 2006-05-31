@@ -31,6 +31,10 @@ class CfgAppPlay(CfgApp):
 		self.variables   = [ VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 				VarType("ext",      title=_("Extension"), len=6),
                        		VarType("filename", title=_("File name"), hint=_("Don't specify an extension"))]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 
 
 	def checkConfig(self):

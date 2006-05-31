@@ -29,17 +29,22 @@ class CfgAppGlobalQuickDial(CfgApp):
 	
 	def createVariables(self):
 		self.variables   = [
+				VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 				VarType("pin", title=_("Password"), len=20, optional=True),
 				VarType("set",      title=_("Setting prefix"), hint=_("don't use ** because it is for private quick dial list"), len=6, default="*9"),
 				VarType("ext",   title=_("Unsetting prefix"), len=6, default="#9#")
 		       ]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 	
 	def row(self):
 		return ("%s / %s" % (self.set,self.ext),self.shortName,"")
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		if self.pin:
 			needModule("app_authenticate")
 			c.appendExten("_%sXX*X." % self.set, "Authenticate(%s)" % self.pin)

@@ -29,16 +29,21 @@ class CfgAppPhoneQuickDial(CfgApp):
 	
 	def createVariables(self):
 		self.variables   = [
+			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 			VarType("set",      title=_("Setting prefix"), hint=_("don't use ** because it is for accesing the quick dial list"), len=6, default="*7"),
 			VarType("ext",   title=_("Unsetting prefix"), len=6, default="#7#")
 		       ]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 	
 	def row(self):
 		return ("%s / %s" % (self.set,self.ext),self.shortName,"")
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten("_%sXX*X." % self.set, "DBput(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d:2}=${EXTEN:%d})" % (len(self.set),len(self.set)+3))
 		c.appendExten("_%sXX*X." % self.set, "Hangup")
 		c.appendExten("_%sXX" % self.ext, "DBdel(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})" % len(self.ext))

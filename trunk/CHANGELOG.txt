@@ -5,6 +5,7 @@
 * A SIP phone depends on its pbx (other phones remaining).
 * Modified cfg_ivr_autoatt to virtual pbx scheme.
 * Added pbx dependencies on cfg_app_voicemail and cfg_app_meetme.
+* Added pbx dependencies on all cfg_app_*.
 
 2006-05-29
 * Added initial cdr_sqlite3_custom.conf support.

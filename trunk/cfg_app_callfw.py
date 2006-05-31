@@ -34,6 +34,11 @@ class CfgAppCallFW(CfgApp):
 			VarType("set",      title=_("Setting preffix"), len=6, default="*21*"),
 			VarType("ext",   title=_("Unsetting extension"), len=6, default="#21#")
 		       	]
+
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 	
 	def row(self):
 		return ("%s / %s" % (self.set,self.ext),"%s %s" % (self.shortName, self.type), self.pbx)

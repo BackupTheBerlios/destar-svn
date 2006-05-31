@@ -27,17 +27,22 @@ class CfgAppSayTime(CfgApp):
 	newObjectTitle  = _("Say time")
 	
 	def createVariables(self):
-		self.variables   = [VarType("ext", title=_("Extension"), len=6),
-		       VarType("what", title=("Say what"), type="choice", options=[
+		self.variables   = [	VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+			VarType("ext", title=_("Extension"), len=6),
+		       	VarType("what", title=("Say what"), type="choice", options=[
 				("kM"   , _("Time")),
 				("dbY"  , _("Date")),
 				("dbYkM", _("Date and Time"))] )]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 
 	def createAsteriskConfig(self):
 		needModule("app_sayunixtime")
 
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		c.appendExten(self.ext, "SayUnixTime(,,%s)" % self.what)

@@ -27,14 +27,20 @@ class CfgAppConference(CfgApp):
 	newObjectTitle  = _("New conference room")
 	
 	def createVariables(self):
-		self.variables   = [VarType("ext",      title=_("Extension"), len=6),
-		       VarType("confno",   title=_("Conference number"))]
+		self.variables   = [
+			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+			VarType("ext",      title=_("Extension"), len=6),
+		       	VarType("confno",   title=_("Conference number"))]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 
 	def createAsteriskConfig(self):
 		needModule("app_conference")
 
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		c.appendExten(self.ext, "Conference")

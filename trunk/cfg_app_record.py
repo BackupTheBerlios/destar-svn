@@ -43,6 +43,10 @@ class CfgAppRecord(CfgApp):
 									),
 				default="WAV")
 		]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 
 
 	def checkConfig(self):

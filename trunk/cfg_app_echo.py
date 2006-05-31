@@ -31,6 +31,10 @@ class CfgAppEcho(CfgApp):
 	def createVariables(self):
 		self.variables   = [VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 				VarType("ext", title=_("Extension"), len=6)]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 
 	def createAsteriskConfig(self):
 		needModule("app_echo")

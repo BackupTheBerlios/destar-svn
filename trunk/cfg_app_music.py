@@ -32,6 +32,10 @@ class CfgAppMusic(CfgApp):
 			VarType("ext", title=_("Extension"), len=6),
 			VarType("moh",	  title=_("Music-on-hold class"), type="choice", optional=True,
 			options=getChoice("CfgOptMusic"))]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")

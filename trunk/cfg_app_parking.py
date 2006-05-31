@@ -28,22 +28,28 @@ class CfgAppParking(CfgApp):
 	description = _("Call Parking extension")
 	
 	def createVariables(self):
-		self.variables   = [VarType("ext",    title=_("Extension"), len=6),
-		       VarType("places", title=_("Parking places"), type="int", default=9, len=2)]
+		self.variables   = [	VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+					VarType("ext",    title=_("Extension"), len=6),
+					VarType("places", title=_("Parking places"), type="int", default=9, len=2)
+					]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 
 	def createAsteriskConfig(self):
 		c = AstConf("features.conf")
 		c.setSection("general")
 
 		c.append("parkext=%s" % self.ext)
-		c.append("context=apps")
+		c.append("context=%s" % self.pbx)
 		# parkingtime
 		first = int(self.ext)+1
 		c.append("parkpos=%d-%d" % (first, first + self.places))
 		# transferdigittimeout
 
 		c = AstConf("extensions.conf")
-		c.setSection("apps")
+		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Park(%s)" % self.ext)
 		
 		panelutils.createParkButton(self)

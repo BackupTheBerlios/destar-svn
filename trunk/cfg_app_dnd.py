@@ -33,6 +33,10 @@ class CfgAppDND(CfgApp):
 			VarType("set",      title=_("Setting extension"), len=6, default="*78"),
 			VarType("unset",   title=_("Unsetting extension"), len=6, default="*79")
 		       ]
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
 
 	def row(self):
 		return ("%s / %s" % (self.set,self.unset), self.shortName, self.pbx)
