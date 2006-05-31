@@ -29,6 +29,11 @@ class CfgPhoneMGCP(CfgPhone):
 	
 	def createVariables(self):
 		self.variables = [
+			VarType("pbx",    
+				title=_("Virtual PBX"), 
+				type="choice", 
+				options=getChoice("CfgOptPBX")),
+
 			VarType("name",
 					title=_("Name"),
 					len=15,
@@ -141,6 +146,17 @@ class CfgPhoneMGCP(CfgPhone):
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":
 					v.hide = False
+		self.dependencies = [
+			DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+		]
+		for var in self.__dict__.keys():
+			if var.startswith('dialout_'):
+				self.dependencies.append(
+					DepType(var,
+							type="hard",
+							message = _("This is a Dependency")))
 		
 	def createDependencies(self):
 		for dep in self.dependencies:

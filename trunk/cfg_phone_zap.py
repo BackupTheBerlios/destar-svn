@@ -30,6 +30,11 @@ class CfgPhoneZap(CfgPhone):
 	
 	def createVariables(self):
 		self.variables = [
+			VarType("pbx",    
+				title=_("Virtual PBX"), 
+				type="choice", 
+				options=getChoice("CfgOptPBX")),
+
 			VarType("name",
 				title=_("Name"),
 				len=35),
@@ -52,7 +57,6 @@ class CfgPhoneZap(CfgPhone):
 				
 			VarType("ext",
 				title=_("Extension"),
-				optional=True,
 				len=6),
 
 			VarType("did",
@@ -140,6 +144,17 @@ class CfgPhoneZap(CfgPhone):
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":
 					v.hide = False
+		self.dependencies = [
+			DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+		]
+		for var in self.__dict__.keys():
+			if var.startswith('dialout_'):
+				self.dependencies.append(
+					DepType(var,
+							type="hard",
+							message = _("This is a Dependency")))
 
 	def createAsteriskConfig(self):
 		needModule("chan_zap")
@@ -182,10 +197,12 @@ class CfgPhoneZap(CfgPhone):
 		return "%s/%s" % (self.technology, self.channels)
 
 
-	def createDialEntry(self, extensions, ext):
-		ret = extensions.appendExten(ext, "Macro(dial-std-exten,%s/%s,out-%s,%d)" % (
+	def createDialEntry(self, extensions, exten, pbx, ext):
+		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%d,%s,%s)" % (
 			self.technology,
 			self.channels,
 			self.name,
-			int(self.usevm))
+			int(self.usevm)),
+			pbx,
+			ext
 		      )

@@ -30,6 +30,11 @@ class CfgPhoneQueue(CfgPhone):
 	
 	def createVariables(self):
 		self.variables = [
+			VarType("pbx",    
+				title=_("Virtual PBX"), 
+				type="choice", 
+				options=getChoice("CfgOptPBX")),
+
 			VarType("name",
 					title=_("Name"),
 					len=15),
@@ -126,29 +131,16 @@ class CfgPhoneQueue(CfgPhone):
 					hide=True,
 					optional=True),]
 
-		if varlist_manager.hasDialouts():
-			self.variables += varlist_manager.getDialouts()
-			for v in self.variables:
-				if v.name == "Dialout" or v.name=="timeout":
-					v.hide = False
-					
-		queues = len(configlet_tree.getConfigletsByName('CfgPhoneQueue'))
-		if queues > 0:
-			for v in self.variables:
-				if v.name == "QueueLab" or v.name == "queues":
-					v.hide = False
+		self.dependencies = [
+			DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+			DepType("moh", 
+					type="hard",
+					message = _("This is a Dependency")),
 
-	def createDependencies(self):
-		for dep in self.dependencies:
-			if self.__dict__.has_key(dep.name):
-				obj_name = dep.name[8:] # get the name after "dialout_"
-				import configlets
-				obj = configlets.configlet_tree.getConfigletByName(obj_name)
-				if obj is None:
-					return
-				dependent_obj = DependentObject(self, dep)
-				obj.dependent_objs.append(dependent_obj)
-
+		]
+	
 	def checkConfig(self):
                 res = CfgPhone.checkConfig(self)
                 if res:
@@ -179,7 +171,7 @@ class CfgPhoneQueue(CfgPhone):
 				c.append("monitor-join=yes")
 		
 		extensions = AstConf("extensions.conf")
-		extensions.setSection("phones")
+		extensions.setSection(self.pbx)
 		if self.ext:
 			if self.monitor and self.monitorfilename:
 				extensions.appendExten(self.ext, "SetVar(MONITOR_FILENAME=%s)" % self.monitorfilename)
@@ -191,9 +183,3 @@ class CfgPhoneQueue(CfgPhone):
                 extensions.appendExten(self.name, "Answer")
 		extensions.appendExten(self.name, "SetMusicOnHold(%s)" % self.moh)
 		extensions.appendExten(self.name, "Queue(%s|Tth)" % self.name)
-		
-		try:
-			if panelutils.isConfigured() == 1 and self.panel:
-				panelutils.createQueueButton(self)
-		except AttributeError:
-			pass

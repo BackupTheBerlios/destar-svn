@@ -30,6 +30,11 @@ class CfgPhoneExtension(CfgPhone):
 	
 	def createVariables(self):
 		self.variables = [
+			VarType("pbx",    
+				title=_("Virtual PBX"), 
+				type="choice", 
+				options=getChoice("CfgOptPBX")),
+
 			VarType("name",
 					title=_("Name"),
 					len=15),
@@ -48,28 +53,11 @@ class CfgPhoneExtension(CfgPhone):
 					type="choice",
 					options=getChoice("CfgPhone")),]
 
-		if varlist_manager.hasDialouts():
-			self.variables += varlist_manager.getDialouts()
-			for v in self.variables:
-				if v.name == "Dialout" or v.name=="timeout":
-					v.hide = False
-					
-		queues = len(configlet_tree.getConfigletsByName('CfgPhoneQueue'))
-		if queues > 0:
-			for v in self.variables:
-				if v.name == "QueueLab" or v.name == "queues":
-					v.hide = False
-
-	def createDependencies(self):
-		for dep in self.dependencies:
-			if self.__dict__.has_key(dep.name):
-				obj_name = dep.name[8:] # get the name after "dialout_"
-				import configlets
-				obj = configlets.configlet_tree.getConfigletByName(obj_name)
-				if obj is None:
-					return
-				dependent_obj = DependentObject(self, dep)
-				obj.dependent_objs.append(dependent_obj)
+		self.dependencies = [
+			DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+		]
 
 
 	def isAddable(self):
@@ -91,5 +79,5 @@ class CfgPhoneExtension(CfgPhone):
 
 	def createAsteriskConfig(self):
 		ext = AstConf("extensions.conf")
-		ext.setSection("phones")
+		ext.setSection(self.pbx)
 		ext.appendExten(self.ext, "Goto(%s)" % self.phone)

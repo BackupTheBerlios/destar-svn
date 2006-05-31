@@ -32,6 +32,11 @@ class CfgPhoneEpygiSip(CfgPhone):
 
 	def createVariables(self):
 		self.variables = [
+			VarType("pbx",    
+				title=_("Virtual PBX"), 
+				type="choice", 
+				options=getChoice("CfgOptPBX")),
+
 			VarType("name",
 					title=_("Name"),
 					len=15),
@@ -52,7 +57,6 @@ class CfgPhoneEpygiSip(CfgPhone):
 
 			VarType("ext",
 					title=_("Extension"),
-					optional=True,
 					len=6),
 
 			VarType("dtmfmode",
@@ -158,6 +162,17 @@ class CfgPhoneEpygiSip(CfgPhone):
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":
 					v.hide = False
+		self.dependencies = [
+			DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+		]
+		for var in self.__dict__.keys():
+			if var.startswith('dialout_'):
+				self.dependencies.append(
+					DepType(var,
+							type="hard",
+							message = _("This is a Dependency")))
 
 	def createDependencies(self):
 		for dep in self.dependencies:
@@ -207,10 +222,9 @@ class CfgPhoneEpygiSip(CfgPhone):
 			sip.append("nat=yes")
 		
 		extensions = AstConf("extensions.conf")
-		extensions.setSection("phones")
+		extensions.setSection(self.pbx)
 		if self.ext:
-			extensions.appendExten(self.ext, "Macro(dial-std-exten,%s/%s@%s:5060,out-%s,%d)" % (self.technology,self.name,self.gw, self.name,int(self.usevm)))
-		extensions.appendExten(self.name, "Macro(dial-std-exten,%s/%s@%s:5060,out-%s,%d)" % (self.technology,self.name,self.gw, self.name,int(self.usevm)))
+			extensions.appendExten(self.ext, "Macro(dial-std-exten,%s/%s@%s:5060,out-%s,%d,%s,%s)" % (self.technology,self.name,self.gw,self.name,int(self.usevm),self.pbx,self.ext))
 
 		self.createVoicemailConfig(sip)
 		self.createOutgoingContext()

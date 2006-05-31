@@ -6,6 +6,7 @@
 * Modified cfg_ivr_autoatt to virtual pbx scheme.
 * Added pbx dependencies on cfg_app_voicemail and cfg_app_meetme.
 * Added pbx dependencies on all cfg_app_*.
+* Added pbx dependencies on all cfg_phone_*.
 
 2006-05-29
 * Added initial cdr_sqlite3_custom.conf support.
