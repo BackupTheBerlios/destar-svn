@@ -163,7 +163,11 @@ class CfgPhoneSip(CfgPhone):
 				if v.name == "QueueLab" or v.name == "queues":
 					v.hide = False
 
-		self.dependencies = []
+		self.dependencies = [
+			DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+		]
 		for var in self.__dict__.keys():
 			if var.startswith('dialout_'):
 				self.dependencies.append(
