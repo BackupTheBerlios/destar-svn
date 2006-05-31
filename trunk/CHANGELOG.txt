@@ -2,7 +2,9 @@
 * Changed menu distribution.
 * Modified to allow virtual pbx: cfg_app_directory, cfg_app_play, cg_app_echo, cfg_app_record, cfg_app_music.
 * Actual new custom CDR fields: intrunk, outtrunk, pbx and dialout.
-* A SIP phone depends on its pbx (other phones remaining)
+* A SIP phone depends on its pbx (other phones remaining).
+* Modified cfg_ivr_autoatt to virtual pbx scheme.
+* Added pbx dependencies on cfg_app_voicemail and cfg_app_meetme.
 
 2006-05-29
 * Added initial cdr_sqlite3_custom.conf support.

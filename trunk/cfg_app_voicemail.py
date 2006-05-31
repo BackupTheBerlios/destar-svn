@@ -33,6 +33,11 @@ class CfgAppVoiceMail(CfgApp):
 			VarType("mailbox", title=_("Ask for user mailbox?"), type="bool", optional=True),
 		]
 
+		self.dependencies = [ DepType("pbx", 
+					type="hard",
+					message = _("This is a Dependency")),
+					]
+
 	def createAsteriskConfig(self):
 		needModule("res_adsi")
 		needModule("app_voicemail")

@@ -86,15 +86,21 @@ class CfgIVRAutoatt(CfgIVR):
 					optional=True,
 					len=300),
 
-			VarType("phones",
-					title=_("Allow calling to all extensions?"),
-					type="bool"),]
+			VarType("pbx", 
+					title=_("Allow calling to all extensions of PBX"),
+					type="choice", 
+					options=getChoice("CfgOptPBX"),
+					optional=True)
+				]
 
 		self.dependencies = [
 			DepType("moh", 
 					type="hard",
 					message = _("This is a Dependency")),
 			DepType("ext", 
+					type="hard",
+					message = _("This is a Dependency")),
+			DepType("pbx", 
 					type="hard",
 					message = _("This is a Dependency")),
 			DepType("ivrtime", 
@@ -120,10 +126,18 @@ class CfgIVRAutoatt(CfgIVR):
 	def createAsteriskConfig(self):
 		s = AstConf("extensions.conf")
 		s.setSection(self.name)
-		if self.phones:
-			s.append("include=phones")
+		if self.pbx:
+			pbx = self.pbx
+		else:	
+			pbx = "phones"
+		s.append("include=%s" % pbx)
 		s.appendExten("s","Wait(1)")
 		s.appendExten("s","DigitTimeout,2.3")
+		if self.moh:
+			s.appendExten("s","Setmusiconhold(%s)" % self.moh)
+			s.appendExten("s","SetVar(DIAL_OPTIONS=m)")
+		else:
+			s.appendExten("s","SetVar(DIAL_OPTIONS=r)")
 		if self.ivrtime:
 			if self.times:
 				times=self.times.split(',')
@@ -131,20 +145,15 @@ class CfgIVRAutoatt(CfgIVR):
 					s.appendExten("s","GotoIfTime(%s?%s,s,1)" % (t,self.ivrtime))
 		if self.timeout:
 			s.appendExten("s","Absolutetimeout(%s)" % self.timeout)
-		if self.moh:
-			s.appendExten("s","Setmusiconhold(%s)" % self.moh)
-                        s.appendExten("s","SetVar(DOPT=m)")
-                else:
-                        s.appendExten("s","SetVar(DOPT=r)")
 		for i in range(self.repeat):
-			s.appendExten("s","Background(%s)" % self.backgroundfile)	
+			s.appendExten("s","Background(ivr/%s)" % self.backgroundfile)	
 			if self.pause:
 				s.appendExten("s","WaitExten(%s)" % self.pause)
-		s.appendExten("s","Goto(phones,%s,1)" % self.ext)	
+		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.ext))	
 		if self.operator:
-			s.appendExten("%s" % self.operator, "Goto(phones,%s,1)" % self.ext)	
+			s.appendExten("%s" % self.operator, "Goto(%s,%s,1)" % (pbx,self.ext))	
 		s.appendExten("i","Playback(privacy-invalid)")	
-		s.appendExten("i","Goto(phones,%s,1)" % self.ext)	
+		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.ext))	
 		s.appendExten("t","ResetCDR(w)")
 		s.appendExten("t","NoCDR")
 		s.appendExten("t","Hungup")
