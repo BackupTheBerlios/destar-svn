@@ -36,13 +36,14 @@ import daemonize
 be_daemon = False
 rport = 8080
 pid_file = '/var/run/destar.pid'
+VERSION = 'DEVELOPMENTAL SNAPSHOT'
 
 
 def print_version():
-	print _("DeStar DEVELOPMENTAL SNAPSHOT, Copyright (C) 2005 by Holger Schurig and contributors.\n\n"\
+	print _("DeStar %s, Copyright (C) 2005 by Holger Schurig and contributors.\n\n"\
 	"DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,\n"\
 	"you are welcome to redistribute it under certain conditions;\n"\
-	"see the included files GPL-2.txt and COPYRIGHT.txt\n")
+	"see the included files GPL-2.txt and COPYRIGHT.txt\n") % VERSION
 	
 
 def print_usage():

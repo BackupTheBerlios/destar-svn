@@ -1,6 +1,7 @@
 2006-05-31
 * Templates.ptl: Restored, fixed a wrong html title header
 * destar: Using gettext in (almost?) all the strings.
+* Use VERSION to put versioning information.
 
 2006-05-30
 * Changed menu distribution.

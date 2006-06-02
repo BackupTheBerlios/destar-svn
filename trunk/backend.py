@@ -196,7 +196,7 @@ def initializeAsteriskConfig():
 	c.append("exten=s,106,Hangup")
 
 	c.append("; no CFIM, no DND")
-	c.append("exten=s,203,DBGet(dsec=DSEC/${MACRO_EXTEN})")
+	c.append("exten=s,203,DBGet(dsec=DSEC/${ARG5}/${ARG4})")
 	c.append("exten=s,204,NoOp")
 	c.append("exten=s,205,SetVar(dopt=${DIAL_OPTIONS})")
 	c.append("exten=s,206,NoOp")

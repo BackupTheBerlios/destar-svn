@@ -24,7 +24,7 @@ from quixote.errors import AccessError
 import os, sys, copy
 
 
-
+VERSION = "DEVELOPMENTAL SNAPSHOT"
 
 
 class HtmlTable:
@@ -226,7 +226,7 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
 def footer [html] ():
 	'</div>\n'
 	'<div id="footer">\n'
-	'	<p>De<em>Star</em> version 0.2<br />\n'
+	'	<p>De<em>Star</em> %s <br />\n' % VERSION
 	'	<a href="http://destar.berlios.de">http://destar.berlios.de</a></p>\n'
 	'</div>\n'
 
