@@ -51,13 +51,13 @@ class CallData:
 		self.minutes += mins
 		self.cost += mins * cost_per_minute
 		
-		if disp == 4:
+		if disp == "ANSWERED":
 			self.answered += 1
-		elif disp == 1:
+		elif disp == "NO ANSWER":
 			self.not_answered += 1
-		elif disp == 3:
+		elif disp == "BUSY":
 			self.busy += 1
-		elif disp == 2:
+		elif disp == "FAILED":
 			self.failed += 1
 	
 	def asignPattern(self, pat):

@@ -69,6 +69,7 @@ def formScript [html] ():
 	'</script> \n'
 
 def pageIndex [html] (pagenum, total, limit):
+	"<p>"
 	lastpage = total/limit
 	if pagenum > 1:
 		"<a href='javascript:gotopage(\"_newest\")'>%s</a> &nbsp; \n" % _("First")
@@ -85,7 +86,7 @@ def pageIndex [html] (pagenum, total, limit):
 	if pagenum < lastpage:
 		"<a href='javascript:gotopage(\"_older\")'>%s</a> &nbsp; \n" % _("Next")
 		"<a href='javascript:gotopage(\"_oldest\")'>%s</a> \n" % _("Last")
-	"\n <br /><br />"
+	"</p>\n <br />"
 
 def     generateYearsNumbers():
         years = range(2004,time.localtime()[0]+1)

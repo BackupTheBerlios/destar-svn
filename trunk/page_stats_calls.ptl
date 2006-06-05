@@ -92,7 +92,7 @@ def perHourInDay [plain] (day, month, year):
 				hour = s.split(":")
 				hour = int(hour[0])
 			if c=='disposition':
-				disposition = int(s)
+				disposition = s
 			if c=='accountcode':
 				try:
 					cost = int(s)
@@ -125,9 +125,8 @@ def perDayInMonth [plain] (month, year):
 			if c=='date(start)':
 				day = s.split("-")
 				day = int(day[2]) - 1
-				
 			if c=='disposition':
-				disposition = int(s)
+				disposition = s
 			if c=='accountcode':
 				try:
 					cost = int(s)
@@ -162,7 +161,7 @@ def perMonthInYear [plain] (year):
 				month = s.split("-")
 				month = int(month[1]) - 1
 			if c=='disposition':
-				disposition = int(s)
+				disposition = s
 			if c=='accountcode':
 				try:
 					cost = int(s)
@@ -195,9 +194,8 @@ def perYear [plain] ():
 				year = s.split("-")
 				print year
 				year = int(year[0]) - startyear
-				
 			if c=='disposition':
-				disposition = int(s)
+				disposition = s
 			if c=='accountcode':
 				try:
 					cost = int(s)

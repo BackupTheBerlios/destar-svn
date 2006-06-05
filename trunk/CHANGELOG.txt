@@ -1,3 +1,7 @@
+2006-06-05
+* Renamed page_stats_callstats.ptl to page_stats_calls.ptl
+* Somehow 'disposition' field now has string values, instead of numeric ones.
+
 2006-05-31
 * Templates.ptl: Restored, fixed a wrong html title header
 * destar: Using gettext in (almost?) all the strings.
