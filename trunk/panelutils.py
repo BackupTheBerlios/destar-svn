@@ -30,7 +30,7 @@ from configlets import *
 
 # Configuration to use with op-panel .deb package:
 PANEL_CONF_DIR	= "/etc/op-panel"
-PANEL_HTML_DIR	= "/usr/share/op-panel/html"
+PANEL_HTML_DIR	= "/usr/share/op-panel/flash"
 PANEL_START_CMD	= "/etc/init.d/op-panel start"
 PANEL_STOP_CMD	= "/etc/init.d/op-panel stop"
 

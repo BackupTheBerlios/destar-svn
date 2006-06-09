@@ -1,3 +1,9 @@
+2006-06-09
+* configlets.py: Changed 'ext' comprobation for each pbx.
+* page_stats_trunks.ptl: Now we use the custom cdr fields.
+* cfg_phone_sip.py: Increased 'ext' field size.
+* panelutils.py: changed panel path according to op-panel-0.26.
+
 2006-06-05
 * Renamed page_stats_callstats.ptl to page_stats_calls.ptl
 * Somehow 'disposition' field now has string values, instead of numeric ones.

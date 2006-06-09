@@ -56,7 +56,7 @@ class CfgPhoneSip(CfgPhone):
 
 			VarType("ext",
 					title=_("Extension"),
-					len=6),
+					len=13),
 					
 			VarType("dtmfmode",
 					title=_("DTMF mode:"),

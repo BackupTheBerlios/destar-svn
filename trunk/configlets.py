@@ -599,13 +599,13 @@ class Cfg(Holder):
 		"""Test if all variables are set, used by createAsteriskConfig().
 		May be overridden for additional test."""
 
-		# Make sure we don't add two thingies with the same extension
+		# Make sure we don't add two thingies with the same extension on the same pbx
 		if self.__dict__.has_key('ext'):
 			for o in configlet_tree:
 				if o==self: continue
 				try:
-					if o.ext == self.ext:
-						return ("ext", _("Extension already in use"))
+					if o.ext == self.ext and o.pbx == self.pbx:
+						return ("ext", _("Extension already in use on that PBX"))
 				except AttributeError:
 					pass
 
