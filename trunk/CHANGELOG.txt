@@ -1,6 +1,6 @@
 2006-06-09
 * configlets.py: Changed 'ext' comprobation for each pbx.
-* page_stats_trunks.ptl: Now we use the custom cdr fields.
+* page_stats_*.ptl: Now we use the custom cdr fields (only page_stats_phone.ptl left). Closes bug #5964.
 * cfg_phone_sip.py: Increased 'ext' field size.
 * panelutils.py: changed panel path according to op-panel-0.26.
 

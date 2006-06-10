@@ -152,7 +152,10 @@ def perMonthInYear [plain] (year):
 	calls_per_month = [CallData() for i in months]
 	
 	cost = 0
-	fieldIndices = range(len(cursor.description))	
+	if cursor.description:
+		fieldIndices = range(len(cursor.description))
+	else:
+		fieldIndices = []
 	while row:
 		for fieldIndex in fieldIndices:
 			c = cursor.description[fieldIndex][0]
