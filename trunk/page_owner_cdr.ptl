@@ -251,7 +251,7 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_
 		totalmin = 0
 		
 		row = cursor.fetchone()
-		if row and int(offset) >= 0 and int(offset) <= total:
+		if row and int(offset) >= 0 and int(offset) <= total and cursor.description:
 		
 			'<table border="1"><thead><tr>'
                 	for s in cursor.description:
@@ -268,7 +268,11 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_
 				'</th>'
                 	'</tr></thead><tbody>'
 		
-			fieldIndices = range(len(cursor.description))
+			if cursor.description:
+				fieldIndices = range(len(cursor.description))
+			else:
+				fieldIndices = []
+
                 	while row:
 	                	'<tr>'
 				for fieldIndex in fieldIndices:

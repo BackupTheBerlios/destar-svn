@@ -37,13 +37,34 @@ class CfgOptUser(CfgOpt):
 		VarType("level",  title=_("Type"), type="choice",
 		                  options=( ("0",_("disabled")),
 		                            ("1",_("User")),
-		                            ("2",_("Administrator")),
+		                            ("2",_("Virtual PBX Administrator")),
 		                            ("3",_("Configurator")) )),
 		VarType("language", title=_("Language"), type="choice",
 				    options=( ("en","en"),
 				    	      ("es","es"),
 					      ("fr","fr") )),
 		     ]
+		self.dependencies = [
+			DepType("pbx", 
+					type="soft",
+					message = _("This is a Dependency")),
+			DepType("phone", 
+					type="soft",
+					message = _("This is a Dependency"))]
+
+	def checkConfig(self):
+		res = CfgOpt.checkConfig(self)
+		if res:
+			return res
+		import configlets
+		for obj in configlets.configlet_tree:
+			if obj==self: 
+				continue
+			try:
+				if self.level == "2" and not self.pbx:
+					return ("pbx", _("Please choose a Virtual PBX for this user."))
+			except AttributeError:
+				pass
 
 	def createAsteriskConfig(self):
 		pass

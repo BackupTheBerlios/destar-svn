@@ -1,3 +1,6 @@
+2006-06-10
+* With the new menu and virtual pbx stuff, "Administrator" user becomes "Virtual PBX Administrator" (we gotta document the whole new thing).
+
 2006-06-09
 * configlets.py: Changed 'ext' comprobation for each pbx.
 * page_stats_*.ptl: Now we use the custom cdr fields (only page_stats_phone.ptl left). Closes bug #5964.
