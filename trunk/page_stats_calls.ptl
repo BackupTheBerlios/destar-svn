@@ -193,9 +193,7 @@ def perYear [plain] ():
 			c = str(cursor.description[fieldIndex][0])
 			s = str(row[fieldIndex])
 			if c=='date(start)':
-				print s
 				year = s.split("-")
-				print year
 				year = int(year[0]) - startyear
 			if c=='disposition':
 				disposition = s

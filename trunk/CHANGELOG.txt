@@ -1,3 +1,7 @@
+2006-06-12
+* configlets.py: Fixed small bug on trunk redirection.
+* Small patch to CSS (still menus won't work on IE).
+
 2006-06-10
 * With the new menu and virtual pbx stuff, "Administrator" user becomes "Virtual PBX Administrator" (we gotta document the whole new thing).
 

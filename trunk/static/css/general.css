@@ -100,6 +100,24 @@ body
 		{
 			background:url("../imgs/content-f.jpg") 0 0 repeat-y;
 		}
+		#mainContent .title
+                {
+                    color:#666666;
+                    font-size:12px;
+                    clear:both;
+                    float:left;
+                    width:160px;
+                    margin:0 10px 10px 0;
+                }
+                #mainContent .content
+                {
+                    float:left;
+                }
+                #mainContent .submit
+                {
+                    padding-top:15px;
+                    clear:both;
+                }
 			#contentNav
 			{
 			}
@@ -239,6 +257,25 @@ body
 						background:#EEEEEE;
 						padding:1px 3px 1px 3px;
 					}*/
+					#mainContent form input.btn01,
+					#mainContent form input.btn02,
+					/*#mainContent form.quixote div.submit div.SubmitWidget div.content,*/
+					#mainContent .submit input
+					{
+						border-width:1px;
+						border-style:solid;
+						font-size:11px;
+						font-weight:bold;
+						padding:1px 3px 1px 3px;
+						margin-right:10px;
+					}
+					#mainContent form input.btn01,
+					#mainContent .submit input
+					{
+						border-color:#faae60;
+						background:#fdce9d;
+						color:#e37e12;
+					}
 					/*#mainContent form input.btn01,
 					#mainContent form.quixote div.submit div.SubmitWidget div.content,
 					#mainContent form input.btn02
@@ -255,7 +292,7 @@ body
 							border-color:#faae60;
 							background:#fdce9d;
 							color:#e37e12;
-						}
+						}*/
 						#mainContent form input.btn02,
 						{
 							border-color:#676767;
@@ -267,7 +304,7 @@ body
 					#mainContent form input.noestilo
 					{
 						background:none;
-					}*/
+					}
 					#mainContent form.quixote select
 					{
 						padding:0;
