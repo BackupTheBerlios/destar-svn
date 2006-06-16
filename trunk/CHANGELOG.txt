@@ -1,3 +1,6 @@
+2006-06-16
+* Changed SetVar by Set. SetVar is deprecated in *-1.2
+
 2006-06-12
 * configlets.py: Fixed small bug on trunk redirection.
 * Small patch to CSS (still menus won't work on IE).

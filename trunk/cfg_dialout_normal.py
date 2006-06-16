@@ -84,22 +84,22 @@ class CfgDialoutNormal(CfgDialout):
 		needModule("app_authenticate")
 		if self.qlookup:
 			c.appendExten("s","DBget(dest=QUICKDIALLIST/GLOBAL/${ARG1})",e="Goto(3)")
-			c.appendExten("s",'SetVar(ARG1=${dest})')
+			c.appendExten("s",'Set(ARG1=${dest})')
 			c.appendExten("s","GotoIf($[${ARG2} = n]?5:4)")
 			c.appendExten("s","Authenticate(${ARG2})")
 			c.appendExten("s","GotoIf($[${ARG3} = 0]?6:9)")
-			c.appendExten("s",'SetVar(timeout=0)')
-			c.appendExten("s",'SetVar(options=Tt)')
+			c.appendExten("s",'Set(timeout=0)')
+			c.appendExten("s",'Set(options=Tt)')
 			c.appendExten("s",'Goto(11)')
 		else:
 			c.appendExten("s","GotoIf($[${ARG2} = n]?3:2)")
 			c.appendExten("s","Authenticate(${ARG2})")
 			c.appendExten("s","GotoIf($[${ARG3} = 0]?4:7)")
-			c.appendExten("s",'SetVar(timeout=0)')
-			c.appendExten("s",'SetVar(options=Tt)')
+			c.appendExten("s",'Set(timeout=0)')
+			c.appendExten("s",'Set(options=Tt)')
 			c.appendExten("s",'Goto(9)')
-		c.appendExten("s",'SetVar(timeout=%d)' % self.maxtime)
-		c.appendExten("s",'SetVar(options=TtL(%d000:10000))' % self.maxtime)
+		c.appendExten("s",'Set(timeout=%d)' % self.maxtime)
+		c.appendExten("s",'Set(options=TtL(%d000:10000))' % self.maxtime)
 		#TODO: add this trunks sorted by price and with a default one.
 		import configlets
 		for obj in configlets.configlet_tree['Trunks']:

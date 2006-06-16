@@ -135,9 +135,9 @@ class CfgIVRAutoatt(CfgIVR):
 		s.appendExten("s","DigitTimeout,2.3")
 		if self.moh:
 			s.appendExten("s","Setmusiconhold(%s)" % self.moh)
-			s.appendExten("s","SetVar(DIAL_OPTIONS=m)")
+			s.appendExten("s","Set(DIAL_OPTIONS=m)")
 		else:
-			s.appendExten("s","SetVar(DIAL_OPTIONS=r)")
+			s.appendExten("s","Set(DIAL_OPTIONS=r)")
 		if self.ivrtime:
 			if self.times:
 				times=self.times.split(',')

@@ -174,12 +174,12 @@ class CfgPhoneQueue(CfgPhone):
 		extensions.setSection(self.pbx)
 		if self.ext:
 			if self.monitor and self.monitorfilename:
-				extensions.appendExten(self.ext, "SetVar(MONITOR_FILENAME=%s)" % self.monitorfilename)
+				extensions.appendExten(self.ext, "Set(MONITOR_FILENAME=%s)" % self.monitorfilename)
                         extensions.appendExten(self.ext, "Answer")
 			extensions.appendExten(self.ext, "SetMusicOnHold(%s)" % self.moh)
 			extensions.appendExten(self.ext, "Queue(%s|Tth)" % self.name)
 		if self.monitor and self.monitorfilename:
-			extensions.appendExten(self.name, "SetVar(MONITOR_FILENAME=%s)" % self.monitorfilename)
+			extensions.appendExten(self.name, "Set(MONITOR_FILENAME=%s)" % self.monitorfilename)
                 extensions.appendExten(self.name, "Answer")
 		extensions.appendExten(self.name, "SetMusicOnHold(%s)" % self.moh)
 		extensions.appendExten(self.name, "Queue(%s|Tth)" % self.name)
