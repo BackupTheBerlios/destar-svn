@@ -41,9 +41,8 @@ FRONTEND.txt for more info.
 
 First the backend. It provides the various configlets that can hold info. And
 it contains the code that takes all of this configlets and produces the
-various Asterisk *.conf config files. You can even run it without the
-frontend, 'python backend.py' will do the trick.
-
+various Asterisk *.conf config files.
+ 
 Now on to the frontend. This provides a web interface. It uses Quixote and
 therefore it can run under Apache with CGI, FCGI, mod_python or whatever.
 See the Quixote documentation for more info. For small load environments 
@@ -57,8 +56,9 @@ to INSTALL.txt.
 Webpages, Source Code & Other Resources
 ----------------------
 
-Project Page:
+Project Pages:
 
+* http://destar.berlios.de
 * http://developer.berlios.de/projects/destar/
 
 
@@ -92,9 +92,3 @@ Web access to Subversion repository:
 Source code for read-only access:
 
 * svn checkout svn://svn.berlios.de/destar/trunk
-
-
-Source code for a DeStar developer:
-
-* export SVN_SSH="ssh -l developername"
-* svn checkout svn+ssh://svn.berlios.de/svnroot/repos/destar

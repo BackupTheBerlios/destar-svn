@@ -14,19 +14,10 @@ The backend consists of very few python files:
 * cdrutils.py
 * manager.py
 
-The backend is self-contained. That means, you don't need the frontend to
-use it.
-
-In fact, you can use a normal text editor to edit
-/etc/asterisk/destar_cfg.py and then run 'python backend.py' to create a new
-set of Asterisk config files.
-
-
 backend.py
 ----------
 
-This is the wizard-of-all. It's the only python module that get's called by
-the frontend. It's tasks are:
+This is the wizard-of-all. It's tasks are:
 
 * read in all Configlets that are in ./cfg_*.py. Configlets are things that
   you can configure and that can create Asterisk configuration.
@@ -87,7 +78,7 @@ A configlet has these properties:
 cdrutils.py
 ===========
 
-This backend module contains code to access the cdr_sqlite.so made
+This backend module contains code to access the cdr_sqlite3_custom.so made
 call data record database.
 
 
