@@ -19,12 +19,13 @@
 
 
 import sys, os
+import language
 
 
 try:
 	from pysqlite2 import dbapi2 as sqlite
 except ImportError:
-	print "Note: you should install python-pysqlite2 to have CDR functionality"
+	print _("Note: you should install python-pysqlite2 to have CDR functionality")
 
 try:
 	db_fn = "/var/log/asterisk/master.db"
@@ -32,7 +33,7 @@ try:
 		raise ImportError
 	db = sqlite.connect(db_fn, isolation_level="IMMEDIATE")
 except:
-	print "Note: you don't seem to have access to /var/log/asterisk/master.db yet"
+	print _("Note: you don't seem to have access to %s yet") % db_fn
 	if __name__ == "__main__": sys.exit(0)
 	db = None
 
