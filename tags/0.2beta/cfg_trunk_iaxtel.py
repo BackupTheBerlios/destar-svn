@@ -66,9 +66,8 @@ class CfgTrunkIaxtel(CfgTrunk):
 			ext = "_%s." % self.ext
 			c.setSection(self.context)
 			if self.callerid:
-				c.appendExten(ext, "CALLERID(%s)" % self.callerid)
-			else:
-				c.appendExten(ext, "CALLERID(%s)" % self.iaxtelid)
+				c.appendExten(ext, "Set(CALLERID(name)=%s)" % self.callerid)
+			c.appendExten(ext, "Set(CALLERID(number)=%s)" % self.iaxtelid)
 			c.appendExten(ext, "Dial(IAX2/%s:%s@iaxtel.com/${EXTEN:%d@iaxtel},60,r)" % (self.iaxtelid, self.iaxtelpw, len(self.ext)))
 			#c.appendExten(ext, "Busy")
 

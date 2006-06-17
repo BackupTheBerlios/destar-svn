@@ -46,7 +46,7 @@ class CfgAppCallFW(CfgApp):
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten("_%sX." % self.set, "DBput(%s/%s/${CALLERIDNUM}=${EXTEN:%d})" % (self.type, self.pbx,len(self.set)))
+		c.appendExten("_%sX." % self.set, "Set(DB(%s/%s/${CALLERIDNUM})=${EXTEN:%d})" % (self.type, self.pbx,len(self.set)))
 		if self.type == "CFIM":
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-unconditional)")
 		else:

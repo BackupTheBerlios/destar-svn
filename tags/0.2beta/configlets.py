@@ -838,7 +838,7 @@ class CfgTrunk(Cfg):
 		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name)
 		if self.clid:
 			needModule("func_callerid")
-			c.appendExten("_X.","CALLERID(%s)" %  self.clid)
+			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			global configlet_tree
 			obj = configlet_tree.getConfigletByName(self.phone)
@@ -852,7 +852,7 @@ class CfgTrunk(Cfg):
 		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name)
 		if self.clid:
 			needModule("func_callerid")
-			c.appendExten("s","CALLERID(%s)" %  self.clid)
+			c.appendExten("s","Set(CALLERID(name)=%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			global configlet_tree
 			obj = configlet_tree.getConfigletByName(self.phone)
@@ -966,7 +966,7 @@ class CfgPhone(Cfg):
 			pbx = "phones"
 		c.append("include=>%s" % pbx)
 		c.appendExten("i","Playback(privacy-invalid)")
-		c.appendExten("_**XX","DBget(dest=QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:2})", e="Playback(privacy-invalid)")
+		c.appendExten("_**XX","Set(dest=${DB( QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:2} )})", e="Playback(privacy-invalid)")
 		c.appendExten("_**XX","Goto(${dest},1)")
 		try:
 			timeoutvalue = not self.timeout and "0" or "1"
@@ -980,8 +980,8 @@ class CfgPhone(Cfg):
 						c.appendExten("%s" % obj.pattern,"Set(CDR(pbx)=%s)" % (self.pbx))
 						c.appendExten("%s" % obj.pattern,"Set(CDR(userfield)=%s)" % (self.name))
 						c.appendExten("%s" % obj.pattern,"Set(CDR(dialout)=%s)" % (obj.name))
-						if self.calleridnum:
-							c.appendExten("%s" % obj.pattern,"CALLERID(%s)" % self.calleridnum)
+						if self.number)=calleridnum:
+							c.appendExten("%s" % obj.pattern,"Set(CALLERID(number)=%s)" % self.calleridnum)
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)
 						if secret:
                                                         c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
