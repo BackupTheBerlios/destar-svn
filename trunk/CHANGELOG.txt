@@ -6,6 +6,7 @@
 * Upgraded cfg_opt_music.py to new musiconhold.conf syntax.
 * Small fix to page_stats_phone.ptl and page_owner_pbx.ptl.
 * Updated basic documentation.
+* Added new features: cfg_opt_monitor.py and cfg_opt_transfer.py.
 
 2006-06-16
 * Changed SetVar by Set. SetVar is deprecated in *-1.2

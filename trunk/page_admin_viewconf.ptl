@@ -26,8 +26,8 @@ import os, backend, configlets, panelutils
 
 
 _q_parent  = 'page_admin'
-_q_title   = _("View Configuration")
-_q_desc    = _("Show Asterisk configuration files")
+_q_title   = _("Save/View Configuration")
+_q_desc    = _("Save and show Asterisk configuration files")
 _q_link    = 'viewconf'
 _q_menupos = 90
 _q_level   = 3
