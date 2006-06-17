@@ -1,0 +1,48 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from ConfigHelper import *
+
+
+_q_parent  = 'page_config'
+_q_title   = _("Trunks")
+_q_desc    = _("Telephone company lines and VoIP-Trunks")
+_q_link    = 'trunks'
+_q_menupos = 30
+_q_level   = 3
+
+
+def _q_access(request):
+        if request.session.level < _q_level:
+		cantAccessPage()
+
+
+def _q_index [plain] (request):
+	header(_q_desc)
+	import configlets
+	phones = False
+	for obj in configlets.configlet_tree:
+		if obj.groupName == 'Phones':
+			phones = True
+	if not phones:
+		_('You should add at least one phone to configure trunks')
+	presentConfiglets('Trunks')
+	footer()
