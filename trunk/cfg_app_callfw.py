@@ -31,8 +31,8 @@ class CfgAppCallFW(CfgApp):
 		self.variables = [ 
 			VarType("pbx",	  title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 			VarType("type", title=_("Type"), type="choice", options=( ("CFIM", _("Call Forwarding Unconditional")), ("CFBS",_("Call Forwarding if Busy/Unavailable")) )),
-			VarType("set",      title=_("Setting preffix"), len=6, default="*21*"),
-			VarType("ext",   title=_("Unsetting extension"), len=6, default="#21#")
+			VarType("set",      title=_("Setting preffix"), len=6, default="*21"),
+			VarType("ext",   title=_("Unsetting extension"), len=6, default="*22")
 		       	]
 
 		self.dependencies = [ DepType("pbx", 

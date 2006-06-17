@@ -230,7 +230,7 @@ def initializeAsteriskConfig():
 	c.append(";")
 	c.setSection("macro-voicemail")
 	c.append("exten => s,1,Answer")
-	c.append("exten => s,2,AbsoluteTimeout(240)")
+	c.append("exten => s,2,Set(TIMEOUT(absolute)=240)")
 	c.append("exten => s,3,Wait(1)")
 	c.append("exten => s,4,VoiceMail(${ARG1})")
 	c.append(";exten => s,105,Macro(dial-result,3)")
@@ -242,7 +242,7 @@ def initializeAsteriskConfig():
 	c.append("; format: Macro(dial-result,[<cause>])")
 	c.append(";")
 	c.setSection("macro-dial-result")
-	c.append("exten => s,1,AbsoluteTimeout(35)")
+	c.append("exten => s,1,Set(TIMEOUT(absolute)=35)")
 	c.append("exten => s,2,GotoIf($[foo${ARG1} != foo]?cause_${ARG1},1:cause_${HANGUPCAUSE},1)")
 
 	c.append("; undefined error (mostly when an existing extension is currently unavailable)")

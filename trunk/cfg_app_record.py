@@ -62,7 +62,7 @@ class CfgAppRecord(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "AbsoluteTimeout(20)")
+		c.appendExten(self.ext, "Set(TIMEOUT(absolute)=20)")
 		c.appendExten(self.ext, "Answer")
 		c.appendExten(self.ext, "Wait(1)")
 		# TODO: don't hardcode ":gsm" here

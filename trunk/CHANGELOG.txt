@@ -1,6 +1,7 @@
 2006-06-17
 * Applied patch #1090: I18n cosmetics+Makefile(s)
 * Some little i18n changes in cdrutils
+* Changed AbsoluteTimeout by Set(TIMEOUT(absolute)=). Absolutetimeout is deprecated in *-1.2
 
 2006-06-16
 * Changed SetVar by Set. SetVar is deprecated in *-1.2

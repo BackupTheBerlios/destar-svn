@@ -105,7 +105,7 @@ class CfgDialoutNormal(CfgDialout):
 		for obj in configlets.configlet_tree['Trunks']:
 			try:
 				if self.__getitem__("trunk_"+obj.name):
-					c.appendExten("s","AbsoluteTimeout(${timeout})")
+					c.appendExten("s","Set(TIMEOUT(absolute)=${timeout})")
 					c.appendExten("s","Set(CDR(outtrunk)=%s)" % obj.name)
 					if self.__getitem__("trunk_%s_price" % obj.name):
 						c.appendExten("s","Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))	

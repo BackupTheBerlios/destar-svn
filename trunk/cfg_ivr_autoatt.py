@@ -144,7 +144,7 @@ class CfgIVRAutoatt(CfgIVR):
 				for t in times:
 					s.appendExten("s","GotoIfTime(%s?%s,s,1)" % (t,self.ivrtime))
 		if self.timeout:
-			s.appendExten("s","Absolutetimeout(%s)" % self.timeout)
+			s.appendExten("s","Set(TIMEOUT(absolute)=%s)" % self.timeout)
 		for i in range(self.repeat):
 			s.appendExten("s","Background(ivr/%s)" % self.backgroundfile)	
 			if self.pause:
