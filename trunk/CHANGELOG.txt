@@ -1,5 +1,5 @@
 2006-06-17
-* Applied patch #1090: I18n cosmetics+Makefile(s)
+* Applied patch #1090: I18n cosmetics+Makefile(s) by alenvers.
 * Some little i18n changes in cdrutils
 * Changed AbsoluteTimeout by Set(TIMEOUT(absolute)=). Absolutetimeout is deprecated in *-1.2
 * Changed SetCID{Name,Num} by CALLERID, because they're deprecated in *-1.2.

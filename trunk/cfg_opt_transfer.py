@@ -32,8 +32,8 @@ class CfgOptTransfer(CfgOptSingle):
 		self.variables = [
 				VarType("blindxfer", title=_("Blind Transfer Extension"), len=6, optional=True),
 				VarType("atxfer", title=_("Attended Transfer Extension"), len=6, optional=True),
-				VarType("transferdigittimeout", title=_("Number of seconds to wait between digits when transfering a call"), hint=_(Default is 3 seconds), type="int", len=6, optional=True, default=3),
-				VarType("atxfernoanswertimeout", title=_("Number of seconds to wait between digits when transfering a call"), hint=_(Default is 3 seconds), type="int", len=6, optional=True, default=15),
+				VarType("transferdigittimeout", title=_("Number of seconds to wait between digits when transfering a call"), hint=_("Default is 3 seconds"), type="int", len=6, optional=True, default=3),
+				VarType("atxfernoanswertimeout", title=_("Timeout for answer on attended transfer"), hint=_("Default is 15 seconds"), type="int", len=6, optional=True, default=15),
 		    ]
 
 	def row(self):
