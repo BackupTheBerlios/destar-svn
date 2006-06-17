@@ -1,7 +1,6 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Destar has Copyright (C) 2005 by Holger Schurig
-# This file has Copyright (C) 2005 by Alejandro Rios P.
+# Copyright (C) 2005 Manuel Alejandro Cerón Estrada <ceronman@gmail.com>
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,16 +19,22 @@
 
 from Templates import *
 from quixote.form2 import *
-from pychart import *
 import cdrutils
 import time
 import backend
 from StatsHelper import *
 
+pychart_exists = True
+try:	
+	from pychart import *
+except ImportError:
+	pychart_exists = False
+
 _q_parent = 'page_stats'
 _q_title  = _("Extension Statistics")
 _q_desc   = _("Statistics for an Extension")
 _q_level  = 3
+_q_menupos = 32
 
 def _q_access(request):
 	if request.session.level < _q_level:
@@ -39,12 +44,28 @@ def _q_test():
 	return cdrutils.db
 
 def makeForm():
+	localtime = time.localtime()
+	
+	localyear = str(localtime[0])
+	
+	# fix the month value for those smaller than 10 (january ... september) 1 -> 01, 2 ->02 
+	if localtime[1] < 10:
+		localmonth = '0%s' % localtime[1] 
+	else:
+		localmonth = localtime[1]
+	
+	#the same for the day
+	if localtime[2] < 10:
+		localday = '0%s' % localtime[2]
+	else:
+		localday = localtime[2]
+
 	form = Form()
 	form.name = "extensionform"
 	form.add(StringWidget, "ext", value="", title=htmltext(_("Extension")), render_br=True )
 
         form.add(StringWidget, "clid",  value="", title=htmltext(_("Caller ID")), render_br=True )
- 
+
 	form.add_single_select('year1', 
 							title=htmltext(_('From:')),
 							value="",
@@ -66,23 +87,25 @@ def makeForm():
 							
 	form.add_single_select('year2', 
 							title=htmltext(_('To:')),
-							value="",
+							value=localyear,
 							options=zip(years, 
 										years),
 							render_br=False )
 							
 	form.add_single_select('month2', 
+							value=localmonth,
 							options=zip(months, 
 										monthnames,
 										months),
 							render_br=False )
 							
 	form.add_single_select('day2',
+							value=localday,
 							options=zip(days,
 										daynames,
 										days),
 							render_br=True )
-							
+
 	form.add(SubmitWidget, '_submit', _("Submit"), render_br=True)
 	
 	return form
@@ -98,33 +121,35 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2, ext, clid):
 		where.append ("src = '%s' or dst = '%s' or clid like '<%s>' or clid like '%%%s%%'" % (ext,ext,ext,clid))
 	else:
 		where.append ("src = '%s' or dst = '%s' or clid like '<%s>'" % (ext,ext,ext))
-	cursor = cdrutils.select(fields=['src', 'dst', 'disposition', 'accountcode', 'billsec'], where = where)
+	cursor = cdrutils.select(fields=['dialout', 'disposition', 'accountcode', 'billsec'], where = where)
 		
-	in_calls_per_dialout = []
 	out_calls_per_dialout = []
 	
 	for i in backend.getConfiglets("Dialout"):
 		dialout = CallData()
 		dialout.name = i.name
-		dialout.asignPattern(i.pattern)
-		in_calls_per_dialout.append(dialout)
+		if 'group' in vars(i).items():
+			dialout.group = i.group
+		if 'host' in vars(i).items():
+			dialout.host = i.host
 		out_calls_per_dialout.append(dialout)
 	
-	in_nomatch = CallData()
-	in_nomatch.name = _("No one Match")
+	nomatch = CallData()
+	nomatch.name = _("Other Calls")
 	
-	out_nomatch = CallData()
-	out_nomatch.name = _("No one Match")
-		
 	row = cursor.fetchone()
+	if cursor.description:
+		fieldIndices = range(len(cursor.description))
+	else:
+		fieldIndices = []
 	while row:
-		for c,s in row.items():
-			if c=='src':
-				source = s
-			if c=='dst':
-				destination = s
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='dialout':
+				dialout = s 
 			if c=='disposition':
-				disposition = int(s)
+				disposition = s
 			if c=='accountcode':
 				try:
 					cost = int(s)
@@ -132,38 +157,25 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2, ext, clid):
 					cost = 0
 			if c=='billsec':
 				seconds = int(s)
+
 		added = False
 		for i in out_calls_per_dialout:
-			if i.match(source):
+			if dialout == i.name:
 				i.addCall(seconds, cost, disposition)
 				added = True
 		if not added:
-			out_nomatch.addCall(seconds, cost, disposition)
-			
-		added = False	
-		for i in in_calls_per_dialout:
-			if i.match(destination):
-				i.addCall(seconds, cost, disposition)
-				added = True
-		if not added:
-			in_nomatch.addCall(seconds, cost, disposition)
+			nomatch.addCall(seconds, cost, disposition)
 			
 		row = cursor.fetchone()
 		
-	in_calls_per_dialout.append(in_nomatch)
-	out_calls_per_dialout.append(out_nomatch)
+	out_calls_per_dialout.append(nomatch)
 		
-	dialout_names = [i.name for i in in_calls_per_dialout]
-	htmltext('<h3>%s</h3>' % _('Incomming Calls per Dialout Entry'))
-	makeCallsTable(_("Dialout Name"), in_calls_per_dialout, dialout_names)
-	htmltext('<h3>%s</h3>' % _('Outgoing Calls per Dialout Entry'))
+	dialout_names = [i.name for i in out_calls_per_dialout]
+	htmltext('<br/><br/><h3>%s</h3>' % _('Outgoing Calls per Dialout Entry'))
 	makeCallsTable(_("Dialout Name"), out_calls_per_dialout, dialout_names)
-	#makeCallsGraphic(dialout_names, in_calls_per_dialout, _("Incomming calls per Dialout Entry"),_("Dialout Entries"), "graph1.png")
-	#makeGraphic(dialout_names, [i.minutes for i in in_calls_per_dialout], _("Minutes per Dialout Entry"),_("Dialout Entries"), _("Minutes"), "graph2.png")
-	#makeGraphic(dialout_names, [i.cost for i in in_calls_per_dialout], _("cost per Dialout Entry"),_("Dialout Entries"), _("Minutes"), "graph2.png")
 	
 def cdrForm [plain] (request):
-	htmltext("<h3>%s</h3>" % _("Statistics of Extension Calls by Dialout Entry:"))
+	htmltext("<h3>%s</h3>" % _("Statistics of Calls by Dialout Entry:"))
 	form = makeForm()
 	form.render()
 	
@@ -173,6 +185,9 @@ def cdrForm [plain] (request):
 	
 def _q_index [plain] (request):
 	header(_q_desc)
-	cdrForm(request)
+	if pychart_exists:
+		cdrForm(request)
+	else:
+		_("You need to install pychart and use a cdr with sqlite to get these statistics")
 	footer()
 	

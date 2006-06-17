@@ -4,6 +4,7 @@
 * Changed AbsoluteTimeout by Set(TIMEOUT(absolute)=). Absolutetimeout is deprecated in *-1.2
 * Changed SetCID{Name,Num} by CALLERID, because they're deprecated in *-1.2.
 * Upgraded cfg_opt_music.py to new musiconhold.conf syntax.
+* Small fix to page_stats_phone.ptl and page_owner_pbx.ptl.
 
 2006-06-16
 * Changed SetVar by Set. SetVar is deprecated in *-1.2
