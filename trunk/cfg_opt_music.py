@@ -28,13 +28,14 @@ class CfgOptMusic(CfgOpt):
 	
 	def createVariables(self):
 		self.variables = [VarType("name", title=_("Name"), len=15),
-		     VarType("type", title=_("Type"), type="choice", options=("mp3", "quietmp3","mp3nb","quietmp3nb","custom")),
+		     VarType("type", title=_("Type"), type="choice", options=("mp3", "quietmp3","mp3nb","quietmp3nb","custom","files")),
 		     VarType("dir",  title=_("Directory"), len=255)]
 
 	def createAsteriskConfig(self):
 		c = AstConf("musiconhold.conf")
-		c.setSection("classes")
-		c.append("%s=%s:%s" % (self.name, self.type, self.dir))
+		c.setSection(self.name)
+		c.append("mode=%s" % self.type)
+		c.append("directory=%s" % self.dir)
 
 	def row(self):
 		return (self.shortName, self.name)
