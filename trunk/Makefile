@@ -3,6 +3,7 @@ DESTDIR=
 PYDIR=$(DESTDIR)/usr/share/destar/python
 PAGES_DIR=$(DESTDIR)/usr/share/destar/static
 SBINDIR=$(DESTDIR)/usr/sbin
+LOCALEDIR=$(DESTDIR)/usr/share/locale
 MANDIR=$(DESTDIR)/usr/share/man/man8
 
 # To use with asternic.org op_panel tarball:
@@ -18,7 +19,9 @@ clean:
 	find -name "*.pyc" -o \
 	     -name "*.ptlc" -o \
 	     -name "*.ptlo" -o \
-	     -name "*.au" | xargs rm -f || true
+	     -name "*.au" -o \
+	     -name "*.mo" | xargs rm -f || true
+	cd po && $(MAKE) clean
 
 clean-panel:
 	rm -f $(PAGES_DIR)/panel
@@ -32,17 +35,23 @@ release:
 gettext:
 	xgettext --language=python -d destar destar *.py *.ptl
 
-msgfmt:
-	msgfmt.py destar.po
+msgfmt:	$(LANGUAGES)
+
 
 install-panel:
 	ln -s $(PANEL_HTML_DIR) $(PAGES_DIR)/panel
 
-install:
+languages:
+	cd po && $(MAKE)
+
+install:	languages
 	install -d $(PYDIR)
 	#cp -a *.py *.ptl misc medusa $(PYDIR)
 	install -m 644 *.py *.ptl $(PYDIR)/
+	install -d $(LOCALEDIR)
+	cp -fa lang/* $(LOCALEDIR)
 	install -d $(PYDIR)/misc
+	install -m 644 misc/*.py $(PYDIR)/misc/
 	install -m 644 misc/*.py $(PYDIR)/misc/
 ifneq ($(SYS_MEDUSA),1)
 	install -d $(PYDIR)/medusa
@@ -56,5 +65,7 @@ endif
 	install -d $(MANDIR)
 	gzip -9 <misc/destar.8 >$(MANDIR)/destar.8.gz
 	chmod 0644 $(MANDIR)/destar.8.gz
-	install -d $(PYDIR)/lang
-	install -m 644 lang/* $(PYDIR)/lang/
+
+test:
+	./tests.py
+

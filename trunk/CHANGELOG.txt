@@ -1,3 +1,6 @@
+2006-06-17
+* Applied patch #1090: I18n cosmetics+Makefile(s)
+
 2006-06-16
 * Changed SetVar by Set. SetVar is deprecated in *-1.2
 

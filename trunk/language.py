@@ -32,24 +32,21 @@ import os, fnmatch, re, gettext
 
 CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
 
-def listLanguages():
-	try:
-		names = fnmatch.filter(os.listdir(CONFIGLETS_DIR+'/lang/'), '*.gmo')
-	except IOError:
-	 	names = []
-	d = dict([('en','en.gmo')] + [(re.sub(r'(.*)\.gmo',r'\1',x),x) for x in names]) 
-	return d
-
 def setLanguage(lang):
 	"Set the language via gnuttext"
-	if languages.has_key(lang):
-		l = 'lang/' + languages[lang]
-	else:
-		l = 'lang/en.gmo'
+	localesdir = "/usr/share/locale"
 	try:
-	 translation = gettext.GNUTranslations(open(l,'rb'))
+		os.listdir(localesdir)
+	except OSError:
+		localesdir = ""
+		
+	try:
+		if localesdir == "":
+			translation = gettext.translation('destar',languages=[lang])
+		else:
+			translation = gettext.translation('destar',localesdir,languages=[lang])
 	except IOError:
-	 translation = gettext.NullTranslations()
+		translation = gettext.NullTranslations()
 	translation.install()
 
 def desactivateGettext():
@@ -59,8 +56,6 @@ def desactivateGettext():
 def activateGettext():
 	global _
 	del _
-
-languages = listLanguages()
 
 def encoding():
 	"Returns the string used in the HTTP Header 'Content-Type: text/html; charset=...'"

@@ -37,7 +37,7 @@ def grep(seq, regex):
 class TestI18n(unittest.TestCase):
     
     def setUp(self):
-        self.files = fnmatch.filter(os.listdir("lang/"),"*.po")
+        self.files = fnmatch.filter(os.listdir("po/"),"*.po")
 
     def testAllStringsDynamic(self):
 
@@ -60,7 +60,7 @@ class TestI18n(unittest.TestCase):
             lineCount = 1
             msgIdCount = 0
             msgNotTrans = 0
-            for line in file("lang/" + fi):
+            for line in file("po/" + fi):
                 # Eating some msgid's miam
                 if state == 0:
                     s = msgstrRegex.search(line)
