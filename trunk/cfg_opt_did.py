@@ -103,7 +103,7 @@ class CfgOptDID(CfgOpt):
 		c.appendExten(self.did,"Set(CDR(intrunk)=%s)" %  self.trunk)
 		if self.clid:
 			needModule("func_callerid")
-			c.appendExten(self.did,"CALLERID(%s)" %  self.clid)
+			c.appendExten(self.did,"Set(CALLERID(name)=%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			import configlets
 			obj = configlets.configlet_tree.getConfigletByName(self.phone)

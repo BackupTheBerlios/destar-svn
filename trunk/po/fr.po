@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-17 05:53-0500\n"
+"POT-Creation-Date: 2006-06-17 07:15-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3310,7 +3310,7 @@ msgstr "Canal"
 msgid "Called extension"
 msgstr "Extension appelÃ©e"
 
-#: page_user_state.ptl:87 ../page_user_state.ptl:87
+#: page_user_state.ptl:87 ../page_user_state.ptl:87 ../cfg_opt_music.py:33
 msgid "Application"
 msgstr "Application"
 
@@ -3712,4 +3712,8 @@ msgstr ""
 
 #: ../page_stats_trunks.ptl:136
 msgid "Internal"
+msgstr ""
+
+#: ../cfg_opt_music.py:39
+msgid "Please specify an application"
 msgstr ""

@@ -181,11 +181,11 @@ def initializeAsteriskConfig():
 	c.setSection("macro-dial-std-exten")
 	c.append(";")
 	c.append("; test for CFIM (Call Forwarding Immediate)")
-	c.append("exten=s,1,DBget(temp=CFIM/${ARG5}/${ARG4})")
+	c.append("exten=s,1,Set(temp=${DB( CFIM/${ARG5}/${ARG4} )})")
 	c.append("exten=s,2,Goto(${ARG2},${temp},1)")
 
 	c.append("; no CFIM")
-	c.append("exten=s,102,DBGet(temp=DND/${ARG5}/${ARG4})")
+	c.append("exten=s,102,Set(temp=${DB( DND/${ARG5}/${ARG4} )})")
 	c.append("; no CFIM, DND set")
 	c.append("exten=s,103,GotoIf($[${ARG3}vm = 1vm]?105:104)")
 	c.append("; no CFIM, DND set, but no voicemaiL:")
@@ -196,7 +196,7 @@ def initializeAsteriskConfig():
 	c.append("exten=s,106,Hangup")
 
 	c.append("; no CFIM, no DND")
-	c.append("exten=s,203,DBGet(dsec=DSEC/${ARG5}/${ARG4})")
+	c.append("exten=s,203,Set(dsec=${DB( DSEC/${ARG5}/${ARG4} )})")
 	c.append("exten=s,204,NoOp")
 	c.append("exten=s,205,Set(dopt=${DIAL_OPTIONS})")
 	c.append("exten=s,206,NoOp")
@@ -204,7 +204,7 @@ def initializeAsteriskConfig():
 	c.append("; Dial result was 'timeout'")
 	c.append("exten=s,208,Set(vmopt=u)")
 	c.append("exten=s,209,Noop")
-	c.append("exten=s,210,DBGet(temp=CFBS/${ARG5}/${ARG4})")
+	c.append("exten=s,210,Set(temp=${DB( CFBS/${ARG5}/${ARG4} )})")
 	c.append("exten=s,211,Goto(${ARG2},${temp},1)")
 
 	c.append("; no CFIM, no DND, no DSEC (dial seconds)")

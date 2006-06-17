@@ -27,10 +27,10 @@ clean-panel:
 	rm -f $(PAGES_DIR)/panel
 
 release:
-	svn export svn+ssh://svn.berlios.de/svnroot/repos/destar/trunk destar-$(DATE) 
-	tar cjf destar-$(DATE).tar.bz2 destar-$(DATE)
-	scp destar-$(DATE).tar.bz2 shell.berlios.de:/home/groups/ftp/pub/destar/
-	rm -rf destar-$(DATE) destar-$(DATE).tar.bz2
+	svn export svn+ssh://svn.berlios.de/svnroot/repos/destar/tags/0.2beta destar-0.2beta 
+	tar cjf destar-0.2beta.tar.bz2 destar-0.2beta
+	#scp destar-$(DATE).tar.bz2 shell.berlios.de:/home/groups/ftp/pub/destar/
+	#rm -rf destar-$(DATE) destar-$(DATE).tar.bz2
 
 gettext:
 	xgettext --language=python -d destar destar *.py *.ptl
