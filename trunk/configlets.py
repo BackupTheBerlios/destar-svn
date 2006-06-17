@@ -837,7 +837,7 @@ class CfgTrunk(Cfg):
 		c.setSection(contextin)
 		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name)
 		if self.clid:
-			needModule("app_setcidname")
+			needModule("func_callerid")
 			c.appendExten("_X.","CALLERID(%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			global configlet_tree
@@ -851,7 +851,7 @@ class CfgTrunk(Cfg):
 			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
 		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name)
 		if self.clid:
-			needModule("app_setcidname")
+			needModule("func_callerid")
 			c.appendExten("s","CALLERID(%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			global configlet_tree
@@ -915,7 +915,6 @@ class CfgPhone(Cfg):
 	def createExtensionConfig(self):
 		needModule("res_adsi")
 		needModule("app_voicemail")
-		needModule("app_setcdruserfield")
 		extensions = AstConf("extensions.conf")
                 try:
                         pbx = self.pbx

@@ -62,14 +62,14 @@ class CfgTrunkFwdIax(CfgTrunk):
 
 		c = AstConf("extensions.conf")
 		if self.ext:
-			needModule("app_setcidname")
-			needModule("app_setcidnum")
+			needModule("func_callerid")
 
 			ext = "_%s." % self.ext
 			c.setSection(self.context)
 			if self.callerid:
 				c.appendExten(ext, "CALLERID(%s)" % self.callerid)
-			c.appendExten(ext, "CALLERID(%s)" % self.fwdid)
+			else: 
+				c.appendExten(ext, "CALLERID(%s)" % self.fwdid)
 			c.appendExten(ext, "Dial(IAX2/%s:%s@iax2.fwdnet.net/${EXTEN:%d},60,r)" % (self.fwdid, self.fwdpw, len(self.ext)))
 			#c.appendExten(ext, "Busy")
 

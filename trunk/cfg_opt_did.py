@@ -102,7 +102,7 @@ class CfgOptDID(CfgOpt):
 		c.setSection("in-%s" % self.trunk)
 		c.appendExten(self.did,"Set(CDR(intrunk)=%s)" %  self.trunk)
 		if self.clid:
-			needModule("app_setcidname")
+			needModule("func_callerid")
 			c.appendExten(self.did,"CALLERID(%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
 			import configlets
