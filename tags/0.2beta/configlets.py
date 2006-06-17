@@ -980,7 +980,7 @@ class CfgPhone(Cfg):
 						c.appendExten("%s" % obj.pattern,"Set(CDR(pbx)=%s)" % (self.pbx))
 						c.appendExten("%s" % obj.pattern,"Set(CDR(userfield)=%s)" % (self.name))
 						c.appendExten("%s" % obj.pattern,"Set(CDR(dialout)=%s)" % (obj.name))
-						if self.number)=calleridnum:
+						if self.calleridnum:
 							c.appendExten("%s" % obj.pattern,"Set(CALLERID(number)=%s)" % self.calleridnum)
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)
 						if secret:
