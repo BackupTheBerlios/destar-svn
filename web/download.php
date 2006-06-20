@@ -7,7 +7,9 @@
 <p>To see the <b>Software Requirements</b> of this release of DeStar, please look at the Installation Instructions that come on the sources.<p>
 
 <ul>
-<li>File: <a href="http://prdownload.berlios.de/destar/destar-0.2beta.tar.bz2">destar-0.2beta.tar.bz2</a> [<a href="https://developer.berlios.de/project/shownotes.php?release_id=10317">Release Notes</a>]</li>
+<li>file: <a href="http://prdownload.berlios.de/destar/destar-0.2beta.tar.bz2">destar-0.2beta.tar.bz2</a> [<a href="https://developer.berlios.de/project/shownotes.php?release_id=10317">release notes</a>] or</li>
+
+<li>file: <a href="http://prdownload.berlios.de/destar/destar-0.2beta.tar.gz">destar-0.2beta.tar.gz</a> </li>
 </ul>
 
 <h3>Get Destar v0.1.X, for Asterisk 1.0.X</h3>
