@@ -48,14 +48,15 @@ install:	languages
 	install -d $(PYDIR)
 	#cp -a *.py *.ptl misc medusa $(PYDIR)
 	install -m 644 *.py *.ptl $(PYDIR)/
+	install -m 755 Server.py $(PYDIR)/
 	install -d $(LOCALEDIR)
 	cp -fa lang/* $(LOCALEDIR)
 	install -d $(PYDIR)/misc
 	install -m 644 misc/*.py $(PYDIR)/misc/
-	install -m 644 misc/*.py $(PYDIR)/misc/
 ifneq ($(SYS_MEDUSA),1)
 	install -d $(PYDIR)/medusa
-	install medusa/*.py $(PYDIR)/medusa/
+	install -m 644 medusa/*.py $(PYDIR)/medusa/
+	install -m 755 medusa/http_server.py $(PYDIR)/medusa/
 endif
 	install -m 755 destar $(PYDIR)/destar.py
 	install -d $(PAGES_DIR)

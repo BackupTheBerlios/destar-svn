@@ -1,3 +1,6 @@
+2006-06-20
+* Applied patches from debian package. Closes patches #1144, #1145 and #1146.
+
 2006-06-17
 * Applied patch #1090: I18n cosmetics+Makefile(s) by alenvers.
 * Some little i18n changes in cdrutils
@@ -232,7 +235,7 @@
 
 2005-12-22
 *cfg_phone_queue.py: fixed bug #5885: MoH fails in calls from PSTN placed directly on queues.
-*configletx.py: is recommended to use _X. instead of _.
+*configlets.py: is recommended to use _X. instead of _.
 
 2005-12-19
 *backend.py: fixed bug on CFIM/CFBS, still needs more testing.

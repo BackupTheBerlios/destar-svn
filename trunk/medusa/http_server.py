@@ -1,4 +1,4 @@
-#! /usr/local/bin/python
+#!/usr/bin/env python
 # -*- Mode: Python -*-
 #
 #       Author: Sam Rushing <rushing@nightmare.com>
