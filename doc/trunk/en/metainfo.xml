@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Local Variables: -->
+<!-- file: metainfo.xml -->
+<!-- xml-parent-document: "manual.xml" -->
+<!-- Destar Manual -->
+<!-- Distributed under the same Destar license  -->
+<!-- destar-version: 0.2  -->
+<!-- destar-revision: 394 -->
+
+<!--
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"/usr/share/xml/docbook/schema/dtd/4.2/docbookx.dtd">
+<book>
+  <bookinfo>
+-->
+
+    <title>Destar 0.2 Manual</title>
+
+    <subtitle>The lightweight Asterisk configuration tool</subtitle>
+
+    <edition>1.0</edition>
+
+    <pubdate>2006-06-21</pubdate>
+
+    <authorgroup>
+      <author>
+        <othername>Alejandro Ríos Peña</othername>
+        <affiliation>
+          <address>
+            <email>alejandro.rios@avatar.com.co</email>
+          </address>
+        </affiliation>
+      </author>
+    </authorgroup>
+
+    <copyright>
+      <year>2006</year>
+    </copyright>
+
+    <!--    <revhistory>
+      <revision>
+	<revnumber>0.1</revnumber>
+	<date>2006-06-22</date>
+	<authorinitials>ARP</authorinitials>
+	<revremark>Initial Stuff</revremark>
+      </revision>
+    </revhistory> -->
+
+<!--
+  </bookinfo>
+</book>
+-->
+
+<!-- End: -->
