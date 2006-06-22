@@ -202,7 +202,7 @@ class CfgPhoneZap(CfgPhone):
 			self.technology,
 			self.channels,
 			self.name,
-			int(self.usevm)),
+			int(self.usevm),
 			pbx,
-			ext
+			ext)
 		      )

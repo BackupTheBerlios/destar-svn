@@ -1,3 +1,6 @@
+2006-06-22
+* Fixed little typo in cfg_phone_zap.py
+
 2006-06-21
 * Fixed conding in French and Spanish .po files. Successful changes need to be
   confirmed. It will close #7950
