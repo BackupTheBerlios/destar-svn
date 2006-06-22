@@ -1,3 +1,8 @@
+2006-06-21
+* Fixed conding in French and Spanish .po files. Successful changes need to be
+  confirmed. It will close #7950
+  TODO: check codings in whole destar
+
 2006-06-20
 * Applied patches from debian package. Closes patches #1144, #1145 and #1146.
 
