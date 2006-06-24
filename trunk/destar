@@ -63,11 +63,11 @@ def print_usage():
 
 try:
 	opts,args = getopt.getopt(sys.argv[1:],'dhpr:v', 
-		['daemonize=','help','pid=', 'port', 'version'])
+		['daemonize','help','pid=', 'port=', 'version'])
 except getopt.GetoptError:
 	print _("DeStar: Command-line parsing error. Aborting.")
 	print_usage()
-	exit(2)
+	sys.exit(2)
 
 for opt,val in opts:
 	if opt in  ('-d', '--daemonize'):

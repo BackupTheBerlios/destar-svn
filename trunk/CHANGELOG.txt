@@ -1,5 +1,7 @@
 2006-06-23
 * Added reportlab pdf exporting example to misc/ thanks to Ian Esper.
+* configlets.py: fixed configlet_tree warning. Closes Bug #7980.
+* destar: fixed 'port' option bug.
 
 2006-06-22
 * Fixed little typo in cfg_phone_zap.py

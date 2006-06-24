@@ -379,6 +379,8 @@ class ConfigletTree:
 		self.groups[configlet.groupName].append(configlet)
 	
 
+configlet_tree = ConfigletTree()
+
 class Holder(object):
 	"""
 	This is a simple wrapper class so that you can write
@@ -443,7 +445,6 @@ class VarType(Holder):
 
 
 
-configlet_tree = ConfigletTree()
 
 class DependentObject:
 	def __init__(self, configlet, dependency):
@@ -604,6 +605,7 @@ class Cfg(Holder):
 		May be overridden for additional test."""
 
 		# Make sure we don't add two thingies with the same extension on the same pbx
+		global configlet_tree
 		if self.__dict__.has_key('ext'):
 			for o in configlet_tree:
 				if o==self: continue
@@ -745,6 +747,7 @@ class CfgOptSingle(CfgOpt):
 		'clazz' where the child class can tell us which class should
 		be unique in the configlet_tree."""
 
+		global configlet_tree
 		if not clazz:
 			clazz = self
 		for o in configlet_tree:
@@ -767,6 +770,7 @@ class VarListManager:
 		
 	def updateTrunks(self):
 		self.trunks = []
+		global configlet_tree
 		for obj in configlet_tree['Trunks']:
 			self.trunks.append(VarType("trunk_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
 			self.trunks.append(VarType("trunk_%s_price" % obj.name, title=_("Price/Account_code for this pattern"), type="int", optional=True, len=10, default=0))
@@ -779,6 +783,7 @@ class VarListManager:
 
 	def updateDialouts(self):
 		self.dialouts = []
+		global configlet_tree
 		for obj in configlet_tree['Dialout']:
 			self.dialouts.append(VarType("dialout_%s" % obj.name, title=_("%s") % obj.name, type="bool", optional=True,render_br=False))
 			self.dialouts.append(VarType("dialout_%s_secret" % obj.name, title=_("Password:"), len=50, optional=True))
@@ -839,8 +844,8 @@ class CfgTrunk(Cfg):
 		if self.clid:
 			needModule("func_callerid")
 			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid)
+		global configlet_tree
 		if self.contextin == 'phone' and self.phone:
-			global configlet_tree
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
@@ -854,7 +859,6 @@ class CfgTrunk(Cfg):
 			needModule("func_callerid")
 			c.appendExten("s","Set(CALLERID(name)=%s)" %  self.clid)
 		if self.contextin == 'phone' and self.phone:
-			global configlet_tree
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
@@ -897,6 +901,7 @@ class CfgPhone(Cfg):
 	def fixup(self):
 		Cfg.fixup(self)
 		self.lookPanel()
+		global configlet_tree
 		if configlet_tree.hasConfiglet('CfgPhoneQueue'):
 			for v in self.variables:
 				if v.name == "QueueLab" or v.name == "queues":
