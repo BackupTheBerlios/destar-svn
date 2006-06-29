@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-17 07:15-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2006-06-28 13:13+0200\n"
+"PO-Revision-Date: 2006-06-28 14:05+0200\n"
+"Last-Translator: Anthony PIRON <Anthony.piron@skynet.be>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,7 +44,8 @@ msgstr "Nouvelles extensions d'activation/désactivation de transfère d'appel"
 #: ../configlets.py:572 ../configlets.py:800 ../configlets.py:865
 #: ../configlets.py:993 ../configlets.py:1014 ../configlets.py:576
 #: ../configlets.py:804 ../configlets.py:880 ../configlets.py:1007
-#: ../configlets.py:1028
+#: ../configlets.py:1028 ../configlets.py:577 ../configlets.py:809
+#: ../configlets.py:884 ../configlets.py:1012 ../configlets.py:1033
 msgid "Type"
 msgstr "Type"
 
@@ -94,7 +95,8 @@ msgstr "Nouvelle salle de conférence"
 #: ../configlets.py:1014 ../page_stats_phone.ptl:44 ../page_user_state.ptl:66
 #: ../page_user_state.ptl:81 ../cfg_opt_monitor.py:32 ../cfg_phone_hunt.py:34
 #: ../configlets.py:576 ../configlets.py:880 ../configlets.py:1007
-#: ../configlets.py:1028 ../page_stats_phone.ptl:65
+#: ../configlets.py:1028 ../page_stats_phone.ptl:65 ../configlets.py:577
+#: ../configlets.py:884 ../configlets.py:1012 ../configlets.py:1033
 msgid "Extension"
 msgstr "Extension"
 
@@ -301,8 +303,7 @@ msgstr "Prefix d'activation"
 #: cfg_app_quickdial_global.py:33 ../cfg_app_quickdial_global.py:34
 msgid "don't use ** because it is for private quick dial list"
 msgstr ""
-"N'utilisez pas ** car c'est réservé pour la liste privée de numérota "
-"rapide"
+"N'utilisez pas ** car c'est réservé pour la liste privée de numérota rapide"
 
 #: cfg_app_quickdial_global.py:34 cfg_app_quickdial_phone.py:33
 #: ../cfg_app_quickdial_global.py:35 ../cfg_app_quickdial_phone.py:34
@@ -341,7 +342,6 @@ msgid "don't use ** because it is for accesing the quick dial list"
 msgstr ""
 "N'utilisez pas ** car c'est réservé à l'accès de la liste de numérotation "
 "rapide"
-
 
 #: cfg_app_record.py:26 ../cfg_app_record.py:26
 msgid "Record sound"
@@ -457,7 +457,9 @@ msgstr "Utilisé pour router les appels à travers les canaux"
 #: ../configlets.py:800 ../configlets.py:865 ../configlets.py:1014
 #: ../configlets.py:1034 ../page_user_state.ptl:64 ../cfg_phone_hunt.py:33
 #: ../configlets.py:720 ../configlets.py:804 ../configlets.py:880
-#: ../configlets.py:1028 ../configlets.py:1048
+#: ../configlets.py:1028 ../configlets.py:1048 ../configlets.py:722
+#: ../configlets.py:809 ../configlets.py:884 ../configlets.py:1033
+#: ../configlets.py:1053
 msgid "Name"
 msgstr "Nom"
 
@@ -487,8 +489,7 @@ msgstr "Recherche dans la liste de numérotation rapide?"
 
 #: cfg_dialout_normal.py:42 ../cfg_dialout_normal.py:42
 msgid "Trunks to use for routing this dialout entry"
-msgstr ""
-"Cannaux à utiliser pour le routage de cette entrée d'appel extérieur"
+msgstr "Cannaux à utiliser pour le routage de cette entrée d'appel extérieur"
 
 #: cfg_dialout_normal.py:59 cfg_ivr_autoatt.py:96 cfg_ivr_autoatt.py:99
 #: cfg_ivr_autoatt.py:102 cfg_opt_did.py:69 cfg_opt_did.py:72
@@ -508,6 +509,7 @@ msgstr ""
 #: ../cfg_phone_queue.py:140 ../cfg_phone_sip.py:169 ../cfg_phone_sip.py:176
 #: ../cfg_phone_zap.py:150 ../cfg_phone_zap.py:157 ../configlets.py:419
 #: ../cfg_opt_user.py:50 ../cfg_opt_user.py:53 ../configlets.py:423
+#: ../configlets.py:425
 msgid "This is a Dependency"
 msgstr "Ceci est une dépendance"
 
@@ -690,8 +692,8 @@ msgid ""
 "Asterisk can emit many events to it's console or a log file, Here you can "
 "make it more (or less) verbose:"
 msgstr ""
-"Asterisk peut émettre beaucoups d'événements sur sa console ou un fichier "
-"de log, ici vous pouvez le rendre plus ou moins verbeux :"
+"Asterisk peut émettre beaucoups d'événements sur sa console ou un fichier de "
+"log, ici vous pouvez le rendre plus ou moins verbeux :"
 
 #: cfg_opt_logger.py:30 ../cfg_opt_logger.py:30
 msgid "Errors"
@@ -1166,8 +1168,8 @@ msgstr ""
 "Cher ${VM_NAME}:\\n\\n\\tJe vous notifie que vous avez à l'instant reçu un "
 "messsage de longueur ${VM_DUR} (nombre ${VM_MSGNUM})\\n\\t dans la boite à "
 "message ${VM_MAILBOX} provenant de ${VM_CALLERID}, à la date du ${VM_DATE}. "
-"Vous pouvez\\n\\t l'écouter dès à présent. Merci!\\n\\n\\t\\t\\t--"
-"Asterisk/Destar PBX."
+"Vous pouvez\\n\\t l'écouter dès à présent. Merci!\\n\\n\\t\\t\\t--Asterisk/"
+"Destar PBX."
 
 #: cfg_opt_voicemail.py:50 ../cfg_opt_voicemail.py:50
 msgid "Should the email contain the voicemail as an attachment?"
@@ -1266,8 +1268,8 @@ msgid ""
 "Power level based on distance from the card to the service provider's "
 "gateway."
 msgstr ""
-"Niveau de puissance basé sur la distance à la passerelle du fournisseur"
-"de service"
+"Niveau de puissance basé sur la distance à la passerelle du fournisseurde "
+"service"
 
 #: cfg_opt_zappri.py:37 ../cfg_opt_zappri.py:37
 msgid "0: 0 db (CSU) / 0-133 feet (DSX-1)"
@@ -1362,8 +1364,7 @@ msgstr "Options du cannal Zaptel"
 
 #: cfg_opt_zap_trunk.py:31 ../cfg_opt_zap_trunk.py:31
 msgid "Try to detect busy signal to detect if remove site hung up"
-msgstr ""
-"Essaie de détecter le signal d'occupation si le site distant raccroche"
+msgstr "Essaie de détecter le signal d'occupation si le site distant raccroche"
 
 #: cfg_opt_zap_trunk.py:32 ../cfg_opt_zap_trunk.py:32
 msgid "Wait how many busy signals before hanging up"
@@ -1603,8 +1604,7 @@ msgstr "Strategie"
 
 #: cfg_phone_queue.py:56 ../cfg_phone_queue.py:61
 msgid "Ring all - ring all available channels until one answers"
-msgstr ""
-"Appelle tous - appelle tous les canaux disponibles jusqu'à une réponse"
+msgstr "Appelle tous - appelle tous les canaux disponibles jusqu'à une réponse"
 
 #: cfg_phone_queue.py:57 ../cfg_phone_queue.py:62
 msgid "Round robin - take turns ringing each available interface"
@@ -2110,24 +2110,30 @@ msgstr "Appels venant du canal ZAP"
 #: ../configlets.py:873 ../configlets.py:874 ../configlets.py:999
 #: ../configlets.py:1021 ../configlets.py:585 ../configlets.py:888
 #: ../configlets.py:889 ../configlets.py:1013 ../configlets.py:1035
+#: ../configlets.py:586 ../configlets.py:892 ../configlets.py:893
+#: ../configlets.py:1018 ../configlets.py:1040
 msgid "None"
 msgstr "Aucun"
 
 #: configlets.py:632 ../configlets.py:615 ../configlets.py:619
+#: ../configlets.py:621
 msgid "Name should not contain '-' or spaces"
 msgstr "Le nom ne doit pas contenir de '-' ou d'espaces"
 
 #: configlets.py:637 ../configlets.py:620 ../configlets.py:624
+#: ../configlets.py:626
 msgid "Name already in use"
 msgstr "Le nom est déja utilisé"
 
 #: configlets.py:733 configlets.py:1015 ../configlets.py:716
 #: ../configlets.py:1034 ../configlets.py:720 ../configlets.py:1048
+#: ../configlets.py:722 ../configlets.py:1053
 msgid "Info"
 msgstr "Info"
 
 #: configlets.py:784 configlets.py:796 ../configlets.py:767
 #: ../configlets.py:779 ../configlets.py:771 ../configlets.py:783
+#: ../configlets.py:775 ../configlets.py:788
 #, python-format
 msgid "%s"
 msgstr "%s"
@@ -2137,14 +2143,17 @@ msgid "Price for this pattern"
 msgstr "Coût de ce pattern"
 
 #: configlets.py:797 ../configlets.py:780 ../configlets.py:784
+#: ../configlets.py:789
 msgid "Password:"
 msgstr "Mot de passe :"
 
 #: configlets.py:817 ../configlets.py:800 ../configlets.py:804
+#: ../configlets.py:809
 msgid "Dial Command"
 msgstr "Commande d'appel"
 
 #: configlets.py:845 ../configlets.py:828 ../configlets.py:832
+#: ../configlets.py:837
 msgid "You should select a phone to ring to"
 msgstr "Sélectionner un téléphone à faire sonner"
 
@@ -2239,8 +2248,8 @@ msgid ""
 "Soft dependencie. The dependent object still can exist if this object is "
 "deleted"
 msgstr ""
-"Dépendance faible : l'objet dépendant peut encore exister si cette objet "
-"est supprimé"
+"Dépendance faible : l'objet dépendant peut encore exister si cette objet est "
+"supprimé"
 
 #: ConfigHelper.ptl:277 ConfigHelper.ptl:298 ConfigHelper.ptl:305
 #: ConfigHelper.ptl:279 ConfigHelper.ptl:300 ConfigHelper.ptl:307
@@ -2951,16 +2960,16 @@ msgid ""
 "You should create a phone. Without defined phones you can't make and receive "
 "calls."
 msgstr ""
-"Vous devez créer un téléphone. Sans téléphones définis vous ne pouvez "
-"pas effecuer et recevoir  des appels."
+"Vous devez créer un téléphone. Sans téléphones définis vous ne pouvez pas "
+"effecuer et recevoir  des appels."
 
 #: page_config.ptl:90 ../page_config.ptl:90
 msgid ""
 "You should create a trunk (connection to a Phone company or VOIP Provider). "
 "Without a trunk you can only make calls between local phones."
 msgstr ""
-"Vous devriez créer un canal (connection vers une compagnie de téléphone "
-"ou un fournisseur VOIP). Sans un canl vous pouvez seulement effectuer des "
+"Vous devriez créer un canal (connection vers une compagnie de téléphone ou "
+"un fournisseur VOIP). Sans un canl vous pouvez seulement effectuer des "
 "appels entre téléphones locaux."
 
 #: page_config.ptl:92 page_config_trunks.ptl:26 ../page_config.ptl:92
@@ -3401,7 +3410,8 @@ msgstr "S'il vous plait, installez entre Quixote > 1.2 et < 2.0"
 #: ../cfg_phone_iax.py:33 ../cfg_phone_mgcp.py:33 ../cfg_phone_queue.py:34
 #: ../cfg_phone_sip.py:34 ../cfg_phone_zap.py:34 ../configlets.py:865
 #: ../configlets.py:993 ../page_config_pbx.ptl:27 ../page_config_pbx.ptl:28
-#: ../configlets.py:880 ../configlets.py:1007
+#: ../configlets.py:880 ../configlets.py:1007 ../configlets.py:884
+#: ../configlets.py:1012
 msgid "Virtual PBX"
 msgstr "PBX Virtuel"
 
@@ -3421,7 +3431,7 @@ msgstr "Vous pouvez avoir plusieurs PBX séparés logiquement"
 msgid "Associated Virtual PBX"
 msgstr "PBX virtuel associé"
 
-#: ../configlets.py:768 ../configlets.py:772
+#: ../configlets.py:768 ../configlets.py:772 ../configlets.py:776
 msgid "Price/Account_code for this pattern"
 msgstr "Coût/Code_de_compte pour ce pattern"
 
@@ -3473,248 +3483,253 @@ msgid ""
 "you are welcome to redistribute it under certain conditions;\n"
 "see the included files GPL-2.txt and COPYRIGHT.txt\n"
 msgstr ""
+"Destar %s, Copyright (C) 2005  Holger Schurig et contributeurs.\n"
+"\n"
+"DeStar est fourni avec aucune garantie. Il s'agit d'un logiciel libre,\n"
+"vous pouvez le redistribuer sous certaines conditions,\n"
+"cfr. les fichiers inclus GPL-2.txt et COPYRIGHT.txt\n"
 
 #: ../destar:51
 msgid "DeStar: Asterisk Management web interface"
-msgstr ""
+msgstr "DeStar : Interface web de gestion d'Asterisk"
 
 #: ../destar:53
 msgid "Usage:"
-msgstr ""
+msgstr "Utilisation:"
 
 #: ../destar:54
 #, python-format
 msgid "  %s [options]: normal execution"
-msgstr ""
+msgstr "  %s [options] : execution normale"
 
 #: ../destar:55
 #, python-format
 msgid "  %s -h|--help: print this text and exit peacefully"
-msgstr ""
+msgstr "  %s -h|--help : affiche ce texte et quitte en paix"
 
 #: ../destar:56
 #, python-format
 msgid "  %s -v|--version: only print version information"
-msgstr ""
+msgstr "  %s -v|--version : affiche seulement la version"
 
 #: ../destar:58
 msgid "Options:"
-msgstr ""
+msgstr "Options :"
 
 #: ../destar:59
 msgid "  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID"
-msgstr ""
+msgstr "  -p <pid>  | --pid=<pid>: utilise <pid> pour stocker le PID du démon"
 
 #: ../destar:60
 msgid "  -d | --daemonize: run in the background"
-msgstr ""
+msgstr "  -d | --daemonize : lance en tâche de fond"
 
 #: ../destar:61
 msgid "  -r <port> | --port=<port>: run on port <port> (default: 8080)"
-msgstr ""
+msgstr "  -r <port> | --port=<port> : tourne sous le port <port> (défault : 8080)"
 
 #: ../destar:68
 msgid "DeStar: Command-line parsing error. Aborting."
-msgstr ""
+msgstr "DeStar : Erreur de syntaxe dans la ligne de commande. Annulation."
 
 #: ../destar:90
 msgid "Error: rport (-r <num>/--port=<num> must be a number)"
-msgstr ""
+msgstr "Erreur : rport (-r <nhum>/--port=<num> doit être un nombre)"
 
 #: ../cdrutils.py:28
 msgid "Note: you should install python-pysqlite2 to have CDR functionality"
-msgstr ""
+msgstr "Note : vous devriez installer python-pysqlite2 pour avoir la fonctionnalité de CDR"
 
 #: ../cdrutils.py:36
 #, python-format
 msgid "Note: you don't seem to have access to %s yet"
-msgstr ""
+msgstr "Note : vous ne semblez pas encore avoir accès à %s"
 
 #: ../cfg_opt_monitor.py:27
 msgid "One Touch Monitor"
-msgstr ""
+msgstr "Moniteur une touche"
 
 #: ../cfg_opt_monitor.py:28
 msgid "Touch Monitor Extension"
-msgstr ""
+msgstr "Touche moniteur d'extension"
 
 #: ../cfg_opt_monitor.py:29
 msgid "Extension to dial to start monitoring a call."
-msgstr ""
+msgstr "Extension à composer pour commencer le monitoring d'un appel"
 
 #: ../cfg_opt_transfer.py:27 ../cfg_opt_transfer.py:28
 msgid "Transfer Extensions"
-msgstr ""
+msgstr "Transfère d'extensions"
 
 #: ../cfg_opt_transfer.py:29
 msgid "Extensions to dial to transfer a call."
-msgstr ""
+msgstr "Extension à composer pour transférer un appel"
 
 #: ../cfg_opt_transfer.py:33
 msgid "Blind Transfer Extension"
-msgstr ""
+msgstr "Transfère d'extension à l'aveugle"
 
 #: ../cfg_opt_transfer.py:34
 msgid "Attended Transfer Extension"
-msgstr ""
+msgstr "Extension de transfère d'occupation"
 
 #: ../cfg_opt_transfer.py:35
 msgid "Number of seconds to wait between digits when transfering a call"
-msgstr ""
+msgstr "Nombre de secondes à attendre entre les chiffres lors d'un transfère d'appel"
 
 #: ../cfg_opt_transfer.py:35
 msgid "Default is 3 seconds"
-msgstr ""
+msgstr "Le défaut est de 3 secondes"
 
 #: ../cfg_opt_transfer.py:36
 msgid "Timeout for answer on attended transfer"
-msgstr ""
+msgstr "Timeout de réponse sur un transfère occupé"
 
 #: ../cfg_opt_transfer.py:36
 msgid "Default is 15 seconds"
-msgstr ""
+msgstr "Le défaut est de 15 secondes"
 
 #: ../cfg_opt_user.py:40
 msgid "Virtual PBX Administrator"
-msgstr ""
+msgstr "Administrateur de PBX virtuel"
 
 #: ../cfg_opt_user.py:65
 msgid "Please choose a Virtual PBX for this user."
-msgstr ""
+msgstr "Svp choisissez un PBX virtuel pour cet utilisateur"
 
 #: ../cfg_phone_hunt.py:27
 msgid "Simple Hunt Group"
-msgstr ""
+msgstr "Groupe de cascade"
 
 #: ../cfg_phone_hunt.py:28
 msgid "New Hunt Group for 5 extensions"
-msgstr ""
+msgstr "Nouveau groupe de cascade pour 5 extensions"
 
 #: ../cfg_phone_hunt.py:37
 msgid "Cycle until timeout?"
-msgstr ""
+msgstr "Cycle jusqu'à un timeout ?"
 
 #: ../cfg_phone_hunt.py:37
 msgid "else it will give only two rounds"
-msgstr ""
+msgstr "sinon il n'y aura que deux tours"
 
 #: ../cfg_phone_hunt.py:39
 msgid "Phones to add to the group"
-msgstr ""
+msgstr "Téléphones à ajouter dans le groupe"
 
 #: ../cfg_phone_hunt.py:40
 msgid "Phone #1"
-msgstr ""
+msgstr "Téléphone #1"
 
 #: ../cfg_phone_hunt.py:42 ../cfg_phone_hunt.py:45 ../cfg_phone_hunt.py:48
 #: ../cfg_phone_hunt.py:51 ../cfg_phone_hunt.py:54
 msgid "Repeat?"
-msgstr ""
+msgstr "Répète ?"
 
 #: ../cfg_phone_hunt.py:43
 msgid "Phone #2"
-msgstr ""
+msgstr "Téléphone #2"
 
 #: ../cfg_phone_hunt.py:46
 msgid "Phone #3"
-msgstr ""
+msgstr "Téléphone #3"
 
 #: ../cfg_phone_hunt.py:49
 msgid "Phone #4"
-msgstr ""
+msgstr "Téléphone #4"
 
 #: ../cfg_phone_hunt.py:52
 msgid "Phone #5"
-msgstr ""
+msgstr "Téléphone #5"
 
-#: ../configlets.py:612
+#: ../configlets.py:612 ../configlets.py:614
 msgid "Extension already in use on that PBX"
-msgstr ""
+msgstr "L'extension est déja utilisée sur ce PBX"
 
 #: ../page_admin_systemstate.ptl:26
 msgid "System Status"
-msgstr ""
+msgstr "Status du système"
 
 #: ../page_admin_systemstate.ptl:27
 msgid "System information of your machine"
-msgstr ""
+msgstr "Information système de votre machine"
 
 #: ../page_admin_systemstate.ptl:41
 msgid "System"
-msgstr ""
+msgstr "Système"
 
 #: ../page_admin_systemstate.ptl:45
 msgid "Load Average in the last minute"
-msgstr ""
+msgstr "Charge moyenne dans la dernière minute"
 
 #: ../page_admin_systemstate.ptl:46
 msgid "Load Average in the last 5 minutes"
-msgstr ""
+msgstr "Charge moyenne dans les 5 dernières minutes"
 
 #: ../page_admin_systemstate.ptl:55
 msgid "Processor"
-msgstr ""
+msgstr "Processeur"
 
 #: ../page_admin_systemstate.ptl:57
 msgid "Frequency"
-msgstr ""
+msgstr "Fréquence"
 
 #: ../page_admin_systemstate.ptl:62
 msgid "Total Memory"
-msgstr ""
+msgstr "Mémoire totale"
 
 #: ../page_admin_systemstate.ptl:64
 msgid "Free Memory"
-msgstr ""
+msgstr "Mémoire libre"
 
 #: ../page_admin_systemstate.ptl:68
 msgid "Disk Usage"
-msgstr ""
+msgstr "Utilisation disque"
 
 #: ../page_admin_systemstate.ptl:71
 msgid "Device"
-msgstr ""
+msgstr "Périphérique"
 
 #: ../page_admin_systemstate.ptl:72
 msgid "FileSystem type"
-msgstr ""
+msgstr "Type du système de fichier"
 
 #: ../page_admin_systemstate.ptl:73
 msgid "Total Size"
-msgstr ""
+msgstr "Taille totale"
 
 #: ../page_admin_systemstate.ptl:74
 msgid "Used"
-msgstr ""
+msgstr "Utilisé"
 
 #: ../page_admin_systemstate.ptl:75
 msgid "Available"
-msgstr ""
+msgstr "Disponible"
 
 #: ../page_admin_systemstate.ptl:76
 msgid "Use percentage"
-msgstr ""
+msgstr "Pourcentage utilisé"
 
 #: ../page_admin_systemstate.ptl:77
 msgid "Mount point"
-msgstr ""
+msgstr "Point de montage"
 
 #: ../page_admin_viewconf.ptl:29
 msgid "Save/View Configuration"
-msgstr ""
+msgstr "Sauve/Visualise la configuration"
 
 #: ../page_admin_viewconf.ptl:30
 msgid "Save and show Asterisk configuration files"
-msgstr ""
+msgstr "Sauve et affiche les fichiers de configuration d'Asterisk"
 
 #: ../page_stats_dialouts.ptl:131 ../page_stats_phone.ptl:138
 msgid "Other Calls"
-msgstr ""
+msgstr "Autres appels"
 
 #: ../page_stats_trunks.ptl:136
 msgid "Internal"
-msgstr ""
+msgstr "Interne"
 
 #: ../cfg_opt_music.py:39
 msgid "Please specify an application"
-msgstr ""
+msgstr "Svp spécifiez une application"

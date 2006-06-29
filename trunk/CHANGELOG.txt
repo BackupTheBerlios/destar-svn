@@ -1,3 +1,6 @@
+2006-06-29
+* Updated french translation. Applied patch #1171. by alenvers
+
 2006-06-23
 * Added reportlab pdf exporting example to misc/ thanks to Ian Esper.
 * configlets.py: fixed configlet_tree warning. Closes Bug #7980.
