@@ -971,7 +971,7 @@ class CfgPhone(Cfg):
 			pbx = "phones"
 		c.append("include=>%s" % pbx)
 		c.appendExten("i","Playback(privacy-invalid)")
-		c.appendExten("_**XX","Set(dest=${DB( QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:2} )})", e="Playback(privacy-invalid)")
+		c.appendExten("_**XX","Set(dest=${DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:2})})", e="Playback(privacy-invalid)")
 		c.appendExten("_**XX","Goto(${dest},1)")
 		try:
 			timeoutvalue = not self.timeout and "0" or "1"

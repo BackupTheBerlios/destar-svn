@@ -1,3 +1,7 @@
+2006-07-07
+* Macro dial-std-exten adjustments (asterisk 1.2 stuff)
+* Some DB typos fixed
+
 2006-06-29
 * Updated french translation. Applied patch #1171. by alenvers
 
