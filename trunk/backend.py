@@ -207,7 +207,7 @@ def initializeAsteriskConfig():
 	c.append("exten=s,13,Goto(testvmu)")
 
 	c.append("; Dial result was 'busy'")
-	c.append("exten=s,13,Goto(testvmb)")
+	c.append("exten=s,110,Goto(testvmb)")
 
 	c.append("exten=s,n(fw),Goto(${ARG2},${fw_ext},1)")
 

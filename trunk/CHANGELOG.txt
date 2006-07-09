@@ -1,3 +1,6 @@
+2006-07-09
+* Fixed priority in macro-dial-std-exten
+
 2006-07-07
 * Macro dial-std-exten adjustments (asterisk 1.2 stuff)
 * Some DB typos fixed
