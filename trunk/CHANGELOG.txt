@@ -1,3 +1,6 @@
+2006-07-10
+* DigitTimeout is deprecated on *-1.2
+
 2006-07-09
 * Fixed priority in macro-dial-std-exten
 

@@ -132,7 +132,7 @@ class CfgIVRAutoatt(CfgIVR):
 			pbx = "phones"
 		s.append("include=%s" % pbx)
 		s.appendExten("s","Wait(1)")
-		s.appendExten("s","DigitTimeout,2.3")
+		s.appendExten("s","Set(TIMEOUT(digit)=2.3")
 		if self.moh:
 			s.appendExten("s","Setmusiconhold(%s)" % self.moh)
 			s.appendExten("s","Set(DIAL_OPTIONS=m)")
