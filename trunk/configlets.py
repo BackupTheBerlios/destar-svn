@@ -849,9 +849,9 @@ class CfgTrunk(Cfg):
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
+				c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone))
 			except AttributeError:
 				pass
-			c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone))
 		if self.contextin == 'ivr' and self.ivr:
 			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
 		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name)
@@ -862,9 +862,9 @@ class CfgTrunk(Cfg):
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
+				c.appendExten("s", "Goto(%s,%s,1)" % (pbx,self.phone))
 			except AttributeError:
 				pass
-			c.appendExten("s", "Goto(%s,%s,1)" % (pbx,self.phone))
 		if self.contextin == 'ivr' and self.ivr:
 			c.appendExten("s", "Goto(%s,s,1)" % self.ivr)
 
