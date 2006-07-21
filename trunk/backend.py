@@ -176,7 +176,7 @@ def initializeAsteriskConfig():
 	c.append(";")
 	c.append("; Macro to dial a standard local extension")
 	c.append(";")
-	c.append("; format: Macro(stdexten,dest,context,voicebox 1/0,ext,pbx)")
+	c.append("; format: Macro(stdexten,dest,voicebox 1/0,ext,pbx)")
 	c.append(";")
 	c.setSection("macro-dial-std-exten")
 	c.append(";")
@@ -186,7 +186,7 @@ def initializeAsteriskConfig():
 
 	c.append("; no CFIM")
 	c.append("exten=s,3,Set(temp=${DB(DND/${ARG5}/${ARG4})})")
-	c.append('exten=s,4,GotoIf($["${temp}" = "1"]?testvmu)')
+	c.append('exten=s,4,GotoIf($["${temp}" = "True"]?testvmu)')
 
 	c.append("; no DND")
 	c.append("exten=s,5,Set(dsec=${DB(DSEC/${ARG5}/${ARG4})})")

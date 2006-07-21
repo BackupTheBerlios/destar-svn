@@ -1,3 +1,7 @@
+2006-07-21
+* AstDB adjustments
+* Fixed bug #8147
+
 2006-07-20
 * configlets.py: fixed small bug on an unreferenced variable.
 * deleted static/page.html since it's not needed anymore.

@@ -54,7 +54,7 @@ class CfgAppDND(CfgApp):
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten("%s" % self.set, "Set(DB(DND/%s/${CALLERIDNUM})=1)" % self.pbx)
+		c.appendExten("%s" % self.set, "Set(DB(DND/%s/${CALLERIDNUM})=True)" % self.pbx)
 		c.appendExten("%s" % self.set, "Playback(do-not-disturb)")
 		c.appendExten("%s" % self.set, "Hangup")
 		c.appendExten("%s" % self.unset, "DBdel(DND/%s/${CALLERIDNUM})" % self.pbx)

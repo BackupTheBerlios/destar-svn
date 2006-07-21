@@ -42,10 +42,10 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 	form = Form()
 
 #	vm   = int(manager.getVar('VM',   phone.ext, True))
-	dnd  = manager.getVar('DND',  phone.ext, False)
-	dsec = int(manager.getVar('DSEC', phone.ext, 45))
-	cfim = manager.getVar('CFIM', phone.ext, '')
-	cfbs = manager.getVar('CFBS', phone.ext, '')
+	dnd  = manager.getVar('DND/%s' % phone.pbx,  phone.ext, False)
+	dsec = int(manager.getVar('DSEC/%s' % phone.pbx, phone.ext, 45))
+	cfim = manager.getVar('CFIM/%s' % phone.pbx, phone.ext, '')
+	cfbs = manager.getVar('CFBS/%s' % phone.pbx, phone.ext, '')
 
 	phones = backend.getChoice("CfgPhone")
 	if type(phones) == types.FunctionType:
@@ -70,15 +70,15 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 	if not form.is_submitted() or form.has_errors():
 		return form.render()
 
-#	manager.setVar('VM',   phone.ext, form['vm'])
-	manager.setVar('DND',  phone.ext, form['dnd'])
-	manager.setVar('DSEC', phone.ext, form['dsec'])
-	manager.setVar('CFIM', phone.ext, form['cfim'] or '')
-	manager.setVar('CFBS', phone.ext, form['cfbs'] or '')
-	manager.setVar('DND',  phone.name, form['dnd'])
-	manager.setVar('DSEC', phone.name, form['dsec'])
-	manager.setVar('CFIM', phone.name, form['cfim'] or '')
-	manager.setVar('CFBS', phone.name, form['cfbs'] or '')
+#	manager.setVar('VM/%s' % phone.pbx,   phone.ext, form['vm'])
+	manager.setVar('DND/%s' % phone.pbx,  phone.ext, form['dnd'])
+	manager.setVar('DSEC/%s' % phone.pbx, phone.ext, form['dsec'])
+	manager.setVar('CFIM/%s' % phone.pbx, phone.ext, form['cfim'] or '')
+	manager.setVar('CFBS/%s' % phone.pbx, phone.ext, form['cfbs'] or '')
+	manager.setVar('DND/%s' % phone.pbx,  phone.name, form['dnd'])
+	manager.setVar('DSEC/%s' % phone.pbx, phone.name, form['dsec'])
+	manager.setVar('CFIM/%s' % phone.pbx, phone.name, form['cfim'] or '')
+	manager.setVar('CFBS/%s' % phone.pbx, phone.name, form['cfbs'] or '')
 
 	if form["pin"]:
 		phone.pin = form["pin"]
