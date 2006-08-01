@@ -235,6 +235,7 @@ def needModule(mod):
 				"app_dial", # needs res_musiconhold, res_parking
 				"app_macro",
 				"app_playback",
+				"app_cdr",
 				],
 			preload = [],
 			)

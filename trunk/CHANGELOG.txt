@@ -1,3 +1,6 @@
+2006-08-01
+* Load app_cdr module (NoCDR() application) at startup
+
 2006-07-21
 * AstDB adjustments
 * Fixed bug #8147
