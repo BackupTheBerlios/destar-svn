@@ -80,4 +80,4 @@ class CfgPhoneExtension(CfgPhone):
 	def createAsteriskConfig(self):
 		ext = AstConf("extensions.conf")
 		ext.setSection(self.pbx)
-		ext.appendExten(self.ext, "Goto(%s)" % self.phone)
+		ext.appendExten(self.ext, "Goto(%s,1)" % self.phone)
