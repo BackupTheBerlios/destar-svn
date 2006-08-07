@@ -148,6 +148,17 @@ class CfgPhoneQueue(CfgPhone):
 		if self.announce and not self.announcefrequency:
 			return ('announcefrequency',_("You should select a frequency"))
 
+	def isAddable(self):
+		"We can only add this object if we have at least one pbx defined."
+
+		# BUG: it does somehow not work to simply write for obj in config_entries,
+		# despite the "from configlets import *" above
+		import configlets
+		if len(configlets.configlet_tree.getConfigletsByName('CfgOptPBX')) > 0:
+			return True
+		return False
+	isAddable = classmethod(isAddable)
+
 		
 	def createAsteriskConfig(self):
 		needModule("res_monitor")

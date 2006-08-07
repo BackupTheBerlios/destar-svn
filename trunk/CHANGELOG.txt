@@ -1,4 +1,5 @@
 2006-08-06
+* Added isAddable() method in all cfg_phone_*.py
 * Fixed bug #8303, applied patch #1273, by hholzer
 * cfg_phone_ext.py: the extension in Goto() was missed 
 

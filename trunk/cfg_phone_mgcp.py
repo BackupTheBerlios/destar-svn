@@ -169,6 +169,17 @@ class CfgPhoneMGCP(CfgPhone):
 				dependent_obj = DependentObject(self, dep)
 				obj.dependent_objs.append(dependent_obj)
 
+	def isAddable(self):
+		"We can only add this object if we have at least one pbx defined."
+
+		# BUG: it does somehow not work to simply write for obj in config_entries,
+		# despite the "from configlets import *" above
+		import configlets
+		if len(configlets.configlet_tree.getConfigletsByName('CfgOptPBX')) > 0:
+			return True
+		return False
+	isAddable = classmethod(isAddable)
+
 	def createAsteriskConfig(self):
 		needModule("chan_mgcp")
 

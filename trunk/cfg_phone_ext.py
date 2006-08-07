@@ -66,9 +66,10 @@ class CfgPhoneExtension(CfgPhone):
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
-		for obj in configlets.configlet_tree:
-			if obj.groupName == 'Phones':
-				return True
+		if len(configlets.configlet_tree.getConfigletsByName('CfgOptPBX')) > 0:
+			for obj in configlets.configlet_tree:
+				if obj.groupName == 'Phones':
+					return True
 		return False
 	isAddable = classmethod(isAddable)
 
