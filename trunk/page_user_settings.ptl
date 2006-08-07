@@ -46,6 +46,7 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 	dsec = int(manager.getVar('DSEC/%s' % phone.pbx, phone.ext, 45))
 	cfim = manager.getVar('CFIM/%s' % phone.pbx, phone.ext, '')
 	cfbs = manager.getVar('CFBS/%s' % phone.pbx, phone.ext, '')
+	cfto = manager.getVar('CFTO/%s' % phone.pbx, phone.ext, '')
 
 	phones = backend.getChoice("CfgPhone")
 	if type(phones) == types.FunctionType:
@@ -55,7 +56,8 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 
 	form.add(CheckboxWidget,     "dnd",  dnd,          title=_("Enable 'do not disturb'"))
 	form.add(StringWidget, 	     "cfim", cfim, title=_("Immediate call forwarding to"))
-	form.add(StringWidget,       "cfbs", cfbs, title=_("Forward call when busy/unavailable to"))
+	form.add(StringWidget,       "cfbs", cfbs, title=_("Forward call when busy to"))
+	form.add(StringWidget,       "cfto", cfto, title=_("Forward call when timeout/unavailable to"))
 	form.add(IntWidget,          "dsec", dsec,         title=_("Seconds of incoming ring time"), maxlength=3, size=3)
 #	form.add(CheckboxWidget,     "vm",   vm,           title=_("Use voice mailbox"))
 	form.add(StringWidget,       "pin", phone.pin, title=_("Voicemail pin"), len=10)
@@ -75,10 +77,7 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 	manager.setVar('DSEC/%s' % phone.pbx, phone.ext, form['dsec'])
 	manager.setVar('CFIM/%s' % phone.pbx, phone.ext, form['cfim'] or '')
 	manager.setVar('CFBS/%s' % phone.pbx, phone.ext, form['cfbs'] or '')
-	manager.setVar('DND/%s' % phone.pbx,  phone.name, form['dnd'])
-	manager.setVar('DSEC/%s' % phone.pbx, phone.name, form['dsec'])
-	manager.setVar('CFIM/%s' % phone.pbx, phone.name, form['cfim'] or '')
-	manager.setVar('CFBS/%s' % phone.pbx, phone.name, form['cfbs'] or '')
+	manager.setVar('CFTO/%s' % phone.pbx, phone.ext, form['cfto'] or '')
 
 	if form["pin"]:
 		phone.pin = form["pin"]

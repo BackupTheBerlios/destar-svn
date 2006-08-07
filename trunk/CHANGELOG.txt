@@ -1,3 +1,7 @@
+2006-08-06
+* Fixed bug #8303, applied patch #1273, by hholzer
+* cfg_phone_ext.py: the extension in Goto() was missed 
+
 2006-08-01
 * Load app_cdr module (NoCDR() application) at startup
 

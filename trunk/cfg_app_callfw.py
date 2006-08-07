@@ -30,7 +30,8 @@ class CfgAppCallFW(CfgApp):
 	def createVariables(self):
 		self.variables = [ 
 			VarType("pbx",	  title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
-			VarType("type", title=_("Type"), type="choice", options=( ("CFIM", _("Call Forwarding Unconditional")), ("CFBS",_("Call Forwarding if Busy/Unavailable")) )),
+			VarType("type", title=_("Type"), type="choice", options=( ("CFIM", _("Call Forwarding Unconditional")), \
+			("CFBS", _("Call Forwarding if Busy")), ("CFTO", _("Call Forwarding if Timeout/Unavailable")) )),
 			VarType("set",      title=_("Setting preffix"), len=6, default="*21"),
 			VarType("ext",   title=_("Unsetting extension"), len=6, default="*22")
 		       	]
@@ -49,6 +50,8 @@ class CfgAppCallFW(CfgApp):
 		c.appendExten("_%sX." % self.set, "Set(DB(%s/%s/${CALLERIDNUM})=${EXTEN:%d})" % (self.type, self.pbx,len(self.set)))
 		if self.type == "CFIM":
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-unconditional)")
+		elif self.type == "CFTO":
+			c.appendExten("_%sX." % self.set, "Playback(call-fwd-no-ans)")
 		else:
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-on-busy)")
 		c.appendExten("_%sX." % self.set, "Hangup")
