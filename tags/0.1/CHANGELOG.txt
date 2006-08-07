@@ -1,3 +1,6 @@
+2006-08-06
+* cfg_phone_ext.py: the extension in Goto() was missed 
+
 2006-02-12
 * configlets.py: createPythonConfig() doesn't writes unnecessary lines anymore. Hope.
 
