@@ -148,8 +148,6 @@ def initializeAsteriskConfig():
 	c.append("defaultexpirey=3600")
 	c.append("disallow=all")
 
-
-	needModule("chan_iax2")
 	c = AstConf("iax.conf")
 	c.append("language=%s" % getSetting('language', 'en'))
 

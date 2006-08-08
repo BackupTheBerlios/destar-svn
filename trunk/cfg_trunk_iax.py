@@ -31,8 +31,8 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 	
 	def createVariables(self):
 		self.variables	= [
-		VarType("name",      title=_("Name"), len=15, default="iaxtrunk"),
-		VarType("host",      title=_("IAX host"), len=25),
+		VarType("name",      title=_("Name"), len=30, default="iaxtrunk"),
+		VarType("host",      title=_("IAX host"), len=80),
 		VarType("bandwidth",  title=_("Bandwith"), type="choice", len=25,
 				options=[('low',_("Low")),('high', _("High"))]
 			),
@@ -40,9 +40,9 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		VarType("authLabel",   title=_("Authentication"), type="label"),
 		VarType("auth",      title=_("Authentication Method"), type="radio", default="plain",
 		                               options=[('plain',_("Plain text")),('rsa',_("RSA")),('md5',_("MD5"))]),
-		VarType("pw",    title=_("Password"), hint=_("For 'Plain' or 'MD5' only"), len=15, optional=True),
-		VarType("inkeys",    title=_("Public key from remote server"), hint=_("For 'RSA' only"), len=15, optional=True),
-		VarType("outkey",    title=_("Private local key"), hint=_("For 'RSA' only"), len=15, optional=True),
+		VarType("pw",    title=_("Password"), hint=_("For 'Plain' or 'MD5' only"), len=80, optional=True),
+		VarType("inkeys",    title=_("Public key from remote server"), hint=_("For 'RSA' only"), len=80, optional=True),
+		VarType("outkey",    title=_("Private local key"), hint=_("For 'RSA' only"), len=80, optional=True),
 
                 VarType("trunk",      title=_("Enable trunking?"), type="bool", hide=True),
 
@@ -56,7 +56,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		                               options=getChoice("CfgPhone")),
 		VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
 		                               options=getChoice("CfgIVR")),
-		VarType("clid",       title=_("Change Caller*Id to:"), len=25, optional=True),
+		VarType("clid",       title=_("Change Caller*Id to:"), len=40, optional=True),
 		VarType("dial", hide=True, len=50),
 		]
 	
@@ -66,8 +66,11 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			return res
 
 	def createAsteriskConfig(self):
+		needModule("res_crypto")
+		needModule("chan_iax2")
+
 		#Dial part to use on dialout macro
-		self.dial = "IAX2/%s/${ARG1}" % self.host
+		self.dial = "IAX2/%s/${ARG1}" % self.name
 		#What to do with incoming calls
 		self.createIncomingContext()
 		

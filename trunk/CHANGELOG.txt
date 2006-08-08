@@ -1,3 +1,7 @@
+2006-08-08
+* Changed some field lengths in cfg_trunk_iax.py
+* Fixed bug #8171, applied patch #1272, by hholzer
+
 2006-08-06
 * Added isAddable() method in all cfg_phone_*.py
 * Fixed bug #8303, applied patch #1273, by hholzer
