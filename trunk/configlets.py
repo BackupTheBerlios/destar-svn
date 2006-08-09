@@ -932,6 +932,15 @@ class CfgPhone(Cfg):
 		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.name, pbx, self.ext)
 
+	def createHintConfig(self):
+		extensions = AstConf("extensions.conf")
+        	try:
+            		pbx = self.pbx
+        	except AttributeError:
+            		pbx = "phones"
+        	extensions.setSection(pbx)
+		extensions.append("exten=%s,hint,%s/%s" % (self.ext, self.technology, self.name))
+
 	def createVoicemailConfig(self, conf):
 		if self.ext and self.usevm:
 			needModule("res_adsi")

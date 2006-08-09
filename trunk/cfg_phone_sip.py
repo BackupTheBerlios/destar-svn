@@ -225,7 +225,14 @@ class CfgPhoneSip(CfgPhone):
 		if self.nat:
 			sip.append("nat=yes")
 
+        	try:
+            		pbx = self.pbx
+        	except AttributeError:
+            		pbx = "phones"
+		sip.append("subscribecontext=%s" % pbx)
+
 		self.createExtensionConfig()
+		self.createHintConfig()
 		self.createVoicemailConfig(sip)
 		self.createOutgoingContext()
 		self.createPanelConfig()
