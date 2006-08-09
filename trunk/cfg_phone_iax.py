@@ -103,7 +103,7 @@ class CfgPhoneIax(CfgPhone):
 					len=6),
 
 			VarType("notransfer",
-					title=_("Disable IAX transfer"),
+					title=_("Skip asterisk media path?"),
 					type="bool"),
 	
 			VarType("Outbound",
@@ -196,7 +196,8 @@ class CfgPhoneIax(CfgPhone):
 			iax.append('callgroup=%s' % self.callgroup)
 			iax.append('pickupgroup=%s' % self.callgroup)
 
-		iax.append("notransfer=%s" % self.notransfer)
+		if not self.notransfer:
+			iax.append("notransfer=yes")
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)
