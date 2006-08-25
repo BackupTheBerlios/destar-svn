@@ -997,11 +997,28 @@ class CfgPhone(Cfg):
 						c.appendExten("%s" % obj.pattern,"Set(CDR(dialout)=%s)" % (obj.name))
 						if self.calleridnum:
 							c.appendExten("%s" % obj.pattern,"Set(CALLERID(number)=%s)" % self.calleridnum)
-						secret = self.__getitem__("dialout_%s_secret" % obj.name)
+							
+						if self.monitor:
+							needModule("app_mixmonitor")	
+							options = ""
+							if self.monitorappend:
+								options = 'a' 
+							if self.monitorwhenbridged:
+								options = options+'b'
+							if self.heardvol == self.spokenvol:
+								options = options+'W(%s)' % (self.heardvol)
+							else:          
+								options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
+							if self.monitorfilename:
+								c.appendExten("%s" % obj.pattern, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options))
+							else:
+								c.appendExten("%s" % obj.pattern, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options))
+						
+						secret = self.__getitem__("dialout_%s_secret" % obj.name)							
 						if secret:
-                                                        c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
-                                                else:
-                                                        c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue))
+							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s}.%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
+						else:
+							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue))
 				except KeyError:
 					pass
 	
