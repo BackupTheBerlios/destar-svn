@@ -1,10 +1,13 @@
+2006-08-25
+* Closed [ Bug #8010 ] tests.py needs the executable flags.
+
 2006-08-09
 * Fixed media path issue in IAX phones.
 
 2006-08-08
 * Added hint support, applied patch #1291, by hholzer
 * Changed some field lengths in cfg_trunk_iax.py
-* Fixed bug #8171, applied patch #1272, by hholzer
+* Fixed bug #8171, applied patch #1232, by hholzer
 
 2006-08-06
 * Added isAddable() method in all cfg_phone_*.py
