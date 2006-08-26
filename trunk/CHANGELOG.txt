@@ -1,6 +1,8 @@
 2006-08-25
 * Closed [ Bug #8010 ] tests.py needs the executable flags.
 * Applied [ Patch #1152 ] Mixmonitor outgoing calls, by juanmanuel.
+* Better python/quixote versions checking to allow python2.3 users use quixote-1.0
+  (and make dasenjo happy).
 
 2006-08-09
 * Fixed media path issue in IAX phones.
