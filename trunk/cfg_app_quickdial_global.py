@@ -31,7 +31,7 @@ class CfgAppGlobalQuickDial(CfgApp):
 		self.variables   = [
 				VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 				VarType("pin", title=_("Password"), len=20, optional=True),
-				VarType("set",      title=_("Setting prefix"), hint=_("don't use ** because it is for private quick dial list"), len=6, default="*9"),
+				VarType("set",      title=_("Setting prefix"), len=6, default="*9"),
 				VarType("ext",   title=_("Unsetting prefix"), len=6, default="#9#")
 		       ]
 		self.dependencies = [ DepType("pbx", 

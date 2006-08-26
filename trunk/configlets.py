@@ -981,8 +981,6 @@ class CfgPhone(Cfg):
 			pbx = "phones"
 		c.append("include=>%s" % pbx)
 		c.appendExten("i","Playback(privacy-invalid)")
-		c.appendExten("_**XX","Set(dest=${DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:2})})", e="Playback(privacy-invalid)")
-		c.appendExten("_**XX","Goto(${dest},1)")
 		try:
 			timeoutvalue = not self.timeout and "0" or "1"
 		except AttributeError:
@@ -1021,6 +1019,10 @@ class CfgPhone(Cfg):
 							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue))
 				except KeyError:
 					pass
+			elif obj.__class__.__name__ == 'CfgAppPhoneQuickDial':
+				prefix = obj.dialprefix
+				c.appendExten("_%sXX" % prefix,"Set(dest=${DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})})" % len(prefix), e="Playback(privacy-invalid)")
+				c.appendExten("_%sXX" % prefix,"Goto(${dest},1)")
 	
 	def createPanelConfig(self):
 		try:

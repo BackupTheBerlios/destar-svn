@@ -24,14 +24,15 @@ from configlets import *
 class CfgAppPhoneQuickDial(CfgApp):
 
 	shortName   = _("Private Quick Dial List")
-	description = _("Extensions to add/remove from personal quick dial list. The add extension will be of the form prefix+2_digits_key+*+final_destination. The remove extension will be of the form prefix+2_digits_key. The personal quick dial list works for all extensions, by dialing **+2_digits_key and only if the extension has an assigned dialout entry which pattern matches the final destination.")
-	newObjectTitle = _("New extensions to add/remove from personal quick dial list")
+	description = _("Extensions to add/remove from personal quick dial list. The add extension will be of the form prefix+2_digits_key+*+final_destination. The remove extension will be of the form prefix+2_digits_key. The personal quick dial list works for all extensions, by dialing dial_prefix+2_digits_key and only if the extension has an assigned dialout entry which pattern matches the final destination.")
+	newObjectTitle = _("New extensions to add/remove/access personal quick dial list")
 	
 	def createVariables(self):
 		self.variables   = [
 			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
-			VarType("set",      title=_("Setting prefix"), hint=_("don't use ** because it is for accesing the quick dial list"), len=6, default="*7"),
-			VarType("ext",   title=_("Unsetting prefix"), len=6, default="#7#")
+			VarType("set",      title=_("Setting prefix"), len=6, default="*7"),
+			VarType("ext",   title=_("Unsetting prefix"), len=6, default="#7#"),
+			VarType("dialprefix",   title=_("Dial prefix"), len=6, default="**"),
 		       ]
 		self.dependencies = [ DepType("pbx", 
 					type="hard",
