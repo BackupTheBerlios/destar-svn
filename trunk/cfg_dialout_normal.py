@@ -38,7 +38,8 @@ class CfgDialoutNormal(CfgDialout):
 		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=300),
 		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
 		VarType("qlookup", title=_("Search on quick dial list?"), type="bool"),
-		
+
+		VarType("dis_transfer", title=_("Disallow calling user transfer?"), type="bool"),
 		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True)
 		]
 
@@ -82,6 +83,10 @@ class CfgDialoutNormal(CfgDialout):
 		c.setSection("macro-%s" % self.name)
 		c.append("; params: exten,secret,timeout")
 		needModule("app_authenticate")
+		if self.dis_transfer:
+		       opts="t"
+		else:
+		       opts="Tt"
 		if self.qlookup:
 			c.appendExten("s","Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})",e="Goto(3)")
 			c.appendExten("s",'Set(ARG1=${dest})')
@@ -89,17 +94,17 @@ class CfgDialoutNormal(CfgDialout):
 			c.appendExten("s","Authenticate(${ARG2})")
 			c.appendExten("s","GotoIf($[${ARG3} = 0]?6:9)")
 			c.appendExten("s",'Set(timeout=0)')
-			c.appendExten("s",'Set(options=Tt)')
+			c.appendExten("s",'Set(options=%s)' % opts)
 			c.appendExten("s",'Goto(11)')
 		else:
 			c.appendExten("s","GotoIf($[${ARG2} = n]?3:2)")
 			c.appendExten("s","Authenticate(${ARG2})")
 			c.appendExten("s","GotoIf($[${ARG3} = 0]?4:7)")
 			c.appendExten("s",'Set(timeout=0)')
-			c.appendExten("s",'Set(options=Tt)')
+			c.appendExten("s",'Set(options=%s)' % opts)
 			c.appendExten("s",'Goto(9)')
 		c.appendExten("s",'Set(timeout=%d)' % self.maxtime)
-		c.appendExten("s",'Set(options=TtL(%d000:10000))' % self.maxtime)
+		c.appendExten("s",'Set(options=%sL(%d000:10000))' % (opts,self.maxtime))
 		#TODO: add this trunks sorted by price and with a default one.
 		import configlets
 		for obj in configlets.configlet_tree['Trunks']:
