@@ -16,27 +16,33 @@
 .\" .sp <n>    insert n+1 empty lines
 .\" for manpage-specific macros, see man(7)
 .SH NAME
-destar \- run the destar webserver interface
+destar \- Asterisk management interface
 .SH SYNOPSIS
-\fBdestar\fP [\fB-d\fP|\fB--daemonize\fP] [-\fBp\fP|--\fBpid\fP=\fIPIDFILE\fP]
+\fBdestar\fP [\fB-d\fP|\fB--daemonize\fP] [-\fBp\fP|--\fBpid\fP=\fIPIDFILE\fP] [-\fBr\fP|--\fBport\fP=\fIPORT\fP]
+
+\fBdestar\fP \fB-b\fP|\fB--backend\fP
 
 \fBdestar\fP \fB-h\fp|\fB--help\fP
 
 \fBdestar\fP \fB-v\fp|\fB--version\fP
 .SH DESCRIPTION
-.B destar
-is a daemon for configuring and controling Asterisk.
 
 \fBdestar\fP is a web-based interface for configuring and controlling
-Asterisk(8). It will also use the Flash-Operator Panel (op-panel(8),
+Asterisk(8). It will also use the Flash-Operator Panel (op-panel(8)),
 if installed.
+
 .SH OPTIONS
 .B -d --daemonize
 .RS
-Run as daemon: fork into background, set userid to 
-.I asterisk
-and redirect standard output and standard error to 
+Run as daemon: fork into background, and redirect standard output and standard error to 
 /var/log/asterisk/destar.log and /var/log/asterisk/destar.log respectively.
+.RE
+
+.B -b --backend
+.RS
+Run in backend mode, reading destar data file
+.B /etc/asterisk/destar_cfg.py
+ and creating Asterisk configuration files without starting the web interface.
 .RE
 
 .B -v --version
@@ -50,6 +56,12 @@ Print version information and exit
 When running as daemon, write the pid of the process to \fIPIDFILE\fP
 instead of the default
 .B /var/run/destar.pid
+.RE
+
+.B -r --port
+.I PORT
+.RS
+Run on specified \fIPORT\fP instead of the default 8080
 .RE
 
 .B -h --help
@@ -89,6 +101,13 @@ Standard output of daemon when in daemon mode.
 .B /var/log/asterisk/destar.err
 .RS
 Standard error of daemon when in daemon mode.
+.RE
+
+.B /etc/asterisk/destar_cfg.py
+.RS
+Destar data file. Can be writen manually and applied using the 
+.B -b
+option
 .RE
 
 .SH SEE ALSO
