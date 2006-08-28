@@ -240,7 +240,10 @@ class CfgPhoneSip(CfgPhone):
 	def createDependencies(self):
 		for dep in self.dependencies:
 			if self.__dict__.has_key(dep.name):
-				obj_name = dep.name[8:] # get the name after "dialout_"
+				if dep.name.startswith('dialout_'):
+					obj_name = dep.name[8:] # get the name after "dialout_"
+				else:
+					obj_name = self.__dict__[dep.name]
 				import configlets
 				obj = configlets.configlet_tree.getConfigletByName(obj_name)
 				if obj is None:
