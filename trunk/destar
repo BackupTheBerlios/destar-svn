@@ -59,11 +59,12 @@ def print_usage():
 	print _("  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID")
 	print _("  -d | --daemonize: run in the background")
 	print _("  -r <port> | --port=<port>: run on port <port> (default: 8080)")
+	print _("  -b | --backend: run on backend mode")
 
 
 try:
-	opts,args = getopt.getopt(sys.argv[1:],'dhpr:v', 
-		['daemonize','help','pid=', 'port=', 'version'])
+	opts,args = getopt.getopt(sys.argv[1:],'dhpr:vb', 
+		['daemonize','help','pid=', 'port=', 'version', 'backend'])
 except getopt.GetoptError:
 	print _("DeStar: Command-line parsing error. Aborting.")
 	print_usage()
@@ -81,6 +82,13 @@ for opt,val in opts:
 		rport = val
 	if opt in ('-v', '--version'):
 		print_version()
+		sys.exit(0)
+	if opt in ('-b', '--backend'):
+		import backend
+		backend.loadPythonConfig()
+		backend.createPythonConfig()
+		backend.createAsteriskConfig()
+		backend.writeAsteriskConfig()
 		sys.exit(0)
 
 # Validate parameters to give better errors:
