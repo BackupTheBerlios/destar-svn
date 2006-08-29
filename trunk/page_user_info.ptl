@@ -61,23 +61,23 @@ def _q_index [plain] (request):
 	":</p><ul>"
 	if request.session.level >= 0:
 		"<li>"
-		htmltext(_('access all public accessible info pages'))
+		htmltext(_('Access all public accessible info pages'))
 		"</li>"
 	if request.session.level >= 1 and request.session.phone:
 		"<li>"
-		htmltext(_('change your personal phone settings'))
+		htmltext(_('Change your personal phone settings'))
 		"</li>"
 	if request.session.level >= 2:
 		"<li>"
-		htmltext(_('change phone settings of other people'))
+		htmltext(_('Change phone settings of other people'))
 		"</li>"
 	if request.session.level >= 3:
 		"<li>"
-		htmltext(_('configure the PBX'))
+		htmltext(_('Configure the PBX'))
 		"</li>"
 	if request.session.level >= 4:
 		"<li>"
-		htmltext(_('access debug pages to help program DeStar'))
+		htmltext(_('Access debug pages to help program DeStar'))
 		"</li>"
 	"</ul><p>"
 	htmltext(_("Have fun!"))
