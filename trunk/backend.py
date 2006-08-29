@@ -26,7 +26,7 @@ import re
 
 DESTAR_CFG = "destar_cfg.py"
 CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
-
+ASTERISK_MODULES_DIR = os.getenv('ASTERISK_MODULES_DIR', default='/usr/lib/asterisk/modules')
 
 
 
@@ -354,40 +354,56 @@ def createAsteriskConfig():
 		if not isinstance(c, CfgOpt):
 			c.createAsteriskConfig()
 
+		
+	available_modules = []
+	missing_modules = []
+	for f in os.listdir(ASTERISK_MODULES_DIR):
+		if f.endswith('.so'): available_modules.append(f[:-3])
 	c = AstConf("modules.conf")
-	for m in c.modules.preload:
-		c.append("%s.so=yes" % m)
-
 	c.setSection("modules")
 	c.append("autoload=no")
+	for m in c.modules.preload:
+		c.append("preload=%s.so" % m)
+		if not m in available_modules: missing_modules.append(m)
+
 	for sect in ("pbx", "codec", "format", "res", "cdr", "chan", "app"):
 		for m in c.modules[sect]:
 			c.append("load=%s.so" % m)
+			if not m in available_modules: missing_modules.append(m)
 
 	# test if all config files are OK to be written or overwritten
-	res = []
+	tmp_conf = []
 	for fn,cnf in configlets.asterisk_configfiles:
 		# zaptel.conf can't have CONF_TAG at the top, so no need to search for it
-		if fn != 'zaptel.conf' and os.path.exists(cnf.fn):
+		if os.path.exists(cnf.fn):
 			f = open(cnf.fn, "r")
 			s = f.readline()
-			if s != configlets.CONF_TAG:
+			if s != configlets.CONF_TAG or fn == 'zaptel.conf':
 				# Backup file not created by us
 				try:
 					backupAsteriskConfig(fn)
 				except OSError:
 					print _("Error backing up %s") % fn 
-		res.append( (fn,cnf) )
+		tmp_conf.append( (fn,cnf) )
 	
+	res=[]
+	res.append(tmp_conf)
+	res.append(missing_modules)
+
+	return res 
+
+def writeAsteriskConfig():
 	# write all stuff out
+	res = True
 	for _fn,cnf in configlets.asterisk_configfiles:
 		if _fn == 'op_server.cfg' and panelutils.isConfigured() != 1:
 			continue
-		cnf.write()
-	
+		try:
+			cnf.write()
+		except OSError:
+			print _("Error writing up %s") % _fn 
+			res = False
 	return res
-
-
 
 
 def backupAsteriskConfig(fn):
@@ -736,6 +752,7 @@ for f in os.listdir(CONFIGLETS_DIR):
 
 
 
+
 ####################################################################################
 #
 # Test code if this file is called with 'python backend.py':
@@ -756,3 +773,8 @@ def reloadAsterisk():
 	if panelutils.isConfigured():
 		s += panelutils.restartPanelDaemon()
 	return "<br/>".join(s)
+
+def createDocs():
+	for c in configletsList():
+		cfg = globals()[c.__name__](autoAdd=False)
+		cfg.writeDoc()

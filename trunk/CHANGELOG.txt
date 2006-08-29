@@ -9,6 +9,9 @@
 * Removed depricated function "useContext()".
 * Small changes on cdrutils.py, Makefile, page_user_info.ptl.
 * Added sqlite tip on page_config.ptl.
+* Fixed '[Bug #8576] From Debian: #384630 breaks related software', by not writing asterisk files until the user clics on "Save all changes".
+* Fixed '[Bug #8577] From Debian: #384632 writes wrong configuration files', by getting list of codecs and formats from ASTERISK_MODULES_DIR, and warning the user about missing needed codecs.
+* Also changed 'preloaded' modules writing format on modules.conf
 
 2006-08-25
 * Closed [ Bug #8010 ] tests.py needs the executable flags.

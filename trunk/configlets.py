@@ -22,7 +22,9 @@ import sys, os, types, sha, binascii, time
 import panelutils
 
 CONF_DIR = "/etc/asterisk"
+DOC_DIR = os.getenv('DESTAR_DOC_DIR', default='/tmp/destar-doc')
 CONF_TAG = "; Automatically created by DESTAR\n"
+ASTERISK_MODULES_DIR = os.getenv('ASTERISK_MODULES_DIR', default='/usr/lib/asterisk/modules') 
 
 
 class AsteriskConfigFile:
@@ -71,6 +73,7 @@ class AsteriskConfigFile:
 					f.write(l)
 					f.write("\n")
 			self.dirty = False
+	
 
 	def setSection(self, sect):
 		"Select a config file section where append() etc will put their data"
@@ -189,46 +192,29 @@ generatePassword = __PasswordGeneratorClass()
 #########################################################################
 
 
-def needModule(mod):
-	#print "Need module", mod
+def needModule(mod,preload=False):
 	c = AstConf("modules.conf")
 	if not "modules" in dir(c):
-		#print "setting c.modules"
 		c.modules = Holder(
 			pbx =	[
 				"pbx_config",
 				"pbx_spool",
 				"pbx_functions",
 				],
-			# TODO: get list of codecs and format from /usr/lib/asterisk/modules
 			codec = [
-				"codec_a_mu",
-				"codec_adpcm",
-				"codec_alaw",
-				"codec_g726",
-				"codec_gsm",
-				"codec_ilbc",
-				"codec_lpc10",
-				"codec_ulaw",
 				],
 			format = [
-				"format_g726",
-				"format_g729",
-				"format_gsm",
-				"format_h263",
-				"format_ilbc",
-				"format_jpeg",
-				"format_pcm",
-				"format_vox",
-				"format_wav",
-				"format_wav_gsm",
 				],
 			res =	[ "res_musiconhold",
 				  "res_features" ],
-			cdr =	[ ],
+			cdr =	[	
+				  "cdr_sqlite3_custom",
+				  "cdr_csv", #To be used as a backup
+				],
 			chan =	[ ],
 			func =	[ 
 				"func_callerid",
+				"func_cdr",
 				],
 			app =	[
 				"app_db",
@@ -239,20 +225,25 @@ def needModule(mod):
 				],
 			preload = [],
 			)
-
-	sect = mod.split("_")[0]
-	#print "sect", sect
-	try:
-		sect = c.modules[sect]
-		#print "sect now:", sect
-	except KeyError:
-		# create new array
-		c.modules[sect] = [mod]
-		return
+		# Get list of codecs and formats from ASTERISK_MODULES_DIR
+		for f in os.listdir(ASTERISK_MODULES_DIR):
+			if f.startswith('codec_'): c.modules["codec"].append(f[:-3])
+			if f.startswith('format_'): c.modules["format"].append(f[:-3])
+	
+	if preload:
+		sect = c.modules["preload"]
+	else: 
+		sect = mod.split("_")[0]
+		try:
+			sect = c.modules[sect]
+		except KeyError:
+			# create new array
+			c.modules[sect] = [mod]
+			sect = c.modules[sect]
+			return
 	# sect contains now the entire section array
 	if not mod in sect:
 		sect.append(mod)
-	#print "sect finally", sect
 
 
 
@@ -677,6 +668,30 @@ class Cfg(Holder):
 		python_cfg.append("")
 		return python_cfg
 
+	def writeDoc(self, d=None):
+		"Write my documentation"
+		if not d:
+			d = DOC_DIR
+		fn = os.path.join(d, self.__class__.__name__)
+		f = open(fn, "w")
+		f.write(CONF_TAG)
+		f.write("\n")
+		f.write("Configuration Object: %s\n" % self.__class__.__name__)
+		if self.__dict__.has_key('groupName'):
+			f.write("Group: %s\n\n" % self.groupName)
+		f.write("Short Name: %s\n\n" % self.shortName)
+		if self.__dict__.has_key('description'):
+			f.write("Description: %s\n\n" % self.description)
+		f.write("Fields:\n\n")
+		for var in self.variables:
+			if var.title:
+				if var.type == "label":
+					f.write("\n[%s]" % var.title)
+				else:
+					f.write("*%s" % var.title)
+					if var.hint:
+						f.write("\n '-> %s" % var.hint)
+			f.write("\n")
 	
 
 #######################################################################

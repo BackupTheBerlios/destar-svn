@@ -26,8 +26,8 @@ import os, backend, configlets, panelutils
 
 
 _q_parent  = 'page_admin'
-_q_title   = _("Save/View Configuration")
-_q_desc    = _("Save and show Asterisk configuration files")
+_q_title   = _("View/Save Configuration")
+_q_desc    = _("Show and Save Asterisk configuration files")
 _q_link    = 'viewconf'
 _q_menupos = 90
 _q_level   = 3
@@ -77,30 +77,59 @@ def showHtmlConfig [plain] (configEntries):
 
 def _q_index [plain] (request):
 
-	configEntries = backend.createAsteriskConfig()
+	res = backend.createAsteriskConfig()
+	configEntries = res[0]
+	missingModules = res[1]
+
 	if not configEntries == []:
 		configEntries.sort()
 
 		showForm = Form(attrs={"id":"showForm"})
 		for file,cnf in configEntries:
 			showForm.add(CheckboxWidget, file, False, title=file)
-		showForm.add(SubmitWidget, '_show', _("Show"))
+		showForm.add(SubmitWidget, '_show', _("Show selected files"), render_br=False)
+		showForm.add(SubmitWidget, '_write', _("Save all changes"))
 
 		if not showForm.is_submitted():
 			header(_(_q_desc))
+			if not missingModules == []: showMissingModules(missingModules)
 			showForm.render()
 
 		elif showForm['_show']:
 			header(_("Asterisk configuration files"))
+			if not missingModules == []: showMissingModules(missingModules)
 			entries = []
 			for file,cnf in configEntries:
 				if showForm[file]:
 					entries.append( (file,cnf) )
 			showHtmlConfig(entries)
+			showForm.render()
+		elif showForm['_write']:
+			header(_("Save changes results"))
+			'<p>'
+			if backend.writeAsteriskConfig():
+				_("Configuration files saved")
+			else:
+				_("There were problems writing the configuration. Please take a look at the error logs.")
+			'</p>'
+
 	else:
 			header(_("Nothing to Show"))
 			'<p>'
 			_("There is nothing configured yet.")
 			'</p>'
 	footer()
-	
+
+def showMissingModules [plain] (missingModules):
+	'<div id="error">\n'
+	'<p>'
+	htmltext(_("WARNING: This configuration might experience grave problems because the following asterisk modules are missing on your system:"))
+	'</p>'
+	'<ul>'
+	for mod in missingModules:
+		'<li>'
+		mod
+		'</li>'
+	'</ul>'
+	'</div>\n'
+
