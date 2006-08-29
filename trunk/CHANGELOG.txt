@@ -4,6 +4,7 @@
 *Updated man page.
 *Alternative solution to '[ Bug #7916 ] Menus don't work on IE', by modifying page_admin.ptl, page_user.ptl and page_owner.ptl to allow automatic listing of their submenus.
 *fixed pbx displaying on cfg_quickdial_*
+*Included up to date destar_cfg.py example.
 
 2006-08-25
 * Closed [ Bug #8010 ] tests.py needs the executable flags.
