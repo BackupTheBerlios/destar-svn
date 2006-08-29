@@ -40,7 +40,7 @@ class CfgAppPhoneQuickDial(CfgApp):
 					]
 	
 	def row(self):
-		return ("%s / %s" % (self.set,self.ext),self.shortName,"")
+		return ("%s / %s" % (self.set,self.ext),self.shortName,self.pbx)
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")

@@ -1,3 +1,10 @@
+2006-08-28
+*Fixed bug on pbx dependencies not created for sip phones.
+*Make command-line-only backend mode work again using 'destar -b'
+*Updated man page.
+*Alternative solution to '[ Bug #7916 ] Menus don't work on IE', by modifying page_admin.ptl, page_user.ptl and page_owner.ptl to allow automatic listing of their submenus.
+*fixed pbx displaying on cfg_quickdial_*
+
 2006-08-25
 * Closed [ Bug #8010 ] tests.py needs the executable flags.
 * Applied [ Patch #1152 ] Mixmonitor outgoing calls, by juanmanuel.
