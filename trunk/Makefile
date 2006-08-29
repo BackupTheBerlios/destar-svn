@@ -32,11 +32,6 @@ release:
 	#scp destar-$(DATE).tar.bz2 shell.berlios.de:/home/groups/ftp/pub/destar/
 	#rm -rf destar-$(DATE) destar-$(DATE).tar.bz2
 
-gettext:
-	xgettext --language=python -d destar destar *.py *.ptl
-
-msgfmt:	$(LANGUAGES)
-
 
 install-panel:
 	ln -s $(PANEL_HTML_DIR) $(PAGES_DIR)/panel
