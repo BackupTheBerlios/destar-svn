@@ -40,7 +40,6 @@ class CfgTrunkCapi(CfgTrunk):
 		
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		useContext("in-capi")
 
 	def channel(self):
 		return "%s[contr1/%s]" % (self.technology, self.msn)

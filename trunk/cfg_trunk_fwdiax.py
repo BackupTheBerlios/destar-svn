@@ -53,8 +53,6 @@ class CfgTrunkFwdIax(CfgTrunk):
 		
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		useContext(self.context)
-		useContext("in-iaxfwd")
 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")

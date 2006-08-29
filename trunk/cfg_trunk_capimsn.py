@@ -38,7 +38,6 @@ class CfgTrunkCapiMSN(CfgTrunk):
 		
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		useContext("in-capi")
 
 	def isAddable(self):
 		"We can only add this object if we have at least one outgoing CAPI channel defined."

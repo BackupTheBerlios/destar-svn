@@ -52,8 +52,6 @@ class CfgTrunkIaxtel(CfgTrunk):
 		
 	def fixup(self):
 		CfgTrunk.fixup(self)
-		useContext(self.context)
-		useContext("in-iaxtel")
 
 	def createAsteriskConfig(self):
 		needModule("res_crypto")

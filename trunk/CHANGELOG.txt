@@ -6,6 +6,7 @@
 *fixed pbx displaying on cfg_quickdial_*
 *Included up to date destar_cfg.py example.
 *Added cfg_opt_codec.py, page_config_codecs.ptl to allow codec order selection for SIP and IAX. Depricates cfg_opt_sip_audio.py
+*Removed depricated function "useContext()".
 
 2006-08-25
 * Closed [ Bug #8010 ] tests.py needs the executable flags.
