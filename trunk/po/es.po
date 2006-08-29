@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-17 07:15-0500\n"
+"POT-Creation-Date: 2006-08-28 17:45-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Warning: There is no %s or %s file yet."
 msgstr "Advertencia: Aún no existe el archivo %s o %s."
 
-#: backend.py:366 ../backend.py:375
+#: backend.py:366 ../backend.py:375 ../backend.py:386
 #, python-format
 msgid "Error backing up %s"
 msgstr "Hubo problemas haciendo el backup de %s"
@@ -71,7 +71,10 @@ msgstr "Extensión para programar/desprogramar la redirección de llamadas."
 #: ../configlets.py:572 ../configlets.py:800 ../configlets.py:865
 #: ../configlets.py:993 ../configlets.py:1014 ../configlets.py:576
 #: ../configlets.py:804 ../configlets.py:880 ../configlets.py:1007
-#: ../configlets.py:1028
+#: ../configlets.py:1028 ../configlets.py:569 ../configlets.py:824
+#: ../configlets.py:899 ../configlets.py:1055 ../configlets.py:1076
+#: ../configlets.py:825 ../configlets.py:900 ../configlets.py:1056
+#: ../configlets.py:1077
 msgid "Type"
 msgstr "Tipo"
 
@@ -83,12 +86,12 @@ msgstr "Reenvío de llamadas incondicional"
 msgid "Call Forwarding if Busy/Unavailable"
 msgstr "Redirigir llamadas si está ocupado o no disponible"
 
-#: cfg_app_callfw.py:29 ../cfg_app_callfw.py:34
+#: cfg_app_callfw.py:29 ../cfg_app_callfw.py:34 ../cfg_app_callfw.py:35
 msgid "Setting preffix"
 msgstr "Prefijo de salida"
 
 #: cfg_app_callfw.py:30 cfg_app_dnd.py:30 ../cfg_app_callfw.py:35
-#: ../cfg_app_dnd.py:34
+#: ../cfg_app_dnd.py:34 ../cfg_app_callfw.py:36
 msgid "Unsetting extension"
 msgstr "Extension para desprogramar"
 
@@ -117,7 +120,9 @@ msgstr "Sala de Conferencias"
 #: ../page_stats_phone.ptl:44 ../page_user_state.ptl:66
 #: ../page_user_state.ptl:81 ../cfg_opt_monitor.py:32 ../cfg_phone_hunt.py:34
 #: ../configlets.py:576 ../configlets.py:880 ../configlets.py:1007
-#: ../configlets.py:1028 ../page_stats_phone.ptl:65
+#: ../configlets.py:1028 ../page_stats_phone.ptl:65 ../configlets.py:569
+#: ../configlets.py:899 ../configlets.py:1055 ../configlets.py:1076
+#: ../configlets.py:900 ../configlets.py:1056 ../configlets.py:1077
 msgid "Extension"
 msgstr "Extensión"
 
@@ -352,6 +357,10 @@ msgstr "Usado para enrutar las llamadas a través de las troncales"
 #: ../configlets.py:1014 ../configlets.py:1034 ../page_user_state.ptl:64
 #: ../cfg_phone_hunt.py:33 ../configlets.py:720 ../configlets.py:804
 #: ../configlets.py:880 ../configlets.py:1028 ../configlets.py:1048
+#: ../configlets.py:737 ../configlets.py:824 ../configlets.py:899
+#: ../configlets.py:1076 ../configlets.py:1096 ../configlets.py:738
+#: ../configlets.py:825 ../configlets.py:900 ../configlets.py:1077
+#: ../configlets.py:1097
 msgid "Name"
 msgstr "Nombre"
 
@@ -368,11 +377,14 @@ msgid "Ringing time in seconds"
 msgstr "Duración del timbre en segundos"
 
 #: cfg_dialout_normal.py:36 ../cfg_dialout_normal.py:42
+#: ../cfg_dialout_normal.py:43
 msgid "Trunks to use for routing this dialout entry"
 msgstr "Troncales usadas para enrutar este destino"
 
 #: cfg_dialout_normal.py:52 configlets.py:692 ../configlets.py:767
 #: ../configlets.py:779 ../configlets.py:771 ../configlets.py:783
+#: ../configlets.py:790 ../configlets.py:803 ../configlets.py:791
+#: ../configlets.py:804
 #, python-format
 msgid "%s"
 msgstr "%s"
@@ -783,44 +795,54 @@ msgid "SIP Audio Options"
 msgstr "Opciones de audio de SIP"
 
 #: cfg_opt_sip_audio.py:29 ../cfg_opt_sip_audio.py:32
+#: ../cfg_opt_sip_audio.py:34
 msgid "Codecs to use"
 msgstr "Codecs a usar"
 
 #: cfg_opt_sip_audio.py:30 ../cfg_opt_sip_audio.py:33
+#: ../cfg_opt_sip_audio.py:35
 msgid "Allow alaw codec"
 msgstr "Permitir códec Ley A"
 
 #: cfg_opt_sip_audio.py:31 ../cfg_opt_sip_audio.py:34
+#: ../cfg_opt_sip_audio.py:36
 msgid "Allow ulaw codec"
 msgstr "Permitir códec Ley U"
 
 #: cfg_opt_sip_audio.py:32 ../cfg_opt_sip_audio.py:35
+#: ../cfg_opt_sip_audio.py:37
 msgid "Allow ilbc codec"
 msgstr "Permitir códec ilbc"
 
 #: cfg_opt_sip_audio.py:33 ../cfg_opt_sip_audio.py:36
+#: ../cfg_opt_sip_audio.py:38
 msgid "Allow gsm codec"
 msgstr "Permitir códec gsm"
 
 #: cfg_opt_sip_audio.py:34 ../cfg_opt_sip_audio.py:37
+#: ../cfg_opt_sip_audio.py:40
 msgid "Allow g729 codec"
 msgstr "Permitir códec g729"
 
 #: cfg_opt_sip_audio.py:35 ../cfg_opt_sip_audio.py:38
+#: ../cfg_opt_sip_audio.py:41
 msgid "g729 pass-thru unless license obtained"
 msgstr ""
 "Sólo reenvío y no trascodificación de g729 a menos que se obtenga una "
 "licencia"
 
 #: cfg_opt_sip_audio.py:36 ../cfg_opt_sip_audio.py:39
+#: ../cfg_opt_sip_audio.py:42
 msgid "Allow g723.1 codec"
 msgstr "Permitir códec g723.1"
 
 #: cfg_opt_sip_audio.py:37 ../cfg_opt_sip_audio.py:40
+#: ../cfg_opt_sip_audio.py:43
 msgid "g723.1 pass-thru"
 msgstr "Paso directo de g723.1"
 
 #: cfg_opt_sip_audio.py:45 ../cfg_opt_sip_audio.py:48
+#: ../cfg_opt_sip_audio.py:53
 msgid "You should choose at least one codec"
 msgstr "Usted debe seleccionar al menos un códec"
 
@@ -1196,12 +1218,14 @@ msgstr "Nombre del Identificador de llamante"
 #: cfg_phone_iax.py:51 cfg_phone_mgcp.py:51 cfg_phone_sip.py:59
 #: cfg_phone_zap.py:51 ../cfg_phone_epygi.py:144 ../cfg_phone_iax.py:122
 #: ../cfg_phone_mgcp.py:128 ../cfg_phone_sip.py:144 ../cfg_phone_zap.py:126
+#: ../cfg_phone_sip.py:206
 msgid "Allowed dialout-entries"
 msgstr "Destinos permitidos"
 
 #: cfg_phone_iax.py:52 cfg_phone_mgcp.py:52 cfg_phone_sip.py:60
 #: cfg_phone_zap.py:52 ../cfg_phone_epygi.py:149 ../cfg_phone_iax.py:127
 #: ../cfg_phone_mgcp.py:133 ../cfg_phone_sip.py:149 ../cfg_phone_zap.py:131
+#: ../cfg_phone_sip.py:211
 msgid "Enable time restriction?"
 msgstr "¿Habilitar la restricción de tiempo?"
 
@@ -1314,7 +1338,7 @@ msgstr "No"
 msgid "Only Once"
 msgstr "Sólo una vez"
 
-#: cfg_phone_queue.py:56 ../cfg_phone_queue.py:97
+#: cfg_phone_queue.py:56 ../cfg_phone_queue.py:97 ../cfg_phone_sip.py:144
 msgid "Monitoring"
 msgstr "Monitoreo"
 
@@ -1322,23 +1346,24 @@ msgstr "Monitoreo"
 msgid "Monitor answered calls?"
 msgstr "¿Monitorear la llamadas contestadas?"
 
-#: cfg_phone_queue.py:58 ../cfg_phone_queue.py:106
+#: cfg_phone_queue.py:58 ../cfg_phone_queue.py:106 ../cfg_phone_sip.py:160
 msgid "Monitor file format"
 msgstr "Formato del archivo de monitoreo"
 
-#: cfg_phone_queue.py:59 ../cfg_phone_queue.py:108
+#: cfg_phone_queue.py:59 ../cfg_phone_queue.py:108 ../cfg_opt_codec.py:40
+#: ../cfg_phone_sip.py:162
 msgid "GSM"
 msgstr "GSM"
 
-#: cfg_phone_queue.py:60 ../cfg_phone_queue.py:109
+#: cfg_phone_queue.py:60 ../cfg_phone_queue.py:109 ../cfg_phone_sip.py:163
 msgid "WAV"
 msgstr "WAV"
 
-#: cfg_phone_queue.py:61 ../cfg_phone_queue.py:110
+#: cfg_phone_queue.py:61 ../cfg_phone_queue.py:110 ../cfg_phone_sip.py:164
 msgid "WAV49"
 msgstr "WAV49"
 
-#: cfg_phone_queue.py:64 ../cfg_phone_queue.py:114
+#: cfg_phone_queue.py:64 ../cfg_phone_queue.py:114 ../cfg_phone_sip.py:154
 msgid "Monitor file name"
 msgstr "Nombre de archivo de monitoreo"
 
@@ -1420,6 +1445,7 @@ msgid "Subscriber number"
 msgstr "Número de Suscriptor"
 
 #: cfg_trunk_capimsn.py:70 ../cfg_trunk_capimsn.py:68
+#: ../cfg_trunk_capimsn.py:67
 msgid "MSN already assigned"
 msgstr "El MSN ya ha sido asignado"
 
@@ -1694,27 +1720,36 @@ msgstr "Troncal ZAP estándar"
 #: ../configlets.py:873 ../configlets.py:874 ../configlets.py:999
 #: ../configlets.py:1021 ../configlets.py:585 ../configlets.py:888
 #: ../configlets.py:889 ../configlets.py:1013 ../configlets.py:1035
+#: ../configlets.py:578 ../configlets.py:907 ../configlets.py:908
+#: ../configlets.py:1061 ../configlets.py:1083 ../configlets.py:909
+#: ../configlets.py:1062 ../configlets.py:1084
 msgid "None"
 msgstr "Ningúno(a)"
 
 #: configlets.py:465 ../configlets.py:620 ../configlets.py:624
+#: ../configlets.py:618
 msgid "Name already in use"
 msgstr "El nombre ya esta en uso"
 
 #: configlets.py:551 configlets.py:818 ../configlets.py:716
 #: ../configlets.py:1034 ../configlets.py:720 ../configlets.py:1048
+#: ../configlets.py:737 ../configlets.py:1096 ../configlets.py:738
+#: ../configlets.py:1097
 msgid "Info"
 msgstr "Información"
 
 #: configlets.py:600 ../configlets.py:800 ../configlets.py:804
+#: ../configlets.py:824 ../configlets.py:825
 msgid "Dial Command"
 msgstr "Comando Marcar"
 
 #: configlets.py:628 ../configlets.py:828 ../configlets.py:832
+#: ../configlets.py:852 ../configlets.py:853
 msgid "You should select a phone to ring to"
 msgstr "Usted debe seleccionar un teléfono para timbrar"
 
 #: configlets.py:693 ../configlets.py:780 ../configlets.py:784
+#: ../configlets.py:804 ../configlets.py:805
 msgid "Password:"
 msgstr "Contraseña:"
 
@@ -1787,7 +1822,7 @@ msgstr "No se encuentra el '%s' requerido"
 #: ../page_stats_phone.ptl:86 ../page_stats_trunks.ptl:87
 #: ../page_user_settings.ptl:67 ../page_stats_calls.ptl:73
 #: ../page_stats_dialouts.ptl:106 ../page_stats_phone.ptl:109
-#: ../page_stats_trunks.ptl:105
+#: ../page_stats_trunks.ptl:105 ../page_user_settings.ptl:69
 msgid "Submit"
 msgstr "Enviar"
 
@@ -1802,6 +1837,7 @@ msgstr "Eliminar"
 #: ConfigHelper.ptl:281 page_login.ptl:46 page_user_settings.ptl:68
 #: UserUI.ptl:49 UserUI.ptl:157 ../ConfigHelper.ptl:201
 #: ../ConfigHelper.ptl:334 ../page_login.ptl:45 ../page_user_settings.ptl:68
+#: ../page_user_settings.ptl:70
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -2043,7 +2079,7 @@ msgstr ""
 #: page_user_settings.ptl:105 page_user_state.ptl:138 UserUI.ptl:216
 #: ../page_admin_pbxstate.ptl:80 ../page_admin_reload.ptl:44
 #: ../page_user_quickdiallist.ptl:76 ../page_user_settings.ptl:105
-#: ../page_user_state.ptl:138
+#: ../page_user_state.ptl:138 ../page_user_settings.ptl:104
 msgid "Asterisk is not running!"
 msgstr "¡Asterisk no está corriendo!"
 
@@ -2051,7 +2087,7 @@ msgstr "¡Asterisk no está corriendo!"
 #: page_user_settings.ptl:110 page_user_state.ptl:143 UserUI.ptl:221
 #: ../page_admin_pbxstate.ptl:85 ../page_admin_reload.ptl:49
 #: ../page_user_quickdiallist.ptl:81 ../page_user_settings.ptl:110
-#: ../page_user_state.ptl:143
+#: ../page_user_state.ptl:143 ../page_user_settings.ptl:109
 msgid "The manager access is not working!"
 msgstr "¡El acceso de gestión no está funcionando!"
 
@@ -2189,19 +2225,19 @@ msgid ""
 "integrated whit the panel."
 msgstr ""
 
-#: page_config.ptl:116 ../page_config.ptl:116
+#: page_config.ptl:116 ../page_config.ptl:116 ../page_config.ptl:120
 msgid "Configured"
 msgstr "Configurado"
 
-#: page_config.ptl:116 ../page_config.ptl:116
+#: page_config.ptl:116 ../page_config.ptl:116 ../page_config.ptl:120
 msgid "Category"
 msgstr "Categoría"
 
-#: page_config.ptl:132 ../page_config.ptl:132
+#: page_config.ptl:132 ../page_config.ptl:132 ../page_config.ptl:136
 msgid "Other things you can configure:"
 msgstr "Otras cosas que puede configurar:"
 
-#: page_config.ptl:134 ../page_config.ptl:134
+#: page_config.ptl:134 ../page_config.ptl:134 ../page_config.ptl:138
 msgid "You can configure the following things"
 msgstr "Usted puede configurar las siguientes cosas"
 
@@ -2250,14 +2286,17 @@ msgid "Show"
 msgstr "Mostrar"
 
 #: page_config_viewconf.ptl:94 ../page_admin_viewconf.ptl:94
+#: ../page_admin_viewconf.ptl:99
 msgid "Asterisk configuration files"
 msgstr "Archivos de configuración de Asterisk"
 
 #: page_config_viewconf.ptl:101 ../page_admin_viewconf.ptl:101
+#: ../page_admin_viewconf.ptl:117
 msgid "Nothing to Show"
 msgstr "Nada para mostrar"
 
 #: page_config_viewconf.ptl:103 ../page_admin_viewconf.ptl:103
+#: ../page_admin_viewconf.ptl:119
 msgid "There is nothing configured yet."
 msgstr "No existe configuración en el momento"
 
@@ -2389,23 +2428,23 @@ msgstr "¡Diviértase!"
 msgid "Perform tasks allowed by users"
 msgstr "Realizar tareas permitidas por el usuario"
 
-#: page_user.ptl:61 ../page_user.ptl:61
+#: page_user.ptl:61 ../page_user.ptl:61 ../page_user_info.ptl:64
 msgid "Access all public accessible info pages"
 msgstr "Acceder a todas las páginas de información públicas"
 
-#: page_user.ptl:65 ../page_user.ptl:65
+#: page_user.ptl:65 ../page_user.ptl:65 ../page_user_info.ptl:68
 msgid "Change your personal phone settings"
 msgstr "Cambiar la configuración de su teléfono personal"
 
-#: page_user.ptl:69 ../page_user.ptl:69
+#: page_user.ptl:69 ../page_user.ptl:69 ../page_user_info.ptl:72
 msgid "Change phone settings of other people"
 msgstr "Cambiar la configuración de teléfono de otros usuarios"
 
-#: page_user.ptl:73 ../page_user.ptl:73
+#: page_user.ptl:73 ../page_user.ptl:73 ../page_user_info.ptl:76
 msgid "Configure the PBX"
 msgstr "Configurar la PBX"
 
-#: page_user.ptl:77 ../page_user.ptl:77
+#: page_user.ptl:77 ../page_user.ptl:77 ../page_user_info.ptl:80
 msgid "Access debug pages to help program DeStar"
 msgstr ""
 "Acceder a páginas de registro o log de DeStar para ayudar con su desarrollo"
@@ -2419,10 +2458,12 @@ msgid "Set your phone settings"
 msgstr "Cambiar la configuración de su teléfono personal"
 
 #: page_user_settings.ptl:56 UserUI.ptl:43 ../page_user_settings.ptl:56
+#: ../page_user_settings.ptl:57
 msgid "Enable 'do not disturb'"
 msgstr "Habilitar 'no molestar"
 
 #: page_user_settings.ptl:57 UserUI.ptl:44 ../page_user_settings.ptl:57
+#: ../page_user_settings.ptl:58
 msgid "Immediate call forwarding to"
 msgstr "Redirección inmediata de llamadas a"
 
@@ -2431,24 +2472,28 @@ msgid "Forward call when busy/unavailable to"
 msgstr "Si está ocupado/indisponible, redireccionar a"
 
 #: page_user_settings.ptl:59 ../page_user_settings.ptl:59
+#: ../page_user_settings.ptl:61
 msgid "Seconds of incoming ring time"
 msgstr "Tiempo de timbre en segundos"
 
 #: page_user_settings.ptl:61 ../page_user_settings.ptl:61
+#: ../page_user_settings.ptl:63
 msgid "Voicemail pin"
 msgstr "PIN del correo de voz"
 
 #: page_user_settings.ptl:64 ../page_user_settings.ptl:64
+#: ../page_user_settings.ptl:66
 msgid "Extension Password"
 msgstr "Contraseña de la extensión"
 
 #: page_user_settings.ptl:95 ../page_user_settings.ptl:95
+#: ../page_user_settings.ptl:94
 msgid "Could not create destar configuration file."
 msgstr "No fue posible crear el archivo de configuración de destar"
 
 #: page_user_settings.ptl:117 page_user_state.ptl:150
 #: ../page_user_quickdiallist.ptl:88 ../page_user_settings.ptl:118
-#: ../page_user_state.ptl:151
+#: ../page_user_state.ptl:151 ../page_user_settings.ptl:117
 msgid "You don't have an associated phone"
 msgstr "Usted no tiene un teléfono asociado"
 
@@ -2554,14 +2599,12 @@ msgstr "Funciones del Usuario"
 
 #: UserPage.ptl:85
 msgid "This menu will contain all sorts of phone user specific stuff:"
-msgstr ""
-"Este menú tendrá todo tipo de funciones para el usuario de teléfono:"
+msgstr "Este menú tendrá todo tipo de funciones para el usuario de teléfono:"
 
 #: UserPage.ptl:88
 msgid "Phone status (number of voicemails, call forwarding etc)"
 msgstr ""
-"Estado del teléfono (número de correos de voz, redirección de llamadas, "
-"etc)"
+"Estado del teléfono (número de correos de voz, redirección de llamadas, etc)"
 
 #: UserPage.ptl:89
 msgid "Set DND (do-not-disturb)"
@@ -2615,11 +2658,11 @@ msgstr "Usar correo de voz"
 msgid "Your access level is"
 msgstr "Su nivel de acceso es"
 
-#: ../destar:105 ../destar:106
+#: ../destar:105 ../destar:106 ../destar:124 ../destar:118
 msgid "Error:"
 msgstr ""
 
-#: ../destar:105 ../destar:106
+#: ../destar:105 ../destar:106 ../destar:124 ../destar:118
 msgid "please install Quixote > 1.2  and < 2.0"
 msgstr ""
 
@@ -2637,7 +2680,8 @@ msgstr ""
 #: ../cfg_phone_iax.py:33 ../cfg_phone_mgcp.py:33 ../cfg_phone_queue.py:34
 #: ../cfg_phone_sip.py:34 ../cfg_phone_zap.py:34 ../configlets.py:865
 #: ../configlets.py:993 ../page_config_pbx.ptl:27 ../page_config_pbx.ptl:28
-#: ../configlets.py:880 ../configlets.py:1007
+#: ../configlets.py:880 ../configlets.py:1007 ../configlets.py:899
+#: ../configlets.py:1055 ../configlets.py:900 ../configlets.py:1056
 msgid "Virtual PBX"
 msgstr ""
 
@@ -2656,6 +2700,9 @@ msgstr ""
 #: ../cfg_phone_queue.py:140 ../cfg_phone_sip.py:169 ../cfg_phone_sip.py:176
 #: ../cfg_phone_zap.py:150 ../cfg_phone_zap.py:157 ../configlets.py:419
 #: ../cfg_opt_user.py:50 ../cfg_opt_user.py:53 ../configlets.py:423
+#: ../cfg_app_callfw.py:41 ../cfg_app_quickdial_phone.py:39
+#: ../cfg_dialout_normal.py:60 ../cfg_phone_sip.py:231 ../cfg_phone_sip.py:238
+#: ../configlets.py:417
 msgid "This is a Dependency"
 msgstr ""
 
@@ -3044,11 +3091,12 @@ msgstr ""
 msgid "Calls from ZAP trunk"
 msgstr ""
 
-#: ../configlets.py:615 ../configlets.py:619
+#: ../configlets.py:615 ../configlets.py:619 ../configlets.py:613
 msgid "Name should not contain '-' or spaces"
 msgstr ""
 
-#: ../configlets.py:768 ../configlets.py:772
+#: ../configlets.py:768 ../configlets.py:772 ../configlets.py:791
+#: ../configlets.py:792
 msgid "Price/Account_code for this pattern"
 msgstr ""
 
@@ -3344,7 +3392,7 @@ msgstr ""
 msgid "Statistics of Extension Calls by Dialout Entry:"
 msgstr ""
 
-#: ../page_stats.ptl:25
+#: ../page_stats.ptl:25 ../page_stats.ptl:38
 msgid "Statistics"
 msgstr ""
 
@@ -3474,11 +3522,11 @@ msgstr ""
 msgid "  -r <port> | --port=<port>: run on port <port> (default: 8080)"
 msgstr ""
 
-#: ../destar:68
+#: ../destar:68 ../destar:70 ../destar:69
 msgid "DeStar: Command-line parsing error. Aborting."
 msgstr ""
 
-#: ../destar:90
+#: ../destar:90 ../destar:104 ../destar:98
 msgid "Error: rport (-r <num>/--port=<num> must be a number)"
 msgstr ""
 
@@ -3588,7 +3636,7 @@ msgstr ""
 msgid "Phone #5"
 msgstr ""
 
-#: ../configlets.py:612
+#: ../configlets.py:612 ../configlets.py:606
 msgid "Extension already in use on that PBX"
 msgstr ""
 
@@ -3678,4 +3726,238 @@ msgstr ""
 
 #: ../cfg_opt_music.py:39
 msgid "Please specify an application"
+msgstr ""
+
+#: ../destar:62
+msgid "  -b | --backend: run on backend mode"
+msgstr ""
+
+#: ../destar:63
+msgid "  -g | --generate-docs: generate documentation"
+msgstr ""
+
+#: ../backend.py:404
+#, python-format
+msgid "Error writing up %s"
+msgstr ""
+
+#: ../cdrutils.py:36
+#, python-format
+msgid ""
+"Note: you don't seem to have access to %s yet created by cdr_sqlite3_custom. "
+"See INSTALL.txt for details."
+msgstr ""
+
+#: ../cfg_app_callfw.py:34
+msgid "Call Forwarding if Busy"
+msgstr ""
+
+#: ../cfg_app_callfw.py:34
+msgid "Call Forwarding if Timeout/Unavailable"
+msgstr ""
+
+#: ../cfg_app_quickdial_phone.py:27
+msgid ""
+"Extensions to add/remove from personal quick dial list. The add extension "
+"will be of the form prefix+2_digits_key+*+final_destination. The remove "
+"extension will be of the form prefix+2_digits_key. The personal quick dial "
+"list works for all extensions, by dialing dial_prefix+2_digits_key and only "
+"if the extension has an assigned dialout entry which pattern matches the "
+"final destination."
+msgstr ""
+
+#: ../cfg_app_quickdial_phone.py:28
+msgid "New extensions to add/remove/access personal quick dial list"
+msgstr ""
+
+#: ../cfg_app_quickdial_phone.py:35
+msgid "Dial prefix"
+msgstr ""
+
+#: ../cfg_dialout_normal.py:42
+msgid "Disallow calling user transfer?"
+msgstr ""
+
+#: ../cfg_opt_codec.py:29
+msgid "Audio Codec"
+msgstr ""
+
+#: ../cfg_opt_codec.py:30
+msgid "New audio codec to be used"
+msgstr ""
+
+#: ../cfg_opt_codec.py:35
+msgid "Allow codec"
+msgstr ""
+
+#: ../cfg_opt_codec.py:37
+msgid "Use all codecs"
+msgstr ""
+
+#: ../cfg_opt_codec.py:38
+msgid "A Law (g711a)"
+msgstr ""
+
+#: ../cfg_opt_codec.py:39
+msgid "U Law (g711u)"
+msgstr ""
+
+#: ../cfg_opt_codec.py:41
+msgid "ILBC"
+msgstr ""
+
+#: ../cfg_opt_codec.py:42
+msgid "g726"
+msgstr ""
+
+#: ../cfg_opt_codec.py:43
+msgid "g723.1"
+msgstr ""
+
+#: ../cfg_opt_codec.py:44
+msgid "g729"
+msgstr ""
+
+#: ../cfg_opt_sip_audio.py:29
+msgid "Depricated: use individual 'Audio Codec' configlets instead."
+msgstr ""
+
+#: ../cfg_opt_sip_audio.py:39
+msgid "Allow g726 codec"
+msgstr ""
+
+#: ../cfg_phone_iax.py:106
+msgid "Skip asterisk media path?"
+msgstr ""
+
+#: ../cfg_phone_sip.py:149
+msgid "Monitor calls made from this extension?"
+msgstr ""
+
+#: ../cfg_phone_sip.py:155
+msgid "Otherwise it will use Date-CallerIdName(CallerIdNum)-Exten"
+msgstr ""
+
+#: ../cfg_phone_sip.py:168
+msgid "Append to existing file instead of overwriting it?"
+msgstr ""
+
+#: ../cfg_phone_sip.py:173
+msgid "Save audio while the channel is bridged?"
+msgstr ""
+
+#: ../cfg_phone_sip.py:178
+msgid "Heard volume factor"
+msgstr ""
+
+#: ../cfg_phone_sip.py:180 ../cfg_phone_sip.py:194
+msgid "+4"
+msgstr ""
+
+#: ../cfg_phone_sip.py:181 ../cfg_phone_sip.py:195
+msgid "+3"
+msgstr ""
+
+#: ../cfg_phone_sip.py:182 ../cfg_phone_sip.py:196
+msgid "+2"
+msgstr ""
+
+#: ../cfg_phone_sip.py:183 ../cfg_phone_sip.py:197
+msgid "+1"
+msgstr ""
+
+#: ../cfg_phone_sip.py:184 ../cfg_phone_sip.py:198
+msgid "0"
+msgstr ""
+
+#: ../cfg_phone_sip.py:185 ../cfg_phone_sip.py:199
+msgid "-1"
+msgstr ""
+
+#: ../cfg_phone_sip.py:186 ../cfg_phone_sip.py:200
+msgid "-2"
+msgstr ""
+
+#: ../cfg_phone_sip.py:187 ../cfg_phone_sip.py:201
+msgid "-3"
+msgstr ""
+
+#: ../cfg_phone_sip.py:188 ../cfg_phone_sip.py:202
+msgid "-4"
+msgstr ""
+
+#: ../cfg_phone_sip.py:192
+msgid "Spoken volume factor"
+msgstr ""
+
+#: ../page_admin.ptl:38 ../page_owner.ptl:40
+msgid "Action"
+msgstr ""
+
+#: ../page_admin.ptl:38 ../page_owner.ptl:40 ../page_stats.ptl:38
+#: ../page_user.ptl:38
+msgid "Description"
+msgstr ""
+
+#: ../page_admin_viewconf.ptl:29
+msgid "View/Save Configuration"
+msgstr ""
+
+#: ../page_admin_viewconf.ptl:30
+msgid "Show and Save Asterisk configuration files"
+msgstr ""
+
+#: ../page_admin_viewconf.ptl:90
+msgid "Show selected files"
+msgstr ""
+
+#: ../page_admin_viewconf.ptl:91
+msgid "Save all changes"
+msgstr ""
+
+#: ../page_admin_viewconf.ptl:108
+msgid "Save changes results"
+msgstr ""
+
+#: ../page_admin_viewconf.ptl:111
+msgid "Configuration files saved"
+msgstr ""
+
+#: ../page_admin_viewconf.ptl:113
+msgid ""
+"There were problems writing the configuration. Please take a look at the "
+"error logs."
+msgstr ""
+
+#: ../page_admin_viewconf.ptl:126
+msgid ""
+"WARNING: This configuration might experience grave problems because the "
+"following asterisk modules are missing on your system:"
+msgstr ""
+
+#: ../page_config_codecs.ptl:27
+msgid "Codecs"
+msgstr ""
+
+#: ../page_config_codecs.ptl:28
+msgid "Audio codecs to use on SIP and IAX channels."
+msgstr ""
+
+#: ../page_config.ptl:107
+#, python-format
+msgid ""
+"You don't seem to have access to %s yet created by cdr_sqlite3_custom. "
+"Without this file CDR reports wont be accesible trough this interface."
+msgstr ""
+
+#: ../page_user.ptl:38
+msgid "Available actions"
+msgstr ""
+
+#: ../page_user_settings.ptl:59
+msgid "Forward call when busy to"
+msgstr ""
+
+#: ../page_user_settings.ptl:60
+msgid "Forward call when timeout/unavailable to"
 msgstr ""
