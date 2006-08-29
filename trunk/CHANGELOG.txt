@@ -5,6 +5,7 @@
 *Alternative solution to '[ Bug #7916 ] Menus don't work on IE', by modifying page_admin.ptl, page_user.ptl and page_owner.ptl to allow automatic listing of their submenus.
 *fixed pbx displaying on cfg_quickdial_*
 *Included up to date destar_cfg.py example.
+*Added cfg_opt_codec.py, page_config_codecs.ptl to allow codec order selection for SIP and IAX. Depricates cfg_opt_sip_audio.py
 
 2006-08-25
 * Closed [ Bug #8010 ] tests.py needs the executable flags.
