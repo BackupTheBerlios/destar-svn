@@ -33,7 +33,7 @@ try:
 		raise ImportError
 	db = sqlite.connect(db_fn, isolation_level="IMMEDIATE")
 except:
-	print _("Note: you don't seem to have access to %s yet") % db_fn
+	print _("Note: you don't seem to have access to %s yet created by cdr_sqlite3_custom. See INSTALL.txt for details.") % db_fn
 	if __name__ == "__main__": sys.exit(0)
 	db = None
 
