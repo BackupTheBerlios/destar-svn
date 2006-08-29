@@ -2,7 +2,7 @@
 
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2006 by Anthony PIRON
+# Copyright (C) 2006 by Alejandro Rios P.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
