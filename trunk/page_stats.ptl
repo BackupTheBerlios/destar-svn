@@ -32,7 +32,23 @@ def _q_access(request):
         if request.session.level < _q_level:
 		cantAccessPage()
 
+def showMenu [plain] ():
+	'<table id="subcategories"><thead>'
+	'<tr>'
+	for s in (htmltext(_('Statistics')), htmltext(_('Description'))):
+		'<th>%s</th>' % s
+	'</thead></tr>'
+
+	for e in _q_menu:
+		'<tr>'
+		'<td><a href="%s">%s</a></td>' % (e._q_link,e._q_title)
+		'<td>%s</td>' % e._q_desc
+		'</tr>'
+	'</table>'
+
+
 
 def _q_index [plain] (request):
 	header(_q_desc)
+	showMenu()
 	footer()
