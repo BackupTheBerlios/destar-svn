@@ -101,8 +101,12 @@ def configurationTips [plain] (request):
 			_("You should enable write access to the %s directory. Without the ability to modify the Asternic Flash Operator Panel configuration files DeStar won't be integrated whit the panel." % panelutils.PANEL_CONF_DIR),
 			"",
 			[])
-
-	# TODO: add a tip for sql access to cdr?
+	db_fn = "/var/log/asterisk/master.db"
+	if not os.access(db_fn, os.O_RDWR):
+		configurationTip(
+			_("You don't seem to have access to %s yet created by cdr_sqlite3_custom. Without this file CDR reports wont be accesible trough this interface."),
+			"",
+			[])
 
 	if tipped:
 		'</ul>'
