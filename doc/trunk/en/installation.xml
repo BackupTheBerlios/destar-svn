@@ -39,7 +39,7 @@ Get and install Python. We use Python 2.4 for development, but maybe Python
 	    <title>Quixote</title> 
 
 	    <para>
-For Python 2.3 (see <xref linkend="python"/>) you can install Quixote version 1.0, 1.2 or 2.X.  For Python 2.4 (see <xref linkend="python"/>) you should only install Quixote 1.2.
+For Python 2.3 (see <xref linkend="python"/>) you can install Quixote version 1.0 or 1.2.  For Python 2.4 (see <xref linkend="python"/>) you should only install Quixote 1.2.
 	    </para>
 	    <para>
 If you can't find it in your Linux distribution, then download the source from <ulink
