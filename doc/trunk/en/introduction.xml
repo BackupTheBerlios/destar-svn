@@ -2,10 +2,10 @@
 <!-- Local Variables: -->
 <!-- file: introduction.xml -->
 <!-- xml-parent-document: "manual.xml" -->
-<!-- Destar Manual -->
-<!-- Distributed under the same Destar license  -->
+<!-- DeStar Manual -->
+<!-- Distributed under the same DeStar license  -->
 <!-- destar-version: 0.2  -->
-<!-- destar-revision: 394 -->
+<!-- destar-revision: 434 -->
 
 <!--
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
@@ -16,11 +16,48 @@
 
     <title>Introduction</title>
 
-    <para></para>
+    <para>This chapter is a general description of DeStar and this document.</para>
 
-   <sect1 id="destar">
-       <title>What is Destar?</title> 
-<para></para>
+   <sect1 id="general_description">
+       <title>General Description</title> 
+
+	<para>
+DeStar is a web-based interface to manage the Asterisk PBX. It provides high-level abstraction of the Asterisk configuration.
+	</para>
+	<para>
+We all know that the Asterisk PBX is highly configurable. However, configuring Asterisk can be a daunting thing, because you have to dig deeply into the internals. This is because Asterisk is configurable at a very low-level. Quite powerful, but low-level.
+	</para>
+	<para>
+DeStar application makes this much easier. It helps you switch the focus. With DeStar, you can concentrate on objects, e.g. SIP Phones, IAX Phones, ISDN Telco lines. You create objects, edit them, delete them. No need to fiddle with extensions.conf or sip.conf directly. Those files are maintained by DeStar, they get automatically re-created whenever you save your configuration.ever. 
+	</para>
+
+   </sect1>
+   <sect1 id="history">
+       <title>History and Authors</title> 
+
+	<para>
+Main DeStar development was made initially at late 2004 by Holger Schurig (holgerschurig using the domain gmx point de and schurig on #asterisk, #asterisk-dev and #destar at irc.freenode.net).
+	</para>
+	<para>
+At that time, just as now, there were many early born Asterisk graphical interfaces, and even FreePBX (at that time AMP - Asterisk Management Portal) was already starting to gain a big market on this segment. But AMP and all other similar applications did not fulfilled many people's expectations around code architecture and organization, so DeStar was a nice alternative to several of them.
+	</para>
+	<para>
+Many of them are still part of the active DeStar developers and contributors, which are listed on <ulink url="http://developer.berlios.de/projects/destar/">DeStar project page at Berlios.de</ulink>.
+	</para>
+	<para>
+Holger Schurig left the project administration around middle 2005, when Alejandro Rios (alejandro.rios at avatar dot com dot co and alerios on #destar at irc.freenode.net and #debian at irc.debian.net) continued the process.
+	</para>
+
+   </sect1>
+   <sect1 id="about">
+       <title>About this Document</title> 
+
+	<para>
+This document is aimed to describe DeStar general concepts, installation process, configuration, usage, troubleshooting tips, and general developing information. For custom examples, release planning, promotional efforts and geeky tips and tricks, see the <ulink url="http://openfacts.berlios.de/index-en.phtml?title=DeStar">DeStar Wiki</ulink>.
+	</para>
+	<para>
+Updated versions of this document can be obtained directly from the <ulink url="http://svn.berlios.de/svnroot/repos/destar/doc/trunk/en">versions control repository</ulink>. 
+	</para>
 
    </sect1>
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Local Variables: -->
+<!-- file: installation.xml -->
+<!-- xml-parent-document: "manual.xml" -->
+<!-- Destar Manual -->
+<!-- Distributed under the same Destar license  -->
+<!-- destar-version: 0.2  -->
+<!-- destar-revision: 434 -->
+
+<!--
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"/usr/share/xml/docbook/schema/dtd/4.2/docbookx.dtd">
+<book>
+  <chapter>
+-->
+
+    <title>Installation</title>
+
+    <para>This chapter is a general installation guide for Destar.</para>
+
+   <sect1 id="prerequisites">
+       <title>Prerequisites</title> 
+
+	<para>
+List of needed sofware to run DeStar and recommended additional stuff to extend DeStar features.
+	</para>
+
+	<sect2 id="python">
+	    <title>Python</title> 
+
+	    <para>
+Get and install Python. We use Python 2.4 for development, but maybe Python
+2.3 would suffice.
+	    </para>
+
+   	</sect2>
+
+	<sect2 id="quixote">
+	    <title>Quixote</title> 
+
+	    <para>
+For Python 2.3 (see <xref linkend="python"/>) you can install Quixote version 1.0, 1.2 or 2.X.  For Python 2.4 (see <xref linkend="python"/>) you should only install Quixote 1.2.
+	    </para>
+	    <para>
+If you can't find it in your Linux distribution, then download the source from <ulink
+ url="http://www.mems-exchange.org/software/quixote/">the official project page</ulink>.
+	    </para>
+
+   	</sect2>
+
+
+   </sect1>
+
+<!--
+  </chapter>
+</book>
+-->
+
+<!-- End -->

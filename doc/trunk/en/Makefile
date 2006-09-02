@@ -9,14 +9,19 @@ DSLPDF=/usr/share/sgml/docbook/stylesheet/dsssl/ldp/ldp.dsl
 
 all: html rtf pdf ps clean
 
+#TODO: automate spell checking
+#spell: 
+#	echo "Cheking spell..."
+#	aspell -l en -c introduction.xml
+
 html: $(SOURCE).xml
 	echo "Generating HTML OUTPUT..."
 	mkdir -p $(OUTPUT)/html
 	#db2html $(SOURCE).xml -o $(OUTPUT)/html --dsl $(DSLHTML)
 	db2html $(SOURCE).xml -o $(OUTPUT)/html
-	rm -rf $(SOURCE).junk $(OUTPUT)/html/images
-	mkdir -p $(OUTPUT)/html/images
-	cp -rp images/*.png $(OUTPUT)/html/imagenes 
+#	rm -rf $(SOURCE).junk $(OUTPUT)/html/images
+#	mkdir -p $(OUTPUT)/html/images
+#	cp -rp images/*.png $(OUTPUT)/html/images 
 	cp ../html.css $(OUTPUT)/html/
 	rm -rf $(SOURCE)
 

@@ -12,6 +12,7 @@
 [
 <!ENTITY metainfo SYSTEM "metainfo.xml">
 <!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY installation SYSTEM "installation.xml">
 ]>
 
 <book lang="en" id="index">
@@ -20,9 +21,12 @@
     &metainfo;
   </bookinfo>
 
-<!-- Introduction -->
   <chapter id="introduction" >
     &introduction;
+  </chapter>
+
+  <chapter id="installation" >
+    &installation;
   </chapter>
 
 </book>

@@ -2,8 +2,8 @@
 <!-- Local Variables: -->
 <!-- file: metainfo.xml -->
 <!-- xml-parent-document: "manual.xml" -->
-<!-- Destar Manual -->
-<!-- Distributed under the same Destar license  -->
+<!-- DeStar Manual -->
+<!-- Distributed under the same DeStar license  -->
 <!-- destar-version: 0.2  -->
 <!-- destar-revision: 394 -->
 
@@ -14,9 +14,9 @@
   <bookinfo>
 -->
 
-    <title>Destar 0.2 Manual</title>
+    <title>DeStar 0.2 Reference Manual</title>
 
-    <subtitle>The lightweight Asterisk configuration tool</subtitle>
+    <subtitle>A web-based interface to manage the Asterisk PBX</subtitle>
 
     <edition>1.0</edition>
 
