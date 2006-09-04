@@ -1,6 +1,7 @@
 2006-09-04
 * Applied missing changes in Templates.ptl from patch #1090. Thanks to alenvers. Closes [ Bug #8014 ] _q_disc and _q_title translation not displayed. 
 * Added code to automate docbook documentation for configlets.
+* Fixed typo in cfg_opt_zap_trunk.py
 
 2006-08-28
 * Fixed bug on pbx dependencies not created for sip phones.
