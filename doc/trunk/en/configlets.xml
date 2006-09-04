@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- file: configlets.xml -->
+<!-- xml-parent-document: "manual.xml" -->
+<!-- Destar Manual -->
+<!-- Distributed under the same Destar license  -->
+<!-- destar-version: 0.2  -->
+
+<!--
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"/usr/share/xml/docbook/schema/dtd/4.2/docbookx.dtd"
+-->
+<title>Available Configuration Objects</title>
+
+&cfgappcallfw;
+&cfgappconference;
+&cfgappdirectory;
+&cfgappdnd;
+&cfgappecho;
+&cfgappglobalquickdial;
+&cfgappmeetme;
+&cfgappmilliwatt;
+&cfgappmusic;
+&cfgappparking;
+&cfgappphonequickdial;
+&cfgappplay;
+&cfgapprecord;
+&cfgappsaytime;
+&cfgappvoicemail;
+&cfgdialoutnormal;
+&cfgivrautoatt;
+&cfgivrraw;
+&cfgoptcodec;
+&cfgoptdid;
+&cfgoptenum;
+&cfgoptlogger;
+&cfgoptmanager;
+&cfgoptmodule;
+&cfgoptmonitor;
+&cfgoptmusic;
+&cfgoptoppanel;
+&cfgoptpbx;
+&cfgoptpickup;
+&cfgoptrawcfg;
+&cfgoptrtp;
+&cfgoptsettings;
+&cfgoptsipnetwork;
+&cfgopttransfer;
+&cfgoptuser;
+&cfgoptvoicemail;
+&cfgoptzapaudio;
+&cfgoptzapphone;
+&cfgoptzappri;
+&cfgoptzaptrunk;
+&cfgphoneepygisip;
+&cfgphoneextension;
+&cfgphoneiax;
+&cfgphonemgcp;
+&cfgphonequeue;
+&cfgphonesip;
+&cfgphonezap;
+&cfgtrunkcapimsn;
+&cfgtrunkcapi;
+&cfgtrunkfwdiax;
+&cfgtrunkiaxtel;
+&cfgtrunkiaxtrunk;
+&cfgtrunksiptrunk;
+&cfgtrunkzaphfc;
+&cfgtrunkzappbx;
+&cfgtrunkzappri;

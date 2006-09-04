@@ -4,9 +4,9 @@ SOURCE=manual
 LANG=en
 OUTPUT=../../build-area/$(LANG)
 DSLPDF=/usr/share/sgml/docbook/stylesheet/dsssl/ldp/ldp.dsl
-#DSLHTML=../destar.dsl\#html
+DSLHTML=../destar.dsl\#html
 #DSLPDF=../destar.dsl\#pdf
-
+DB_IMAGES=/usr/share/sgml/docbook/stylesheet/dsssl/modular/images
 all: html rtf pdf ps clean
 
 #TODO: automate spell checking
@@ -17,11 +17,13 @@ all: html rtf pdf ps clean
 html: $(SOURCE).xml
 	echo "Generating HTML OUTPUT..."
 	mkdir -p $(OUTPUT)/html
-	#db2html $(SOURCE).xml -o $(OUTPUT)/html --dsl $(DSLHTML)
-	db2html $(SOURCE).xml -o $(OUTPUT)/html
-#	rm -rf $(SOURCE).junk $(OUTPUT)/html/images
-#	mkdir -p $(OUTPUT)/html/images
-#	cp -rp images/*.png $(OUTPUT)/html/images 
+	db2html $(SOURCE).xml -o $(OUTPUT)/html --dsl $(DSLHTML)
+	db2html -u $(SOURCE).xml -o $(OUTPUT)/html --dsl $(DSLHTML)
+	rm -rf $(SOURCE).junk $(OUTPUT)/html/images
+	mkdir -p $(OUTPUT)/html/images
+	mkdir -p $(OUTPUT)/images
+	cp -rp images/*.png $(OUTPUT)/html/images 
+	cp -rp $(DB_IMAGES)/*.gif $(OUTPUT)/images 
 	cp ../html.css $(OUTPUT)/html/
 	rm -rf $(SOURCE)
 

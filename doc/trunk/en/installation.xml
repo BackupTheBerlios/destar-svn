@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Local Variables: -->
 <!-- file: installation.xml -->
 <!-- xml-parent-document: "manual.xml" -->
 <!-- Destar Manual -->
 <!-- Distributed under the same Destar license  -->
 <!-- destar-version: 0.2  -->
-<!-- destar-revision: 434 -->
 
 <!--
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
@@ -42,13 +41,201 @@ Get and install Python. We use Python 2.4 for development, but maybe Python
 For Python 2.3 (see <xref linkend="python"/>) you can install Quixote version 1.0 or 1.2.  For Python 2.4 (see <xref linkend="python"/>) you should only install Quixote 1.2.
 	    </para>
 	    <para>
-If you can't find it in your Linux distribution, then download the source from <ulink
- url="http://www.mems-exchange.org/software/quixote/">the official project page</ulink>.
+If you can't find it in your Linux distribution, then download the source from <ulink  url="http://www.mems-exchange.org/software/quixote/">the official project page</ulink>.
+	    </para>
+
+   	</sect2>
+
+	<sect2 id="sqlite3">
+	    <title>SQLite3 and pysqlite2 (optional)</title> 
+
+	    <para>
+This is only needed for the CDR (call detail record) part. Get SQLite3 from your distribution, it should be version 3.x. If you don't find it, then install it from <ulink url="http://www.sqlite.org">the project page</ulink>.
+	    </para>
+	    <para>
+pysqlite2 is not in many distributions, but you can find it at <ulink url="http://www.pysqlite.org/">http://www.pysqlite.org</ulink>.
+	    </para>
+	    <para>
+You will also need to build asterisk using the cdr_sqlite3_custom driver found on <ulink url="http://bugs.digium.com/view.php?id=7149">the asterisk bug tracker system</ulink>. Applying the patch could be a little annoying, but it should be incluided on asterisk source after version 1.4 is out.
+	    </para>
+
+   	</sect2>
+
+	<sect2 id="pychart">
+	    <title>Pychart (optional)</title> 
+
+	    <para>
+This is needed to generate graphical reports about the number and time of the calls made with your PBX. 
+	    </para>
+	    <para>
+You can download it from <ulink url="http://home.gna.org/pychart/">the project page</ulink>, or get it from your distribution.
+	    </para>
+
+   	</sect2>
+
+	<sect2 id="oppanel">
+	    <title>Flash Operator Panel - FOP (optional)</title> 
+
+	    <para>
+DeStar has the ability to integrate with the FOP from Asternic in a simple way. You can download it from <ulink url="http://www.asternic.org">the project page</ulink>, or get it from your distribution.
+	    </para>
+	    <para>
+After you have installed the panel, edit panelutils.py and Makefile on DeStar source to match the path where the panel resides.
 	    </para>
 
    	</sect2>
 
 
+   </sect1>
+
+   <sect1 id="get_and_install">
+       <title>Get and Install DeStar</title> 
+
+	    <para>
+Where to get DeStar source code or packages for specific distributions.
+	    </para>
+
+	<sect2 id="source">
+	    <title>Getting the Source</title> 
+		<para>
+You can get the sources tarball in two formats: 
+		</para>
+
+		<itemizedlist>
+		      <listitem>
+				<para>
+Bzip2: <ulink url="http://prdownload.berlios.de/destar/destar-0.2.tar.bz2">destar-0.2.tar.bz2</ulink>
+				</para>
+		      </listitem>
+		      <listitem>
+				<para>
+Gzip: <ulink url="http://prdownload.berlios.de/destar/destar-0.2.tar.gz">destar-0.2.tar.gz</ulink>
+				</para>
+		      </listitem>
+		</itemizedlist>
+		<para>
+You can also take a look at the <ulink url="https://developer.berlios.de/project/shownotes.php?release_id=10317">release notes</ulink>.
+		</para>
+
+	</sect2>
+
+	<sect2 id="get_svn">
+	    <title>Latest svn snapshot</title>
+
+		<para>
+DeStar development is done using Subversion. To get the SVN copy of the 0.2.X version:
+		<screen>
+			<command>
+svn checkout svn://svn.berlios.de/destar/tags/0.2
+			</command>
+		</screen>
+		</para>
+
+		<para>
+To grab the last svn copy (development version):
+		<screen>
+			<command>
+svn checkout svn://svn.berlios.de/destar/trunk
+			</command>
+		</screen>
+		</para>
+
+		<para>
+You can also browse the <ulink url="http://svn.berlios.de/viewcvs/destar">Subversion repository via Web</ulink>.
+		</para>
+
+	</sect2>
+
+	<sect2 id="installit">
+	    <title>Installing from sources</title> 
+
+		<para>
+From the uncompressed sources directory run:
+		<screen>
+			<command>
+make clean install
+			</command>
+		</screen>
+		</para>
+
+		<para>
+If this is your first time with destar, you can install the example destar config file:
+		<screen>
+			<command>
+make install-examples
+			</command>
+		</screen>
+		<caution>
+			<para>
+This command overwrites your destar_cfg.py configuration file on /etc/asterisk/.
+			</para>
+		</caution>
+		</para>
+
+		<para>
+If you plan to use the flash operator panel (see <xref linkend="oppanel"/>) you need to do:
+		<screen>
+			<command>
+make install-panel
+			</command>
+		</screen>
+		<caution>
+			<para>
+You should add propper commands on your destar init file to start the panel service when starting destar daemon.
+			</para>
+		</caution>
+		</para>
+
+	</sect2>
+
+	<sect2 id="debian">
+	    <title>Debian package</title> 
+
+		<para>
+Most DeStar developers love Debian, that's why if you use Debian GNU/Linux, you should only have to run:  
+		<screen>
+			<command>
+apt-get install destar python-pysqlite2 sqlite3 python-pychart op-panel
+			</command>
+		</screen>
+And that's all ;)
+		</para>
+		<para>
+You can also download the <ulink url="http://packages.debian.org/destar">Deb file</ulink> directly.
+		</para>
+	</sect2>
+
+   </sect1>
+
+   <sect1 id="first_steps">
+       <title>First Steps</title> 
+
+	    <para>
+Please take a look at the man page for destar before starting:
+	    <screen>
+		<command>
+man destar
+		</command>
+	    </screen>
+It contains up to date information about ways to call the destar application.
+	    </para>
+
+	    <para>
+If you have all the prerequisites, then start the destar script by running 'destar' as root. You should see something like:
+	    <screen>
+# destar
+warning: Computing default hostname
+info: Medusa (V1.1) started at Thu Jul 15 09:34:18 2004
+Hostname: mnz66.mn-solutions.de
+Port:8080
+	    </screen>
+  	    <caution>
+		<para>
+Until you have configured and applied a valid Manager API Access object (see ), you will get an <guilabel>"Asterisk is not running"</guilabel> message on some actions that require remote communication with the asterisk process, like phones state and applying changes.
+		</para>
+	    </caution>
+Now point your web browser at <ulink url="http://127.0.0.1:8080">http://127.0.0.1:8080</ulink>. 
+		</para>
    </sect1>
 
 <!--

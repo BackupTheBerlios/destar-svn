@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- Local Variables: -->
 <!-- file: introduction.xml -->
 <!-- xml-parent-document: "manual.xml" -->
 <!-- DeStar Manual -->
 <!-- Distributed under the same DeStar license  -->
 <!-- destar-version: 0.2  -->
-<!-- destar-revision: 434 -->
 
 <!--
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
@@ -45,7 +44,7 @@ At that time, just as now, there were many early born Asterisk graphical interfa
 Many of them are still part of the active DeStar developers and contributors, which are listed on <ulink url="http://developer.berlios.de/projects/destar/">DeStar project page at Berlios.de</ulink>.
 	</para>
 	<para>
-Holger Schurig left the project administration around middle 2005, when Alejandro Rios (alejandro.rios at avatar dot com dot co and alerios on #destar at irc.freenode.net and #debian at irc.debian.net) continued the process.
+At around middle 2005, Alejandro Rios (alejandro.rios at avatar dot com dot co and alerios on #destar at irc.freenode.net and #debian at irc.debian.net) became the project mantainer.
 	</para>
 
    </sect1>

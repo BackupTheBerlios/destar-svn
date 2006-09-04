@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Local Variables: -->
+<!-- file: concepts.xml -->
+<!-- xml-parent-document: "manual.xml" -->
+<!-- Destar Manual -->
+<!-- Distributed under the same Destar license  -->
+<!-- destar-version: 0.2  -->
+
+<!--
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"/usr/share/xml/docbook/schema/dtd/4.2/docbookx.dtd">
+<book>
+  <chapter>
+-->
+
+    <title>General Concepts</title>
+
+    <para>This chapter is an overview of DeStar main components and their relations.</para>
+
+   <sect1 id="architecture">
+       <title>Architecture</title> 
+
+	<para>
+DeStar has a backend and a frontend. The backend provides the various configlets that hold configuration data. A configlet may contain a SIP phone, a Trunk line definition, one DeStar user, Asterisk options and so on. The backend contains the code that takes all of this configlets and produces the various Asterisk *.conf config files. You can even run it without the frontend (see man page for details).
+	</para>
+	<para>
+The frontend provides a web interface. It uses Quixote and therefore it can run under Apache with CGI, FCGI, mod_python or whatever. See the Quixote documentation for more info. For small load environments and development, we use it under a standalone webserver named Medusa. The executable python script 'destar' uses this. Just start it and point your web-browser to http://127.0.0.1:8080. For more info, please refer to <xref linkend="installation"/>.
+	</para>
+	<para>
+See the files BACKEND.txt and FRONTEND.txt on the sources for more info.
+	</para>
+
+   </sect1>
+
+
+   <sect1 id="relations">
+       <title>Configuration Objects and their Relations</title> 
+
+	<para>
+With DeStar you can concentrate on configuration objects (configlets) of an IP PBX. The following are the most important ones:
+	</para>
+	<itemizedlist>
+	      <listitem>
+	        <para>
+Virtual PBX: You can have more than one PBX on your system, and their phones and applications will be contained on separated asterisk contexts.
+		</para>
+	      </listitem>
+	      <listitem>
+	        <para>
+Phones: these are the final PBX extensions which have the information to configure hard-phones, soft-phones, ATAs, etc.
+		</para>
+	      </listitem>
+	      <listitem>
+	        <para>
+Dialouts: you can configure specific destination patterns to be used by phones and they can be routed trough several trunks.
+		</para>
+	      </listitem>
+	      <listitem>
+	        <para>
+Trunks: your system can have several trunks to make and receive calls to and from the outside world. These trunks can be shared by several Virtual PBX and Dialouts.
+		</para>
+	      </listitem>
+	      <listitem>
+	        <para>
+DIDs: you can configure DIDs for your trunks and route their calls to phones, call queues or Auto-Attendant IVRs.
+		</para>
+	      </listitem>
+	      <listitem>
+	        <para>
+Auto-Attendants:  these are small IVRs that act as wellcome messages for the Virtual PBXs.
+		</para>
+	      </listitem>
+	</itemizedlist>
+
+	<para>
+The following two figures describe the relations between these components at incoming and outgoing calls.
+	</para>
+
+	<figure>
+          <title>Incoming calls rationale</title>
+              <graphic align="center" fileref="images/incoming-calls-rationale.png" />
+        </figure>
+	<figure>
+          <title>Outgoing calls rationale</title>
+              <graphic align="center" fileref="images/outgoing-calls-rationale.png" />
+        </figure>
+
+   </sect1>
+
+   <sect1 id="user_types">
+       <title>User Types</title> 
+
+	<para>
+DeStar has three levels of users:
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+Users: they have a phone and a web interface to change some basic settings.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+Virtual PBX administrators: they can see how much people phoned on their particular Virtual PBX.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+System configurators: they define virtual PBXs, interfaces to the telephone company or VOIP-Provider, create phones, fiddle with options and create other users. They also have access to reports, call details and the operator panel.
+			</para>
+		</listitem>
+	</itemizedlist>
+	<caution>
+		<para>
+If you start DeStar for the very first time and you don't have a valid destar_cfg.py file (see <xref linkend="installit"/>), there won't be any PBX configurator. This is detected by the session manager and you will be promoted to a 'virtual config user' automatically,  without a password. Then you can go to <guimenu>Configuration -> Options -> DeStar User</guimenu> and create your first configuration user. The changes will apply after saving and restarting.
+		</para>
+	</caution>
+
+   </sect1>
+
+<!--
+  </chapter>
+</book>
+-->
+
+<!-- End -->

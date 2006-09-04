@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Local Variables: -->
+<!-- file: usage.xml -->
+<!-- xml-parent-document: "manual.xml" -->
+<!-- Destar Manual -->
+<!-- Distributed under the same Destar license  -->
+<!-- destar-version: 0.2  -->
+
+<!--
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"/usr/share/xml/docbook/schema/dtd/4.2/docbookx.dtd">
+<book>
+  <chapter>
+-->
+
+    <title>Usage</title>
+
+    <para>This chapter is an overview of DeStar possible actions for each user type.</para>
+
+   <sect1 id="configurator">
+       <title>System Configurator User</title> 
+
+	<para>
+You can define virtual PBXs, interfaces to the telephone company or VOIP-Provider, create phones, fiddle with options and create other users. You also have access to reports, call details and the operator panel.
+	</para>
+
+	<sect2 id="configuration">
+	       <title>Configuration Menu</title> 
+
+		<para>
+On this menu you can see some configuration tips to help you finish DeStar installation and you can access the various groups of configlets you can configure.
+		</para>
+		<para>
+When you finish creation and edition of your configuration objects, you have to save and apply your configuration (see <!--xref linkend="administration"/-->). If you want, you can edit the main configuration file destar_cfg.py directly and use destar in 'backend mode' (see man page for details).
+		</para>
+		<para>
+DeStar source code includes some example destar_cfg.py configuration files, and the <ulink url="http://openfacts.berlios.de/index-en.phtml?title=DeStar">community contributed wiki</ulink> has some custom configurations for common situations.
+		</para>
+		<sect3 id="configlets">
+		&configlets;
+		</sect3>
+
+	</sect2>
+
+   </sect1>
+
+<!--
+  </chapter>
+</book>
+-->
+
+<!-- End -->

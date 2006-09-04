@@ -1,27 +1,179 @@
-body { 
-    background: #FFFFFF; 
+body	{
+        background-color: #ffffff;
+        color: #000000;
+        font-family: helvetica, arial,sans-serif;
+        font-size: 12pt;
+	}
+
+table.note, table.tip, table.important, table.caution, table.warning {
+	width: 95%;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 12pt;
+        border: 2px solid #faae60;
+  	background-color: #EEEEEE;
+	color: #000000;
+	padding: 0.5em; 
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+	}
+
+.computeroutput, .command {
+        font-family: courier, courier new, monospace;
+        font-size: 11pt;
+	}
+
+table.screen {
+	width: 95%;
+	font-family: courier, courier new, monospace;
+	font-size: 12pt;
+        border: 2px solid #A9A9A9;
+  	/*background-color: #DCDCDC;*/
+  	background-color: #EEEEEE;
+	color: #000000;
+	padding: 0.5em;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+	}
+
+h2, h2.indexdiv	{
+
+	font-family: helvetica, arial, sans-serif;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #e37e12;
+	}
+
+h3
+        {
+	font-family: helvetica, arial, sans-serif;
+        font-size: 13pt;
+        font-weight: bold;
+	color: #e37e12;
+        }
+
+h4	
+	{
+	font-family: helvetica, arial, sans-serif;
+	font-size: 12pt;
+	font-weight: bold;
+	color: #e37e12;
+	}
+	
+a:link	{
+		color:	blue;
+		}
+		
+a:visited
+		{
+		color:	blue;
+		}
+	
+h1 {
+        margin : 0px 0px 0px 0px;
+        font-family: helvetica, arial, sans-serif;
+        font-size: 18pt;
+        font-weight: bold;
+        color: #e37e12;
+        }
+
+h1.sect1, h2.sect1 {
+	margin : 0px 0px 0px 0px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 18pt;
+	font-weight: bold;
+	color: #e37e12;
+	}
+
+h2.sect2, h2.title {
+	margin : 0px 0px 0px 0px;
+        font-family: helvetica, arial, sans-serif;
+        font-size: 16pt;
+        font-weight: bold;
+        color: #e37e12;
+        }
+
+h3.sect3, h3.title {
+	margin : 0px 0px 0px 0px;
+        font-family: helvetica, arial, sans-serif;
+        font-size: 14pt;
+        font-weight: bold;
+        color: #e37e12;
+        }
+
+
+h4.sect4 {
+	margin : 0px 0px 0px 0px;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 12pt;
+	font-weight: bold;
+	color: #e37e12;
+	}
+
+h1.title	{
+	font-family: helvetica, arial, sans-serif;
+	font-size: 22pt;
+	font-weight: bold;
+	color: #e37e12;
+        margin : 10px 10px 10px 10px;
+        padding: 10 0 0;
+	}
+
+body.refentry h1 {
+        margin: 0 0 0 20px;
 }
 
-h1, h2, h3, h4, h5 { 
-    color: #800000; 
-    font-family: sans-serif; 
-}
+.subtitle	{
+	font-family: helvetica, arial, sans-serif;
+	font-size: 16pt;
+	color: #666666;
+	font-weight: bold;
+        margin : 10px 10px 10px 10px;
+        padding: 0;
+	}
 
-span.term { 
-    font-weight: bold; 
-}
+b.othername	{
+	font-family: helvetica, arial, sans-serif;
+	font-size: 18pt;
+	color:#e37e12;
+	font-weight: bold;
+        margin : 10px 10px 10px 10px;
+        padding: 0;
+	}
 
-div.sidebar { 
-    background: #F0F0F0; 
-    border: 1px solid gray; 
-    padding: 5px; 
-    margin: 20px; 
-}
+.copyright, .affiliation	{
+	font-family: helvetica, arial, sans-serif;
+	font-size: 12pt;
+	color:#e37e12;
+	margin : 10px 10px 10px 10px;
+	padding: 0;
+	}
 
-pre.programlisting { 
-    background: #F0F0F0; 
-    border: 1px solid gray; 
-    padding: 2px; 
-    font-size: 10pt;
-    white-space: pre;
-}
+.author	{
+	font-family: helvetica, arial, sans-serif;
+	font-size: 12pt;
+	color:#e37e12;
+	font-weight: bold;
+	margin : 10px;
+	line-height: 1.4em;
+	}
+
+/* make guibuttons look like real buttons */
+.guibutton {
+	color: #000000;
+	font-family: helvetica, arial, sans-serif;
+	border: outset 2px #faae60;
+	background-color: #EEEEEE;
+	padding: 1px 3px;
+	font-size: 10pt;
+	text-decoration: none;
+	}
+
+/* make guimenu look like real menu */
+.guimenu, .guimenuitem, .guilabel {
+	color: #666666;
+	border: outset 2px #faae60;
+	font-family: helvetica, arial, sans-serif;
+	font-size: 12pt;
+	font-style: italic;
+	}
+
