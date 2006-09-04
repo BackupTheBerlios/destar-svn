@@ -107,7 +107,8 @@
 ; === Books only ===
 (define %generate-book-titlepage% #t)
 (define %generate-book-toc% #t)
-(define %generate-chapter-toc% #t)	;; never generate a chapter TOC in books
+;(define %generate-chapter-toc% #t)	;; never generate a chapter TOC in books
+(define ($generate-chapter-toc$) #f)	;; never generate a chapter TOC in books
 
 ; === Articles only ===
 (define %generate-article-titlepage% #t)
