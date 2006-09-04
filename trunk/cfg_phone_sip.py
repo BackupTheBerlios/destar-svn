@@ -26,6 +26,7 @@ class CfgPhoneSip(CfgPhone):
 
 	shortName = _("Normal SIP phone")
 	newObjectTitle = _("New SIP phone")
+	description = _("This is a SIP phone account, to be used by hard-phones, soft-phones, ATAs, etc.")
 	technology = "SIP"
 	
 	def createVariables(self):

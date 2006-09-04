@@ -24,10 +24,13 @@
 Generate docs for cfg_*.py
 """
 
-import language
-import sys
-import panelutils, backend
+import sys,os
+DESTAR_DOC_LANGUAGE = os.getenv('DESTAR_DOC_LANGUAGE', default='en')
 
-language.setLanguage('es')
+import language
+language.setLanguage(DESTAR_DOC_LANGUAGE)
+
+import panelutils, backend
 backend.createDocs()
+
 sys.exit(0)
