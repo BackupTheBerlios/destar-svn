@@ -1,20 +1,22 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# translation of destar.
+# Copyright (C) 2006 THE destar'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the destar package.
+# <>, 2006.
+# , fuzzy
+#  <>, 2006.
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: destar rev-437\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-28 17:45-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2006-09-04 13:15-0500\n"
+"Last-Translator: Alejandro Rios P. <alejandro.rios@avatar.com.co>\n"
+"Language-Team: es <destar-dev@lists.berlios.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: backend.py:63 ../backend.py:63
 #, python-format
@@ -2977,79 +2979,79 @@ msgstr ""
 
 #: ../cfg_phone_epygi.py:127
 msgid "E-mail"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: ../cfg_phone_ext.py:27
 msgid "New extension"
-msgstr ""
+msgstr "Nueva extensión"
 
 #: ../cfg_phone_iax.py:28
 msgid "New IAX phone"
-msgstr ""
+msgstr "Nuevo teléfono IAX"
 
 #: ../cfg_phone_mgcp.py:27
 msgid "New MGCP phone"
-msgstr ""
+msgstr "Nuevo teléfono MGCP"
 
 #: ../cfg_phone_queue.py:28
 msgid "New Call Queue"
-msgstr ""
+msgstr "Nueva cola de llamadas"
 
 #: ../cfg_phone_queue.py:75
 msgid "Announces"
-msgstr ""
+msgstr "Anuncios"
 
 #: ../cfg_phone_queue.py:80
 msgid "Announce queue position to caller?"
-msgstr ""
+msgstr "¿Informar la posición en la cola al llamante?"
 
 #: ../cfg_phone_queue.py:120
 msgid "Split file on inbound and outbound channels?"
-msgstr ""
+msgstr "¿Dividir el archivo en canales entrante y saliente?"
 
 #: ../cfg_phone_sip.py:28
 msgid "New SIP phone"
-msgstr ""
+msgstr "Nuevo teléfono SIP"
 
 #: ../cfg_phone_sip.py:127
 msgid "Voicemail email"
-msgstr ""
+msgstr "Correo electónico para el buzón de voz"
 
 #: ../cfg_phone_zap.py:28
 msgid "New ZAP phone"
-msgstr ""
+msgstr "Nuevo teléfono ZAP"
 
 #: ../cfg_phone_zap.py:54
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 #: ../cfg_trunk_capimsn.py:27
 msgid "New incoming ISDN using CAPI"
-msgstr ""
+msgstr "Nueva RDSI de entrada usando CAPI"
 
 #: ../cfg_trunk_capi.py:30
 msgid "New outgoing ISDN using CAPI"
-msgstr ""
+msgstr "Nueva RDSI de salida usando CAPI"
 
 #: ../cfg_trunk_fwdiax.py:27
 msgid "New VOIP-Provider FreeworldDialup (IAX) trunk"
-msgstr ""
+msgstr "Nueva troncal con Freeworld Dialup (IAX)"
 
 #: ../cfg_trunk_iax.py:28
 msgid "New standard IAX trunk"
-msgstr ""
+msgstr "Nueva troncal estándar IAX"
 
 #: ../cfg_trunk_iaxtel.py:27
 msgid "New VOIP-Provider Iaxtel trunk"
-msgstr ""
+msgstr "Nueva troncal Iaxtel"
 
 #: ../cfg_trunk_sip.py:28
 msgid "New standard SIP trunk"
-msgstr ""
+msgstr "Nueva troncal estándar SIP"
 
 #: ../cfg_trunk_sip.py:39
 msgid "Register with remote host?"
-msgstr ""
+msgstr "¿Registrar con el equipo remoto?"
 
 #: ../cfg_trunk_sip.py:42
 msgid "Bypass auth for incoming calls?"
@@ -3061,44 +3063,44 @@ msgstr ""
 
 #: ../cfg_trunk_zappbx.py:27
 msgid "PBX ZAP trunk"
-msgstr ""
+msgstr "Troncal ZAP PBX"
 
 #: ../cfg_trunk_zappbx.py:28
 msgid "New PBX ZAP trunk"
-msgstr ""
+msgstr "Nueva troncal ZAP PBX"
 
 #: ../cfg_trunk_zappbx.py:46
 msgid "Outbound prefix"
-msgstr ""
+msgstr "Prefijo de salida"
 
 #: ../cfg_trunk_zappbx.py:46
 msgid "Used to call through a PBX"
-msgstr ""
+msgstr "Utilizada para realizar llamadas a través de una PBX"
 
 #: ../cfg_trunk_zappri.py:29
 msgid "New standard ZAP PRI trunk"
-msgstr ""
+msgstr "Nueva troncal estándar ZAP PRI"
 
 #: ../cfg_trunk_zappri.py:56
 msgid "Calls from PRI channel(s)"
-msgstr ""
+msgstr "Llamadas desde canal(es) PRI"
 
 #: ../cfg_trunk_zap.py:28
 msgid "New standard ZAP trunk"
-msgstr ""
+msgstr "Nueva troncal estándar ZAP"
 
 #: ../cfg_trunk_zap.py:45
 msgid "Calls from ZAP trunk"
-msgstr ""
+msgstr "Llamadas desde la troncal ZAP"
 
 #: ../configlets.py:615 ../configlets.py:619 ../configlets.py:613
 msgid "Name should not contain '-' or spaces"
-msgstr ""
+msgstr "El nombre no debe contener «-» o espacios"
 
 #: ../configlets.py:768 ../configlets.py:772 ../configlets.py:791
 #: ../configlets.py:792
 msgid "Price/Account_code for this pattern"
-msgstr ""
+msgstr "Precio/Código_de_cuenta para este patrón"
 
 #: ../ConfigHelper.ptl:200
 msgid "Cascade Delete"
@@ -3961,3 +3963,4 @@ msgstr ""
 #: ../page_user_settings.ptl:60
 msgid "Forward call when timeout/unavailable to"
 msgstr ""
+
