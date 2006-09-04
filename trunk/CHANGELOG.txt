@@ -1,3 +1,6 @@
+2006-09-04
+* Applied missing changes in Templates.ptl from patch #1090. Thanks to alenvers. 
+
 2006-08-28
 * Fixed bug on pbx dependencies not created for sip phones.
 * Make command-line-only backend mode work again using 'destar -b'
