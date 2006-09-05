@@ -1,5 +1,6 @@
 2006-09-05
-* Reordered config menu, the real one didn't agree with each _q_menupos
+* Reordered config menu, the real one didn't agree with each _q_menupos. 
+* sort() function for submenus was missed
 
 2006-09-04
 * Applied missing changes in Templates.ptl from patch #1090. Thanks to alenvers. Closes [ Bug #8014 ] _q_disc and _q_title translation not displayed. 

@@ -27,7 +27,7 @@ _q_parent  = 'page_config'
 _q_title   = _("Codecs")
 _q_desc    = _("Audio codecs to use on SIP and IAX channels.")
 _q_link    = 'codecs'
-_q_menupos = 50
+_q_menupos = 80
 _q_level   = 3
 
 
