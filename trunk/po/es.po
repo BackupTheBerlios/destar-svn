@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: destar rev-437\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-28 17:45-0500\n"
-"PO-Revision-Date: 2006-09-04 23:23-0500\n"
+"PO-Revision-Date: 2006-09-05 00:33-0500\n"
 "Last-Translator: Alejandro Rios P. <alejandro.rios@avatar.com.co>\n"
 "Language-Team: es <destar-dev@lists.berlios.de>\n"
 "MIME-Version: 1.0\n"
@@ -3366,7 +3366,7 @@ msgstr "Costo por año"
 
 #: ../page_stats_callsstats.ptl:227 ../page_stats_calls.ptl:226
 msgid "Sorry, this kind of query is not supported yet"
-msgstr ""
+msgstr "Lamentablemente, esta clase de búsqueda aún no está soportada"
 
 #: ../page_stats_callsstats.ptl:231 ../page_stats_calls.ptl:230
 msgid "Statistics of Calls by Date:"
@@ -3397,138 +3397,138 @@ msgstr "Estadísticas de destino"
 
 #: ../page_stats_dialouts.ptl:36 ../page_stats_dialouts.ptl:35
 msgid "Statistics for Dialout Entries"
-msgstr ""
+msgstr "Estadísticas para las entradas de destino"
 
 #: ../page_stats_dialouts.ptl:51 ../page_stats_phone.ptl:49
 #: ../page_stats_trunks.ptl:50 ../page_stats_dialouts.ptl:67
 #: ../page_stats_phone.ptl:70 ../page_stats_trunks.ptl:66
 msgid "From:"
-msgstr ""
+msgstr "De:"
 
 #: ../page_stats_dialouts.ptl:70 ../page_stats_phone.ptl:68
 #: ../page_stats_trunks.ptl:69 ../page_stats_dialouts.ptl:86
 #: ../page_stats_phone.ptl:89 ../page_stats_trunks.ptl:86
 msgid "To:"
-msgstr ""
+msgstr "A:"
 
 #: ../page_stats_dialouts.ptl:116 ../page_stats_dialouts.ptl:119
 #: ../page_stats_phone.ptl:114 ../page_stats_phone.ptl:117
 #: ../page_stats_trunks.ptl:114 ../page_stats_trunks.ptl:117
 msgid "No one Match"
-msgstr ""
+msgstr "Ninguna coincidencia"
 
 #: ../page_stats_dialouts.ptl:159 ../page_stats_phone.ptl:157
 msgid "Incomming Calls per Dialout Entry"
-msgstr ""
+msgstr "Llamadas entrantes por Destino"
 
 #: ../page_stats_dialouts.ptl:160 ../page_stats_dialouts.ptl:162
 #: ../page_stats_phone.ptl:158 ../page_stats_phone.ptl:160
 #: ../page_stats_dialouts.ptl:168 ../page_stats_phone.ptl:175
 msgid "Dialout Name"
-msgstr ""
+msgstr "Nombre del destino"
 
 #: ../page_stats_dialouts.ptl:161 ../page_stats_phone.ptl:159
 #: ../page_stats_dialouts.ptl:167 ../page_stats_phone.ptl:174
 msgid "Outgoing Calls per Dialout Entry"
-msgstr ""
+msgstr "Llamadas salientes por Destino"
 
 #: ../page_stats_dialouts.ptl:168 ../page_stats_dialouts.ptl:171
 #: ../page_stats_phone.ptl:178
 msgid "Statistics of Calls by Dialout Entry:"
-msgstr ""
+msgstr "Estadísticas de llamadas por Destino:"
 
 #: ../page_stats_phone.ptl:30 ../page_stats_phone.ptl:34
 msgid "Extension Statistics"
-msgstr ""
+msgstr "Estadísticas de la extensión"
 
 #: ../page_stats_phone.ptl:31 ../page_stats_phone.ptl:35
 msgid "Statistics for an Extension"
-msgstr ""
+msgstr "Estadísticas para una Extensión"
 
 #: ../page_stats_phone.ptl:166
 msgid "Statistics of Extension Calls by Dialout Entry:"
-msgstr ""
+msgstr "Estadísticas de llamadas de una extensión por patrón de destino"
 
 #: ../page_stats.ptl:25 ../page_stats.ptl:38
 msgid "Statistics"
-msgstr ""
+msgstr "Estadísticas"
 
 #: ../page_stats.ptl:26
 msgid "Global PBX statistics and CDR"
-msgstr ""
+msgstr "Estadísticas globales de la PBX y CDR"
 
 #: ../page_stats_trunks.ptl:34
 msgid "Trunk Statistics"
-msgstr ""
+msgstr "Estadísticas de Troncales"
 
 #: ../page_stats_trunks.ptl:35
 msgid "Statistics for Trunks"
-msgstr ""
+msgstr "Estadísticas de las Troncales"
 
 #: ../page_stats_trunks.ptl:158 ../page_stats_trunks.ptl:179
 msgid "Incomming Calls per Trunk"
-msgstr ""
+msgstr "Llamadas entrantes por troncal"
 
 #: ../page_stats_trunks.ptl:159 ../page_stats_trunks.ptl:161
 #: ../page_stats_trunks.ptl:180 ../page_stats_trunks.ptl:182
 msgid "Trunk Name"
-msgstr ""
+msgstr "Nombre de la troncal"
 
 #: ../page_stats_trunks.ptl:160 ../page_stats_trunks.ptl:181
 msgid "Outgoing Calls per Trunk"
-msgstr ""
+msgstr "Llamadas salientes por troncal"
 
 #: ../page_stats_trunks.ptl:167 ../page_stats_trunks.ptl:185
 msgid "Statistics of Calls by Trunk:"
-msgstr ""
+msgstr "Estadísticas de llamadas por troncal:"
 
 #: ../page_user_quickdiallist.ptl:28 ../page_user_quickdiallist.ptl:29
 msgid "Quick Dial List"
-msgstr ""
+msgstr "Lista de marcación rápida"
 
 #: ../page_user_quickdiallist.ptl:46
 msgid "Global Shorcuts and Final Destinations"
-msgstr ""
+msgstr "Atajos globales y destinos finales"
 
 #: ../page_user_quickdiallist.ptl:54
 msgid "No Global Shorcuts Found on Database"
-msgstr ""
+msgstr "No se encontraron atajos globales en la base de datos"
 
 #: ../page_user_quickdiallist.ptl:60
 msgid "Private Shorcuts and Final Destinations"
-msgstr ""
+msgstr "Atajos privados y destinos finales"
 
 #: ../page_user_quickdiallist.ptl:68
 msgid "No Private Shorcuts Found on Database"
-msgstr ""
+msgstr "No se encontraron atajos privados en la base de datos"
 
 #: ../StatsHelper.ptl:111
 msgid "Number of Calls"
-msgstr ""
+msgstr "Número de llamadas"
 
 #: ../StatsHelper.ptl:114
 msgid "Answered Calls"
-msgstr ""
+msgstr "Llamadas contestadas"
 
 #: ../StatsHelper.ptl:115
 msgid "Not Answered Calls"
-msgstr ""
+msgstr "Llamadas sin contestar"
 
 #: ../StatsHelper.ptl:116
 msgid "Busy Calls"
-msgstr ""
+msgstr "Llamadas a números ocupados"
 
 #: ../StatsHelper.ptl:117
 msgid "Failed Calls"
-msgstr ""
+msgstr "Llamadas fallidas"
 
 #: ../StatsHelper.ptl:158
 msgid "Calls"
-msgstr ""
+msgstr "Llamadas"
 
 #: ../StatsHelper.ptl:161
 msgid "Not Answered"
-msgstr ""
+msgstr "Sin contestar"
 
 #: ../destar:43
 #, python-format
@@ -3539,122 +3539,127 @@ msgid ""
 "you are welcome to redistribute it under certain conditions;\n"
 "see the included files GPL-2.txt and COPYRIGHT.txt\n"
 msgstr ""
+"DeStar·%s,·Copyright·(C)·2005·by·Holger·Schurig·and·contributors.\n"
+"\n"
+"DeStar·comes·with·ABSOLUTELY·NO·WARRANTY.·This·is·free·software,\n"
+"you·are·welcome·to·redistribute·it·under·certain·conditions;\n"
+"see·the·included·files·GPL-2.txt·and·COPYRIGHT.txt\n"
 
 #: ../destar:51
 msgid "DeStar: Asterisk Management web interface"
-msgstr ""
+msgstr "DeStar: Interfaz web de administración de Asterisk"
 
 #: ../destar:53
 msgid "Usage:"
-msgstr ""
+msgstr "Uso:"
 
 #: ../destar:54
 #, python-format
 msgid "  %s [options]: normal execution"
-msgstr ""
+msgstr "  :% [opciones]: ejecución normal"
 
 #: ../destar:55
 #, python-format
 msgid "  %s -h|--help: print this text and exit peacefully"
-msgstr ""
+msgstr "  %s -h|--help: imprime este texto de ayuda y termina de forma pacífica"
 
 #: ../destar:56
 #, python-format
 msgid "  %s -v|--version: only print version information"
-msgstr ""
+msgstr "  %s -v|--version: sólo imprime la información sobre la versión"
 
 #: ../destar:58
 msgid "Options:"
-msgstr ""
+msgstr "Opciones:"
 
 #: ../destar:59
 msgid "  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID"
-msgstr ""
+msgstr "  -p <pid>  | --pid=<pid>: utilizar <pid> para almacenar el número de identificación de proceso «PID» del demonio"
 
 #: ../destar:60
 msgid "  -d | --daemonize: run in the background"
-msgstr ""
+msgstr "  -d | --daemonize: ejecutar en segundo plano"
 
 #: ../destar:61
 msgid "  -r <port> | --port=<port>: run on port <port> (default: 8080)"
-msgstr ""
+msgstr "  -r <puerto> | --port=<puerto>: escuchar en el puerto <puerto> (por omisión es el 8080)"
 
 #: ../destar:68 ../destar:70 ../destar:69
 msgid "DeStar: Command-line parsing error. Aborting."
-msgstr ""
+msgstr "DeStar: Error en el análisis de la línea de comandos. Abortando."
 
 #: ../destar:90 ../destar:104 ../destar:98
 msgid "Error: rport (-r <num>/--port=<num> must be a number)"
-msgstr ""
+msgstr "Error: rport (-r <núm>/--port=<núm> debe ser un número)"
 
 #: ../cdrutils.py:28
 msgid "Note: you should install python-pysqlite2 to have CDR functionality"
-msgstr ""
+msgstr "Nota: usted debe instalar python-pysqlite2 para hacer uso de la funcionalidad de CDR"
 
 #: ../cdrutils.py:36
 #, python-format
 msgid "Note: you don't seem to have access to %s yet"
-msgstr ""
+msgstr "Nota: al parecer, usted aún no tiene acceso a %s"
 
 #: ../cfg_opt_monitor.py:27
 msgid "One Touch Monitor"
-msgstr ""
+msgstr "Supervisión en caliente"
 
 #: ../cfg_opt_monitor.py:28
 msgid "Touch Monitor Extension"
-msgstr ""
+msgstr "Extensión para supervisión en caliente"
 
 #: ../cfg_opt_monitor.py:29
 msgid "Extension to dial to start monitoring a call."
-msgstr ""
+msgstr "Extensión a marcar para iniciar el monitoreo de llamadas."
 
 #: ../cfg_opt_transfer.py:27 ../cfg_opt_transfer.py:28
 msgid "Transfer Extensions"
-msgstr ""
+msgstr "Extensiones de transferencia"
 
 #: ../cfg_opt_transfer.py:29
 msgid "Extensions to dial to transfer a call."
-msgstr ""
+msgstr "Extensión a marcar para transferir una llamada."
 
 #: ../cfg_opt_transfer.py:33
 msgid "Blind Transfer Extension"
-msgstr ""
+msgstr "Extensión para transferencia inmediata"
 
 #: ../cfg_opt_transfer.py:34
 msgid "Attended Transfer Extension"
-msgstr ""
+msgstr "Extensión para transferencia consultada"
 
 #: ../cfg_opt_transfer.py:35
 msgid "Number of seconds to wait between digits when transfering a call"
-msgstr ""
+msgstr "Número de segundos que se deben esperar entre dígitos cuando se transfiere una llamada"
 
 #: ../cfg_opt_transfer.py:35
 msgid "Default is 3 seconds"
-msgstr ""
+msgstr "El valor por omisión es de 3 segundos"
 
 #: ../cfg_opt_transfer.py:36
 msgid "Timeout for answer on attended transfer"
-msgstr ""
+msgstr "Tiempo máximo para consulta en la transferencia"
 
 #: ../cfg_opt_transfer.py:36
 msgid "Default is 15 seconds"
-msgstr ""
+msgstr "El valor por omisión es de 15 segundos"
 
 #: ../cfg_opt_user.py:40
 msgid "Virtual PBX Administrator"
-msgstr ""
+msgstr "Administrador de la PBX Virtual"
 
 #: ../cfg_opt_user.py:65
 msgid "Please choose a Virtual PBX for this user."
-msgstr ""
+msgstr "Por favor, escoja la PBX Virtual para este usuario."
 
 #: ../cfg_phone_hunt.py:27
 msgid "Simple Hunt Group"
-msgstr ""
+msgstr "Grupo simple de extensiones"
 
 #: ../cfg_phone_hunt.py:28
 msgid "New Hunt Group for 5 extensions"
-msgstr ""
+msgstr "Nuevo grupo de 5 extensiones"
 
 #: ../cfg_phone_hunt.py:37
 msgid "Cycle until timeout?"
@@ -3666,16 +3671,16 @@ msgstr ""
 
 #: ../cfg_phone_hunt.py:39
 msgid "Phones to add to the group"
-msgstr ""
+msgstr "Teléfonos a añadir en el grupo"
 
 #: ../cfg_phone_hunt.py:40
 msgid "Phone #1"
-msgstr ""
+msgstr "Teléfono #1"
 
 #: ../cfg_phone_hunt.py:42 ../cfg_phone_hunt.py:45 ../cfg_phone_hunt.py:48
 #: ../cfg_phone_hunt.py:51 ../cfg_phone_hunt.py:54
 msgid "Repeat?"
-msgstr ""
+msgstr "¿Repetir?"
 
 #: ../cfg_phone_hunt.py:43
 msgid "Phone #2"
@@ -3796,22 +3801,22 @@ msgstr ""
 #: ../backend.py:404
 #, python-format
 msgid "Error writing up %s"
-msgstr ""
+msgstr "Error escribiendo %s"
 
 #: ../cdrutils.py:36
 #, python-format
 msgid ""
 "Note: you don't seem to have access to %s yet created by cdr_sqlite3_custom. "
 "See INSTALL.txt for details."
-msgstr ""
+msgstr "Nota: aún no hay acceso al archivo %s creado por el módulo cdr_sqlite3_custom. Vea más información en el archivo INSTALL.txt"
 
 #: ../cfg_app_callfw.py:34
 msgid "Call Forwarding if Busy"
-msgstr ""
+msgstr "Redirección de llamada si está ocupado"
 
 #: ../cfg_app_callfw.py:34
 msgid "Call Forwarding if Timeout/Unavailable"
-msgstr ""
+msgstr "Redirección de llamadas si no está disponible o se vence el tiempo"
 
 #: ../cfg_app_quickdial_phone.py:27
 msgid ""
@@ -3821,43 +3826,43 @@ msgid ""
 "list works for all extensions, by dialing dial_prefix+2_digits_key and only "
 "if the extension has an assigned dialout entry which pattern matches the "
 "final destination."
-msgstr ""
+msgstr "Extensiones para agregar/remover entradas en la lista personal de marcación rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos+*+destino_final. La extensión para remover será de la forma prefijo+clave_de_2_dígitos. La lista personal funciona para todas las extensiones marcando prefijo_de_marcado+clave_de_2_dígitos y solo si a la extensión se le ha asignado un patrón de marcado que permita alcanzar el destino final."
 
 #: ../cfg_app_quickdial_phone.py:28
 msgid "New extensions to add/remove/access personal quick dial list"
-msgstr ""
+msgstr "Nuevas extensiones para agregar/remover/acceder a la lista personal de marcación rápida"
 
 #: ../cfg_app_quickdial_phone.py:35
 msgid "Dial prefix"
-msgstr ""
+msgstr "Prefijo de marcado"
 
 #: ../cfg_dialout_normal.py:42
 msgid "Disallow calling user transfer?"
-msgstr ""
+msgstr "¿Deshabilitar la transferencia para el usuario llamante?"
 
 #: ../cfg_opt_codec.py:29
 msgid "Audio Codec"
-msgstr ""
+msgstr "Codec de audio"
 
 #: ../cfg_opt_codec.py:30
 msgid "New audio codec to be used"
-msgstr ""
+msgstr "Nuevo codec a ser utilizado"
 
 #: ../cfg_opt_codec.py:35
 msgid "Allow codec"
-msgstr ""
+msgstr "Permitir codec"
 
 #: ../cfg_opt_codec.py:37
 msgid "Use all codecs"
-msgstr ""
+msgstr "Usar todos los codecs"
 
 #: ../cfg_opt_codec.py:38
 msgid "A Law (g711a)"
-msgstr ""
+msgstr "Ley A (g711a)"
 
 #: ../cfg_opt_codec.py:39
 msgid "U Law (g711u)"
-msgstr ""
+msgstr "Ley U (g711u)"
 
 #: ../cfg_opt_codec.py:41
 msgid "ILBC"
@@ -3877,35 +3882,35 @@ msgstr ""
 
 #: ../cfg_opt_sip_audio.py:29
 msgid "Depricated: use individual 'Audio Codec' configlets instead."
-msgstr ""
+msgstr "Descontinuado: use configlets \"Codec de Audio\" individuales."
 
 #: ../cfg_opt_sip_audio.py:39
 msgid "Allow g726 codec"
-msgstr ""
+msgstr "Permitir codec g726"
 
 #: ../cfg_phone_iax.py:106
 msgid "Skip asterisk media path?"
-msgstr ""
+msgstr "¿Hacer que el flujo de voz evada a Asterisk?"
 
 #: ../cfg_phone_sip.py:149 ../cfg_phone_sip.py:150
 msgid "Monitor calls made from this extension?"
-msgstr ""
+msgstr "¿Grabar las llamadas realizadas desde esta extensión?"
 
 #: ../cfg_phone_sip.py:155 ../cfg_phone_sip.py:156
 msgid "Otherwise it will use Date-CallerIdName(CallerIdNum)-Exten"
-msgstr ""
+msgstr "De otra forma se usará Fecha-Identificador_de_Llamante-Extensión"
 
 #: ../cfg_phone_sip.py:168 ../cfg_phone_sip.py:169
 msgid "Append to existing file instead of overwriting it?"
-msgstr ""
+msgstr "¿Agregar al archivo existente en lugar de sobreescribirlo?"
 
 #: ../cfg_phone_sip.py:173 ../cfg_phone_sip.py:174
 msgid "Save audio while the channel is bridged?"
-msgstr ""
+msgstr "¿Guardar el audio mientras el canal está siendo puenteado?"
 
 #: ../cfg_phone_sip.py:178 ../cfg_phone_sip.py:179
 msgid "Heard volume factor"
-msgstr ""
+msgstr "Factor de volumen escuchado"
 
 #: ../cfg_phone_sip.py:180 ../cfg_phone_sip.py:194 ../cfg_phone_sip.py:181
 #: ../cfg_phone_sip.py:195
@@ -3954,52 +3959,52 @@ msgstr ""
 
 #: ../cfg_phone_sip.py:192 ../cfg_phone_sip.py:193
 msgid "Spoken volume factor"
-msgstr ""
+msgstr "Factor de volumen hablado"
 
 #: ../page_admin.ptl:38 ../page_owner.ptl:40
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #: ../page_admin.ptl:38 ../page_owner.ptl:40 ../page_stats.ptl:38
 #: ../page_user.ptl:38
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: ../page_admin_viewconf.ptl:29
 msgid "View/Save Configuration"
-msgstr ""
+msgstr "Ver/Guardar Configuración"
 
 #: ../page_admin_viewconf.ptl:30
 msgid "Show and Save Asterisk configuration files"
-msgstr ""
+msgstr "Ver y guardar archivos de configuración de Asterisk"
 
 #: ../page_admin_viewconf.ptl:90
 msgid "Show selected files"
-msgstr ""
+msgstr "Mostrar los archivos seleccionados"
 
 #: ../page_admin_viewconf.ptl:91
 msgid "Save all changes"
-msgstr ""
+msgstr "Guardar todos los cambios"
 
 #: ../page_admin_viewconf.ptl:108
 msgid "Save changes results"
-msgstr ""
+msgstr "Resultados de guardar cambios"
 
 #: ../page_admin_viewconf.ptl:111
 msgid "Configuration files saved"
-msgstr ""
+msgstr "Los archivos de configuración fueron guardados"
 
 #: ../page_admin_viewconf.ptl:113
 msgid ""
 "There were problems writing the configuration. Please take a look at the "
 "error logs."
-msgstr ""
+msgstr "Hubo problemas al escribir la configuración. Por favor revise los registros de errores."
 
 #: ../page_admin_viewconf.ptl:126
 msgid ""
 "WARNING: This configuration might experience grave problems because the "
 "following asterisk modules are missing on your system:"
-msgstr ""
+msgstr "ADVERTENCIA: Esta configuración puede experimentar graves problemas porque los siguientes módulos de Asterisk no están presentes en su sistema:"
 
 #: ../page_config_codecs.ptl:27
 msgid "Codecs"
@@ -4007,14 +4012,14 @@ msgstr ""
 
 #: ../page_config_codecs.ptl:28
 msgid "Audio codecs to use on SIP and IAX channels."
-msgstr ""
+msgstr "Codecs de audio a usar en los canales SIP e IAX"
 
 #: ../page_config.ptl:107
 #, python-format
 msgid ""
 "You don't seem to have access to %s yet created by cdr_sqlite3_custom. "
 "Without this file CDR reports wont be accesible trough this interface."
-msgstr ""
+msgstr "Parece que aún no hay acceso a %s, creado por el módulo cdr_sqlite3_custom. Sin esto los reportes de CDR no podrán ser vistos a través de la interfaz de DeStar."
 
 #: ../page_user.ptl:38
 msgid "Available actions"
@@ -4032,20 +4037,20 @@ msgstr ""
 
 #: ../cfg_ivr_autoatt.py:84
 msgid "i.e. hours|weekdays|monthdays|months (comma separated)"
-msgstr ""
+msgstr "p.e.: horas|días_a_la_semana|días_al_mes|meses (separados por comas)"
 
 #: ../cfg_opt_zap_trunk.py:31
 msgid "Try to detect busy signal to detect if remote site hung up"
-msgstr ""
+msgstr "Tratar de detectar la señal de ocupado para detectar el cuelgue remoto"
 
 #: ../cfg_phone_sip.py:29
 msgid ""
 "This is a SIP phone account, to be used by hard-phones, soft-phones, ATAs, "
 "etc."
-msgstr ""
+msgstr "Esta es una cuenta de extensión SIP para ser utilizada por teléfonos IP hardware y software, ATAs, etc."
 
 #: ../configlets.py:696
 #, python-format
 msgid "The configlet '%s' does not have a description"
-msgstr ""
+msgstr "El configlet '%s' no tiene una descripción válida"
 
