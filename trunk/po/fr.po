@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-04 13:56-0500\n"
+"POT-Creation-Date: 2006-09-04 22:03-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3646,4 +3646,8 @@ msgstr ""
 #: ../configlets.py:696
 #, python-format
 msgid "The configlet '%s' does not have a description"
+msgstr ""
+
+#: ../cfg_opt_zap_trunk.py:31
+msgid "Try to detect busy signal to detect if remote site hung up"
 msgstr ""
