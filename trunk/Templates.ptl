@@ -267,6 +267,7 @@ def getMenu():
 				for sub in e._q_menu:
 					parent_name = sub._q_parent.__name__[5:]
 					submenu.append( (sub._q_menupos, '/'.join([root,parent_name,sub._q_link]), sub._q_title, []) )
+			submenu.sort()
 
 			m.append( (e._q_menupos, '/'.join([root,e._q_link]), e._q_title, submenu) )
 		m.sort()
