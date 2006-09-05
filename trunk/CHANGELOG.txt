@@ -1,6 +1,8 @@
 2006-09-05
 * Reordered config menu, the real one didn't agree with each _q_menupos. 
 * sort() function for submenus was missed
+* Changes in Makefile to allow use it on FreeBSD. (And close bug #8004) It still needs some testing, 
+  I don't have a FreeBSD box.
 
 2006-09-04
 * Applied missing changes in Templates.ptl from patch #1090. Thanks to alenvers. Closes [ Bug #8014 ] _q_disc and _q_title translation not displayed. 

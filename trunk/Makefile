@@ -16,11 +16,11 @@ PANEL_HTML_DIR=/usr/share/op-panel/flash
 SYS_MEDUSA=0
 
 clean:
-	find -name "*.pyc" -o \
-	     -name "*.ptlc" -o \
-	     -name "*.ptlo" -o \
-	     -name "*.au" -o \
-	     -name "*.mo" | xargs rm -f || true
+	(find -name "*.pyc" ; \
+	 find -name "*.ptlc" ; \
+	 find -name "*.ptlo" ; \
+	 find -name "*.au" ; \
+	 find -name "*.mo" ) | xargs rm -f || true
 	cd po && $(MAKE) clean
 
 clean-panel:
@@ -45,7 +45,7 @@ install:	languages
 	install -m 644 *.py *.ptl $(PYDIR)/
 	install -m 755 Server.py $(PYDIR)/
 	install -d $(LOCALEDIR)
-	cp -fa lang/* $(LOCALEDIR)
+	cp -fRp lang/* $(LOCALEDIR)
 	install -d $(PYDIR)/misc
 	install -m 644 misc/*.py $(PYDIR)/misc/
 ifneq ($(SYS_MEDUSA),1)
@@ -55,7 +55,7 @@ ifneq ($(SYS_MEDUSA),1)
 endif
 	install -m 755 destar $(PYDIR)/destar.py
 	install -d $(PAGES_DIR)
-	cp -a static/* $(PAGES_DIR)
+	cp -fRp static/* $(PAGES_DIR)
 	install -d $(SBINDIR)
 	install -m 755 misc/destar.sh $(SBINDIR)/destar
 	install -d $(MANDIR)
