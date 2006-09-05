@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: destar rev-437\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-28 17:45-0500\n"
-"PO-Revision-Date: 2006-09-04 22:54-0500\n"
+"PO-Revision-Date: 2006-09-04 23:23-0500\n"
 "Last-Translator: Alejandro Rios P. <alejandro.rios@avatar.com.co>\n"
 "Language-Team: es <destar-dev@lists.berlios.de>\n"
 "MIME-Version: 1.0\n"
@@ -3370,14 +3370,14 @@ msgstr ""
 
 #: ../page_stats_callsstats.ptl:231 ../page_stats_calls.ptl:230
 msgid "Statistics of Calls by Date:"
-msgstr ""
+msgstr "Estadísticas de las llamadas por fecha:"
 
 #: ../page_stats_callsstats.ptl:236 ../page_stats_dialouts.ptl:173
 #: ../page_stats_phone.ptl:171 ../page_stats_trunks.ptl:172
 #: ../page_stats_calls.ptl:235 ../page_stats_dialouts.ptl:176
 #: ../page_stats_phone.ptl:183 ../page_stats_trunks.ptl:190
 msgid "Results"
-msgstr ""
+msgstr "Resultados"
 
 #: ../page_stats_callsstats.ptl:244 ../page_stats_dialouts.ptl:181
 #: ../page_stats_trunks.ptl:180 ../page_stats_calls.ptl:243
@@ -3385,15 +3385,15 @@ msgstr ""
 #: ../page_stats_trunks.ptl:198
 msgid ""
 "You need to install pychart and use a cdr with sqlite to get these statistics"
-msgstr ""
+msgstr "Es necesario instalar pychart y hacer uso de un cdr con sqlite para obtener estas estadísticas"
 
 #: ../page_stats_cdr.ptl:140 ../page_stats_cdr.ptl:141
 msgid "PBX"
-msgstr ""
+msgstr "PBX"
 
 #: ../page_stats_dialouts.ptl:35 ../page_stats_dialouts.ptl:34
 msgid "Dialout Statistics"
-msgstr ""
+msgstr "Estadísticas de destino"
 
 #: ../page_stats_dialouts.ptl:36 ../page_stats_dialouts.ptl:35
 msgid "Statistics for Dialout Entries"
