@@ -7,17 +7,17 @@
 # 
 # 
 #, fuzzy
- msgid ""
- msgstr ""
+msgid ""
+msgstr ""
 "Project-Id-Version: destar rev-437\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-28 17:45-0500\n"
-"PO-Revision-Date: 2006-09-04 19:56-0500\n"
+"PO-Revision-Date: 2006-09-04 22:54-0500\n"
 "Last-Translator: Alejandro Rios P. <alejandro.rios@avatar.com.co>\n"
 "Language-Team: es <destar-dev@lists.berlios.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: backend.py:63 ../backend.py:63
 #, python-format
@@ -1127,7 +1127,7 @@ msgstr "Opciones de troncal Zaptel"
 
 #: cfg_opt_zap_trunk.py:28 ../cfg_opt_zap_trunk.py:31
 msgid "Try to detect busy signal to detect if remove site hung up"
-msgstr ""
+msgstr "Tratar de detectar la señal de ocupado si el sitio remoto cuelga"
 
 #: cfg_opt_zap_trunk.py:29 ../cfg_opt_zap_trunk.py:32
 msgid "Wait how many busy signals before hanging up"
@@ -1712,7 +1712,7 @@ msgstr "Señalización PRI en el lado de la red"
 
 #: cfg_trunk_zappri.py:33 ../cfg_trunk_zappri.py:37
 msgid "Switch type"
-msgstr ""
+msgstr "Cambiar tipo"
 
 #: cfg_trunk_zappri.py:43 cfg_trunk_zap.py:33 ../cfg_trunk_zappbx.py:37
 #: ../cfg_trunk_zappri.py:47 ../cfg_trunk_zap.py:36
@@ -1801,15 +1801,15 @@ msgstr ""
 
 #: panelutils.py:98 ../panelutils.py:98
 msgid "Meetme"
-msgstr ""
+msgstr "Sala de Conferencia"
 
 #: panelutils.py:102 ../panelutils.py:102
 msgid "PARK"
-msgstr ""
+msgstr "Parqueo"
 
 #: panelutils.py:106 ../panelutils.py:106
 msgid "Park"
-msgstr ""
+msgstr "Parqueo"
 
 #: panelutils.py:124 ../panelutils.py:124
 msgid "Restarting the panel daemon ..."
@@ -2277,7 +2277,7 @@ msgid ""
 "You should enable write access to the %s directory. Without the ability to "
 "modify the Asternic Flash Operator Panel configuration files DeStar won't be "
 "integrated whit the panel."
-msgstr ""
+msgstr "Debe habilitar los permisos de escritura al directorio %s. Sin la posibilidad de editar los archivos de configuración del Panel de Operadora Flash de Asternic, DeStar no podrá estar integrado con el panel."
 
 #: page_config.ptl:116 ../page_config.ptl:116 ../page_config.ptl:120
 msgid "Configured"
@@ -2360,7 +2360,7 @@ msgstr "Depuración"
 
 #: page_debug.ptl:26 ../page_debug.ptl:26
 msgid "Various functions to debug DeStar, mostly useful for programmers"
-msgstr ""
+msgstr "Varias funciones para depurar DeStar, la mayoría solo útiles para programadores"
 
 #: page_debug_values.ptl:25 ../page_debug_values.ptl:25
 msgid "Values"
@@ -2368,7 +2368,7 @@ msgstr "Valores"
 
 #: page_debug_values.ptl:26 ../page_debug_values.ptl:26
 msgid "Dumps all values in the HTTP request"
-msgstr ""
+msgstr "Vaciar todos los valores en la petición HTTP"
 
 #: page_login.ptl:27 UserPage.ptl:111 ../page_login.ptl:26
 msgid "Login"
@@ -2397,7 +2397,7 @@ msgstr "Cerrar Sesión"
 
 #: page_logout.ptl:26 ../page_logout.ptl:26
 msgid "Logout and become a guest user"
-msgstr ""
+msgstr "Cerrar sesión y convertirse en un usuario invitado"
 
 #: page_main.ptl:28 ../page_main.ptl:28
 msgid "Main menu"
@@ -2441,7 +2441,7 @@ msgstr "Programador"
 #: page_user_info.ptl:56 page_user.ptl:53 ../page_user_info.ptl:56
 #: ../page_user.ptl:53
 msgid "Your account is disabled. "
-msgstr ""
+msgstr "Su cuenta está deshabilitada"
 
 #: page_user_info.ptl:58 page_user.ptl:55 UserUI.ptl:181
 #: ../page_user_info.ptl:58 ../page_user.ptl:55
@@ -2722,7 +2722,7 @@ msgstr "Por favor, instale Quixote > 1.2 y < 2.0"
 
 #: ../cfg_app_callfw.py:28
 msgid "New extensions to set/unset call forwarding"
-msgstr ""
+msgstr "Nuevas extensiones para programar/desprogramar la redirección de llamadas"
 
 #: ../cfg_app_callfw.py:32 ../cfg_app_conference.py:31
 #: ../cfg_app_directory.py:31 ../cfg_app_dnd.py:32 ../cfg_app_echo.py:32
@@ -2771,7 +2771,7 @@ msgstr "Nuevo directorio"
 
 #: ../cfg_app_dnd.py:27
 msgid "New extensions to Set/Unset Do not disturb"
-msgstr ""
+msgstr "Nuevas extensiones para programar/desprogramar la opción de No Molestar"
 
 #: ../cfg_app_echo.py:27
 msgid "New Echo test extension"
@@ -2779,7 +2779,7 @@ msgstr "Nueva extensión de prueba de Eco"
 
 #: ../cfg_app_meetme.py:27
 msgid "New meeting room"
-msgstr ""
+msgstr "Nueva sala de conferencia"
 
 #: ../cfg_app_milliwatt.py:27
 msgid "New milliwatt test extension"
@@ -2804,15 +2804,15 @@ msgid ""
 "will be of the form prefix+2_digits_key. The global list only works if the "
 "calling estension has been assigned a dialout with the quick dial lookup "
 "option activated."
-msgstr ""
+msgstr "Extensiones para agregar/remover entradas en la lista global de marcación rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos+*+destino_final. La extensión para remover será de la forma prefijo+clave_de_2_dígitos. La lista global solo funciona si a la extensión le ha sido asignado un patrón de destino con la opción para buscar en la lista de marcación rápida."
 
 #: ../cfg_app_quickdial_global.py:28
 msgid "New extensions to add/remove from global quick dial list"
-msgstr ""
+msgstr "Nuevas extensiones para agregar/remover de la lista global de marcación rápida"
 
 #: ../cfg_app_quickdial_global.py:34 ../cfg_app_quickdial_phone.py:33
 msgid "Setting prefix"
-msgstr ""
+msgstr "Prefijo para programar"
 
 #: ../cfg_app_quickdial_global.py:34
 msgid "don't use ** because it is for private quick dial list"
@@ -2820,7 +2820,7 @@ msgstr "no utilice ** porque es usado para la lista de marcado rápido privada"
 
 #: ../cfg_app_quickdial_global.py:35 ../cfg_app_quickdial_phone.py:34
 msgid "Unsetting prefix"
-msgstr ""
+msgstr "Prefijo para desprogramar"
 
 #: ../cfg_app_quickdial_phone.py:26
 msgid "Private Quick Dial List"
@@ -2834,15 +2834,15 @@ msgid ""
 "list works for all extensions, by dialing **+2_digits_key and only if the "
 "extension has an assigned dialout entry which pattern matches the final "
 "destination."
-msgstr ""
+msgstr "Extensiones para agregar/remover entradas en la lista personal de marcación rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos+*+destino_final. La extensión para remover será de la forma prefijo+clave_de_2_dígitos. La lista personal funciona para todas las extensiones marcando prefijo_de_marcado+clave_de_2_dígitos y solo si a la extensión se le ha asignado un patrón de marcado que permita alcanzar el destino final."
 
 #: ../cfg_app_quickdial_phone.py:28
 msgid "New extensions to add/remove from personal quick dial list"
-msgstr ""
+msgstr "Nuevas extensiones para agregar/remover de la lista personal de marcación rápida"
 
 #: ../cfg_app_quickdial_phone.py:33
 msgid "don't use ** because it is for accesing the quick dial list"
-msgstr ""
+msgstr "no usar ** porque es para acceder a la lista de marcación rápida"
 
 #: ../cfg_app_record.py:27
 msgid "New recording extension"
@@ -2870,85 +2870,85 @@ msgstr "¿Buscar en la lista de marcado rápido?"
 
 #: ../cfg_ivr_autoatt.py:28
 msgid "New auto attendant"
-msgstr ""
+msgstr "Nueva operadora automática"
 
 #: ../cfg_ivr_autoatt.py:71
 msgid "Digit to jump that extension directly"
-msgstr ""
+msgstr "Dígito para saltar a esa extensión automáticamente"
 
 #: ../cfg_ivr_autoatt.py:90
 msgid "Allow calling to all extensions of PBX"
-msgstr ""
+msgstr "Permitir la marcación a todas las extensiones de la PBX"
 
 #: ../cfg_ivr_raw.py:28
 msgid "New raw IVR"
-msgstr ""
+msgstr "Nuevo IVR en formato de Asterisk"
 
 #: ../cfg_opt_did.py:27
 msgid "New direct inward dialing (DID) number"
-msgstr ""
+msgstr "Nuevo número MDE (Marcación Directa a Extensiones)"
 
 #: ../cfg_opt_did.py:28
 msgid ""
 " Used to route a DID to an extension \n"
 "\t\t\t\t\t\tor Auto-Attendant."
-msgstr ""
+msgstr "Usado para encaminar un número MDE a una extensión \n \t\t\t\t\t\t\tu operadora automática"
 
 #: ../cfg_opt_enum.py:27
 msgid "New ENUM search domain"
-msgstr ""
+msgstr "Nuevo dominio para búsquedas ENUM"
 
 #: ../cfg_opt_manager.py:27
 msgid "New management API access"
-msgstr ""
+msgstr "Nuevo acceso al API de gestión de Asterisk"
 
 #: ../cfg_opt_music.py:27
 msgid "New background music directory"
-msgstr ""
+msgstr "Nuevo directorio para música de fondo"
 
 #: ../cfg_opt_pbx.py:28
 msgid "New Virtual PBX"
-msgstr ""
+msgstr "Nueva PBX Virtual"
 
 #: ../cfg_opt_pbx.py:29
 msgid "You can have several logically separated PBX"
-msgstr ""
+msgstr "Se pueden tener varias PBX separadas lógicamente"
 
 #: ../cfg_opt_rawcfg.py:27
 msgid "New raw config file snippet"
-msgstr ""
+msgstr "Nuevo trozo de archivo de configuración de Asterisk"
 
 #: ../cfg_opt_sip_network.py:28 ../cfg_opt_sip_network.py:29
 msgid "SIP Network Options"
-msgstr ""
+msgstr "Opciones de red para SIP"
 
 #: ../cfg_opt_sip_network.py:33
 msgid "Bind specific address?"
-msgstr ""
+msgstr "Enlazar una dirección específica?"
 
 #: ../cfg_opt_sip_network.py:34
 msgid "Bind address"
-msgstr ""
+msgstr "Dirección a enlazar"
 
 #: ../cfg_opt_sip_network.py:35
 msgid "External/Internal IP"
-msgstr ""
+msgstr "IP Externa/Interna"
 
 #: ../cfg_opt_sip_network.py:36
 msgid "Force external ip/internel network?"
-msgstr ""
+msgstr "Forzar red ip/internet externa?"
 
 #: ../cfg_opt_sip_network.py:37
 msgid "External ip"
-msgstr ""
+msgstr "IP externa"
 
 #: ../cfg_opt_sip_network.py:38
 msgid "Internal network"
-msgstr ""
+msgstr "Red interna"
 
 #: ../cfg_opt_sip_network.py:39
 msgid "Netmask"
-msgstr ""
+msgstr "Máscara de red"
 
 #: ../cfg_opt_user.py:26
 msgid "New DeStar user"
@@ -2956,7 +2956,7 @@ msgstr "Nuevo usuario DeStar"
 
 #: ../cfg_opt_user.py:36
 msgid "Associated Virtual PBX"
-msgstr ""
+msgstr "PBX Virtual asociada"
 
 #: ../cfg_opt_user.py:42
 msgid "Language"
@@ -2964,39 +2964,39 @@ msgstr "Idioma"
 
 #: ../cfg_opt_voicemail.py:42
 msgid "E-mail integration settings"
-msgstr ""
+msgstr "Integración con correo electrónico"
 
 #: ../cfg_opt_voicemail.py:43
 msgid "Activate email voicemail notifications?"
-msgstr ""
+msgstr "¿Activar notificaciones de correo de voz al correo electrónico?"
 
 #: ../cfg_opt_voicemail.py:44
 msgid "Who the e-mail notification should appear to come from"
-msgstr ""
+msgstr "¿Qué correo será el remitente de la notificación?"
 
 #: ../cfg_opt_voicemail.py:44
 msgid "destar_pbx@yourdomain"
-msgstr ""
+msgstr "pbx_destar@su_dominio"
 
 #: ../cfg_opt_voicemail.py:45
 msgid "Change the From: string"
-msgstr ""
+msgstr "Cambiar la cadena De:"
 
 #: ../cfg_opt_voicemail.py:45
 msgid "The Asterisk/DeStar PBX"
-msgstr ""
+msgstr "La PBX Destar/Asterisk"
 
 #: ../cfg_opt_voicemail.py:46
 msgid "Change email Subject"
-msgstr ""
+msgstr "Cambiar el asunto del correo"
 
 #: ../cfg_opt_voicemail.py:46
 msgid "[DeStar PBX]: New message from ${VM_CALLERID} in mailbox ${VM_MAILBOX}"
-msgstr ""
+msgstr "[PBX DeStar]: Nuevo mensaje de ${VM_CALLERID}·en el buzón·${VM_MAILBOX}"
 
 #: ../cfg_opt_voicemail.py:47
 msgid "Change email Body"
-msgstr ""
+msgstr "Cambiar el cuerpo del correo"
 
 #: ../cfg_opt_voicemail.py:48
 msgid ""
@@ -3004,31 +3004,33 @@ msgid ""
 "${VM_DUR} long message (number ${VM_MSGNUM})\\n\\tin mailbox ${VM_MAILBOX} "
 "from ${VM_CALLERID}, on ${VM_DATE}, so you might\\n\\twant to check it when "
 "you get a chance. Thanks!\\n\\n\\t\\t\\t--Asterisk/Destar PBX."
-msgstr ""
+msgstr "Estimado ${VM_NAME}:\\n\\n\\tqueremos anunciarle que le fue dejado un mensaje de duración"
+": ${VM_DUR} y número: ${VM_MSGNUM}\\n\\ten el buzón ${VM_MAILBOX} "
+"de parte de ${VM_CALLERID}, en la fecha: ${VM_DATE}, de forma que usted podrá\\n\\trevisarlo.cuando tenga la oportunidad. Gracias!\\n\\n\\t\\t\\t--PBX Asterisk/Destar."
 
 #: ../cfg_opt_voicemail.py:50
 msgid "Should the email contain the voicemail as an attachment?"
-msgstr ""
+msgstr "¿El correo debe contener el mensaje de voz como un adjunto?"
 
 #: ../cfg_opt_voicemail.py:51
 msgid "Override the default program to send e-mail"
-msgstr ""
+msgstr "Sobreescribir el programa de envío de correo por omisión"
 
 #: ../cfg_opt_voicemail.py:51
 msgid "i.e.: /usr/sbin/sendmail -t"
-msgstr ""
+msgstr "p. e.: /usr/sbin/sendmail·-t"
 
 #: ../cfg_phone_epygi.py:29
 msgid "Remote SIP extension - Epygi"
-msgstr ""
+msgstr "Extensión remota de Epygi"
 
 #: ../cfg_phone_epygi.py:30
 msgid "New SIP Epigy extension"
-msgstr ""
+msgstr "Nueva extensión SIP en Epygi"
 
 #: ../cfg_phone_epygi.py:50
 msgid "IP address of Epygi gateway"
-msgstr ""
+msgstr "Dirección IP de la pasarela Epygi"
 
 #: ../cfg_phone_epygi.py:127
 msgid "E-mail"
@@ -3108,11 +3110,11 @@ msgstr "¿Registrar con el equipo remoto?"
 
 #: ../cfg_trunk_sip.py:42
 msgid "Bypass auth for incoming calls?"
-msgstr ""
+msgstr "¿Omitir autenticación para llamadas entrantes?"
 
 #: ../cfg_trunk_zaphfc.py:27
 msgid "New ISDN using zaphfc trunk"
-msgstr ""
+msgstr "Nueva troncal RDSI usando zaphfc"
 
 #: ../cfg_trunk_zappbx.py:27
 msgid "PBX ZAP trunk"
@@ -3157,7 +3159,7 @@ msgstr "Precio/Código_de_cuenta para este patrón"
 
 #: ../ConfigHelper.ptl:200
 msgid "Cascade Delete"
-msgstr ""
+msgstr "Borrado en cascada"
 
 #: ../ConfigHelper.ptl:203
 msgid "Warning"
@@ -3166,31 +3168,31 @@ msgstr "Aviso"
 #: ../ConfigHelper.ptl:206
 msgid ""
 "The following configlets depends on this object in a direct or indirect way:"
-msgstr ""
+msgstr "Los siguientes objetos de configuración dependen de este elemento en forma directa o indirecta:"
 
 #: ../ConfigHelper.ptl:211
 msgid "Hard Dependencie:"
-msgstr ""
+msgstr "Dependencia fuerte:"
 
 #: ../ConfigHelper.ptl:214
 msgid "Soft Dependencie:"
-msgstr ""
+msgstr "Dependencia ébil:"
 
 #: ../ConfigHelper.ptl:233
 msgid ""
 "Hard dependencie: The dependent object can not exist if this object is "
 "deleted"
-msgstr ""
+msgstr "Dependencia fuerte: el objeto dependiente no puede existir si este objeto es borrado"
 
 #: ../ConfigHelper.ptl:237
 msgid ""
 "Soft dependencie. The dependent object still can exist if this object is "
 "deleted"
-msgstr ""
+msgstr "Dependencia débil: el objeto dependiente puede continuar existiendo aún si este objeto es borrado"
 
 #: ../page_admin.ptl:26
 msgid "Perform administrative actions to PBX"
-msgstr ""
+msgstr "Ejecutar acciones de administración sobre la PBX"
 
 #: ../page_config_dids.ptl:27
 msgid "DIDs"
@@ -3198,48 +3200,48 @@ msgstr "DIDs"
 
 #: ../page_config_dids.ptl:28
 msgid "Direct Inward Dialing."
-msgstr ""
+msgstr "Marcación Directa a Extensiones"
 
 #: ../page_owner_cdr.ptl:38
 msgid "Call Details For Virtual PBX"
-msgstr ""
+msgstr "Detalles de llamadas para la PBX Virtual"
 
 #: ../page_owner_cdr.ptl:73 ../page_stats_cdr.ptl:74 ../page_owner_cdr.ptl:74
 #: ../page_stats_cdr.ptl:75
 msgid "First"
-msgstr ""
+msgstr "Primero(a)"
 
 #: ../page_owner_cdr.ptl:74 ../page_stats_cdr.ptl:75 ../page_owner_cdr.ptl:75
 #: ../page_stats_cdr.ptl:76
 msgid "Previous"
-msgstr ""
+msgstr "Previo(a)"
 
 #: ../page_owner_cdr.ptl:85 ../page_stats_cdr.ptl:86 ../page_owner_cdr.ptl:86
 #: ../page_stats_cdr.ptl:87
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #: ../page_owner_cdr.ptl:86 ../page_stats_cdr.ptl:87 ../page_owner_cdr.ptl:87
 #: ../page_stats_cdr.ptl:88
 msgid "Last"
-msgstr ""
+msgstr "Último(a)"
 
 #: ../page_owner_cdr.ptl:155 ../page_owner_cdr.ptl:241
 #: ../page_stats_cdr.ptl:157 ../page_stats_cdr.ptl:244
 #: ../page_owner_cdr.ptl:156 ../page_owner_cdr.ptl:242
 #: ../page_stats_cdr.ptl:158 ../page_stats_cdr.ptl:245
 msgid "Time_of_start"
-msgstr ""
+msgstr "Tiempo_de_inicio"
 
 #: ../page_owner_cdr.ptl:263 ../page_stats_cdr.ptl:266
 #: ../page_owner_cdr.ptl:264 ../page_stats_cdr.ptl:267
 msgid "Asc. Order"
-msgstr ""
+msgstr "Orden Ascendente"
 
 #: ../page_owner_cdr.ptl:265 ../page_stats_cdr.ptl:268
 #: ../page_owner_cdr.ptl:266 ../page_stats_cdr.ptl:269
 msgid "Desc. Order"
-msgstr ""
+msgstr "Orden Descendente"
 
 #: ../page_owner_cdr.ptl:293 ../page_owner_cdr.ptl:295
 #: ../page_stats_cdr.ptl:296 ../page_stats_cdr.ptl:298
@@ -3247,34 +3249,34 @@ msgstr ""
 #: ../page_stats_cdr.ptl:300 ../page_stats_cdr.ptl:302
 #, python-format
 msgid "Showing records from %s to %s of %s <br /><br />"
-msgstr ""
+msgstr "Mostrando registros del %s al %s de %s <br·/><br·/>"
 
 #: ../page_owner.ptl:25
 msgid "Virtual PBX Owner"
-msgstr ""
+msgstr "Propietario de PBX Virtual"
 
 #: ../page_stats_callsstats.ptl:39 ../page_stats_callsstats.ptl:40
 #: ../page_stats_calls.ptl:39 ../page_stats_calls.ptl:40
 msgid "Calls Statistics"
-msgstr ""
+msgstr "Estadísticas de Llamadas"
 
 #: ../page_stats_callsstats.ptl:55 ../page_stats_calls.ptl:55
 msgid "Day:"
-msgstr ""
+msgstr "Fecha:"
 
 #: ../page_stats_callsstats.ptl:106 ../page_stats_calls.ptl:106
 msgid "Calls per Hour in a Day"
-msgstr ""
+msgstr "Llamadas por hora en un día"
 
 #: ../page_stats_callsstats.ptl:106 ../page_stats_callsstats.ptl:107
 #: ../page_stats_callsstats.ptl:108 ../page_stats_calls.ptl:106
 #: ../page_stats_calls.ptl:107 ../page_stats_calls.ptl:108
 msgid "Hours"
-msgstr ""
+msgstr "Horas"
 
 #: ../page_stats_callsstats.ptl:107 ../page_stats_calls.ptl:107
 msgid "Minutes per Hour in a Day"
-msgstr ""
+msgstr "Minutos por hora en un día"
 
 #: ../page_stats_callsstats.ptl:107 ../page_stats_callsstats.ptl:142
 #: ../page_stats_callsstats.ptl:178 ../page_stats_callsstats.ptl:179
@@ -3283,84 +3285,84 @@ msgstr ""
 #: ../page_stats_calls.ptl:180 ../page_stats_calls.ptl:181
 #: ../page_stats_calls.ptl:211
 msgid "Minutes"
-msgstr ""
+msgstr "Minutos"
 
 #: ../page_stats_callsstats.ptl:108 ../page_stats_calls.ptl:108
 msgid "Cost per Hour in a Day"
-msgstr ""
+msgstr "Costo por hora en un día"
 
 #: ../page_stats_callsstats.ptl:108 ../page_stats_callsstats.ptl:143
 #: ../page_stats_callsstats.ptl:213 ../StatsHelper.ptl:113
 #: ../page_stats_calls.ptl:108 ../page_stats_calls.ptl:142
 #: ../page_stats_calls.ptl:212
 msgid "Cost"
-msgstr ""
+msgstr "Costo"
 
 #: ../page_stats_callsstats.ptl:140 ../page_stats_calls.ptl:139
 msgid "Day"
-msgstr ""
+msgstr "Día"
 
 #: ../page_stats_callsstats.ptl:141 ../page_stats_calls.ptl:140
 msgid "Calls per Day in a Month"
-msgstr ""
+msgstr "Llamadas por día en un mes"
 
 #: ../page_stats_callsstats.ptl:141 ../page_stats_callsstats.ptl:142
 #: ../page_stats_callsstats.ptl:143 ../page_stats_calls.ptl:140
 #: ../page_stats_calls.ptl:141 ../page_stats_calls.ptl:142
 msgid "Days"
-msgstr ""
+msgstr "Días"
 
 #: ../page_stats_callsstats.ptl:142 ../page_stats_calls.ptl:141
 msgid "Minutes per Day in a Month"
-msgstr ""
+msgstr "Minutos por día en un mes"
 
 #: ../page_stats_callsstats.ptl:143 ../page_stats_calls.ptl:142
 msgid "Cost per Day in a Month"
-msgstr ""
+msgstr "Costo por día en un mes"
 
 #: ../page_stats_callsstats.ptl:175 ../page_stats_calls.ptl:177
 msgid "Month"
-msgstr ""
+msgstr "Mes"
 
 #: ../page_stats_callsstats.ptl:177 ../page_stats_calls.ptl:179
 msgid "Calls per Month in a Year"
-msgstr ""
+msgstr "Llamadas por mes en un año"
 
 #: ../page_stats_callsstats.ptl:177 ../page_stats_callsstats.ptl:178
 #: ../page_stats_callsstats.ptl:179 ../page_stats_calls.ptl:179
 #: ../page_stats_calls.ptl:180 ../page_stats_calls.ptl:181
 msgid "Months"
-msgstr ""
+msgstr "Meses"
 
 #: ../page_stats_callsstats.ptl:178 ../page_stats_calls.ptl:180
 msgid "Minutes per Month in a Year"
-msgstr ""
+msgstr "Minutos por mes en un año"
 
 #: ../page_stats_callsstats.ptl:179 ../page_stats_calls.ptl:181
 msgid "Cost per Month in a Year"
-msgstr ""
+msgstr "Costo por mes en un año"
 
 #: ../page_stats_callsstats.ptl:210 ../page_stats_calls.ptl:209
 msgid "Year"
-msgstr ""
+msgstr "Año"
 
 #: ../page_stats_callsstats.ptl:211 ../page_stats_calls.ptl:210
 msgid "Calls per Year"
-msgstr ""
+msgstr "Llamadas por año"
 
 #: ../page_stats_callsstats.ptl:211 ../page_stats_callsstats.ptl:212
 #: ../page_stats_callsstats.ptl:213 ../page_stats_calls.ptl:210
 #: ../page_stats_calls.ptl:211 ../page_stats_calls.ptl:212
 msgid "Years"
-msgstr ""
+msgstr "Años"
 
 #: ../page_stats_callsstats.ptl:212 ../page_stats_calls.ptl:211
 msgid "Minutes per Year"
-msgstr ""
+msgstr "Minutos por año"
 
 #: ../page_stats_callsstats.ptl:213 ../page_stats_calls.ptl:212
 msgid "cost per Year"
-msgstr ""
+msgstr "Costo por año"
 
 #: ../page_stats_callsstats.ptl:227 ../page_stats_calls.ptl:226
 msgid "Sorry, this kind of query is not supported yet"
@@ -4046,3 +4048,4 @@ msgstr ""
 #, python-format
 msgid "The configlet '%s' does not have a description"
 msgstr ""
+
