@@ -27,7 +27,7 @@ _q_parent  = 'page_config'
 _q_title   = _("IVRs")
 _q_desc    = _("Interactive Voice Response menus for the PBX.")
 _q_link    = 'ivrs'
-_q_menupos = 50
+_q_menupos = 60
 _q_level   = 3
 
 

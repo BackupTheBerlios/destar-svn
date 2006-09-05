@@ -26,7 +26,7 @@ _q_parent  = 'page_config'
 _q_title   = _("Options")
 _q_desc    = _("DeStar and Asterisk options and parameters")
 _q_link    = 'options'
-_q_menupos = 80
+_q_menupos = 999
 _q_level   = 3
 
 

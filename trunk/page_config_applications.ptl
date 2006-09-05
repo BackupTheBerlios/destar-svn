@@ -26,7 +26,7 @@ _q_parent  = 'page_config'
 _q_title   = _("Applications")
 _q_desc    = _("Special Asterisk Applications")
 _q_link    = 'applications'
-_q_menupos = 60
+_q_menupos = 50
 _q_level   = 3
 
 

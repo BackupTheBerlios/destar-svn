@@ -27,7 +27,7 @@ _q_parent  = 'page_config'
 _q_title   = _("Virtual PBX")
 _q_desc    = _("Virtual PBX")
 _q_link    = 'pbx'
-_q_menupos = 50
+_q_menupos = 05
 _q_level   = 3
 
 

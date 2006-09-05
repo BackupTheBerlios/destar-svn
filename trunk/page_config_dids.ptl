@@ -27,7 +27,7 @@ _q_parent  = 'page_config'
 _q_title   = _("DIDs")
 _q_desc    = _("Direct Inward Dialing.")
 _q_link    = 'dids'
-_q_menupos = 50
+_q_menupos = 70
 _q_level   = 3
 
 
