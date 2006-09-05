@@ -3679,115 +3679,115 @@ msgstr ""
 
 #: ../cfg_phone_hunt.py:43
 msgid "Phone #2"
-msgstr ""
+msgstr "Teléfono #2"
 
 #: ../cfg_phone_hunt.py:46
 msgid "Phone #3"
-msgstr ""
+msgstr "Teléfono #3"
 
 #: ../cfg_phone_hunt.py:49
 msgid "Phone #4"
-msgstr ""
+msgstr "Teléfono #4"
 
 #: ../cfg_phone_hunt.py:52
 msgid "Phone #5"
-msgstr ""
+msgstr "Teléfono #5"
 
 #: ../configlets.py:612 ../configlets.py:606
 msgid "Extension already in use on that PBX"
-msgstr ""
+msgstr "La extensión ya está en uso en esa PBX virtual"
 
 #: ../page_admin_systemstate.ptl:26
 msgid "System Status"
-msgstr ""
+msgstr "Estado del sistema"
 
 #: ../page_admin_systemstate.ptl:27
 msgid "System information of your machine"
-msgstr ""
+msgstr "Información del sistema para la máquina"
 
 #: ../page_admin_systemstate.ptl:41
 msgid "System"
-msgstr ""
+msgstr "Sistema"
 
 #: ../page_admin_systemstate.ptl:45
 msgid "Load Average in the last minute"
-msgstr ""
+msgstr "Carga promedio en el último minuto"
 
 #: ../page_admin_systemstate.ptl:46
 msgid "Load Average in the last 5 minutes"
-msgstr ""
+msgstr "Carga promedio en los últimos 5 minutos"
 
 #: ../page_admin_systemstate.ptl:55
 msgid "Processor"
-msgstr ""
+msgstr "Procesador"
 
 #: ../page_admin_systemstate.ptl:57
 msgid "Frequency"
-msgstr ""
+msgstr "Frecuencia"
 
 #: ../page_admin_systemstate.ptl:62
 msgid "Total Memory"
-msgstr ""
+msgstr "Memoria Total"
 
 #: ../page_admin_systemstate.ptl:64
 msgid "Free Memory"
-msgstr ""
+msgstr "Memoria Libre"
 
 #: ../page_admin_systemstate.ptl:68
 msgid "Disk Usage"
-msgstr ""
+msgstr "Uso del Disco"
 
 #: ../page_admin_systemstate.ptl:71
 msgid "Device"
-msgstr ""
+msgstr "Dispositivo"
 
 #: ../page_admin_systemstate.ptl:72
 msgid "FileSystem type"
-msgstr ""
+msgstr "Tipo de sistema de archivos"
 
 #: ../page_admin_systemstate.ptl:73
 msgid "Total Size"
-msgstr ""
+msgstr "Tamaño Total"
 
 #: ../page_admin_systemstate.ptl:74
 msgid "Used"
-msgstr ""
+msgstr "Usado"
 
 #: ../page_admin_systemstate.ptl:75
 msgid "Available"
-msgstr ""
+msgstr "Disponible"
 
 #: ../page_admin_systemstate.ptl:76
 msgid "Use percentage"
-msgstr ""
+msgstr "Porcentaje de Utilización"
 
 #: ../page_admin_systemstate.ptl:77
 msgid "Mount point"
-msgstr ""
+msgstr "Punto de montaje"
 
 #: ../page_admin_viewconf.ptl:29
 msgid "Save/View Configuration"
-msgstr ""
+msgstr "Ver/Guardar Configuración"
 
 #: ../page_admin_viewconf.ptl:30
 msgid "Save and show Asterisk configuration files"
-msgstr ""
+msgstr "Ver y guardar los archivos de configuración de Asterisk"
 
 #: ../page_stats_dialouts.ptl:131 ../page_stats_phone.ptl:138
 msgid "Other Calls"
-msgstr ""
+msgstr "Otras llamadas"
 
 #: ../page_stats_trunks.ptl:136
 msgid "Internal"
-msgstr ""
+msgstr "Interno"
 
 #: ../cfg_opt_music.py:39
 msgid "Please specify an application"
-msgstr ""
+msgstr "Por favor especifique una aplicación"
 
 #: ../destar:62
 msgid "  -b | --backend: run on backend mode"
-msgstr ""
+msgstr "··-b·|·--backend:·correr en modo de consola"
 
 #: ../destar:63
 msgid "  -g | --generate-docs: generate documentation"
