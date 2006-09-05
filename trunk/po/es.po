@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: destar rev-437\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-28 17:45-0500\n"
-"PO-Revision-Date: 2006-09-04 13:15-0500\n"
+"PO-Revision-Date: 2006-09-04 19:56-0500\n"
 "Last-Translator: Alejandro Rios P. <alejandro.rios@avatar.com.co>\n"
 "Language-Team: es <destar-dev@lists.berlios.de>\n"
 "MIME-Version: 1.0\n"
@@ -950,15 +950,15 @@ msgstr ""
 
 #: cfg_opt_zap_audio.py:29 ../cfg_opt_zap_audio.py:32
 msgid "Echo cancel samples"
-msgstr ""
+msgstr "Muestras para la cancelación de eco"
 
 #: cfg_opt_zap_audio.py:31 ../cfg_opt_zap_audio.py:34
 msgid "Cancel echo even on bridged calls"
-msgstr ""
+msgstr "Cancelar eco aun en llamadas a través de un puente"
 
 #: cfg_opt_zap_audio.py:32 ../cfg_opt_zap_audio.py:35
 msgid "Do early echo training"
-msgstr ""
+msgstr "Hacer entrenamiento de eco temprano"
 
 #: cfg_opt_zap_phone.py:26 ../cfg_opt_zap_phone.py:26
 #: ../cfg_opt_zap_phone.py:27
@@ -971,15 +971,15 @@ msgstr ""
 
 #: cfg_opt_zap_phone.py:29 ../cfg_opt_zap_phone.py:32
 msgid "Signal a waiting call"
-msgstr ""
+msgstr "Habilitar llamada en espera"
 
 #: cfg_opt_zap_phone.py:30 ../cfg_opt_zap_phone.py:33
 msgid "Send callerid during call waiting indication"
-msgstr ""
+msgstr "Enviar la identificación del llamante en la indicación de llamada en espera"
 
 #: cfg_opt_zap_phone.py:31 ../cfg_opt_zap_phone.py:34
 msgid "Suspend a call temporarily via a hook flash"
-msgstr ""
+msgstr "Suspender una llamada de forma temporal con un «hook flash»"
 
 #: cfg_opt_zap_phone.py:32 ../cfg_opt_zap_phone.py:35
 msgid "Allow call transfer"
@@ -991,7 +991,7 @@ msgstr "Habilitar reenvío de llamadas"
 
 #: cfg_opt_zap_phone.py:34 ../cfg_opt_zap_phone.py:37
 msgid "Read caller number with *69"
-msgstr ""
+msgstr "Leer el número del llamante con *69"
 
 #: cfg_opt_zappri.py:28 ../cfg_opt_zappri.py:28 ../cfg_opt_zappri.py:29
 msgid "Zaptel configuration for PRI"
@@ -1021,7 +1021,7 @@ msgstr ""
 msgid ""
 "Power level based on distance from the card to the service provider's "
 "gateway."
-msgstr ""
+msgstr "Nivel de potencia basado en la distancia desde la tarjeta a la pasarela del proveedor de servicio"
 
 #: cfg_opt_zappri.py:35 ../cfg_opt_zappri.py:37
 msgid "0: 0 db (CSU) / 0-133 feet (DSX-1)"
@@ -1120,7 +1120,7 @@ msgstr ""
 
 #: cfg_opt_zap_trunk.py:29 ../cfg_opt_zap_trunk.py:32
 msgid "Wait how many busy signals before hanging up"
-msgstr ""
+msgstr "Número de señales de ocupado que se deben esperar antes de colgar"
 
 #: cfg_phone_ext.py:27 ../cfg_phone_ext.py:28
 msgid "Set an 'alias' extension to a phone"
@@ -1128,8 +1128,7 @@ msgstr "Establecer una extensión \"alias\" al teléfono"
 
 #: cfg_phone_ext.py:31 ../cfg_phone_ext.py:44
 msgid "This can be used to set operator(o) or fax(fax) extensions."
-msgstr ""
-"Esto puede usarse para configurar extensiones de operadora (o) o fax (fax)"
+msgstr "Esto puede usarse para configurar extensiones de operadora (o) o fax (fax)"
 
 #: cfg_phone_ext.py:33 ../cfg_phone_ext.py:48
 msgid "Calls to the extension"
@@ -1677,7 +1676,7 @@ msgstr "Señalización del PRI, lado del consumidor"
 
 #: cfg_trunk_zappri.py:32 ../cfg_trunk_zappri.py:36
 msgid "PRI signalling, Network side"
-msgstr ""
+msgstr "Señalización PRI en el lado de la red"
 
 #: cfg_trunk_zappri.py:33 ../cfg_trunk_zappri.py:37
 msgid "Switch type"
@@ -1691,12 +1690,12 @@ msgstr "Grupo de llamadas de salida"
 #: cfg_trunk_zappri.py:48 cfg_trunk_zap.py:38 ../cfg_trunk_zappbx.py:42
 #: ../cfg_trunk_zappri.py:52 ../cfg_trunk_zap.py:41
 msgid "Reception and Transmission Gains"
-msgstr ""
+msgstr "Ganancias de recepción y transmisión"
 
 #: cfg_trunk_zappri.py:49 cfg_trunk_zap.py:39 ../cfg_trunk_zappbx.py:43
 #: ../cfg_trunk_zappri.py:53 ../cfg_trunk_zap.py:42
 msgid "Reception gain"
-msgstr ""
+msgstr "Ganancia de recepción"
 
 #: cfg_trunk_zappri.py:49 cfg_trunk_zappri.py:50 cfg_trunk_zap.py:39
 #: cfg_trunk_zap.py:40 ../cfg_trunk_zappbx.py:43 ../cfg_trunk_zappbx.py:44
@@ -1708,7 +1707,7 @@ msgstr "En dB"
 #: cfg_trunk_zappri.py:50 cfg_trunk_zap.py:40 ../cfg_trunk_zappbx.py:44
 #: ../cfg_trunk_zappri.py:54 ../cfg_trunk_zap.py:43
 msgid "Transmission gain"
-msgstr ""
+msgstr "Ganancia de transmisión"
 
 #: cfg_trunk_zappri.py:86 ../cfg_trunk_zappri.py:90
 msgid "Group already in use"
@@ -1781,7 +1780,7 @@ msgstr ""
 
 #: panelutils.py:124 ../panelutils.py:124
 msgid "Restarting the panel daemon ..."
-msgstr ""
+msgstr "Reiniciando el demonio del pánel ..."
 
 #: ConfigHelper.ptl:53 ../ConfigHelper.ptl:53
 msgid "E"
@@ -1874,7 +1873,7 @@ msgstr "Registro de llamadas"
 
 #: page_admin_cdr.ptl:38 ../page_owner_cdr.ptl:39 ../page_stats_cdr.ptl:39
 msgid "Get statistics about made and received calls"
-msgstr ""
+msgstr "Obtener estadísticas sobre las llamadas hechas y recibidas"
 
 #: page_admin_cdr.ptl:69 ../page_owner_cdr.ptl:108
 #: ../page_stats_callsstats.ptl:216 ../page_stats_cdr.ptl:109
@@ -1956,12 +1955,12 @@ msgstr "Origen"
 msgid ""
 "Wildcards: % is the 'zero or more characters' wildcard, and _ is the "
 "'exactly one character' wildcard"
-msgstr ""
+msgstr "Comodines: % es igual a «cero o más caractéres», _ es igual a «exactamente un caracter»"
 
 #: page_admin_cdr.ptl:105 ../page_owner_cdr.ptl:141 ../page_stats_cdr.ptl:143
 #: ../page_owner_cdr.ptl:142 ../page_stats_cdr.ptl:144
 msgid "You can use the same wildcards as above"
-msgstr ""
+msgstr "Se pueden utilizar los mismos comodines que arriba"
 
 #: page_admin_cdr.ptl:107 ../page_owner_cdr.ptl:143 ../page_stats_cdr.ptl:145
 #: ../page_owner_cdr.ptl:144 ../page_stats_cdr.ptl:146
@@ -1992,7 +1991,7 @@ msgstr "Asc."
 #: page_admin_cdr.ptl:111 ../page_owner_cdr.ptl:145 ../page_stats_cdr.ptl:147
 #: ../page_owner_cdr.ptl:146 ../page_stats_cdr.ptl:148
 msgid "Search between the following dates"
-msgstr ""
+msgstr "Buscar entre las siguientes fechas"
 
 #: page_admin_cdr.ptl:113 ../page_owner_cdr.ptl:146 ../page_stats_cdr.ptl:148
 #: ../page_owner_cdr.ptl:147 ../page_stats_cdr.ptl:149
@@ -2012,7 +2011,7 @@ msgstr "Buscar"
 #: page_admin_cdr.ptl:211 page_admin_cdr.ptl:213
 #, python-format
 msgid "Showing records from %s to %s of %s <br><br>"
-msgstr ""
+msgstr "Mostrando los registros desde el %s al %s de %s <br><br>"
 
 #: page_admin_cdr.ptl:222
 msgid "Duration_in_minutes"
@@ -2046,12 +2045,12 @@ msgstr "inicio"
 #: ../page_owner_cdr.ptl:302 ../page_stats_cdr.ptl:304
 #, python-format
 msgid "Total Duration of shown calls: %s min."
-msgstr ""
+msgstr "Duración total de las llamadas mostradas: %s mins."
 
 #: page_admin_cdr.ptl:276
 #, python-format
 msgid "Total Cost of shown calls: %s"
-msgstr ""
+msgstr "Costo total de las llamadas mostradas: %s"
 
 #: page_admin_panel.ptl:28 ../page_admin_panel.ptl:28
 msgid "Asternic Flash Operator Panel"
@@ -2063,7 +2062,7 @@ msgstr "Usted no tiene un pánel configurado en este momento."
 
 #: page_admin_panel.ptl:47 ../page_admin_panel.ptl:47
 msgid "You have a panel configured "
-msgstr ""
+msgstr "Usted tiene un pánel configurado"
 
 #: page_admin_panel.ptl:49 ../page_admin_panel.ptl:49
 msgid "here"
@@ -2075,7 +2074,7 @@ msgstr "Estado de la PBX"
 
 #: page_admin_pbxstate.ptl:27 ../page_admin_pbxstate.ptl:27
 msgid "Status of Asterisk/DeStar PBX"
-msgstr ""
+msgstr "Estado de la PBX Asterisk/Destar"
 
 #: page_admin_pbxstate.ptl:80 page_config_reload.ptl:44
 #: page_user_settings.ptl:105 page_user_state.ptl:138 UserUI.ptl:216
@@ -2132,7 +2131,7 @@ msgstr "Destinos para llamadas salientes"
 
 #: page_config_down.ptl:26 ../page_config_down.ptl:26
 msgid "Moves a configlet one position down"
-msgstr ""
+msgstr "Mover un «configlet» una posición abajo"
 
 #: page_config_down.ptl:41 page_config_up.ptl:41 ../page_config_down.ptl:41
 #: ../page_config_up.ptl:41
@@ -2150,11 +2149,11 @@ msgstr "IVRs"
 
 #: page_config_ivrs.ptl:28 ../page_config_ivrs.ptl:28
 msgid "Interactive Voice Response menus for the PBX."
-msgstr ""
+msgstr "Menús de Respuesta de Voz Interactiva para la PBX"
 
 #: page_config_options.ptl:27 ../page_config_options.ptl:27
 msgid "DeStar and Asterisk options and parameters"
-msgstr "DeStar y Asterisk"
+msgstr "Opciones y parámetros de DeStar y Asterisk"
 
 #: page_config_phones.ptl:26 page_config.ptl:86 ../page_config_phones.ptl:26
 #: ../page_config.ptl:86
@@ -2177,7 +2176,7 @@ msgstr "Pistas para la configuración"
 msgid ""
 "You should create a user with type 'Configurator'. Without this user, "
 "everyone connecting to DeStar can configure everything."
-msgstr ""
+msgstr "Usted debe crear un usuario del tipo «Configurador». Sin ese usuario, cualquiera que se conecte a la PBX puede modificar la conifguración"
 
 #: page_config.ptl:72 ../page_config.ptl:72
 #, python-format
@@ -2185,25 +2184,25 @@ msgid ""
 "You should enable write access to the directory /etc/asterisk. Without the "
 "ability to modify the configuration files DeStar would be pretty useless. "
 "You should 'chmod g+rwx' this directory and set it's group to one of '%s'."
-msgstr ""
+msgstr "Usted debe habilitar el acceso de escritura en el directorio /etc/asterisk. Sin la posibilidad de modificar los archivos de configuración, Destar sería inútil. Ejecute el comando «chmod g+ rwx» para ese directorio y establezca a %s como grupo propietario."
 
 #: page_config.ptl:78 ../page_config.ptl:78
 msgid ""
 "You should create a management API entry. Without this entry, DeStar can't "
 "control the Asterisk PBX software."
-msgstr ""
+msgstr "Usted debe crear una entrad de API de administración. Sin esa entrada, Destar no puede controlar el software de Asterisk PBX"
 
 #: page_config.ptl:84 ../page_config.ptl:84
 msgid ""
 "You should create a phone. Without defined phones you can't make and receive "
 "calls."
-msgstr ""
+msgstr "Usted debe crear un teléfono. Sin teléfonos definidos, usted no podrá hacer ni recibir llamadas."
 
 #: page_config.ptl:90 ../page_config.ptl:90
 msgid ""
 "You should create a trunk (connection to a Phone company or VOIP Provider). "
 "Without a trunk you can only make calls between local phones."
-msgstr ""
+msgstr "Usted debe crear una troncal (conexión a una compañía de teléfonos o un proveedor de VoIP). Sin una troncal, usted sólo puede hacer llamadas entre teléfonos internos."
 
 #: page_config.ptl:92 page_config_trunks.ptl:26 ../page_config.ptl:92
 #: ../page_config_trunks.ptl:26
@@ -2217,7 +2216,7 @@ msgid ""
 "this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 "
 "cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set "
 "it's group to one of '%s'."
-msgstr ""
+msgstr "Usted debe habilitar el acceso de escritura a /etc/zaptel.conf. Sin acceso de escritura en ese archivo usted no puede configurar los dispositivos Zaptel, como las tarjetas FXO o FXS, tarjetas T1 o E1, RDSI ZapHFC, etc. Ustede debe utilizar «chmod g+rw» sobre ese archivo y establecer a %s como grupo propietario."
 
 #: page_config.ptl:101 ../page_config.ptl:101
 #, python-format
@@ -2265,7 +2264,7 @@ msgstr "Usted debe añadir al menos un teléfono para configurar troncales"
 
 #: page_config_up.ptl:26 ../page_config_up.ptl:26
 msgid "Moves a configlet one position up"
-msgstr ""
+msgstr "Mueve un «configlet» una posición arriba"
 
 #: page_config_users.ptl:26 ../page_config_users.ptl:26
 msgid "Users"
@@ -2505,7 +2504,7 @@ msgstr "Estado del Teléfono"
 
 #: page_user_state.ptl:28 ../page_user_state.ptl:28
 msgid "Status of your phone"
-msgstr ""
+msgstr "Estado de su teléfono"
 
 #: page_user_state.ptl:48 UserUI.ptl:75 ../page_user_state.ptl:48
 msgid "State"
@@ -2662,11 +2661,11 @@ msgstr "Su nivel de acceso es"
 
 #: ../destar:105 ../destar:106 ../destar:124 ../destar:118
 msgid "Error:"
-msgstr ""
+msgstr "Error:"
 
 #: ../destar:105 ../destar:106 ../destar:124 ../destar:118
 msgid "please install Quixote > 1.2  and < 2.0"
-msgstr ""
+msgstr "Por favor, instale Quixote > 1.2 y < 2.0"
 
 #: ../cfg_app_callfw.py:28
 msgid "New extensions to set/unset call forwarding"
@@ -2685,7 +2684,7 @@ msgstr ""
 #: ../configlets.py:880 ../configlets.py:1007 ../configlets.py:899
 #: ../configlets.py:1055 ../configlets.py:900 ../configlets.py:1056
 msgid "Virtual PBX"
-msgstr ""
+msgstr "PBX Virtual"
 
 #: ../cfg_app_callfw.py:40 ../cfg_app_conference.py:36
 #: ../cfg_app_directory.py:36 ../cfg_app_dnd.py:38 ../cfg_app_echo.py:36
@@ -2706,15 +2705,15 @@ msgstr ""
 #: ../cfg_dialout_normal.py:60 ../cfg_phone_sip.py:231 ../cfg_phone_sip.py:238
 #: ../configlets.py:417
 msgid "This is a Dependency"
-msgstr ""
+msgstr "Ésta es una dependencia"
 
 #: ../cfg_app_conference.py:27
 msgid "New conference room"
-msgstr ""
+msgstr "Nueva sala de conferencia"
 
 #: ../cfg_app_directory.py:27
 msgid "New Directory"
-msgstr ""
+msgstr "Nuevo directorio"
 
 #: ../cfg_app_dnd.py:27
 msgid "New extensions to Set/Unset Do not disturb"
@@ -2722,7 +2721,7 @@ msgstr ""
 
 #: ../cfg_app_echo.py:27
 msgid "New Echo test extension"
-msgstr ""
+msgstr "Nueva extensión de prueba de Eco"
 
 #: ../cfg_app_meetme.py:27
 msgid "New meeting room"
@@ -2730,19 +2729,19 @@ msgstr ""
 
 #: ../cfg_app_milliwatt.py:27
 msgid "New milliwatt test extension"
-msgstr ""
+msgstr "Nueva extención de prueba de un milivatio"
 
 #: ../cfg_app_music.py:27
 msgid "New music-on-hold extension"
-msgstr ""
+msgstr "Nueva extensión de música-en-espera"
 
 #: ../cfg_app_parking.py:27
 msgid "New call parking extension"
-msgstr ""
+msgstr "Nueva extensión de parqueo de llamadas"
 
 #: ../cfg_app_quickdial_global.py:26
 msgid "Global Quick Dial List"
-msgstr ""
+msgstr "Lista de marcado rápido global"
 
 #: ../cfg_app_quickdial_global.py:27
 msgid ""
@@ -2763,7 +2762,7 @@ msgstr ""
 
 #: ../cfg_app_quickdial_global.py:34
 msgid "don't use ** because it is for private quick dial list"
-msgstr ""
+msgstr "no utilice ** porque es usado para la lista de marcado rápido privada"
 
 #: ../cfg_app_quickdial_global.py:35 ../cfg_app_quickdial_phone.py:34
 msgid "Unsetting prefix"
@@ -2771,7 +2770,7 @@ msgstr ""
 
 #: ../cfg_app_quickdial_phone.py:26
 msgid "Private Quick Dial List"
-msgstr ""
+msgstr "Lista de marcado rápido privada"
 
 #: ../cfg_app_quickdial_phone.py:27
 msgid ""
@@ -2793,27 +2792,27 @@ msgstr ""
 
 #: ../cfg_app_record.py:27
 msgid "New recording extension"
-msgstr ""
+msgstr "Nueva extensión de grabación"
 
 #: ../cfg_app_voicemail.py:27
 msgid "New voicemail dialog"
-msgstr ""
+msgstr "Nuevo diálogo de correo de voz"
 
 #: ../cfg_dialout_normal.py:28
 msgid "New normal dialout entry"
-msgstr ""
+msgstr "Nueva entrada de destino normal"
 
 #: ../cfg_dialout_normal.py:36
 msgid "Remove Prefix of length"
-msgstr ""
+msgstr "Remover el prefijo de longitud"
 
 #: ../cfg_dialout_normal.py:37
 msgid "Add Prefix"
-msgstr ""
+msgstr "Añadir prefijo"
 
 #: ../cfg_dialout_normal.py:40
 msgid "Search on quick dial list?"
-msgstr ""
+msgstr "¿Buscar en la lista de marcado rápido?"
 
 #: ../cfg_ivr_autoatt.py:28
 msgid "New auto attendant"
@@ -2899,7 +2898,7 @@ msgstr ""
 
 #: ../cfg_opt_user.py:26
 msgid "New DeStar user"
-msgstr ""
+msgstr "Nuevo usuario DeStar"
 
 #: ../cfg_opt_user.py:36
 msgid "Associated Virtual PBX"
@@ -2907,7 +2906,7 @@ msgstr ""
 
 #: ../cfg_opt_user.py:42
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: ../cfg_opt_voicemail.py:42
 msgid "E-mail integration settings"
@@ -3108,7 +3107,7 @@ msgstr ""
 
 #: ../ConfigHelper.ptl:203
 msgid "Warning"
-msgstr ""
+msgstr "Aviso"
 
 #: ../ConfigHelper.ptl:206
 msgid ""
@@ -3141,7 +3140,7 @@ msgstr ""
 
 #: ../page_config_dids.ptl:27
 msgid "DIDs"
-msgstr ""
+msgstr "DIDs"
 
 #: ../page_config_dids.ptl:28
 msgid "Direct Inward Dialing."
@@ -3954,13 +3953,13 @@ msgstr ""
 
 #: ../page_user.ptl:38
 msgid "Available actions"
-msgstr ""
+msgstr "Acciones disponibles"
 
 #: ../page_user_settings.ptl:59
 msgid "Forward call when busy to"
-msgstr ""
+msgstr "Redirigir las llamadas cuando esté ocupado a"
 
 #: ../page_user_settings.ptl:60
 msgid "Forward call when timeout/unavailable to"
-msgstr ""
+msgstr "Redirigir las llamadas cuando se alcance el tiempo límite o no esté disponible a "
 
