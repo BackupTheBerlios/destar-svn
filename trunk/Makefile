@@ -27,8 +27,9 @@ clean-panel:
 	rm -f $(PAGES_DIR)/panel
 
 release:
-	svn export svn+ssh://svn.berlios.de/svnroot/repos/destar/tags/0.2beta destar-0.2beta 
-	tar cjf destar-0.2beta.tar.bz2 destar-0.2beta
+	svn export svn+ssh://svn.berlios.de/svnroot/repos/destar/trunk destar-0.2.0
+	tar cjf destar-0.2.tar.bz2 destar-0.2.0
+	tar czf destar-0.2.tar.gz destar-0.2.0
 	#scp destar-$(DATE).tar.bz2 shell.berlios.de:/home/groups/ftp/pub/destar/
 	#rm -rf destar-$(DATE) destar-$(DATE).tar.bz2
 
@@ -44,6 +45,8 @@ install:	languages
 	#cp -a *.py *.ptl misc medusa $(PYDIR)
 	install -m 644 *.py *.ptl $(PYDIR)/
 	install -m 755 Server.py $(PYDIR)/
+	install -m 755 tests.py $(PYDIR)/
+	install -m 755 docs.py $(PYDIR)/
 	install -d $(LOCALEDIR)
 	cp -fRp lang/* $(LOCALEDIR)
 	install -d $(PYDIR)/misc

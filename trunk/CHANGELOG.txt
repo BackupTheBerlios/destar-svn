@@ -1,5 +1,6 @@
 2006-09-07
 * Meetme needs a timer
+* Applied patch from Debian on Makefile.
 
 2006-09-05
 * Reordered config menu, the real one didn't agree with each _q_menupos. 
