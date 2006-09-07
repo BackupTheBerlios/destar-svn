@@ -1,3 +1,6 @@
+2006-09-07
+* Applied patch #1232 to fix bug in the IAX trunks for the 0.1 tag too (better late than never .. :p)
+
 2006-08-06
 * cfg_phone_ext.py: the extension in Goto() was missed 
 
