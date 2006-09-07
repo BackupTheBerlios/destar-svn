@@ -9,10 +9,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: destar rev-437\n"
+"Project-Id-Version: destar 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-28 17:45-0500\n"
-"PO-Revision-Date: 2006-09-05 00:33-0500\n"
+"POT-Creation-Date: 2006-09-05 01:39-0500\n"
+"PO-Revision-Date: 2006-09-07 15:44-0500\n"
 "Last-Translator: Alejandro Rios P. <alejandro.rios@avatar.com.co>\n"
 "Language-Team: es <destar-dev@lists.berlios.de>\n"
 "MIME-Version: 1.0\n"
@@ -2158,7 +2158,7 @@ msgstr "Hubo problemas haciendo el backup de %s"
 
 #: page_config_dialout.ptl:27 ../page_config_dialout.ptl:27
 msgid "Dialout"
-msgstr "Destino"
+msgstr "Destinos"
 
 #: page_config_dialout.ptl:28 ../page_config_dialout.ptl:28
 msgid "Dialout entries for outgoing calls"
@@ -2277,7 +2277,10 @@ msgid ""
 "You should enable write access to the %s directory. Without the ability to "
 "modify the Asternic Flash Operator Panel configuration files DeStar won't be "
 "integrated whit the panel."
-msgstr "Debe habilitar los permisos de escritura al directorio %s. Sin la posibilidad de editar los archivos de configuración del Panel de Operadora Flash de Asternic, DeStar no podrá estar integrado con el panel."
+msgstr ""
+"Debe habilitar los permisos de escritura al directorio %s. Sin la "
+"posibilidad de editar los archivos de configuración del Panel de Operadora "
+"Flash de Asternic, DeStar no podrá estar integrado con el panel."
 
 #: page_config.ptl:116 ../page_config.ptl:116 ../page_config.ptl:120
 msgid "Configured"
@@ -2360,7 +2363,9 @@ msgstr "Depuración"
 
 #: page_debug.ptl:26 ../page_debug.ptl:26
 msgid "Various functions to debug DeStar, mostly useful for programmers"
-msgstr "Varias funciones para depurar DeStar, la mayoría solo útiles para programadores"
+msgstr ""
+"Varias funciones para depurar DeStar, la mayoría solo útiles para "
+"programadores"
 
 #: page_debug_values.ptl:25 ../page_debug_values.ptl:25
 msgid "Values"
@@ -2620,10 +2625,12 @@ msgid "Old"
 msgstr "Antiguo"
 
 #: Templates.ptl:248 ../Templates.ptl:280 ../Templates.ptl:281
+#: ../Templates.ptl:282 ../Templates.ptl:286
 msgid "Error"
 msgstr "Error"
 
 #: Templates.ptl:256 ../Templates.ptl:288 ../Templates.ptl:289
+#: ../Templates.ptl:290 ../Templates.ptl:294
 msgid "You don't have access to this page"
 msgstr "Usted no tiene acceso a esta ubicación"
 
@@ -2722,7 +2729,8 @@ msgstr "Por favor, instale Quixote > 1.2 y < 2.0"
 
 #: ../cfg_app_callfw.py:28
 msgid "New extensions to set/unset call forwarding"
-msgstr "Nuevas extensiones para programar/desprogramar la redirección de llamadas"
+msgstr ""
+"Nuevas extensiones para programar/desprogramar la redirección de llamadas"
 
 #: ../cfg_app_callfw.py:32 ../cfg_app_conference.py:31
 #: ../cfg_app_directory.py:31 ../cfg_app_dnd.py:32 ../cfg_app_echo.py:32
@@ -2771,7 +2779,8 @@ msgstr "Nuevo directorio"
 
 #: ../cfg_app_dnd.py:27
 msgid "New extensions to Set/Unset Do not disturb"
-msgstr "Nuevas extensiones para programar/desprogramar la opción de No Molestar"
+msgstr ""
+"Nuevas extensiones para programar/desprogramar la opción de No Molestar"
 
 #: ../cfg_app_echo.py:27
 msgid "New Echo test extension"
@@ -2804,11 +2813,19 @@ msgid ""
 "will be of the form prefix+2_digits_key. The global list only works if the "
 "calling estension has been assigned a dialout with the quick dial lookup "
 "option activated."
-msgstr "Extensiones para agregar/remover entradas en la lista global de marcación rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos+*+destino_final. La extensión para remover será de la forma prefijo+clave_de_2_dígitos. La lista global solo funciona si a la extensión le ha sido asignado un patrón de destino con la opción para buscar en la lista de marcación rápida."
+msgstr ""
+"Extensiones para agregar/remover entradas en la lista global de marcación "
+"rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos"
+"+*+destino_final. La extensión para remover será de la forma prefijo"
+"+clave_de_2_dígitos. La lista global solo funciona si a la extensión le ha "
+"sido asignado un patrón de destino con la opción para buscar en la lista de "
+"marcación rápida."
 
 #: ../cfg_app_quickdial_global.py:28
 msgid "New extensions to add/remove from global quick dial list"
-msgstr "Nuevas extensiones para agregar/remover de la lista global de marcación rápida"
+msgstr ""
+"Nuevas extensiones para agregar/remover de la lista global de marcación "
+"rápida"
 
 #: ../cfg_app_quickdial_global.py:34 ../cfg_app_quickdial_phone.py:33
 msgid "Setting prefix"
@@ -2834,11 +2851,19 @@ msgid ""
 "list works for all extensions, by dialing **+2_digits_key and only if the "
 "extension has an assigned dialout entry which pattern matches the final "
 "destination."
-msgstr "Extensiones para agregar/remover entradas en la lista personal de marcación rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos+*+destino_final. La extensión para remover será de la forma prefijo+clave_de_2_dígitos. La lista personal funciona para todas las extensiones marcando prefijo_de_marcado+clave_de_2_dígitos y solo si a la extensión se le ha asignado un patrón de marcado que permita alcanzar el destino final."
+msgstr ""
+"Extensiones para agregar/remover entradas en la lista personal de marcación "
+"rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos"
+"+*+destino_final. La extensión para remover será de la forma prefijo"
+"+clave_de_2_dígitos. La lista personal funciona para todas las extensiones "
+"marcando prefijo_de_marcado+clave_de_2_dígitos y solo si a la extensión se "
+"le ha asignado un patrón de marcado que permita alcanzar el destino final."
 
 #: ../cfg_app_quickdial_phone.py:28
 msgid "New extensions to add/remove from personal quick dial list"
-msgstr "Nuevas extensiones para agregar/remover de la lista personal de marcación rápida"
+msgstr ""
+"Nuevas extensiones para agregar/remover de la lista personal de marcación "
+"rápida"
 
 #: ../cfg_app_quickdial_phone.py:33
 msgid "don't use ** because it is for accesing the quick dial list"
@@ -2892,7 +2917,9 @@ msgstr "Nuevo número MDE (Marcación Directa a Extensiones)"
 msgid ""
 " Used to route a DID to an extension \n"
 "\t\t\t\t\t\tor Auto-Attendant."
-msgstr "Usado para encaminar un número MDE a una extensión \n \t\t\t\t\t\t\tu operadora automática"
+msgstr ""
+"Usado para encaminar un número MDE a una extensión \n"
+" \t\t\t\t\t\t\tu operadora automática"
 
 #: ../cfg_opt_enum.py:27
 msgid "New ENUM search domain"
@@ -2992,7 +3019,8 @@ msgstr "Cambiar el asunto del correo"
 
 #: ../cfg_opt_voicemail.py:46
 msgid "[DeStar PBX]: New message from ${VM_CALLERID} in mailbox ${VM_MAILBOX}"
-msgstr "[PBX DeStar]: Nuevo mensaje de ${VM_CALLERID}·en el buzón·${VM_MAILBOX}"
+msgstr ""
+"[PBX DeStar]: Nuevo mensaje de ${VM_CALLERID}·en el buzón·${VM_MAILBOX}"
 
 #: ../cfg_opt_voicemail.py:47
 msgid "Change email Body"
@@ -3004,9 +3032,12 @@ msgid ""
 "${VM_DUR} long message (number ${VM_MSGNUM})\\n\\tin mailbox ${VM_MAILBOX} "
 "from ${VM_CALLERID}, on ${VM_DATE}, so you might\\n\\twant to check it when "
 "you get a chance. Thanks!\\n\\n\\t\\t\\t--Asterisk/Destar PBX."
-msgstr "Estimado ${VM_NAME}:\\n\\n\\tqueremos anunciarle que le fue dejado un mensaje de duración"
-": ${VM_DUR} y número: ${VM_MSGNUM}\\n\\ten el buzón ${VM_MAILBOX} "
-"de parte de ${VM_CALLERID}, en la fecha: ${VM_DATE}, de forma que usted podrá\\n\\trevisarlo.cuando tenga la oportunidad. Gracias!\\n\\n\\t\\t\\t--PBX Asterisk/Destar."
+msgstr ""
+"Estimado ${VM_NAME}:\\n\\n\\tqueremos anunciarle que le fue dejado un "
+"mensaje de duración: ${VM_DUR} y número: ${VM_MSGNUM}\\n\\ten el buzón "
+"${VM_MAILBOX} de parte de ${VM_CALLERID}, en la fecha: ${VM_DATE}, de forma "
+"que usted podrá\\n\\trevisarlo.cuando tenga la oportunidad. Gracias!\\n\\n\\t"
+"\\t\\t--PBX Asterisk/Destar."
 
 #: ../cfg_opt_voicemail.py:50
 msgid "Should the email contain the voicemail as an attachment?"
@@ -3168,7 +3199,9 @@ msgstr "Aviso"
 #: ../ConfigHelper.ptl:206
 msgid ""
 "The following configlets depends on this object in a direct or indirect way:"
-msgstr "Los siguientes objetos de configuración dependen de este elemento en forma directa o indirecta:"
+msgstr ""
+"Los siguientes objetos de configuración dependen de este elemento en forma "
+"directa o indirecta:"
 
 #: ../ConfigHelper.ptl:211
 msgid "Hard Dependencie:"
@@ -3182,13 +3215,17 @@ msgstr "Dependencia ébil:"
 msgid ""
 "Hard dependencie: The dependent object can not exist if this object is "
 "deleted"
-msgstr "Dependencia fuerte: el objeto dependiente no puede existir si este objeto es borrado"
+msgstr ""
+"Dependencia fuerte: el objeto dependiente no puede existir si este objeto es "
+"borrado"
 
 #: ../ConfigHelper.ptl:237
 msgid ""
 "Soft dependencie. The dependent object still can exist if this object is "
 "deleted"
-msgstr "Dependencia débil: el objeto dependiente puede continuar existiendo aún si este objeto es borrado"
+msgstr ""
+"Dependencia débil: el objeto dependiente puede continuar existiendo aún si "
+"este objeto es borrado"
 
 #: ../page_admin.ptl:26
 msgid "Perform administrative actions to PBX"
@@ -3385,7 +3422,9 @@ msgstr "Resultados"
 #: ../page_stats_trunks.ptl:198
 msgid ""
 "You need to install pychart and use a cdr with sqlite to get these statistics"
-msgstr "Es necesario instalar pychart y hacer uso de un cdr con sqlite para obtener estas estadísticas"
+msgstr ""
+"Es necesario instalar pychart y hacer uso de un cdr con sqlite para obtener "
+"estas estadísticas"
 
 #: ../page_stats_cdr.ptl:140 ../page_stats_cdr.ptl:141
 msgid "PBX"
@@ -3561,7 +3600,8 @@ msgstr "  :% [opciones]: ejecución normal"
 #: ../destar:55
 #, python-format
 msgid "  %s -h|--help: print this text and exit peacefully"
-msgstr "  %s -h|--help: imprime este texto de ayuda y termina de forma pacífica"
+msgstr ""
+"  %s -h|--help: imprime este texto de ayuda y termina de forma pacífica"
 
 #: ../destar:56
 #, python-format
@@ -3574,7 +3614,9 @@ msgstr "Opciones:"
 
 #: ../destar:59
 msgid "  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID"
-msgstr "  -p <pid>  | --pid=<pid>: utilizar <pid> para almacenar el número de identificación de proceso «PID» del demonio"
+msgstr ""
+"  -p <pid>  | --pid=<pid>: utilizar <pid> para almacenar el número de "
+"identificación de proceso «PID» del demonio"
 
 #: ../destar:60
 msgid "  -d | --daemonize: run in the background"
@@ -3582,7 +3624,9 @@ msgstr "  -d | --daemonize: ejecutar en segundo plano"
 
 #: ../destar:61
 msgid "  -r <port> | --port=<port>: run on port <port> (default: 8080)"
-msgstr "  -r <puerto> | --port=<puerto>: escuchar en el puerto <puerto> (por omisión es el 8080)"
+msgstr ""
+"  -r <puerto> | --port=<puerto>: escuchar en el puerto <puerto> (por omisión "
+"es el 8080)"
 
 #: ../destar:68 ../destar:70 ../destar:69
 msgid "DeStar: Command-line parsing error. Aborting."
@@ -3594,7 +3638,9 @@ msgstr "Error: rport (-r <núm>/--port=<núm> debe ser un número)"
 
 #: ../cdrutils.py:28
 msgid "Note: you should install python-pysqlite2 to have CDR functionality"
-msgstr "Nota: usted debe instalar python-pysqlite2 para hacer uso de la funcionalidad de CDR"
+msgstr ""
+"Nota: usted debe instalar python-pysqlite2 para hacer uso de la "
+"funcionalidad de CDR"
 
 #: ../cdrutils.py:36
 #, python-format
@@ -3631,7 +3677,9 @@ msgstr "Extensión para transferencia consultada"
 
 #: ../cfg_opt_transfer.py:35
 msgid "Number of seconds to wait between digits when transfering a call"
-msgstr "Número de segundos que se deben esperar entre dígitos cuando se transfiere una llamada"
+msgstr ""
+"Número de segundos que se deben esperar entre dígitos cuando se transfiere "
+"una llamada"
 
 #: ../cfg_opt_transfer.py:35
 msgid "Default is 3 seconds"
@@ -3808,7 +3856,9 @@ msgstr "Error escribiendo %s"
 msgid ""
 "Note: you don't seem to have access to %s yet created by cdr_sqlite3_custom. "
 "See INSTALL.txt for details."
-msgstr "Nota: aún no hay acceso al archivo %s creado por el módulo cdr_sqlite3_custom. Vea más información en el archivo INSTALL.txt"
+msgstr ""
+"Nota: aún no hay acceso al archivo %s creado por el módulo "
+"cdr_sqlite3_custom. Vea más información en el archivo INSTALL.txt"
 
 #: ../cfg_app_callfw.py:34
 msgid "Call Forwarding if Busy"
@@ -3826,11 +3876,19 @@ msgid ""
 "list works for all extensions, by dialing dial_prefix+2_digits_key and only "
 "if the extension has an assigned dialout entry which pattern matches the "
 "final destination."
-msgstr "Extensiones para agregar/remover entradas en la lista personal de marcación rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos+*+destino_final. La extensión para remover será de la forma prefijo+clave_de_2_dígitos. La lista personal funciona para todas las extensiones marcando prefijo_de_marcado+clave_de_2_dígitos y solo si a la extensión se le ha asignado un patrón de marcado que permita alcanzar el destino final."
+msgstr ""
+"Extensiones para agregar/remover entradas en la lista personal de marcación "
+"rápida. La extensión para agregar será de la forma prefijo+clave_de_2_dígitos"
+"+*+destino_final. La extensión para remover será de la forma prefijo"
+"+clave_de_2_dígitos. La lista personal funciona para todas las extensiones "
+"marcando prefijo_de_marcado+clave_de_2_dígitos y solo si a la extensión se "
+"le ha asignado un patrón de marcado que permita alcanzar el destino final."
 
 #: ../cfg_app_quickdial_phone.py:28
 msgid "New extensions to add/remove/access personal quick dial list"
-msgstr "Nuevas extensiones para agregar/remover/acceder a la lista personal de marcación rápida"
+msgstr ""
+"Nuevas extensiones para agregar/remover/acceder a la lista personal de "
+"marcación rápida"
 
 #: ../cfg_app_quickdial_phone.py:35
 msgid "Dial prefix"
@@ -3998,13 +4056,17 @@ msgstr "Los archivos de configuración fueron guardados"
 msgid ""
 "There were problems writing the configuration. Please take a look at the "
 "error logs."
-msgstr "Hubo problemas al escribir la configuración. Por favor revise los registros de errores."
+msgstr ""
+"Hubo problemas al escribir la configuración. Por favor revise los registros "
+"de errores."
 
 #: ../page_admin_viewconf.ptl:126
 msgid ""
 "WARNING: This configuration might experience grave problems because the "
 "following asterisk modules are missing on your system:"
-msgstr "ADVERTENCIA: Esta configuración puede experimentar graves problemas porque los siguientes módulos de Asterisk no están presentes en su sistema:"
+msgstr ""
+"ADVERTENCIA: Esta configuración puede experimentar graves problemas porque "
+"los siguientes módulos de Asterisk no están presentes en su sistema:"
 
 #: ../page_config_codecs.ptl:27
 msgid "Codecs"
@@ -4019,7 +4081,10 @@ msgstr "Codecs de audio a usar en los canales SIP e IAX"
 msgid ""
 "You don't seem to have access to %s yet created by cdr_sqlite3_custom. "
 "Without this file CDR reports wont be accesible trough this interface."
-msgstr "Parece que aún no hay acceso a %s, creado por el módulo cdr_sqlite3_custom. Sin esto los reportes de CDR no podrán ser vistos a través de la interfaz de DeStar."
+msgstr ""
+"Parece que aún no hay acceso a %s, creado por el módulo cdr_sqlite3_custom. "
+"Sin esto los reportes de CDR no podrán ser vistos a través de la interfaz de "
+"DeStar."
 
 #: ../page_user.ptl:38
 msgid "Available actions"
@@ -4047,7 +4112,9 @@ msgstr "Tratar de detectar la señal de ocupado para detectar el cuelgue remoto"
 msgid ""
 "This is a SIP phone account, to be used by hard-phones, soft-phones, ATAs, "
 "etc."
-msgstr "Esta es una cuenta de extensión SIP para ser utilizada por teléfonos IP hardware y software, ATAs, etc."
+msgstr ""
+"Esta es una cuenta de extensión SIP para ser utilizada por teléfonos IP "
+"hardware y software, ATAs, etc."
 
 #: ../configlets.py:696
 #, python-format
