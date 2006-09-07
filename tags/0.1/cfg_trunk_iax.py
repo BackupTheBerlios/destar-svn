@@ -29,8 +29,8 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 	description = _("""Used to setup an IAX trunk to another Asterisk server or an IAX termination.""")
 
 	variables	= [
-		VarType("name",      title=_("Name"), len=15, default="iaxtrunk"),
-		VarType("host",      title=_("IAX host"), len=25),
+		VarType("name",      title=_("Name"), len=25, default="iaxtrunk"),
+		VarType("host",      title=_("IAX host"), len=80),
 		VarType("bandwidth",  title=_("Bandwith"), type="choice", len=25,
 				options=[('low',_("Low")),('high', _("High"))]
 			),
@@ -38,9 +38,9 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		VarType("authLabel",   title=_("Authentication"), type="label"),
 		VarType("auth",      title=_("Authentication Method"), type="radio", default="plain",
 		                               options=[('plain',_("Plain text")),('rsa',_("RSA")),('md5',_("MD5"))]),
-		VarType("pw",    title=_("Password"), hint=_("For 'Plain' or 'MD5' only"), len=15, optional=True),
-		VarType("inkeys",    title=_("Public key from remote server"), hint=_("For 'RSA' only"), len=15, optional=True),
-		VarType("outkey",    title=_("Private local key"), hint=_("For 'RSA' only"), len=15, optional=True),
+		VarType("pw",    title=_("Password"), hint=_("For 'Plain' or 'MD5' only"), len=80, optional=True),
+		VarType("inkeys",    title=_("Public key from remote server"), hint=_("For 'RSA' only"), len=80, optional=True),
+		VarType("outkey",    title=_("Private local key"), hint=_("For 'RSA' only"), len=80, optional=True),
 
                 VarType("trunk",      title=_("Enable trunking?"), type="bool", hide=True),
 
@@ -69,7 +69,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 
        	def createAsteriskConfig(self):
 		#Dial part to use on dialout macro
-		self.dial = "IAX2/%s/${ARG1}" % self.host
+		self.dial = "IAX2/%s/${ARG1}" % self.name
 		#What to do with incoming calls
 		self.createIncomingContext()
 		
