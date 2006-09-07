@@ -44,6 +44,7 @@ class CfgAppMeetme(CfgApp):
 		self.lookPanel()
 
 	def createAsteriskConfig(self):
+		needModule("chan_zap")
 		needModule("app_meetme")
 
 		c = AstConf("extensions.conf")
