@@ -1,4 +1,7 @@
 2006-09-07
+* page_stats_cdr.ptl: Now it works with translations. Partially fixes bug #8689
+
+2006-09-07
 * Meetme needs a timer
 * Applied patch from Debian on Makefile.
 

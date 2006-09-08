@@ -155,7 +155,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 		
 	form.add(HiddenWidget, 'pagenumber', value='_newest')
 	form.add(HiddenWidget, 'order', value='ASC')
-	form.add(HiddenWidget, 'orderby', value=_('Time_of_start'))
+	form.add(HiddenWidget, 'orderby', value='Time_of_start')
 
 	form.add(SubmitWidget, '_submit', _("Search"), render_br=True)
 
@@ -242,7 +242,8 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	
 	return render()
 
-def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_start"), order="DESC"):
+#def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_start"), order="DESC"):
+def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", order="DESC"):
 	if total == 0:
 		'<p>'
 		'--No records to Show--'
@@ -297,9 +298,10 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_
 
 			f = offset + limit
 			if total >= f:			
-				_('Showing records from %s to %s of %s <br /><br />') % (offset+1, f, total)
+				_('Showing records from %s to %s of %s') % (offset+1, f, total)
 			else:
-				_('Showing records from %s to %s of %s <br /><br />') % (offset+1, total, total)
+				_('Showing records from %s to %s of %s') % (offset+1, total, total)
+			'<br /><br />'
 
 		_('Total Duration of shown calls: %s min.' % totalmin)
 		'</p>'
