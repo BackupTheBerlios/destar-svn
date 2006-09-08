@@ -2070,7 +2070,7 @@ msgstr "Ocupado"
 
 #: page_admin_cdr.ptl:240 ../StatsHelper.ptl:163
 msgid "Failed"
-msgstr "Falló"
+msgstr "Fallida"
 
 #: page_admin_cdr.ptl:241
 msgid "start"
@@ -3436,7 +3436,7 @@ msgstr "Estadísticas de destino"
 
 #: ../page_stats_dialouts.ptl:36 ../page_stats_dialouts.ptl:35
 msgid "Statistics for Dialout Entries"
-msgstr "Estadísticas para las entradas de destino"
+msgstr "Estadísticas para los destinos"
 
 #: ../page_stats_dialouts.ptl:51 ../page_stats_phone.ptl:49
 #: ../page_stats_trunks.ptl:50 ../page_stats_dialouts.ptl:67
@@ -3458,7 +3458,7 @@ msgstr "Ninguna coincidencia"
 
 #: ../page_stats_dialouts.ptl:159 ../page_stats_phone.ptl:157
 msgid "Incomming Calls per Dialout Entry"
-msgstr "Llamadas entrantes por Destino"
+msgstr "Llamadas entrantes por destino"
 
 #: ../page_stats_dialouts.ptl:160 ../page_stats_dialouts.ptl:162
 #: ../page_stats_phone.ptl:158 ../page_stats_phone.ptl:160
