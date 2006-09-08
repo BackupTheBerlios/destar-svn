@@ -1,5 +1,6 @@
 2006-09-07
-* page_stats_cdr.ptl: Now it works with translations. Partially fixes bug #8689
+* StatsHelper.ptl: solved some problems with gettext and pychart. Fixes bug#8689
+* page_stats_cdr.ptl: Now it works with translations.
 
 2006-09-07
 * Meetme needs a timer
