@@ -1,3 +1,6 @@
+2006-09-09
+* Languages stuff do not have to be re-created each time destar is installed.
+
 2006-09-07
 * StatsHelper.ptl: solved some problems with gettext and pychart. Fixes bug#8689
 * page_stats_cdr.ptl: Now it works with translations.

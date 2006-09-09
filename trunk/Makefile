@@ -21,6 +21,8 @@ clean:
 	 find -name "*.ptlo" ; \
 	 find -name "*.au" ; \
 	 find -name "*.mo" ) | xargs rm -f || true
+
+clean-languages:
 	cd po && $(MAKE) clean
 
 clean-panel:
@@ -40,7 +42,7 @@ install-panel:
 languages:
 	cd po && $(MAKE)
 
-install:	languages
+install:
 	install -d $(PYDIR)
 	#cp -a *.py *.ptl misc medusa $(PYDIR)
 	install -m 644 *.py *.ptl $(PYDIR)/
