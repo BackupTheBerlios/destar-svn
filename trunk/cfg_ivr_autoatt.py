@@ -35,11 +35,26 @@ class CfgIVRAutoatt(CfgIVR):
 					title=_("Name"),
 					len=25),
 
+			VarType("waittime",
+					title=_("Time to wait before answer the line"),
+					hint=_("(in seconds)"),
+					len=10,
+					type="int",
+					default=2),
+
+			VarType("digittimeout",
+					title=_("How many time has the user to dial an extension?"),
+					hint=_("(in seconds)"),
+					len=10,
+					type="int",
+					default=3),
+
 			VarType("timeout",
 					title=_("Max. time for incoming calls in seconds"),
 					hint=_("(0 or empty means no time restriction)"),
 					optional=True,
 					len=10,
+					type="int",
 					default=0),
 
 			VarType("moh",
@@ -131,8 +146,8 @@ class CfgIVRAutoatt(CfgIVR):
 		else:	
 			pbx = "phones"
 		s.append("include=%s" % pbx)
-		s.appendExten("s","Wait(1)")
-		s.appendExten("s","Set(TIMEOUT(digit)=2.3")
+		s.appendExten("s","Wait(%d)" % self.waittime)
+		s.appendExten("s","Set(TIMEOUT(digit)=%d" % self.digittimeout)
 		if self.moh:
 			s.appendExten("s","Setmusiconhold(%s)" % self.moh)
 			s.appendExten("s","Set(DIAL_OPTIONS=m)")

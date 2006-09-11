@@ -1,3 +1,6 @@
+2006-09-11
+* Wait time to answer and digit timeout were fixed on the code for the AutoAttendant. 
+
 2006-09-09
 * Languages stuff do not have to be re-created each time destar is installed.
 
