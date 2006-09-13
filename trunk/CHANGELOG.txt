@@ -1,3 +1,7 @@
+2006-09-13
+* The auth=md5 line in sip.conf is wrong. auth is the auth name, not the auth type
+* Closes Bug #007917
+
 2006-09-11
 * Wait time to answer and digit timeout were fixed on the code for the AutoAttendant. 
 

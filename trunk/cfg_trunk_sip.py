@@ -26,34 +26,84 @@ class CfgTrunkSiptrunk(CfgTrunk):
 
 	shortName   = _("Standard SIP Trunk")
 	newObjectTitle  = _("New standard SIP trunk")
-
 	description = _("""Used to setup a SIP trunk to a SIP provider or a different SIP server.""")
 	technology = "SIP"
 	
 	def createVariables(self):
 		self.variables   = [
-			VarType("name",       title=_("Name"), len=15, default="siptrunk"),
-			VarType("id",         title=_("SIP username"),   len=15),
-			VarType("pw",         title=_("SIP password"), len=15),
-			VarType("host",       title=_("SIP host"), len=25),
-			VarType("register",   title=_("Register with remote host?"), type="bool"),
-			VarType("forward",      title=_("Enable forward address type?"), type="bool"),
-			VarType("nat",      title=_("Is the trunk behind NAT?"), type="bool"),
-			VarType("insecure",      title=_("Bypass auth for incoming calls?"), type="bool"),
+			VarType("name",
+				title=_("Name"),
+				len=15,
+				default="siptrunk"),
+			
+			VarType("id",
+				title=_("SIP username"),
+				len=15),
+			
+			VarType("pw",
+				title=_("SIP password"),
+				len=15),
+
+			VarType("host",
+				title=_("SIP host"),
+				len=25),
+				
+			VarType("register",
+				title=_("Register with remote host?"),
+				type="bool"),
+				
+			VarType("forward",
+				title=_("Enable forward address type?"),
+				type="bool"),
+
+			VarType("nat",
+				title=_("Is the trunk behind NAT?"),
+				type="bool"),
+				
+			VarType("insecure",
+				title=_("Bypass auth for incoming calls?"),
+				type="bool"),
 	
-			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-					VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
+			VarType("panelLab",
+				title=_("Operator Panel"),
+				type="label",
+				hide=True),
+				
+			VarType("panel",
+				title=_("Show this trunk in the panel"),
+				type="bool",
+				hide=True),
 	
-			VarType("Inbound",    title=_("Calls from SIP trunk"), type="label"),
-			VarType("contextin",      title=_("Go to"), type="radio", default='phone',
-										   options=[('phone',_("Phone")),('ivr',_("IVR"))]),
-			VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
-										   options=getChoice("CfgPhone")),
-			VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
-										   options=getChoice("CfgIVR")),
-			VarType("clid",       title=_("Change Caller*Id to:"), len=25, optional=True),
-			VarType("dial", hide=True, len=50),
-		]
+			VarType("Inbound",
+				title=_("Calls from SIP trunk"),
+				type="label"),
+				
+			VarType("contextin",
+				title=_("Go to"),
+				type="radio",
+				default='phone',
+				options=[('phone',_("Phone")),('ivr',_("IVR"))]),
+			
+			VarType("phone",
+				title=_("Extension to ring"),
+				type="choice",
+				optional=False,
+				options=getChoice("CfgPhone")),
+			
+			VarType("ivr",
+				title=_("IVR to jump to"),
+				type="choice",
+				optional=True,
+				options=getChoice("CfgIVR")),
+
+			VarType("clid",
+				title=_("Change Caller*Id to:"),
+				len=25,
+				optional=True),
+			
+			VarType("dial",
+				hide=True,
+				len=80),]
 
 
 	def checkConfig(self):
@@ -90,7 +140,6 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			c.append("secret=%s" % self.pw)
 			c.append("host=%s" % self.host)
 			c.append("context=in-%s" % self.name)
-			c.append("auth=md5")
 			c.append("canreinvite=no")
 			if self.nat:
 				c.append("nat=yes")
