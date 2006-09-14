@@ -1,3 +1,7 @@
+2006-09-14
+* Use md5secret instead secret in sip.conf
+* Ths SIP password is not optional
+
 2006-09-13
 * The auth=md5 line in sip.conf is wrong. auth is the auth name, not the auth type
 * Closes Bug #007917

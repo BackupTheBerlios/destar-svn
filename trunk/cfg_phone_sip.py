@@ -20,6 +20,7 @@
 
 
 from configlets import *
+import md5
 
 
 class CfgPhoneSip(CfgPhone):
@@ -42,7 +43,6 @@ class CfgPhoneSip(CfgPhone):
 
 			VarType("secret",
 					title=_("Password"),
-					optional=True,
 					len=15),
 
 			VarType("host",
@@ -271,7 +271,9 @@ class CfgPhoneSip(CfgPhone):
 		sip.setSection(self.name)
 		sip.append("type=friend")
 		sip.append("qualify=yes")
-		sip.appendValue(self, "secret")
+		m = md5.new()
+		m.update('%s:asterisk:%s' % (self.name,self.secret))
+		sip.append("md5secret=%s" % m.hexdigest())
 		sip.append("host=dynamic")
 		if self.host:
 			sip.appendValue(self, "host", "defaultip")
