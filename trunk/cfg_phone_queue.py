@@ -102,6 +102,12 @@ class CfgPhoneQueue(CfgPhone):
 					title=_("Monitor answered calls?"),
 					type="bool"),
 
+			VarType("monitorfilename",
+					title=_("Monitor file name"),
+					hint=_("Otherwise it will use Date-CallerIdName(CallerIdNum)-Exten"),
+					len=25,
+					optional=True),
+
 			VarType("monitorfileformat",
 					title=_("Monitor file format"),
 					type="choice",
@@ -110,16 +116,39 @@ class CfgPhoneQueue(CfgPhone):
 							("wav49",_("WAV49"))), 
 					default="gsm"),
 
-			VarType("monitorfilename",
-					title=_("Monitor file name"),
-					hint=_("Otherwise it will use ${UNIQUEID}"),
-					len=25,
-					optional=True),
-
-			VarType("monitorjoin",
-					title=_("Split file on inbound and outbound channels?"),
+			VarType("monitorappend",
+					title=_("Append to existing file instead of overwriting it?"),
+					optional=True,
 					type="bool"),
-	
+
+			VarType("heardvol",
+					title=_("Heard volume factor"),
+					type="choice",
+					options=(       ("+4",_("+4")),
+					("+3",_("+3")),
+					("+2",_("+2")),
+					("+1",_("+1")),
+					("0",_("0")),
+					("-1",_("-1")),
+					("-2",_("-2")),
+					("-3",_("-3")),                   
+					("-4",_("-4"))),	
+					default="0"),
+
+			VarType("spokenvol",
+					title=_("Spoken volume factor"),
+					type="choice",
+					options=(       ("+4",_("+4")),
+					("+3",_("+3")),
+					("+2",_("+2")),
+					("+1",_("+1")),
+					("0",_("0")),
+					("-1",_("-1")),
+					("-2",_("-2")),
+					("-3",_("-3")),                   
+					("-4",_("-4"))),
+					default="0"),
+					
 			VarType("panelLab",
 					title=_("Operator Panel"),
 					type="label",
@@ -161,8 +190,8 @@ class CfgPhoneQueue(CfgPhone):
 
 		
 	def createAsteriskConfig(self):
-		needModule("res_monitor")
 		needModule("app_queue")
+		needModule("res_monitor")
 
 		c = AstConf("queues.conf")
 		c.setSection(self.name)
@@ -176,21 +205,40 @@ class CfgPhoneQueue(CfgPhone):
 		if self.announce:
 			c.append("announce-frequency=%s" % self.announcefrequency)
 			c.append("announce-holdtime=%s" % self.announceholdtime)
-		if self.monitor:
-			c.append("monitor-format=%s" % self.monitorfileformat)
-			if not self.monitorjoin:
-				c.append("monitor-join=yes")
-		
+
 		extensions = AstConf("extensions.conf")
 		extensions.setSection(self.pbx)
+		
+		mon_line=""
+
+		if self.monitor:
+			needModule("app_mixmonitor")
+			options = ""
+			if self.monitorappend:
+				options = 'a' 
+			if self.heardvol == self.spokenvol:
+				options = options+'W(%s)' % (self.heardvol)
+			else:          
+				options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
+			if self.monitorfilename:
+				mon_line = "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options)
+			else:
+				mon_line = "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options)
+
 		if self.ext:
-			if self.monitor and self.monitorfilename:
-				extensions.appendExten(self.ext, "Set(MONITOR_FILENAME=%s)" % self.monitorfilename)
                         extensions.appendExten(self.ext, "Answer")
-			extensions.appendExten(self.ext, "SetMusicOnHold(%s)" % self.moh)
+			if self.moh:
+				extensions.appendExten(self.ext, "SetMusicOnHold(%s)" % self.moh)
+			if mon_line:
+				extensions.appendExten(self.ext, mon_line)
 			extensions.appendExten(self.ext, "Queue(%s|Tth)" % self.name)
-		if self.monitor and self.monitorfilename:
-			extensions.appendExten(self.name, "Set(MONITOR_FILENAME=%s)" % self.monitorfilename)
-                extensions.appendExten(self.name, "Answer")
-		extensions.appendExten(self.name, "SetMusicOnHold(%s)" % self.moh)
+
+
+		extensions.appendExten(self.name, "Answer")
+		if self.moh:
+			extensions.appendExten(self.name, "SetMusicOnHold(%s)" % self.moh)
+		if mon_line:
+			extensions.appendExten(self.name, mon_line)
 		extensions.appendExten(self.name, "Queue(%s|Tth)" % self.name)
+
+

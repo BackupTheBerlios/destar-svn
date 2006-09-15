@@ -161,8 +161,8 @@ class CfgPhoneSip(CfgPhone):
 					title=_("Monitor file format"),
 					type="choice",
 					options=(       ("gsm",_("GSM")),
-					("wav",_("WAV")),
-					("wav49",_("WAV49"))),
+							("wav",_("WAV")),
+							("wav49",_("WAV49"))),
 					default="gsm"),
 
 			VarType("monitorappend",
@@ -171,7 +171,8 @@ class CfgPhoneSip(CfgPhone):
 					type="bool"),
 
 			VarType("monitorwhenbridged",
-					title=_("Save audio while the channel is bridged?"),
+					title=_("Save audio only while the channel is bridged?"),
+					hint=_("Does not include conferences"),
 					optional=True,
 					type="bool"),
 

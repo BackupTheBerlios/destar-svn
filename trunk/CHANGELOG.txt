@@ -1,14 +1,16 @@
 2006-09-15
-* Remove unnecessary imports
-* Fixed bug #7951 checking the existence of a PBX
+* Remove unnecessary imports.
+* Fixed bug #7951 checking the existence of a PBX.
+* Fixed bug #7952 replacing Monitor by MixMonitor in the queues.
+* Allow monitoring for the other phones types.
 
 2006-09-14
-* Use md5secret instead secret in sip.conf
-* Ths SIP password is not optional
+* Use md5secret instead secret in sip.conf.
+* Ths SIP password is not optional.
 
 2006-09-13
-* The auth=md5 line in sip.conf is wrong. auth is the auth name, not the auth type
-* Closes Bug #007917
+* The auth=md5 line in sip.conf is wrong. auth is the auth name, not the auth type.
+* Closes Bug #007917.
 
 2006-09-11
 * Wait time to answer and digit timeout were fixed on the code for the AutoAttendant. 
