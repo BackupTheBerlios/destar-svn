@@ -19,8 +19,7 @@
 
 
 from Templates import *
-from quixote.form2 import *
-import backend, panelutils, configlets
+import panelutils
 
 
 _q_parent  = 'page_admin'

@@ -1,3 +1,7 @@
+2006-09-15
+* Remove unnecessary imports
+* Fixed bug #7951 checking the existence of a PBX
+
 2006-09-14
 * Use md5secret instead secret in sip.conf
 * Ths SIP password is not optional
