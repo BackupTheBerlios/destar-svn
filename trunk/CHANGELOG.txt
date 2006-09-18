@@ -1,3 +1,7 @@
+2006-09-18
+* Added sort (default True) param to the getChoice function in backend.py
+* Bug #8257 closed.
+
 2006-09-15
 * Remove unnecessary imports.
 * Fixed bug #7951 checking the existence of a PBX.

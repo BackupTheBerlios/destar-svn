@@ -617,7 +617,7 @@ configlets.getConfig = getConfig
 
 # FIXME: here is a mix of backend and frontend stuff, needs to be refactored
 # FIXME: this is an ugly function too
-def getChoice(clazz, key='name',val='name'):
+def getChoice(clazz, key='name',val='name',sort=True):
 	"""This is used to generate a list of tuples which we later use
 	in the select widgets of type "choice" or "mchoice".
 
@@ -639,6 +639,9 @@ def getChoice(clazz, key='name',val='name'):
 	if a == [] :
 		a.append( ('','') )
 		
+	if sort:
+		a.sort()
+
 	return a
 
 configlets.__getChoice = getChoice
