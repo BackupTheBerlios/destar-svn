@@ -1,4 +1,5 @@
 2006-09-19
+* Added some translations.
 * Updated es.po header and added a missing translation.
 * Replaced _('string') by _(str('string')) on the [html] functions.
 * Fixed Bug #8745.
