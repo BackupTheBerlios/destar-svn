@@ -108,13 +108,13 @@ hournames =["%d:00"%i for i in range(24)]
 def makeCallsTable [html] (label, calls, names):
 	'<table border="1"> \n'
 	'<tr> <td><b>'+ label
-	'</b></td><td><b>'+_("Number of Calls")
-	'</b></td><td><b>'+_("Minutes")
-	'</b></td><td><b>'+_("Cost")
-	'</b></td><td><b>'+_("Answered Calls")
-	'</b></td><td><b>'+_("Not Answered Calls")
-	'</b></td><td><b>'+_("Busy Calls")
-	'</b></td><td><b>'+_("Failed Calls")
+	'</b></td><td><b>'+_(str("Number of Calls"))
+	'</b></td><td><b>'+_(str("Minutes"))
+	'</b></td><td><b>'+_(str("Cost"))
+	'</b></td><td><b>'+_(str("Answered Calls"))
+	'</b></td><td><b>'+_(str("Not Answered Calls"))
+	'</b></td><td><b>'+_(str("Busy Calls"))
+	'</b></td><td><b>'+_(str("Failed Calls"))
 	'</td></tr>\n'
 	for i in range(len(calls)):
 		'<tr>'

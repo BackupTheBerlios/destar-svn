@@ -197,21 +197,21 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		header(title, menu)
 		#render_desc()
 		form2 = Form()
-		form2.add(SubmitWidget, '_cascade_delete', _("Cascade Delete"), render_br=False)
-		form2.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
+		form2.add(SubmitWidget, '_cascade_delete', _(str("Cascade Delete")), render_br=False)
+		form2.add(SubmitWidget, '_cancel', _(str("Cancel")), render_br=False)
 		'<h2>'
-		_("Warning")
+		_(str("Warning"))
 		'</h2>'
 		'<p>'
-		_("The following configlets depends on this object in a direct or indirect way:")
+		_(str("The following configlets depends on this object in a direct or indirect way:"))
 		'</p>'
 		'<table>'
 		for dep in obj.dependent_objs:
 			if dep.dependency.type == "hard":
-				dep_type = _("Hard Dependencie:")
+				dep_type = _(str("Hard Dependency:"))
 				color = 'red'
 			else:
-				dep_type = _("Soft Dependencie:")
+				dep_type = _(str("Soft Dependency:"))
 				color = 'green'
 			'<tr>'
 			'<td><span style="color:%s">%s</span></td>' % (color, dep_type)
@@ -230,11 +230,11 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		'<h3>Note:</h3>'
 		'<p>'
 		'<span style="color:red">'
-		_("Hard dependencie: The dependent object can not exist if this object is deleted")
+		_(str("Hard dependency: The dependent object can not exist if this object is deleted"))
 		'<br />'
 		'</span>'
 		'<span style="color:green">'
-		_("Soft dependencie. The dependent object still can exist if this object is deleted")
+		_(str("Soft dependency. The dependent object still can exist if this object is deleted"))
 		'</span>'
 		'</p>'
 		form2.render()

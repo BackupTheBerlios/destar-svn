@@ -72,8 +72,8 @@ def pageIndex [html] (pagenum, total, limit):
 	"<p>"
 	lastpage = total/limit
 	if pagenum > 1:
-		"<a href='javascript:gotopage(\"_newest\")'>%s</a> &nbsp; \n" % _("First")
-		"<a href='javascript:gotopage(\"_newer\")'>%s</a> &nbsp; \n" % _("Previous")
+		"<a href='javascript:gotopage(\"_newest\")'>%s</a> &nbsp; \n" % _(str("First"))
+		"<a href='javascript:gotopage(\"_newer\")'>%s</a> &nbsp; \n" % _(str("Previous"))
 	
 	pagelist = [i for i in range(pagenum-10, pagenum+10) if i >= 0 and  i < lastpage]
 
@@ -84,8 +84,8 @@ def pageIndex [html] (pagenum, total, limit):
 			"%d &nbsp; \n" % (i+1)
 
 	if pagenum < lastpage:
-		"<a href='javascript:gotopage(\"_older\")'>%s</a> &nbsp; \n" % _("Next")
-		"<a href='javascript:gotopage(\"_oldest\")'>%s</a> \n" % _("Last")
+		"<a href='javascript:gotopage(\"_older\")'>%s</a> &nbsp; \n" % _(str("Next"))
+		"<a href='javascript:gotopage(\"_oldest\")'>%s</a> \n" % _(str("Last"))
 	"</p>\n <br />"
 
 def     generateYearsNumbers():
@@ -263,13 +263,13 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", or
 				'<th>'
 				if s[0] == field:
 					neworder = (order=='ASC' and 'DESC') or 'ASC'
-					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], neworder, _(s[0]))
+					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], neworder, _(str(s[0])))
 					if order=='ASC':
-						" <img src='/static/down.gif' border='0' alt='%s'>\n" % _('Asc. Order')
+						" <img src='/static/down.gif' border='0' alt='%s'>\n" % _(str('Asc. Order'))
 					else:
-						" <img src='/static/up.gif' border='0' alt='%s'>\n" % _('Desc. Order')
+						" <img src='/static/up.gif' border='0' alt='%s'>\n" % _(str('Desc. Order'))
 				else:
-					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], order, _(s[0]))
+					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], order, _(str(s[0])))
 				'</th>'
                 	'</tr></thead><tbody>'
 		
@@ -283,7 +283,7 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", or
 					'<td><center>'
 					if row[fieldIndex] == "1969-12-31 19:00:00":
 						'-'
-					elif cursor.description[fieldIndex][0] == _("Duration"):
+					elif cursor.description[fieldIndex][0] == _(str("Duration")):
 						s = int(row[fieldIndex])
 						min = (s % 60) and ((s / 60) + 1) or (s / 60)
                                                	totalmin += min
@@ -298,12 +298,12 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", or
 
 			f = offset + limit
 			if total >= f:			
-				_('Showing records from %s to %s of %s') % (offset+1, f, total)
+				_(str('Showing records from %s to %s of %s')) % (offset+1, f, total)
 			else:
-				_('Showing records from %s to %s of %s') % (offset+1, total, total)
+				_(str('Showing records from %s to %s of %s')) % (offset+1, total, total)
 			'<br /><br />'
 
-		_('Total Duration of shown calls: %s min.' % totalmin)
+		_(str('Total Duration of shown calls: %s min.' % totalmin))
 		'</p>'
 
 

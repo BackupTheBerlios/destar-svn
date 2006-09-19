@@ -1,3 +1,7 @@
+2006-09-19
+* Replaced _('string') by _(str('string')) on the [html] functions.
+* Fixed Bug #8745.
+
 2006-09-18
 * Added sort (default True) param to the getChoice function in backend.py
 * Bug #8257 closed.

@@ -41,8 +41,8 @@ def showMenu [plain] ():
 
 	for e in _q_menu:
 		'<tr>'
-		'<td><a href="%s">%s</a></td>' % (e._q_link,e._q_title)
-		'<td>%s</td>' % e._q_desc
+		'<td><a href="%s">%s</a></td>' % (e._q_link,_(e._q_title))
+		'<td>%s</td>' % _(e._q_desc)
 		'</tr>'
 	'</table>'
 
