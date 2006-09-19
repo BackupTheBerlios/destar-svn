@@ -50,6 +50,12 @@ class CfgTrunkIaxtel(CfgTrunk):
 		                    options=getChoice("CfgPhone"))
 		]
 		
+		self.dependencies = [
+			DepType("phone", 
+					type="hard",
+					message = _("This is a Dependency"))
+		]
+
 	def fixup(self):
 		CfgTrunk.fixup(self)
 

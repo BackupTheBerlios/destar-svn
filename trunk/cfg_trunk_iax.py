@@ -60,6 +60,15 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		VarType("dial", hide=True, len=50),
 		]
 	
+		self.dependencies = [
+			DepType("phone", 
+					type="hard",
+					message = _("This is a Dependency")),
+			DepType("ivr", 
+					type="hard",
+					message = _("This is a Dependency"))
+		]
+
 	def checkConfig(self):
 		res = CfgTrunk.checkConfig(self)
 		if res:

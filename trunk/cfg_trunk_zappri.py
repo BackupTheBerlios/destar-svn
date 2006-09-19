@@ -64,6 +64,15 @@ class CfgTrunkZapPRI(CfgTrunk):
 		VarType("dial", hide=True, len=50),
 		]
 
+		self.dependencies = [
+			DepType("phone", 
+					type="hard",
+					message = _("This is a Dependency")),
+			DepType("ivr", 
+					type="hard",
+					message = _("This is a Dependency"))
+		]
+
 	def isAddable(self):
 		"""We can only add this configlet if we have at least one
 		ZapPRI option defined."""
