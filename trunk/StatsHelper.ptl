@@ -105,7 +105,12 @@ monthnames = [ _('January'), _('February'), _('March'),
 daynames = ["%d"%(i+1) for i in range(31)]
 hournames =["%d:00"%i for i in range(24)] 
 
-def makeCallsTable [html] (label, calls, names):
+def getMonthnames ():
+	mn = []
+	for m in monthnames: mn.append(_(m))
+	return mn
+
+def makeCallsTable [plain] (label, calls, names):
 	'<table border="1"> \n'
 	'<tr> <td><b>'+ label
 	'</b></td><td><b>'+_(str("Number of Calls"))
@@ -154,7 +159,7 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 								width = 15,
 								data = data)
 	
-	ar = area.T(x_axis=axis.X(label=labelx),
+	ar = area.T(x_axis=axis.X(label=unicode(_(labelx), 'utf-8') ),
 				y_axis=axis.Y(label=unicode(_('Calls'), 'utf-8'), tic_interval=interval))
 	
 	plot1=bar_plot.T(label=unicode(_('Answered'), 'utf-8'), hcol=1, fill_style=fill_style.goldenrod)
@@ -174,6 +179,7 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 	htmltext('</p>')				
 
 def makeGraphic [plain] (names, values, title, labelx, labely, filename):
+
 	theme.use_color = True;
 	theme.default_font_size = 14
 	theme.reinitialize()
@@ -192,10 +198,10 @@ def makeGraphic [plain] (names, values, title, labelx, labely, filename):
 								width = 15,
 								data = data)
 	
-	ar = area.T(x_axis=axis.X(label=labelx),
-				y_axis=axis.Y(label=labely, tic_interval=interval))
+	ar = area.T(x_axis=axis.X(label=unicode(_(labelx), 'utf-8') ),
+				y_axis=axis.Y(label=unicode(_(labely), 'utf-8'), tic_interval=interval))
 	
-	plot1=bar_plot.T(label=labely, hcol=1, fill_style=fill_style.darkseagreen)
+	plot1=bar_plot.T(label=unicode(_(labely), 'utf-8'), hcol=1, fill_style=fill_style.darkseagreen)
 	ar.add_plot(plot1)
 	ar.draw(can)
 	can.close()

@@ -72,7 +72,7 @@ def makeForm():
 							
 	form.add_single_select('month1', 
 							options=zip(months, 
-										monthnames,
+										getMonthnames(),
 										months),
 							render_br=False )
 							
@@ -92,7 +92,7 @@ def makeForm():
 	form.add_single_select('month2', 
 							value=localmonth,
 							options=zip(months, 
-										monthnames,
+										getMonthnames(),
 										months),
 							render_br=False )
 							
