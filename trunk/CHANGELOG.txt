@@ -2,6 +2,8 @@
 * StatsHelper.ptl and some page_stats_*.ptl, using getMonthnames() to 
   allow translate strings in date html selects. Fixes bug #8842
 * StatsHelper.ptl: some pychart label weren't using unicode().
+* page_stats_cdr.ptl: new M_(message) function = _(str(message)). It really
+  fixes bug #8745
 
 2006-09-19
 * Added dependencies for the trunks. Fixed Bug #8836.
