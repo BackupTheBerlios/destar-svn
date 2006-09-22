@@ -2966,7 +2966,7 @@ msgstr "Se pueden tener varias PBX separadas lógicamente"
 
 #: ../cfg_opt_rawcfg.py:27
 msgid "New raw config file snippet"
-msgstr "Nuevo trozo de archivo de configuración de Asterisk"
+msgstr "Nuevo trozo de configuración de Asterisk «en bruto»"
 
 #: ../cfg_opt_sip_network.py:28 ../cfg_opt_sip_network.py:29
 msgid "SIP Network Options"
