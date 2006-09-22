@@ -651,7 +651,7 @@ msgstr "Extensión a marcar para tomar una llamada del grupo"
 
 #: cfg_opt_rawcfg.py:26 ../cfg_opt_rawcfg.py:26
 msgid "Raw config file snippet"
-msgstr "Archivo de configuración original fragmentado"
+msgstr "Archivo de configuración «en bruto»"
 
 #: cfg_opt_rawcfg.py:30 ../cfg_opt_rawcfg.py:33
 msgid "Section/Context"
