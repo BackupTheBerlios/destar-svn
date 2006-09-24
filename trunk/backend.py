@@ -366,7 +366,7 @@ def createAsteriskConfig():
 		c.append("preload=%s.so" % m)
 		if not m in available_modules: missing_modules.append(m)
 
-	for sect in ("pbx", "codec", "format", "res", "cdr", "chan", "app"):
+	for sect in ("pbx", "codec", "format", "res", "cdr", "chan", "func", "app"):
 		for m in c.modules[sect]:
 			c.append("load=%s.so" % m)
 			if not m in available_modules: missing_modules.append(m)

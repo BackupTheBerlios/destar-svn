@@ -214,7 +214,6 @@ def needModule(mod,preload=False):
 			chan =	[ ],
 			func =	[ 
 				"func_callerid",
-				"func_cdr",
 				],
 			app =	[
 				"app_db",

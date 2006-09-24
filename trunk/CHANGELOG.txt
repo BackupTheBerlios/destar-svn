@@ -1,3 +1,6 @@
+2006-09-23
+* Allows to load func_* modules 
+
 2006-09-20
 * StatsHelper.ptl and some page_stats_*.ptl, using getMonthnames() to 
   allow translate strings in date html selects. Fixes bug #8842
