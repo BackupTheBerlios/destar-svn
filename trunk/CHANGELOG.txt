@@ -1,3 +1,7 @@
+2006-09-24
+* backend.py: using writeAsteriskConfig() instead of createAsteriskConfig()
+  in reloadAsterisk. Fixes Bug #8777
+
 2006-09-23
 * Allows to load func_* modules 
 
