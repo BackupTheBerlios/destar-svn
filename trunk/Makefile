@@ -19,10 +19,10 @@ clean:
 	(find -name "*.pyc" ; \
 	 find -name "*.ptlc" ; \
 	 find -name "*.ptlo" ; \
-	 find -name "*.au" ; \
-	 find -name "*.mo" ) | xargs rm -f || true
+	 find -name "*.au" ) | xargs rm -f || true
 
 clean-languages:
+	find -name "*.mo" | xargs rm -f || true
 	cd po && $(MAKE) clean
 
 clean-panel:
@@ -39,7 +39,7 @@ release:
 install-panel:
 	ln -s $(PANEL_HTML_DIR) $(PAGES_DIR)/panel
 
-languages:
+languages: 
 	cd po && $(MAKE)
 
 install:

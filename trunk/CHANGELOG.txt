@@ -1,6 +1,7 @@
 2006-09-24
 * backend.py: using writeAsteriskConfig() after createAsteriskConfig()
   in reloadAsterisk. Fixes Bug #8777
+* Makefile: .mo file are removed in clean-languages:, not in clean:
 
 2006-09-23
 * Allows to load func_* modules 
