@@ -1,5 +1,5 @@
 2006-09-24
-* backend.py: using writeAsteriskConfig() instead of createAsteriskConfig()
+* backend.py: using writeAsteriskConfig() after createAsteriskConfig()
   in reloadAsterisk. Fixes Bug #8777
 
 2006-09-23

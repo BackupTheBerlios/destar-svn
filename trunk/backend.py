@@ -770,6 +770,7 @@ if __name__ == "__main__":
 def reloadAsterisk():
 	"""This reloads the Asterisk PBX."""
 	createPythonConfig()
+	createAsteriskConfig()
 	writeAsteriskConfig()
 	import manager
 	s = manager.reloadAsterisk()
