@@ -1044,7 +1044,7 @@ class CfgPhone(Cfg):
 						
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)							
 						if secret:
-							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s}.%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
+							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
 						else:
 							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue))
 				except KeyError:

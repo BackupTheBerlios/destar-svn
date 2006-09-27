@@ -1,3 +1,6 @@
+2006-09-26
+* configlets: fixed undetectable little bug on dialout_secret writing.
+
 2006-09-24
 * backend.py: using writeAsteriskConfig() after createAsteriskConfig()
   in reloadAsterisk. Fixes Bug #8777
