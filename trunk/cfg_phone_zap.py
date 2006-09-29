@@ -242,13 +242,20 @@ class CfgPhoneZap(CfgPhone):
 		elif self.calleridname:
 			c.append('callerid="%s"' % self.calleridname)
 		elif self.calleridnum:
-			c.append('callerid=%s' % self.calleridnum)
+			c.append('callerid=<%s>' % self.calleridnum)
+		else:
+			c.append('callerid=<%s>' % self.ext)
 		c.append("context=out-%s" % self.name)
 
 		if self.group:
 			c.appendValue(self, "group")
 		c.append("txgain=0.0")
 		c.append("rxgain=0.0")
+
+		if self.enablecallgroup:
+			c.append('callgroup=%s' % self.callgroup)
+			c.append('pickupgroup=%s' % self.callgroup)
+
 		c.append("channel=%s" % self.channels)
 		c.append("")
 
@@ -257,10 +264,6 @@ class CfgPhoneZap(CfgPhone):
 		c.destar_comment = False
 		c.append("fxo%s=%s" % (self.sigtype, self.channels))
 		c.append("")
-
-		if self.enablecallgroup:
-			c.append('callgroup=%s' % self.callgroup)
-			c.append('pickupgroup=%s' % self.callgroup)
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(c)
