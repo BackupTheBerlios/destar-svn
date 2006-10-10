@@ -43,11 +43,12 @@ switch ($c) {
 <div id="navigation" class="nav">
 <ul>
 <li><a href="index.php">Home</a></li>
-<li><a href="index.php?c=1">Screenshots</a></li>
+<li><a href="manual/images/">Screenshots</a></li>
 <li><a href="index.php?c=2">Download</a></li>
 <li><a href="index.php?c=3">Documentation</a></li>
 <li><a href="index.php?c=4">Resources & Support</a></li>
 <li><a href="index.php?c=5">About</a></li>
+<li><a href="manual/">User Manual</a></li>
 <!--<li><a href="index.php?c=6">Demo</a></li>-->
 </ul>
 <a href="http://developer.berlios.de/projects/destar/">

@@ -51,3 +51,7 @@ clean:
 	rm -rf $(OUTPUT)
 	rm -rf $(SOURCE) $(SOURCE).junk
 	rm -f *~
+
+release: html
+	scp -r $(OUTPUT)/html/ shell.berlios.de:/home/groups/destar/htdocs/manual/
+

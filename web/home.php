@@ -7,14 +7,14 @@
 
 <p>This new version contains many improvements to the 0.1 one:<br /> 
 <ul style="font-family: verdana;">   
-<li>A new interface style (see screenshots).   </li>   
+<li>A new interface style (see <a href="manual/images/">screenshots</a>).   </li>   
 <li>Referencial integrity.   </li>   
 <li>Better i18n support (english, spanish and french right now).   </li>   
 <li>Better statistics for CDR.</li>   
 <li>Updated for <a href="http://www.asterisk.org">asterisk</a> 1.2.X.<br />  </li>   
 <li>Many new features.   </li>   
 <li>Several Bug fixes.</li>
-<li>First version of user manual</li> 
+<li>First version of <a href="manual/">user manual</a></li> 
 </ul> 
 
 <p>Destar main features include:</p>
@@ -30,7 +30,7 @@
 <li>Extensible pluguin-based architecture.</li>
 </ul>
 
-<img src="imgs/destar-0.2.0.png" alt="Destar small screenshot" />
+<img src="manual/images/configuration.png" alt="Destar small screenshot" />
 
 
 <p>NOTE: The Asterisk trademark referred to within this site is the sole property of Digium, Inc.</p>
