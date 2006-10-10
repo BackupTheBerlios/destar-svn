@@ -1,5 +1,6 @@
 2006-10-10
 * Little bug fix in autoattendant
+* Removed unnecessary stuff
 
 2006-09-29
 * cfg_phone_zap.py: 
