@@ -34,7 +34,7 @@ class CfgTrunkZapPBX(CfgTrunk):
 			VarType("channels",    title=_("Zaptel channel number"), type="string", len=5),
 			VarType("signalling", title=_("Signalling type"), type="choice",
 								  options=[('fxs_ls','loopstart'),('fxs_ks', 'kewlstart')]),
-			VarType("group",      title=_("Callout group"), type="int", default=1, optional=True),
+			VarType("group",      title=_("Callout group"), type="int", optional=True),
 	
 			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
 					VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
