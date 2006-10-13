@@ -49,5 +49,8 @@ class CfgOptOPPanel(CfgOptSingle):
 		panelutils.createManagerConfig(self)
 		panelutils.createDefaultConfig(c)	
 
+		c = AstConf("op_style.cfg")
+		panelutils.createDefaultStyle(c)
+
 	def row(self):
 		return (self.shortName, self.name)

@@ -45,7 +45,9 @@ class AsteriskConfigFile:
 	def __init__(self, fn):
 		if fn == 'zaptel.conf':
 			fn = os.path.join("/etc", fn)
-		if fn == 'op_server.cfg' or fn == 'op_buttons.cfg':
+		if fn == 'op_server.cfg' or \
+		   	fn == 'op_buttons.cfg' or\
+			fn == 'op_style.cfg' :
 			fn = os.path.join(panelutils.PANEL_CONF_DIR, fn)
 		elif fn.find('/')==-1:
 			fn = os.path.join(CONF_DIR, fn)
