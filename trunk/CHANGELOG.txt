@@ -1,3 +1,6 @@
+2006-10-13
+* panelutils: using restart option instead of stop and the restart
+
 2006-10-10
 * Little bug fix in autoattendant
 * Removed unnecessary stuff

@@ -31,8 +31,7 @@ from configlets import *
 # Configuration to use with op-panel .deb package:
 PANEL_CONF_DIR	= "/etc/op-panel"
 PANEL_HTML_DIR	= "/usr/share/op-panel/flash"
-PANEL_START_CMD	= "/etc/init.d/op-panel start"
-PANEL_STOP_CMD	= "/etc/init.d/op-panel stop"
+PANEL_RESTART_CMD = "/etc/init.d/op-panel restart"
 
 def isConfigured ():
 	import configlets
@@ -113,17 +112,10 @@ def createQueueButton(obj):
 	p.append("Extension=-1")
 	p.append("Label=%s" % obj.name)
 
-def startPanelDaemon():
-        return commands.getoutput(PANEL_START_CMD)
-
-def stopPanelDaemon():
-        return commands.getoutput(PANEL_STOP_CMD)
-
 def restartPanelDaemon():
 	s = []
 	s.append(_("Restarting the panel daemon ..."))
-	s.append(stopPanelDaemon())
-	s.append(startPanelDaemon())
+        commands.getoutput(PANEL_RESTART_CMD)
 	return s
 
 if isConfigured():
