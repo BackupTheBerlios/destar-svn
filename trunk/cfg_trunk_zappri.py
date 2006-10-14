@@ -31,40 +31,100 @@ class CfgTrunkZapPRI(CfgTrunk):
 	
 	def createVariables(self):
 		self.variables = [
-		VarType("name",       title=_("Name"), len=35),
-		VarType("signalling", title=_("Signalling type"), type="choice",
-			      options=[('pri_cpe',_('PRI signalling, CPE side')),('pri_net', _('PRI signalling, Network side'))]),
-		VarType("switchtype", title=_("Switch type"), type="choice",
+			VarType("name",
+				title=_("Name"),
+				len=35),
+
+			VarType("signalling",
+				title=_("Signalling type"),
+				type="choice",
+				options=[('pri_cpe',_('PRI signalling, CPE side')),
+					('pri_net', _('PRI signalling, Network side'))]),
+					
+			VarType("switchtype",
+				title=_("Switch type"),
+				type="choice",
 			      	options=[('national','National ISDN 2'),
 					('dms100', 'Nortel DMS100'),
 					('4ess', 'AT&T 4ESS'),
 					('5ess', 'Lucent 5ESS'),
 					('euroisdn', 'Euro ISDN'),
-					('ni1', 'Old National ISDN 1')
-					],
+					('ni1', 'Old National ISDN 1')],
 				default="euroisdn"),
-		VarType("channels",    title=_("Channels"), hint=_("i.e. 1-15,17-31"), type="string", len=20),
-		VarType("group",      title=_("Callout group"), type="string", optional=True),
+				
+			VarType("channels",
+				title=_("Channels"),
+				hint=_("i.e. 1-15,17-31"),
+				type="string",
+				len=20),
+				
+			VarType("group",
+				title=_("Callout group"),
+				type="string",
+				optional=True),
 
-		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
+			VarType("panelLab",
+				title=_("Operator Panel"),
+				type="label",
+				hide=True),
 
-		VarType("Gains",      title=_("Reception and Transmission Gains"), type="label"),
-		VarType("rxgain",     title=_("Reception gain"), hint=_("in dB"), optional=True, default="0.0"),
-		VarType("txgain",     title=_("Transmission gain"), hint=_("in dB"), optional=True, default="0.0"),
-	
-		VarType("Inbound",    title=_("Calls from PRI channel(s)"), type="label"),
-		VarType("clid",       title=_("Change Caller*Id to:"), len=25, optional=True),
-		VarType("contextin",      title=_("Go to"), type="radio", default='phone',
-		                               options=[('phone',_("Phone")),('ivr',_("IVR")),('pbx',_("Virtual PBX"))]),
-		VarType("phone",      title=_("Extension to ring"), type="choice", optional=True,
-		                               options=getChoice("CfgPhone")),
-		VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
-		                               options=getChoice("CfgIVR")),
-		VarType("pbx",      title=_("Allow dial extension from which Virtual PBX"), type="choice", optional=True,
-		                               options=getChoice("CfgOptPBX")),
-		VarType("dial", hide=True, len=50),
-		]
+			VarType("panel",
+				title=_("Show this trunk in the panel"),
+				type="bool",
+				hide=True,
+				optional=True),
+
+			VarType("Gains",
+				title=_("Reception and Transmission Gains"),
+				type="label"),
+
+			VarType("rxgain",
+				title=_("Reception gain"),
+				hint=_("in dB"),
+				optional=True,
+				default="0.0"),
+
+			VarType("txgain",
+				title=_("Transmission gain"),
+				hint=_("in dB"),
+				optional=True,
+				default="0.0"),
+
+			VarType("Inbound",
+				title=_("Calls from PRI channel(s)"),
+				type="label"),
+
+			VarType("clid",
+				title=_("Change Caller*Id to:"),
+				len=25,
+				optional=True),
+
+			VarType("contextin",
+				title=_("Go to"),
+				type="radio",
+				default='phone',
+				options=[('phone',_("Phone")),('ivr',_("IVR")),('pbx',_("Virtual PBX"))]),
+
+			VarType("phone",
+				title=_("Extension to ring"),
+				type="choice",
+				optional=True,
+				options=getChoice("CfgPhone")),
+
+			VarType("ivr",
+				title=_("IVR to jump to"),
+				type="choice",
+				optional=True,
+				options=getChoice("CfgIVR")),
+
+			VarType("pbx",
+				title=_("Allow dial extension from which Virtual PBX"),
+				type="choice",
+				optional=True,options=getChoice("CfgOptPBX")),
+
+			VarType("dial",
+				hide=True,
+				len=50),]
 
 		self.dependencies = [
 			DepType("phone", 

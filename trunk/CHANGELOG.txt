@@ -4,6 +4,7 @@
 * No default dial group in the zap trunks
 * Cosmetic changes in cfg_opt_oppanel.py
 * Allow the incoming calls jump to a Virtual PBX
+* Cosmetic changes in cfg_trunk_*.py
 
 2006-10-10
 * Little bug fix in autoattendant

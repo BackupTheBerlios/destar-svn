@@ -31,36 +31,101 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 	
 	def createVariables(self):
 		self.variables	= [
-		VarType("name",      title=_("Name"), len=30, default="iaxtrunk"),
-		VarType("host",      title=_("IAX host"), len=80),
-		VarType("bandwidth",  title=_("Bandwith"), type="choice", len=25,
-				options=[('low',_("Low")),('high', _("High"))]
-			),
+			VarType("name",
+				title=_("Name"),
+				len=30,
+				default="iaxtrunk"),
+
+			VarType("host",
+				title=_("IAX host"),
+				len=80),
+
+			VarType("bandwidth",
+				title=_("Bandwith"),
+				type="choice",
+				len=25,
+				options=[('low',_("Low")),('high', _("High"))]),
 		
-		VarType("authLabel",   title=_("Authentication"), type="label"),
-		VarType("auth",      title=_("Authentication Method"), type="radio", default="plain",
-		                               options=[('plain',_("Plain text")),('rsa',_("RSA")),('md5',_("MD5"))]),
-		VarType("pw",    title=_("Password"), hint=_("For 'Plain' or 'MD5' only"), len=80, optional=True),
-		VarType("inkeys",    title=_("Public key from remote server"), hint=_("For 'RSA' only"), len=80, optional=True),
-		VarType("outkey",    title=_("Private local key"), hint=_("For 'RSA' only"), len=80, optional=True),
+			VarType("authLabel",
+				title=_("Authentication"),
+				type="label"),
 
-                VarType("trunk",      title=_("Enable trunking?"), type="bool", hide=True),
+			VarType("auth",
+				title=_("Authentication Method"),
+				type="radio",
+				default="plain",
+				options=[('plain',_("Plain text")),('rsa',_("RSA")),('md5',_("MD5"))]),
 
-		VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
+			VarType("pw",
+				title=_("Password"),
+				hint=_("For 'Plain' or 'MD5' only"),
+				len=80,
+				optional=True),
+				
+			VarType("inkeys",
+				title=_("Public key from remote server"),
+				hint=_("For 'RSA' only"),
+				len=80,
+				optional=True),
 
-		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
-		VarType("clid",       title=_("Change Caller*Id to:"), len=40, optional=True),
-		VarType("contextin",      title=_("Go to"), type="radio", default='phone',
-		                               options=[('phone',_("Phone")),('ivr',_("IVR")),('pbx',_("Virtual PBX"))]),
-		VarType("phone",      title=_("Extension to ring"), type="choice", optional=True,
-		                               options=getChoice("CfgPhone")),
-		VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
-		                               options=getChoice("CfgIVR")),
-		VarType("pbx",      title=_("Allow dial extension from which Virtual PBX"), type="choice", optional=True,
-		                               options=getChoice("CfgOptPBX")),
-		VarType("dial", hide=True, len=50),
-		]
+			VarType("outkey",
+				title=_("Private local key"),
+				hint=_("For 'RSA' only"),
+				len=80,
+				optional=True),
+
+			VarType("trunk",
+				title=_("Enable trunking?"),
+				type="bool",
+				hide=True),
+
+			VarType("panelLab",
+				title=_("Operator Panel"),
+				type="label",
+				hide=True),
+
+			VarType("panel",
+				title=_("Show this trunk in the panel"),
+				type="bool",
+				hide=True,
+				optional=True),
+
+			VarType("Inbound",
+				title=_("Calls from IAX trunk"),
+				type="label"),
+
+			VarType("clid",
+				title=_("Change Caller*Id to:"),
+				len=40,
+				optional=True),
+
+			VarType("contextin",
+				title=_("Go to"),
+				type="radio",
+				default='phone',
+				options=[('phone',_("Phone")),('ivr',_("IVR")),('pbx',_("Virtual PBX"))]),
+				
+			VarType("phone",
+				title=_("Extension to ring"),
+				type="choice",
+				optional=True,
+				options=getChoice("CfgPhone")),
+
+			VarType("ivr",
+				title=_("IVR to jump to"),
+				type="choice",
+				optional=True,
+				options=getChoice("CfgIVR")),
+
+			VarType("pbx",
+				title=_("Allow dial extension from which Virtual PBX"),
+				type="choice",
+				optional=True,
+				options=getChoice("CfgOptPBX")),
+
+			VarType("dial",
+				hide=True,
+				len=50),]
 	
 		self.dependencies = [
 			DepType("phone", 
