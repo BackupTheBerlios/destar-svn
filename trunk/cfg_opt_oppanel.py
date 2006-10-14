@@ -46,6 +46,19 @@ class CfgOptOPPanel(CfgOptSingle):
 				len=15,
 				default=generatePassword(8)),
 
+			VarType("btnsize",
+				title=_("Button Size"),
+				type="choice",
+				options=(
+					("vsmall", _("Very Small"), "vsmall"),
+					("small", _("Small"), "small"),
+					("normal", _("Normal"), "normal"),
+					("large", _("Large"), "large"),
+					("vlarge", _("Very Large"), "vlarge"),
+					),
+				default="normal"
+				),
+
 			VarType("manager",
 				title=_("Manager agent"),
 				type="choice",
@@ -70,6 +83,35 @@ class CfgOptOPPanel(CfgOptSingle):
 
 		c = AstConf("op_style.cfg")
 		panelutils.createDefaultStyle(c)
+		if self.btnsize == "normal" or true:
+			c.append("label_font_size=20")
+			c.append("clid_font_size=13")
+			c.append("btn_width=246")
+			c.append("btn_height=70")
+			c.append("led_scale=90")
+			c.append("led_margin_top=34")
+			c.append("led_margin_left=20")
+			c.append("icon1_margin_top=43")
+			c.append("icon1_margin_left=-34")
+			c.append("icon1_scale=17")
+			c.append("icon2_margin_top=46")
+			c.append("icon2_margin_left=-29")
+			c.append("icon2_scale=14")
+			c.append("icon3_margin_top=34")
+			c.append("icon3_margin_left=-36")
+			c.append("icon3_scale=20")
+			c.append("icon4_margin_top=33")
+			c.append("icon4_margin_left=-34")
+			c.append("icon4_scale=16")
+			c.append("icon5_margin_top=32")
+			c.append("icon5_margin_left=-33")
+			c.append("icon5_scale=16")
+			c.append("icon6_margin_top=32")
+			c.append("icon6_margin_left=-33")
+			c.append("icon6_scale=16")
+			c.append("mail_margin_left=-23")
+			c.append("mail_margin_top=13")
+			c.append("mail_scale=9")
 
 	def row(self):
 		return (self.shortName, self.name)
