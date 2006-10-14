@@ -45,11 +45,12 @@ class CfgOptOPPanel(CfgOptSingle):
 				title=_("Security Code"),
 				len=15,
 				default=generatePassword(8)),
-			
+
 			VarType("manager",
 				title=_("Manager agent"),
 				type="choice",
-			
+				options=getChoice("CfgOptManager")),
+
 			VarType("poll_interval",
 				title=_("Frequency in seconds to poll for sip and iax status"),
 				len=10,
