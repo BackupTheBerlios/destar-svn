@@ -50,13 +50,15 @@ class CfgTrunkIaxtrunk(CfgTrunk):
                 VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True),
 
 		VarType("Inbound",    title=_("Calls from IAX trunk"), type="label"),
+		VarType("clid",       title=_("Change Caller*Id to:"), len=40, optional=True),
 		VarType("contextin",      title=_("Go to"), type="radio", default='phone',
-		                               options=[('phone',_("Phone")),('ivr',_("IVR"))]),
+		                               options=[('phone',_("Phone")),('ivr',_("IVR")),('pbx',_("Virtual PBX"))]),
 		VarType("phone",      title=_("Extension to ring"), type="choice", optional=True,
 		                               options=getChoice("CfgPhone")),
 		VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
 		                               options=getChoice("CfgIVR")),
-		VarType("clid",       title=_("Change Caller*Id to:"), len=40, optional=True),
+		VarType("pbx",      title=_("Allow dial extension from which Virtual PBX"), type="choice", optional=True,
+		                               options=getChoice("CfgOptPBX")),
 		VarType("dial", hide=True, len=50),
 		]
 	

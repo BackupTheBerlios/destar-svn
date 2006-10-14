@@ -43,13 +43,13 @@ class CfgTrunkZap(CfgTrunk):
 			VarType("txgain",     title=_("Transmission gain"), hint=_("in dB"), optional=True, default="0.0"),
 		
 			VarType("Inbound",    title=_("Calls from ZAP trunk"), type="label"),
+			VarType("clid",       title=_("Change Caller*Id to:"), len=25, optional=True),
 			VarType("contextin",      title=_("Go to"), type="radio", default='phone',
-										   options=[('phone',_("Phone")),('ivr',_("IVR"))]),
+										   options=[('phone',_("Phone")),('ivr',_("IVR")),('pbx',_("Virtual PBX"))]),
 			VarType("phone",      title=_("Extension to ring"), type="choice", optional=False,
 										   options=getChoice("CfgPhone")),
 			VarType("ivr",      title=_("IVR to jump to"), type="choice", optional=True,
 										   options=getChoice("CfgIVR")),
-			VarType("clid",       title=_("Change Caller*Id to:"), len=25, optional=True),
 			VarType("dial", hide=True, len=50),
 		]
 
