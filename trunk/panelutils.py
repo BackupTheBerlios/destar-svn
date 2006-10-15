@@ -74,7 +74,7 @@ def createDefaultConfig(c):
 	c.append("enable_restart = 0")
 
 def createDefaultStyle(c):
-	c.append("[general]")
+	c.setSection("general")
 	c.append("shake_pixels=2")
 	c.append("dimm_noregister_by=20")
 	c.append("dimm_lagged_by=60")

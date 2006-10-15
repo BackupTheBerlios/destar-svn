@@ -83,35 +83,72 @@ class CfgOptOPPanel(CfgOptSingle):
 
 		c = AstConf("op_style.cfg")
 		panelutils.createDefaultStyle(c)
-		if self.btnsize == "normal" or true:
-			c.append("label_font_size=20")
-			c.append("clid_font_size=13")
-			c.append("btn_width=246")
-			c.append("btn_height=70")
-			c.append("led_scale=90")
-			c.append("led_margin_top=34")
-			c.append("led_margin_left=20")
-			c.append("icon1_margin_top=43")
-			c.append("icon1_margin_left=-34")
-			c.append("icon1_scale=17")
-			c.append("icon2_margin_top=46")
-			c.append("icon2_margin_left=-29")
-			c.append("icon2_scale=14")
-			c.append("icon3_margin_top=34")
-			c.append("icon3_margin_left=-36")
-			c.append("icon3_scale=20")
-			c.append("icon4_margin_top=33")
-			c.append("icon4_margin_left=-34")
-			c.append("icon4_scale=16")
-			c.append("icon5_margin_top=32")
-			c.append("icon5_margin_left=-33")
-			c.append("icon5_scale=16")
-			c.append("icon6_margin_top=32")
-			c.append("icon6_margin_left=-33")
-			c.append("icon6_scale=16")
-			c.append("mail_margin_left=-23")
-			c.append("mail_margin_top=13")
-			c.append("mail_scale=9")
+
+		LABEL_FONT_SIZE = 20
+		CLID_FONT_SIZE = 13
+		BTN_WIDTH = 246
+		BTN_HEIGHT = 70
+		LED_SCALE = 90
+		LED_MARGIN_TOP = 34
+		LED_MARGIN_LEFT = 20
+		ICON1_MARGIN_TOP = 43
+		ICON1_MARGIN_LEFT = -34
+		ICON1_SCALE = 17
+		ICON2_MARGIN_TOP = 46
+		ICON2_MARGIN_LEFT = -29
+		ICON2_SCALE = 14
+		ICON3_MARGIN_TOP = 34
+		ICON3_MARGIN_LEFT = -36
+		ICON3_SCALE = 20
+		ICON4_MARGIN_TOP = 33
+		ICON4_MARGIN_LEFT = -34
+		ICON4_SCALE = 16
+		ICON5_MARGIN_TOP = 32
+		ICON5_MARGIN_LEFT = -33
+		ICON5_SCALE = 16
+		ICON6_MARGIN_TOP = 32
+		ICON6_MARGIN_LEFT = -33
+		ICON6_SCALE = 16
+		IN_LEFT = -33
+		ICON6_SCALE = 16
+		MAIL_MARGIN_LEFT = -23
+		MAIL_MARGIN_TOP = 13
+		MAIL_SCALE = 9
+
+		if self.btnsize == "vsmall": scale = 0.6
+		elif self.btnsize == "small": scale = 0.8
+		elif self.btnsize == "large": scale = 1.2
+		elif self.btnsize == "vlarge": scale = 1.4
+		else: scale = 1
+
+		c.append("label_font_size=%s" % int(LABEL_FONT_SIZE * scale) )
+		c.append("clid_font_size=%s" % int(CLID_FONT_SIZE * scale) )
+		c.append("btn_width=%s" % int(BTN_WIDTH * scale) )
+		c.append("btn_height=%s" % int(BTN_HEIGHT * scale) )
+		c.append("led_scale=%s" % int(LED_SCALE * scale) )
+		c.append("led_margin_top=%s" % int(LED_MARGIN_TOP * scale) )
+		c.append("led_margin_left=%s" % int(LED_MARGIN_LEFT * scale) )
+		c.append("icon1_margin_top=%s" % int(ICON1_MARGIN_TOP * scale) )
+		c.append("icon1_margin_left=%s" % int(ICON1_MARGIN_LEFT * scale) )
+		c.append("icon1_scale=%s" % int(ICON1_SCALE * scale) )
+		c.append("icon2_margin_top=%s" % int(ICON2_MARGIN_TOP * scale) )
+		c.append("icon2_margin_left=%s" % int(ICON2_MARGIN_LEFT * scale) )
+		c.append("icon2_scale=%s" % int(ICON2_SCALE * scale) )
+		c.append("icon3_margin_top=%s" % int(ICON3_MARGIN_TOP * scale) )
+		c.append("icon3_margin_left=%s" % int(ICON3_MARGIN_LEFT * scale) )
+		c.append("icon3_scale=%s" % int(ICON3_SCALE * scale) )
+		c.append("icon4_margin_top=%s" % int(ICON4_MARGIN_TOP * scale) )
+		c.append("icon4_margin_left=%s" % int(ICON4_MARGIN_LEFT * scale) )
+		c.append("icon4_scale=%s" % int(ICON4_SCALE * scale) )
+		c.append("icon5_margin_top=%s" % int(ICON5_MARGIN_TOP * scale) )
+		c.append("icon5_margin_left=%s" % int(ICON5_MARGIN_LEFT * scale) )
+		c.append("icon5_scale=%s" % int(ICON5_SCALE * scale) )
+		c.append("icon6_margin_top=%s" % int(ICON6_MARGIN_TOP * scale) )
+		c.append("icon6_margin_left=%s" % int(ICON6_MARGIN_LEFT * scale) )
+		c.append("icon6_scale=%s" % int(ICON6_SCALE * scale) )
+		c.append("mail_margin_left=%s" % int(MAIL_MARGIN_LEFT * scale) )
+		c.append("mail_margin_top=%s" % int(MAIL_MARGIN_TOP * scale) )
+		c.append("mail_scale=%s" % int(MAIL_SCALE * scale) )
 
 	def row(self):
 		return (self.shortName, self.name)

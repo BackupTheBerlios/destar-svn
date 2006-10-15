@@ -1,3 +1,6 @@
+2006-10-14:
+* Allow changing the size of panel buttons
+
 2006-10-13
 * panelutils: using restart option instead of stop and the restart
 * First step to allow changing the size of op-panel buttons
