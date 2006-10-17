@@ -159,7 +159,7 @@ def createQueueButton(obj):
 def restartPanelDaemon():
 	s = []
 	s.append(_("Restarting the panel daemon ..."))
-        commands.getoutput(PANEL_RESTART_CMD)
+        s.append(commands.getoutput(PANEL_RESTART_CMD))
 	return s
 
 if isConfigured():

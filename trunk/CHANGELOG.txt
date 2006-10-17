@@ -1,3 +1,6 @@
+2006-10-17:
+* Display op-panel restarting result
+
 2006-10-14:
 * Allow changing the size of panel buttons
 
