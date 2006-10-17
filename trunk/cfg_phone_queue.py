@@ -231,21 +231,24 @@ class CfgPhoneQueue(CfgPhone):
 
 		if self.ext:
                         extensions.appendExten(self.ext, "Answer")
-			if self.moh:
-				extensions.appendExten(self.ext, "SetMusicOnHold(%s)" % self.moh)
 			if mon_line:
 				extensions.appendExten(self.ext, mon_line)
+
 			if self.ring:
 				extensions.appendExten(self.ext, "Queue(%s|Tthr)" % self.name)
-			else:
+			elif self.moh:
+				extensions.appendExten(self.ext, "SetMusicOnHold(%s)" % self.moh)
 				extensions.appendExten(self.ext, "Queue(%s|Tth)" % self.name)
 
 
 		extensions.appendExten(self.name, "Answer")
-		if self.moh:
-			extensions.appendExten(self.name, "SetMusicOnHold(%s)" % self.moh)
 		if mon_line:
 			extensions.appendExten(self.name, mon_line)
-		extensions.appendExten(self.name, "Queue(%s|Tth)" % self.name)
+		
+		if self.ring:
+			extensions.appendExten(self.name, "Queue(%s|Tthr)" % self.name)
+		elif self.moh:
+			extensions.appendExten(self.name, "SetMusicOnHold(%s)" % self.moh)
+			extensions.appendExten(self.name, "Queue(%s|Tth)" % self.name)
 
 
