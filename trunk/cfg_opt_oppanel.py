@@ -85,9 +85,12 @@ class CfgOptOPPanel(CfgOptSingle):
 		panelutils.createDefaultStyle(c)
 
 		LABEL_FONT_SIZE = 20
+		LABEL_MARGIN_TOP = 20
+		LABEL_MARGIN_LEFT = 38
 		CLID_FONT_SIZE = 13
 		BTN_WIDTH = 246
 		BTN_HEIGHT = 70
+		BTN_ROUND_BORDER = 8
 		LED_SCALE = 90
 		LED_MARGIN_TOP = 34
 		LED_MARGIN_LEFT = 20
@@ -112,6 +115,10 @@ class CfgOptOPPanel(CfgOptSingle):
 		MAIL_MARGIN_LEFT = -23
 		MAIL_MARGIN_TOP = 13
 		MAIL_SCALE = 9
+		TIMER_FONT_SIZE = 13
+		TIMER_MARGIN_TOP = 48
+		ARROW_SCALE = 70
+		ARROW_MARGIN_TOP = 10
 
 		if self.btnsize == "vsmall": scale = 0.6
 		elif self.btnsize == "small": scale = 0.8
@@ -120,9 +127,14 @@ class CfgOptOPPanel(CfgOptSingle):
 		else: scale = 1
 
 		c.append("label_font_size=%s" % int(LABEL_FONT_SIZE * scale) )
+		c.append("label_margin_top=%s" % ( int(BTN_HEIGHT * scale)/2 - int(LABEL_FONT_SIZE * scale)/2) )
+
+		c.append("label_margin_left=%s" % int(LABEL_MARGIN_LEFT * scale) )
 		c.append("clid_font_size=%s" % int(CLID_FONT_SIZE * scale) )
 		c.append("btn_width=%s" % int(BTN_WIDTH * scale) )
 		c.append("btn_height=%s" % int(BTN_HEIGHT * scale) )
+		c.append("btn_round_border=%s" % int(BTN_ROUND_BORDER * scale) )
+
 		c.append("led_scale=%s" % int(LED_SCALE * scale) )
 		c.append("led_margin_top=%s" % int(LED_MARGIN_TOP * scale) )
 		c.append("led_margin_left=%s" % int(LED_MARGIN_LEFT * scale) )
@@ -147,6 +159,11 @@ class CfgOptOPPanel(CfgOptSingle):
 		c.append("mail_margin_left=%s" % int(MAIL_MARGIN_LEFT * scale) )
 		c.append("mail_margin_top=%s" % int(MAIL_MARGIN_TOP * scale) )
 		c.append("mail_scale=%s" % int(MAIL_SCALE * scale) )
+		c.append("timer_font_size=%s" % int(TIMER_FONT_SIZE * scale))
+		c.append("timer_margin_top=%s "% int(TIMER_MARGIN_TOP * scale) )
+		c.append("arrow_scale=%s" % int(ARROW_SCALE * scale) )
+		c.append("arrow_margin_top=%s" % int(ARROW_MARGIN_TOP * scale) )
+
 
 	def row(self):
 		return (self.shortName, self.name)
