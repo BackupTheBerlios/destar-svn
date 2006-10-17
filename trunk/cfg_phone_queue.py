@@ -235,7 +235,7 @@ class CfgPhoneQueue(CfgPhone):
 				extensions.appendExten(self.ext, "SetMusicOnHold(%s)" % self.moh)
 			if mon_line:
 				extensions.appendExten(self.ext, mon_line)
-			if ring:
+			if self.ring:
 				extensions.appendExten(self.ext, "Queue(%s|Tthr)" % self.name)
 			else:
 				extensions.appendExten(self.ext, "Queue(%s|Tth)" % self.name)
