@@ -55,6 +55,10 @@ class CfgPhoneQueue(CfgPhone):
 					optional=True,
 					options=getChoice("CfgOptMusic")),
 
+			VarType("ring",
+					title=_("Ring instead of playing Music-on-Hold?"),
+					type="bool"),
+
 			VarType("strategy",
 					title=_("Strategy:"),
 					type="choice",
@@ -231,7 +235,10 @@ class CfgPhoneQueue(CfgPhone):
 				extensions.appendExten(self.ext, "SetMusicOnHold(%s)" % self.moh)
 			if mon_line:
 				extensions.appendExten(self.ext, mon_line)
-			extensions.appendExten(self.ext, "Queue(%s|Tth)" % self.name)
+			if ring:
+				extensions.appendExten(self.ext, "Queue(%s|Tthr)" % self.name)
+			else:
+				extensions.appendExten(self.ext, "Queue(%s|Tth)" % self.name)
 
 
 		extensions.appendExten(self.name, "Answer")
