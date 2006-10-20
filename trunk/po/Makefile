@@ -16,7 +16,7 @@ dirs:
 	install -m 644 $@ $(patsubst %.mo,../lang/%/LC_MESSAGES/destar.mo,$@)
 
 %.po:	../destar ../*.py ../*.ptl
-	xgettext --language=python -j -d $(@:.po=) -kM_ ../destar ../*.py ../*.ptl
+	xgettext --language=python -d $(@:.po=) -kM_ ../destar ../*.py ../*.ptl
 
 clean:
 	rm -rf *.mo
