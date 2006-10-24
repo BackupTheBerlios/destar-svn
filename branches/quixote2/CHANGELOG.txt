@@ -1,3 +1,7 @@
+2006-10-24:
+* New branch for quixote2 transition
+* Moved every form2 to form
+
 2006-10-17:
 * Display op-panel restarting result
 * cfg_opt_oppanel: deleted duplicate and wrong variables
