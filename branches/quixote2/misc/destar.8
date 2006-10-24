@@ -1,0 +1,118 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH DESTAR 8 "Fri, 29 Apr 2005 11:39:41 +0200"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+destar \- Asterisk management interface
+.SH SYNOPSIS
+\fBdestar\fP [\fB-d\fP|\fB--daemonize\fP] [-\fBp\fP|--\fBpid\fP=\fIPIDFILE\fP] [-\fBr\fP|--\fBport\fP=\fIPORT\fP]
+
+\fBdestar\fP \fB-b\fP|\fB--backend\fP
+
+\fBdestar\fP \fB-h\fp|\fB--help\fP
+
+\fBdestar\fP \fB-v\fp|\fB--version\fP
+.SH DESCRIPTION
+
+\fBdestar\fP is a web-based interface for configuring and controlling
+Asterisk(8). It will also use the Flash-Operator Panel (op-panel(8)),
+if installed.
+
+.SH OPTIONS
+.B -d --daemonize
+.RS
+Run as daemon: fork into background, and redirect standard output and standard error to 
+/var/log/asterisk/destar.log and /var/log/asterisk/destar.log respectively.
+.RE
+
+.B -b --backend
+.RS
+Run in backend mode, reading destar data file
+.B /etc/asterisk/destar_cfg.py
+ and creating Asterisk configuration files without starting the web interface.
+.RE
+
+.B -v --version
+.RS
+Print version information and exit
+.RE
+
+.B -p --pid
+.I PIDFILE
+.RS
+When running as daemon, write the pid of the process to \fIPIDFILE\fP
+instead of the default
+.B /var/run/destar.pid
+.RE
+
+.B -r --port
+.I PORT
+.RS
+Run on specified \fIPORT\fP instead of the default 8080
+.RE
+
+.B -h --help
+Print help text and exit.
+.RE
+.SH ENVIRONMENT
+.B CONFIGLETS_DIR
+.RS
+The directory where all the configlets reside. Set by the wrapper script
+to
+.B /usr/share/destar/python
+, unless already set in the environment.
+.RE
+
+.B STATICPAGES_DIR
+.RS
+The directory where the CSS stylesheet and images reside. Set by the wrapper script
+to
+.B /usr/share/destar/static
+, unless already set in the environment.
+.SH FILES
+.B /usr/share/destar/static
+.RS
+The static pages (the CSS files, images etc).
+.RE
+
+.B /var/run/destar.pid
+.RS
+Default location for the PID file. Only applicable in daemon mode.
+.RE
+
+.B /var/log/asterisk/destar.log
+.RS
+Standard output of daemon when in daemon mode.
+.RE
+
+.B /var/log/asterisk/destar.err
+.RS
+Standard error of daemon when in daemon mode.
+.RE
+
+.B /etc/asterisk/destar_cfg.py
+.RS
+Destar data file. Can be writen manually and applied using the 
+.B -b
+option
+.RE
+
+.SH SEE ALSO
+asterisk(8), op-panel(8)
+.SH AUTHOR
+destar was written by Holger Schurig.
+
+This manual page was written by Tzafrir Cohen <tzafrir.cohen@xorcom.com>.
