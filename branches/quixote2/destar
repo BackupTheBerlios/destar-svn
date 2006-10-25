@@ -108,21 +108,17 @@ import medusa
 # 'quixote' is a web application framework
 try:
 	import quixote
-	if sys.version[:3] < "2.4":
-		if quixote.__version__ < "1.0" or quixote.__version__ >= "2.0":
-			raise ImportError
-	else:
-		if quixote.__version__ < "1.2" or quixote.__version__ >= "2.0":
-			raise ImportError
+	if quixote.__version__ < "2.0":
+		raise ImportError
 except ImportError:
-	print _("Error:"), _("please install Quixote > 1.2  and < 2.0")
+	print _("Error:"), _("please install Quixote >= 2.0")
 	import sys
 	sys.exit(1)
 
 # 'Publisher.py' contains our session management, 'page_main' contains
 # the start page.
 import Server, Publisher
-pub = Server.Server("page_main", port=int(rport), publisher=Publisher.DeStarPublisher)
+pub = Server.Server("page_main", Publisher.create_publisher, port=int(rport))
 
 
 

@@ -53,6 +53,8 @@ request.session.language     User language
 
 
 from quixote.publish import Publisher
+#temporal import:
+from quixote.directory import Directory
 import configlets, backend, language
 import time
 
@@ -113,3 +115,24 @@ class DeStarPublisher(Publisher):
 		if resp.get_header('Content-Type') in (None, 'text/html'):
 			resp.set_header('Content-Type','text/html; charset=%s' % language.encoding() )
 		return output
+
+class RootDirectory(Directory):
+	"""
+	this is a test class, and should be replaced with
+	page_main
+	"""
+
+	_q_exports = ['']
+
+	def _q_index(self):
+		return '''<html>
+			    <body>DeStar main page
+			    </body>
+			  </html>
+			'''
+	
+def create_publisher():
+	#from page_main import RootDirectory
+	return DeStarPublisher(RootDirectory(),
+		display_exceptions='plain')
+
