@@ -62,7 +62,8 @@ sessions = {}
 
 class DeStarPublisher(Publisher):
 
-	def start_request (self, request):
+	def start_request (self):
+		request = self.get_request()
 		t = time.time()
 
 		# Determine IP of originator, keep Squid in mind :-)
