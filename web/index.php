@@ -53,6 +53,9 @@ switch ($c) {
 </ul>
 <a href="http://developer.berlios.de/projects/destar/">
 <img src="http://developer.berlios.de/bslogo.php?group_id=2112" width="124" height="32" border="0" alt="BerliOS Logo" /></a>
+<br/>
+<a href="https://developer.berlios.de/project/make_donation.php?group_id=2112"><img src="http://developer.berlios.de/images/x-click-but7.gif" align="top" border="0" width="72" height="29" alt="[Donate to DeStar]"></a>
+
 </div>
 
 <div id="content">
