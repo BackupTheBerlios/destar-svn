@@ -36,7 +36,7 @@ import daemonize
 be_daemon = False
 rport = 8080
 pid_file = '/var/run/destar.pid'
-VERSION = '0.2.0'
+VERSION = 'QUIXOTE 2.X BRANCH'
 
 
 def print_version():

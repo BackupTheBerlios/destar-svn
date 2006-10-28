@@ -1,4 +1,5 @@
 2006-10-28:
+* Updated Version. TODO: Define it in only one place
 * Template.ptl: importing get_directory_path to replace 
   Publisher's namespace_stack
 * session.py: New (draft) class for managing Destar's sessions
