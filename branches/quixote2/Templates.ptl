@@ -20,6 +20,7 @@
 
 from quixote.html import htmltext, htmlescape
 from quixote.publish import get_publisher, get_request
+from quixote.util import get_directory_path
 from quixote.errors import AccessError
 import os, sys, copy
 

@@ -1,4 +1,6 @@
 2006-10-28:
+* Template.ptl: importing get_directory_path to replace 
+  Publisher's namespace_stack
 * session.py: New (draft) class for managing Destar's sessions
 * Publisher.py: -taken off all session management related stuff
   - publishing PageMain from page_main
