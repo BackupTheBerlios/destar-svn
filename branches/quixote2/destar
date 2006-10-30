@@ -128,6 +128,9 @@ if be_daemon:
 	quixote.config.DISPLAY_EXCEPTIONS = 'plain'
 	daemonize.daemonize(stdout='/var/log/asterisk/destar.log', stderr='/var/log/asterisk/destar.err', pidfile=pid_file)
 
+	if panelutils.isConfigured():
+		panelutils.startPanelDaemon()
+
 try:
 	pub.run()
 except KeyboardInterrupt:
