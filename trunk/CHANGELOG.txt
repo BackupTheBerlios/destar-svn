@@ -1,3 +1,8 @@
+2006-10-30:
+* panelutils: Insterting again startPanelDaemon and stopPanelDaemon,
+  cause ./destar was using the last one.
+* destar: starts panel when destar begins
+
 2006-10-26:
 * destar: updated VERSION variable
 
