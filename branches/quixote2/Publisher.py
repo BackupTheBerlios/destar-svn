@@ -52,7 +52,7 @@ request.session.language     User language
 """
 
 
-from quixote import enable_ptl
+from quixote import enable_ptl, get_request
 from quixote.publish import Publisher
 from quixote.session import SessionManager
 import configlets, backend, language

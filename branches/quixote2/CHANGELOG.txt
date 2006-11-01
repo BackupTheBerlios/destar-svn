@@ -1,3 +1,6 @@
+2006-10-31:
+* A test with page_main and page_login.
+
 2006-10-30:
 * panelutils: Insterting again startPanelDaemon and stopPanelDaemon,
   cause ./destar was using the last one.

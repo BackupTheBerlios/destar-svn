@@ -37,9 +37,9 @@ class DestarSession(Session):
 
 		# Determine IP of originator, keep Squid in mind :-)
 		try:
-			ip = request.environ['HTTP_X_FORWARDED_FOR']
+			self.ip = request.environ['HTTP_X_FORWARDED_FOR']
 		except:
-			ip = request.environ['REMOTE_ADDR']
+			self.ip = request.environ['REMOTE_ADDR']
 
 
 		#session = sessions.setdefault(ip,
@@ -54,26 +54,26 @@ class DestarSession(Session):
 		# level==-1 means we should auto-login
 		# This works by searching for the first CfgOptUser configlet where
 		# the 'pc' variable matches the request originating IP:
-#		if session.level == -1:
+		if self.level == -1:
 			# Only try auto-login once, so set it to lowest level
-#			session.level = 0
+			self.level = 0
 
-#			users = backend.getConfiglets(name="CfgOptUser")
-#			if len(users) == 0:
+			users = backend.getConfiglets(name="CfgOptUser")
+			if len(users) == 0:
 				# be Admin if there are no users configured
-#				session.user  = "programmer"
-#				session.level = 4
-#				session.language = 'en'
-#			else:
-#				for user in users:
-#					if user.pc == ip:
-#						session.user = user.name
-#						session.level = int(user.level)
-#						session.phone = user.phone
-#						session.language = user.language
-#						break
+				self.user  = "programmer"
+				self.level = 4
+				self.language = 'en'
+			else:
+				for user in users:
+					if user.pc == self.ip:
+						self.user = user.name
+						self.level = int(user.level)
+						self.phone = user.phone
+						self.language = user.language
+						break
 						
-#		language.setLanguage(session.language)				
+		language.setLanguage(self.language)				
 #		request.session = session
 
 

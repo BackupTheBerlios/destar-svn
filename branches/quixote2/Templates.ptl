@@ -242,17 +242,22 @@ def getMenu():
 	path = request.environ['PATH_INFO']
 	path = path[1:].split('/')
 
-	stack = get_publisher().get_namespace_stack()
+	#stack = get_publisher().get_namespace_stack()
+	stack = get_directory_path()
 
 	def calcMenu(root='', n=0):
 		m = []
+		print stack
 		try:
 			obj = stack[n]
+			print "obj = %s" % obj
 		except IndexError:
 			return
 		try:
 			prueba = obj._q_menu
+			print "sí hay menu %s" % prueba
 		except AttributeError:
+			print "no hay menu"
 			return
 		for e in obj._q_menu:
 			if e._q_level>request.session.level:
@@ -270,6 +275,9 @@ def getMenu():
 					submenu.append( (sub._q_menupos, '/'.join([root,parent_name,sub._q_link]), sub._q_title, []) )
 			submenu.sort()
 
+			print e._q_menupos
+			print e._q_link
+			print e._q_title
 			m.append( (e._q_menupos, '/'.join([root,e._q_link]), e._q_title, submenu) )
 		m.sort()
 		return m
