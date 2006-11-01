@@ -1,3 +1,6 @@
+2006-10-31
+* Simple and ugly bug fix for #9281.
+
 2006-10-30:
 * panelutils: Insterting again startPanelDaemon and stopPanelDaemon,
   cause ./destar was using the last one.

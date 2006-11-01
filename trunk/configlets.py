@@ -874,25 +874,37 @@ class CfgTrunk(Cfg):
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
 		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name)
-		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name)
 		if self.clid:
 			needModule("func_callerid")
 			c.appendExten("s","Set(CALLERID(name)=%s)" %  self.clid)
-			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid)
 		global configlet_tree
 		if self.contextin == 'phone' and self.phone:
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
 				c.appendExten("s", "Goto(%s,%s,1)" % (pbx,self.phone))
-				c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone))
 			except AttributeError:
 				pass
 		if self.contextin == 'ivr' and self.ivr:
 			c.appendExten("s", "Goto(%s,s,1)" % self.ivr)
-			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
 		if self.contextin == 'pbx' and self.pbx:
 			c.appendExten("s", "Goto(%s,s,1)" % self.pbx)
+
+		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name)
+		if self.clid:
+			needModule("func_callerid")
+			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid)
+		global configlet_tree
+		if self.contextin == 'phone' and self.phone:
+			obj = configlet_tree.getConfigletByName(self.phone)
+			try:
+				pbx = obj.pbx
+				c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone))
+			except AttributeError:
+				pass
+		if self.contextin == 'ivr' and self.ivr:
+			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
+		if self.contextin == 'pbx' and self.pbx:
 			c.appendExten("_X.", "Goto(%s,${EXTEN},1)" % self.ivr)
 
 		
