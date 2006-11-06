@@ -1,3 +1,8 @@
+2006-11-05
+* page_stats_cdr.ptl: display records in DESC order.
+* page_stats_phone.ptl, page_stats_trunks.ptl, page_stats_dialouts.ptl:
+  Fixed current month
+  
 2006-10-31
 * Simple and ugly bug fix for #9281.
 
