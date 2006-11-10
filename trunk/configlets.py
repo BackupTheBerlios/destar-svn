@@ -905,7 +905,7 @@ class CfgTrunk(Cfg):
 		if self.contextin == 'ivr' and self.ivr:
 			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
 		if self.contextin == 'pbx' and self.pbx:
-			c.appendExten("_X.", "Goto(%s,${EXTEN},1)" % self.ivr)
+			c.appendExten("_X.", "Goto(%s,${EXTEN},1)" % self.pbx)
 
 		
 class CfgPhone(Cfg):

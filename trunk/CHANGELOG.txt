@@ -1,3 +1,6 @@
+2006-11-09:
+* configlets.py: fixed incoming context rule.
+
 2006-11-05
 * page_stats_cdr.ptl: display records in DESC order.
 * page_stats_phone.ptl, page_stats_trunks.ptl, page_stats_dialouts.ptl:
