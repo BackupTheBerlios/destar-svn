@@ -1,3 +1,6 @@
+2006-11-10:
+* configlets.py: added _X incoming context rule. Closes bug #9419.
+
 2006-11-09:
 * configlets.py: fixed incoming context rule.
 
