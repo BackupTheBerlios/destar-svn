@@ -1,3 +1,6 @@
+2006-11-11:
+Updated fr.po. Thanks to Anthony Piron.
+
 2006-11-10:
 * configlets.py: added _X incoming context rule. Closes bug #9419.
 

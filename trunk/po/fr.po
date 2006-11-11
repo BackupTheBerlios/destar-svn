@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-09 16:16-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2006-11-11 14:32+0100\n"
+"PO-Revision-Date: 2006-11-11 15:38+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,8 @@ msgstr "Nouvelles extensions d'activation/désactivation de transfère d'appel"
 #: ../configlets.py:1055 ../configlets.py:1076 ../configlets.py:825
 #: ../configlets.py:900 ../configlets.py:1056 ../configlets.py:1077
 #: ../configlets.py:841 ../configlets.py:916 ../configlets.py:1072
-#: ../configlets.py:1093
+#: ../configlets.py:1093 ../configlets.py:570 ../configlets.py:842
+#: ../configlets.py:940 ../configlets.py:1096 ../configlets.py:1117
 msgid "Type"
 msgstr "Type"
 
@@ -82,7 +83,8 @@ msgstr "Nouvelle salle de conférence"
 #: ../configlets.py:1076 ../page_stats_phone.ptl:65 ../page_user_state.ptl:66
 #: ../page_user_state.ptl:81 ../configlets.py:900 ../configlets.py:1056
 #: ../configlets.py:1077 ../cfg_phone_sip.py:59 ../configlets.py:916
-#: ../configlets.py:1072 ../configlets.py:1093
+#: ../configlets.py:1072 ../configlets.py:1093 ../configlets.py:570
+#: ../configlets.py:940 ../configlets.py:1096 ../configlets.py:1117
 msgid "Extension"
 msgstr "Extension"
 
@@ -159,11 +161,16 @@ msgstr "PIN"
 #: ../cfg_phone_sip.py:96 ../cfg_phone_zap.py:83 ../cfg_trunk_iax.py:49
 #: ../cfg_trunk_sip.py:44 ../cfg_trunk_zappbx.py:39 ../cfg_trunk_zappri.py:49
 #: ../cfg_trunk_zap.py:38 ../page_admin_panel.ptl:27 ../cfg_phone_sip.py:97
+#: ../cfg_phone_queue.py:157 ../cfg_trunk_iax.py:83 ../cfg_trunk_sip.py:68
+#: ../cfg_trunk_zappbx.py:53 ../cfg_trunk_zappri.py:67 ../cfg_trunk_zap.py:52
+#: ../page_admin_panel.ptl:26
 msgid "Operator Panel"
 msgstr "Panneau de l'opérateur"
 
 #: ../cfg_app_meetme.py:36 ../cfg_trunk_iax.py:50 ../cfg_trunk_sip.py:45
 #: ../cfg_trunk_zappbx.py:40 ../cfg_trunk_zappri.py:50 ../cfg_trunk_zap.py:39
+#: ../cfg_trunk_iax.py:88 ../cfg_trunk_sip.py:73 ../cfg_trunk_zappbx.py:58
+#: ../cfg_trunk_zappri.py:72 ../cfg_trunk_zap.py:57
 msgid "Show this trunk in the panel"
 msgstr "Affiche ce canal dans le panneau"
 
@@ -196,6 +203,7 @@ msgid "Play Play Music On Hold until you hang up."
 msgstr "Joue la musique d'attente jusqu'au raccrochage"
 
 #: ../cfg_app_music.py:33 ../cfg_ivr_autoatt.py:46 ../cfg_phone_queue.py:53
+#: ../cfg_ivr_autoatt.py:61
 msgid "Music-on-hold class"
 msgstr "Classe de musique d'attente"
 
@@ -262,6 +270,7 @@ msgstr ""
 #: ../cfg_app_quickdial_global.py:33 ../cfg_opt_user.py:32
 #: ../cfg_phone_epygi.py:45 ../cfg_phone_iax.py:42 ../cfg_phone_mgcp.py:42
 #: ../cfg_phone_sip.py:43 ../cfg_trunk_iax.py:43 ../cfg_phone_sip.py:44
+#: ../cfg_phone_sip.py:45 ../cfg_trunk_iax.py:60
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -357,6 +366,7 @@ msgid "Say time"
 msgstr "Dire l'heure"
 
 #: ../cfg_app_saytime.py:33 ../page_stats_calls.ptl:105
+#: ../page_stats_calls.ptl:109
 msgid "Time"
 msgstr "Heure"
 
@@ -410,7 +420,11 @@ msgstr "Utilisé pour router les appels à travers les canaux"
 #: ../configlets.py:738 ../configlets.py:825 ../configlets.py:900
 #: ../configlets.py:1077 ../configlets.py:1097 ../cfg_phone_sip.py:40
 #: ../configlets.py:754 ../configlets.py:841 ../configlets.py:916
-#: ../configlets.py:1093 ../configlets.py:1113
+#: ../configlets.py:1093 ../configlets.py:1113 ../cfg_opt_oppanel.py:35
+#: ../cfg_phone_sip.py:41 ../cfg_trunk_iax.py:35 ../cfg_trunk_zappbx.py:34
+#: ../cfg_trunk_zappri.py:35 ../cfg_trunk_zap.py:33 ../configlets.py:755
+#: ../configlets.py:842 ../configlets.py:940 ../configlets.py:1117
+#: ../configlets.py:1137
 msgid "Name"
 msgstr "Nom"
 
@@ -457,7 +471,18 @@ msgstr "Cannaux à utiliser pour le routage de cette entrée d'appel extérieur"
 #: ../cfg_phone_mgcp.py:159 ../cfg_phone_queue.py:137
 #: ../cfg_phone_queue.py:140 ../cfg_phone_sip.py:231 ../cfg_phone_sip.py:238
 #: ../cfg_phone_zap.py:150 ../cfg_phone_zap.py:157 ../configlets.py:417
-#: ../cfg_phone_sip.py:232 ../cfg_phone_sip.py:239
+#: ../cfg_phone_sip.py:232 ../cfg_phone_sip.py:239 ../cfg_ivr_autoatt.py:114
+#: ../cfg_ivr_autoatt.py:117 ../cfg_ivr_autoatt.py:120
+#: ../cfg_ivr_autoatt.py:123 ../cfg_phone_epygi.py:231
+#: ../cfg_phone_epygi.py:238 ../cfg_phone_iax.py:209 ../cfg_phone_iax.py:216
+#: ../cfg_phone_mgcp.py:215 ../cfg_phone_mgcp.py:222 ../cfg_phone_queue.py:170
+#: ../cfg_phone_queue.py:173 ../cfg_phone_sip.py:233 ../cfg_phone_sip.py:240
+#: ../cfg_phone_zap.py:213 ../cfg_phone_zap.py:220 ../cfg_trunk_capimsn.py:42
+#: ../cfg_trunk_fwdiax.py:57 ../cfg_trunk_iax.py:133 ../cfg_trunk_iax.py:136
+#: ../cfg_trunk_iaxtel.py:56 ../cfg_trunk_sip.py:117 ../cfg_trunk_sip.py:120
+#: ../cfg_trunk_zappbx.py:125 ../cfg_trunk_zappbx.py:128
+#: ../cfg_trunk_zappri.py:132 ../cfg_trunk_zappri.py:135
+#: ../cfg_trunk_zap.py:112 ../cfg_trunk_zap.py:115 ../configlets.py:418
 msgid "This is a Dependency"
 msgstr "Ceci est une dépendance"
 
@@ -473,39 +498,39 @@ msgstr "Nouveau répondeur automatique"
 msgid "Basic auto-attendant."
 msgstr "Répondeur automatique de base"
 
-#: ../cfg_ivr_autoatt.py:39
+#: ../cfg_ivr_autoatt.py:39 ../cfg_ivr_autoatt.py:53
 msgid "Max. time for incoming calls in seconds"
 msgstr "Temps maximum pour les appels entrants en secondes"
 
-#: ../cfg_ivr_autoatt.py:40
+#: ../cfg_ivr_autoatt.py:40 ../cfg_ivr_autoatt.py:54
 msgid "(0 or empty means no time restriction)"
 msgstr "(0 ou vide signifie pas de restriction de temps)"
 
-#: ../cfg_ivr_autoatt.py:52
+#: ../cfg_ivr_autoatt.py:52 ../cfg_ivr_autoatt.py:67
 msgid "File to play in the background"
 msgstr "Fichier à jouer en fond"
 
-#: ../cfg_ivr_autoatt.py:56
+#: ../cfg_ivr_autoatt.py:56 ../cfg_ivr_autoatt.py:71
 msgid "How many times should it be played?"
 msgstr "Combien de fois devrait-it être joué ?"
 
-#: ../cfg_ivr_autoatt.py:62
+#: ../cfg_ivr_autoatt.py:62 ../cfg_ivr_autoatt.py:77
 msgid "Pause between each playback"
 msgstr "Pause entre chaque jeu"
 
-#: ../cfg_ivr_autoatt.py:66
+#: ../cfg_ivr_autoatt.py:66 ../cfg_ivr_autoatt.py:81
 msgid "Extension to ring after file playing"
 msgstr "Extension à appeler après le jeu"
 
-#: ../cfg_ivr_autoatt.py:71
+#: ../cfg_ivr_autoatt.py:71 ../cfg_ivr_autoatt.py:86
 msgid "Digit to jump that extension directly"
 msgstr "Chiffre pour sauter directement à cette extension"
 
-#: ../cfg_ivr_autoatt.py:76
+#: ../cfg_ivr_autoatt.py:76 ../cfg_ivr_autoatt.py:91
 msgid "IVR to jump on special dates"
 msgstr "IVR à activer à des dates spécifiques"
 
-#: ../cfg_ivr_autoatt.py:83
+#: ../cfg_ivr_autoatt.py:83 ../cfg_ivr_autoatt.py:98
 msgid "Times string"
 msgstr "Spécification de temps"
 
@@ -518,11 +543,11 @@ msgstr ""
 msgid "Allow calling to all extensions?"
 msgstr "Autorise l'appel de toute les extentions"
 
-#: ../cfg_ivr_autoatt.py:122
+#: ../cfg_ivr_autoatt.py:122 ../cfg_ivr_autoatt.py:137
 msgid "File should be played at least one time"
 msgstr "Les fichier devraient être joués au moins une fois"
 
-#: ../cfg_ivr_autoatt.py:124
+#: ../cfg_ivr_autoatt.py:124 ../cfg_ivr_autoatt.py:139
 msgid "Please specify dates"
 msgstr "Svp spécifiez des dates"
 
@@ -564,16 +589,22 @@ msgstr "A partir du canal :"
 
 #: ../cfg_opt_did.py:45 ../cfg_trunk_iax.py:53 ../cfg_trunk_sip.py:48
 #: ../cfg_trunk_zappbx.py:49 ../cfg_trunk_zappri.py:57 ../cfg_trunk_zap.py:46
+#: ../cfg_trunk_iax.py:103 ../cfg_trunk_sip.py:87 ../cfg_trunk_zappbx.py:95
+#: ../cfg_trunk_zappri.py:103 ../cfg_trunk_zap.py:88
 msgid "Go to"
 msgstr "Aller à"
 
 #: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:54 ../cfg_trunk_sip.py:49
 #: ../cfg_trunk_zappbx.py:50 ../cfg_trunk_zappri.py:58 ../cfg_trunk_zap.py:47
+#: ../cfg_trunk_iax.py:106 ../cfg_trunk_sip.py:90 ../cfg_trunk_zappbx.py:98
+#: ../cfg_trunk_zappri.py:106 ../cfg_trunk_zap.py:91
 msgid "Phone"
 msgstr "Téléphone"
 
 #: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:54 ../cfg_trunk_sip.py:49
 #: ../cfg_trunk_zappbx.py:50 ../cfg_trunk_zappri.py:58 ../cfg_trunk_zap.py:47
+#: ../cfg_trunk_iax.py:106 ../cfg_trunk_sip.py:90 ../cfg_trunk_zappbx.py:98
+#: ../cfg_trunk_zappri.py:106 ../cfg_trunk_zap.py:91
 msgid "IVR"
 msgstr "IVR"
 
@@ -584,11 +615,15 @@ msgstr "Téléphone à faire sonner"
 
 #: ../cfg_opt_did.py:57 ../cfg_trunk_iax.py:57 ../cfg_trunk_sip.py:52
 #: ../cfg_trunk_zappbx.py:53 ../cfg_trunk_zappri.py:61 ../cfg_trunk_zap.py:50
+#: ../cfg_trunk_iax.py:115 ../cfg_trunk_sip.py:99 ../cfg_trunk_zappbx.py:107
+#: ../cfg_trunk_zappri.py:115 ../cfg_trunk_zap.py:100
 msgid "IVR to jump to"
 msgstr "Faire aller l'IVR à"
 
 #: ../cfg_opt_did.py:63 ../cfg_trunk_iax.py:59 ../cfg_trunk_sip.py:54
 #: ../cfg_trunk_zappbx.py:55 ../cfg_trunk_zappri.py:63 ../cfg_trunk_zap.py:52
+#: ../cfg_trunk_iax.py:98 ../cfg_trunk_sip.py:82 ../cfg_trunk_zappbx.py:90
+#: ../cfg_trunk_zappri.py:98 ../cfg_trunk_zap.py:83
 msgid "Change Caller*Id to:"
 msgstr "Changer le Caller*Id en :"
 
@@ -704,19 +739,19 @@ msgstr "Nouveau répertoire de la musique de fond"
 msgid "Configure Asternic Flash Operator Panel"
 msgstr "Configurer le Asternic Flash Operator Panel"
 
-#: ../cfg_opt_oppanel.py:35
+#: ../cfg_opt_oppanel.py:35 ../cfg_opt_oppanel.py:40
 msgid "FQDN/IP to access the panel via web"
 msgstr "FQDN/IP pour accéder au panneau via le web"
 
-#: ../cfg_opt_oppanel.py:36
+#: ../cfg_opt_oppanel.py:36 ../cfg_opt_oppanel.py:45
 msgid "Security Code"
 msgstr "Code de sécurité"
 
-#: ../cfg_opt_oppanel.py:37
+#: ../cfg_opt_oppanel.py:37 ../cfg_opt_oppanel.py:63
 msgid "Manager agent"
 msgstr "Agent de gestion"
 
-#: ../cfg_opt_oppanel.py:39
+#: ../cfg_opt_oppanel.py:39 ../cfg_opt_oppanel.py:68
 msgid "Frequency in seconds to poll for sip and iax status"
 msgstr "Fréquence en seconde de verification de status de sip et de iax"
 
@@ -1255,11 +1290,11 @@ msgstr "B8ZF (T1)"
 msgid "HDB3 (E1)"
 msgstr "HDB3 (E1)"
 
-#: ../cfg_opt_zappri.py:51 ../cfg_trunk_zappri.py:46
+#: ../cfg_opt_zappri.py:51 ../cfg_trunk_zappri.py:46 ../cfg_trunk_zappri.py:56
 msgid "Channels"
 msgstr "Cannaux"
 
-#: ../cfg_opt_zappri.py:51 ../cfg_trunk_zappri.py:46
+#: ../cfg_opt_zappri.py:51 ../cfg_trunk_zappri.py:46 ../cfg_trunk_zappri.py:57
 msgid "i.e. 1-15,17-31"
 msgstr "par exemple, 1-15,17-31"
 
@@ -1380,11 +1415,15 @@ msgstr "Nom de l'identifiant de l'appelant"
 
 #: ../cfg_phone_epygi.py:144 ../cfg_phone_iax.py:122 ../cfg_phone_mgcp.py:128
 #: ../cfg_phone_sip.py:206 ../cfg_phone_zap.py:126 ../cfg_phone_sip.py:207
+#: ../cfg_phone_epygi.py:207 ../cfg_phone_iax.py:185 ../cfg_phone_mgcp.py:191
+#: ../cfg_phone_sip.py:208 ../cfg_phone_zap.py:189
 msgid "Allowed dialout-entries"
 msgstr "Autorise les entrées d'appel vers l'extérieur"
 
 #: ../cfg_phone_epygi.py:149 ../cfg_phone_iax.py:127 ../cfg_phone_mgcp.py:133
 #: ../cfg_phone_sip.py:211 ../cfg_phone_zap.py:131 ../cfg_phone_sip.py:212
+#: ../cfg_phone_epygi.py:212 ../cfg_phone_iax.py:190 ../cfg_phone_mgcp.py:196
+#: ../cfg_phone_sip.py:213 ../cfg_phone_zap.py:194
 msgid "Enable time restriction?"
 msgstr "Active les restrictions de temps ?"
 
@@ -1482,104 +1521,115 @@ msgstr "Nouvelle file d'appel"
 msgid "Timeout"
 msgstr "Timeout"
 
-#: ../cfg_phone_queue.py:59
+#: ../cfg_phone_queue.py:59 ../cfg_phone_queue.py:63
 msgid "Strategy:"
 msgstr "Strategie"
 
-#: ../cfg_phone_queue.py:61
+#: ../cfg_phone_queue.py:61 ../cfg_phone_queue.py:65
 msgid "Ring all - ring all available channels until one answers"
 msgstr "Appelle tous - appelle tous les canaux disponibles jusqu'à une réponse"
 
-#: ../cfg_phone_queue.py:62
+#: ../cfg_phone_queue.py:62 ../cfg_phone_queue.py:66
 msgid "Round robin - take turns ringing each available interface"
 msgstr "Caroussel - fait sonner chaque interface disponible à son tour"
 
-#: ../cfg_phone_queue.py:63
+#: ../cfg_phone_queue.py:63 ../cfg_phone_queue.py:67
 msgid ""
 "Least recent - ring interface which was least recently called by this queue"
 msgstr ""
 "Le moins récent - fait sonner l'interface qui a été le moins récement "
 "appelée dans cette file"
 
-#: ../cfg_phone_queue.py:64
+#: ../cfg_phone_queue.py:64 ../cfg_phone_queue.py:68
 msgid "Fewest calls - ring the one with fewest completed calls from this queue"
 msgstr ""
 "Le moins d'appels - fait sonner celle avec le moins d'appel complétés sur "
 "cette file"
 
-#: ../cfg_phone_queue.py:65
+#: ../cfg_phone_queue.py:65 ../cfg_phone_queue.py:69
 msgid "Random - ring random interface"
 msgstr "Au hasard - fait sonner une interface au hasard"
 
-#: ../cfg_phone_queue.py:66
+#: ../cfg_phone_queue.py:66 ../cfg_phone_queue.py:70
 msgid "Round robin with memory - remember where we left off last ring pass"
 msgstr ""
 "Caroussel avec mémoire - se souvient qui a laissé passer lors du dernier "
 "passage"
 
-#: ../cfg_phone_queue.py:70
+#: ../cfg_phone_queue.py:70 ../cfg_phone_queue.py:74
 msgid "How long to wait before trying all the members again?"
 msgstr ""
 "Combien de temps faut-il attendre avant de réessayer tous les membre de "
 "nouveau ?"
 
-#: ../cfg_phone_queue.py:75
+#: ../cfg_phone_queue.py:75 ../cfg_phone_queue.py:79
 msgid "Announces"
 msgstr "Annonces"
 
-#: ../cfg_phone_queue.py:80
+#: ../cfg_phone_queue.py:80 ../cfg_phone_queue.py:84
 msgid "Announce queue position to caller?"
 msgstr "Annonce la position dans la file à l'appelant ?"
 
-#: ../cfg_phone_queue.py:84
+#: ../cfg_phone_queue.py:84 ../cfg_phone_queue.py:88
 msgid ""
 "How often to announce queue position and/or estimated holdtime to caller"
 msgstr ""
 "Combien de fois annoncer la position dans la liste et/ou le temps d'attente "
 "estimé à l'appelant"
 
-#: ../cfg_phone_queue.py:89
+#: ../cfg_phone_queue.py:89 ../cfg_phone_queue.py:93
 msgid "Include estimated hold time in position announcements?"
 msgstr "Inclure le temps estimé d'attente dans les annonces de position"
 
-#: ../cfg_phone_queue.py:91
+#: ../cfg_phone_queue.py:91 ../cfg_phone_queue.py:95
 msgid "Yes"
 msgstr "Oui"
 
-#: ../cfg_phone_queue.py:92
+#: ../cfg_phone_queue.py:92 ../cfg_phone_queue.py:96
 msgid "No"
 msgstr "Non"
 
-#: ../cfg_phone_queue.py:93
+#: ../cfg_phone_queue.py:93 ../cfg_phone_queue.py:97
 msgid "Only Once"
 msgstr "Seulement une fois"
 
 #: ../cfg_phone_queue.py:97 ../cfg_phone_sip.py:144 ../cfg_phone_sip.py:145
+#: ../cfg_phone_epygi.py:144 ../cfg_phone_iax.py:122 ../cfg_phone_mgcp.py:128
+#: ../cfg_phone_queue.py:101 ../cfg_phone_zap.py:126
 msgid "Monitoring"
 msgstr "Surveillance"
 
-#: ../cfg_phone_queue.py:102
+#: ../cfg_phone_queue.py:102 ../cfg_phone_queue.py:106
 msgid "Monitor answered calls?"
 msgstr "Surveillance des appels répondus ?"
 
 #: ../cfg_phone_queue.py:106 ../cfg_phone_sip.py:160 ../cfg_phone_sip.py:161
+#: ../cfg_phone_epygi.py:160 ../cfg_phone_iax.py:138 ../cfg_phone_mgcp.py:144
+#: ../cfg_phone_queue.py:116 ../cfg_phone_zap.py:142
 msgid "Monitor file format"
 msgstr "Format de fichier de la surveillance"
 
 #: ../cfg_opt_codec.py:40 ../cfg_phone_queue.py:108 ../cfg_phone_sip.py:162
-#: ../cfg_phone_sip.py:163
+#: ../cfg_phone_sip.py:163 ../cfg_phone_epygi.py:162 ../cfg_phone_iax.py:140
+#: ../cfg_phone_mgcp.py:146 ../cfg_phone_queue.py:118 ../cfg_phone_zap.py:144
 msgid "GSM"
 msgstr "GSM"
 
 #: ../cfg_phone_queue.py:109 ../cfg_phone_sip.py:163 ../cfg_phone_sip.py:164
+#: ../cfg_phone_epygi.py:163 ../cfg_phone_iax.py:141 ../cfg_phone_mgcp.py:147
+#: ../cfg_phone_queue.py:119 ../cfg_phone_zap.py:145
 msgid "WAV"
 msgstr "WAV"
 
 #: ../cfg_phone_queue.py:110 ../cfg_phone_sip.py:164 ../cfg_phone_sip.py:165
+#: ../cfg_phone_epygi.py:164 ../cfg_phone_iax.py:142 ../cfg_phone_mgcp.py:148
+#: ../cfg_phone_queue.py:120 ../cfg_phone_zap.py:146
 msgid "WAV49"
 msgstr "WAV49"
 
 #: ../cfg_phone_queue.py:114 ../cfg_phone_sip.py:154 ../cfg_phone_sip.py:155
+#: ../cfg_phone_epygi.py:154 ../cfg_phone_iax.py:132 ../cfg_phone_mgcp.py:138
+#: ../cfg_phone_queue.py:110 ../cfg_phone_zap.py:136
 msgid "Monitor file name"
 msgstr "Nom de fichier de la surveillance"
 
@@ -1591,19 +1641,19 @@ msgstr "Autrement il usera ${UNIQUEID}"
 msgid "Split file on inbound and outbound channels?"
 msgstr "Coupe le fichier sur les canaux entrants et sortants ?"
 
-#: ../cfg_phone_queue.py:129
+#: ../cfg_phone_queue.py:129 ../cfg_phone_queue.py:162
 msgid "Show this queue in the panel"
 msgstr "Affiche cette file dans le panneau"
 
-#: ../cfg_phone_queue.py:149
+#: ../cfg_phone_queue.py:149 ../cfg_phone_queue.py:182
 msgid "You should select a frequency"
 msgstr "Vous devriez sélectionner une fréquence"
 
-#: ../cfg_phone_sip.py:27
+#: ../cfg_phone_sip.py:27 ../cfg_phone_sip.py:28
 msgid "Normal SIP phone"
 msgstr "Téléphone SIP normal"
 
-#: ../cfg_phone_sip.py:28
+#: ../cfg_phone_sip.py:28 ../cfg_phone_sip.py:29
 msgid "New SIP phone"
 msgstr "Nouveau téléphone SIP normal"
 
@@ -1620,11 +1670,13 @@ msgid "New ZAP phone"
 msgstr "Nouveau téléphone ZAP"
 
 #: ../cfg_phone_zap.py:43 ../cfg_trunk_zappbx.py:34 ../cfg_trunk_zap.py:33
+#: ../cfg_trunk_zappbx.py:38 ../cfg_trunk_zap.py:37
 msgid "Zaptel channel number"
 msgstr "Numéro du canal Zaptel"
 
 #: ../cfg_phone_zap.py:48 ../cfg_trunk_zappbx.py:35 ../cfg_trunk_zappri.py:35
-#: ../cfg_trunk_zap.py:34
+#: ../cfg_trunk_zap.py:34 ../cfg_trunk_zappbx.py:43 ../cfg_trunk_zappri.py:39
+#: ../cfg_trunk_zap.py:42
 msgid "Signalling type"
 msgstr "Type de signalisation"
 
@@ -1654,6 +1706,7 @@ msgid "Subscriber number"
 msgstr "Numéro du souscripteur"
 
 #: ../cfg_trunk_capimsn.py:68 ../cfg_trunk_capimsn.py:67
+#: ../cfg_trunk_capimsn.py:73
 msgid "MSN already assigned"
 msgstr "MSN déja assigné"
 
@@ -1736,68 +1789,71 @@ msgstr ""
 "Utilisé pour configurer un canal IAX vers un autre serveur Asterisk ou un "
 "point d'accès IAX."
 
-#: ../cfg_trunk_iax.py:35
+#: ../cfg_trunk_iax.py:35 ../cfg_trunk_iax.py:40
 msgid "IAX host"
 msgstr "Hôte IAX"
 
-#: ../cfg_trunk_iax.py:36
+#: ../cfg_trunk_iax.py:36 ../cfg_trunk_iax.py:44
 msgid "Bandwith"
 msgstr "Bande passante"
 
-#: ../cfg_trunk_iax.py:37
+#: ../cfg_trunk_iax.py:37 ../cfg_trunk_iax.py:47
 msgid "Low"
 msgstr "Basse"
 
-#: ../cfg_trunk_iax.py:37
+#: ../cfg_trunk_iax.py:37 ../cfg_trunk_iax.py:47
 msgid "High"
 msgstr "Haute"
 
-#: ../cfg_trunk_iax.py:40
+#: ../cfg_trunk_iax.py:40 ../cfg_trunk_iax.py:50
 msgid "Authentication"
 msgstr "Authentification"
 
-#: ../cfg_trunk_iax.py:41
+#: ../cfg_trunk_iax.py:41 ../cfg_trunk_iax.py:54
 msgid "Authentication Method"
 msgstr "Méthode d'Authentification"
 
-#: ../cfg_trunk_iax.py:42
+#: ../cfg_trunk_iax.py:42 ../cfg_trunk_iax.py:57
 msgid "Plain text"
 msgstr "Textuelle"
 
-#: ../cfg_trunk_iax.py:42
+#: ../cfg_trunk_iax.py:42 ../cfg_trunk_iax.py:57
 msgid "RSA"
 msgstr "RSA"
 
-#: ../cfg_trunk_iax.py:42
+#: ../cfg_trunk_iax.py:42 ../cfg_trunk_iax.py:57
 msgid "MD5"
 msgstr "MD5"
 
-#: ../cfg_trunk_iax.py:43
+#: ../cfg_trunk_iax.py:43 ../cfg_trunk_iax.py:61
 msgid "For 'Plain' or 'MD5' only"
 msgstr "Seulement pour 'Textuelle' ou 'MD5'"
 
-#: ../cfg_trunk_iax.py:44
+#: ../cfg_trunk_iax.py:44 ../cfg_trunk_iax.py:66
 msgid "Public key from remote server"
 msgstr "Clé publique du serveur distant"
 
-#: ../cfg_trunk_iax.py:44 ../cfg_trunk_iax.py:45
+#: ../cfg_trunk_iax.py:44 ../cfg_trunk_iax.py:45 ../cfg_trunk_iax.py:67
+#: ../cfg_trunk_iax.py:73
 msgid "For 'RSA' only"
 msgstr "Seulement pour 'RSA'"
 
-#: ../cfg_trunk_iax.py:45
+#: ../cfg_trunk_iax.py:45 ../cfg_trunk_iax.py:72
 msgid "Private local key"
 msgstr "Clé privée locale"
 
-#: ../cfg_trunk_iax.py:47
+#: ../cfg_trunk_iax.py:47 ../cfg_trunk_iax.py:78
 msgid "Enable trunking?"
 msgstr "Active le trunking"
 
-#: ../cfg_trunk_iax.py:52
+#: ../cfg_trunk_iax.py:52 ../cfg_trunk_iax.py:94
 msgid "Calls from IAX trunk"
 msgstr "Appels venant d'un canal IAX"
 
 #: ../cfg_trunk_iax.py:55 ../cfg_trunk_sip.py:50 ../cfg_trunk_zappbx.py:51
-#: ../cfg_trunk_zappri.py:59 ../cfg_trunk_zap.py:48
+#: ../cfg_trunk_zappri.py:59 ../cfg_trunk_zap.py:48 ../cfg_trunk_iax.py:109
+#: ../cfg_trunk_sip.py:93 ../cfg_trunk_zappbx.py:101
+#: ../cfg_trunk_zappri.py:109 ../cfg_trunk_zap.py:94
 msgid "Extension to ring"
 msgstr "Extension à faire sonner"
 
@@ -1843,41 +1899,42 @@ msgstr "Canal SIP standard"
 msgid "New standard SIP trunk"
 msgstr "Nouveau canal SIP standard"
 
-#: ../cfg_trunk_sip.py:30
+#: ../cfg_trunk_sip.py:30 ../cfg_trunk_sip.py:29
 msgid "Used to setup a SIP trunk to a SIP provider or a different SIP server."
 msgstr ""
 "Utilisé pour configurer un canal SIP vers un fournisseur SIP ou un serveur "
 "sip différent."
 
-#: ../cfg_trunk_sip.py:36
+#: ../cfg_trunk_sip.py:36 ../cfg_trunk_sip.py:40
 msgid "SIP username"
 msgstr "Nom d'utilisateur SIP"
 
-#: ../cfg_trunk_sip.py:37
+#: ../cfg_trunk_sip.py:37 ../cfg_trunk_sip.py:44
 msgid "SIP password"
 msgstr "Mot de passe SIP"
 
-#: ../cfg_trunk_sip.py:38
+#: ../cfg_trunk_sip.py:38 ../cfg_trunk_sip.py:48
 msgid "SIP host"
 msgstr "Hôte SIP"
 
-#: ../cfg_trunk_sip.py:39
+#: ../cfg_trunk_sip.py:39 ../cfg_trunk_sip.py:52
 msgid "Register with remote host?"
 msgstr "S'enregistrer (se faire connaître) de l'hôte distant ?"
 
-#: ../cfg_trunk_sip.py:40
+#: ../cfg_trunk_sip.py:40 ../cfg_trunk_sip.py:56
 msgid "Enable forward address type?"
 msgstr "Active les adresses de type 'faire suivre' ?"
 
-#: ../cfg_trunk_sip.py:41
+#: ../cfg_trunk_sip.py:41 ../cfg_trunk_sip.py:60
 msgid "Is the trunk behind NAT?"
 msgstr "Le canal est-il derrière un NAT ?"
 
-#: ../cfg_trunk_sip.py:42
+#: ../cfg_trunk_sip.py:42 ../cfg_trunk_sip.py:64
 msgid "Bypass auth for incoming calls?"
 msgstr "Evite l'authentification pour les appels entrants ?"
 
-#: ../cfg_trunk_sip.py:47 ../cfg_trunk_zappbx.py:48
+#: ../cfg_trunk_sip.py:47 ../cfg_trunk_zappbx.py:48 ../cfg_trunk_sip.py:78
+#: ../cfg_trunk_zappbx.py:86
 msgid "Calls from SIP trunk"
 msgstr "Appels venant du canal SIP"
 
@@ -1906,32 +1963,38 @@ msgid "New PBX ZAP trunk"
 msgstr "Nouveau canal PBX ZAP"
 
 #: ../cfg_trunk_zappbx.py:37 ../cfg_trunk_zappri.py:47 ../cfg_trunk_zap.py:36
+#: ../cfg_trunk_zappbx.py:48 ../cfg_trunk_zappri.py:62 ../cfg_trunk_zap.py:47
 msgid "Callout group"
 msgstr "Groupe d'appel vers l'extérieur"
 
 #: ../cfg_trunk_zappbx.py:42 ../cfg_trunk_zappri.py:52 ../cfg_trunk_zap.py:41
+#: ../cfg_trunk_zappbx.py:64 ../cfg_trunk_zappri.py:78 ../cfg_trunk_zap.py:63
 msgid "Reception and Transmission Gains"
 msgstr "Gains de réception et de transmission"
 
 #: ../cfg_trunk_zappbx.py:43 ../cfg_trunk_zappri.py:53 ../cfg_trunk_zap.py:42
+#: ../cfg_trunk_zappbx.py:68 ../cfg_trunk_zappri.py:82 ../cfg_trunk_zap.py:67
 msgid "Reception gain"
 msgstr "Gain de réception"
 
 #: ../cfg_trunk_zappbx.py:43 ../cfg_trunk_zappbx.py:44
 #: ../cfg_trunk_zappri.py:53 ../cfg_trunk_zappri.py:54 ../cfg_trunk_zap.py:42
-#: ../cfg_trunk_zap.py:43
+#: ../cfg_trunk_zap.py:43 ../cfg_trunk_zappbx.py:69 ../cfg_trunk_zappbx.py:75
+#: ../cfg_trunk_zappri.py:83 ../cfg_trunk_zappri.py:89 ../cfg_trunk_zap.py:68
+#: ../cfg_trunk_zap.py:74
 msgid "in dB"
 msgstr "en dB"
 
 #: ../cfg_trunk_zappbx.py:44 ../cfg_trunk_zappri.py:54 ../cfg_trunk_zap.py:43
+#: ../cfg_trunk_zappbx.py:74 ../cfg_trunk_zappri.py:88 ../cfg_trunk_zap.py:73
 msgid "Transmission gain"
 msgstr "Gain de transmission"
 
-#: ../cfg_trunk_zappbx.py:46
+#: ../cfg_trunk_zappbx.py:46 ../cfg_trunk_zappbx.py:80
 msgid "Outbound prefix"
 msgstr "Préfixe de sortie"
 
-#: ../cfg_trunk_zappbx.py:46
+#: ../cfg_trunk_zappbx.py:46 ../cfg_trunk_zappbx.py:82
 msgid "Used to call through a PBX"
 msgstr "Utilisé pour appelé à travers un PBX"
 
@@ -1943,23 +2006,23 @@ msgstr "Canal ZAP PRI standard"
 msgid "New standard ZAP PRI trunk"
 msgstr "Nouveau canal ZAP PRI standard"
 
-#: ../cfg_trunk_zappri.py:36
+#: ../cfg_trunk_zappri.py:36 ../cfg_trunk_zappri.py:41
 msgid "PRI signalling, CPE side"
 msgstr "Signalisation PRI, coté CPE"
 
-#: ../cfg_trunk_zappri.py:36
+#: ../cfg_trunk_zappri.py:36 ../cfg_trunk_zappri.py:42
 msgid "PRI signalling, Network side"
 msgstr "Signalisation PRI, coté réseau"
 
-#: ../cfg_trunk_zappri.py:37
+#: ../cfg_trunk_zappri.py:37 ../cfg_trunk_zappri.py:45
 msgid "Switch type"
 msgstr "Type de switch"
 
-#: ../cfg_trunk_zappri.py:56
+#: ../cfg_trunk_zappri.py:56 ../cfg_trunk_zappri.py:94
 msgid "Calls from PRI channel(s)"
 msgstr "Appels venant du/des canal/canaux PRI"
 
-#: ../cfg_trunk_zappri.py:90
+#: ../cfg_trunk_zappri.py:90 ../cfg_trunk_zappri.py:161
 msgid "Group already in use"
 msgstr "Groupe déja utlisé"
 
@@ -1971,7 +2034,7 @@ msgstr "Canal ZAP standard"
 msgid "New standard ZAP trunk"
 msgstr "Nouveau canal ZAP standard"
 
-#: ../cfg_trunk_zap.py:45
+#: ../cfg_trunk_zap.py:45 ../cfg_trunk_zap.py:79
 msgid "Calls from ZAP trunk"
 msgstr "Appels venant du canal ZAP"
 
@@ -1979,24 +2042,28 @@ msgstr "Appels venant du canal ZAP"
 #: ../configlets.py:1061 ../configlets.py:1083 ../configlets.py:909
 #: ../configlets.py:1062 ../configlets.py:1084 ../configlets.py:924
 #: ../configlets.py:925 ../configlets.py:1078 ../configlets.py:1100
+#: ../configlets.py:579 ../configlets.py:948 ../configlets.py:949
+#: ../configlets.py:1102 ../configlets.py:1124
 msgid "None"
 msgstr "Aucun"
 
-#: ../configlets.py:613
+#: ../configlets.py:613 ../configlets.py:614
 msgid "Name should not contain '-' or spaces"
 msgstr "Le nom ne doit pas contenir de '-' ou d'espaces"
 
-#: ../configlets.py:618
+#: ../configlets.py:618 ../configlets.py:619
 msgid "Name already in use"
 msgstr "Le nom est déja utilisé"
 
 #: ../configlets.py:737 ../configlets.py:1096 ../configlets.py:738
 #: ../configlets.py:1097 ../configlets.py:754 ../configlets.py:1113
+#: ../configlets.py:755 ../configlets.py:1137
 msgid "Info"
 msgstr "Info"
 
 #: ../configlets.py:790 ../configlets.py:803 ../configlets.py:791
 #: ../configlets.py:804 ../configlets.py:807 ../configlets.py:820
+#: ../configlets.py:808 ../configlets.py:821
 #, python-format
 msgid "%s"
 msgstr "%s"
@@ -2005,14 +2072,17 @@ msgid "Price for this pattern"
 msgstr "Coût de ce pattern"
 
 #: ../configlets.py:804 ../configlets.py:805 ../configlets.py:821
+#: ../configlets.py:822
 msgid "Password:"
 msgstr "Mot de passe :"
 
 #: ../configlets.py:824 ../configlets.py:825 ../configlets.py:841
+#: ../configlets.py:842
 msgid "Dial Command"
 msgstr "Commande d'appel"
 
 #: ../configlets.py:852 ../configlets.py:853 ../configlets.py:869
+#: ../configlets.py:870
 msgid "You should select a phone to ring to"
 msgstr "Sélectionner un téléphone à faire sonner"
 
@@ -2020,7 +2090,7 @@ msgstr "Sélectionner un téléphone à faire sonner"
 msgid "This menu will contain all sorts of administration stuff:"
 msgstr "Ce menu contient toutes sortes de composants d'administration"
 
-#: ../panelutils.py:74
+#: ../panelutils.py:74 ../panelutils.py:75
 msgid ""
 "0,No timeout|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 minutes|"
 "3000,50 minutes"
@@ -2028,19 +2098,19 @@ msgstr ""
 "0,pas de minuterie|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 "
 "minutes|3000,50 minutes"
 
-#: ../panelutils.py:98
+#: ../panelutils.py:98 ../panelutils.py:136
 msgid "Meetme"
 msgstr "Meetme"
 
-#: ../panelutils.py:102
+#: ../panelutils.py:102 ../panelutils.py:140
 msgid "PARK"
 msgstr "PARK"
 
-#: ../panelutils.py:106
+#: ../panelutils.py:106 ../panelutils.py:144
 msgid "Park"
 msgstr "Park"
 
-#: ../panelutils.py:124
+#: ../panelutils.py:124 ../panelutils.py:162
 msgid "Restarting the panel daemon ..."
 msgstr "Redémarrage du démon du panneau..."
 
@@ -2115,6 +2185,7 @@ msgstr "'%s' requis non trouvé"
 #: ../ConfigHelper.ptl:324 ../page_login.ptl:44 ../page_stats_calls.ptl:73
 #: ../page_stats_dialouts.ptl:106 ../page_stats_phone.ptl:109
 #: ../page_stats_trunks.ptl:105 ../page_user_settings.ptl:69
+#: ../page_stats_calls.ptl:77
 msgid "Submit"
 msgstr "Soumettre"
 
@@ -2130,121 +2201,132 @@ msgstr "Supprimer"
 msgid "Calls Statistics"
 msgstr "Statistiques d'appels"
 
-#: ../page_stats_calls.ptl:55
+#: ../page_stats_calls.ptl:55 ../page_stats_calls.ptl:57
 msgid "Day:"
 msgstr "Jour :"
 
-#: ../page_stats_calls.ptl:106
+#: ../page_stats_calls.ptl:106 ../page_stats_calls.ptl:110
 msgid "Calls per Hour in a Day"
 msgstr "Appels par heure dans une journée"
 
 #: ../page_stats_calls.ptl:106 ../page_stats_calls.ptl:107
-#: ../page_stats_calls.ptl:108
+#: ../page_stats_calls.ptl:108 ../page_stats_calls.ptl:110
+#: ../page_stats_calls.ptl:111 ../page_stats_calls.ptl:112
 msgid "Hours"
 msgstr "Heures"
 
-#: ../page_stats_calls.ptl:107
+#: ../page_stats_calls.ptl:107 ../page_stats_calls.ptl:111
 msgid "Minutes per Hour in a Day"
 msgstr "Minuntes par heure dans une journée"
 
 #: ../page_stats_calls.ptl:107 ../page_stats_calls.ptl:141
 #: ../page_stats_calls.ptl:180 ../page_stats_calls.ptl:181
 #: ../page_stats_calls.ptl:211 ../StatsHelper.ptl:112
+#: ../page_stats_calls.ptl:111 ../page_stats_calls.ptl:145
+#: ../page_stats_calls.ptl:184 ../page_stats_calls.ptl:185
+#: ../page_stats_calls.ptl:215
 msgid "Minutes"
 msgstr "Minutes"
 
-#: ../page_stats_calls.ptl:108
+#: ../page_stats_calls.ptl:108 ../page_stats_calls.ptl:112
 msgid "Cost per Hour in a Day"
 msgstr "Coût par heure dans une journée"
 
 #: ../page_stats_calls.ptl:108 ../page_stats_calls.ptl:142
 #: ../page_stats_calls.ptl:212 ../StatsHelper.ptl:113
+#: ../page_stats_calls.ptl:112 ../page_stats_calls.ptl:146
+#: ../page_stats_calls.ptl:216
 msgid "Cost"
 msgstr "Coût"
 
-#: ../page_stats_calls.ptl:139
+#: ../page_stats_calls.ptl:139 ../page_stats_calls.ptl:143
 msgid "Day"
 msgstr "Jour"
 
-#: ../page_stats_calls.ptl:140
+#: ../page_stats_calls.ptl:140 ../page_stats_calls.ptl:144
 msgid "Calls per Day in a Month"
 msgstr "Appels par jour dans un mois"
 
 #: ../page_stats_calls.ptl:140 ../page_stats_calls.ptl:141
-#: ../page_stats_calls.ptl:142
+#: ../page_stats_calls.ptl:142 ../page_stats_calls.ptl:144
+#: ../page_stats_calls.ptl:145 ../page_stats_calls.ptl:146
 msgid "Days"
 msgstr "Jours"
 
-#: ../page_stats_calls.ptl:141
+#: ../page_stats_calls.ptl:141 ../page_stats_calls.ptl:145
 msgid "Minutes per Day in a Month"
 msgstr "Minutes par jour dans un mois"
 
-#: ../page_stats_calls.ptl:142
+#: ../page_stats_calls.ptl:142 ../page_stats_calls.ptl:146
 msgid "Cost per Day in a Month"
 msgstr "Coût par jour dans un mois"
 
-#: ../page_stats_calls.ptl:177
+#: ../page_stats_calls.ptl:177 ../page_stats_calls.ptl:181
 msgid "Month"
 msgstr "Mois"
 
-#: ../page_stats_calls.ptl:179
+#: ../page_stats_calls.ptl:179 ../page_stats_calls.ptl:183
 msgid "Calls per Month in a Year"
 msgstr "Appels par mois dans une année"
 
 #: ../page_stats_calls.ptl:179 ../page_stats_calls.ptl:180
-#: ../page_stats_calls.ptl:181
+#: ../page_stats_calls.ptl:181 ../page_stats_calls.ptl:183
+#: ../page_stats_calls.ptl:184 ../page_stats_calls.ptl:185
 msgid "Months"
 msgstr "Mois"
 
-#: ../page_stats_calls.ptl:180
+#: ../page_stats_calls.ptl:180 ../page_stats_calls.ptl:184
 msgid "Minutes per Month in a Year"
 msgstr "Minutes par mois dans une année"
 
-#: ../page_stats_calls.ptl:181
+#: ../page_stats_calls.ptl:181 ../page_stats_calls.ptl:185
 msgid "Cost per Month in a Year"
 msgstr "Coût par mois dans une année"
 
-#: ../page_stats_calls.ptl:209
+#: ../page_stats_calls.ptl:209 ../page_stats_calls.ptl:213
 msgid "Year"
 msgstr "Année"
 
-#: ../page_stats_calls.ptl:210
+#: ../page_stats_calls.ptl:210 ../page_stats_calls.ptl:214
 msgid "Calls per Year"
 msgstr "Appels par an"
 
 #: ../page_stats_calls.ptl:210 ../page_stats_calls.ptl:211
-#: ../page_stats_calls.ptl:212
+#: ../page_stats_calls.ptl:212 ../page_stats_calls.ptl:214
+#: ../page_stats_calls.ptl:215 ../page_stats_calls.ptl:216
 msgid "Years"
 msgstr "Ans"
 
-#: ../page_stats_calls.ptl:211
+#: ../page_stats_calls.ptl:211 ../page_stats_calls.ptl:215
 msgid "Minutes per Year"
 msgstr "Minutes par an"
 
-#: ../page_stats_calls.ptl:212
+#: ../page_stats_calls.ptl:212 ../page_stats_calls.ptl:216
 msgid "cost per Year"
 msgstr "coût par an"
 
 #: ../page_owner_cdr.ptl:109 ../page_stats_calls.ptl:215
-#: ../page_stats_cdr.ptl:110 ../StatsHelper.ptl:95
+#: ../page_stats_cdr.ptl:110 ../StatsHelper.ptl:95 ../page_stats_cdr.ptl:112
 msgid "All"
 msgstr "Tout"
 
-#: ../page_stats_calls.ptl:226
+#: ../page_stats_calls.ptl:226 ../page_stats_calls.ptl:230
 msgid "Sorry, this kind of query is not supported yet"
 msgstr "Désolé, ce type de requête n'est pas encore supporté"
 
-#: ../page_stats_calls.ptl:230
+#: ../page_stats_calls.ptl:230 ../page_stats_calls.ptl:234
 msgid "Statistics of Calls by Date:"
 msgstr "Statistiques d'appels par date"
 
 #: ../page_stats_calls.ptl:235 ../page_stats_dialouts.ptl:176
 #: ../page_stats_phone.ptl:183 ../page_stats_trunks.ptl:190
+#: ../page_stats_calls.ptl:239
 msgid "Results"
 msgstr "Résultat"
 
 #: ../page_stats_calls.ptl:243 ../page_stats_dialouts.ptl:184
 #: ../page_stats_phone.ptl:191 ../page_stats_trunks.ptl:198
+#: ../page_stats_calls.ptl:247
 msgid ""
 "You need to install pychart and use a cdr with sqlite to get these statistics"
 msgstr ""
@@ -2259,77 +2341,91 @@ msgstr "Détail des appels"
 msgid "Get statistics about made and received calls"
 msgstr "Statistiques des appels effectués et reçus"
 
-#: ../page_owner_cdr.ptl:74 ../page_stats_cdr.ptl:75
+#: ../page_owner_cdr.ptl:74 ../page_stats_cdr.ptl:75 ../page_stats_cdr.ptl:77
 msgid "First"
 msgstr "Premier"
 
-#: ../page_owner_cdr.ptl:75 ../page_stats_cdr.ptl:76
+#: ../page_owner_cdr.ptl:75 ../page_stats_cdr.ptl:76 ../page_stats_cdr.ptl:78
 msgid "Previous"
 msgstr "Précédent"
 
-#: ../page_owner_cdr.ptl:86 ../page_stats_cdr.ptl:87
+#: ../page_owner_cdr.ptl:86 ../page_stats_cdr.ptl:87 ../page_stats_cdr.ptl:89
 msgid "Next"
 msgstr "Suivant"
 
-#: ../page_owner_cdr.ptl:87 ../page_stats_cdr.ptl:88
+#: ../page_owner_cdr.ptl:87 ../page_stats_cdr.ptl:88 ../page_stats_cdr.ptl:90
 msgid "Last"
 msgstr "Dernier"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:102
+#: ../page_stats_cdr.ptl:121
 msgid "January"
 msgstr "Janvier"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:102
+#: ../page_stats_cdr.ptl:121
 msgid "February"
 msgstr "Février"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:102
+#: ../page_stats_cdr.ptl:121
 msgid "March"
 msgstr "Mars"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:103
+#: ../page_stats_cdr.ptl:121
 msgid "April"
 msgstr "Avril"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:103
+#: ../page_stats_cdr.ptl:121
 msgid "May"
 msgstr "Mai"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:103
+#: ../page_stats_cdr.ptl:121
 msgid "June"
 msgstr "Juin"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:103
+#: ../page_stats_cdr.ptl:121
 msgid "July"
 msgstr "Juillet"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:103
+#: ../page_stats_cdr.ptl:121
 msgid "August"
 msgstr "Août"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:104
+#: ../page_stats_cdr.ptl:121
 msgid "September"
 msgstr "Septembre"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:104
+#: ../page_stats_cdr.ptl:121
 msgid "October"
 msgstr "Octobre"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:104
+#: ../page_stats_cdr.ptl:121
 msgid "November"
 msgstr "Novembre"
 
 #: ../page_owner_cdr.ptl:118 ../page_stats_cdr.ptl:119 ../StatsHelper.ptl:104
+#: ../page_stats_cdr.ptl:121
 msgid "December"
 msgstr "Décembre"
 
 #: ../page_owner_cdr.ptl:140 ../page_stats_cdr.ptl:142
+#: ../page_stats_cdr.ptl:144
 msgid "Source "
 msgstr "Source"
 
 #: ../page_owner_cdr.ptl:140 ../page_owner_cdr.ptl:141
 #: ../page_stats_cdr.ptl:141 ../page_stats_cdr.ptl:142
-#: ../page_stats_cdr.ptl:143
+#: ../page_stats_cdr.ptl:143 ../page_stats_cdr.ptl:144
+#: ../page_stats_cdr.ptl:145
 #, python-format
 msgid ""
 "Wildcards: % is the 'zero or more characters' wildcard, and _ is the "
@@ -2340,54 +2436,63 @@ msgstr ""
 
 #: ../page_owner_cdr.ptl:141 ../page_stats_cdr.ptl:143
 #: ../page_stats_phone.ptl:67 ../page_user_state.ptl:100
+#: ../page_stats_cdr.ptl:145
 msgid "Caller ID"
 msgstr "Identifiant de l'appelant"
 
 #: ../page_owner_cdr.ptl:142 ../page_stats_cdr.ptl:144
+#: ../page_stats_cdr.ptl:146
 msgid "Destination"
 msgstr "Destination"
 
 #: ../page_owner_cdr.ptl:142 ../page_stats_cdr.ptl:144
+#: ../page_stats_cdr.ptl:146
 msgid "You can use the same wildcards as above"
 msgstr "Vous pouvez utiliser les mêmes caractères de matching que ci-dessus"
 
 #: ../page_owner_cdr.ptl:143 ../page_owner_cdr.ptl:283
 #: ../page_stats_cdr.ptl:145 ../page_stats_cdr.ptl:285
-#: ../page_stats_cdr.ptl:286
+#: ../page_stats_cdr.ptl:286 ../page_stats_cdr.ptl:147
 msgid "Duration"
 msgstr "Durée"
 
 #: ../page_owner_cdr.ptl:144 ../page_stats_cdr.ptl:146
+#: ../page_stats_cdr.ptl:148
 msgid "In seconds"
 msgstr "En secondes"
 
 #: ../page_owner_cdr.ptl:145 ../page_stats_cdr.ptl:147
+#: ../page_stats_cdr.ptl:149
 msgid "Number of records to show:"
 msgstr "Nombre d'enregistrements affichés :"
 
 #: ../page_owner_cdr.ptl:146 ../page_stats_cdr.ptl:148
+#: ../page_stats_cdr.ptl:150
 msgid "Search between the following dates"
 msgstr "Recherche entre les dates suivantes"
 
 #: ../page_owner_cdr.ptl:147 ../page_stats_cdr.ptl:149
+#: ../page_stats_cdr.ptl:151
 msgid "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Start:"
 msgstr "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Début :"
 
 #: ../page_owner_cdr.ptl:150 ../page_stats_cdr.ptl:152
+#: ../page_stats_cdr.ptl:154
 msgid "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;End:"
 msgstr "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fin :"
 
 #: ../page_owner_cdr.ptl:158 ../page_stats_cdr.ptl:160
+#: ../page_stats_cdr.ptl:162
 msgid "Search"
 msgstr "Recherche"
 
 #: ../page_owner_cdr.ptl:264 ../page_stats_cdr.ptl:267
-#: ../page_stats_cdr.ptl:268
+#: ../page_stats_cdr.ptl:268 ../page_stats_cdr.ptl:269
 msgid "Asc. Order"
 msgstr "Ordre croissant"
 
 #: ../page_owner_cdr.ptl:266 ../page_stats_cdr.ptl:269
-#: ../page_stats_cdr.ptl:270
+#: ../page_stats_cdr.ptl:270 ../page_stats_cdr.ptl:271
 msgid "Desc. Order"
 msgstr "Ordre décroissant"
 
@@ -2400,18 +2505,18 @@ msgstr "Coût de l'appel"
 msgid "Result"
 msgstr "Résultat"
 
-#: ../StatsHelper.ptl:160
+#: ../StatsHelper.ptl:160 ../StatsHelper.ptl:165
 msgid "Answered"
 msgstr "Réponse"
 
 msgid "Not answered"
 msgstr "Pas répondu"
 
-#: ../StatsHelper.ptl:162
+#: ../StatsHelper.ptl:162 ../StatsHelper.ptl:167
 msgid "Busy"
 msgstr "Occupé"
 
-#: ../StatsHelper.ptl:163
+#: ../StatsHelper.ptl:163 ../StatsHelper.ptl:168
 msgid "Failed"
 msgstr "Echoué"
 
@@ -2428,7 +2533,7 @@ msgid "Showing records from %s to %s of %s <br /><br />"
 msgstr "Affiche les enregistrements de %s à %s de %s <br /><br />"
 
 #: ../page_owner_cdr.ptl:302 ../page_stats_cdr.ptl:304
-#: ../page_stats_cdr.ptl:306
+#: ../page_stats_cdr.ptl:306 ../page_stats_cdr.ptl:307
 #, python-format
 msgid "Total Duration of shown calls: %s min."
 msgstr "Durée totale des appels affichés : %s min."
@@ -2473,19 +2578,19 @@ msgstr "Appels sortants par entrée d'appels sortants"
 msgid "Statistics of Calls by Dialout Entry:"
 msgstr "Statistiques des appels par entrée d'appels sortants :"
 
-#: ../page_admin_panel.ptl:28
+#: ../page_admin_panel.ptl:28 ../page_admin_panel.ptl:27
 msgid "Asternic Flash Operator Panel"
 msgstr "Panneau Asternic Flash Operator"
 
-#: ../page_admin_panel.ptl:43
+#: ../page_admin_panel.ptl:43 ../page_admin_panel.ptl:42
 msgid "You don't have a panel configured yet"
 msgstr "Vous n'avez pas encore configuré le panneau"
 
-#: ../page_admin_panel.ptl:47
+#: ../page_admin_panel.ptl:47 ../page_admin_panel.ptl:46
 msgid "You have a panel configured "
 msgstr "Vous avez un panneau configuré"
 
-#: ../page_admin_panel.ptl:49
+#: ../page_admin_panel.ptl:49 ../page_admin_panel.ptl:48
 msgid "here"
 msgstr "ici"
 
@@ -2524,7 +2629,7 @@ msgstr "Statistiques des appels d'extension par entrée d'appel sortant"
 msgid "Administration"
 msgstr "Administration"
 
-#: ../page_owner.ptl:26
+#: ../page_owner.ptl:26 ../page_owner.ptl:27
 msgid "Perform administrative actions to PBX and extensions"
 msgstr "Effectue des actions administrative sur le PBX et les extensions"
 
@@ -3053,11 +3158,11 @@ msgstr "Appels occupés"
 msgid "Failed Calls"
 msgstr "Appels ayant échoués"
 
-#: ../StatsHelper.ptl:158
+#: ../StatsHelper.ptl:158 ../StatsHelper.ptl:163
 msgid "Calls"
 msgstr "Appels"
 
-#: ../StatsHelper.ptl:161
+#: ../StatsHelper.ptl:161 ../StatsHelper.ptl:166
 msgid "Not Answered"
 msgstr "Non répondu"
 
@@ -3095,11 +3200,14 @@ msgstr "S'il vous plait, installez entre Quixote > 1.2 et < 2.0"
 #: ../cfg_phone_sip.py:34 ../cfg_phone_zap.py:34 ../configlets.py:899
 #: ../configlets.py:1055 ../page_config_pbx.ptl:27 ../page_config_pbx.ptl:28
 #: ../configlets.py:900 ../configlets.py:1056 ../cfg_phone_sip.py:35
-#: ../configlets.py:916 ../configlets.py:1072
+#: ../configlets.py:916 ../configlets.py:1072 ../cfg_phone_sip.py:36
+#: ../cfg_trunk_iax.py:106 ../cfg_trunk_sip.py:90 ../cfg_trunk_zappbx.py:98
+#: ../cfg_trunk_zappri.py:106 ../cfg_trunk_zap.py:91 ../configlets.py:940
+#: ../configlets.py:1096
 msgid "Virtual PBX"
 msgstr "PBX Virtuel"
 
-#: ../cfg_ivr_autoatt.py:90
+#: ../cfg_ivr_autoatt.py:90 ../cfg_ivr_autoatt.py:105
 msgid "Allow calling to all extensions of PBX"
 msgstr "Autorise l'appel de toutes les extensions du PBX"
 
@@ -3116,6 +3224,7 @@ msgid "Associated Virtual PBX"
 msgstr "PBX virtuel associé"
 
 #: ../configlets.py:791 ../configlets.py:792 ../configlets.py:808
+#: ../configlets.py:809
 msgid "Price/Account_code for this pattern"
 msgstr "Coût/Code_de_compte pour ce pattern"
 
@@ -3140,11 +3249,11 @@ msgstr "Détails d'appel pour le PBX virtuel"
 msgid "Time_of_start"
 msgstr "Heure_du_début"
 
-#: ../page_owner.ptl:25
+#: ../page_owner.ptl:25 ../page_owner.ptl:26
 msgid "Virtual PBX Owner"
 msgstr "Propriétaire du PBX virtuel"
 
-#: ../page_stats_cdr.ptl:141
+#: ../page_stats_cdr.ptl:141 ../page_stats_cdr.ptl:143
 msgid "PBX"
 msgstr "PBX"
 
@@ -3315,7 +3424,7 @@ msgstr "Téléphone #4"
 msgid "Phone #5"
 msgstr "Téléphone #5"
 
-#: ../configlets.py:606
+#: ../configlets.py:606 ../configlets.py:607
 msgid "Extension already in use on that PBX"
 msgstr "L'extension est déja utilisée sur ce PBX"
 
@@ -3390,101 +3499,146 @@ msgstr "Svp spécifiez une application"
 
 #: ../cfg_app_callfw.py:34
 msgid "Call Forwarding if Busy"
-msgstr ""
+msgstr "Transfère d'appel si occupé"
 
 #: ../cfg_app_callfw.py:34
 msgid "Call Forwarding if Timeout/Unavailable"
-msgstr ""
+msgstr "Transfère d'appel si Timeout/Non disponible"
 
 #: ../cfg_phone_iax.py:106
 msgid "Skip asterisk media path?"
-msgstr ""
+msgstr "Evite le chemin de média d'asterisk"
 
-#: ../cfg_phone_sip.py:149 ../cfg_phone_sip.py:150
+#: ../cfg_phone_sip.py:149 ../cfg_phone_sip.py:150 ../cfg_phone_epygi.py:149
+#: ../cfg_phone_iax.py:127 ../cfg_phone_mgcp.py:133 ../cfg_phone_zap.py:131
 msgid "Monitor calls made from this extension?"
-msgstr ""
+msgstr "Surveille les appels exécutés de cette extension"
 
-#: ../cfg_phone_sip.py:155 ../cfg_phone_sip.py:156
+#: ../cfg_phone_sip.py:155 ../cfg_phone_sip.py:156 ../cfg_phone_epygi.py:155
+#: ../cfg_phone_iax.py:133 ../cfg_phone_mgcp.py:139 ../cfg_phone_queue.py:111
+#: ../cfg_phone_zap.py:137
 msgid "Otherwise it will use Date-CallerIdName(CallerIdNum)-Exten"
-msgstr ""
+msgstr "Sinon sera utilisé Date-CallerIdName(CallerIdNum)-Exten"
 
-#: ../cfg_phone_sip.py:168 ../cfg_phone_sip.py:169
+#: ../cfg_phone_sip.py:168 ../cfg_phone_sip.py:169 ../cfg_phone_epygi.py:168
+#: ../cfg_phone_iax.py:146 ../cfg_phone_mgcp.py:152 ../cfg_phone_queue.py:124
+#: ../cfg_phone_zap.py:150
 msgid "Append to existing file instead of overwriting it?"
-msgstr ""
+msgstr "Ajouter au fichier existant à la place de remplacer"
 
 #: ../cfg_phone_sip.py:173 ../cfg_phone_sip.py:174
 msgid "Save audio while the channel is bridged?"
-msgstr ""
+msgstr "Sauve le son pendant que le cannal est bridgé"
 
-#: ../cfg_phone_sip.py:178 ../cfg_phone_sip.py:179
+#: ../cfg_phone_sip.py:178 ../cfg_phone_sip.py:179 ../cfg_phone_epygi.py:179
+#: ../cfg_phone_iax.py:157 ../cfg_phone_mgcp.py:163 ../cfg_phone_queue.py:129
+#: ../cfg_phone_sip.py:180 ../cfg_phone_zap.py:161
 msgid "Heard volume factor"
-msgstr ""
+msgstr "Entendre le facteur de volume"
 
 #: ../cfg_phone_sip.py:180 ../cfg_phone_sip.py:194 ../cfg_phone_sip.py:181
-#: ../cfg_phone_sip.py:195
+#: ../cfg_phone_sip.py:195 ../cfg_phone_epygi.py:181 ../cfg_phone_epygi.py:195
+#: ../cfg_phone_iax.py:159 ../cfg_phone_iax.py:173 ../cfg_phone_mgcp.py:165
+#: ../cfg_phone_mgcp.py:179 ../cfg_phone_queue.py:131
+#: ../cfg_phone_queue.py:145 ../cfg_phone_sip.py:182 ../cfg_phone_sip.py:196
+#: ../cfg_phone_zap.py:163 ../cfg_phone_zap.py:177
 msgid "+4"
-msgstr ""
+msgstr "+4"
 
 #: ../cfg_phone_sip.py:181 ../cfg_phone_sip.py:195 ../cfg_phone_sip.py:182
-#: ../cfg_phone_sip.py:196
+#: ../cfg_phone_sip.py:196 ../cfg_phone_epygi.py:182 ../cfg_phone_epygi.py:196
+#: ../cfg_phone_iax.py:160 ../cfg_phone_iax.py:174 ../cfg_phone_mgcp.py:166
+#: ../cfg_phone_mgcp.py:180 ../cfg_phone_queue.py:132
+#: ../cfg_phone_queue.py:146 ../cfg_phone_sip.py:183 ../cfg_phone_sip.py:197
+#: ../cfg_phone_zap.py:164 ../cfg_phone_zap.py:178
 msgid "+3"
-msgstr ""
+msgstr "+3"
 
 #: ../cfg_phone_sip.py:182 ../cfg_phone_sip.py:196 ../cfg_phone_sip.py:183
-#: ../cfg_phone_sip.py:197
+#: ../cfg_phone_sip.py:197 ../cfg_phone_epygi.py:183 ../cfg_phone_epygi.py:197
+#: ../cfg_phone_iax.py:161 ../cfg_phone_iax.py:175 ../cfg_phone_mgcp.py:167
+#: ../cfg_phone_mgcp.py:181 ../cfg_phone_queue.py:133
+#: ../cfg_phone_queue.py:147 ../cfg_phone_sip.py:184 ../cfg_phone_sip.py:198
+#: ../cfg_phone_zap.py:165 ../cfg_phone_zap.py:179
 msgid "+2"
-msgstr ""
+msgstr "+2"
 
 #: ../cfg_phone_sip.py:183 ../cfg_phone_sip.py:197 ../cfg_phone_sip.py:184
-#: ../cfg_phone_sip.py:198
+#: ../cfg_phone_sip.py:198 ../cfg_phone_epygi.py:184 ../cfg_phone_epygi.py:198
+#: ../cfg_phone_iax.py:162 ../cfg_phone_iax.py:176 ../cfg_phone_mgcp.py:168
+#: ../cfg_phone_mgcp.py:182 ../cfg_phone_queue.py:134
+#: ../cfg_phone_queue.py:148 ../cfg_phone_sip.py:185 ../cfg_phone_sip.py:199
+#: ../cfg_phone_zap.py:166 ../cfg_phone_zap.py:180
 msgid "+1"
-msgstr ""
+msgstr "+1"
 
 #: ../cfg_phone_sip.py:184 ../cfg_phone_sip.py:198 ../cfg_phone_sip.py:185
-#: ../cfg_phone_sip.py:199
+#: ../cfg_phone_sip.py:199 ../cfg_phone_epygi.py:185 ../cfg_phone_epygi.py:199
+#: ../cfg_phone_iax.py:163 ../cfg_phone_iax.py:177 ../cfg_phone_mgcp.py:169
+#: ../cfg_phone_mgcp.py:183 ../cfg_phone_queue.py:135
+#: ../cfg_phone_queue.py:149 ../cfg_phone_sip.py:186 ../cfg_phone_sip.py:200
+#: ../cfg_phone_zap.py:167 ../cfg_phone_zap.py:181
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../cfg_phone_sip.py:185 ../cfg_phone_sip.py:199 ../cfg_phone_sip.py:186
-#: ../cfg_phone_sip.py:200
+#: ../cfg_phone_sip.py:200 ../cfg_phone_epygi.py:186 ../cfg_phone_epygi.py:200
+#: ../cfg_phone_iax.py:164 ../cfg_phone_iax.py:178 ../cfg_phone_mgcp.py:170
+#: ../cfg_phone_mgcp.py:184 ../cfg_phone_queue.py:136
+#: ../cfg_phone_queue.py:150 ../cfg_phone_sip.py:187 ../cfg_phone_sip.py:201
+#: ../cfg_phone_zap.py:168 ../cfg_phone_zap.py:182
 msgid "-1"
-msgstr ""
+msgstr "-1"
 
 #: ../cfg_phone_sip.py:186 ../cfg_phone_sip.py:200 ../cfg_phone_sip.py:187
-#: ../cfg_phone_sip.py:201
+#: ../cfg_phone_sip.py:201 ../cfg_phone_epygi.py:187 ../cfg_phone_epygi.py:201
+#: ../cfg_phone_iax.py:165 ../cfg_phone_iax.py:179 ../cfg_phone_mgcp.py:171
+#: ../cfg_phone_mgcp.py:185 ../cfg_phone_queue.py:137
+#: ../cfg_phone_queue.py:151 ../cfg_phone_sip.py:188 ../cfg_phone_sip.py:202
+#: ../cfg_phone_zap.py:169 ../cfg_phone_zap.py:183
 msgid "-2"
-msgstr ""
+msgstr "-2"
 
 #: ../cfg_phone_sip.py:187 ../cfg_phone_sip.py:201 ../cfg_phone_sip.py:188
-#: ../cfg_phone_sip.py:202
+#: ../cfg_phone_sip.py:202 ../cfg_phone_epygi.py:188 ../cfg_phone_epygi.py:202
+#: ../cfg_phone_iax.py:166 ../cfg_phone_iax.py:180 ../cfg_phone_mgcp.py:172
+#: ../cfg_phone_mgcp.py:186 ../cfg_phone_queue.py:138
+#: ../cfg_phone_queue.py:152 ../cfg_phone_sip.py:189 ../cfg_phone_sip.py:203
+#: ../cfg_phone_zap.py:170 ../cfg_phone_zap.py:184
 msgid "-3"
-msgstr ""
+msgstr "-3"
 
 #: ../cfg_phone_sip.py:188 ../cfg_phone_sip.py:202 ../cfg_phone_sip.py:189
-#: ../cfg_phone_sip.py:203
+#: ../cfg_phone_sip.py:203 ../cfg_phone_epygi.py:189 ../cfg_phone_epygi.py:203
+#: ../cfg_phone_iax.py:167 ../cfg_phone_iax.py:181 ../cfg_phone_mgcp.py:173
+#: ../cfg_phone_mgcp.py:187 ../cfg_phone_queue.py:139
+#: ../cfg_phone_queue.py:153 ../cfg_phone_sip.py:190 ../cfg_phone_sip.py:204
+#: ../cfg_phone_zap.py:171 ../cfg_phone_zap.py:185
 msgid "-4"
-msgstr ""
+msgstr "-4"
 
-#: ../cfg_phone_sip.py:192 ../cfg_phone_sip.py:193
+#: ../cfg_phone_sip.py:192 ../cfg_phone_sip.py:193 ../cfg_phone_epygi.py:193
+#: ../cfg_phone_iax.py:171 ../cfg_phone_mgcp.py:177 ../cfg_phone_queue.py:143
+#: ../cfg_phone_sip.py:194 ../cfg_phone_zap.py:175
 msgid "Spoken volume factor"
-msgstr ""
+msgstr "Facteur de volume parlé"
 
 #: ../page_user_settings.ptl:59
 msgid "Forward call when busy to"
-msgstr ""
+msgstr "Faire suivre l'appel quand occupé vers"
 
 #: ../page_user_settings.ptl:60
 msgid "Forward call when timeout/unavailable to"
-msgstr ""
+msgstr "Faire suivre l'appel quand timeout/non disponible vers"
 
 #: ../cfg_dialout_normal.py:42
 msgid "Disallow calling user transfer?"
-msgstr ""
+msgstr "Interdit le transfère de l'utilisateur appelant ?"
 
 #: ../backend.py:404
 #, python-format
 msgid "Error writing up %s"
-msgstr ""
+msgstr "Erreur d'écriture sur %s"
 
 #: ../cfg_app_quickdial_phone.py:27
 msgid ""
@@ -3495,102 +3649,107 @@ msgid ""
 "if the extension has an assigned dialout entry which pattern matches the "
 "final destination."
 msgstr ""
+"Extensions à ajouter à partir de la liste de numérotation rapide. L'ajout d'extension\n"
+"sera de la forme préfixe+2_chiffres+*+destination_finale. La suppression\n"
+"d'extension sera de la forme préfixe+2_chiffres. La liste de numérotation rapide\n"
+"personnelle fonctionne pour toutes les extensions, en téléphonant préfixe_d_appel+2_chiffres et\n"
+"seulement si l'extension possède une entrée d'appel sortant matchant la destination finale"
 
 #: ../cfg_app_quickdial_phone.py:28
 msgid "New extensions to add/remove/access personal quick dial list"
-msgstr ""
+msgstr "Nouvelles extensions à ajouter/supprimer/accéder de la liste des numérotations rapide"
 
 #: ../cfg_app_quickdial_phone.py:35
 msgid "Dial prefix"
-msgstr ""
+msgstr "Préfixe d'appel"
 
 #: ../page_admin_viewconf.ptl:29
 msgid "View/Save Configuration"
-msgstr ""
+msgstr "Voir/Sauver configuration"
 
 #: ../page_admin_viewconf.ptl:30
 msgid "Show and Save Asterisk configuration files"
-msgstr ""
+msgstr "Monter et sauver les fichiers de configuration d'asterisk"
 
 #: ../page_admin_viewconf.ptl:91
 msgid "Save all changes"
-msgstr ""
+msgstr "Sauver tous les changements"
 
 #: ../page_admin_viewconf.ptl:108
 msgid "Save changes results"
-msgstr ""
+msgstr "Sauver les résultants des changements"
 
 #: ../page_admin_viewconf.ptl:111
 msgid "Configuration files saved"
-msgstr ""
+msgstr "Fichiers de configuration sauvés"
 
 #: ../page_admin_viewconf.ptl:113
 msgid ""
 "There were problems writing the configuration. Please take a look at the "
 "error logs."
-msgstr ""
+msgstr "Il y a eu des problèmes lors de la sauvegarde de la configuration. Svp, regardes les logs d'erreur"
 
 #: ../page_admin_viewconf.ptl:126
 msgid ""
 "WARNING: This configuration might experience grave problems because the "
 "following asterisk modules are missing on your system:"
-msgstr ""
+msgstr "AVERTISSEMENT: Cette configuration peut avoir de problème conséquents car les module asterisk suivant sont manquants sur votre système :"
 
 #: ../cfg_opt_sip_audio.py:39
 msgid "Allow g726 codec"
-msgstr ""
+msgstr "Autorise le codec g726"
 
 #: ../page_admin_viewconf.ptl:90
 msgid "Show selected files"
-msgstr ""
+msgstr "Montre les fichiers sélectionnés"
 
 #: ../cfg_opt_codec.py:29
 msgid "Audio Codec"
-msgstr ""
+msgstr "Codec audio"
 
 #: ../cfg_opt_codec.py:30
 msgid "New audio codec to be used"
-msgstr ""
+msgstr "Nouveau codec audio à utiliser"
 
 #: ../cfg_opt_codec.py:35
 msgid "Allow codec"
-msgstr ""
+msgstr "Autorise codec"
 
 #: ../cfg_opt_codec.py:37
 msgid "Use all codecs"
-msgstr ""
+msgstr "Utilise tous les codecs"
 
 #: ../cfg_opt_codec.py:38
 msgid "A Law (g711a)"
-msgstr ""
+msgstr "Alaw (g711a)"
 
 #: ../cfg_opt_codec.py:39
 msgid "U Law (g711u)"
-msgstr ""
+msgstr "Ulaw (g711u)"
 
 #: ../cfg_opt_codec.py:41
 msgid "ILBC"
-msgstr ""
+msgstr "ILBC"
 
 #: ../cfg_opt_codec.py:42
 msgid "g726"
-msgstr ""
+msgstr "g726"
 
 #: ../cfg_opt_codec.py:43
 msgid "g723.1"
-msgstr ""
+msgstr "g723.1"
 
 #: ../cfg_opt_codec.py:44
 msgid "g729"
-msgstr ""
+msgstr "g729"
 
 #: ../page_config_codecs.ptl:27
 msgid "Codecs"
-msgstr ""
+msgstr "Codecs"
 
 #: ../page_config_codecs.ptl:28
 msgid "Audio codecs to use on SIP and IAX channels."
-msgstr ""
+msgstr "Codecs audio à utiliser sur les cannaux SIP et IAX"
 
 #: ../cdrutils.py:36
 #, python-format
@@ -3598,25 +3757,29 @@ msgid ""
 "Note: you don't seem to have access to %s yet created by cdr_sqlite3_custom. "
 "See INSTALL.txt for details."
 msgstr ""
+"Note : vous ne semblez pas avoir accès à %s déja créé par cdr_sqlite3_custom.\n"
+"Consultez INSTALL.txt pour les détails."
 
 #: ../cfg_opt_sip_audio.py:29
 msgid "Depricated: use individual 'Audio Codec' configlets instead."
-msgstr ""
+msgstr "Désuet : utilisez le configlets individuel 'Audio Codec' à la place"
 
-#: ../page_admin.ptl:38 ../page_owner.ptl:40
+#: ../page_admin.ptl:38 ../page_owner.ptl:40 ../page_owner.ptl:43
 msgid "Action"
-msgstr ""
+msgstr "Action"
 
 #: ../page_admin.ptl:38 ../page_owner.ptl:40 ../page_stats.ptl:38
-#: ../page_user.ptl:38
+#: ../page_user.ptl:38 ../page_owner.ptl:43
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #, python-format
 msgid ""
 "You don't seem to have access to %s yet created by cdr_sqlite3_custom. "
 "Without this file CDR reports wont be accesible trough this interface.),"
 msgstr ""
+"Note : vous ne semblez pas avoir accès à %s déja créé par cdr_sqlite3_custom.\n"
+"Sans ce fichier, les rapports CDR ne seront pas accessible via cette interface."
 
 #: ../page_config.ptl:107
 #, python-format
@@ -3624,39 +3787,103 @@ msgid ""
 "You don't seem to have access to %s yet created by cdr_sqlite3_custom. "
 "Without this file CDR reports wont be accesible trough this interface."
 msgstr ""
+"Note : vous ne semblez pas avoir accès à %s déja créé par cdr_sqlite3_custom.\n"
+"Sans ce fichier, les rapports CDR ne seront pas accessible via cette interface."
 
 #: ../page_user.ptl:38
 msgid "Available actions"
-msgstr ""
+msgstr "Actions disponibles"
 
 #: ../destar:62
 msgid "  -b | --backend: run on backend mode"
-msgstr ""
+msgstr "  -b | --backend : lance en mode backend"
 
 #: ../destar:63
 msgid "  -g | --generate-docs: generate documentation"
-msgstr ""
+msgstr "  -g | --generate-docs : génère la documentation"
 
-#: ../cfg_ivr_autoatt.py:84
+#: ../cfg_ivr_autoatt.py:84 ../cfg_ivr_autoatt.py:99
 msgid "i.e. hours|weekdays|monthdays|months (comma separated)"
-msgstr ""
+msgstr "càd heures|jours de la semaine|jours du mois|mois (séparés par des vigules)"
 
-#: ../cfg_phone_sip.py:29
+#: ../cfg_phone_sip.py:29 ../cfg_phone_sip.py:30
 msgid ""
 "This is a SIP phone account, to be used by hard-phones, soft-phones, ATAs, "
 "etc."
 msgstr ""
+"Ceci est un compte de téléphone SIP pouvant être utilisé par des téléphones matériels ou logiciels, ATAs,\n"
+"etc."
 
-#: ../configlets.py:696
+#: ../configlets.py:696 ../configlets.py:697
 #, python-format
 msgid "The configlet '%s' does not have a description"
-msgstr ""
+msgstr "La configlet '%s' n'a pas de description"
 
 #: ../cfg_opt_zap_trunk.py:31
 msgid "Try to detect busy signal to detect if remote site hung up"
-msgstr ""
+msgstr "Essaie de détecter le signal d'occupation si le site distant raccroche"
 
 #: ../page_stats_cdr.ptl:301 ../page_stats_cdr.ptl:303
+#: ../page_stats_cdr.ptl:302 ../page_stats_cdr.ptl:304
 #, python-format
 msgid "Showing records from %s to %s of %s"
-msgstr ""
+msgstr "Affichage des enregistrements de %s à %s de %s"
+
+#: ../cfg_ivr_autoatt.py:39
+msgid "Time to wait before answer the line"
+msgstr "Temps d'attente avant de répondre sur la ligne"
+
+#: ../cfg_ivr_autoatt.py:40 ../cfg_ivr_autoatt.py:47
+msgid "(in seconds)"
+msgstr "(en secondes)"
+
+#: ../cfg_ivr_autoatt.py:46
+msgid "How many time has the user to dial an extension?"
+msgstr "Combien de fois un utilisateur a pour composer une extension ?"
+
+#: ../cfg_opt_oppanel.py:50
+msgid "Button Size"
+msgstr "Taille de Bouton"
+
+#: ../cfg_opt_oppanel.py:53
+msgid "Very Small"
+msgstr "Très petit"
+
+#: ../cfg_opt_oppanel.py:54
+msgid "Small"
+msgstr "Petit"
+
+#: ../cfg_opt_oppanel.py:55
+msgid "Normal"
+msgstr "Normal"
+
+#: ../cfg_opt_oppanel.py:56
+msgid "Large"
+msgstr "Grand"
+
+#: ../cfg_opt_oppanel.py:57
+msgid "Very Large"
+msgstr "Très grand"
+
+#: ../cfg_phone_epygi.py:173 ../cfg_phone_iax.py:151 ../cfg_phone_mgcp.py:157
+#: ../cfg_phone_sip.py:174 ../cfg_phone_zap.py:155
+msgid "Save audio only while the channel is bridged?"
+msgstr "Sauvegarder l'audio seulement pendant que cannal est bridgé ?"
+
+#: ../cfg_phone_epygi.py:174 ../cfg_phone_iax.py:152 ../cfg_phone_mgcp.py:158
+#: ../cfg_phone_sip.py:175 ../cfg_phone_zap.py:156
+msgid "Does not include conferences"
+msgstr "N'inclus pas les conférences"
+
+#: ../cfg_phone_queue.py:59
+msgid "Ring instead of playing Music-on-Hold?"
+msgstr "Sonne à place de jouer la musique d'attente ?"
+
+#: ../cfg_trunk_iax.py:121 ../cfg_trunk_sip.py:105 ../cfg_trunk_zappbx.py:113
+#: ../cfg_trunk_zappri.py:121
+msgid "Allow dial extension from which Virtual PBX"
+msgstr "Autorise l'extension d'appel à partir de quel PBX VIrtual"
+
+#: ../Templates.ptl:27
+msgid "0.2.0"
+msgstr "0.2.0"
