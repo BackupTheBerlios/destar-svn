@@ -1,5 +1,9 @@
+2066-11-14:
+* Added email variable to the cfg_phone_* configlets. Closes bug #9462.
+* Set int type for the email pin.
+
 2006-11-11:
-Updated fr.po. Thanks to Anthony Piron.
+* Updated fr.po. Thanks to Anthony Piron.
 
 2006-11-10:
 * configlets.py: added _X incoming context rule. Closes bug #9419.

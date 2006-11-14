@@ -99,8 +99,15 @@ class CfgPhoneIax(CfgPhone):
 
 			VarType("pin",
 					title=_("Voicemail PIN"),
+					type="int",
 					optional=True,
 					len=6),
+
+			VarType("email",
+					title=_("Voicemail email"),
+					optional=True,
+					len=60),
+			
 
 			VarType("notransfer",
 					title=_("Skip asterisk media path?"),

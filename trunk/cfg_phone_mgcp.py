@@ -112,6 +112,11 @@ class CfgPhoneMGCP(CfgPhone):
 					optional=True,
 					len=6),
 
+			VarType("email",
+					title=_("Voicemail email"),
+					optional=True,
+					len=60),
+			
 			VarType("Outbound",
 					title=_("Calls from the phone"),
 					type="label"),
