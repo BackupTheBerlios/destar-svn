@@ -1,4 +1,8 @@
-2066-11-14:
+2006-11-16
+* Removed unnecessary global configlet_tree's in configlets.createIncomingContext()
+* Moved language=** from [general] to [channels] in zapata.conf. Thanks to tzafrir! :)
+
+2006-11-14:
 * Added email variable to the cfg_phone_* configlets. Closes bug #9462.
 * Set int type for the email pin.
 

@@ -894,7 +894,6 @@ class CfgTrunk(Cfg):
 		if self.clid:
 			needModule("func_callerid")
 			c.appendExten("_X","Set(CALLERID(name)=%s)" %  self.clid)
-		global configlet_tree
 		if self.contextin == 'phone' and self.phone:
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
@@ -911,7 +910,6 @@ class CfgTrunk(Cfg):
 		if self.clid:
 			needModule("func_callerid")
 			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid)
-		global configlet_tree
 		if self.contextin == 'phone' and self.phone:
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
