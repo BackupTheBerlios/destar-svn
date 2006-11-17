@@ -1,0 +1,249 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 Manuel Alejandro Cerón Estrada <ceronman@gmail.com>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# TODO:
+# 	- Improve security with server side validations
+#	- Maybe merge all per* functions in one
+#	- Put an option to hide zero values
+#	- Delete graphic files after it use
+
+from Templates import *
+from quixote.form2 import *
+import cdrutils
+import time
+from StatsHelper import *
+
+pychart_exists = True
+try:	
+	from pychart import *
+except ImportError:
+	pychart_exists = False
+	
+
+_q_parent = 'page_stats'
+_q_title  = _("Calls Statistics")
+_q_desc   = _("Calls Statistics")
+_q_level  = 3
+_q_menupos = 30
+
+def _q_access(request):
+	if request.session.level < _q_level:
+		cantAccessPage()
+
+def _q_test():
+	return cdrutils.db
+
+def N_(message): return message
+
+def makeForm():
+	form = Form()
+	form.name = "queryform"
+	form.add_single_select('year', 
+							title=htmltext(_('Day:')),
+							value="",
+							options=zip([all] + years, 
+										[_(all)] + years,
+										[all] + years),
+							render_br=False )
+							
+	form.add_single_select('month', 
+							options=zip([all] + months, 
+										[_(all)] + getMonthnames(),
+										[all] + months),
+
+							render_br=False )
+							
+	form.add_single_select('day',
+							options=zip([all] + days,
+										[_(all)] + daynames,
+										[all] + days),
+							render_br=True )
+							
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=True)
+	
+	return form
+		
+def perHourInDay [plain] (day, month, year):
+	
+	date = "%s-%s-%s" % (year, month, day)
+	where = []
+	where.append("date(start) = date('%s')" % date)
+	cursor = cdrutils.select(fields=['time(start)', 'disposition', 'accountcode', 'billsec'], where = where)
+	row = cursor.fetchone()
+	calls_per_hour = [CallData() for i in hours]
+
+	fieldIndices = range(len(cursor.description))	
+	while row:
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='time(start)':
+				hour = s.split(":")
+				hour = int(hour[0])
+			if c=='disposition':
+				disposition = s
+			if c=='accountcode':
+				try:
+					cost = int(s)
+				except ValueError:
+					cost = 0
+			if c=='billsec':
+				calls_per_hour[hour].addCall(int(s), cost, disposition)
+		row = cursor.fetchone()
+		
+	makeCallsTable(_("Time"), calls_per_hour, hournames)
+	makeCallsGraphic(range(24), calls_per_hour, _("Calls per Hour in a Day"),_("Hours"), "graph1.png")
+	makeGraphic(range(24), [i.minutes for i in calls_per_hour], _("Minutes per Hour in a Day"),_("Hours"), _("Minutes"), "graph2.png")
+	makeGraphic(range(24), [i.cost for i in calls_per_hour], _("Cost per Hour in a Day"), _("Hours"), _("Cost"), "graph3.png")
+	
+def perDayInMonth [plain] (month, year):
+	
+	date1 = "%s-%s-01" % (year, month)
+	date2 = "%s-%s-31" % (year, month)
+	where = []
+	where.append("date(start) between date('%s') and date('%s')" % (date1, date2))
+	cursor = cdrutils.select(fields=['date(start)', 'disposition', 'accountcode', 'billsec'], where = where)
+	row = cursor.fetchone()
+	calls_per_day = [CallData() for i in days]
+	
+	fieldIndices = range(len(cursor.description))	
+	while row:
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='date(start)':
+				day = s.split("-")
+				day = int(day[2]) - 1
+			if c=='disposition':
+				disposition = s
+			if c=='accountcode':
+				try:
+					cost = int(s)
+				except ValueError:
+					cost = 0
+			if c=='billsec':
+				calls_per_day[day].addCall(int(s), cost, disposition)
+		row = cursor.fetchone()
+	
+	makeCallsTable(_("Day"), calls_per_day, daynames)
+	makeCallsGraphic(daynames, calls_per_day, _("Calls per Day in a Month"), _("Days"), "graph1.png")
+	makeGraphic(daynames, [i.minutes for i in calls_per_day], _("Minutes per Day in a Month"), _("Days"), _("Minutes"), "graph2.png")
+	makeGraphic(daynames, [i.cost for i in calls_per_day], _("Cost per Day in a Month"), _("Days"), _("Cost"), "graph3.png")
+	
+	
+def perMonthInYear [plain] (year):
+	date1 = "%s-01-01" % (year)
+	date2 = "%s-12-31" % (year)
+	where = []
+	where.append("date(start) between date('%s') and date('%s')" % (date1, date2))
+	cursor = cdrutils.select(fields=['date(start)', 'disposition', 'accountcode', 'billsec'], where = where)
+	row = cursor.fetchone()
+	calls_per_month = [CallData() for i in months]
+	
+	cost = 0
+	if cursor.description:
+		fieldIndices = range(len(cursor.description))
+	else:
+		fieldIndices = []
+	while row:
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='date(start)':
+				month = s.split("-")
+				month = int(month[1]) - 1
+			if c=='disposition':
+				disposition = s
+			if c=='accountcode':
+				try:
+					cost = int(s)
+				except ValueError:
+					cost = 0
+			if c=='billsec':
+				calls_per_month[month].addCall(int(s), cost, disposition)
+		row = cursor.fetchone()
+
+	makeCallsTable(_("Month"), calls_per_month, monthnames)
+	anglednames = ["/a60%s"%s for s in monthnames]
+	makeCallsGraphic(anglednames, calls_per_month, _("Calls per Month in a Year"), _("Months"), "graph1.png")
+	makeGraphic(anglednames, [i.minutes for i in calls_per_month], _("Minutes per Month in a Year"),_("Months"), _("Minutes"), "graph2.png")
+	makeGraphic(anglednames, [i.cost for i in calls_per_month], _("Cost per Month in a Year"),_("Months"), _("Minutes"), "graph3.png")
+
+def perYear [plain] ():
+	where = []
+	cursor = cdrutils.select(fields=['date(start)', 'disposition', 'accountcode', 'billsec'], where = where)
+	row = cursor.fetchone()
+	calls_per_year = [CallData() for i in years]
+	
+	cost = 0
+	fieldIndices = range(len(cursor.description))	
+	while row:
+		for fieldIndex in fieldIndices:
+			c = str(cursor.description[fieldIndex][0])
+			s = str(row[fieldIndex])
+			if c=='date(start)':
+				year = s.split("-")
+				year = int(year[0]) - startyear
+			if c=='disposition':
+				disposition = s
+			if c=='accountcode':
+				try:
+					cost = int(s)
+				except ValueError:
+					cost = 0
+			if c=='billsec':
+				calls_per_year[year].addCall(int(s), cost, disposition)
+		row = cursor.fetchone()
+	
+	makeCallsTable(_("Year"), calls_per_year, yearnames)
+	makeCallsGraphic(yearnames, calls_per_year, _("Calls per Year"), _("Years"), "graph1.png")
+	makeGraphic(yearnames, [i.minutes for i in calls_per_year], _("Minutes per Year"), _("Years"), _("Minutes"), "graph2.png")
+	makeGraphic(yearnames, [i.cost for i in calls_per_year], _("cost per Year"), _("Years"), _("Cost"), "graph3.png")
+	
+def showResults [plain] (day, month, year):
+	all = N_("All")
+	if day != all and month != all and year != all:
+		perHourInDay(day, month, year)
+	elif day == all and month != all and year != all:
+		perDayInMonth(month, year)
+	elif day == all and month == all and year != all:
+		perMonthInYear(year)
+	elif day == all and month == all and year == all:
+		perYear()
+	else:
+		htmltext("<p style='color:red;'>\n")
+		htmltext("%s" % _("Sorry, this kind of query is not supported yet"))
+		htmltext("</p>")
+
+def cdrForm [plain] (request):
+	htmltext("<h3>%s</h3>" % _("Statistics of Calls by Date:"))
+	form = makeForm()
+	form.render()
+	
+	if form.is_submitted() and not form.has_errors():
+		htmltext("<h3>%s</h3>" % _("Results"))
+		showResults(form["day"], form["month"], form["year"])
+	
+def _q_index [plain] (request):
+	header(_q_desc)
+	if pychart_exists:
+		cdrForm(request)
+	else:
+		_("You need to install pychart and use a cdr with sqlite to get these statistics")
+	footer()
+	

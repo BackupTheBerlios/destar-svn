@@ -1,0 +1,181 @@
+/* 
+ *		Horizontal, top-2-bottom menu
+ *		Copyright Aleksandar Vacic, www.aplus.co.yu, some rights reserved http://creativecommons.org/licenses/by/2.0/
+ */
+
+/*		------	Basic style	------		*/
+	#menu
+	{
+		clear:both;
+		display:block;
+		width:750px;
+		height:25px;
+		margin:0 0 0 15px;
+	}
+		#menu ul
+		{
+			margin:0;
+			padding:0;
+			border:0;
+			list-style-type:none;
+		}
+			#menu li
+			{
+				margin:0;
+				padding:0;
+				border:0;
+				display:block;
+				float:left;
+				position:relative;
+			}
+		#menu a
+		{
+			display:block;
+		}
+		#menu li li
+		{
+			width:100%;
+		}
+		
+		/* fix the position for 2nd level submenus. first make sure no horizontal scrollbars are visible on initial page load... */
+			#menu li li ul
+			{
+				top:0;
+				left:0;
+			}
+			
+			/* ...and then place it where it should be when shown */
+				#menu li li:hover ul
+				{
+					left:100%;
+				}
+		/* initialy hide all sub menus */
+		#menu li ul
+		{
+			display:none;
+			position:absolute;
+			z-index:10;
+		}
+		/* display them on hover */
+			#menu li:hover>ul
+			{
+				display:block;
+			}		
+		/* this is needed if you want to style #menu div - force containment of floated LIs inside of main UL */
+		#menuList:after
+		{
+			content:".";
+			height:0;
+			display:block;
+			visibility:hidden;
+			overflow:hidden;
+			clear:both;
+		}
+		/* Clear-fix for IE5/Mac \*//*/
+		#menu a
+		{
+			float:left;
+		}
+		
+		#menuList
+		{
+			display:inline-block;
+		}
+		/*  */
+		
+		/*		------   Make-up	--------			*/
+		
+	#menu
+	{
+		font-size:11px;
+		color:#FFFFFF;
+		min-height:25px;/* 	Height mentioned above	 */
+	}		
+		#menu li
+		{
+		}
+			#menu li li
+			{
+				background:none;
+				width:129px;
+			}		
+				#menu li li:last-child
+				{
+					
+				}
+				#menu a
+				{
+					font-size:11px;
+					font-weight:bold;
+					text-decoration:none;
+					text-align:left;
+					padding:0 0 0 10px;
+					background:url("../imgs/menu-f1.gif") -20px -20px no-repeat;
+				}
+					#menu a span
+					{
+						color:#FFFFFF;
+						padding:4px 10px 2px 0px;
+						display:block;
+						background:url("../imgs/menu-f1.gif") -20px -20px no-repeat;
+					}
+						#menu span em
+						{
+							text-decoration:underline;
+							font-style:normal;
+						}
+					/*Para cazar un bug en el IE-Apple*/
+					#menu a span
+					{
+						float:none;
+					}
+					/*Fin de la cacería*/
+				#menu li:hover>a
+				{
+					background:url("../imgs/menu-f1.gif") left top no-repeat;
+				}
+					#menu li:hover>a span
+					{
+						color:#f89833;
+						background:url("../imgs/menu-f2.gif") right top no-repeat;
+						display:block;
+					}
+			#menu a:hover span
+			{
+				color:#f89833;
+			}		
+				#menu li li a
+				{
+					color:#333333;
+					text-decoration:none;
+					font-size:1em;
+					font-weight:normal;
+					text-align:left;
+					background:none;
+					padding:5px 10px 5px 10px;
+				}
+					#menu li li:hover>a,
+					#menu li li a:hover
+					{
+						color:#000000 !important;
+						text-decoration:underline;
+						background:none;
+					}
+				#menu li ul
+				{
+					background:url("../imgs/submenu-f_bottom.gif") bottom repeat-y;
+					width:150px;
+				}
+					#menu li li ul
+					{
+						
+					}		
+						#menu li li li:first-child
+						{
+							
+						}
+						
+						#menu li li.submenu>a:after
+						{
+							content:" ...";
+						}

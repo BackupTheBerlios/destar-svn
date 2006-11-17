@@ -1,0 +1,172 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 Ian Esper 
+# based on file made by Manuel Alejandro Cerón Estrada <ceronman@gmail.com>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+from Templates import *
+from quixote.form2 import *
+from pychart import *
+import time
+from Billing import *
+import os
+from configlets import *
+
+_q_parent = 'page_stats'
+_q_title  = _("Billing")
+_q_desc   = _("Billing Information")
+_q_level  = 2
+_q_menupos = 10 
+def _q_access(request):
+	if request.session.level < _q_level:
+		cantAccessPage()
+
+
+def     generateOptionSelect(text=True):
+        option = range (10,110,10)
+        return option
+	
+def     generateOptionSelect2(text=False):
+		option = range (1,21,1)
+       		return option
+
+def formScript [html] ():
+	'<script language="JavaScript" type="text/javascript"> \n'
+	'<!-- \n'
+	'function gotopage ( page ) \n'
+	'{ \n'
+	'  document.billingform.pagenum.value = page; \n'
+	'  document.billingform.submit() ; \n'
+	'} \n'
+	'function orderby ( column, order ) \n'
+	'{ \n'
+	'  document.searchform.orderby.value = column; \n'
+	'  document.searchform.order.value = order; \n'
+	'  document.searchform.submit() ; \n'
+	'} \n'
+	'--> \n'
+	'</script> \n'
+
+def makeForm():
+	form = Form()
+	form.name = "billingform"
+	
+	form.add(StringWidget, "extension", title=htmltext(_("Extension ")), render_br=True, value='%', hint=htmltext(_("Use '%' for all extensions")))
+	 
+
+	form.add_single_select('year1', 
+							title=htmltext(_('From:')),
+							value="",
+							options=zip(years, 
+										years),
+							render_br=False )
+							
+	form.add_single_select('month1', 
+							options=zip(months, 
+										monthnames,
+										months),
+							render_br=False )
+							
+	form.add_single_select('day1',
+							options=zip(days,
+										daynames,
+										days),
+							render_br=True )
+							
+	form.add_single_select('year2', 
+							title=htmltext(_('To:')),
+							value="",
+							options=zip(years, 
+										years),
+							render_br=False )
+							
+	form.add_single_select('month2', 
+							options=zip(months, 
+										monthnames,
+										months),
+							render_br=False )
+							
+	form.add_single_select('day2',
+							options=zip(days,
+										daynames,
+										days),
+							render_br=True )
+	
+	
+	form.add(CheckboxWidget,'all', title=_("Show All Records"), render_br=True)	
+	
+	form.add(OptionSelectWidget,'linesToShow', title=_('Number of records to show:'),options=zip( generateOptionSelect(), generateOptionSelect(), generateOptionSelect() ), value=20)
+	
+	form.add(CheckboxWidget,'export', title=_("Export to PDF"), render_br=True)	
+	
+	form.add(HiddenWidget,'pagenum', value=1)
+	
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=True)
+	
+	return form
+
+def showResults [plain] (extension, day1, month1, year1, day2, month2, year2, all, linesToShow, export, pagenum):
+	
+	extension = "%s" % (extension)
+	fromdate = "%s-%s-%s" % (year1, month1, day1)
+	todate = "%s-%s-%s" % (year2, month2, day2)
+	offset = (int(pagenum) - 1) * (int(linesToShow) + 1) 
+	
+	import Billing
+	bdb = Billing.BillDB()
+	bdb.getRate(extension, fromdate, todate, linesToShow, offset)
+	
+	if all:
+		bdb.getRate1()
+	else:
+		bdb.getRate2()
+
+	bdb.getSum()
+	bdb.getCount()
+	bdb.getTime()	
+	
+#navegador
+	if not all:
+		numpages = (bdb.numrows/int(linesToShow))
+		navigator = '<div id=navigator>'
+		navigator += '<a href="javascript:gotopage(1)" > &lt;&lt;</a>' 
+		for i in range(numpages):
+			navigator += '<a href="javascript:gotopage(%s)" > %s | </a>' % (i+1, i+1)
+		navigator += '<a href="javascript:gotopage(%s+1)" > &gt;&gt;</a>' % (pagenum)
+		navigator += '</div>'	
+		htmltext(navigator)
+
+	htmltext('<h3>%s</h3>' % _('Call Report for Billing'))
+	bdb.makeBillsTable()
+	bdb.makeTotalTable()
+	if export:
+		bdb.export(canvas, extension, fromdate, todate)
+
+def billForm [plain] (request):
+	htmltext("<h3>%s</h3>" % _("Billing Statistics:"))
+	form = makeForm()
+	form.render()
+	
+	if form.is_submitted() and not form.has_errors():
+		htmltext("<h3>%s</h3>" % _("Results"))
+		showResults(form["extension"], form["day1"], form["month1"], form["year1"], form["day2"], form["month2"], form["year2"], form["all"], form["linesToShow"], form["export"], form["pagenum"])
+
+def _q_index [plain] (request):
+	header(_q_desc,scripts=[formScript])
+	billForm(request)
+	footer()
+	
