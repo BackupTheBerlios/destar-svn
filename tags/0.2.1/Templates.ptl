@@ -24,7 +24,7 @@ from quixote.errors import AccessError
 import os, sys, copy
 
 
-VERSION = _("0.2.0")
+VERSION = _("0.2.1")
 
 
 class HtmlTable:
