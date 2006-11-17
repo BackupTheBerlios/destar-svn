@@ -3,7 +3,7 @@
 <p>Destar is a web-based interface to manage the Asterisk PBX.</p>
 <p>It provides high-level abstraction of the Asterisk configuration.</p>
 
-<p><i>Download the latest version: <b><a href="/index.php?c=2">destar-0.2.0</a></b></i></p>
+<p><i>Download the latest version: <b><a href="/index.php?c=2">destar-0.2.1</a></b></i></p>
 
 <p>This new version contains many improvements to the 0.1 one:<br /> 
 <ul style="font-family: verdana;">   
