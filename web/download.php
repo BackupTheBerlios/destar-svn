@@ -1,6 +1,6 @@
 <h2 id="contentHeading">Download Area</h2>
 
-<h3>Destar v0.2.0, for Asterisk 1.2.X</h3>
+<h3>Destar v0.2.1, for Asterisk 1.2.X</h3>
 
 <h4>Tarball (.tgz) file</h4>
 

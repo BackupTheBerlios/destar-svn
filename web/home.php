@@ -5,7 +5,7 @@
 
 <p><i>Download the latest version: <b><a href="/index.php?c=2">destar-0.2.1</a></b></i></p>
 
-<p>This new version contains many improvements to the 0.1 one:<br /> 
+<p>Versions 0.2.X contain many improvements over the 0.1 one:<br /> 
 <ul style="font-family: verdana;">   
 <li>A new interface style (see <a href="manual/images/">screenshots</a>).   </li>   
 <li>Referencial integrity.   </li>   
