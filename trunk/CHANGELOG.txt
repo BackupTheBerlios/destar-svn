@@ -1,3 +1,6 @@
+2006-11-21
+* Configlet to listen active calls with ChanSpy
+
 2006-11-16
 * Removed unnecessary global configlet_tree's in configlets.createIncomingContext()
 * Moved language=** from [general] to [channels] in zapata.conf. Thanks to tzafrir! :)
