@@ -19,24 +19,30 @@
 
 
 from Templates import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
 
+class Page(AccessControlled, Directory): 
 
-_q_parent  = 'page_main'
-_q_title   = _("Logout")
-_q_desc    = _("Logout and become a guest user")
-_q_menupos = 90
-_q_level   = 1
+	_q_parent  = 'page_main'
+	_q_title   = _("Logout")
+	_q_desc    = _("Logout and become a guest user")
+	_q_menupos = 90
+	_q_level   = 1
 
+	_q_exports = ['']
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
-	if request.session.level == 4:
-		return request.redirect('/user/info/')
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+		if self.session.level == 4:
+			return redirect('/user/info/')
 
-def _q_index(request):
-	# TODO: move this into Publisher.py
-	request.session.user = ''
-	request.session.phone = ''
-	request.session.level = -1
-	return request.redirect('/user/info/')
+	def _q_index(self):
+		# TODO: move this into Publisher.py
+		self.session.user = ''
+		self.session.phone = ''
+		self.session.level = -1
+		return redirect('/user/info/')

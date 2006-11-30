@@ -1,3 +1,7 @@
+2006-11-29:
+* Renamed PageMain to Page
+* Upgraded page_user, page_user_info and page_logout
+
 2006-10-31:
 * A test with page_main and page_login.
 

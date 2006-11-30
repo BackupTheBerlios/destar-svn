@@ -49,7 +49,9 @@ from quixote.directory import Directory, AccessControlled
 #######################################################################
 
 
-class PageMain(AccessControlled, Directory): #order matters
+class Page(AccessControlled, Directory): #order matters
+
+        # Our main page
 
 	_q_exports = ['', 'static', 'graphs']
         _q_parent  = ''
@@ -64,7 +66,9 @@ class PageMain(AccessControlled, Directory): #order matters
 		# Import all cfg_*.py files once when the module loads.
 		for s in os.listdir(backend.CONFIGLETS_DIR):
 			#continue
-			if not s.startswith('page_main') and not s.startswith('page_login'):
+			if not s.startswith('page_main') and not s.startswith('page_user.ptl') \
+			and not s.startswith('page_user_info.ptl') and not s.startswith('page_login') \
+			and not s.startswith('page_logout'):
 				continue
 			m = None
 			if s.endswith('.ptl'):
@@ -77,23 +81,23 @@ class PageMain(AccessControlled, Directory): #order matters
 				m =  __import__(s)
 			if m:
 				for a in ('_q_parent', '_q_title', '_q_access'):
-					if not m.PageMain.__dict__.has_key(a):
+					if not m.Page.__dict__.has_key(a):
 						print "Error: '%s' doesn't define %s" % (s,a)
 						sys.exit(1)
 
 				# instantiate eventually missing variables
-				if not m.PageMain.__dict__.has_key('_q_menu'):
-					m.PageMain._q_menu = []
-				if not m.PageMain.__dict__.has_key('_q_menupos'):
-					m.PageMain._q_menupos = 0
-				if not m.PageMain.__dict__.has_key('_q_exports'):
-					m.PageMain._q_exports = []
-				if not m.PageMain.__dict__.has_key('_q_desc'):
-					m.PageMain._q_desc = ''
-				if not m.PageMain.__dict__.has_key('_q_level'):
-					m.PageMain._q_level = 4
-				if not m.PageMain.__dict__.has_key('_q_link'):
-					m.PageMain._q_link = s[5:]
+				if not m.Page.__dict__.has_key('_q_menu'):
+					m.Page._q_menu = []
+				if not m.Page.__dict__.has_key('_q_menupos'):
+					m.Page._q_menupos = 0
+				if not m.Page.__dict__.has_key('_q_exports'):
+					m.Page._q_exports = []
+				if not m.Page.__dict__.has_key('_q_desc'):
+					m.Page._q_desc = ''
+				if not m.Page.__dict__.has_key('_q_level'):
+					m.Page._q_level = 4
+				if not m.Page.__dict__.has_key('_q_link'):
+					m.Page._q_link = s[5:]
 				
 		# Build the menu structure for all page modules
 
@@ -105,16 +109,16 @@ class PageMain(AccessControlled, Directory): #order matters
 			
 			print "modulo %s" % s
 			
-			this_mod = sys.modules[s].PageMain
+			this_mod = sys.modules[s].Page
 			if this_mod.__dict__.has_key('_q_test') and not this_mod._q_test():
 				continue
 
 			try:
-				parent_mod = sys.modules[this_mod._q_parent].PageMain
+				parent_mod = sys.modules[this_mod._q_parent].Page
 				print "parent %s" % parent_mod
 			except KeyError:
 				print "Note: %s does not exist, menu is now garbled" % this_mod._q_parent
-				parent_mod = sys.modules['page_main'].PageMain
+				parent_mod = sys.modules['page_main'].Page
 			s = s[5:]	# strip 'page_'
 
 			#print s
@@ -130,9 +134,9 @@ class PageMain(AccessControlled, Directory): #order matters
 				parent_mod._q_menu.append( this_mod )
 			parent_mod._q_exports.append( link )
 			# Make this module known in the parent's module namespace
-			import pdb; pdb.set_trace()
-			parent_mod.__dict__[link] = this_mod
-			#setattr(parent_mod, link, this_mod)
+			#parent_mod.__dict__[link] = this_mod
+			#import pdb; pdb.set_trace()
+			setattr(parent_mod, link, this_mod())
 			print parent_mod.__dict__
 			# 'Convert' the _q_parent from type String to type Module
 			this_mod._q_parent = parent_mod
@@ -146,18 +150,6 @@ class PageMain(AccessControlled, Directory): #order matters
 #
 #######################################################################
 
-
-#class PageMain(AccessControlled, Directory): #order matters
-#
-#	_q_exports = ['', 'static', 'graphs']
-#        _q_parent  = ''
-#        _q_title   = _("Main menu")
-#        _q_desc    = _("DeStar main page")
-#        #_q_level   = 0
-#        _q_level   = -1
-
-        # Our main page
-	
 	def _q_index [plain] (self):
                 #session = get_session()
 		#if session.level < 1:
@@ -193,9 +185,9 @@ class PageMain(AccessControlled, Directory): #order matters
                         raise exc
 
 
-	#from page_login import PageMain as Page
+	#from page_login import Page as Page
 	#login = Page()
-	#login = __import__("page_main", "", "", "PageMain")
+	#login = __import__("page_main", "", "", "Page")
 
 # Out static things like images and style-sheets:
 	static = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','static')), list_directory=1, follow_symlinks=1)

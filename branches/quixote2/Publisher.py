@@ -72,8 +72,8 @@ class DeStarPublisher(Publisher):
 
 
 def create_publisher():
-	from page_main import PageMain
-	return DeStarPublisher(PageMain(),
+	from page_main import Page
+	return DeStarPublisher(Page(),
 		session_manager=SessionManager(session_class=DestarSession),
 		display_exceptions='plain')
 
