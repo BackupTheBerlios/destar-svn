@@ -23,113 +23,116 @@ from ConfigHelper import LabelWidget
 from quixote.form import *
 from quixote.html import htmlescape
 import os, backend, configlets, panelutils
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
+
+class Page(AccessControlled, Directory): 
 
 
-_q_parent  = 'page_admin'
-_q_title   = _("View/Save Configuration")
-_q_desc    = _("Show and Save Asterisk configuration files")
-_q_link    = 'viewconf'
-_q_menupos = 90
-_q_level   = 3
+	_q_parent  = 'page_admin'
+	_q_title   = _("View/Save Configuration")
+	_q_desc    = _("Show and Save Asterisk configuration files")
+	_q_link    = 'viewconf'
+	_q_menupos = 90
+	_q_level   = 3
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_test(self):
+		return os.access("/etc/asterisk", os.O_RDWR)
 
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
-
-
-def _q_test():
-	return os.access("/etc/asterisk", os.O_RDWR)
-
-
-def showHtmlConfig [plain] (configEntries):
-	'<div id="config">\n'
-	for file, cfg in configEntries:
-		'\n<div id="configFile">'
-		'<p>'
-		file
-		'</p>'
-		'</div>\n'
-		'<div id="configContents">\n'
-		if cfg.destar_comment:
+	def showHtmlConfig [plain] (configEntries):
+		'<div id="config">\n'
+		for file, cfg in configEntries:
+			'\n<div id="configFile">'
 			'<p>'
-			configlets.CONF_TAG
+			file
 			'</p>'
-		for sect in cfg.order:
-			if sect:
-				'<div id="configSection">'
+			'</div>\n'
+			'<div id="configContents">\n'
+			if cfg.destar_comment:
 				'<p>'
-				'['
-				sect
-				']'
+				configlets.CONF_TAG
 				'</p>'
-				'</div>\n'
-			'<p>'
-			for l in cfg.sections[sect]:
-				htmlescape(l)
-				'<br />\n'
-			'</p>'
+			for sect in cfg.order:
+				if sect:
+					'<div id="configSection">'
+					'<p>'
+					'['
+					sect
+					']'
+					'</p>'
+					'</div>\n'
+				'<p>'
+				for l in cfg.sections[sect]:
+					htmlescape(l)
+					'<br />\n'
+				'</p>'
+			'</div>\n'
 		'</div>\n'
-	'</div>\n'
 
+	def _q_index [plain] (self):
 
+		res = backend.createAsteriskConfig()
+		configEntries = res[0]
+		missingModules = res[1]
 
+		if not configEntries == []:
+			configEntries.sort()
 
-def _q_index [plain] (request):
-
-	res = backend.createAsteriskConfig()
-	configEntries = res[0]
-	missingModules = res[1]
-
-	if not configEntries == []:
-		configEntries.sort()
-
-		showForm = Form(attrs={"id":"showForm"})
-		for file,cnf in configEntries:
-			showForm.add(CheckboxWidget, file, False, title=file)
-		showForm.add(SubmitWidget, '_show', _("Show selected files"), render_br=False)
-		showForm.add(SubmitWidget, '_write', _("Save all changes"))
-
-		if not showForm.is_submitted():
-			header(_(_q_desc))
-			if not missingModules == []: showMissingModules(missingModules)
-			showForm.render()
-
-		elif showForm['_show']:
-			header(_("Asterisk configuration files"))
-			if not missingModules == []: showMissingModules(missingModules)
-			entries = []
+			showForm = Form(attrs={"id":"showForm"})
 			for file,cnf in configEntries:
-				if showForm[file]:
-					entries.append( (file,cnf) )
-			showHtmlConfig(entries)
-			showForm.render()
-		elif showForm['_write']:
-			header(_("Save changes results"))
-			'<p>'
-			if backend.writeAsteriskConfig():
-				_("Configuration files saved")
-			else:
-				_("There were problems writing the configuration. Please take a look at the error logs.")
-			'</p>'
+				showForm.add(CheckboxWidget, file, False, title=file)
+			showForm.add(SubmitWidget, '_show', _("Show selected files"), render_br=False)
+			showForm.add(SubmitWidget, '_write', _("Save all changes"))
 
-	else:
-			header(_("Nothing to Show"))
-			'<p>'
-			_("There is nothing configured yet.")
-			'</p>'
-	footer()
+			if not showForm.is_submitted():
+				header(_(_q_desc))
+				if not missingModules == []: showMissingModules(missingModules)
+				showForm.render()
 
-def showMissingModules [plain] (missingModules):
-	'<div id="error">\n'
-	'<p>'
-	htmltext(_("WARNING: This configuration might experience grave problems because the following asterisk modules are missing on your system:"))
-	'</p>'
-	'<ul>'
-	for mod in missingModules:
-		'<li>'
-		mod
-		'</li>'
-	'</ul>'
-	'</div>\n'
+			elif showForm['_show']:
+				header(_("Asterisk configuration files"))
+				if not missingModules == []: showMissingModules(missingModules)
+				entries = []
+				for file,cnf in configEntries:
+					if showForm[file]:
+						entries.append( (file,cnf) )
+				self.showHtmlConfig(entries)
+				showForm.render()
+			elif showForm['_write']:
+				header(_("Save changes results"))
+				'<p>'
+				if backend.writeAsteriskConfig():
+					_("Configuration files saved")
+				else:
+					_("There were problems writing the configuration. Please take a look at the error logs.")
+				'</p>'
+
+		else:
+				header(_("Nothing to Show"))
+				'<p>'
+				_("There is nothing configured yet.")
+				'</p>'
+		footer()
+
+	def showMissingModules [plain] (missingModules):
+		'<div id="error">\n'
+		'<p>'
+		htmltext(_("WARNING: This configuration might experience grave problems because the following asterisk modules are missing on your system:"))
+		'</p>'
+		'<ul>'
+		for mod in missingModules:
+			'<li>'
+			mod
+			'</li>'
+		'</ul>'
+		'</div>\n'
 

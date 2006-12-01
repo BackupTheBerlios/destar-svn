@@ -59,6 +59,8 @@ class Page(AccessControlled, Directory): #order matters
         _q_desc    = _("DeStar main page")
         _q_level   = 0
 
+	_q_exports = ['']
+
 	def __init__(self):
 
 		print "init"
@@ -66,8 +68,8 @@ class Page(AccessControlled, Directory): #order matters
 		# Import all cfg_*.py files once when the module loads.
 		for s in os.listdir(backend.CONFIGLETS_DIR):
 			#continue
-			if not s.startswith('page_main') and not s.startswith('page_user.ptl') \
-			and not s.startswith('page_user_info.ptl') and not s.startswith('page_login') \
+			if not s.startswith('page_main') and not s.startswith('page_user') \
+			and not s.startswith('page_login') and not s.startswith('page_admin') \
 			and not s.startswith('page_logout'):
 				continue
 			m = None
@@ -110,7 +112,7 @@ class Page(AccessControlled, Directory): #order matters
 			print "modulo %s" % s
 			
 			this_mod = sys.modules[s].Page
-			if this_mod.__dict__.has_key('_q_test') and not this_mod._q_test():
+			if this_mod.__dict__.has_key('_q_test') and not this_mod()._q_test():
 				continue
 
 			try:

@@ -19,27 +19,31 @@
 
 
 from Templates import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
 import os, backend
 
+class Page(AccessControlled, Directory): 
 
-_q_parent = 'page_admin'
-_q_title  = ''
-_q_desc   = _("Backup a config file")
-_q_link   = 'backup'
-_q_level  = 3
+	_q_parent = 'page_admin'
+	_q_title  = ''
+	_q_desc   = _("Backup a config file")
+	_q_link   = 'backup'
+	_q_level  = 3
 
+	_q_exports = ['']
 
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
-
-
-def _q_lookup(request, component):
-         try:
-                 res = backend.backupAsteriskConfig(component)
-         except OSError:
-                 res = None
-         if not res:
-                 return errorpage(htmltext(_("I had a problem backing up %s")) % component)
-         return request.redirect("../write")
+	def _q_lookup(self, component):
+		 try:
+			 res = backend.backupAsteriskConfig(component)
+		 except OSError:
+			 res = None
+		 if not res:
+			 return errorpage(htmltext(_("I had a problem backing up %s")) % component)
+		 return redirect("../write")

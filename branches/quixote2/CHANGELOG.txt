@@ -1,3 +1,6 @@
+2006-11-30:
+* All page_admin and page_user files upgraded
+
 2006-11-29:
 * Renamed PageMain to Page
 * Upgraded page_user, page_user_info and page_logout
