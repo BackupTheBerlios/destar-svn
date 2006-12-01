@@ -21,22 +21,27 @@
 
 from Templates import *
 from ConfigHelper import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
 
+class Page(AccessControlled, Directory): 
 
-_q_parent  = 'page_config'
-_q_title   = _("Codecs")
-_q_desc    = _("Audio codecs to use on SIP and IAX channels.")
-_q_link    = 'codecs'
-_q_menupos = 80
-_q_level   = 3
+	_q_parent  = 'page_config'
+	_q_title   = _("Codecs")
+	_q_desc    = _("Audio codecs to use on SIP and IAX channels.")
+	_q_link    = 'codecs'
+	_q_menupos = 80
+	_q_level   = 3
 
+	_q_exports = ['']
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
 
-
-def _q_index [plain] (request):
-	header(_q_desc)
-	presentConfiglets('Codecs')
-	footer()
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		presentConfiglets('Codecs')
+		footer()

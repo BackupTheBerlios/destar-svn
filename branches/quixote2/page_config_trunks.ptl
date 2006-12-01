@@ -20,29 +20,34 @@
 
 from Templates import *
 from ConfigHelper import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
 
+class Page(AccessControlled, Directory): 
 
-_q_parent  = 'page_config'
-_q_title   = _("Trunks")
-_q_desc    = _("Telephone company lines and VoIP-Trunks")
-_q_link    = 'trunks'
-_q_menupos = 30
-_q_level   = 3
+	_q_parent  = 'page_config'
+	_q_title   = _("Trunks")
+	_q_desc    = _("Telephone company lines and VoIP-Trunks")
+	_q_link    = 'trunks'
+	_q_menupos = 30
+	_q_level   = 3
 
+	_q_exports = ['']
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
 
-
-def _q_index [plain] (request):
-	header(_q_desc)
-	import configlets
-	phones = False
-	for obj in configlets.configlet_tree:
-		if obj.groupName == 'Phones':
-			phones = True
-	if not phones:
-		_('You should add at least one phone to configure trunks')
-	presentConfiglets('Trunks')
-	footer()
+	def _q_index [plain] (self):
+		header(self_q_desc)
+		import configlets
+		phones = False
+		for obj in configlets.configlet_tree:
+			if obj.groupName == 'Phones':
+				phones = True
+		if not phones:
+			_('You should add at least one phone to configure trunks')
+		presentConfiglets('Trunks')
+		footer()
