@@ -59,8 +59,6 @@ class Page(AccessControlled, Directory): #order matters
         _q_desc    = _("DeStar main page")
         _q_level   = 0
 
-	_q_exports = ['']
-
 	def __init__(self):
 
 		print "init"
