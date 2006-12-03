@@ -37,7 +37,7 @@ def showMenu [plain] ():
 	'<tr>'
 	for s in (htmltext(_('Statistics')), htmltext(_('Description'))):
 		'<th>%s</th>' % s
-	'</thead></tr>'
+	'</tr></thead>'
 
 	for e in _q_menu:
 		'<tr>'

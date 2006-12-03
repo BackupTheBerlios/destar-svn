@@ -60,10 +60,10 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 	form.add(StringWidget,       "cfto", cfto, title=_("Forward call when timeout/unavailable to"))
 	form.add(IntWidget,          "dsec", dsec,         title=_("Seconds of incoming ring time"), maxlength=3, size=3)
 #	form.add(CheckboxWidget,     "vm",   vm,           title=_("Use voice mailbox"))
-	form.add(StringWidget,       "pin", phone.pin, title=_("Voicemail pin"), len=10)
+	form.add(StringWidget,       "pin", phone.pin, title=_("Voicemail pin"), maxlength=10)
 	try:
 		if phone.secret:
-			form.add(StringWidget,  "secret", phone.secret, title=_("Extension Password"), len=10)
+			form.add(StringWidget,  "secret", phone.secret, title=_("Extension Password"), maxlength=10)
 	except AttributeError:
 		pass
 	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)

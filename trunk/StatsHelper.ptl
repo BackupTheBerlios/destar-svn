@@ -120,7 +120,7 @@ def makeCallsTable [plain] (label, calls, names):
 	'</b></td><td><b>'+_(str("Not Answered Calls"))
 	'</b></td><td><b>'+_(str("Busy Calls"))
 	'</b></td><td><b>'+_(str("Failed Calls"))
-	'</td></tr>\n'
+	'</b></td></tr>\n'
 	for i in range(len(calls)):
 		'<tr>'
 		"<td>%s</td>" % names[i]
@@ -175,7 +175,7 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 	htmltext('</h3>')
 	
 	htmltext('<p>')
-	htmltext('<img alt="table" src="/graphs/%s">' % filename)
+	htmltext('<img alt="table" src="/graphs/%s" />' % filename)
 	htmltext('</p>')				
 
 def makeGraphic [plain] (names, values, title, labelx, labely, filename):
@@ -211,6 +211,6 @@ def makeGraphic [plain] (names, values, title, labelx, labely, filename):
 	htmltext('</h3>')
 	
 	htmltext('<p>')
-	htmltext('<img alt="table" src="/graphs/%s">' % filename)
+	htmltext('<img alt="table" src="/graphs/%s" />' % filename)
 	htmltext('</p>')
 	

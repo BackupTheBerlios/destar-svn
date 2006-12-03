@@ -119,7 +119,7 @@ def showConfigurables [plain] (head):
 	'<tr>'
 	for s in (htmltext(_('Configured')), htmltext(_('Category'))):
 		'<th>%s</th>' % s
-	'</thead></tr>'
+	'</tr></thead>'
 
 	for group in backend.configletsGrouped():
 		'<tr>'
