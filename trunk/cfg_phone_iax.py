@@ -71,6 +71,19 @@ class CfgPhoneIax(CfgPhone):
 			VarType("callgroup",
 					title=_("Call group number"),
 					optional=True),
+
+			VarType("QueueLab",
+					title=_("Call Queues"),
+					type="label",
+					hide=True),
+			
+			VarType("queues",
+					title=_("Agent of queues:"),
+					type="mchoice",
+					optional=True,
+					options=getChoice("CfgPhoneQueue"),
+					hide=True),
+	
 	
 			VarType("panelLab",
 					title=_("Operator Panel"),

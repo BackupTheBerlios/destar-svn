@@ -1,3 +1,6 @@
+2006-12-03:
+* Added queues web form variables for iax, zap ad mgcp phones 
+
 2006-11-21
 * Configlet to listen active calls with ChanSpy
 
