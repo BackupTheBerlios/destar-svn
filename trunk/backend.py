@@ -153,8 +153,8 @@ def initializeAsteriskConfig():
 
 
 	c = AstConf("zapata.conf")
-	c.append("language=%s" % getSetting('language', 'en'))
 	c.setSection("channels")
+	c.append("language=%s" % getSetting('language', 'en'))
 	c.append("immediate=no")
 	c.append("overlapdial=yes")
 	

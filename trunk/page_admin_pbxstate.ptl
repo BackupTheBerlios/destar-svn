@@ -94,7 +94,7 @@ def _q_index [plain] (request):
 	x = y = 0
 	for obj in phones:
 		#print obj.name
-		if obj.technology == "virtual":
+		if obj.technology == "virtual" or obj.technology == "QUEUE":
 			continue
 
 		#id = '<a href="%d/state">%s</a>' % (obj._id, ' '.join(obj.row()[1:]) )

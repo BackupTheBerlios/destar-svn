@@ -26,7 +26,7 @@ class CfgPhoneQueue(CfgPhone):
 
 	shortName = _("Normal Call Queue")
 	newObjectTitle = _("New Call Queue")
-	technology = "Virtual"
+	technology = "QUEUE"
 	
 	def createVariables(self):
 		self.variables = [
@@ -250,5 +250,6 @@ class CfgPhoneQueue(CfgPhone):
 		elif self.moh:
 			extensions.appendExten(self.name, "SetMusicOnHold(%s)" % self.moh)
 			extensions.appendExten(self.name, "Queue(%s|Tth)" % self.name)
+		self.createPanelConfig()
 
 
