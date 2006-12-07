@@ -284,9 +284,11 @@ class CfgPhoneZap(CfgPhone):
 		c.append("")
 
 		self.createExtensionConfig()
+		self.createHintConfig()
 		self.createVoicemailConfig(c)
 		self.createOutgoingContext()
 		self.createPanelConfig()
+		self.createQueuesConfig()
 
 	def channelString(self):
 		return "%s/%s" % (self.technology, self.channels)

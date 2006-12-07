@@ -283,6 +283,8 @@ class CfgPhoneIax(CfgPhone):
 			iax.append("notransfer=yes")
 
 		self.createExtensionConfig()
+		self.createHintConfig()
 		self.createVoicemailConfig(iax)
 		self.createOutgoingContext()
 		self.createPanelConfig()
+		self.createQueuesConfig()
