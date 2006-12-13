@@ -38,6 +38,15 @@ class CfgOptSipNetwork(CfgOptSingle):
 					title=_("Bind address"), 
 					len=25),
 
+			VarType("globalnat",
+					title=_("Global NAT"),
+					type="choice",
+					options=( ("no",_("No")),
+						  ("yes",_("Yes")),
+						  ("always",_("Always")), 
+						  ("route",_("Route")) ), 
+					default="no"),
+
 			VarType("extintnet",	
 					title=_("External/Internal IP"), 
 					type="label"),
@@ -81,8 +90,10 @@ class CfgOptSipNetwork(CfgOptSingle):
 
 	def createAsteriskConfig(self):
 		c = AstConf("sip.conf")
+		c.setSection("general")
 		if self.doBind:
 			c.append("bindaddr=%s" % self.bindaddr)
 		if self.setExt:
 			c.append("externip=%s" % self.extip)
 			c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
+		c.append("nat=%s" % self.globalnat)
