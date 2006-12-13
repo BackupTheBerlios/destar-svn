@@ -30,13 +30,34 @@ class CfgOptSipNetwork(CfgOptSingle):
 	
 	def createVariables(self):
 		self.variables = [
-			VarType("doBind",	title=_("Bind specific address?"), type="bool"),
-			VarType("bindaddr",	title=_("Bind address"), len=25),
-			VarType("extintnet",	title=_("External/Internal IP"), type="label"),
-			VarType("setExt",	title=_("Force external ip/internel network?"),	type="bool"),
-			VarType("extip",	title=_("External ip"), len=25),
-			VarType("intnet",	title=_("Internal network"), len=25),
-			VarType("intnetmask",	title=_("Netmask"), len=25),
+			VarType("doBind",	
+					title=_("Bind specific address?"), 
+					type="bool"),
+
+			VarType("bindaddr",	
+					title=_("Bind address"), 
+					len=25),
+
+			VarType("extintnet",	
+					title=_("External/Internal IP"), 
+					type="label"),
+
+			VarType("setExt",	
+					title=_("Force external ip/internel network?"),	
+					type="bool"),
+
+			VarType("extip",	
+					title=_("External ip"), 
+					len=25),
+
+			VarType("intnet",	
+					title=_("Internal network"), 
+					len=25),
+
+			VarType("intnetmask",	
+					title=_("Netmask"), 
+					len=25),
+					
 		]
 
 	def checkConfig(self):
