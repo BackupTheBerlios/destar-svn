@@ -26,6 +26,38 @@ from quixote import get_request, get_session, redirect
 import backend, manager, configlets
 import time,types
 
+def QDList [plain] (obj):
+	global_qdlist = manager.getVarFamily("QUICKDIALLIST/GLOBAL")
+	private_qdlist = manager.getVarFamily("QUICKDIALLIST/%s" % obj.ext)
+	if global_qdlist != []:
+		# TODO: use CSS
+		'<table border=1 cellspacing="1">'
+		'<tbody><thead>'
+		'<tr><th>%s</th></tr>' % htmltext(_('Global Shorcuts and Final Destinations')) 
+		'</thead>'
+		for i in global_qdlist:
+			'<tr><td>%s</td></tr>' % _(i)
+		'</tbody>'
+		'</table><br/><br/>'
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("No Global Shorcuts Found on Database"))
+		'</span></p>'
+	if private_qdlist != []:
+		# TODO: use CSS
+		'<table border=1 cellspacing="1">'
+		'<tbody><thead>'
+		'<tr><th>%s</th></tr>' % htmltext(_('Private Shorcuts and Final Destinations')) 
+		'</thead>'
+		for i in private_qdlist:
+			'<tr><td>%s</td></tr>' % _(i)
+		'</tbody>'
+		'</table>'
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("No Private Shorcuts Found on Database"))
+		'</span></p>'
+	
 class Page(AccessControlled, Directory): 
 
 	_q_parent  = 'page_user'
@@ -43,38 +75,7 @@ class Page(AccessControlled, Directory):
 		if self.session.level < self._q_level:
 			cantAccessPage()
 
-	def QDList [plain] (obj):
-		global_qdlist = manager.getVarFamily("QUICKDIALLIST/GLOBAL")
-		private_qdlist = manager.getVarFamily("QUICKDIALLIST/%s" % obj.ext)
-		if global_qdlist != []:
-			# TODO: use CSS
-			'<table border=1 cellspacing="1">'
-			'<tbody><thead>'
-			'<tr><th>%s</th></tr>' % htmltext(_('Global Shorcuts and Final Destinations')) 
-			'</thead>'
-			for i in global_qdlist:
-				'<tr><td>%s</td></tr>' % _(i)
-			'</tbody>'
-			'</table><br/><br/>'
-		else:
-			'<p><span class="errornotice">'
-			htmltext(_("No Global Shorcuts Found on Database"))
-			'</span></p>'
-		if private_qdlist != []:
-			# TODO: use CSS
-			'<table border=1 cellspacing="1">'
-			'<tbody><thead>'
-			'<tr><th>%s</th></tr>' % htmltext(_('Private Shorcuts and Final Destinations')) 
-			'</thead>'
-			for i in private_qdlist:
-				'<tr><td>%s</td></tr>' % _(i)
-			'</tbody>'
-			'</table>'
-		else:
-			'<p><span class="errornotice">'
-			htmltext(_("No Private Shorcuts Found on Database"))
-			'</span></p>'
-		
+	
 	def _q_index [plain] (self):
 		header(self._q_desc, refresh=10)
 		manager.connect()

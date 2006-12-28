@@ -24,6 +24,40 @@ import time
 from quixote.directory import Directory, AccessControlled
 from quixote import get_request, get_session
 
+def formatChannel(obj, now):
+
+	# +------------------------------+
+	# | Nr Name         Voicemailbox |
+	# | Number                       |
+	# | Timer                 Status |
+	# +------------------------------+
+
+	#TODO id = '<a href="%s/state">%s</a>' % (obj._id, ' '.join(obj.row()[1:]) )
+	id = ' '.join(obj.row()[1:])
+
+	number = '&nbsp;'
+	try:
+		number = obj._state.Extension
+		try:
+			number = "%s %s" % (number, obj._state.Application)
+		except AttributeError:
+			pass
+		number = "> " + number
+	except AttributeError:
+		pass
+	
+	t = obj._state.LastUpdate
+	if t:
+		t = now -t + 1
+		ti = backend.time2HMS(t)
+	else:
+		ti = ''
+
+	if obj._state.State in ['Hangup','Registered','Reachable','Unknown'] and t>30:
+		ti = ''
+
+	return htmltext('<span id="phonename">%s</span><br />%s<br />%s&nbsp;<span id="phonestate">%s</span>' % (id, number, ti, _(obj._state.State)))
+
 class Page(AccessControlled, Directory): 
 
 	_q_parent  = 'page_admin'
@@ -40,41 +74,6 @@ class Page(AccessControlled, Directory):
 		self.request = get_request()
 		if self.session.level < self._q_level:
 			cantAccessPage()
-
-	def formatChannel(obj, now):
-
-		# +------------------------------+
-		# | Nr Name         Voicemailbox |
-		# | Number                       |
-		# | Timer                 Status |
-		# +------------------------------+
-
-		#TODO id = '<a href="%s/state">%s</a>' % (obj._id, ' '.join(obj.row()[1:]) )
-		id = ' '.join(obj.row()[1:])
-
-		number = '&nbsp;'
-		try:
-			number = obj._state.Extension
-			try:
-				number = "%s %s" % (number, obj._state.Application)
-			except AttributeError:
-				pass
-			number = "> " + number
-		except AttributeError:
-			pass
-		
-		t = obj._state.LastUpdate
-		if t:
-			t = now -t + 1
-			ti = backend.time2HMS(t)
-		else:
-			ti = ''
-
-		if obj._state.State in ['Hangup','Registered','Reachable','Unknown'] and t>30:
-			ti = ''
-
-		return htmltext('<span id="phonename">%s</span><br />%s<br />%s&nbsp;<span id="phonestate">%s</span>' % (id, number, ti, _(obj._state.State)))
-
 
 	def _q_index [plain] (self):
 		header(self._q_desc,refresh=10)

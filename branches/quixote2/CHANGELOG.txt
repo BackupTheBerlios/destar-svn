@@ -2,6 +2,8 @@
 * page_main and Templates: fixed menus displaying.
 * page_config_trunks.ptl: fixed typo.
 * page_logout.ptl: fixed redirect.
+* page_user*.ptl and page_admin*.ptl: corrected some 
+  function's "position"
 
 2006-12-02:
 * All missing page_* "upgraded", but there is still work to do.
