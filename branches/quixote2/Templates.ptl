@@ -20,6 +20,7 @@
 
 from quixote.html import htmltext, htmlescape
 from quixote.publish import get_publisher, get_request
+from quixote import get_session
 from quixote.util import get_directory_path
 from quixote.errors import AccessError
 import os, sys, copy
@@ -239,6 +240,7 @@ def footer [html] ():
 
 def getMenu():
 	request = get_request()
+	session = get_session()
 	path = request.environ['PATH_INFO']
 	path = path[1:].split('/')
 
@@ -255,29 +257,25 @@ def getMenu():
 			return
 		try:
 			prueba = obj._q_menu
-			print "sí hay menu %s" % prueba
 		except AttributeError:
-			print "no hay menu"
 			return
 		for e in obj._q_menu:
-			if e._q_level>request.session.level:
+			if e._q_level > session.level:
 				continue
 			if e._q_level<0:
-				if e._q_title == _("Logout") and request.session.level == 4:
+				if e._q_title == _("Logout") and session.level == 4:
 	                                continue
 				if e._q_level<0:
-	                                if abs(e._q_level) <= request.session.level:			
+	                                if abs(e._q_level) <= session.level:			
 	                                	continue
 			submenu = []
-			if e._q_parent == sys.modules['page_main']:
+			#if e._q_parent == sys.modules['page_main']:
+			if e._q_parent == 'page_main':
 				for sub in e._q_menu:
-					parent_name = sub._q_parent.__name__[5:]
+					parent_name = sub._q_parent[5:]
 					submenu.append( (sub._q_menupos, '/'.join([root,parent_name,sub._q_link]), sub._q_title, []) )
 			submenu.sort()
 
-			print e._q_menupos
-			print e._q_link
-			print e._q_title
 			m.append( (e._q_menupos, '/'.join([root,e._q_link]), e._q_title, submenu) )
 		m.sort()
 		return m

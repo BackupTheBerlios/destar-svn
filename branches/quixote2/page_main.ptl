@@ -139,7 +139,7 @@ class Page(AccessControlled, Directory): #order matters
 			setattr(parent_mod, link, this_mod())
 			print parent_mod.__dict__
 			# 'Convert' the _q_parent from type String to type Module
-			this_mod._q_parent = parent_mod
+			#this_mod._q_parent = parent_mod
 			#print parent_mod._q_exports
 			#print dir(parent_mod)
 
