@@ -41,7 +41,7 @@ class Page(AccessControlled, Directory):
 			cantAccessPage()
 
 	def _q_index [plain] (self):
-		header(self_q_desc)
+		header(self._q_desc)
 		import configlets
 		phones = False
 		for obj in configlets.configlet_tree:
