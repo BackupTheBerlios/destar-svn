@@ -45,4 +45,4 @@ class Page(AccessControlled, Directory):
 		self.session.user = ''
 		self.session.phone = ''
 		self.session.level = -1
-		return redirect('/user/info/')
+		return redirect('/')
