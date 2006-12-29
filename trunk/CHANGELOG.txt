@@ -1,3 +1,6 @@
+2006-12-29:
+* "updated" version
+
 2006-12-13:
 * Added global nat option for sip  in cfg_opt_sip_network.py
 * Cosmetical changes in cfg_opt_sip_network.py
