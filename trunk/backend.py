@@ -163,7 +163,6 @@ def initializeAsteriskConfig():
 	c.append("language=%s" % getSetting('language', 'en'))
 
 	needModule("pbx_functions")
-	needModule("cdr_sqlite3_custom")
 	c = AstConf("cdr_sqlite3_custom.conf")
 	c.setSection("master")
 	c.append("table => cdr")
