@@ -1,3 +1,6 @@
+2007-01-13:
+* Deleted some debug prints.
+
 2006-12-28:
 * page_main and Templates: fixed menus displaying.
 * page_config_trunks.ptl: fixed typo.

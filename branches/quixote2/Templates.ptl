@@ -106,7 +106,6 @@ class HtmlTable:
 			attr = self.attrs.get(x,y)
 			hide = False
 			elem = 'td'
-			#print "attr:", attr
 			if attr:
 				for k in attr:
 					if k == '__hide':
@@ -249,10 +248,8 @@ def getMenu():
 
 	def calcMenu(root='', n=0):
 		m = []
-		print stack
 		try:
 			obj = stack[n]
-			print "obj = %s" % obj
 		except IndexError:
 			return
 		try:
