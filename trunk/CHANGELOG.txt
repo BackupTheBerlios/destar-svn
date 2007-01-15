@@ -1,3 +1,6 @@
+2007-01-15:
+* Fixed recording. Patch by Harald Holzer
+
 2006-12-29:
 * "updated" version
 * First attempt to detect if cdr_sqlite3_custom.so exists

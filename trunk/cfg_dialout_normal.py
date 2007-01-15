@@ -84,9 +84,9 @@ class CfgDialoutNormal(CfgDialout):
 		c.append("; params: exten,secret,timeout")
 		needModule("app_authenticate")
 		if self.dis_transfer:
-		       opts="t"
+		       opts="tW"
 		else:
-		       opts="Tt"
+		       opts="TtW"
 		if self.qlookup:
 			c.appendExten("s","Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})",e="Goto(3)")
 			c.appendExten("s",'Set(ARG1=${dest})')

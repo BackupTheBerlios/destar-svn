@@ -198,7 +198,7 @@ def initializeAsteriskConfig():
 	c.append("exten=s,n(doptEnd),NoOp()")
 	c.append(";")
 	c.append("; Dial")
-	c.append("exten=s,n(MainDial),Dial(${ARG1},${dsec},Tt${dopt})")
+	c.append("exten=s,n(MainDial),Dial(${ARG1},${dsec},TtWw${dopt})")
 	c.append(";")
 	c.append("; Dial result was 'timeout'")
 	c.append("exten=s,n,Set(fw_ext=${DB(CFTO/${ARG5}/${ARG4})})")

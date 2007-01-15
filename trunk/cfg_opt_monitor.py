@@ -36,6 +36,11 @@ class CfgOptMonitor(CfgOptSingle):
 		return (self.shortName, self.ext)
 		
 	def createAsteriskConfig(self):
+		needModule("res_monitor")
+		needModule("app_record")
+		c = AstConf("extensions.conf")
+        	c.setSection("globals")
+		c.append("DYNAMIC_FEATURES=>automon")
 		c = AstConf("features.conf")
         	c.setSection("featuremap")
 		c.append("automon=>%s" % self.ext)
