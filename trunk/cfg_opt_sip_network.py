@@ -36,7 +36,8 @@ class CfgOptSipNetwork(CfgOptSingle):
 
 			VarType("bindaddr",	
 					title=_("Bind address"), 
-					len=25),
+					len=25,
+					optional=True),
 
 			VarType("globalnat",
 					title=_("Global NAT"),
@@ -57,16 +58,23 @@ class CfgOptSipNetwork(CfgOptSingle):
 
 			VarType("extip",	
 					title=_("External ip"), 
-					len=25),
+					len=25,
+					optional=True),
 
 			VarType("intnet",	
 					title=_("Internal network"), 
-					len=25),
+					len=25,
+					optional=True),
 
 			VarType("intnetmask",	
 					title=_("Netmask"), 
-					len=25),
-					
+					len=25,
+					optional=True),
+
+			VarType("tos",
+					title=_("TOS:"),
+					len=10,
+					optional=True),
 		]
 
 	def checkConfig(self):
@@ -94,6 +102,10 @@ class CfgOptSipNetwork(CfgOptSingle):
 		if self.doBind:
 			c.append("bindaddr=%s" % self.bindaddr)
 		if self.setExt:
-			c.append("externip=%s" % self.extip)
-			c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
+			if self.extip:
+				c.append("externip=%s" % self.extip)
+			if self.intnet:
+				c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
+		if self.tos:
+			c.append("tos=%s" % self.tos)
 		c.append("nat=%s" % self.globalnat)
