@@ -362,13 +362,17 @@ def createAsteriskConfig():
 	c.setSection("modules")
 	c.append("autoload=no")
 	for m in c.modules.preload:
-		c.append("preload=%s.so" % m)
-		if not m in available_modules: missing_modules.append(m)
+		if not m in available_modules:
+			missing_modules.append(m)
+		else:
+			c.append("preload=%s.so" % m)
 
 	for sect in ("pbx", "codec", "format", "res", "cdr", "chan", "func", "app"):
 		for m in c.modules[sect]:
-			c.append("load=%s.so" % m)
-			if not m in available_modules: missing_modules.append(m)
+			if not m in available_modules:
+				missing_modules.append(m)
+			else:
+				c.append("load=%s.so" % m)
 
 	# test if all config files are OK to be written or overwritten
 	tmp_conf = []
