@@ -8,6 +8,9 @@
 - added sip from domain option
 - added DID custom mapping option
 * some better defaults. Patch by Harald Holzer
+* add early media support in dialmacro. Patch by Harald Holzer
+- add parallel ringing support in dialmacro
+- add call forward only on trunk support in dialmacro
 
 2006-12-29:
 * "updated" version
