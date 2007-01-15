@@ -57,18 +57,20 @@ class CfgAppCallFW(CfgApp):
 			c.appendExten("_%sX." % self.set, 'GotoIf($["${testcf}" = ""]?:switchoff)')
 		c.appendExten("_%sX." % self.set, "Set(DB(%s/%s/${CALLERIDNUM})=${EXTEN:%d})" % (self.type, self.pbx,len(self.set)))
 		if self.devstateprefix:
-			c.appendExten("_%sX." % self.set, "Devstate(%s${CALLERIDNUM},2)" % self.devstateprefix)
+			c.appendExten("_%sX." % self.set, "Devstate(%s_%s_${CALLERIDNUM},2)" % (self.type.lower(), self.pbx))
 		if self.type == "CFIM":
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-unconditional)")
 		elif self.type == "CFTO":
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-no-ans)")
 		else:
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-on-busy)")
+		c.appendExten("_%sX." % self.set, "Wait(1)")
 		c.appendExten("_%sX." % self.set, "Hangup")
 		c.appendExten("_%sX." % self.set, "Goto(%s,%s,1)" % (self.pbx, self.ext), label="switchoff")
 		c.appendExten("%s" % self.ext, "Answer()")
 		c.appendExten("%s" % self.ext, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type, self.pbx))
 		if self.devstateprefix:
-			c.appendExten("%s" % self.ext, "Devstate(%s${CALLERIDNUM},0)" % self.devstateprefix)
+			c.appendExten("%s" % self.ext, "Devstate(%s_%s_${CALLERIDNUM},0)" % (self.type.lower(), self.pbx))
 		c.appendExten("%s" % self.ext, "Playback(call-fwd-cancelled)")
+		c.appendExten("%s" % self.ext, "Wait(1)")
 		c.appendExten("%s" % self.ext, "Hangup")

@@ -41,12 +41,14 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 		return request.redirect(exitPath)
 	form = Form()
 
-#	vm   = int(manager.getVar('VM',   phone.ext, True))
 	dnd  = manager.getVar('DND/%s' % phone.pbx,  phone.ext, False)
 	dsec = int(manager.getVar('DSEC/%s' % phone.pbx, phone.ext, 45))
 	cfim = manager.getVar('CFIM/%s' % phone.pbx, phone.ext, '')
 	cfbs = manager.getVar('CFBS/%s' % phone.pbx, phone.ext, '')
 	cfto = manager.getVar('CFTO/%s' % phone.pbx, phone.ext, '')
+	vmim = manager.getVar('VMIM/%s' % phone.pbx,  phone.ext, False)
+	vmbs = manager.getVar('VMBS/%s' % phone.pbx,  phone.ext, False)
+	vmu  = manager.getVar('VMU/%s' % phone.pbx,  phone.ext, False)
 
 	phones = backend.getChoice("CfgPhone")
 	if type(phones) == types.FunctionType:
@@ -54,12 +56,14 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 	phones.remove( (phone.name,phone.name) )
 	phones.insert(0, ('',''))
 
-	form.add(CheckboxWidget,     "dnd",  dnd,          title=_("Enable 'do not disturb'"))
+	form.add(CheckboxWidget,     "dnd",  dnd,  title=_("Enable 'do not disturb'"))
 	form.add(StringWidget, 	     "cfim", cfim, title=_("Immediate call forwarding to"))
 	form.add(StringWidget,       "cfbs", cfbs, title=_("Forward call when busy to"))
 	form.add(StringWidget,       "cfto", cfto, title=_("Forward call when timeout/unavailable to"))
-	form.add(IntWidget,          "dsec", dsec,         title=_("Seconds of incoming ring time"), maxlength=3, size=3)
-#	form.add(CheckboxWidget,     "vm",   vm,           title=_("Use voice mailbox"))
+	form.add(IntWidget,          "dsec", dsec, title=_("Seconds of incoming ring time"), maxlength=3, size=3)
+	form.add(CheckboxWidget,     "vmim", vmim, title=_("Immediate voice mailbox"))
+	form.add(CheckboxWidget,     "vmbs", vmbs, title=_("Voice mailbox on busy"))
+	form.add(CheckboxWidget,     "vmu",  vmu,  title=_("Voice mailbox on timeout/unavailable"))
 	form.add(StringWidget,       "pin", phone.pin, title=_("Voicemail pin"), maxlength=10)
 	try:
 		if phone.secret:
@@ -72,12 +76,14 @@ def phoneSettingsForm(request, phone, exitPath=".."):
 	if not form.is_submitted() or form.has_errors():
 		return form.render()
 
-#	manager.setVar('VM/%s' % phone.pbx,   phone.ext, form['vm'])
 	manager.setVar('DND/%s' % phone.pbx,  phone.ext, form['dnd'])
 	manager.setVar('DSEC/%s' % phone.pbx, phone.ext, form['dsec'])
 	manager.setVar('CFIM/%s' % phone.pbx, phone.ext, form['cfim'] or '')
 	manager.setVar('CFBS/%s' % phone.pbx, phone.ext, form['cfbs'] or '')
 	manager.setVar('CFTO/%s' % phone.pbx, phone.ext, form['cfto'] or '')
+	manager.setVar('VMIM/%s' % phone.pbx, phone.ext, form['vmim'])
+	manager.setVar('VMBS/%s' % phone.pbx, phone.ext, form['vmbs'])
+	manager.setVar('VMU/%s' % phone.pbx,  phone.ext, form['vmu'])
 
 	if form["pin"]:
 		phone.pin = form["pin"]

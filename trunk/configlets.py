@@ -1002,13 +1002,22 @@ class CfgPhone(Cfg):
 		for obj in configlet_tree:
 			if obj.__class__.__name__ == 'CfgAppCallFW':
 				if obj.devstateprefix:
-					extensions.append("exten=%s%s,hint,DS/%s%s" % (obj.devstateprefix, self.ext, obj.devstateprefix, self.ext))
+					extensions.append("exten=%s%s,hint,DS/%s_%s_%s" % (obj.devstateprefix, self.ext, obj.type.lower(), pbx, self.ext))
+					extensions.appendExten("%s%s" % (obj.devstateprefix, self.ext), "Goto(%s,%s,1)" % (pbx, obj.set))
+		for obj in configlet_tree:
+			if obj.__class__.__name__ == 'CfgAppVoicemailSettings':
+				if obj.devstateprefix:
+					extensions.append("exten=%s%s,hint,DS/%s_%s_%s" % (obj.devstateprefix, self.ext, obj.type.lower(), pbx, self.ext))
 					extensions.appendExten("%s%s" % (obj.devstateprefix, self.ext), "Goto(%s,%s,1)" % (pbx, obj.set))
 
 	def createVoicemailConfig(self, conf):
-		if self.ext and self.usevm:
-			needModule("res_adsi")
-			needModule("app_voicemail")
+		vmconfig = False;
+		for obj in configlet_tree:
+			if obj.__class__.__name__ == 'CfgOptVoicemail':
+				if obj.enable:
+				    vmconfig = True;
+				break
+		if vmconfig:
 			if self.usemwi:
 				conf.append("mailbox=%s@%s" % (self.ext,self.pbx))
 
