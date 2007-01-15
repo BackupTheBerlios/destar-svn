@@ -113,9 +113,13 @@ class CfgDialoutNormal(CfgDialout):
 					c.appendExten("s","Set(TIMEOUT(absolute)=${timeout})")
 					c.appendExten("s","Set(CDR(outtrunk)=%s)" % obj.name)
 					if self.__getitem__("trunk_%s_price" % obj.name):
-						c.appendExten("s","Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
+						c.appendExten("s","Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))
 					else:
-						c.appendExten("s","Set(CDR(accountcode)=0)")	
+						c.appendExten("s","Set(CDR(accountcode)=0)")
+					if obj.clidnameout:
+						c.appendExten("s","Set(CALLERID(name)=%s)" % obj.clidnameout)
+					if obj.clidnumout:
+						c.appendExten("s","Set(CALLERID(number)=%s)" % obj.clidnumout)
 					c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 			except KeyError:
 				pass

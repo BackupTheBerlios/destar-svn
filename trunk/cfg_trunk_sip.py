@@ -73,6 +73,11 @@ class CfgTrunkSiptrunk(CfgTrunk):
 				title=_("Show this trunk in the panel"),
 				type="bool",
 				hide=True),
+
+	    		VarType("fromdomain",
+                               title=_("Sip domain:"),
+                               len=40,
+                               optional=True),
 	
 			VarType("Inbound",
 				title=_("Calls from SIP trunk"),
@@ -82,6 +87,11 @@ class CfgTrunkSiptrunk(CfgTrunk):
 				title=_("Change Caller*Id to:"),
 				len=25,
 				optional=True),
+
+ 			VarType("clidnumin",
+ 				title=_("Change Caller*Id Number to:"),
+ 				len=40,
+ 				optional=True),
 			
 			VarType("contextin",
 				title=_("Go to"),
@@ -107,9 +117,24 @@ class CfgTrunkSiptrunk(CfgTrunk):
 				optional=True,
 				options=getChoice("CfgOptPBX")),
 
+ 			VarType("Outbound",
+ 				title=_("Outgoing calls to IAX trunk"),
+ 				type="label"),
+ 
+ 			VarType("clidnameout",
+ 				title=_("Change Caller*Id Name to:"),
+ 				len=40,
+ 				optional=True),
+ 
+ 			VarType("clidnumout",
+ 				title=_("Change Caller*Id Number to:"),
+ 				len=40,
+ 				optional=True),
+
 			VarType("dial",
 				hide=True,
-				len=80),]
+				len=80),
+				]
 
 		self.dependencies = [
 			DepType("phone", 
@@ -156,6 +181,8 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			c.append("host=%s" % self.host)
 			c.append("context=in-%s" % self.name)
 			c.append("canreinvite=no")
+			if self.fromdomain:
+				c.append("fromdomain=%s" % self.fromdomain)
 			if self.nat:
 				c.append("nat=yes")
 			if self.insecure:
