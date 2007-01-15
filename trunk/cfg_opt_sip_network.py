@@ -25,8 +25,8 @@ from configlets import *
 
 class CfgOptSipNetwork(CfgOptSingle):
 
-	shortName = _("SIP Network Options")
-	newObjectTitle = _("SIP Network Options")
+	shortName = _("SIP Options")
+	newObjectTitle = _("SIP Options")
 	
 	def createVariables(self):
 		self.variables = [
@@ -47,6 +47,12 @@ class CfgOptSipNetwork(CfgOptSingle):
 						  ("always",_("Always")), 
 						  ("route",_("Route")) ), 
 					default="no"),
+
+			# Hell, what a mess in Asterisk and Snom FW >6.2.2, pedantic is needed to get "#" working
+			VarType("pedantic",	
+					title=_("SIP Pedantic checking of Call-ID"),	
+					type="bool",
+					optional=True),
 
 			VarType("extintnet",	
 					title=_("External/Internal IP"), 
@@ -121,4 +127,6 @@ class CfgOptSipNetwork(CfgOptSingle):
 			c.append("tos=%s" % self.tos)
 		if self.moh:
 			c.append("musiconhold=%s" % self.moh)
+     		if self.pedantic:
+             		c.append("pedantic=yes")
 		c.append("nat=%s" % self.globalnat)
