@@ -33,7 +33,9 @@ class CfgAppCallFW(CfgApp):
 			VarType("type", title=_("Type"), type="choice", options=( ("CFIM", _("Call Forwarding Unconditional")), \
 			("CFBS", _("Call Forwarding if Busy")), ("CFTO", _("Call Forwarding if Timeout/Unavailable")) )),
 			VarType("set",      title=_("Setting preffix"), len=6, default="*21"),
-			VarType("ext",   title=_("Unsetting extension"), len=6, default="*22")
+			VarType("ext",   title=_("Unsetting extension"), len=6, default="*22"),
+			VarType("toggle",   title=_("Set function toggleable"), type="bool"),
+			VarType("devstateprefix",   title=_("Create Devstate extension. Devstate Prefix:"), len=8, default="")
 		       	]
 
 		self.dependencies = [ DepType("pbx", 
@@ -45,9 +47,17 @@ class CfgAppCallFW(CfgApp):
 		return ("%s / %s" % (self.set,self.ext),"%s %s" % (self.shortName, self.type), self.pbx)
 
 	def createAsteriskConfig(self):
+		if self.devstateprefix:
+		    needModule("app_devstate")
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
+		c.appendExten("_%sX." % self.set, "Answer()")
+		if self.toggle:
+			c.appendExten("_%sX." % self.set, "Set(testcf=${DB(%s/%s/${CALLERIDNUM})})" % (self.type, self.pbx))
+			c.appendExten("_%sX." % self.set, 'GotoIf($["${testcf}" = ""]?:switchoff)')
 		c.appendExten("_%sX." % self.set, "Set(DB(%s/%s/${CALLERIDNUM})=${EXTEN:%d})" % (self.type, self.pbx,len(self.set)))
+		if self.devstateprefix:
+			c.appendExten("_%sX." % self.set, "Devstate(%s${CALLERIDNUM},2)" % self.devstateprefix)
 		if self.type == "CFIM":
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-unconditional)")
 		elif self.type == "CFTO":
@@ -55,6 +65,10 @@ class CfgAppCallFW(CfgApp):
 		else:
 			c.appendExten("_%sX." % self.set, "Playback(call-fwd-on-busy)")
 		c.appendExten("_%sX." % self.set, "Hangup")
-		c.appendExten("%s" % self.ext, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type,self.pbx))
+		c.appendExten("_%sX." % self.set, "Goto(%s,%s,1)" % (self.pbx, self.ext), label="switchoff")
+		c.appendExten("%s" % self.ext, "Answer()")
+		c.appendExten("%s" % self.ext, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type, self.pbx))
+		if self.devstateprefix:
+			c.appendExten("%s" % self.ext, "Devstate(%s${CALLERIDNUM},0)" % self.devstateprefix)
 		c.appendExten("%s" % self.ext, "Playback(call-fwd-cancelled)")
 		c.appendExten("%s" % self.ext, "Hangup")

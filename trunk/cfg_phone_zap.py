@@ -284,7 +284,6 @@ class CfgPhoneZap(CfgPhone):
 		c.append("")
 
 		self.createExtensionConfig()
-		self.createHintConfig()
 		self.createVoicemailConfig(c)
 		self.createOutgoingContext()
 		self.createPanelConfig()

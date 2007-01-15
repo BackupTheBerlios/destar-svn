@@ -284,7 +284,6 @@ class CfgPhoneMGCP(CfgPhone):
 			mgcp.append('pickupgroup=%s' % self.callgroup)
 
 		self.createExtensionConfig()
-		self.createHintConfig()
 		self.createVoicemailConfig(mgcp)
 		self.createOutgoingContext()
 		self.createQueuesConfig()

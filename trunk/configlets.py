@@ -104,7 +104,7 @@ class AsteriskConfigFile:
 			self.order.append(self.section)
 		self.dirty = True
 
-	def appendExten(self,ext,l,e=None):
+	def appendExten(self,ext,l,e=None, label=None):
 		"""Append an extension line l to the current section. Append
 		an optional error extenion e as well. Increments the priorty
 		if the extension stays the same, resets the prio to 1 if the
@@ -113,7 +113,12 @@ class AsteriskConfigFile:
 		if ext != self.lastext:
 			self.extpriority = 1
 		self.lastext = ext
-		self.append("exten=%s,%d,%s" % (ext, self.extpriority, l))
+
+		if label:
+		    self.append("exten=%s,%d(%s),%s" % (ext, self.extpriority, label, l))
+		else:
+		    self.append("exten=%s,%d,%s" % (ext, self.extpriority, l))
+
 		if e:
 			self.append("exten=%s,%d,%s" % (ext, self.extpriority+101, e))
 			
@@ -989,19 +994,16 @@ class CfgPhone(Cfg):
                 except AttributeError:
                         pbx = "phones"
                 extensions.setSection(pbx)
+		extensions.append("exten=%s,hint,%s/%s" % (self.ext, self.technology, self.name))
 		extensions.appendExten(self.ext,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.ext, pbx, self.ext)
 		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.name, pbx, self.ext)
-
-	def createHintConfig(self):
-		extensions = AstConf("extensions.conf")
-        	try:
-            		pbx = self.pbx
-        	except AttributeError:
-            		pbx = "phones"
-        	extensions.setSection(pbx)
-		extensions.append("exten=%s,hint,%s/%s" % (self.ext, self.technology, self.name))
+		for obj in configlet_tree:
+			if obj.__class__.__name__ == 'CfgAppCallFW':
+				if obj.devstateprefix:
+					extensions.append("exten=%s%s,hint,DS/%s%s" % (obj.devstateprefix, self.ext, obj.devstateprefix, self.ext))
+					extensions.appendExten("%s%s" % (obj.devstateprefix, self.ext), "Goto(%s,%s,1)" % (pbx, obj.set))
 
 	def createVoicemailConfig(self, conf):
 		if self.ext and self.usevm:
