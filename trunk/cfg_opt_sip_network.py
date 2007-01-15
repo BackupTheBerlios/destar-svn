@@ -72,9 +72,20 @@ class CfgOptSipNetwork(CfgOptSingle):
 					optional=True),
 
 			VarType("tos",
-					title=_("TOS:"),
+					title=_("TOS Field"),
 					len=10,
-					optional=True),
+					optional=True,
+					default="184"),
+
+			VarType("sipdefaults",
+					title=_("Defaults"), 
+					type="label"),
+
+			VarType("moh",
+                                        title=_("Music on hold"),
+                                        type="choice",
+                                        optional = True,
+                                        options=getChoice("CfgOptMusic")),
 		]
 
 	def checkConfig(self):
@@ -108,4 +119,6 @@ class CfgOptSipNetwork(CfgOptSingle):
 				c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
 		if self.tos:
 			c.append("tos=%s" % self.tos)
+		if self.moh:
+			c.append("musiconhold=%s" % self.moh)
 		c.append("nat=%s" % self.globalnat)
