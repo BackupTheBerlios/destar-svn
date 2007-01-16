@@ -104,7 +104,7 @@ class AsteriskConfigFile:
 			self.order.append(self.section)
 		self.dirty = True
 
-	def appendExten(self,ext,l,e=None):
+	def appendExten(self,ext,l,e=None, label=None):
 		"""Append an extension line l to the current section. Append
 		an optional error extenion e as well. Increments the priorty
 		if the extension stays the same, resets the prio to 1 if the
@@ -113,7 +113,12 @@ class AsteriskConfigFile:
 		if ext != self.lastext:
 			self.extpriority = 1
 		self.lastext = ext
-		self.append("exten=%s,%d,%s" % (ext, self.extpriority, l))
+
+		if label:
+		    self.append("exten=%s,%d(%s),%s" % (ext, self.extpriority, label, l))
+		else:
+		    self.append("exten=%s,%d,%s" % (ext, self.extpriority, l))
+
 		if e:
 			self.append("exten=%s,%d,%s" % (ext, self.extpriority+101, e))
 			
@@ -874,26 +879,62 @@ class CfgTrunk(Cfg):
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
 		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name)
-		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name)
 		if self.clid:
 			needModule("func_callerid")
 			c.appendExten("s","Set(CALLERID(name)=%s)" %  self.clid)
-			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid)
+		if self.clidnumin:
+			needModule("func_callerid")
+			c.appendExten("s","Set(CALLERID(number)=%s)" %  self.clidnumin)
 		global configlet_tree
 		if self.contextin == 'phone' and self.phone:
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
 				c.appendExten("s", "Goto(%s,%s,1)" % (pbx,self.phone))
-				c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone))
 			except AttributeError:
 				pass
 		if self.contextin == 'ivr' and self.ivr:
 			c.appendExten("s", "Goto(%s,s,1)" % self.ivr)
-			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
 		if self.contextin == 'pbx' and self.pbx:
 			c.appendExten("s", "Goto(%s,s,1)" % self.pbx)
-			c.appendExten("_X.", "Goto(%s,${EXTEN},1)" % self.ivr)
+
+		c.appendExten("_X","Set(CDR(intrunk)=%s)" %  self.name)
+		if self.clid:
+			needModule("func_callerid")
+			c.appendExten("_X","Set(CALLERID(name)=%s)" %  self.clid)
+		if self.clidnumin:
+			needModule("func_callerid")
+			c.appendExten("_X","Set(CALLERID(number)=%s)" %  self.clidnumin)
+		if self.contextin == 'phone' and self.phone:
+			obj = configlet_tree.getConfigletByName(self.phone)
+			try:
+				pbx = obj.pbx
+				c.appendExten("_X", "Goto(%s,%s,1)" % (pbx,self.phone))
+			except AttributeError:
+				pass
+		if self.contextin == 'ivr' and self.ivr:
+			c.appendExten("_X", "Goto(%s,s,1)" % self.ivr)
+		if self.contextin == 'pbx' and self.pbx:
+			c.appendExten("_X", "Goto(%s,${EXTEN},1)" % self.pbx)
+
+		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name)
+		if self.clid:
+			needModule("func_callerid")
+			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid)
+		if self.clidnumin:
+			needModule("func_callerid")
+			c.appendExten("_X.","Set(CALLERID(number)=%s)" %  self.clidnumin)
+		if self.contextin == 'phone' and self.phone:
+			obj = configlet_tree.getConfigletByName(self.phone)
+			try:
+				pbx = obj.pbx
+				c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone))
+			except AttributeError:
+				pass
+		if self.contextin == 'ivr' and self.ivr:
+			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
+		if self.contextin == 'pbx' and self.pbx:
+			c.appendExten("_X.", "Goto(%s,${EXTEN},1)" % self.pbx)
 
 		
 class CfgPhone(Cfg):
@@ -953,24 +994,30 @@ class CfgPhone(Cfg):
                 except AttributeError:
                         pbx = "phones"
                 extensions.setSection(pbx)
+		extensions.append("exten=%s,hint,%s/%s" % (self.ext, self.technology, self.name))
 		extensions.appendExten(self.ext,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.ext, pbx, self.ext)
 		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.name, pbx, self.ext)
-
-	def createHintConfig(self):
-		extensions = AstConf("extensions.conf")
-        	try:
-            		pbx = self.pbx
-        	except AttributeError:
-            		pbx = "phones"
-        	extensions.setSection(pbx)
-		extensions.append("exten=%s,hint,%s/%s" % (self.ext, self.technology, self.name))
+		for obj in configlet_tree:
+			if obj.__class__.__name__ == 'CfgAppCallFW':
+				if obj.devstateprefix:
+					extensions.append("exten=%s%s,hint,DS/%s_%s_%s" % (obj.devstateprefix, self.ext, obj.type.lower(), pbx, self.ext))
+					extensions.appendExten("%s%s" % (obj.devstateprefix, self.ext), "Goto(%s,%s,1)" % (pbx, obj.set))
+		for obj in configlet_tree:
+			if obj.__class__.__name__ == 'CfgAppVoicemailSettings':
+				if obj.devstateprefix:
+					extensions.append("exten=%s%s,hint,DS/%s_%s_%s" % (obj.devstateprefix, self.ext, obj.type.lower(), pbx, self.ext))
+					extensions.appendExten("%s%s" % (obj.devstateprefix, self.ext), "Goto(%s,%s,1)" % (pbx, obj.set))
 
 	def createVoicemailConfig(self, conf):
-		if self.ext and self.usevm:
-			needModule("res_adsi")
-			needModule("app_voicemail")
+		vmconfig = False;
+		for obj in configlet_tree:
+			if obj.__class__.__name__ == 'CfgOptVoicemail':
+				if obj.enable:
+				    vmconfig = True;
+				break
+		if vmconfig:
 			if self.usemwi:
 				conf.append("mailbox=%s@%s" % (self.ext,self.pbx))
 

@@ -20,12 +20,20 @@
 
 import sys, os
 import language
-
+from configlets import needModule
 
 try:
 	from pysqlite2 import dbapi2 as sqlite
 except ImportError:
 	print _("Note: you should install python-pysqlite2 to have CDR functionality")
+
+try:
+	if not  os.access("/usr/lib/asterisk/modules/cdr_sqlite3_custom.so", os.F_OK):
+		raise ImportError
+	needModule("cdr_sqlite3_custom")
+except:
+	print _("Note: you need the cdr_sqlite3_custom module to have CDR and Stats functionalities")
+	
 
 try:
 	db_fn = "/var/log/asterisk/master.db"
