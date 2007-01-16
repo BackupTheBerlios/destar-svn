@@ -30,7 +30,10 @@ class CfgOptPBX(CfgOpt):
 	groupName = 'PBX'
 		
 	variables = [
-		VarType("name",	  title=_("Name"), len=15),
+		VarType("name",
+			title=_("Name"),
+			len=15,
+			default="defaultpbx"),
 			]
 
 	def checkConfig(self):
