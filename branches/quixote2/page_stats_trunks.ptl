@@ -39,9 +39,9 @@ def makeForm():
 	
 	# fix the month value for those smaller than 10 (january ... september) 1 -> 01, 2 ->02 
 	if localtime[1] < 10:
-		localmonth = '0%s' % localtime[1] 
+		localmonth = '0%s' % str(localtime[1]) 
 	else:
-		localmonth = localtime[1]
+		localmonth = str(localtime[1])
 	
 	#the same for the day
 	if localtime[2] < 10:

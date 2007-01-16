@@ -142,7 +142,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	form.add_single_select('today', value=localday, options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers()  ), render_br=True)
 		
 	form.add(HiddenWidget, 'pagenumber', value='_newest')
-	form.add(HiddenWidget, 'order', value='ASC')
+	form.add(HiddenWidget, 'order', value='DESC')
 	form.add(HiddenWidget, 'orderby', value='Time_of_start')
 
 	form.add(SubmitWidget, '_submit', _("Search"), render_br=True)
