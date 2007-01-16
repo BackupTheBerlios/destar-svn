@@ -120,7 +120,6 @@ class Page(AccessControlled, Directory):
 		if self.tipped:
 			'</ul>'
 
-
 	def showConfigurables [plain] (sefl, head):
 		'<p>'
 		head
