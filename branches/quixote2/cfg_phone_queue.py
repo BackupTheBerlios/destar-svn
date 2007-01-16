@@ -26,7 +26,7 @@ class CfgPhoneQueue(CfgPhone):
 
 	shortName = _("Normal Call Queue")
 	newObjectTitle = _("New Call Queue")
-	technology = "Virtual"
+	technology = "QUEUE"
 	
 	def createVariables(self):
 		self.variables = [
@@ -45,9 +45,20 @@ class CfgPhoneQueue(CfgPhone):
 					len=6),
 
 			VarType("timeout",
-					title=_("Timeout"),
+					title=_("Phone timeout"),
 					optional=True,
 					len=6),
+
+	                VarType("queuetimeout",
+        	            		title=_("Queue Timeout"),
+                                	optional=True,
+                                	len=6),
+
+                	VarType("queuetimeoutext",
+                        		title=_("On queue timeout forward to extension"),
+                        		type="choice",
+                        		optional=True,
+                        		options=getChoice("CfgPhone")),
 
 			VarType("moh",
 					title=_("Music-on-hold class"),
@@ -229,26 +240,35 @@ class CfgPhoneQueue(CfgPhone):
 			else:
 				mon_line = "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options)
 
+		qnames = []
 		if self.ext:
-                        extensions.appendExten(self.ext, "Answer")
+		    qnames.append(self.ext)
+		if self.name:
+		    qnames.append(self.name)
+
+		for qname in qnames:
+			opt = "Tth"
 			if mon_line:
-				extensions.appendExten(self.ext, mon_line)
+				extensions.appendExten(qname, mon_line)
 
 			if self.ring:
-				extensions.appendExten(self.ext, "Queue(%s|Tthr)" % self.name)
-			elif self.moh:
-				extensions.appendExten(self.ext, "SetMusicOnHold(%s)" % self.moh)
-				extensions.appendExten(self.ext, "Queue(%s|Tth)" % self.name)
+				opt = opt + "r"
+				
+			if self.moh:
+				extensions.appendExten(qname, "Answer")
+				extensions.appendExten(qname, "SetMusicOnHold(%s)" % self.moh)
 
-
-		extensions.appendExten(self.name, "Answer")
-		if mon_line:
-			extensions.appendExten(self.name, mon_line)
-		
-		if self.ring:
-			extensions.appendExten(self.name, "Queue(%s|Tthr)" % self.name)
-		elif self.moh:
-			extensions.appendExten(self.name, "SetMusicOnHold(%s)" % self.moh)
-			extensions.appendExten(self.name, "Queue(%s|Tth)" % self.name)
+			if self.queuetimeout and self.queuetimeoutext:
+				opt = opt + "n"
+				extensions.appendExten(qname, "Queue(%s|%s|||%s)" % (self.name, opt, self.queuetimeout))
+				import configlets
+				obj = configlets.configlet_tree.getConfigletByName(self.queuetimeoutext)
+				try:
+					extensions.appendExten(qname, "Goto(%s,%s,1)" %  (obj.pbx, self.queuetimeoutext))
+				except AttributeError:
+					pass
+			else:
+				extensions.appendExten(qname, "Queue(%s|%s)" % (self.name, opt))
+		self.createPanelConfig()
 
 

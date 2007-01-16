@@ -25,18 +25,73 @@ from configlets import *
 
 class CfgOptSipNetwork(CfgOptSingle):
 
-	shortName = _("SIP Network Options")
-	newObjectTitle = _("SIP Network Options")
+	shortName = _("SIP Options")
+	newObjectTitle = _("SIP Options")
 	
 	def createVariables(self):
 		self.variables = [
-			VarType("doBind",	title=_("Bind specific address?"), type="bool"),
-			VarType("bindaddr",	title=_("Bind address"), len=25),
-			VarType("extintnet",	title=_("External/Internal IP"), type="label"),
-			VarType("setExt",	title=_("Force external ip/internel network?"),	type="bool"),
-			VarType("extip",	title=_("External ip"), len=25),
-			VarType("intnet",	title=_("Internal network"), len=25),
-			VarType("intnetmask",	title=_("Netmask"), len=25),
+			VarType("doBind",	
+					title=_("Bind specific address?"), 
+					type="bool"),
+
+			VarType("bindaddr",	
+					title=_("Bind address"), 
+					len=25,
+					optional=True),
+
+			VarType("globalnat",
+					title=_("Global NAT"),
+					type="choice",
+					options=( ("no",_("No")),
+						  ("yes",_("Yes")),
+						  ("always",_("Always")), 
+						  ("route",_("Route")) ), 
+					default="no"),
+
+			# Hell, what a mess in Asterisk and Snom FW >6.2.2, pedantic is needed to get "#" working
+			VarType("pedantic",	
+					title=_("SIP Pedantic checking of Call-ID"),	
+					type="bool",
+					optional=True),
+
+			VarType("extintnet",	
+					title=_("External/Internal IP"), 
+					type="label"),
+
+			VarType("setExt",	
+					title=_("Force external ip/internel network?"),	
+					type="bool"),
+
+			VarType("extip",	
+					title=_("External ip"), 
+					len=25,
+					optional=True),
+
+			VarType("intnet",	
+					title=_("Internal network"), 
+					len=25,
+					optional=True),
+
+			VarType("intnetmask",	
+					title=_("Netmask"), 
+					len=25,
+					optional=True),
+
+			VarType("tos",
+					title=_("TOS Field"),
+					len=10,
+					optional=True,
+					default="184"),
+
+			VarType("sipdefaults",
+					title=_("Defaults"), 
+					type="label"),
+
+			VarType("moh",
+                                        title=_("Music on hold"),
+                                        type="choice",
+                                        optional = True,
+                                        options=getChoice("CfgOptMusic")),
 		]
 
 	def checkConfig(self):
@@ -60,8 +115,18 @@ class CfgOptSipNetwork(CfgOptSingle):
 
 	def createAsteriskConfig(self):
 		c = AstConf("sip.conf")
+		c.setSection("general")
 		if self.doBind:
 			c.append("bindaddr=%s" % self.bindaddr)
 		if self.setExt:
-			c.append("externip=%s" % self.extip)
-			c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
+			if self.extip:
+				c.append("externip=%s" % self.extip)
+			if self.intnet:
+				c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
+		if self.tos:
+			c.append("tos=%s" % self.tos)
+		if self.moh:
+			c.append("musiconhold=%s" % self.moh)
+     		if self.pedantic:
+             		c.append("pedantic=yes")
+		c.append("nat=%s" % self.globalnat)

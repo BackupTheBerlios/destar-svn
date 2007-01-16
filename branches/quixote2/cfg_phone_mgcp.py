@@ -91,6 +91,18 @@ class CfgPhoneMGCP(CfgPhone):
 			VarType("callgroup",
 					title=_("Call group number"),
 					optional=True),
+	
+			VarType("QueueLab",
+					title=_("Call Queues"),
+					type="label",
+					hide=True),
+			
+			VarType("queues",
+					title=_("Agent of queues:"),
+					type="mchoice",
+					optional=True,
+					options=getChoice("CfgPhoneQueue"),
+					hide=True),
 
 			VarType("Voicemail",
 					title=_("Voicemail settings"),
@@ -112,6 +124,11 @@ class CfgPhoneMGCP(CfgPhone):
 					optional=True,
 					len=6),
 
+			VarType("email",
+					title=_("Voicemail email"),
+					optional=True,
+					len=60),
+			
 			VarType("Outbound",
 					title=_("Calls from the phone"),
 					type="label"),
@@ -269,3 +286,4 @@ class CfgPhoneMGCP(CfgPhone):
 		self.createExtensionConfig()
 		self.createVoicemailConfig(mgcp)
 		self.createOutgoingContext()
+		self.createQueuesConfig()

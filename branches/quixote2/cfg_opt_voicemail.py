@@ -27,7 +27,9 @@ class CfgOptVoicemail(CfgOptSingle):
 	newObjectTitle = _("Voicemail settings")
 	
 	def createVariables(self):
-		self.variables = [VarType("recording", title=_("Recording settings"), type="label"),
+		self.variables = [
+				 VarType("enable", title=_("Enable Voicemail on phones"), type="bool", default=True),
+				 VarType("recording", title=_("Recording settings"), type="label"),
 				 VarType("format", title=_("File format for voicemail messages"), type="choice",
 								   options=[('wav49','WAV (common sound format)'),('gsm','GSM (smaller)')], default="wav49"),
 				 VarType("maxmessage", title=_("Maximal message length (in seconds)"), type="int", default=180, len=3),
@@ -64,6 +66,10 @@ class CfgOptVoicemail(CfgOptSingle):
 		c.appendValue(self, "silencethreshold")
 		c.appendValue(self, "maxlogins")
 		c.append("skipms=%d" % (self.skipms * 1000))
+		
+		if self.enable:
+			needModule("res_adsi")
+			needModule("app_voicemail")
 
 		if self.emailintegration and self.serveremail:
 			c.appendValue(self,"serveremail")

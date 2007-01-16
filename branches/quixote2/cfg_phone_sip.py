@@ -121,6 +121,7 @@ class CfgPhoneSip(CfgPhone):
 			
 			VarType("pin",
 					title=_("Voicemail PIN"),
+					type="int",
 					optional=True,
 					len=6),
 			
@@ -301,7 +302,6 @@ class CfgPhoneSip(CfgPhone):
 		sip.append("subscribecontext=%s" % pbx)
 
 		self.createExtensionConfig()
-		self.createHintConfig()
 		self.createVoicemailConfig(sip)
 		self.createOutgoingContext()
 		self.createPanelConfig()

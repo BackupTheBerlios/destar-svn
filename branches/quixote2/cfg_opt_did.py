@@ -45,7 +45,7 @@ class CfgOptDID(CfgOpt):
 					title = _("Go to"),
 					type = "radio",
 					default = 'phone',
-					options = [('phone', _("Phone")), ('ivr', _("IVR"))]),
+					options = [('phone', _("Phone")), ('ivr', _("IVR")), ("custommap", _("Custom map"))]),
 
 			VarType("phone",
 					title = _("Phone to ring"),
@@ -59,10 +59,31 @@ class CfgOptDID(CfgOpt):
 					type = "choice", 
 					options = getChoice("CfgIVR")),
 
+			VarType("custommappbx",
+                                        title=_("Custom map, PBX"),
+                                        type="choice",
+                                        optional = True,
+                                        options=getChoice("CfgOptPBX")),
+
+    			VarType("custommapdest",
+                                        title = _("Custom map, destination"),
+                                        len = 30,
+                                        optional = True),
+
+			VarType("callerid",
+					title=_("CallerID:"),
+					type="label"),
+
 			VarType("clid",
-					title = _("Change Caller*Id to:"), 
+					title = _("Change Caller*Id Name to:"),
 					len = 25,
-					optional = True)]
+					optional = True),
+
+			VarType("clidnum",
+					title = _("Change Caller*Id Number to:"),
+					len = 25,
+					optional = True),
+					]
 					
 		self.dependencies = [
 			DepType("trunk", 
@@ -104,6 +125,9 @@ class CfgOptDID(CfgOpt):
 		if self.clid:
 			needModule("func_callerid")
 			c.appendExten(self.did,"Set(CALLERID(name)=%s)" %  self.clid)
+		if self.clidnum:
+			needModule("func_callerid")
+			c.appendExten(self.did,"Set(CALLERID(number)=%s)" %  self.clidnum)
 		if self.contextin == 'phone' and self.phone:
 			import configlets
 			obj = configlets.configlet_tree.getConfigletByName(self.phone)
@@ -113,5 +137,5 @@ class CfgOptDID(CfgOpt):
 				pass
 		elif self.contextin == 'ivr' and self.ivr:
 			c.appendExten(self.did,"Goto(%s,s,1)" % self.ivr)
-
-
+        	elif self.contextin == 'custommap' and self.custommapdest:
+        		c.appendExten(self.did,"Goto(%s,%s,1)" % (self.custommappbx, self.custommapdest))

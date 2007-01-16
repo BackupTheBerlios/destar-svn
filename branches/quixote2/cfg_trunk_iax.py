@@ -99,6 +99,11 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 				len=40,
 				optional=True),
 
+			VarType("clidnumin",
+				title=_("Change Caller*Id Number to:"),
+				len=40,
+				optional=True),
+
 			VarType("contextin",
 				title=_("Go to"),
 				type="radio",
@@ -123,9 +128,24 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 				optional=True,
 				options=getChoice("CfgOptPBX")),
 
+			VarType("Outbound",
+				title=_("Outgoing calls to IAX trunk"),
+				type="label"),
+
+			VarType("clidnameout",
+				title=_("Change Caller*Id Name to:"),
+				len=40,
+				optional=True),
+
+			VarType("clidnumout",
+				title=_("Change Caller*Id Number to:"),
+				len=40,
+				optional=True),
+
 			VarType("dial",
 				hide=True,
-				len=50),]
+				len=50),
+				]
 	
 		self.dependencies = [
 			DepType("phone", 

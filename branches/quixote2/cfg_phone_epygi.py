@@ -120,6 +120,7 @@ class CfgPhoneEpygiSip(CfgPhone):
 
 			VarType("pin",
 					title=_("Voicemail PIN"),
+					type="int",
 					optional=True,
 					len=6),
 

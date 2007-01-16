@@ -35,8 +35,8 @@ class CfgDialoutNormal(CfgDialout):
 		VarType("pattern", title=_("Pattern"), len=55),
 		VarType("rmprefix", title=_("Remove Prefix of length"), len=10, default="0"),
 		VarType("addprefix", title=_("Add Prefix"), len=10, optional=True, default=""),
-		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=300),
-		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=25),
+		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=6000),
+		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=300),
 		VarType("qlookup", title=_("Search on quick dial list?"), type="bool"),
 
 		VarType("dis_transfer", title=_("Disallow calling user transfer?"), type="bool"),
@@ -84,9 +84,9 @@ class CfgDialoutNormal(CfgDialout):
 		c.append("; params: exten,secret,timeout")
 		needModule("app_authenticate")
 		if self.dis_transfer:
-		       opts="t"
+		       opts="tW"
 		else:
-		       opts="Tt"
+		       opts="TtW"
 		if self.qlookup:
 			c.appendExten("s","Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})",e="Goto(3)")
 			c.appendExten("s",'Set(ARG1=${dest})')
@@ -113,9 +113,13 @@ class CfgDialoutNormal(CfgDialout):
 					c.appendExten("s","Set(TIMEOUT(absolute)=${timeout})")
 					c.appendExten("s","Set(CDR(outtrunk)=%s)" % obj.name)
 					if self.__getitem__("trunk_%s_price" % obj.name):
-						c.appendExten("s","Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))	
+						c.appendExten("s","Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))
 					else:
-						c.appendExten("s","Set(CDR(accountcode)=0)")	
+						c.appendExten("s","Set(CDR(accountcode)=0)")
+					if obj.clidnameout:
+						c.appendExten("s","Set(CALLERID(name)=%s)" % obj.clidnameout)
+					if obj.clidnumout:
+						c.appendExten("s","Set(CALLERID(number)=%s)" % obj.clidnumout)
 					c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 			except KeyError:
 				pass

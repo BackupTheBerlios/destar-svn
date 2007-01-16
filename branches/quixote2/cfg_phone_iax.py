@@ -71,6 +71,19 @@ class CfgPhoneIax(CfgPhone):
 			VarType("callgroup",
 					title=_("Call group number"),
 					optional=True),
+
+			VarType("QueueLab",
+					title=_("Call Queues"),
+					type="label",
+					hide=True),
+			
+			VarType("queues",
+					title=_("Agent of queues:"),
+					type="mchoice",
+					optional=True,
+					options=getChoice("CfgPhoneQueue"),
+					hide=True),
+	
 	
 			VarType("panelLab",
 					title=_("Operator Panel"),
@@ -99,8 +112,15 @@ class CfgPhoneIax(CfgPhone):
 
 			VarType("pin",
 					title=_("Voicemail PIN"),
+					type="int",
 					optional=True,
 					len=6),
+
+			VarType("email",
+					title=_("Voicemail email"),
+					optional=True,
+					len=60),
+			
 
 			VarType("notransfer",
 					title=_("Skip asterisk media path?"),
@@ -266,3 +286,4 @@ class CfgPhoneIax(CfgPhone):
 		self.createVoicemailConfig(iax)
 		self.createOutgoingContext()
 		self.createPanelConfig()
+		self.createQueuesConfig()
