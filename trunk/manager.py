@@ -344,7 +344,7 @@ class ManagerEvents(ManagerClient):
 		# Callerid: <unknown>
 		# Uniqueid: 1091804181.95
 
-		# reap old, hungup channels :-)
+		# reap old, hangup channels :-)
 		global channels
 		reapchannel = normalizeChannel(dict.Channel)
 		toreap = []

@@ -1,3 +1,6 @@
+2007-01-19:
+* Fixed hungup typo
+
 2007-01-15:
 * Fixed recording. Patch by Harald Holzer
 * dont add modules to modules.conf, if they does not exists (Bug #9708). Patch by Harald Holzer

@@ -171,10 +171,10 @@ class CfgIVRAutoatt(CfgIVR):
 		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.ext))	
 		s.appendExten("t","ResetCDR(w)")
 		s.appendExten("t","NoCDR")
-		s.appendExten("t","Hungup")
+		s.appendExten("t","Hangup")
 		s.appendExten("T","ResetCDR(w)")
 		s.appendExten("T","NoCDR")
-		s.appendExten("T","Hungup")
+		s.appendExten("T","Hangup")
 	
 
 	def row(self):
