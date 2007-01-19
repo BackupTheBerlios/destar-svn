@@ -108,11 +108,6 @@ class CfgPhoneEpygiSip(CfgPhone):
 					type="label",
 					len=6),
 
-			VarType("usevm",
-					title=_("Use voicemail"),
-					type="bool",
-					optional=True),
-
 			VarType("usemwi",
 					title=_("Signal waiting mail"),
 					type="bool",
@@ -299,7 +294,7 @@ class CfgPhoneEpygiSip(CfgPhone):
 		extensions = AstConf("extensions.conf")
 		extensions.setSection(self.pbx)
 		if self.ext:
-			extensions.appendExten(self.ext, "Macro(dial-std-exten,%s/%s@%s:5060,out-%s,%d,%s,%s)" % (self.technology,self.name,self.gw,self.name,int(self.usevm),self.pbx,self.ext))
+			extensions.appendExten(self.ext, "Macro(dial-std-exten,%s/%s@%s:5060,out-%s,%s,%s)" % (self.technology,self.name,self.gw,self.name,self.pbx,self.ext))
 
 		self.createVoicemailConfig(sip)
 		self.createOutgoingContext()

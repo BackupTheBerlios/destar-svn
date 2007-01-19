@@ -107,11 +107,6 @@ class CfgPhoneZap(CfgPhone):
 				type="label",
 				len=6),
 			
-			VarType("usevm",
-				title=_("Use voicemail"),
-				type="bool",
-				optional=True),
-				
 			VarType("usemwi",
 				title=_("Signal waiting mail"),
 				type="bool",
@@ -294,11 +289,10 @@ class CfgPhoneZap(CfgPhone):
 
 
 	def createDialEntry(self, extensions, exten, pbx, ext):
-		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%d,%s,%s)" % (
+		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%s,%s)" % (
 			self.technology,
 			self.channels,
 			self.name,
-			int(self.usevm),
 			pbx,
 			ext)
 		      )
