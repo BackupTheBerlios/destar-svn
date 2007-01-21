@@ -36,7 +36,7 @@ import daemonize
 be_daemon = False
 rport = 8080
 pid_file = '/var/run/destar.pid'
-VERSION = 'DEVELOPMENT SNAPSHOT'
+VERSION = '0.2.2'
 
 
 def print_version():

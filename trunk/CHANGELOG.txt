@@ -1,5 +1,6 @@
 2007-01-21:
 * added tapi support
+* Releasing and taging 0.2.2 version
 
 2007-01-19:
 * Fixed hungup typo
