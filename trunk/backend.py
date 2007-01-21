@@ -116,6 +116,11 @@ def initializeAsteriskConfig():
 	* macros.inc
 	"""
 
+	tapisupport = False
+        for obj in configlets.configlet_tree:
+	        if obj.__class__.__name__ == 'CfgOptSettings':
+		        if obj.tapi:
+			        tapisupport = True
 
 	# Start with empty config files
 	configlets.asterisk_configfiles = []
@@ -198,9 +203,8 @@ def initializeAsteriskConfig():
 	c.append(";")
 	c.append("; get global dial options")
 	c.append("exten=s,n,Set(dopt=${DIAL_OPTIONS})")
-	#c.append('exten=s,n,GotoIf($["${dopt}" != ""]?doptEnd)')
-	#c.append("exten=s,n,Set(dopt=r)")
-	#c.append("exten=s,n(doptEnd),NoOp()")
+        if tapisupport:
+	        c.append("exten=s,n,Set(dopt=${dopt}M(tapi^${UNIQUEID}|${ARG1}))")
 	c.append(";")
 	c.append("; get early media")
 	c.append("exten=s,n,Set(emedia=${DB(EMEDIA/${ARG4}/${ARG3})})")
@@ -213,7 +217,13 @@ def initializeAsteriskConfig():
 	c.append("exten=s,n,Set(prng=${DB(PRNG/${ARG4}/${ARG3})})")
 	c.append(";")
 	c.append("; Dial")
-	c.append("exten=s,n(MainDial),Dial(${ARG1}${prng},${dsec},TtWw${dopt})")
+	c.append("exten=s,n(MainDial),NoOp()")
+        if tapisupport:
+                c.append("exten=s,n,UserEvent(TAPI|TAPIEVENT: LINE_NEWCALL ${ARG1})")
+                c.append("exten=s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_OFFERING)")
+                c.append("exten=s,n,UserEvent(TAPI|TAPIEVENT: SET CALLERID ${CALLERID})")
+                c.append("exten=s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLINFO LINECALLINFOSTATE_CALLERID)")
+	c.append("exten=s,n,Dial(${ARG1}${prng},${dsec},TtWw${dopt})")
 	c.append(";")
 	c.append("; Dial result was 'timeout'")
 	c.append("exten=s,n(dialtimeout),Set(fw_ext=${DB(CFTO/${ARG4}/${ARG3})})")
@@ -254,6 +264,12 @@ def initializeAsteriskConfig():
 	c.append("exten=s,n(hangup),Hangup()")
 	c.append(";")
 	c.append("exten=i,0,Hangup")
+        if tapisupport:
+                c.append("exten=h,1,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_IDLE)")
+
+                c.append("[macro-tapi];")
+                c.append("exten=s,1,UserEvent(TAPI|TAPIEVENT: [~${ARG1}&${ARG2}] LINE_CALLSTATE LINECALLSTATE_CONNECTED)")
+                c.append("exten=s,2,UserEvent(TAPI|TAPIEVENT: [~${ARG1}&!${ARG2}] LINE_CALLSTATE LINECALLSTATE_HANGUP)")
 
 	c.append(";")
 	c.append("; format: Macro(voicemail,<VoiceMail arguments>)")
