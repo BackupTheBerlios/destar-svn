@@ -1,0 +1,290 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from quixote.html import htmltext, htmlescape
+from quixote.publish import get_publisher, get_request
+from quixote.errors import AccessError
+import os, sys, copy
+
+
+VERSION = '0.2.2'
+
+
+class HtmlTable:
+
+	class TwoDimensionalArray:
+		"""An automatically growing two-dimensional array, based on work from
+		http://www.pasko.net/PyHtmlTable/"""
+
+		def __init__(self, x=1, y=1, fill=''):
+			self.array        = []
+			self.maxX         = x
+			self.maxY         = y
+			self.defaultfill  = fill
+
+			for xi in range(x):
+				self.array.append([])
+				for yi in range(y):
+					self.array[xi].append(copy.copy(fill))
+
+		def addCol(self):
+			nrow = []
+			for f in range(self.maxX):
+				self.array[f].append(copy.copy(self.defaultfill))
+
+			self.maxY = self.maxY +1
+
+		def addRow(self):
+			nrow = []
+			for f in range(self.maxY):
+				nrow.append(copy.copy(self.defaultfill))
+			self.array.append( copy.copy(nrow) )
+			self.maxX = self.maxX +1
+
+		def get(self, x, y):
+			try:
+				return self.array[x][y]
+			except:
+				return None
+
+		def set(self, x, y, data):
+			if x >= self.maxX:
+				for i in range(self.maxX-1, x):
+					self.addRow()
+			if y >= self.maxY:
+				for i in range(self.maxY-1, y):
+					self.addCol()
+			self.array[x][y] = data
+
+
+	def __init__(self, rows, cols):
+		self.cells = self.TwoDimensionalArray(rows,cols)
+		self.attrs = self.TwoDimensionalArray(rows,cols, {})
+
+	def setCell(self, x, y, data):
+		self.cells.set(x, y, data)
+
+	def setAttr(self, x, y, **attr):
+		dict = self.attrs.get(x,y) or {}
+		dict.update(attr)
+		self.attrs.set(x,y, dict)
+
+	def setRowSpan(self, x,y, span):
+		self.setAttr(x,y, rowspan=span)
+		for i in range(y+1,y+span):
+			self.setAttr(x,i, __hide=True)
+
+	def setColSpan(self, x,y, span):
+		self.setAttr(x,y, colspan=span)
+		for i in range(x+1,x+span):
+			self.setAttr(i,y, __hide=True)
+
+	def getRow [html] (self, y):
+		a = []
+		a.append('<tr>\n')
+		for x in range(self.cells.maxX):
+			b = []
+			attr = self.attrs.get(x,y)
+			hide = False
+			elem = 'td'
+			#print "attr:", attr
+			if attr:
+				for k in attr:
+					if k == '__hide':
+						hide = True
+						break
+					if k == '__head':
+						elem = 'th'
+						continue
+					b.append('%s="%s"' % (k,attr[k]))
+				if hide: continue
+				if b: b.insert(0, '')
+			a.append('<%s%s>' % (elem, ' '.join(b)) )
+			a.append(self.cells.get(x,y) or '&nbsp;')
+			a.append('</%s>\n' % elem)
+		a.append('</tr>')
+		return a
+
+
+	def getRows(self):
+		a = []
+		for y in range(self.cells.maxY):
+			a.extend(self.getRow(y))
+		return a
+
+	def getHtml [html] (self, **attr):
+		a = []
+		for k in attr:
+			if k[0] == '_':
+				a.append('%s="%s"' % (k[1:],attr[k]))
+			else:
+				a.append('%s="%s"' % (k,attr[k]))
+		if a:
+			a.insert(0,'')
+		a = [ "<table%s>" % ' '.join(a) ]
+		a.append('<tbody>')
+		a.extend(self.getRows())
+		a.append('</tbody></table>')
+		return ''.join(a)
+
+
+
+
+# The script parameter should be a list of functions defining scripts
+# such as JavaScript.
+def header [html] (title, menu=None, refresh=None, scripts=None):
+
+	# Boilerplate
+  	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n'
+   	'<html xmlns="http://www.w3.org/1999/xhtml">\n'
+   	'<head>\n'
+   	if refresh:
+   		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
+  	'<title>Asterisk/DeStar PBX :: %s</title>\n' % _(str(title))
+  	'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n'
+  	'<style type="text/css" media="screen, tv, projection">\n'
+  	'	@import url("/static/css/general.css");\n' 
+  	'	@import url("/static/css/Menu.css");\n'
+  	'</style>\n'
+  	'<!--[if lte IE 6]>\n'
+  	'<style type="text/css" media="screen, tv, projection">\n'
+  	'	@import "/static/css/Menu4IE.css";\n'
+  	'	body { behavior:url("/static/css/ADxMenu.htc"); }\n'
+  	'</style>\n'
+  	'<![endif]-->\n'
+ 
+	if scripts:
+		for sc in scripts:
+			sc()
+	
+	'</head>\n'
+	'<body>\n'
+	#'<body onload="window.resizeTo(800,600);">'
+
+
+	# Header
+ 	'<div id="wrapper">\n'
+ 	'	<div id="header">\n'
+ 	'		<h1>DeStar/Asterisk PBX</h1>\n'
+
+	
+	# Side menu
+	# e[0]: priority, only needed for sorting, discarded
+	# e[1]: Textual link
+	# e[2]: link
+	# e[3]: submenu
+ 	'<div id="menu" class="nav">\n'
+ 	'<ul id=menuList class="adxm">\n'
+ 	def showMenu [html] (menu, submenu=False):
+  		for e in menu:
+ 			'<li>\n'
+  			if e[1]:
+ 				if not submenu:
+ 					'<a href="%s"><span>%s</span></a>\n' % (e[1],_(str(e[2])))
+ 				else:
+ 					'<a href="%s">%s</a>\n' % (e[1],_(str(e[2])))
+  			else:
+  				'<li>&nbsp;</li>\n'
+  			if e[3]:
+ 				'<ul>\n'
+ 				showMenu(e[3], True)
+ 				'</ul>\n'
+ 			'</li>\n'
+  	showMenu(getMenu())
+ 	'</ul>\n'
+  	'</div>\n'
+ 	'	</div>\n' #header
+  
+  
+  	# Content
+ 	'<div id="mainContent">\n'
+ 	'			<div id="contentNav">\n'
+ 	'\n'			
+ 	'			</div>\n'
+
+	if title:
+		'<h2 id="contentHeading">%s</h2>\n' % _(str(title))
+
+	
+def footer [html] ():
+	'</div>\n'
+	'<div id="footer">\n'
+	'	<p>De<em>Star</em> %s <br />\n' % VERSION
+	'	<a href="http://destar.berlios.de">http://destar.berlios.de</a></p>\n'
+	'</div>\n'
+
+	'</div>\n'
+
+	'</body>\n'
+	'</html>\n'
+
+
+def getMenu():
+	request = get_request()
+	path = request.environ['PATH_INFO']
+	path = path[1:].split('/')
+
+	stack = get_publisher().get_namespace_stack()
+
+	def calcMenu(root='', n=0):
+		m = []
+		try:
+			obj = stack[n]
+		except IndexError:
+			return
+		try:
+			prueba = obj._q_menu
+		except AttributeError:
+			return
+		for e in obj._q_menu:
+			if e._q_level>request.session.level:
+				continue
+			if e._q_level<0:
+				if e._q_title == _("Logout") and request.session.level == 4:
+	                                continue
+				if e._q_level<0:
+	                                if abs(e._q_level) <= request.session.level:			
+	                                	continue
+			submenu = []
+			if e._q_parent == sys.modules['page_main']:
+				for sub in e._q_menu:
+					parent_name = sub._q_parent.__name__[5:]
+					submenu.append( (sub._q_menupos, '/'.join([root,parent_name,sub._q_link]), sub._q_title, []) )
+			submenu.sort()
+
+			m.append( (e._q_menupos, '/'.join([root,e._q_link]), e._q_title, submenu) )
+		m.sort()
+		return m
+
+	m = calcMenu()
+	return m
+
+
+
+def errorpage [plain] (txt, menu=None):
+	header(htmltext(_('Error')), menu)
+	'<p>'
+	txt
+	'.</p>'
+	footer()
+
+
+def cantAccessPage():
+	raise AccessError(htmltext(_("You don't have access to this page")))
