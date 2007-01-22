@@ -107,6 +107,11 @@ class CfgDialoutNormal(CfgDialout):
 		c.appendExten("s",'Set(options=%sL(%d000:10000))' % (opts,self.maxtime))
 		#TODO: add this trunks sorted by price and with a default one.
 		import configlets
+		tapisupport = False
+		for obj in configlets.configlet_tree:
+			if obj.__class__.__name__ == 'CfgOptSettings':
+				if obj.tapi:
+				    tapisupport = True
 		for obj in configlets.configlet_tree['Trunks']:
 			try:
 				if self.__getitem__("trunk_"+obj.name):
@@ -120,6 +125,12 @@ class CfgDialoutNormal(CfgDialout):
 						c.appendExten("s","Set(CALLERID(name)=%s)" % obj.clidnameout)
 					if obj.clidnumout:
 						c.appendExten("s","Set(CALLERID(number)=%s)" % obj.clidnumout)
+				        if tapisupport:
+					        c.appendExten("s","Set(chan=${CUT(CHANNEL,,1)})")
+					        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_NEWCALL ${chan})")
+	    				        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALTONE)")
+					        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALING)")
+					        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_PROCEEDING)")
 					c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 			except KeyError:
 				pass
@@ -131,4 +142,6 @@ class CfgDialoutNormal(CfgDialout):
 		c.appendExten("t","ResetCDR(w)")
 		c.appendExten("t","NoCDR")
 		c.appendExten("t","Hangup")
+		if tapisupport:
+		        c.appendExten("h","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_IDLE)")
 

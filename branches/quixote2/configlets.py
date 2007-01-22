@@ -976,11 +976,10 @@ class CfgPhone(Cfg):
 					v.hide = False
 
 	def createDialEntry(self, extensions, exten, pbx, ext):
-		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%d,%s,%s)" % (
+		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%s,%s)" % (
 			self.technology,
 			self.name,
 			self.name,
-			int(self.usevm),
 			ext,
 			pbx
 			))

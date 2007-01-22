@@ -326,6 +326,10 @@ class CfgOptSettings(CfgOptSingle):
 			hint=_("The language is used for voice prompts"),
 			len=10,
 			type="string"),
+		     VarType("tapi",
+			title=_("Tapi Support"),
+			type="bool",
+			default = True),
 		]
 
 	def createAsteriskConfig(self):
@@ -350,3 +354,6 @@ class CfgOptSettings(CfgOptSingle):
 		c.append("loadzone = %s" % zapcountry)
 		if self.country != 'us':
 			c.append("defaultzone = %s" % zapcountry)
+		if self.tapi:
+			needModule("app_userevent")
+			needModule("app_cut")

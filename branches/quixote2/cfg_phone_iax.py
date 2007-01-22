@@ -100,11 +100,6 @@ class CfgPhoneIax(CfgPhone):
 					title=_("Voicemail settings"),
 					type="label"),
 
-			VarType("usevm",
-					title=_("Use voicemail"),
-					type="bool",
-					optional=True),
-
 			VarType("usemwi",
 					title=_("Signal waiting mail"),
 					type="bool",
