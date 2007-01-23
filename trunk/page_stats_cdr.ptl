@@ -29,25 +29,11 @@
 
 
 from Templates import *
-from quixote.form2 import *
+from quixote.form import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
 import cdrutils
 import time
-
-
-_q_parent = 'page_stats'
-_q_title  = _("Call Details")
-_q_desc   = _("Get statistics about made and received calls")
-_q_level  = 3
-_q_menupos = 20
-
-
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
-
-
-def _q_test():
-	return cdrutils.db
 
 def M_(message): return _(str(message))
 
@@ -308,7 +294,26 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", or
 		'</p>'
 
 
-def _q_index [plain] (request):
-	header(_q_desc, scripts=[formScript])
-	cdrForm(request)
-	footer()
+class Page(AccessControlled, Directory): 
+
+	_q_parent = 'page_stats'
+	_q_title  = _("Call Details")
+	_q_desc   = _("Get statistics about made and received calls")
+	_q_level  = 3
+	_q_menupos = 20
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_test(self):
+		return cdrutils.db
+
+	def _q_index [plain] (self):
+		header(self._q_desc, scripts=[formScript])
+		cdrForm(request)
+		footer()

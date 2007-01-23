@@ -18,30 +18,19 @@
 #
 
 from Templates import *
-from quixote.form2 import *
+from quixote.form import *
 import cdrutils
 import time
 import backend
 from StatsHelper import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
 
 pychart_exists = True
 try:	
 	from pychart import *
 except ImportError:
 	pychart_exists = False
-
-_q_parent = 'page_stats'
-_q_title  = _("Extension Statistics")
-_q_desc   = _("Statistics for an Extension")
-_q_level  = 3
-_q_menupos = 32
-
-def _q_access(request):
-	if request.session.level < _q_level:
-		cantAccessPage()
-
-def _q_test():
-	return cdrutils.db
 
 def makeForm():
 	localtime = time.localtime()
@@ -174,7 +163,7 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2, ext, clid):
 	htmltext('<br/><br/><h3>%s</h3>' % _('Outgoing Calls per Dialout Entry'))
 	makeCallsTable(_("Dialout Name"), out_calls_per_dialout, dialout_names)
 	
-def cdrForm [plain] (request):
+def cdrForm [plain] ():
 	htmltext("<h3>%s</h3>" % _("Statistics of Calls by Dialout Entry:"))
 	form = makeForm()
 	form.render()
@@ -182,12 +171,31 @@ def cdrForm [plain] (request):
 	if form.is_submitted() and not form.has_errors():
 		htmltext("<h3>%s</h3>" % _("Results"))
 		showResults(form["day1"], form["month1"], form["year1"], form["day2"], form["month2"], form["year2"], form["ext"], form["clid"])
-	
-def _q_index [plain] (request):
-	header(_q_desc)
-	if pychart_exists:
-		cdrForm(request)
-	else:
-		_("You need to install pychart and use a cdr with sqlite to get these statistics")
-	footer()
+
+
+class Page(AccessControlled, Directory): 
+		
+	_q_parent = 'page_stats'
+	_q_title  = _("Extension Statistics")
+	_q_desc   = _("Statistics for an Extension")
+	_q_level  = 3
+	_q_menupos = 32
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+	def _q_test(self):
+		return cdrutils.db
+
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		if pychart_exists:
+			cdrForm()
+		else:
+			_("You need to install pychart and use a cdr with sqlite to get these statistics")
+		footer()
 	

@@ -21,119 +21,127 @@
 from Templates import *
 import os, grp, backend, string
 import panelutils
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
 
-_q_parent  = 'page_main'
-_q_title   = _("Configuration")
-_q_desc    = _("Modify Asterisk configuration")
-_q_menupos = 30
-_q_level   = 3
+class Page(AccessControlled, Directory): 
 
+	_q_parent  = 'page_main'
+	_q_title   = _("Configuration")
+	_q_desc    = _("Modify Asterisk configuration")
+	_q_menupos = 30
+	_q_level   = 3
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
+	_q_exports = ['']
 
-
-tipped = False
-def configurationTip [plain] (tip, url, label):
-	global tipped
-	if not tipped:
-		'<p>'
-		htmltext(_('Configuration tips'))
-		'</p>'
-		'<ul>'
-	tipped = True
-	'<li>'
-	htmltext(_(tip))
-	if url:
-		'You can do it in the <a href="%s">' % url
-		' -> '.join(label)
-		'</a> form.'	
-	'</li>'
-
-
-def configurationTips [plain] (request):
-	global tipped
 	tipped = False
 
-	groups = []
-	for gid in os.getgroups():
-		groups.append(grp.getgrgid(gid)[0])
-	groups = ", ".join(groups)
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
 
-	if request.session.user=='programmer':
-		configurationTip(
-			_("You should create a user with type 'Configurator'. Without this user, everyone connecting to DeStar can configure everything."),
-			"add/CfgOptUser",
-			[_("Configuration"), _("Options"), _("DeStar user")] )
-
-	if not os.access("/etc/asterisk", os.O_RDWR):
-		configurationTip(
-			_("You should enable write access to the directory /etc/asterisk. Without the ability to modify the configuration files DeStar would be pretty useless. You should 'chmod g+rwx' this directory and set it's group to one of '%s'." % groups),
-			"",
-			[])
-
-	if not backend.countConfiglets(clazz="CfgOptManager"):
-		configurationTip(
-			_("You should create a management API entry. Without this entry, DeStar can't control the Asterisk PBX software."),
-			"add/CfgOptManager",
-			[_("Configuration"), _("Options"), _("Management API access")] )
-
-	if not backend.countConfiglets("Phones"):
-		configurationTip(
-			_("You should create a phone. Without defined phones you can't make and receive calls."),
-			"phones/",
-			[_("Configuration"), _("Phones")] )
-
-	if not backend.countConfiglets("Trunks"):
-		configurationTip(
-			_("You should create a trunk (connection to a Phone company or VOIP Provider). Without a trunk you can only make calls between local phones."),
-			"trunks/",
-			[_("Configuration"), _("Trunks")] )
-
-	if not os.access("/etc/zaptel.conf", os.O_RDWR):
-		configurationTip(
-			_("You should enable write access to /etc/zaptel.conf. Without write access to this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set it's group to one of '%s'." % groups),
-			"",
-			[])
-	if not os.access(panelutils.PANEL_CONF_DIR, os.O_RDWR):
-		configurationTip(
-			_("You should enable write access to the %s directory. Without the ability to modify the Asternic Flash Operator Panel configuration files DeStar won't be integrated whit the panel." % panelutils.PANEL_CONF_DIR),
-			"",
-			[])
-	db_fn = "/var/log/asterisk/master.db"
-	if not os.access(db_fn, os.O_RDWR):
-		configurationTip(
-			_("You don't seem to have access to %s yet created by cdr_sqlite3_custom. Without this file CDR reports wont be accesible trough this interface."),
-			"",
-			[])
-
-	if tipped:
-		'</ul>'
+	def configurationTip [plain] (self, tip, url, label):
+		tipped = self.tipped
+		global tipped
+		if not tipped:
+			'<p>'
+			htmltext(_('Configuration tips'))
+			'</p>'
+			'<ul>'
+		self.tipped = True
+		'<li>'
+		htmltext(_(tip))
+		if url:
+			'You can do it in the <a href="%s">' % url
+			' -> '.join(label)
+			'</a> form.'	
+		'</li>'
 
 
-def showConfigurables [plain] (head):
-	'<p>'
-	head
-	':</p><table id="subcategories"><thead>'
-	'<tr>'
-	for s in (htmltext(_('Configured')), htmltext(_('Category'))):
-		'<th>%s</th>' % s
-	'</tr></thead>'
+	def configurationTips [plain] (self):
+		tipped = self.tipped
+		global tipped
+		tipped = False
 
-	for group in backend.configletsGrouped():
+		groups = []
+		for gid in os.getgroups():
+			groups.append(grp.getgrgid(gid)[0])
+		groups = ", ".join(groups)
+
+		if self.session.user=='programmer':
+			configurationTip(
+				_("You should create a user with type 'Configurator'. Without this user, everyone connecting to DeStar can configure everything."),
+				"add/CfgOptUser",
+				[_("Configuration"), _("Options"), _("DeStar user")] )
+
+		if not os.access("/etc/asterisk", os.O_RDWR):
+			configurationTip(
+				_("You should enable write access to the directory /etc/asterisk. Without the ability to modify the configuration files DeStar would be pretty useless. You should 'chmod g+rwx' this directory and set it's group to one of '%s'." % groups),
+				"",
+				[])
+
+		if not backend.countConfiglets(clazz="CfgOptManager"):
+			self.configurationTip(
+				_("You should create a management API entry. Without this entry, DeStar can't control the Asterisk PBX software."),
+				"add/CfgOptManager",
+				[_("Configuration"), _("Options"), _("Management API access")] )
+
+		if not backend.countConfiglets("Phones"):
+			self.configurationTip(
+				_("You should create a phone. Without defined phones you can't make and receive calls."),
+				"phones/",
+				[_("Configuration"), _("Phones")] )
+
+		if not backend.countConfiglets("Trunks"):
+			self.configurationTip(
+				_("You should create a trunk (connection to a Phone company or VOIP Provider). Without a trunk you can only make calls between local phones."),
+				"trunks/",
+				[_("Configuration"), _("Trunks")] )
+
+		if not os.access("/etc/zaptel.conf", os.O_RDWR):
+			self.configurationTip(
+				_("You should enable write access to /etc/zaptel.conf. Without write access to this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set it's group to one of '%s'." % groups),
+				"",
+				[])
+		if not os.access(panelutils.PANEL_CONF_DIR, os.O_RDWR):
+			self.configurationTip(
+				_("You should enable write access to the %s directory. Without the ability to modify the Asternic Flash Operator Panel configuration files DeStar won't be integrated whit the panel." % panelutils.PANEL_CONF_DIR),
+				"",
+				[])
+		db_fn = "/var/log/asterisk/master.db"
+		if not os.access(db_fn, os.O_RDWR):
+			configurationTip(
+				_("You don't seem to have access to %s yet created by cdr_sqlite3_custom. Without this file CDR reports wont be accesible trough this interface."),
+				"",
+				[])
+
+		if self.tipped:
+			'</ul>'
+
+	def showConfigurables [plain] (sefl, head):
+		'<p>'
+		head
+		':</p><table id="subcategories"><thead>'
 		'<tr>'
-		'<td>%s</td>' % backend.countConfiglets(group)
-		'<td><a href="%s">%s</a></td>' % (group.lower(), _(group))
-		'</tr>'
-	'</table>'
+		for s in (htmltext(_('Configured')), htmltext(_('Category'))):
+			'<th>%s</th>' % s
+		'</thead></tr>'
+
+		for group in backend.configletsGrouped():
+			'<tr>'
+			'<td>%s</td>' % backend.countConfiglets(group)
+			'<td><a href="%s">%s</a></td>' % (group.lower(), _(group))
+			'</tr>'
+		'</table>'
 
 
-def _q_index [plain] (request):
-	header(_q_desc)
-	configurationTips(request)
-	if tipped:
-		showConfigurables(htmltext(_('Other things you can configure:')))
-	else:
-		showConfigurables(htmltext(_('You can configure the following things')))
-	footer()
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		self.configurationTips()
+		if self.tipped:
+			self.showConfigurables(htmltext(_('Other things you can configure:')))
+		else:
+			self.showConfigurables(htmltext(_('You can configure the following things')))
+		footer()

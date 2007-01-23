@@ -20,11 +20,13 @@
 
 from quixote.html import htmltext, htmlescape
 from quixote.publish import get_publisher, get_request
+from quixote import get_session
+from quixote.util import get_directory_path
 from quixote.errors import AccessError
 import os, sys, copy
 
 
-VERSION = '0.2.2'
+VERSION = 'DEVELOPMENT SNAPSHOT'
 
 
 class HtmlTable:
@@ -104,7 +106,6 @@ class HtmlTable:
 			attr = self.attrs.get(x,y)
 			hide = False
 			elem = 'td'
-			#print "attr:", attr
 			if attr:
 				for k in attr:
 					if k == '__hide':
@@ -238,10 +239,12 @@ def footer [html] ():
 
 def getMenu():
 	request = get_request()
+	session = get_session()
 	path = request.environ['PATH_INFO']
 	path = path[1:].split('/')
 
-	stack = get_publisher().get_namespace_stack()
+	#stack = get_publisher().get_namespace_stack()
+	stack = get_directory_path()
 
 	def calcMenu(root='', n=0):
 		m = []
@@ -254,18 +257,19 @@ def getMenu():
 		except AttributeError:
 			return
 		for e in obj._q_menu:
-			if e._q_level>request.session.level:
+			if e._q_level > session.level:
 				continue
 			if e._q_level<0:
-				if e._q_title == _("Logout") and request.session.level == 4:
+				if e._q_title == _("Logout") and session.level == 4:
 	                                continue
 				if e._q_level<0:
-	                                if abs(e._q_level) <= request.session.level:			
+	                                if abs(e._q_level) <= session.level:			
 	                                	continue
 			submenu = []
-			if e._q_parent == sys.modules['page_main']:
+			#if e._q_parent == sys.modules['page_main']:
+			if e._q_parent == 'page_main':
 				for sub in e._q_menu:
-					parent_name = sub._q_parent.__name__[5:]
+					parent_name = sub._q_parent[5:]
 					submenu.append( (sub._q_menupos, '/'.join([root,parent_name,sub._q_link]), sub._q_title, []) )
 			submenu.sort()
 

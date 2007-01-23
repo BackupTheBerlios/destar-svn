@@ -20,21 +20,11 @@
 
 
 from Templates import *
-from quixote.form2 import *
+from quixote.form import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
 import backend, manager, configlets
 import time,types
-
-_q_parent  = 'page_user'
-_q_title   = _("Quick Dial List")
-_q_desc    = _("Quick Dial List")
-_q_link    = 'quickdiallist'
-_q_menupos = 10
-_q_level   = 1
-
-
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
 
 def QDList [plain] (obj):
 	global_qdlist = manager.getVarFamily("QUICKDIALLIST/GLOBAL")
@@ -68,24 +58,42 @@ def QDList [plain] (obj):
 		htmltext(_("No Private Shorcuts Found on Database"))
 		'</span></p>'
 	
-def _q_index [plain] (request):
-	header(_q_desc,refresh=10)
-	manager.connect()
-	if not manager.isConnected():
-		'<p><span class="errornotice">'
-		htmltext(_("Asterisk is not running!"))
-		'</span></p>'
-	elif not manager.isLoggedIn():
-		# TODO: describe how to set this up
-		'<p><span class="errornotice">'
-		htmltext(_("The manager access is not working!"))
-		'</span></p>'
-	elif request.session.phone: 
-		phone = backend.getConfiglet(name=request.session.phone)
-		QDList(phone)
-	else:
-		'<p><span class="errornotice">'
-		htmltext(_("You don't have an associated phone"))
-		'</span></p>'
-	footer()
+class Page(AccessControlled, Directory): 
+
+	_q_parent  = 'page_user'
+	_q_title   = _("Quick Dial List")
+	_q_desc    = _("Quick Dial List")
+	_q_link    = 'quickdiallist'
+	_q_menupos = 10
+	_q_level   = 1
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	
+	def _q_index [plain] (self):
+		header(self._q_desc, refresh=10)
+		manager.connect()
+		if not manager.isConnected():
+			'<p><span class="errornotice">'
+			htmltext(_("Asterisk is not running!"))
+			'</span></p>'
+		elif not manager.isLoggedIn():
+			# TODO: describe how to set this up
+			'<p><span class="errornotice">'
+			htmltext(_("The manager access is not working!"))
+			'</span></p>'
+		elif self.session.phone: 
+			phone = backend.getConfiglet(name=self.session.phone)
+			QDList(phone)
+		else:
+			'<p><span class="errornotice">'
+			htmltext(_("You don't have an associated phone"))
+			'</span></p>'
+		footer()
 

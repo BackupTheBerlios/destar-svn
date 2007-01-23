@@ -23,30 +23,18 @@
 #	- Delete graphic files after it use
 
 from Templates import *
-from quixote.form2 import *
+from quixote.form import *
 import cdrutils
 import time
 from StatsHelper import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
 
 pychart_exists = True
 try:	
 	from pychart import *
 except ImportError:
 	pychart_exists = False
-	
-
-_q_parent = 'page_stats'
-_q_title  = _("Calls Statistics")
-_q_desc   = _("Calls Statistics")
-_q_level  = 3
-_q_menupos = 30
-
-def _q_access(request):
-	if request.session.level < _q_level:
-		cantAccessPage()
-
-def _q_test():
-	return cdrutils.db
 
 def N_(message): return message
 
@@ -77,7 +65,7 @@ def makeForm():
 	form.add(SubmitWidget, '_submit', _("Submit"), render_br=True)
 	
 	return form
-		
+
 def perHourInDay [plain] (day, month, year):
 	
 	date = "%s-%s-%s" % (year, month, day)
@@ -230,7 +218,7 @@ def showResults [plain] (day, month, year):
 		htmltext("%s" % _("Sorry, this kind of query is not supported yet"))
 		htmltext("</p>")
 
-def cdrForm [plain] (request):
+def cdrForm [plain] ():
 	htmltext("<h3>%s</h3>" % _("Statistics of Calls by Date:"))
 	form = makeForm()
 	form.render()
@@ -238,12 +226,31 @@ def cdrForm [plain] (request):
 	if form.is_submitted() and not form.has_errors():
 		htmltext("<h3>%s</h3>" % _("Results"))
 		showResults(form["day"], form["month"], form["year"])
-	
-def _q_index [plain] (request):
-	header(_q_desc)
-	if pychart_exists:
-		cdrForm(request)
-	else:
-		_("You need to install pychart and use a cdr with sqlite to get these statistics")
-	footer()
-	
+		
+class Page(AccessControlled, Directory): 
+
+	_q_parent = 'page_stats'
+	_q_title  = _("Calls Statistics")
+	_q_desc   = _("Calls Statistics")
+	_q_level  = 3
+	_q_menupos = 30
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_test(self):
+		return cdrutils.db
+
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		if pychart_exists:
+			cdrForm()
+		else:
+			_("You need to install pychart and use a cdr with sqlite to get these statistics")
+		footer()
+		

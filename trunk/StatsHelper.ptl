@@ -18,7 +18,7 @@
 #
 
 from Templates import *
-from quixote.form2 import *
+from quixote.form import *
 try:
         from pychart import *
 except ImportError:

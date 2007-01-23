@@ -112,18 +112,19 @@ class QuixoteHandler:
 		environ[k] = ''
 
 	stdin = StringIO(data)
-	qreq = self.publisher.create_request(stdin, environ)
-	try:
-	    self.publisher.parse_request(qreq)
-	    output = self.publisher.process_request(qreq, environ)
-	except PublishError, err:
-	    output = self.publisher.finish_interrupted_request(qreq, err)
-	except:
-	    output = self.publisher.finish_failed_request(qreq)
-
-	qresponse = qreq.response
-	if output:
-	    qresponse.set_body(output)
+	#qreq = self.publisher.create_request(stdin, environ)
+	qresponse = self.publisher.process(stdin, environ)
+#	try:
+#	    self.publisher.parse_request(qreq)
+#	    output = self.publisher.process_request(qreq, environ)
+#	except PublishError, err:
+#	    output = self.publisher.finish_interrupted_request(qreq, err)
+#	except:
+#	    output = self.publisher.finish_failed_request(qreq)
+#
+#	qresponse = qreq.response
+#	if output:
+#	    qresponse.set_body(output)
 
 	# Copy headers from Quixote's HTTP response
 	for name, value in qresponse.generate_headers():
@@ -132,13 +133,14 @@ class QuixoteHandler:
 	    request[name] = value
 
 	request.response(qresponse.status_code)
+	request.push(StreamProducer(qresponse.generate_body_chunks()))
 
-	# XXX should we set a default Last-Modified time?
-	if qresponse.body is not None:
-	    if isinstance(qresponse.body, Stream):
-		request.push(StreamProducer(qresponse.body))
-	    else:
-		request.push(qresponse.body)
+#	# XXX should we set a default Last-Modified time?
+#	if qresponse.body is not None:
+#	    if isinstance(qresponse.body, Stream):
+#		request.push(StreamProducer(qresponse.body))
+#	    else:
+#		request.push(qresponse.body)
 
 	request.done()
 
@@ -152,12 +154,13 @@ class Server:
     enable_ptl: ensure that PTL mechanism is started (default: true)
     """
 
-    def __init__(self, approot, config_file=None, port=80,
-	       enable_ptl=True, publisher=Publisher):
+    def __init__(self, approot, create_publisher, config_file=None, port=80,
+	       enable_ptl=True):
 	self.approot = approot
 	self.config_file = config_file
 	self.port = port
-	self.publishclass = publisher
+	#self.publishclass = publisher
+	self.publisher = create_publisher()
 	if enable_ptl:
 	    from quixote import enable_ptl
 	    enable_ptl()
@@ -165,11 +168,11 @@ class Server:
     def run(self):
 	print 'Serving application %r on port %d' % (self.approot, self.port)
 	server = http_server.http_server('', self.port)
-	publisher = self.publishclass(self.approot)
-	if self.config_file:
-	    publisher.read_config(self.config_file)
-	publisher.setup_logs()
-	dh = QuixoteHandler(publisher, self.approot, server)
+#	publisher = self.publishclass(self.approot)
+#	if self.config_file:
+#	    publisher.read_config(self.config_file)
+#	publisher.setup_logs()
+	dh = QuixoteHandler(self.publisher, self.approot, server)
 	server.install_handler(dh)
 	asyncore.loop()
 

@@ -19,34 +19,39 @@
 
 
 from Templates import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
 import panelutils
 
+class Page(AccessControlled, Directory): 
 
-_q_parent  = 'page_admin'
-_q_title   = _("Operator Panel")
-_q_desc    = _("Asternic Flash Operator Panel")
-_q_link    = 'panel'
-_q_menupos = 90
-_q_level   = 3
+	_q_parent  = 'page_admin'
+	_q_title   = _("Operator Panel")
+	_q_desc    = _("Asternic Flash Operator Panel")
+	_q_link    = 'panel'
+	_q_menupos = 90
+	_q_level   = 3
 
+	_q_exports = ['']
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
 
-
-def _q_index [plain] (request):
-	header(_q_desc)
-	if panelutils.isConfigured() != 1:
-		'<p>'
-		htmltext(_("You don't have a panel configured yet"))
-		'</p>'
-	else:
-		'<p>'
-		htmltext(_('You have a panel configured '))
-		'<a href="/static/panel/index.html">'
-		htmltext(_('here'))
-		'</a>'
-		'</p>'
-	footer()
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		if panelutils.isConfigured() != 1:
+			'<p>'
+			htmltext(_("You don't have a panel configured yet"))
+			'</p>'
+		else:
+			'<p>'
+			htmltext(_('You have a panel configured '))
+			'<a href="/static/panel/index.html">'
+			htmltext(_('here'))
+			'</a>'
+			'</p>'
+		footer()
 

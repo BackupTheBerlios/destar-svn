@@ -19,40 +19,46 @@
 
 
 from Templates import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
 import backend
 
+class Page(AccessControlled, Directory): 
 
-_q_parent  = 'page_main'
-_q_title   = _("Virtual PBX Owner")
-_q_desc    = _("Perform administrative actions to PBX and extensions")
-_q_menupos = 20
-_q_level   = 2
+	_q_parent  = 'page_main'
+	_q_title   = _("Virtual PBX Owner")
+	_q_desc    = _("Perform administrative actions to PBX and extensions")
+	_q_menupos = 20
+	_q_level   = 2
 
+	_q_exports = ['']
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
-	if not backend.getConfiglets(name='CfgOptPbx'):
-		cantAccessPage()
-        if not request.session.pbx:
-		cantAccessPage()
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+		if not backend.getConfiglets(name='CfgOptPbx'):
+			cantAccessPage()
+		if not request.session.pbx:
+			cantAccessPage()
 
-def showMenu [plain] ():
-	'<table id="subcategories"><thead>'
-	'<tr>'
-	for s in (htmltext(_('Action')), htmltext(_('Description'))):
-		'<th>%s</th>' % s
-	'</tr></thead>'
-
-	for e in _q_menu:
+	def showMenu [plain] (self):
+		'<table id="subcategories"><thead>'
 		'<tr>'
-		'<td><a href="%s">%s</a></td>' % (e._q_link,_(e._q_title))
-		'<td>%s</td>' % _(e._q_desc)
-		'</tr>'
-	'</table>'
+		for s in (htmltext(_('Action')), htmltext(_('Description'))):
+			'<th>%s</th>' % s
+		'</thead></tr>'
+
+		for e in self._q_menu:
+			'<tr>'
+			'<td><a href="%s">%s</a></td>' % (e._q_link,_(e._q_title))
+			'<td>%s</td>' % _(e._q_desc)
+			'</tr>'
+		'</table>'
 
 
-def _q_index [plain] (request):
-	header(_q_desc)
-	showMenu()
-	footer()
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		showMenu()
+		footer()

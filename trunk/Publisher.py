@@ -52,59 +52,15 @@ request.session.language     User language
 """
 
 
+from quixote import enable_ptl, get_request
 from quixote.publish import Publisher
+from quixote.session import SessionManager
 import configlets, backend, language
+from session import DestarSession
 import time
-
-sessions = {}
+enable_ptl()
 
 class DeStarPublisher(Publisher):
-
-	def start_request (self, request):
-		t = time.time()
-
-		# Determine IP of originator, keep Squid in mind :-)
-		try:
-			ip = request.environ['HTTP_X_FORWARDED_FOR']
-		except:
-			ip = request.environ['REMOTE_ADDR']
-
-		# Search session object, if none found, create one with default values
-		global sessions
-		session = sessions.setdefault(ip,
-			configlets.Holder(
-				firstaccess=t,
-				user=None,
-				phone='',
-				language='en',
-				level=-1,		# Try to auto-login, based on IP
-			))
-
-		# level==-1 means we should auto-login
-		# This works by searching for the first CfgOptUser configlet where
-		# the 'pc' variable matches the request originating IP:
-		if session.level == -1:
-			# Only try auto-login once, so set it to lowest level
-			session.level = 0
-
-			users = backend.getConfiglets(name="CfgOptUser")
-			if len(users) == 0:
-				# be Admin if there are no users configured
-				session.user  = "programmer"
-				session.level = 4
-				session.language = 'en'
-			else:
-				for user in users:
-					if user.pc == ip:
-						session.user = user.name
-						session.level = int(user.level)
-						session.phone = user.phone
-						session.language = user.language
-						break
-						
-		language.setLanguage(session.language)				
-		session.lastaccess = t
-		request.session = session
 
 
 	def filter_output(self, request, output):
@@ -113,3 +69,11 @@ class DeStarPublisher(Publisher):
 		if resp.get_header('Content-Type') in (None, 'text/html'):
 			resp.set_header('Content-Type','text/html; charset=%s' % language.encoding() )
 		return output
+
+
+def create_publisher():
+	from page_main import Page
+	return DeStarPublisher(Page(),
+		session_manager=SessionManager(session_class=DestarSession),
+		display_exceptions='plain')
+

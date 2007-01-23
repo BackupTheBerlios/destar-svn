@@ -19,7 +19,7 @@
 
 
 from Templates import *
-from quixote.form2 import *
+from quixote.form import *
 from quixote.html import htmlescape
 import backend
 import types, string
