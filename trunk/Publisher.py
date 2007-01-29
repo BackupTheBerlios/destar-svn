@@ -65,9 +65,9 @@ class DeStarPublisher(Publisher):
 
 	def filter_output(self, request, output):
 		output = Publisher.filter_output(self, request, output)
-		resp = request.response
-		if resp.get_header('Content-Type') in (None, 'text/html'):
-			resp.set_header('Content-Type','text/html; charset=%s' % language.encoding() )
+		#resp = request.response
+		#if resp.get_header('Content-Type') in (None, 'text/html'):
+		#	resp.set_header('Content-Type','text/html; charset=%s' % language.encoding() )
 		return output
 
 
