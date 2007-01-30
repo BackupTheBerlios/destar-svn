@@ -35,7 +35,7 @@ class CfgAppCallFW(CfgApp):
 			VarType("set",      title=_("Setting preffix"), len=6, default="*21"),
 			VarType("ext",   title=_("Unsetting extension"), len=6, default="*22"),
 			VarType("toggle",   title=_("Set function toggleable"), type="bool"),
-			VarType("devstateprefix",   title=_("Create Devstate extension. Devstate Prefix:"), len=8, default="")
+			VarType("devstateprefix",   title=_("Create Devstate extension. Devstate Prefix:"), len=8, optional=True, default="")
 		       	]
 
 		self.dependencies = [ DepType("pbx", 

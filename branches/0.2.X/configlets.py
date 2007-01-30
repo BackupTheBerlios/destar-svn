@@ -1022,8 +1022,10 @@ class CfgPhone(Cfg):
 
 			vm = AstConf("voicemail.conf")
 			vm.setSection(self.pbx)
+			pin = ""
 			try:
-				pin = self.pin
+			        if self.pin != None:
+				        pin = self.pin
 			except:
 				pin = ""
 			#TODO: deal with timezones

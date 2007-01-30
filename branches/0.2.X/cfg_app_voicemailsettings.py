@@ -53,6 +53,7 @@ class CfgAppVoicemailSettings(CfgApp):
 			VarType("devstateprefix",
 				title=_("Create Devstate extension. Devstate Prefix:"),
 				len=8,
+				optional=True,
 				default="")
 		       	]
 
