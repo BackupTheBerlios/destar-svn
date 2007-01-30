@@ -43,7 +43,7 @@ class Page(AccessControlled, Directory):
 		obj = backend.getConfiglet(component)
 		if obj is not None:
 			obj.fixup()
-			return configletsForm(request, obj, _(obj.shortName), exitPath = "../" + obj.groupName.lower())
+			return configletsForm(self.request, obj, _(obj.shortName), exitPath = "../" + obj.groupName.lower())
 		else:
 			return errorpage(_("Object does not exist"))
 

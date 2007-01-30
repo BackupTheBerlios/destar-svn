@@ -28,7 +28,7 @@ import time,types
 def phoneSettingsForm(self, phone, exitPath=".."):
 
 	if self.form.has_key('_cancel'):
-		return request.redirect(exitPath)
+		return redirect(exitPath)
 	form = Form()
 
 	dnd  = manager.getVar('DND/%s' % phone.pbx,  phone.ext, False)

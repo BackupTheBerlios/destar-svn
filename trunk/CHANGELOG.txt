@@ -1,3 +1,6 @@
+2007-01-30:
+* Bug fixes related with request object and redirect function.
+
 2007-01-29:
 * Added "filter_output" publisher's funcion. It changed everything to text/html content-type,
   including css. Needs some revision. Fixes bug #10130

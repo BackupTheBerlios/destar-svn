@@ -43,7 +43,7 @@ class Page(AccessControlled, Directory):
 	def loginForm(self, exitPath=".", render=0):
 
 		if self.request.form.has_key('_cancel'):
-			return self.request.redirect(exitPath)
+			return redirect(exitPath)
 		form = Form()
 
 		form.add(StringWidget, "name",  "",  title=htmltext(_("User or phone name/number")), required=True)

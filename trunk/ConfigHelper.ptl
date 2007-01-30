@@ -21,6 +21,7 @@
 from Templates import *
 from quixote.form import *
 from quixote.html import htmlescape
+from quixote import redirect
 import backend
 import types, string
 
@@ -244,16 +245,16 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 	form = Form()
 
 	if request.form.has_key('_cancel'):
-		return request.redirect(exitPath)
+		return redirect(exitPath)
 	if request.form.has_key('_delete'):
 		if obj.hasDependencies():
 			return showDependencies()
 		else:
 			backend.deleteConfiglet(obj._id)
-			return request.redirect(exitPath)
+			return redirect(exitPath)
 	if request.form.has_key('_cascade_delete'):
 		backend.deleteConfiglet(obj._id)
-		return request.redirect(exitPath)
+		return redirect(exitPath)
 
 
 	do_update = False
@@ -339,4 +340,4 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 	if form.has_errors():
 		return render()
 	saveConfig()
-	return request.redirect(exitPath)
+	return redirect(exitPath)
