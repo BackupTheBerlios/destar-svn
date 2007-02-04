@@ -95,12 +95,12 @@ class Page(AccessControlled, Directory):
 
 			if not showForm.is_submitted():
 				header(_(self._q_desc))
-				if not missingModules == []: showMissingModules(missingModules)
+				if not missingModules == []: self.showMissingModules(missingModules)
 				showForm.render()
 
 			elif showForm['_show']:
 				header(_("Asterisk configuration files"))
-				if not missingModules == []: showMissingModules(missingModules)
+				if not missingModules == []: self.showMissingModules(missingModules)
 				entries = []
 				for file,cnf in configEntries:
 					if showForm[file]:
@@ -123,7 +123,7 @@ class Page(AccessControlled, Directory):
 				'</p>'
 		footer()
 
-	def showMissingModules [plain] (missingModules):
+	def showMissingModules [plain] (self, missingModules):
 		'<div id="error">\n'
 		'<p>'
 		htmltext(_("WARNING: This configuration might experience grave problems because the following asterisk modules are missing on your system:"))
