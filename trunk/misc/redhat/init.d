@@ -9,20 +9,50 @@
 PIDFILE="/var/run/destar.pid"
 RETVAL=0
 
+start() {
+        # Start daemons.
+        echo -n $"Starting destar: "
+        /usr/sbin/destar > /dev/null 2>&1 &
+        RETVAL=$?
+        echo $! > $PIDFILE
+        echo
+        [ $RETVAL = 0 ] && touch /var/lock/subsys/destar
+}
+
+stop() {
+        # Stop daemons.
+        echo -n $"Shutting down destar: "
+	PID=`cat $PIDFILE`
+	kill $PID
+        RETVAL=$?
+        echo
+        [ $RETVAL = 0 ] && rm -f /var/lock/subsys/destar
+}
+
+restart() {
+        stop
+        start
+}
+
 # See how we were called.
 case "$1" in
   start)
-	/usr/sbin/destar > /dev/null 2>&1 &
-	echo $! > $PIDFILE
-	RETVAL=0
-	;;
+        start
+        ;;
   stop)
-	PID=`cat $PIDFILE`
-	kill $PID
-	;;
+        stop
+        ;;
+  restart)
+        restart
+        ;;
+  condrestart)
+        [ -f /var/lock/subsys/destar ] && restart || :
+        ;;
+  status)
+        ;;
   *)
-	echo $"Usage: $0 {start|stop}"
-	RETVAL=1
+        echo $"Usage: exim {start|stop|restart|status|condrestart}"
+        exit 1
 esac
 
 exit $RETVAL
