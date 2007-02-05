@@ -71,13 +71,13 @@ class Page(AccessControlled, Directory):
 		groups = ", ".join(groups)
 
 		if self.session.user=='programmer':
-			configurationTip(
+			self.configurationTip(
 				_("You should create a user with type 'Configurator'. Without this user, everyone connecting to DeStar can configure everything."),
 				"add/CfgOptUser",
 				[_("Configuration"), _("Options"), _("DeStar user")] )
 
 		if not os.access("/etc/asterisk", os.O_RDWR):
-			configurationTip(
+			self.configurationTip(
 				_("You should enable write access to the directory /etc/asterisk. Without the ability to modify the configuration files DeStar would be pretty useless. You should 'chmod g+rwx' this directory and set it's group to one of '%s'." % groups),
 				"",
 				[])
@@ -112,7 +112,7 @@ class Page(AccessControlled, Directory):
 				[])
 		db_fn = "/var/log/asterisk/master.db"
 		if not os.access(db_fn, os.O_RDWR):
-			configurationTip(
+			self.configurationTip(
 				_("You don't seem to have access to %s yet created by cdr_sqlite3_custom. Without this file CDR reports wont be accesible trough this interface."),
 				"",
 				[])
@@ -120,7 +120,7 @@ class Page(AccessControlled, Directory):
 		if self.tipped:
 			'</ul>'
 
-	def showConfigurables [plain] (sefl, head):
+	def showConfigurables [plain] (self, head):
 		'<p>'
 		head
 		':</p><table id="subcategories"><thead>'

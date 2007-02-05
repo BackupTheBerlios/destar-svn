@@ -1,5 +1,6 @@
 2007-02-05:
 * Bug fix related with request object adding configlets.
+* page_config.ptl: some configletTip functions were called without self.
 
 2007-01-30:
 * Bug fixes related with request object and redirect function.
