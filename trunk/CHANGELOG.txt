@@ -1,6 +1,7 @@
 2007-02-05:
 * Bug fix related with request object adding configlets.
 * page_config.ptl: some configletTip functions were called without self.
+* Cosmetic changes and clidnum added to cfg_trunk_fwdiax.py
 
 2007-01-30:
 * Bug fixes related with request object and redirect function.

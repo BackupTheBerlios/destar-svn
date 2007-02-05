@@ -37,19 +37,53 @@ class CfgTrunkFwdIax(CfgTrunk):
 	
 	def createVariables(self):
 		self.variables   = [
-			VarType("name",     title=_("Name"), len=15, default="fwdiax"),
-			VarType("fwdid",    title=_("FWD number"),   len=6),
-			VarType("fwdpw",    title=_("FWD password"), len=15),
+			VarType("name",
+				title=_("Name"),
+				len=15,
+				default="fwdiax"),
+
+			VarType("fwdid",
+				title=_("FWD number"),
+				len=6),
+
+			VarType("fwdpw",
+				title=_("FWD password"),
+				len=15),
 	
-			VarType("Outbound", title=_("Calls to FWD"), type="label"),
-			VarType("ext",      title=_("Extension"), optional=True, len=6),
-			VarType("context",  title=_("Context"), default="default", optional=True, hide=True),
-			VarType("callerid", title=_("Caller-Id Name"), optional=True),
+			VarType("Outbound",
+				title=_("Calls to FWD"),
+				type="label"),
+
+			VarType("ext",
+				title=_("Extension"),
+				optional=True,
+				len=6),
+
+			VarType("context",
+				title=_("Context"),
+				default="default",
+				optional=True,
+				hide=True),
+
+			VarType("callerid",
+				title=_("Change Caller*Id to:"),
+				len=25,
+				optional=True),
+
+ 			VarType("clidnumin",
+ 				title=_("Change Caller*Id Number to:"),
+ 				len=40,
+ 				optional=True),
 	
-			VarType("Inbound",  title=_("Calls from FWD"), type="label"),
-			VarType("phone",    title=_("Phone to ring"), optional=True, type="choice",
-								options=getChoice("CfgPhone"))
-		]
+			VarType("Inbound",
+				title=_("Calls from FWD"),
+				type="label"),
+
+			VarType("phone",
+				title=_("Phone to ring"),
+				optional=True,
+				type="choice",
+				options=getChoice("CfgPhone"))]
 		
 		self.dependencies = [
 			DepType("phone", 
