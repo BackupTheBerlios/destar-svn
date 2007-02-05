@@ -83,7 +83,7 @@ class CfgTrunkZapPBX(CfgTrunk):
 				optional=False ),
 	
 			VarType("Inbound",
-				title=_("Calls from SIP trunk"),
+				title=_("For incoming calls through this trunk:"),
 				type="label"),
 
 			VarType("clid",
@@ -119,6 +119,20 @@ class CfgTrunkZapPBX(CfgTrunk):
 				type="choice",
 				optional=True,
 				options=getChoice("CfgOptPBX")),
+
+			VarType("Outbound",
+				title=_("For outgoing calls through this trunk:"),
+				type="label"),
+
+			VarType("clidnameout",
+				title=_("Change Caller*Id Name to:"),
+				len=40,
+				optional=True),
+
+			VarType("clidnumout",
+				title=_("Change Caller*Id Number to:"),
+				len=40,
+				optional=True),
 
 			VarType("dial",
 				hide=True,

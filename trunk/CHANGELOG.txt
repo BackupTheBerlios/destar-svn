@@ -3,6 +3,7 @@
 * page_config.ptl: some configletTip functions were called without self.
 * Cosmetic changes and clidnumin added to cfg_trunk_fwdiax.py
 * Added clidnumin to cfg_trunk_zap*.py
+* Adjusted all labels and caller identifier for trunks.
 
 2007-01-30:
 * Bug fixes related with request object and redirect function.

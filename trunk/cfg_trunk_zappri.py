@@ -91,7 +91,7 @@ class CfgTrunkZapPRI(CfgTrunk):
 				default="0.0"),
 
 			VarType("Inbound",
-				title=_("Calls from PRI channel(s)"),
+				title=_("For incoming calls through this trunk:"),
 				type="label"),
 
 			VarType("clid",
@@ -126,6 +126,20 @@ class CfgTrunkZapPRI(CfgTrunk):
 				title=_("Allow dial extension from which Virtual PBX"),
 				type="choice",
 				optional=True,options=getChoice("CfgOptPBX")),
+
+			VarType("Outbound",
+				title=_("For outgoing calls through this trunk:"),
+				type="label"),
+
+			VarType("clidnameout",
+				title=_("Change Caller*Id Name to:"),
+				len=40,
+				optional=True),
+
+			VarType("clidnumout",
+				title=_("Change Caller*Id Number to:"),
+				len=40,
+				optional=True),
 
 			VarType("dial",
 				hide=True,

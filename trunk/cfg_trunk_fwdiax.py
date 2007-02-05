@@ -50,10 +50,6 @@ class CfgTrunkFwdIax(CfgTrunk):
 				title=_("FWD password"),
 				len=15),
 	
-			VarType("Outbound",
-				title=_("Calls to FWD"),
-				type="label"),
-
 			VarType("ext",
 				title=_("Extension"),
 				optional=True,
@@ -65,25 +61,40 @@ class CfgTrunkFwdIax(CfgTrunk):
 				optional=True,
 				hide=True),
 
-			VarType("callerid",
+			VarType("Inbound",
+				title=_("For incoming calls through this trunk:"),
+				type="label"),
+
+			VarType("clid",
 				title=_("Change Caller*Id to:"),
-				len=25,
+				len=40,
 				optional=True),
 
- 			VarType("clidnumin",
- 				title=_("Change Caller*Id Number to:"),
- 				len=40,
- 				optional=True),
-	
-			VarType("Inbound",
-				title=_("Calls from FWD"),
-				type="label"),
+			VarType("clidnumin",
+				title=_("Change Caller*Id Number to:"),
+				len=40,
+				optional=True),
 
 			VarType("phone",
 				title=_("Phone to ring"),
 				optional=True,
 				type="choice",
-				options=getChoice("CfgPhone"))]
+				options=getChoice("CfgPhone")),
+
+			VarType("Outbound",
+				title=_("For outgoing calls through this trunk:"),
+				type="label"),
+
+			VarType("clidnameout",
+				title=_("Change Caller*Id to:"),
+				len=25,
+				optional=True),
+
+ 			VarType("clidnumout",
+ 				title=_("Change Caller*Id Number to:"),
+ 				len=40,
+ 				optional=True)]
+	
 		
 		self.dependencies = [
 			DepType("phone", 

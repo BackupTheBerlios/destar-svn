@@ -80,7 +80,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
                                optional=True),
 	
 			VarType("Inbound",
-				title=_("Calls from SIP trunk"),
+				title=_("For incoming calls through this trunk:"),
 				type="label"),
 				
 			VarType("clid",
@@ -118,7 +118,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 				options=getChoice("CfgOptPBX")),
 
  			VarType("Outbound",
- 				title=_("Outgoing calls to IAX trunk"),
+ 				title=_("For outgoing calls through this trunk:"),
  				type="label"),
  
  			VarType("clidnameout",
