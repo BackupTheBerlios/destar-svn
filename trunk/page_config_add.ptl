@@ -38,4 +38,5 @@ class Page(AccessControlled, Directory):
 		if self.session.level < self._q_level:
 			cantAccessPage()
 
-	_q_lookup = lookupConfiglets
+	def _q_lookup(self,component):
+		return lookupConfiglets(self.request,component)
