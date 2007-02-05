@@ -91,6 +91,11 @@ class CfgTrunkZapPBX(CfgTrunk):
 				len=25,
 				optional=True),
 
+ 			VarType("clidnumin",
+ 				title=_("Change Caller*Id Number to:"),
+ 				len=40,
+ 				optional=True),
+			
 			VarType("contextin",
 				title=_("Go to"),
 				type="radio",
