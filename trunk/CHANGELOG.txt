@@ -1,5 +1,7 @@
 2007-02-16:
 * Added externhost support in sip.conf through SIP Options.
+* Redirecting to login when no user is logged
+* Create PBX configuration tip
 
 2007-02-08:
 * Added DISA support (Patch #1878 by imesper)

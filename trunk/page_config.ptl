@@ -88,6 +88,12 @@ class Page(AccessControlled, Directory):
 				"add/CfgOptManager",
 				[_("Configuration"), _("Options"), _("Management API access")] )
 
+		if not backend.countConfiglets(clazz="CfgOptPBX"):
+			self.configurationTip(
+				_("You should create a PBX. Without a PBX, you can't create phones."),
+				"pbx/",
+				[_("Configuration"), _("PBX")] )
+
 		if not backend.countConfiglets("Phones"):
 			self.configurationTip(
 				_("You should create a phone. Without defined phones you can't make and receive calls."),
