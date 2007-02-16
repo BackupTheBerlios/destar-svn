@@ -58,11 +58,12 @@ class CfgOptSipNetwork(CfgOptSingle):
 					title=_("External/Internal IP"), 
 					type="label"),
 
-			VarType("setExt",	
-					title=_("Force external ip/internel network?"),	
-					type="bool"),
+			VarType("externhost",	
+					title=_("External hostname"), 
+					len=25,
+					optional=True),
 
-			VarType("extip",	
+			VarType("externip",	
 					title=_("External ip"), 
 					len=25,
 					optional=True),
@@ -118,9 +119,12 @@ class CfgOptSipNetwork(CfgOptSingle):
 		c.setSection("general")
 		if self.doBind:
 			c.append("bindaddr=%s" % self.bindaddr)
-		if self.setExt:
-			if self.extip:
-				c.append("externip=%s" % self.extip)
+		if self.externip:
+			c.append("externip=%s" % self.externip)
+			if self.intnet:
+				c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
+		if self.externhost:
+			c.append("externhost=%s" % self.externhost)
 			if self.intnet:
 				c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
 		if self.tos:
