@@ -64,9 +64,7 @@ class Page(AccessControlled, Directory): #order matters
 		# Import all cfg_*.py files once when the module loads.
 		for s in os.listdir(backend.CONFIGLETS_DIR):
 			#continue
-			if not s.startswith('page_main') and not s.startswith('page_user') \
-			and not s.startswith('page_login') and not s.startswith('page_admin') \
-			and not s.startswith('page_logout') and not s.startswith('page_config') :
+			if not s.startswith('page_'):
 				continue
 			m = None
 			if s.endswith('.ptl'):

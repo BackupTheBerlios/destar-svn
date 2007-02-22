@@ -188,7 +188,7 @@ class Page(AccessControlled, Directory):
 	def _q_index [plain] (self):
 		header(self._q_desc)
 		if pychart_exists:
-			cdrForm(request)
+			cdrForm(self.request)
 		else:
 			_("You need to install pychart and use a cdr with sqlite to get these statistics")
 		footer()

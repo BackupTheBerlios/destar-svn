@@ -315,5 +315,5 @@ class Page(AccessControlled, Directory):
 
 	def _q_index [plain] (self):
 		header(self._q_desc, scripts=[formScript])
-		cdrForm(request)
+		cdrForm(self.request)
 		footer()
