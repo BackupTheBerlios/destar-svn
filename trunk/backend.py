@@ -223,7 +223,7 @@ def initializeAsteriskConfig():
                 c.append("exten=s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_OFFERING)")
                 c.append("exten=s,n,UserEvent(TAPI|TAPIEVENT: SET CALLERID ${CALLERID})")
                 c.append("exten=s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLINFO LINECALLINFOSTATE_CALLERID)")
-	c.append("exten=s,n(MainDial),Dial(${ARG1}${prng},${dsec},TtWw${dopt})")
+	c.append("exten=s,n(MainDial),Dial(${ARG1}${prng},${dsec},TtWwr${dopt})")
 	c.append(";")
 	c.append("; Dial result was 'timeout'")
 	c.append("exten=s,n(dialtimeout),Set(fw_ext=${DB(CFTO/${ARG4}/${ARG3})})")
