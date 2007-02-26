@@ -60,7 +60,7 @@ class Page(AccessControlled, Directory):
 	def notLoggedIn [plain] (self):
 		'<p>'
 		htmltext(_('Invalid username or password'))
-		self.loginForm(self.request, render=1)
+		self.loginForm(render=1)
 		'.</p>'
 
 
@@ -69,7 +69,7 @@ class Page(AccessControlled, Directory):
 		self.request = get_request()
 
 		header(self._q_desc)
-		res = self.loginForm(self.request)
+		res = self.loginForm()
 
 		if type(res) != types.TupleType:
 			res
