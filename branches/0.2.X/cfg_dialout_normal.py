@@ -31,16 +31,51 @@ class CfgDialoutNormal(CfgDialout):
 					
 	def createVariables(self):
 		self.variables = [
-		VarType("name",   title=_("Name"), len=15),
-		VarType("pattern", title=_("Pattern"), len=55),
-		VarType("rmprefix", title=_("Remove Prefix of length"), len=10, default="0"),
-		VarType("addprefix", title=_("Add Prefix"), len=10, optional=True, default=""),
-		VarType("maxtime", title=_("Maximum call time in seconds"), type="int", len=15, default=6000),
-		VarType("ringtime", title=_("Ringing time in seconds"), type="int", len=15, default=300),
-		VarType("qlookup", title=_("Search on quick dial list?"), type="bool"),
+		VarType("name",   
+			title=_("Name"), 
+			len=15),
 
-		VarType("dis_transfer", title=_("Disallow calling user transfer?"), type="bool"),
-		VarType("Trunks", title=_("Trunks to use for routing this dialout entry"), type="label", len=15, hide=True)
+		VarType("pattern", 
+			title=_("Pattern"), 
+			len=55),
+
+		VarType("rmprefix", 
+			title=_("Remove Prefix of length"), 
+			len=10, 
+			default="0"),
+
+		VarType("addprefix", 
+			title=_("Add Prefix"), 
+			len=10, 
+			optional=True, 
+			default=""),
+
+		VarType("maxtime", 
+			title=_("Maximum call time in seconds"), 
+			type="int", 
+			len=15, 
+			default=6000),
+
+		VarType("ringtime", 
+			title=_("Ringing time in seconds"), 
+			type="int", 
+			len=15, 
+			default=30),
+
+		VarType("qlookup", 
+			title=_("Search on quick dial list?"), 
+			type="bool"),
+
+		VarType("dis_transfer", 
+			title=_("Disable transfer to the calling party?"), 
+			type="bool", 
+			default=False),
+
+		VarType("Trunks", 
+			title=_("Trunks to use for routing this dialout entry"), 
+			type="label", 
+			len=15, 
+			hide=True)
 		]
 
 		Cfg.fixup(self)
@@ -88,18 +123,20 @@ class CfgDialoutNormal(CfgDialout):
 		else:
 		       opts="TtW"
 		if self.qlookup:
+			c.appendExten("s",'SetVar(options=%sr)' % opts)
 			c.appendExten("s","Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})",e="Goto(3)")
 			c.appendExten("s",'Set(ARG1=${dest})')
-			c.appendExten("s","GotoIf($[${ARG2} = n]?5:4)")
+			c.appendExten("s","GotoIf($[${ARG2} = n]?6:5)")
 			c.appendExten("s","Authenticate(${ARG2})")
-			c.appendExten("s","GotoIf($[${ARG3} = 0]?6:9)")
+			c.appendExten("s","GotoIf($[${ARG3} = 0]?7:10)")
 			c.appendExten("s",'Set(timeout=0)')
 			c.appendExten("s",'Set(options=%s)' % opts)
 			c.appendExten("s",'Goto(11)')
 		else:
-			c.appendExten("s","GotoIf($[${ARG2} = n]?3:2)")
+			c.appendExten("s",'SetVar(options=%sr)' % opts)
+			c.appendExten("s","GotoIf($[${ARG2} = n]?4:3)")
 			c.appendExten("s","Authenticate(${ARG2})")
-			c.appendExten("s","GotoIf($[${ARG3} = 0]?4:7)")
+			c.appendExten("s","GotoIf($[${ARG3} = 0]?5:8)")
 			c.appendExten("s",'Set(timeout=0)')
 			c.appendExten("s",'Set(options=%s)' % opts)
 			c.appendExten("s",'Goto(9)')
