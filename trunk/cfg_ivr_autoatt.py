@@ -77,7 +77,7 @@ class CfgIVRAutoatt(CfgIVR):
 					title=_("Pause between each playback"),
 					optional=True,len=2),
 
-			VarType("ext",
+			VarType("exten",
 					title=_("Extension to ring after file playing"),
 					type="choice",
 					options=getChoice("CfgPhone")),
@@ -112,7 +112,7 @@ class CfgIVRAutoatt(CfgIVR):
 			DepType("moh", 
 					type="hard",
 					message = _("This is a Dependency")),
-			DepType("ext", 
+			DepType("exten", 
 					type="hard",
 					message = _("This is a Dependency")),
 			DepType("pbx", 
@@ -164,11 +164,11 @@ class CfgIVRAutoatt(CfgIVR):
 			s.appendExten("s","Background(ivr/%s)" % self.backgroundfile)	
 			if self.pause:
 				s.appendExten("s","WaitExten(%s)" % self.pause)
-		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.ext))	
+		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.exten))	
 		if self.operator:
-			s.appendExten("%s" % self.operator, "Goto(%s,%s,1)" % (pbx,self.ext))	
+			s.appendExten("%s" % self.operator, "Goto(%s,%s,1)" % (pbx,self.exten))	
 		s.appendExten("i","Playback(privacy-invalid)")	
-		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.ext))	
+		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.exten))	
 		s.appendExten("t","ResetCDR(w)")
 		s.appendExten("t","NoCDR")
 		s.appendExten("t","Hangup")
