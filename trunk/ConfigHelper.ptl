@@ -107,7 +107,6 @@ def presentConfiglets [plain] (group):
 
 def __addit__(obj):
 	backend.addConfiglet(obj)
-	backend.createAsteriskConfig()
 
 def lookupConfiglets(request,component):
         if not component:
@@ -179,6 +178,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 				obj.renameDependencies(_v)
 		if withCallback and actionCallback:
 			actionCallback(obj)
+			obj.createAsteriskConfig()
+			backend.createPythonConfig()
 			
 
 	def checkConfig():
