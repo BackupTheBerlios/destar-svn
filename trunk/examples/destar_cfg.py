@@ -1,4 +1,4 @@
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 # You should execfile() this config
 
 CfgTrunkSiptrunk(

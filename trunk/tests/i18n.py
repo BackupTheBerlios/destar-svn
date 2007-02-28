@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2006 by Anthony PIRON
 #
