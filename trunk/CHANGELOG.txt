@@ -3,6 +3,7 @@
 * object all createAsteriskConfig() from all objects where called.
 * Little name change to skip check in checkConfig() (for extensions to jump in an IVR)
 * Better dialout's macros handling
+* Added -j xgettext's option in po/Makefile
 
 2007-02-27:
 * languages.py: installing the gettext classes using unicode
