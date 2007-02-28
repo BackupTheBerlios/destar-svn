@@ -119,30 +119,24 @@ class CfgDialoutNormal(CfgDialout):
 		c.append("; params: exten,secret,timeout")
 		needModule("app_authenticate")
 		if self.dis_transfer:
-		       opts="tW"
+		       opts="tWr"
 		else:
-		       opts="TtW"
+		       opts="TtWr"
+		c.append("exten=>s,1,SetVar(options=%s)" % opts)
 		if self.qlookup:
-			c.appendExten("s",'SetVar(options=%sr)' % opts)
-			c.appendExten("s","Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})",e="Goto(3)")
-			c.appendExten("s",'Set(ARG1=${dest})')
-			c.appendExten("s","GotoIf($[${ARG2} = n]?6:5)")
-			c.appendExten("s","Authenticate(${ARG2})")
-			c.appendExten("s","GotoIf($[${ARG3} = 0]?7:10)")
-			c.appendExten("s",'Set(timeout=0)')
-			c.appendExten("s",'Set(options=%s)' % opts)
-			c.appendExten("s",'Goto(11)')
-		else:
-			c.appendExten("s",'SetVar(options=%sr)' % opts)
-			c.appendExten("s","GotoIf($[${ARG2} = n]?4:3)")
-			c.appendExten("s","Authenticate(${ARG2})")
-			c.appendExten("s","GotoIf($[${ARG3} = 0]?5:8)")
-			c.appendExten("s",'Set(timeout=0)')
-			c.appendExten("s",'Set(options=%s)' % opts)
-			c.appendExten("s",'Goto(9)')
-		c.appendExten("s",'Set(timeout=%d)' % self.maxtime)
-		c.appendExten("s",'Set(options=%sL(%d000:10000))' % (opts,self.maxtime))
+			c.append("exten=>s,n(quickd),Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})")
+			c.append("exten=>s,quickd+1,Goto(ifAuth)")
+			c.append("exten=>s,n,Set(ARG1=${dest})")
+		c.append("exten=>s,n(ifAuth),GotoIf($[${ARG2} = n]?ifTimeOut:auth)")
+		c.append("exten=>s,n(auth),Authenticate(${ARG2})")
+		c.append("exten=>s,n,Set(options=%s)" % opts.strip('r'))
+		c.append("exten=>s,n(ifTimeOut),GotoIf($[${ARG3} = 0]?noTimeOut:setTimeOut)")
+		c.append("exten=>s,n(noTimeOut),Set(timeout=0)")
+		c.append("exten=>s,n,Goto(CallLimit)")
+		c.append("exten=>s,n(setTimeOut),Set(timeout=%d)" % self.maxtime)
+		c.append("exten=>s,n(CallLimit),Set(options=%sL(%d000:10000))" % (opts,self.maxtime))
 		#TODO: add this trunks sorted by price and with a default one.
+
 		import configlets
 		tapisupport = False
 		for obj in configlets.configlet_tree:
@@ -152,27 +146,28 @@ class CfgDialoutNormal(CfgDialout):
 		for obj in configlets.configlet_tree['Trunks']:
 			try:
 				if self.__getitem__("trunk_"+obj.name):
-					c.appendExten("s","Set(TIMEOUT(absolute)=${timeout})")
-					c.appendExten("s","Set(CDR(outtrunk)=%s)" % obj.name)
+					c.append("exten=>s,n,Set(TIMEOUT(absolute)=${timeout})")
+					c.append("exten=>s,n,Set(CDR(outtrunk)=%s)" % obj.name)
 					if self.__getitem__("trunk_%s_price" % obj.name):
-						c.appendExten("s","Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))
+						c.append("exten=>s,n,Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))
 					else:
-						c.appendExten("s","Set(CDR(accountcode)=0)")
+						c.append("exten=>s,n,Set(CDR(accountcode)=0)")
 					if obj.clidnameout:
-						c.appendExten("s","Set(CALLERID(name)=%s)" % obj.clidnameout)
+						c.append("exten=>s,n,Set(CALLERID(name)=%s)" % obj.clidnameout)
 					if obj.clidnumout:
-						c.appendExten("s","Set(CALLERID(number)=%s)" % obj.clidnumout)
+						c.append("exten=>s,n,Set(CALLERID(number)=%s)" % obj.clidnumout)
 				        if tapisupport:
-					        c.appendExten("s","Set(chan=${CUT(CHANNEL,,1)})")
-					        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_NEWCALL ${chan})")
-	    				        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALTONE)")
-					        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALING)")
-					        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_PROCEEDING)")
-					c.appendExten("s","Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
+					        c.append("exten=>s,n,Set(chan=${CUT(CHANNEL,,1)})")
+					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_NEWCALL ${chan})")
+	    				        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALTONE)")
+					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALING)")
+					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_PROCEEDING)")
+					c.append("exten=>s,n,Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
 			except KeyError:
 				pass
-		c.appendExten("s","Congestion(5)")
-		c.appendExten("s","Goto(9)")
+		c.append("exten=>s,n,Congestion(5)")
+		#c.append("exten=>s,n,Goto(9)")
+		c.append("exten=>s,n,Goto(CallLimit)")
 		c.appendExten("T","ResetCDR(w)")
 		c.appendExten("T","NoCDR")
 		c.appendExten("T","Hangup")
