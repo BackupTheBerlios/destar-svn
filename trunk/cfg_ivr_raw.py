@@ -1,4 +1,4 @@
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 #
 # Destar has Copyright (C) 2005 by Holger Schurig
 # this file has Copyright (C) 2005 by Alejandro Rios P.

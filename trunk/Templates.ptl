@@ -1,4 +1,4 @@
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2005 by Holger Schurig
 # 
@@ -159,7 +159,7 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
    	if refresh:
    		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
   	'<title>Asterisk/DeStar PBX :: %s</title>\n' % _(str(title))
-  	'<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />\n'
+  	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n'
   	'<style type="text/css" media="screen, tv, projection">\n'
   	'	@import url("/static/css/general.css");\n' 
   	'	@import url("/static/css/Menu.css");\n'

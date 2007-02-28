@@ -1,4 +1,4 @@
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 #
 # This module is Copyright (C) 2005 by Francesco Crescioli,
 # Heavly based on module cfg_opt_sip_audio Copyright (C) 2005 by Alejandro Rios,

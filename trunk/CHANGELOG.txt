@@ -1,5 +1,6 @@
 2007-02-27:
 * languages.py: installing the gettext classes using unicode
+* changing the file's encoding to utf-8, everybody should use unicode.
 
 2007-02-26:
 * Fixed "cancel" option in page_login

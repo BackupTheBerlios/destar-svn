@@ -1,4 +1,4 @@
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2005 by Holger Schurig, some addons by Michael Bielicki, TAAN Softworks Corp.
 #
@@ -94,7 +94,7 @@ def createPythonConfig(f=None):
 	if f is None:
 		f = open(os.path.join(configlets.CONF_DIR,DESTAR_CFG),"w")
 
-	f.write("# -*- coding: iso-latin-1 -*-\n")
+	f.write("# -*- coding: utf-8 -*-\n")
 	f.write("# You should execfile() this config\n\n")
 	for c in configlets.configlet_tree:
 		a = c.createPythonConfig()
