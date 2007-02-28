@@ -1,4 +1,4 @@
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2005 by Holger Schurig
 #
@@ -47,7 +47,7 @@ def setLanguage(lang):
 			translation = gettext.translation('destar',localesdir,languages=[lang])
 	except IOError:
 		translation = gettext.NullTranslations()
-	translation.install()
+	translation.install(unicode=True)
 
 def desactivateGettext():
 	global _
