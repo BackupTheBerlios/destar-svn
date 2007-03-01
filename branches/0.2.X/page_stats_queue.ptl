@@ -1,0 +1,379 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Destar has Copyright (C) 2004-2007 by Holger Schurig
+# This fila has Copyright (C) 2007 by Alejandro Rios P.
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+from Templates import *
+from quixote.form2 import *
+import queueutils
+import time
+from StatsHelper import *
+
+pychart_exists = True
+try:	
+	from pychart import *
+except ImportError:
+	pychart_exists = False
+	
+
+_q_parent = 'page_stats'
+_q_title  = _("Queue Statistics")
+_q_desc   = _("Statistics by Queue")
+_q_level  = 3
+_q_menupos = 30
+
+def _q_access(request):
+	if request.session.level < _q_level:
+		cantAccessPage()
+
+def _q_test():
+	return cdrutils.db
+
+def N_(message): return message
+
+def getQueues():
+	import configlets
+	objs = configlets.configlet_tree.getConfigletsByName('CfgPhoneQueue')
+	queues=[]
+	for obj in objs:
+		queues.append(obj.name)		
+	return queues
+
+def makeForm():
+	form = Form()
+	form.name = "queryform"
+	form.add_single_select('queue', 
+							title=htmltext(_('Queue:')),
+							value="",
+							options=zip(getQueues(),getQueues(),getQueues()),
+							render_br=True )
+
+	form.add_single_select('year', 
+							title=htmltext(_('Day:')),
+							value="",
+							options=zip([all] + years, 
+										[_(all)] + years,
+										[all] + years),
+							render_br=False )
+							
+	form.add_single_select('month', 
+							options=zip([all] + months, 
+										[_(all)] + getMonthnames(),
+										[all] + months),
+
+							render_br=False )
+							
+	form.add_single_select('day',
+							options=zip([all] + days,
+										[_(all)] + daynames,
+										[all] + days),
+							render_br=True )
+							
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=True)
+	
+	return form
+		
+def perHourInDay [plain] (day, month, year, queue):
+	
+	date = "%s-%s-%s" % (year, month, day)
+	where = []
+	where.append("date(timestamp) = date('%s')" % date)
+	where.append("qname = '%s'" % queue)
+	where.append("action like 'COMPLETE%'")
+	cursor = queueutils.select(
+				fields = ['time(timestamp)', 'agent', 'action', 'info1', 'info2', 'info3'],
+				where = where,
+				order=['timestamp','agent'])
+	row = cursor.fetchone()
+	calls_per_hour = [CallData() for i in hours]
+	calls_by_agent = []
+	agentnames = []
+	total_completed = cursor.rowcount
+	total_completed_by_agent = 0
+	total_completed_by_caller = 0
+	total_duration = 0
+	average_duration = 0
+	average_hodtime = 0
+
+	if cursor.description:
+		fieldIndices = range(len(cursor.description))
+	else:
+		fieldIndices = []
+
+	while row:
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='time(timestamp)':
+				hour = s.split(":")
+				hour = int(hour[0])
+			if c=='agent':
+				agent = s.split("-")[0]
+				if not agentnames.count(agent):
+					agentnames.append(agent)
+					calls_by_agent.insert(agentnames.index(agent), CallData())
+			if c=='action':
+				disposition = s
+			if c=='info1':
+				try:
+					holdtime = int(s)
+				except ValueError:
+					holdtime = 0
+			if c=='info2':
+				try:
+					calltime = int(s)
+				except ValueError:
+					calltime = 0
+			if c=='info2':
+				try:
+					origposition = int(s)
+				except ValueError:
+					origposition = 0
+		calls_per_hour[hour].addQueueCall(holdtime, calltime, origposition, disposition)
+		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
+		row = cursor.fetchone()
+		
+	htmltext("<h4>%s</h4>" % _("Completed Calls"))
+	makeQueueCallsTable(_("Time"), calls_per_hour, hournames)
+	makeAgentCallsTable(_("Agent"), calls_by_agent, agentnames)
+	
+def perDayInMonth [plain] (month, year, queue):
+	
+	date1 = "%s-%s-01" % (year, month)
+	date2 = "%s-%s-31" % (year, month)
+	where = []
+	where.append("date(timestamp) between date('%s') and date('%s')" % (date1, date2))
+	where.append("qname = '%s'" % queue)
+	where.append("action like 'COMPLETE%'")
+	cursor = queueutils.select(
+				fields = ['date(timestamp)', 'agent', 'action', 'info1', 'info2', 'info3'],
+				where = where,
+				order=['timestamp','agent'])
+	row = cursor.fetchone()
+	calls_per_day = [CallData() for i in days]
+	calls_by_agent = []
+	agentnames = []
+	total_completed = cursor.rowcount
+	total_completed_by_agent = 0
+	total_completed_by_caller = 0
+	total_duration = 0
+	average_duration = 0
+	average_hodtime = 0
+
+	if cursor.description:
+		fieldIndices = range(len(cursor.description))
+	else:
+		fieldIndices = []
+
+	while row:
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='date(timestamp)':
+				day = s.split("-")
+				day = int(day[2]) - 1
+			if c=='agent':
+				agent = s.split("-")[0]
+				if not agentnames.count(agent):
+					agentnames.append(agent)
+					calls_by_agent.insert(agentnames.index(agent), CallData())
+			if c=='action':
+				disposition = s
+			if c=='info1':
+				try:
+					holdtime = int(s)
+				except ValueError:
+					holdtime = 0
+			if c=='info2':
+				try:
+					calltime = int(s)
+				except ValueError:
+					calltime = 0
+			if c=='info2':
+				try:
+					origposition = int(s)
+				except ValueError:
+					origposition = 0
+		calls_per_day[day].addQueueCall(holdtime, calltime, origposition, disposition)
+		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
+		row = cursor.fetchone()
+		
+	htmltext("<h4>%s</h4>" % _("Completed Calls"))
+	makeQueueCallsTable(_("Day"), calls_per_day, daynames)
+	makeAgentCallsTable(_("Agent"), calls_by_agent, agentnames)
+
+	
+def perMonthInYear [plain] (year, queue):
+	date1 = "%s-01-01" % (year)
+	date2 = "%s-12-31" % (year)
+	where = []
+	where.append("date(timestamp) between date('%s') and date('%s')" % (date1, date2))
+	where.append("qname = '%s'" % queue)
+	where.append("action like 'COMPLETE%'")
+	cursor = queueutils.select(
+				fields = ['date(timestamp)', 'agent', 'action', 'info1', 'info2', 'info3'],
+				where = where,
+				order=['timestamp','agent'])
+	row = cursor.fetchone()
+	calls_per_month = [CallData() for i in months]
+	calls_by_agent = []
+	agentnames = []
+	total_completed = cursor.rowcount
+	total_completed_by_agent = 0
+	total_completed_by_caller = 0
+	total_duration = 0
+	average_duration = 0
+	average_hodtime = 0
+
+	if cursor.description:
+		fieldIndices = range(len(cursor.description))
+	else:
+		fieldIndices = []
+
+	while row:
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='date(timestamp)':
+				month = s.split("-")
+				month = int(month[1]) - 1
+			if c=='agent':
+				agent = s.split("-")[0]
+				if not agentnames.count(agent):
+					agentnames.append(agent)
+					calls_by_agent.insert(agentnames.index(agent), CallData())
+			if c=='action':
+				disposition = s
+			if c=='info1':
+				try:
+					holdtime = int(s)
+				except ValueError:
+					holdtime = 0
+			if c=='info2':
+				try:
+					calltime = int(s)
+				except ValueError:
+					calltime = 0
+			if c=='info2':
+				try:
+					origposition = int(s)
+				except ValueError:
+					origposition = 0
+		calls_per_month[month].addQueueCall(holdtime, calltime, origposition, disposition)
+		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
+		row = cursor.fetchone()
+		
+	htmltext("<h4>%s</h4>" % _("Completed Calls"))
+	makeQueueCallsTable(_("Month"), calls_per_month, monthnames)
+	makeAgentCallsTable(_("Agent"), calls_by_agent, agentnames)
+
+
+def perYear [plain] (queue):
+	where = []
+	where.append("qname = '%s'" % queue)
+	where.append("action like 'COMPLETE%'")
+	cursor = queueutils.select(
+				fields = ['date(timestamp)', 'agent', 'action', 'info1', 'info2', 'info3'],
+				where = where,
+				order=['timestamp','agent'])
+	row = cursor.fetchone()
+	calls_per_year = [CallData() for i in years]
+	calls_by_agent = []
+	agentnames = []
+	total_completed = cursor.rowcount
+	total_completed_by_agent = 0
+	total_completed_by_caller = 0
+	total_duration = 0
+	average_duration = 0
+	average_hodtime = 0
+
+	if cursor.description:
+		fieldIndices = range(len(cursor.description))
+	else:
+		fieldIndices = []
+
+	while row:
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='date(timestamp)':
+				year = s.split("-")
+				year = int(year[0]) - startyear
+			if c=='agent':
+				agent = s.split("-")[0]
+				if not agentnames.count(agent):
+					agentnames.append(agent)
+					calls_by_agent.insert(agentnames.index(agent), CallData())
+			if c=='action':
+				disposition = s
+			if c=='info1':
+				try:
+					holdtime = int(s)
+				except ValueError:
+					holdtime = 0
+			if c=='info2':
+				try:
+					calltime = int(s)
+				except ValueError:
+					calltime = 0
+			if c=='info2':
+				try:
+					origposition = int(s)
+				except ValueError:
+					origposition = 0
+		calls_per_year[year].addQueueCall(holdtime, calltime, origposition, disposition)
+		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
+		row = cursor.fetchone()
+		
+	htmltext("<h4>%s</h4>" % _("Completed Calls"))
+	makeQueueCallsTable(_("Year"), calls_per_year, yearnames)
+	makeAgentCallsTable(_("Agent"), calls_by_agent, agentnames)
+
+	
+def showResults [plain] (day, month, year, queue):
+	all = N_("All")
+	if day != all and month != all and year != all:
+		perHourInDay(day, month, year, queue)
+	elif day == all and month != all and year != all:
+		perDayInMonth(month, year, queue)
+	elif day == all and month == all and year != all:
+		perMonthInYear(year, queue)
+	elif day == all and month == all and year == all:
+		perYear(queue)
+	else:
+		htmltext("<p style='color:red;'>\n")
+		htmltext("%s" % _("Sorry, this kind of query is not supported yet"))
+		htmltext("</p>")
+
+def cdrForm [plain] (request):
+	htmltext("<h3>%s</h3>" % _("Statistics for a Queue by Date:"))
+	form = makeForm()
+	form.render()
+	
+	if form.is_submitted() and not form.has_errors():
+		htmltext("<h3>%s</h3>" % _("Results"))
+		showResults(form["day"], form["month"], form["year"], form["queue"])
+	
+def _q_index [plain] (request):
+	header(_q_desc)
+	if pychart_exists:
+		cdrForm(request)
+	else:
+		_("You need to install pychart and use a cdr with sqlite to get these statistics")
+	footer()
+	

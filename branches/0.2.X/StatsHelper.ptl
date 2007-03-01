@@ -1,6 +1,6 @@
 # -*- coding: iso-latin-1 -*-
 #
-# Copyright (C) 2005 Manuel Alejandro Cerón Estrada <ceronman@gmail.com>
+# Copyright (C) 2005 Manuel Alejandro CerÃ³n Estrada <ceronman@gmail.com>
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,6 +41,13 @@ class CallData:
 		self.name = None
 		self.group = None
 		self.host = None
+		self.seconds = 0
+		self.holdtime = 0
+		self.completed_by_agent = 0
+		self.completed_by_caller = 0
+		self.dumped = 0
+		self.abandon = 0
+
 	
 	def addCall(self, seconds, cost_per_minute, disp):
 		self.calls_number += 1
@@ -60,6 +67,25 @@ class CallData:
 		elif disp == "FAILED":
 			self.failed += 1
 	
+	def addQueueCall(self, holdtime, calltime, origposition, disp):
+		self.calls_number += 1
+		self.seconds += int(calltime)
+		self.holdtime += int(holdtime)
+		self.origposition = origposition
+		if disp == "COMPLETEAGENT":
+			self.completed_by_agent += 1
+		elif disp == "COMPLETECALLER":
+			self.completed_by_caller += 1
+		elif disp == "AGENTDUMP":
+			self.dumped += 1
+		elif disp == "ABANDON":
+			self.abandon += 1
+
+	def addAgentCall(self, holdtime, calltime):
+		self.calls_number += 1
+		self.seconds += int(calltime)
+		self.holdtime += int(holdtime)
+
 	def asignPattern(self, pat):
 		self.pattern = re.compile(pat.replace('X','[0-9]'))
 	
@@ -132,7 +158,49 @@ def makeCallsTable [plain] (label, calls, names):
 		"<td>%d</td>" % calls[i].busy
 		"<td>%d</td>" % calls[i].failed
 		'</tr>\n'
-	'</table>'
+	'</table>\n<br/>'
+
+def makeAgentCallsTable [plain] (label, calls, names):
+	'<table border="1"> \n'
+	'<tr> <td><b>'+ label
+	'</b></td><td><b>'+_(str("Number of Calls"))
+	#'</b></td><td><b>'+_(str("% Number of Calls"))
+	'</b></td><td><b>'+_(str("Avg. Hold Time"))
+	#'</b></td><td><b>'+_(str("% Avg. Hold Time"))
+	'</b></td><td><b>'+_(str("Avg. Call Duration"))
+	#'</b></td><td><b>'+_(str("% Avg. Call Duration"))
+	#'</b></td><td><b>'+_(str("Transfered Calls"))
+	#'</b></td><td><b>'+_(str("% Transfered Calls"))
+	'</b></td></tr>\n'
+	for i in range(len(calls)):
+		'<tr>'
+		"<td>%s</td>" % names[i]
+		"<td>%d</td>" % calls[i].calls_number
+		"<td>%d</td>" % (calls[i].calls_number and (calls[i].holdtime / calls[i].calls_number) or 0)
+		"<td>%d</td>" % (calls[i].calls_number and (calls[i].seconds / calls[i].calls_number) or 0)
+		'</tr>\n'
+	'</table>\n<br/>'
+
+def makeQueueCallsTable [plain] (label, calls, names):
+	'<table border="1"> \n'
+	'<tr> <td><b>'+ label
+	'</b></td><td><b>'+_(str("Number of Calls"))
+	#'</b></td><td><b>'+_(str("% Number of Calls"))
+	'</b></td><td><b>'+_(str("Avg. Hold Time"))
+	#'</b></td><td><b>'+_(str("% Avg. Hold Time"))
+	'</b></td><td><b>'+_(str("Avg. Call Duration"))
+	#'</b></td><td><b>'+_(str("% Avg. Call Duration"))
+	#'</b></td><td><b>'+_(str("Transfered Calls"))
+	#'</b></td><td><b>'+_(str("% Transfered Calls"))
+	'</b></td></tr>\n'
+	for i in range(len(calls)):
+		'<tr>'
+		"<td>%s</td>" % names[i]
+		"<td>%d</td>" % calls[i].calls_number
+		"<td>%d</td>" % (calls[i].calls_number and (calls[i].holdtime / calls[i].calls_number) or 0)
+		"<td>%d</td>" % (calls[i].calls_number and (calls[i].seconds / calls[i].calls_number) or 0)
+		'</tr>\n'
+	'</table>\n<br/>'
 
 def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 	theme.use_color = True;
