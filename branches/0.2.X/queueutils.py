@@ -63,7 +63,7 @@ def loadQueueLog ():
 		try:
 			maxtime = datetime(*strptime(row[0], "%Y-%m-%d %H:%M:%S")[0:6])
 		except:
-			continue
+			pass
 
 	rows = 0
 	in_file = open(q_fn,"r")
