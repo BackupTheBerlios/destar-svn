@@ -34,6 +34,8 @@ http://www.pysqlite.org/
 You will also need to build asterisk using the cdr_sqlite3_custom driver found on
 http://bugs.digium.com/view.php?id=7149
 
+For Queue Statistics, the file misc/queue.db must be copied to /var/log/asterisk/
+
 Optional: Pychart
 -----------------
 
