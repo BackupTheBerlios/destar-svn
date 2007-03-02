@@ -94,72 +94,13 @@ def perHourInDay [plain] (day, month, year, queue):
 	where = []
 	where.append("date(timestamp) = date('%s')" % date)
 	where.append("qname = '%s'" % queue)
-	where.append("action like 'COMPLETE%'")
+	where_completed = where + [("action like 'COMPLETE%'")]
 	cursor = queueutils.select(
-				fields = ['time(timestamp)', 'agent', 'action', 'info1', 'info2', 'info3'],
-				where = where,
+				fields = ['time(timestamp) as hour', 'agent', 'action', 'info1', 'info2', 'info3'],
+				where = where_completed,
 				order=['timestamp','agent'])
-	row = cursor.fetchone()
-	calls_per_hour = [CallData() for i in hours]
-	calls_by_agent = []
-	agentnames = []
-	total_completed = 0
-	total_completed_by_agent = 0
-	total_completed_by_caller = 0
-	total_duration = 0
-	average_duration = 0
-	average_hodtime = 0
+	completedPerPeriod (cursor, hours, hournames)
 
-	if cursor.description:
-		fieldIndices = range(len(cursor.description))
-	else:
-		fieldIndices = []
-
-	while row:
-		for fieldIndex in fieldIndices:
-			c = cursor.description[fieldIndex][0]
-			s = row[fieldIndex]
-			if c=='time(timestamp)':
-				hour = s.split(":")
-				hour = int(hour[0])
-			if c=='agent':
-				agent = s.split("-")[0]
-				if not agentnames.count(agent):
-					agentnames.append(agent)
-					calls_by_agent.insert(agentnames.index(agent), CallData())
-			if c=='action':
-				disposition = s
-			if c=='info1':
-				try:
-					holdtime = int(s)
-				except ValueError:
-					holdtime = 0
-			if c=='info2':
-				try:
-					calltime = int(s)
-				except ValueError:
-					calltime = 0
-			if c=='info2':
-				try:
-					origposition = int(s)
-				except ValueError:
-					origposition = 0
-		total_completed += 1
-		calls_per_hour[hour].addQueueCall(holdtime, calltime, origposition, disposition)
-		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
-		row = cursor.fetchone()
-		
-	htmltext("<h3>%s</h3>" % _("Completed Calls"))
-	completed_table = HtmlTable(1,1)
-	completed_table.setCell(0,0, _("Total completed calls"))
-	completed_table.setCell(1,0, "%d" % total_completed)
-	completed_table.getHtml(border=1)
-
-	htmltext("<br/><h3>%s</h3>" % _("Completed Calls by Agent"))
-	makeAgentCallsTable(_("Agent"), calls_by_agent, agentnames)
-	htmltext("<h3>%s</h3>" % _("Distribution of Completed Calls"))
-	makeQueueCallsTable(_("Time"), calls_per_hour, hournames)
-	
 def perDayInMonth [plain] (month, year, queue):
 	
 	date1 = "%s-%s-01" % (year, month)
@@ -169,63 +110,10 @@ def perDayInMonth [plain] (month, year, queue):
 	where.append("qname = '%s'" % queue)
 	where.append("action like 'COMPLETE%'")
 	cursor = queueutils.select(
-				fields = ['date(timestamp)', 'agent', 'action', 'info1', 'info2', 'info3'],
+				fields = ['date(timestamp) as day', 'agent', 'action', 'info1', 'info2', 'info3'],
 				where = where,
 				order=['timestamp','agent'])
-	row = cursor.fetchone()
-	calls_per_day = [CallData() for i in days]
-	calls_by_agent = []
-	agentnames = []
-	total_completed = cursor.rowcount
-	total_completed_by_agent = 0
-	total_completed_by_caller = 0
-	total_duration = 0
-	average_duration = 0
-	average_hodtime = 0
-
-	if cursor.description:
-		fieldIndices = range(len(cursor.description))
-	else:
-		fieldIndices = []
-
-	while row:
-		for fieldIndex in fieldIndices:
-			c = cursor.description[fieldIndex][0]
-			s = row[fieldIndex]
-			if c=='date(timestamp)':
-				day = s.split("-")
-				day = int(day[2]) - 1
-			if c=='agent':
-				agent = s.split("-")[0]
-				if not agentnames.count(agent):
-					agentnames.append(agent)
-					calls_by_agent.insert(agentnames.index(agent), CallData())
-			if c=='action':
-				disposition = s
-			if c=='info1':
-				try:
-					holdtime = int(s)
-				except ValueError:
-					holdtime = 0
-			if c=='info2':
-				try:
-					calltime = int(s)
-				except ValueError:
-					calltime = 0
-			if c=='info2':
-				try:
-					origposition = int(s)
-				except ValueError:
-					origposition = 0
-		calls_per_day[day].addQueueCall(holdtime, calltime, origposition, disposition)
-		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
-		row = cursor.fetchone()
-		
-	htmltext("<h3>%s</h3>" % _("Completed Calls by Agent"))
-	makeAgentCallsTable(_("Agent"), calls_by_agent, agentnames)
-	htmltext("<h3>%s</h3>" % _("Distribution of Completed Calls"))
-	makeQueueCallsTable(_("Day"), calls_per_day, daynames)
-
+	completedPerPeriod (cursor, days, daynames)
 	
 def perMonthInYear [plain] (year, queue):
 	date1 = "%s-01-01" % (year)
@@ -235,82 +123,31 @@ def perMonthInYear [plain] (year, queue):
 	where.append("qname = '%s'" % queue)
 	where.append("action like 'COMPLETE%'")
 	cursor = queueutils.select(
-				fields = ['date(timestamp)', 'agent', 'action', 'info1', 'info2', 'info3'],
+				fields = ['date(timestamp) as month', 'agent', 'action', 'info1', 'info2', 'info3'],
 				where = where,
 				order=['timestamp','agent'])
-	row = cursor.fetchone()
-	calls_per_month = [CallData() for i in months]
-	calls_by_agent = []
-	agentnames = []
-	total_completed = cursor.rowcount
-	total_completed_by_agent = 0
-	total_completed_by_caller = 0
-	total_duration = 0
-	average_duration = 0
-	average_hodtime = 0
-
-	if cursor.description:
-		fieldIndices = range(len(cursor.description))
-	else:
-		fieldIndices = []
-
-	while row:
-		for fieldIndex in fieldIndices:
-			c = cursor.description[fieldIndex][0]
-			s = row[fieldIndex]
-			if c=='date(timestamp)':
-				month = s.split("-")
-				month = int(month[1]) - 1
-			if c=='agent':
-				agent = s.split("-")[0]
-				if not agentnames.count(agent):
-					agentnames.append(agent)
-					calls_by_agent.insert(agentnames.index(agent), CallData())
-			if c=='action':
-				disposition = s
-			if c=='info1':
-				try:
-					holdtime = int(s)
-				except ValueError:
-					holdtime = 0
-			if c=='info2':
-				try:
-					calltime = int(s)
-				except ValueError:
-					calltime = 0
-			if c=='info2':
-				try:
-					origposition = int(s)
-				except ValueError:
-					origposition = 0
-		calls_per_month[month].addQueueCall(holdtime, calltime, origposition, disposition)
-		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
-		row = cursor.fetchone()
-		
-	htmltext("<h3>%s</h3>" % _("Completed Calls by Agent"))
-	makeAgentCallsTable(_("Agent"), calls_by_agent, agentnames)
-	htmltext("<h3>%s</h3>" % _("Distribution of Completed Calls"))
-	makeQueueCallsTable(_("Month"), calls_per_month, monthnames)
-
+	completedPerPeriod (cursor, months, monthnames)
 
 def perYear [plain] (queue):
 	where = []
 	where.append("qname = '%s'" % queue)
 	where.append("action like 'COMPLETE%'")
 	cursor = queueutils.select(
-				fields = ['date(timestamp)', 'agent', 'action', 'info1', 'info2', 'info3'],
+				fields = ['date(timestamp) as year', 'agent', 'action', 'info1', 'info2', 'info3'],
 				where = where,
 				order=['timestamp','agent'])
+	completedPerPeriod (cursor, years, yearnames)
+
+def completedPerPeriod [plain] (cursor, periods, periodnames):
 	row = cursor.fetchone()
-	calls_per_year = [CallData() for i in years]
+	calls_per_period = [CallData() for i in periods]
 	calls_by_agent = []
 	agentnames = []
-	total_completed = cursor.rowcount
+	total_completed = 0
 	total_completed_by_agent = 0
 	total_completed_by_caller = 0
 	total_duration = 0
-	average_duration = 0
-	average_hodtime = 0
+	total_holdtime = 0
 
 	if cursor.description:
 		fieldIndices = range(len(cursor.description))
@@ -321,9 +158,18 @@ def perYear [plain] (queue):
 		for fieldIndex in fieldIndices:
 			c = cursor.description[fieldIndex][0]
 			s = row[fieldIndex]
-			if c=='date(timestamp)':
-				year = s.split("-")
-				year = int(year[0]) - startyear
+			if c=='hour':
+				period = s.split(":")
+				period = int(period[0])
+			if c=='day':
+				period = s.split("-")
+				period = int(period[2]) - 1
+			if c=='month':
+				period = s.split("-")
+				period = int(period[1]) - 1
+			if c=='year':
+				period = s.split("-")
+				period = int(period[0]) - startyear
 			if c=='agent':
 				agent = s.split("-")[0]
 				if not agentnames.count(agent):
@@ -331,6 +177,10 @@ def perYear [plain] (queue):
 					calls_by_agent.insert(agentnames.index(agent), CallData())
 			if c=='action':
 				disposition = s
+				if disposition == "COMPLETEAGENT":
+					total_completed_by_agent += 1
+				if disposition == "COMPLETECALLER":
+					total_completed_by_caller += 1
 			if c=='info1':
 				try:
 					holdtime = int(s)
@@ -346,15 +196,36 @@ def perYear [plain] (queue):
 					origposition = int(s)
 				except ValueError:
 					origposition = 0
-		calls_per_year[year].addQueueCall(holdtime, calltime, origposition, disposition)
+		total_duration += calltime
+		total_holdtime += holdtime
+		calls_per_period [period].addQueueCall(holdtime, calltime, origposition, disposition)
 		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
 		row = cursor.fetchone()
-		
-	htmltext("<h3>%s</h3>" % _("Completed Calls by Agent"))
+
+	makeCompletedTable(total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime)
+
+	htmltext("<br/><h3>%s</h3>" % _("Completed Calls by Agent"))
 	makeAgentCallsTable(_("Agent"), calls_by_agent, agentnames)
 	htmltext("<h3>%s</h3>" % _("Distribution of Completed Calls"))
-	makeQueueCallsTable(_("Year"), calls_per_year, yearnames)
+	makeQueueCallsTable(_("Period"), calls_per_period, periodnames)
 
+def makeCompletedTable [plain] (total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime):
+	total_completed = total_completed_by_agent + total_completed_by_caller
+	htmltext("<h3>%s</h3>" % _("Completed Calls"))
+	completed_table = HtmlTable(1,1)
+	completed_table.setCell(0,0, _("Total completed calls"))
+	completed_table.setCell(1,0, "%d" % total_completed)
+	completed_table.setCell(0,1, _("Calls terminated by agents"))
+	completed_table.setCell(1,1, "%d" % total_completed_by_agent)
+	completed_table.setCell(0,2, _("Calls terminated by caller"))
+	completed_table.setCell(1,2, "%d" % total_completed_by_caller)
+	completed_table.setCell(0,3, _("Total call duration"))
+	completed_table.setCell(1,3, "%d" % total_duration)
+	completed_table.setCell(0,4, _("Average call duration"))
+	completed_table.setCell(1,4, "%d" % (total_completed and (total_duration / total_completed) or 0))
+	completed_table.setCell(0,5, _("Average hold time"))
+	completed_table.setCell(1,5, "%d" % (total_completed and (total_holdtime / total_completed) or 0))
+	completed_table.getHtml(border=1)
 	
 def showResults [plain] (day, month, year, queue):
 	all = N_("All")
