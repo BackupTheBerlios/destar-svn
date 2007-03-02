@@ -37,10 +37,6 @@ class CallData:
 		self.not_answered = 0
 		self.busy = 0
 		self.failed = 0
-		self.pattern = None
-		self.name = None
-		self.group = None
-		self.host = None
 		self.seconds = 0
 		self.holdtime = 0
 		self.completed_by_agent = 0
@@ -77,36 +73,6 @@ class CallData:
 		elif disp == "uncompleted":
 			self.uncompleted += 1
 
-	def asignPattern(self, pat):
-		self.pattern = re.compile(pat.replace('X','[0-9]'))
-	
-	def match(self, pat):
-		return self.pattern.match(pat)
-	
-	def isIncommingCall(self, dcontext):
-		pat = re.compile('in-(.*)')
-		match = pat.match(dcontext)
-		if match:
-			if self.name == match.group(1):
-				return True
-	
-		return False
-	
-	def isOutgoingCall(self, lastdata):
-		patZap = re.compile('Zap/g([0-9]+)/.*')
-		patIax = re.compile('IAX2/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/.*')
-		
-		match = patZap.match(lastdata)
-		if match:
-			if str(self.group) == match.group(1):
-				return True
-		
-		match = patIax.match(lastdata)
-		if match:
-			if str(self.host) == match.group(1):
-				return True
-
-		return False
 
 startyear = 2005
 all = _("All")

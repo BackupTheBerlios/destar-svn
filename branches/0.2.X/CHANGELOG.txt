@@ -1,9 +1,10 @@
 2007-03-02:
- * Improved page_stats_queue.ptl:
+ * Improved Queue statistics:
  	- Refactored field processing code.
 	- Added general completed calls stats.
 	- Added uncompleted calls stats.
 	- Added service level table.
+ * Removed depricated method from StatsHelper.ptl
 
 2007-03-01:
  * Added queueutils.py to put queue_log in an sqlite3 database.
