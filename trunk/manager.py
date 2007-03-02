@@ -636,6 +636,9 @@ def checkMailBox(ext):
 def reloadAsterisk():
 	return conn.action('Command', Command='reload')
 
+def reloadMoH():
+	return conn.action('Command', Command='moh reload')
+
 if __name__ == '__main__':
 	connect()
 	if not isConnected():
