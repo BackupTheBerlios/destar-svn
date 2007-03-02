@@ -45,8 +45,7 @@ class CallData:
 		self.holdtime = 0
 		self.completed_by_agent = 0
 		self.completed_by_caller = 0
-		self.dumped = 0
-		self.abandon = 0
+		self.uncompleted = 0
 
 	
 	def addCall(self, seconds, cost_per_minute, disp):
@@ -67,21 +66,18 @@ class CallData:
 		elif disp == "FAILED":
 			self.failed += 1
 	
-	def addQueueCall(self, holdtime, calltime, origposition, disp):
+	def addQueueCall(self, holdtime=0, calltime=0, disp):
 		self.calls_number += 1
 		self.seconds += int(calltime)
 		self.holdtime += int(holdtime)
-		self.origposition = origposition
 		if disp == "COMPLETEAGENT":
 			self.completed_by_agent += 1
 		elif disp == "COMPLETECALLER":
 			self.completed_by_caller += 1
-		elif disp == "AGENTDUMP":
-			self.dumped += 1
-		elif disp == "ABANDON":
-			self.abandon += 1
+		elif disp == "uncompleted":
+			self.uncompleted += 1
 
-	def addAgentCall(self, holdtime, calltime):
+	def addAgentCall(self, holdtime=0, calltime=0):
 		self.calls_number += 1
 		self.seconds += int(calltime)
 		self.holdtime += int(holdtime)
@@ -160,7 +156,8 @@ def makeCallsTable [plain] (label, calls, names):
 		'</tr>\n'
 	'</table>\n<br/>'
 
-def makeAgentCallsTable [plain] (label, calls, names):
+#def makeAgentCallsTable [plain] (label, names, completed, dumped, transfered):
+def makeAgentCallsTable [plain] (label, completed, dumped, names):
 	'<table border="1"> \n'
 	'<tr> <td><b>'+ label
 	'</b></td><td><b>'+_(str("Number of Calls"))
@@ -171,21 +168,29 @@ def makeAgentCallsTable [plain] (label, calls, names):
 	#'</b></td><td><b>'+_(str("% Avg. Call Duration"))
 	#'</b></td><td><b>'+_(str("Transfered Calls"))
 	#'</b></td><td><b>'+_(str("% Transfered Calls"))
+	'</b></td><td><b>'+_(str("Dumped Calls"))
+	#'</b></td><td><b>'+_(str("% Dumped Calls"))
 	'</b></td></tr>\n'
-	for i in range(len(calls)):
+	for i in range(len(names)):
 		'<tr>'
 		"<td>%s</td>" % names[i]
-		"<td>%d</td>" % calls[i].calls_number
-		"<td>%d</td>" % (calls[i].calls_number and (calls[i].holdtime / calls[i].calls_number) or 0)
-		"<td>%d</td>" % (calls[i].calls_number and (calls[i].seconds / calls[i].calls_number) or 0)
+		"<td>%d</td>" % completed[i].calls_number
+		"<td>%d</td>" % (completed[i].calls_number and (completed[i].holdtime / completed[i].calls_number) or 0)
+		"<td>%d</td>" % (completed[i].calls_number and (completed[i].seconds / completed[i].calls_number) or 0)
+		if i < len(dumped):
+			"<td>%d</td>" % dumped[i].calls_number
+		else:
+			"<td>0</td>" 
 		'</tr>\n'
 	'</table>\n<br/>'
 
-def makeQueueCallsTable [plain] (label, calls, names):
+def makeQueueCallsTable [plain] (label, completed, uncompleted, names):
 	'<table border="1"> \n'
 	'<tr> <td><b>'+ label
-	'</b></td><td><b>'+_(str("Number of Calls"))
-	#'</b></td><td><b>'+_(str("% Number of Calls"))
+	'</b></td><td><b>'+_(str("Completed Calls"))
+	#'</b></td><td><b>'+_(str("% Completed"))
+	'</b></td><td><b>'+_(str("Uncompleted Calls"))
+	#'</b></td><td><b>'+_(str("% Uncompleted"))
 	'</b></td><td><b>'+_(str("Avg. Hold Time"))
 	#'</b></td><td><b>'+_(str("% Avg. Hold Time"))
 	'</b></td><td><b>'+_(str("Avg. Call Duration"))
@@ -193,12 +198,13 @@ def makeQueueCallsTable [plain] (label, calls, names):
 	#'</b></td><td><b>'+_(str("Transfered Calls"))
 	#'</b></td><td><b>'+_(str("% Transfered Calls"))
 	'</b></td></tr>\n'
-	for i in range(len(calls)):
+	for i in range(len(names)):
 		'<tr>'
 		"<td>%s</td>" % names[i]
-		"<td>%d</td>" % calls[i].calls_number
-		"<td>%d</td>" % (calls[i].calls_number and (calls[i].holdtime / calls[i].calls_number) or 0)
-		"<td>%d</td>" % (calls[i].calls_number and (calls[i].seconds / calls[i].calls_number) or 0)
+		"<td>%d</td>" % completed[i].calls_number
+		"<td>%d</td>" % uncompleted[i].calls_number
+		"<td>%d</td>" % (completed[i].calls_number and (completed[i].holdtime / completed[i].calls_number) or 0)
+		"<td>%d</td>" % (completed[i].calls_number and (completed[i].seconds / completed[i].calls_number) or 0)
 		'</tr>\n'
 	'</table>\n<br/>'
 

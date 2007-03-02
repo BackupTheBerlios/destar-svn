@@ -140,6 +140,7 @@ def select(
 		if offset:
 			sql.append('OFFSET %d' % offset)
 
+	#print ' '.join(sql) 
 	cursor.execute( ' '.join(sql) )
 	return cursor
 

@@ -2,6 +2,7 @@
  * Improved page_stats_queue.ptl:
  	- Refactored field processing code.
 	- Added general completed calls stats.
+	- Added uncompleted calls stats.
 
 2007-03-01:
  * Added queueutils.py to put queue_log in an sqlite3 database.
