@@ -117,7 +117,7 @@ def makeCallsTable [plain] (label, calls, names):
 		'</tr>\n'
 	'</table>\n<br/>'
 
-#def makeAgentCallsTable [plain] (label, names, completed, dumped, transfered):
+#def makeAgentCallsTable [plain] (label, completed, dumped, transfered, names):
 def makeAgentCallsTable [plain] (label, completed, dumped, names):
 	'<table border="1"> \n'
 	'<tr> <td><b>'+ label
@@ -241,11 +241,13 @@ def makeGraphic [plain] (names, values, title, labelx, labely, filename):
 	ar.draw(can)
 	can.close()
 	
-	htmltext('<br/><br/><h3>')
-	htmltext(title)
-	htmltext('</h3>')
+	html = htmltext('<br/><br/><h3>')
+	html += htmltext(title)
+	html += htmltext('</h3>')
 	
-	htmltext('<p>')
-	htmltext('<img alt="table" src="/graphs/%s" />' % filename)
-	htmltext('</p>')
+	html += htmltext('<p>')
+	html += htmltext('<img alt="table" src="/graphs/%s" />' % filename)
+	html += htmltext('</p>')
+
+	return html
 	

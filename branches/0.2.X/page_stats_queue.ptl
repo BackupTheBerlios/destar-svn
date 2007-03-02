@@ -118,7 +118,7 @@ def perHourInDay [plain] (day, month, year, queue):
 	completed[3].getHtml(border=1)
 
 	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
-	completed[4].getHtml(border=1)
+	completed[4]
 
 	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
 	uncompleted[3].getHtml(border=1)
@@ -161,7 +161,7 @@ def perDayInMonth [plain] (month, year, queue):
 	completed[3].getHtml(border=1)
 
 	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
-	completed[4].getHtml(border=1)
+	completed[4]
 
 	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
 	uncompleted[3].getHtml(border=1)
@@ -204,7 +204,7 @@ def perMonthInYear [plain] (year, queue):
 	completed[3].getHtml(border=1)
 
 	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
-	completed[4].getHtml(border=1)
+	completed[4]
 
 	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
 	uncompleted[3].getHtml(border=1)
@@ -244,7 +244,7 @@ def perYear [plain] (queue):
 	completed[3].getHtml(border=1)
 
 	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
-	completed[4].getHtml(border=1)
+	completed[4]
 
 	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
 	uncompleted[3].getHtml(border=1)
@@ -442,7 +442,10 @@ def makeServiceTable [plain] (total_completed, calls_per_holdtime, holdtimes):
 		table.setCell(1,y, "%d" % calls_per_holdtime[i].calls_number)
 		table.setCell(2,y, "%f" % (total_completed and (float(calls_per_holdtime[i].calls_number)*100 / float(total_completed)) or 0))
 		y += 1
-	return table
+	graph = makeGraphic(holdtimes, [i.calls_number for i in calls_per_holdtime], _("Service Level"),_("Time of Answer"), _("Number of calls"), "service_level.png")
+	table_html = table.getHtml(border=1)
+
+	return table_html+graph
 
 def showResults [plain] (day, month, year, queue):
 	all = N_("All")

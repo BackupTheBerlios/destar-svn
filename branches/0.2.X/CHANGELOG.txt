@@ -4,6 +4,7 @@
 	- Added general completed calls stats.
 	- Added uncompleted calls stats.
 	- Added service level table.
+	- Added service level graphic.
  * Removed depricated method from StatsHelper.ptl
 
 2007-03-01:
