@@ -820,6 +820,8 @@ def reloadAsterisk():
 	writeAsteriskConfig()
 	import manager
 	s = manager.reloadAsterisk()
+	if configlets.configlet_tree.hasConfiglet('CfgOptMusic'):
+		s += manager.reloadMoH()
 	if panelutils.isConfigured():
 		s += panelutils.restartPanelDaemon()
 	return "<br/>".join(s)

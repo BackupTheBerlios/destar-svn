@@ -2,6 +2,7 @@
  * Added queueutils.py to put queue_log in an sqlite3 database.
  * Added initial version of page_stats_queue.ptl for Queue statistics.
  * Added misc/queue.db with initial schema to ease queue stats installation.
+* `Apply changes` relaods MoH
 
 2007-02-26:
 * cfg_dialout_normal: adding r Dial option if no Authenticate() is used
