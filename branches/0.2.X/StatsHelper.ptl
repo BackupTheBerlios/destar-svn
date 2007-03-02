@@ -66,7 +66,7 @@ class CallData:
 		elif disp == "FAILED":
 			self.failed += 1
 	
-	def addQueueCall(self, holdtime=0, calltime=0, disp):
+	def addQueueCall(self, holdtime=0, calltime=0, disp=""):
 		self.calls_number += 1
 		self.seconds += int(calltime)
 		self.holdtime += int(holdtime)
@@ -76,11 +76,6 @@ class CallData:
 			self.completed_by_caller += 1
 		elif disp == "uncompleted":
 			self.uncompleted += 1
-
-	def addAgentCall(self, holdtime=0, calltime=0):
-		self.calls_number += 1
-		self.seconds += int(calltime)
-		self.holdtime += int(holdtime)
 
 	def asignPattern(self, pat):
 		self.pattern = re.compile(pat.replace('X','[0-9]'))

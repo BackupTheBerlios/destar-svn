@@ -3,6 +3,7 @@
  	- Refactored field processing code.
 	- Added general completed calls stats.
 	- Added uncompleted calls stats.
+	- Added service level table.
 
 2007-03-01:
  * Added queueutils.py to put queue_log in an sqlite3 database.

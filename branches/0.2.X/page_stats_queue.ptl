@@ -117,6 +117,9 @@ def perHourInDay [plain] (day, month, year, queue):
 	htmltext("<br/><h3>%s</h3>" % _("Completed Calls"))
 	completed[3].getHtml(border=1)
 
+	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
+	completed[4].getHtml(border=1)
+
 	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
 	uncompleted[3].getHtml(border=1)
 
@@ -157,6 +160,9 @@ def perDayInMonth [plain] (month, year, queue):
 	htmltext("<br/><h3>%s</h3>" % _("Completed Calls"))
 	completed[3].getHtml(border=1)
 
+	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
+	completed[4].getHtml(border=1)
+
 	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
 	uncompleted[3].getHtml(border=1)
 
@@ -177,7 +183,7 @@ def perMonthInYear [plain] (year, queue):
 	where_completed = where + [("action like 'COMPLETE%'")]
 	cursor = queueutils.select(
 				fields = ['date(timestamp) as month', 'agent', 'action', 'info1', 'info2', 'info3'],
-				where = where,
+				where = where_completed,
 				order=['timestamp','agent'])
 	completed = completedPerPeriod (cursor, months, monthnames)
 
@@ -197,6 +203,9 @@ def perMonthInYear [plain] (year, queue):
 	htmltext("<br/><h3>%s</h3>" % _("Completed Calls"))
 	completed[3].getHtml(border=1)
 
+	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
+	completed[4].getHtml(border=1)
+
 	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
 	uncompleted[3].getHtml(border=1)
 
@@ -214,7 +223,7 @@ def perYear [plain] (queue):
 	where_completed = where + [("action like 'COMPLETE%'")]
 	cursor = queueutils.select(
 				fields = ['date(timestamp) as year', 'agent', 'action', 'info1', 'info2', 'info3'],
-				where = where,
+				where = where_completed,
 				order=['timestamp','agent'])
 	completed = completedPerPeriod (cursor, years, yearnames)
 
@@ -233,6 +242,9 @@ def perYear [plain] (queue):
 
 	htmltext("<br/><h3>%s</h3>" % _("Completed Calls"))
 	completed[3].getHtml(border=1)
+
+	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
+	completed[4].getHtml(border=1)
 
 	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
 	uncompleted[3].getHtml(border=1)
@@ -254,6 +266,8 @@ def completedPerPeriod [plain] (cursor, periods, periodnames):
 	total_completed_by_caller = 0
 	total_duration = 0
 	total_holdtime = 0
+	holdtimes = ['< 15','< 30','< 45','< 60','< 75','< 90','>= 90']
+	calls_per_holdtime = [CallData() for i in holdtimes]
 
 	if cursor.description:
 		fieldIndices = range(len(cursor.description))
@@ -278,7 +292,7 @@ def completedPerPeriod [plain] (cursor, periods, periodnames):
 				period = int(period[0]) - startyear
 			if c=='agent':
 				agent = s.split("-")[0]
-				if not agentnames.count(agent):
+				if not agentnames.count(agent) and agent != "NONE":
 					agentnames.append(agent)
 					calls_by_agent.insert(agentnames.index(agent), CallData())
 			if c=='action':
@@ -305,12 +319,17 @@ def completedPerPeriod [plain] (cursor, periods, periodnames):
 		total_duration += calltime
 		total_holdtime += holdtime
 		calls_per_period [period].addQueueCall(holdtime, calltime, disposition)
-		calls_by_agent[agentnames.index(agent)].addAgentCall(holdtime, calltime)
+		if holdtime / 15 > 5 : 
+			calls_per_holdtime[6].addQueueCall(0,0,"")
+		else: 
+			calls_per_holdtime[holdtime/15].addQueueCall(0,0,"")
+		calls_by_agent[agentnames.index(agent)].addQueueCall(holdtime, calltime, "")
 		row = cursor.fetchone()
 
-	table = makeCompletedTable(total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime)
+	completed_table = makeCompletedTable(total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime)
+	service_table = makeServiceTable((total_completed_by_agent + total_completed_by_caller), calls_per_holdtime, holdtimes)
 
-	return [calls_per_period, calls_by_agent, agentnames, table]
+	return [calls_per_period, calls_by_agent, agentnames, completed_table, service_table]
 	
 def uncompletedPerPeriod [plain] (cursor, periods, periodnames, agentnames):
 	row = cursor.fetchone()
@@ -351,7 +370,7 @@ def uncompletedPerPeriod [plain] (cursor, periods, periodnames, agentnames):
 			if not agentnames.count(agent):
 				agentnames.append(agent)
 				calls_by_agent.insert(agentnames.index(agent), CallData())
-			calls_by_agent[agentnames.index(agent)].addAgentCall(0,0)
+			calls_by_agent[agentnames.index(agent)].addQueueCall(0,0,"")
 		if disposition == "EXITWITHKEY":
 			total_exited_with_key += 1
 			total_position += int(row[4]) # (info2)
@@ -410,6 +429,19 @@ def makeUncompletedTable [plain] (
 	table.setCell(0,5, _("Average position at abandon time"))
 	total_positioned = total_abandoned_by_caller + total_exited_with_key + total_timed_out
 	table.setCell(1,5, "%d" % (total_positioned and (total_position / total_positioned) or 0))
+	return table
+
+def makeServiceTable [plain] (total_completed, calls_per_holdtime, holdtimes):
+	table = HtmlTable(1,1)
+	table.setCell(0,0, _("Time of answer"))
+	table.setCell(1,0, _("Number of calls"))
+	table.setCell(2,0, _("% of Total Calls"))
+	y = 1
+	for i in range(len(holdtimes)):
+		table.setCell(0,y, "%s" % holdtimes[i])
+		table.setCell(1,y, "%d" % calls_per_holdtime[i].calls_number)
+		table.setCell(2,y, "%f" % (total_completed and (float(calls_per_holdtime[i].calls_number)*100 / float(total_completed)) or 0))
+		y += 1
 	return table
 
 def showResults [plain] (day, month, year, queue):
