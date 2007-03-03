@@ -1,6 +1,7 @@
 2007-03-03
 * Bad example line. Default values are not stored in destar_cfg.py
 * Enable qualify option for IAX phones.
+* Add the Speex Codec (http://www.speex.org/) as an option and make it default in the example.
 
 2007-03-01:
 * `Apply changes` relaods MoH

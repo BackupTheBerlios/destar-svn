@@ -35,6 +35,7 @@ class CfgOptCodec(CfgOpt):
 			VarType("name", title=_("Allow codec"), type="choice",
 				options=(
 					("all",_("Use all codecs")),
+					("speex",_("Speex")),
 					("alaw",_("A Law (g711a)")),
 					("ulaw",_("U Law (g711u)")),
 					("gsm",_("GSM")),

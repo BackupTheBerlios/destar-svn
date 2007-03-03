@@ -273,6 +273,10 @@ CfgOptDID(
 	)
 
 CfgOptCodec(
+	name     = "speex",
+	)
+
+CfgOptCodec(
 	name     = "gsm",
 	)
 
