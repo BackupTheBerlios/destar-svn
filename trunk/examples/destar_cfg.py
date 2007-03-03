@@ -21,7 +21,6 @@ CfgOptUser(
 
 CfgIVRAutoatt(
 	name     = "attendant1",
-	timeout  = "0",
 	ext      = "queue1",
 	pbx      = "pbx1",
 	)

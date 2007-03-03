@@ -1,3 +1,6 @@
+2007-03-03
+* Bad example line. Default values are not stored in destar_cfg.py
+
 2007-03-02:
  * Improved Queue statistics:
  	- Refactored field processing code.
