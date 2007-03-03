@@ -281,7 +281,8 @@ class CfgPhoneIax(CfgPhone):
 
 		if not self.notransfer:
 			iax.append("notransfer=yes")
-		iax.appendValue(self, "qualify")
+		if self.qualify:
+			iax.appendValue(self, "qualify")
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)
