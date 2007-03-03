@@ -5,6 +5,7 @@
 	- Added uncompleted calls stats.
 	- Added service level table.
 	- Added service level graphic.
+	- Added graphic for queue calls distribution in time periods.
  * Removed depricated method from StatsHelper.ptl
 
 2007-03-01:

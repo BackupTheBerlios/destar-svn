@@ -442,7 +442,7 @@ def makeServiceTable [plain] (total_completed, calls_per_holdtime, holdtimes):
 		table.setCell(1,y, "%d" % calls_per_holdtime[i].calls_number)
 		table.setCell(2,y, "%f" % (total_completed and (float(calls_per_holdtime[i].calls_number)*100 / float(total_completed)) or 0))
 		y += 1
-	graph = makeGraphic(holdtimes, [i.calls_number for i in calls_per_holdtime], _("Service Level"),_("Time of Answer"), _("Number of calls"), "service_level.png")
+	graph = makeGraphic(holdtimes, [i.calls_number for i in calls_per_holdtime], _("Service Level Graphic"),_("Time of Answer"), _("Number of calls"), "service_level.png")
 	table_html = table.getHtml(border=1)
 
 	return table_html+graph

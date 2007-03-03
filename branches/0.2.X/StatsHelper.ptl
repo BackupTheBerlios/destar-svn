@@ -168,6 +168,7 @@ def makeQueueCallsTable [plain] (label, completed, uncompleted, names):
 		"<td>%d</td>" % (completed[i].calls_number and (completed[i].seconds / completed[i].calls_number) or 0)
 		'</tr>\n'
 	'</table>\n<br/>'
+	makeQueueCallsGraphic(names, completed, uncompleted, _("Number of calls"),_("Period"), "calls_per_period.png")
 
 def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 	theme.use_color = True;
@@ -202,6 +203,48 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 	plot3=bar_plot.T(label=unicode(_('Busy'), 'utf-8'), hcol=3, stack_on = plot2, fill_style=fill_style.gray50)
 	plot4=bar_plot.T(label=unicode(_('Failed'), 'utf-8'), hcol=4, stack_on = plot3, fill_style=fill_style.darkseagreen)
 	ar.add_plot(plot1,plot2,plot3,plot4)
+	ar.draw(can)
+	can.close()
+	
+	htmltext('<br/><br/><h3>')
+	htmltext(title)
+	htmltext('</h3>')
+	
+	htmltext('<p>')
+	htmltext('<img alt="table" src="/graphs/%s" />' % filename)
+	htmltext('</p>')				
+
+def makeQueueCallsGraphic [plain] (names, completed, uncompleted, title, labelx, filename):
+	theme.use_color = True;
+	theme.default_font_size = 14
+	theme.reinitialize()
+	
+	can = canvas.init("/tmp/%s" % filename, "png")
+	
+	completed_calls = [i.calls_number for i in completed]
+	
+	interval = max(completed_calls) // 6
+
+	names = [i[:3] for i in names]
+
+	data = zip( names,
+				[i.calls_number for i in completed],
+				[i.calls_number for i in uncompleted])
+
+	chart_object.set_defaults(area.T, 
+								size = (510, 280),
+								x_coord = category_coord.T(data, 0))
+	
+	chart_object.set_defaults(bar_plot.T,
+								width = 15,
+								data = data)
+	
+	ar = area.T(x_axis=axis.X(label=unicode(_(labelx), 'utf-8') ),
+				y_axis=axis.Y(label=unicode(_('Distribution by period'), 'utf-8'), tic_interval=interval))
+	
+	plot1=bar_plot.T(label=unicode(_('Completed'), 'utf-8'), hcol=1, fill_style=fill_style.goldenrod)
+	plot2=bar_plot.T(label=unicode(_('Uncompleted'), 'utf-8'), hcol=2, stack_on = plot1, fill_style=fill_style.gray70)
+	ar.add_plot(plot1,plot2)
 	ar.draw(can)
 	can.close()
 	
