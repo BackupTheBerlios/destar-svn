@@ -48,6 +48,11 @@ class CfgPhoneIax(CfgPhone):
 					optional=True,
 					len=15),
 
+			VarType("qualify",
+					title=_("Qualify? (yes|no|xxx)"),
+					optional=True,
+					len=5),
+
 			VarType("ext",
 					title=_("Extension"),
 					len=6),
@@ -276,6 +281,7 @@ class CfgPhoneIax(CfgPhone):
 
 		if not self.notransfer:
 			iax.append("notransfer=yes")
+		iax.appendValue(self, "qualify")
 
 		self.createExtensionConfig()
 		self.createVoicemailConfig(iax)

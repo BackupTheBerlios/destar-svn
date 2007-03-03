@@ -1,5 +1,6 @@
 2007-03-03
 * Bad example line. Default values are not stored in destar_cfg.py
+* Enable qualify option for IAX phones.
 
 2007-03-01:
 * `Apply changes` relaods MoH
