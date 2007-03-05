@@ -375,7 +375,14 @@ class ConfigletTree:
 		if not self.groups.has_key(configlet.groupName):
 			self.groups[configlet.groupName] = []
 		self.groups[configlet.groupName].append(configlet)
-	
+		
+	def generateUniqueId(self):
+		ids = [i._id for i in self]
+		newid = 0
+		while newid in ids:
+			newid = newid + 1
+		return newid
+
 
 configlet_tree = ConfigletTree()
 
@@ -481,7 +488,7 @@ class Cfg(Holder):
 
 		# Store the object into global array
 		global configlet_tree
-		self._id = len(configlet_tree)
+		self._id = configlet_tree.generateUniqueId()
 		if autoAdd:
 			configlet_tree.addConfiglet(self)
 		else:
