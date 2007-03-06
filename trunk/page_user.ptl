@@ -38,10 +38,10 @@ class Page(AccessControlled, Directory):
 		if self.session.level < self._q_level:
 			cantAccessPage()
 
-	def showMenu [plain] (self):
+	def showMenu [html] (self):
 		'<table id="subcategories"><thead>'
 		'<tr>'
-		for s in (htmltext(_('Available actions')), htmltext(_('Description'))):
+		for s in (_('Available actions'), _('Description')):
 			'<th>%s</th>' % s
 		'</thead></tr>'
 

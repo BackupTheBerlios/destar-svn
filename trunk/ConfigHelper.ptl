@@ -45,7 +45,7 @@ class LabelWidget(Widget):
 		pass
 
 
-def presentEditableConfiglets [plain] (configlets):
+def presentEditableConfiglets [html] (configlets):
         if configlets:
                 # Show currently defined configlets
                 '<table id="configureditems">'
@@ -55,7 +55,7 @@ def presentEditableConfiglets [plain] (configlets):
                 '<th>%s</th>' % _("D")
                 '<th>%s</th>' % _("U")
                 for f in configlets[0].head():
-                        '<th>%s</th>' % htmltext(_(f))
+                        '<th>%s</th>' % _(f)
                 '</tr>'
                 '</thead>'
                 n = 0
@@ -73,12 +73,12 @@ def presentEditableConfiglets [plain] (configlets):
                         wrap = True
                         for f in o.row():
                                 if wrap:
-                                        '<td><a href="../edit/%s">%s</a></td>' % (o._id, htmlescape(f))
+                                        '<td><a href="../edit/%s">%s</a></td>' % (o._id, f)
                                         wrap = False
 				else:
 					if f == "":
 						f = " "
-	                                '<td>%s</td>' % htmlescape(_(f))
+	                                '<td>%s</td>' % _(f)
                         '</tr>'
                         n = n + 1
                 '</table>'

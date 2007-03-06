@@ -131,7 +131,7 @@ class Page(AccessControlled, Directory):
 		head
 		':</p><table id="subcategories"><thead>'
 		'<tr>'
-		for s in (htmltext(_('Configured')), htmltext(_('Category'))):
+		for s in (_('Configured'), _('Category')):
 			'<th>%s</th>' % s
 		'</thead></tr>'
 

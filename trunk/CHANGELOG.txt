@@ -1,5 +1,6 @@
 2007-03-05:
 * Fixed crazy ids assignment, Patch by ceronman
+* Fixed some bugs "introduced" by the strict unicode handling
 
 2007-03-03
 * Bad example line. Default values are not stored in destar_cfg.py
