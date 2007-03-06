@@ -824,7 +824,7 @@ def reloadAsterisk():
 		s += manager.reloadMoH()
 	if panelutils.isConfigured():
 		s += panelutils.restartPanelDaemon()
-	return "<br/>".join(s)
+	return "".join(s)
 
 def createDocs():
 	for c in configletsList():

@@ -159,13 +159,13 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 								width = 15,
 								data = data)
 	
-	ar = area.T(x_axis=axis.X(label=unicode(_(labelx), 'utf-8') ),
-				y_axis=axis.Y(label=unicode(_('Calls'), 'utf-8'), tic_interval=interval))
+	ar = area.T(x_axis=axis.X(label=labelx),
+				y_axis=axis.Y(label=_('Calls'), tic_interval=interval))
 	
-	plot1=bar_plot.T(label=unicode(_('Answered'), 'utf-8'), hcol=1, fill_style=fill_style.goldenrod)
-	plot2=bar_plot.T(label=unicode(_('Not Answered'), 'utf-8'), hcol=2, stack_on = plot1, fill_style=fill_style.gray70)
-	plot3=bar_plot.T(label=unicode(_('Busy'), 'utf-8'), hcol=3, stack_on = plot2, fill_style=fill_style.gray50)
-	plot4=bar_plot.T(label=unicode(_('Failed'), 'utf-8'), hcol=4, stack_on = plot3, fill_style=fill_style.darkseagreen)
+	plot1=bar_plot.T(label=_('Answered'), hcol=1, fill_style=fill_style.goldenrod)
+	plot2=bar_plot.T(label=_('Not Answered'), hcol=2, stack_on = plot1, fill_style=fill_style.gray70)
+	plot3=bar_plot.T(label=_('Busy'), hcol=3, stack_on = plot2, fill_style=fill_style.gray50)
+	plot4=bar_plot.T(label=_('Failed'), hcol=4, stack_on = plot3, fill_style=fill_style.darkseagreen)
 	ar.add_plot(plot1,plot2,plot3,plot4)
 	ar.draw(can)
 	can.close()
@@ -198,10 +198,10 @@ def makeGraphic [plain] (names, values, title, labelx, labely, filename):
 								width = 15,
 								data = data)
 	
-	ar = area.T(x_axis=axis.X(label=unicode(_(labelx), 'utf-8') ),
-				y_axis=axis.Y(label=unicode(_(labely), 'utf-8'), tic_interval=interval))
+	ar = area.T(x_axis=axis.X(label=_(labelx)),
+				y_axis=axis.Y(label=_(labely), tic_interval=interval))
 	
-	plot1=bar_plot.T(label=unicode(_(labely), 'utf-8'), hcol=1, fill_style=fill_style.darkseagreen)
+	plot1=bar_plot.T(label=_(labely), hcol=1, fill_style=fill_style.darkseagreen)
 	ar.add_plot(plot1)
 	ar.draw(can)
 	can.close()

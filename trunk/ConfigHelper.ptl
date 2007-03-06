@@ -31,7 +31,7 @@ class ROStringWidget(StringWidget):
 	"""
 
 	def render_content(self):
-		return htmltext(self.value)
+		return _(self.value)
 
 
 class LabelWidget(Widget):
@@ -267,7 +267,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		except:
 			_v = ''
 		if _v: do_update = True
-		t = htmltext(v.title)
+		t = _(v.title)
 		r = not v.optional
 		if v.type=="string":
 			form.add(StringWidget, v.name, _v, t, v.hint, r, render_br=v.render_br, maxlength=v.len, size=min(v.size,56) )
@@ -281,6 +281,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 				opts.insert(0, ('',''))
 			elif not opts:
 				return errorpage(_("Required '%s' not found") % v.name)
+			for a in opts:
+				a = (a[0], _(a[1]))
 			form.add(SingleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=opts,render_br=v.render_br)
 		elif v.type=="mchoice":
 			# TODO: much of this code should NOT by in a *.ptl file

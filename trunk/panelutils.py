@@ -35,6 +35,8 @@ PANEL_START_CMD	= "/etc/init.d/op-panel start"
 PANEL_STOP_CMD	= "/etc/init.d/op-panel stop"
 PANEL_RESTART_CMD = "/etc/init.d/op-panel restart"
 
+def N_(message): return message
+
 def isConfigured ():
 	import configlets
 	configured=0
@@ -72,7 +74,7 @@ def createDefaultConfig(c):
 	c.append("change_led_agent=1")
 	c.append("reverse_transfer=0")
 	c.append("clicktodial_insecure=0")
-	c.append('transfer_timeout="%s"' % _("0,No timeout|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 minutes|3000,50 minutes"))
+	c.append('transfer_timeout="%s"' % N_("0,No timeout|300,5 minutes|600,10 minutes|1200,20 minutes|2400,40 minutes|3000,50 minutes"))
 	c.append("enable_restart = 0")
 
 def createDefaultStyle(c):

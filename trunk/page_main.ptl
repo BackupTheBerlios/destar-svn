@@ -149,13 +149,13 @@ class Page(AccessControlled, Directory): #order matters
         def _q_exception_handler [plain] (self, exc):
                 if isinstance(exc, quixote.errors.AccessError) or isinstance(exc, quixote.errors.PublishError):
                         if (exc.title == "Access denied"):
-                                #header(htmltext(_('Access Denied')))
+                                header(_('Access Denied'))
                                 '<p>'
                                 htmltext(_("You don't have access to this page."))
                                 '</p>'
                                 footer()
                         else:
-                                #header(_(exc.title))
+                                header(_(exc.title))
                                 '<p>'
                                 _(exc.public_msg)
                                 '</p>'
