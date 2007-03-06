@@ -198,9 +198,9 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
  			'<li>\n'
   			if e[1]:
  				if not submenu:
- 					'<a href="%s"><span>%s</span></a>\n' % (e[1],_(str(e[2])))
+ 					'<a href="%s"><span>%s</span></a>\n' % (e[1],_(e[2]))
  				else:
- 					'<a href="%s">%s</a>\n' % (e[1],_(str(e[2])))
+ 					'<a href="%s">%s</a>\n' % (e[1],_(e[2]))
   			else:
   				'<li>&nbsp;</li>\n'
   			if e[3]:
