@@ -683,7 +683,7 @@ def getChoice(clazz, key='name',val='name',sort=True):
 		a.append( (obj.__dict__[val], obj.__dict__[key]) )
 		
 	if a == [] :
-		a.append( ('','') )
+		a.append( ('', '(None)') )
 		
 	if sort:
 		a.sort()

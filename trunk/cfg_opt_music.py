@@ -28,9 +28,26 @@ class CfgOptMusic(CfgOpt):
 	
 	def createVariables(self):
 		self.variables = [VarType("name", title=_("Name"), len=15),
-		     VarType("type", title=_("Type"), type="choice", options=("mp3", "quietmp3","mp3nb","quietmp3nb","custom","files")),
-		     VarType("dir",  title=_("Directory"), len=255),
-		     VarType("app",  title=_("Application"), len=255, optional=True),
+		     VarType("type", 
+		     		title=_("Type"), 
+				type="choice", 
+				options=(("mp3", "mp3"), 
+					("quietmp3", _("Quiet mp3")) ,
+					("mp3nb", _("mp3 nbuffered")),
+					("quietmp3nb", _("Quiet mp3 unbuffered")),
+					("custom", _("Custom")),
+					("files", _("Files"))),
+					default="quietmp3",
+					),
+
+		     VarType("dir",  
+		     		title=_("Directory"), 
+				len=255),
+
+		     VarType("app",  
+		     		title=_("Application"), 
+				len=255, 
+				optional=True),
 				]
 
 	def checkConfig(self):

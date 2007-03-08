@@ -283,7 +283,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 			for a in op:
 				opts.append((a[0], _(a[1]), a[0]))
 			if v.optional and opts[0][0]:
-				opts.insert(0, ('',_('(None)'),''))
+				opts.insert(0, ('', _('(None)'), ''))
 			form.add(SingleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=opts, render_br=v.render_br)
 		elif v.type=="mchoice":
 			# TODO: much of this code should NOT by in a *.ptl file
@@ -307,7 +307,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 				opts.append((a[0], _(a[1]), a[0]))
 			if v.optional and type(opts) == types.ListType:
 				if opts[0][0]:
-					opts.insert(0, ('',_('(None)'),''))
+					opts.insert(0, ('', _('(None)'), ''))
 			form.add(MultipleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=opts, render_br=v.render_br)
 		elif v.type=="radio":
 			opts = v.options

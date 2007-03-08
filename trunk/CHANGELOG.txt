@@ -1,6 +1,7 @@
 2007-03-08:
 * Fixed an unicode and select widgets problem
 * Added _q_traverse() at page_main, to handle exceptions correctly
+* Fixed a cfg_opt_music.py problem
 
 2007-03-05:
 * Fixed crazy ids assignment, Patch by ceronman
