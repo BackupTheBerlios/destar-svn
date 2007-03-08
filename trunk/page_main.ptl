@@ -21,6 +21,7 @@
 from Templates import *
 import sys, os, quixote, backend
 from quixote import get_session, get_session_manager, redirect
+from quixote.errors import PublishError
 from quixote.util import StaticDirectory
 from quixote.directory import Directory, AccessControlled
 
@@ -163,6 +164,11 @@ class Page(AccessControlled, Directory): #order matters
                 else:
                         raise exc
 
+	def _q_traverse(self, path):
+		try:
+			return Directory._q_traverse(self, path)
+		except PublishError, exc:
+			return self._q_exception_handler(exc)	
 
 	#from page_login import Page as Page
 	#login = Page()
