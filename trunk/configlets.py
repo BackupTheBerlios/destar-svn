@@ -1001,6 +1001,7 @@ class CfgPhone(Cfg):
                         pbx = "phones"
                 extensions.setSection(pbx)
 		extensions.append("exten=%s,hint,%s/%s" % (self.ext, self.technology, self.name))
+		extensions.append("exten=%s,hint,%s/%s" % (self.name, self.technology, self.name))
 		extensions.appendExten(self.ext,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.ext, pbx, self.ext)
 		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
@@ -1010,11 +1011,14 @@ class CfgPhone(Cfg):
 				if obj.devstateprefix:
 					extensions.append("exten=%s%s,hint,DS/%s_%s_%s" % (obj.devstateprefix, self.ext, obj.type.lower(), pbx, self.ext))
 					extensions.appendExten("%s%s" % (obj.devstateprefix, self.ext), "Goto(%s,%s,1)" % (pbx, obj.set))
-		for obj in configlet_tree:
 			if obj.__class__.__name__ == 'CfgAppVoicemailSettings':
 				if obj.devstateprefix:
 					extensions.append("exten=%s%s,hint,DS/%s_%s_%s" % (obj.devstateprefix, self.ext, obj.type.lower(), pbx, self.ext))
 					extensions.appendExten("%s%s" % (obj.devstateprefix, self.ext), "Goto(%s,%s,1)" % (pbx, obj.set))
+			if obj.__class__.__name__ == 'CfgAppPickup':
+				if obj.prefix:
+					extensions.append("exten=%s%s,1,PickupChan(%s/%s)" % (obj.prefix, self.ext, self.technology, self.name))
+					extensions.append("exten=%s%s,1,PickupChan(%s/%s)" % (obj.prefix, self.name, self.technology, self.name))
 
 	def createVoicemailConfig(self, conf):
 		vmconfig = False;
