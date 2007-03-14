@@ -122,9 +122,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	else:
 		localday = localtime[2]
 
-	form = Form()
-
-	form.name = "searchform"
+	form = Form(name = "searchform")
 	
 	form.add(StringWidget, "pbx",  "%s" % pbx, title=htmltext(_("PBX")),hint=htmltext(_("Wildcards: % is the 'zero or more characters' wildcard, and _ is the 'exactly one character' wildcard")), render_br=True )
 	form.add(StringWidget, "srcextension",  "%s" % srcextension, title=htmltext(_("Source ")),hint=htmltext(_("Wildcards: % is the 'zero or more characters' wildcard, and _ is the 'exactly one character' wildcard")), render_br=True )
@@ -252,9 +250,9 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", or
 					neworder = (order=='ASC' and 'DESC') or 'ASC'
 					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], neworder, M_(s[0]))
 					if order=='ASC':
-						" <img src='/static/down.gif' border='0' alt='%s'>\n" % M_('Asc. Order')
+						" <img src='/static/down.gif' border='0' alt='%s' />\n" % M_('Asc. Order')
 					else:
-						" <img src='/static/up.gif' border='0' alt='%s'>\n" % M_('Desc. Order')
+						" <img src='/static/up.gif' border='0' alt='%s' />\n" % M_('Desc. Order')
 				else:
 					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], order, M_(s[0]))
 				'</th>'

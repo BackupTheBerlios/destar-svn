@@ -1,3 +1,7 @@
+2007-03-14:
+* page_stats_cdr: added name attribute in the form. Fixes bug #10622 
+- closed img tags
+
 2007-03-08:
 * Fixed an unicode and select widgets problem
 * Added _q_traverse() at page_main, to handle exceptions correctly
