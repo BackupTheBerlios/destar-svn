@@ -281,7 +281,10 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 				return errorpage(_("Required '%s' not found") % v.name)
 			opts = []
 			for a in op:
-				opts.append((a[0], _(a[1]), a[0]))
+                                if a[1]:
+                                        opts.append((a[0], _(a[1]), a[0]))
+                                else:
+                                        opts.append((a[0], a[1], a[0]))
 			if v.optional and opts[0][0]:
 				opts.insert(0, ('', _('(None)'), ''))
 			form.add(SingleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=opts, render_br=v.render_br)
@@ -304,7 +307,10 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 				return errorpage(_("Required '%s' not found") % v.name)
 			opts = []
 			for a in op:
-				opts.append((a[0], _(a[1]), a[0]))
+                                if a[1]:
+                                        opts.append((a[0], _(a[1]), a[0]))
+                                else:
+                                        opts.append((a[0], a[1], a[0]))
 			if v.optional and type(opts) == types.ListType:
 				if opts[0][0]:
 					opts.insert(0, ('', _('(None)'), ''))
