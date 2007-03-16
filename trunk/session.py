@@ -34,7 +34,7 @@ class DestarSession(Session):
 
 		request = get_request()
 		t = time.time()
-
+		request.response.set_charset('utf-8')
 		# Determine IP of originator, keep Squid in mind :-)
 		try:
 			self.ip = request.environ['HTTP_X_FORWARDED_FOR']

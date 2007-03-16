@@ -1,3 +1,7 @@
+2007-03-16:
+*session.py: added utf-8 in request.response, because quixote-2 uses ISO-8859-1 as default
+*ConfigHelper: had to do some converting to unicode
+
 2007-03-14:
 * page_stats_cdr: added name attribute in the form. Fixes bug #10622 
 - closed img tags
