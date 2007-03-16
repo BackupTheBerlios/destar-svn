@@ -78,8 +78,11 @@ def presentEditableConfiglets [html] (configlets):
 				else:
 					if f == "":
 						f = " "
-	                                f = unicode(f, str('utf-8'))
-					'<td>%s</td>' % _(f)
+	                		try:	                
+						'<td>%s</td>' % _(f)
+					except:
+						f = unicode(f, str('utf-8'))
+						'<td>%s</td>' % _(f)
                         '</tr>'
                         n = n + 1
                 '</table>'
@@ -264,13 +267,14 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		if v.hide:
 			continue
 		try:
-			_v = unicode(obj.__dict__[v.name], 'utf-8')
+			_v = obj.__dict__[v.name]
 		except:
 			_v = ''
 		if _v: do_update = True
 		t = _(v.title)
 		r = not v.optional
 		if v.type=="string":
+			_v = unicode(_v, 'utf-8')
 			form.add(StringWidget, v.name, _v, t, v.hint, r, render_br=v.render_br, maxlength=v.len, size=min(v.size,56) )
 		elif v.type=="text":
 			form.add(TextWidget,   v.name, _v, t, v.hint, r, render_br=v.render_br, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
