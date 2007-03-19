@@ -72,16 +72,17 @@ def presentEditableConfiglets [html] (configlets):
                                 '<td>&nbsp;</td>'
                         wrap = True
                         for f in o.row():
-                                if wrap:
+                                try:
+                                        f = unicode(f, str('utf-8'))
+                                except: 
+                                        pass
+                                
+				if wrap:
                                         '<td><a href="../edit/%s">%s</a></td>' % (o._id, f)
                                         wrap = False
 				else:
 					if f == "":
 						f = " "
-	                		try:	                
-						'<td>%s</td>' % _(f)
-					except:
-						f = unicode(f, str('utf-8'))
 						'<td>%s</td>' % _(f)
                         '</tr>'
                         n = n + 1
@@ -273,23 +274,40 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		if _v: do_update = True
 		t = _(v.title)
 		r = not v.optional
+
+                if not v.type == "int" and not v.type == 'bool' and not v.type=='radio' and _v:
+                        try:
+                                _v = unicode(_v, 'utf-8')
+                        except:
+				pass
+		
 		if v.type=="string":
-			_v = unicode(_v, 'utf-8')
 			form.add(StringWidget, v.name, _v, t, v.hint, r, render_br=v.render_br, maxlength=v.len, size=min(v.size,56) )
 		elif v.type=="text":
 			form.add(TextWidget,   v.name, _v, t, v.hint, r, render_br=v.render_br, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
 		elif v.type=="choice":
-			op = v.options
 			if type(op) == types.FunctionType:
 				op = op()
 			elif not op:
 				return errorpage(_("Required '%s' not found") % v.name)
 			opts = []
-			for a in op:
-                                if a[1]:
-                                        opts.append((a[0], _(a[1]), a[0]))
-                                else:
-                                        opts.append((a[0], a[1], a[0]))
+                        n = 0
+                        for a in op:
+                                try:
+                                        c = unicode(a[1], 'utf-8')
+					b = unicode(a[0], 'utf-8')	
+                                        if a[1]:
+                                                opts.append((b, _(c), n))
+                                        else:
+                                                opts.append((b, c, n))
+
+                                except:
+                                        if a[1]:
+                                                opts.append((a[0], _(a[1]), a[0]))
+                                        else:
+                                                opts.append((a[0], a[1], a[0]))
+                                n += 1
+			
 			if v.optional and opts[0][0]:
 				opts.insert(0, ('', _('(None)'), ''))
 			form.add(SingleSelectWidget, v.name, _v, title=t, hint=v.hint, required=r, options=opts, render_br=v.render_br)
@@ -311,11 +329,23 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 			elif not op:
 				return errorpage(_("Required '%s' not found") % v.name)
 			opts = []
-			for a in op:
-                                if a[1]:
-                                        opts.append((a[0], _(a[1]), a[0]))
-                                else:
-                                        opts.append((a[0], a[1], a[0]))
+                        n = 0
+                        for a in op:
+                                try:
+                                        c = unicode(a[1], 'utf-8')
+					b = unicode(a[0], 'utf-8')	
+                                        if a[1]:
+                                                opts.append((b, _(c), n))
+                                        else:
+                                                opts.append((b, c, n))
+
+                                except:
+                                        if a[1]:
+                                                opts.append((a[0], _(a[1]), a[0]))
+                                        else:
+                                                opts.append((a[0], a[1], a[0]))
+                                n += 1
+
 			if v.optional and type(opts) == types.ListType:
 				if opts[0][0]:
 					opts.insert(0, ('', _('(None)'), ''))
