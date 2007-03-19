@@ -83,7 +83,7 @@ def presentEditableConfiglets [html] (configlets):
 				else:
 					if f == "":
 						f = " "
-						'<td>%s</td>' % _(f)
+					'<td>%s</td>' % _(f)
                         '</tr>'
                         n = n + 1
                 '</table>'
@@ -286,6 +286,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		elif v.type=="text":
 			form.add(TextWidget,   v.name, _v, t, v.hint, r, render_br=v.render_br, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
 		elif v.type=="choice":
+			op = v.options
 			if type(op) == types.FunctionType:
 				op = op()
 			elif not op:
