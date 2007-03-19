@@ -99,7 +99,10 @@ def createPythonConfig(f=None):
 	for c in configlets.configlet_tree:
 		a = c.createPythonConfig()
 		for s in a:
-			f.write("%s\n" % s)
+                        try:
+                                f.write("%s\n" % s.encode('utf-8'))
+                        except:
+                                f.write("%s\n" % s)
 
 
 
