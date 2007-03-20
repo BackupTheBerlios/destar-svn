@@ -55,6 +55,8 @@ def loadPythonConfig():
 	fn = os.path.join(configlets.CONF_DIR,DESTAR_CFG)
 	try:
 		try:
+			reload(sys)
+			sys.setdefaultencoding('utf-8')
 			execfile(fn)
 		except IOError:
 			try:

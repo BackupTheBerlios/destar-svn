@@ -622,8 +622,8 @@ class Cfg(Holder):
 
 		# Make sure we don't add two thingies with the same name
 		if self.__dict__.has_key('name'):
-			if self.name.find("-") > 1 or self.name.find(" ") > 1:
-				return ("name", _("Name should not contain '-' or spaces"))
+			if not self.name.replace('_','').isalnum():
+				return ("name", _("Name should only contain characters, numbers or _"))
 			for o in configlet_tree:
 				if o==self: continue
 				try:
