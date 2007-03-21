@@ -38,6 +38,12 @@ class CfgAppChanspy(CfgApp):
 				title=_("Extension"),
 				len=6),
 
+			VarType("scanspec",
+				title=_("Channel pattern to scan?"),
+				hint="<scanspec>",
+				optional=True,
+				len=15),
+
 			VarType("password",
 				type="int",
 				title=_("Password"),
@@ -60,6 +66,6 @@ class CfgAppChanspy(CfgApp):
 		if self.password:
 			c.appendExten(self.ext, "Authenticate(%s)" % self.password)
 		if self.quiet:
-			c.appendExten(self.ext, "Chanspy(|q)")
+			c.appendExten(self.ext, "Chanspy(%s|q)" % self.scanspec)
 		else: 
-			c.appendExten(self.ext, "Chanspy()")
+			c.appendExten(self.ext, "Chanspy(%s)" % self.scanspec)
