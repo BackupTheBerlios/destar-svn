@@ -299,6 +299,7 @@ CfgOptManager(
 	name     = "destarman",
 	secret   = "9fYMbomD",
 	read     = ",system,call,log,verbose,command,agent,user",
+	write    = ",system,call,log,verbose,command,agent,user",
 	)
 
 CfgOptOPPanel(

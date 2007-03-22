@@ -1,3 +1,6 @@
+2007-03-22:
+* Fixed permissions for the default Manager API Access
+
 2007-03-20:
 * fixed a bug related with encoding in form widgets
 * Allow to configure a scanspec string for ChanSpy
