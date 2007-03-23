@@ -1,0 +1,232 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Destar has Copyright (C) 2004-2007 by Holger Schurig
+# This file has Copyright (C) 2007 by Alejandro Rios P.
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+from Templates import *
+from quixote.form2 import *
+import queueutils
+import time
+from StatsHelper import *
+
+pychart_exists = True
+try:	
+	from pychart import *
+except ImportError:
+	pychart_exists = False
+	
+
+_q_parent = 'page_stats'
+_q_title  = _("Queue Callback")
+_q_desc   = _("Call Back List by Queue")
+_q_level  = 3
+_q_menupos = 30
+
+def _q_access(request):
+	if request.session.level < _q_level:
+		cantAccessPage()
+
+def _q_test():
+	return queueutils.db
+
+def N_(message): return message
+
+def getQueues():
+	import configlets
+	objs = configlets.configlet_tree.getConfigletsByName('CfgPhoneQueue')
+	queues=[]
+	for obj in objs:
+		queues.append(obj.name)		
+	return queues
+
+def makeForm():
+	form = Form()
+	form.name = "queryform"
+	form.add_single_select('queue', 
+							title=htmltext(_('Queue:')),
+							value="",
+							options=zip(getQueues(),getQueues(),getQueues()),
+							render_br=True )
+
+	form.add_single_select('year', 
+							title=htmltext(_('Day:')),
+							value="",
+							options=zip([all] + years, 
+										[_(all)] + years,
+										[all] + years),
+							render_br=False )
+							
+	form.add_single_select('month', 
+							options=zip([all] + months, 
+										[_(all)] + getMonthnames(),
+										[all] + months),
+
+							render_br=False )
+							
+	form.add_single_select('day',
+							options=zip([all] + days,
+										[_(all)] + daynames,
+										[all] + days),
+							render_br=True )
+							
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=True)
+	
+	return form
+		
+def perHourInDay [plain] (day, month, year, queue):
+	
+	date = "%s-%s-%s" % (year, month, day)
+	where = []
+	where.append("date(timestamp) = date('%s')" % date)
+	where.append("qname = '%s'" % queue)
+
+	where_uncompleted = where + [("( action like 'AGENTDUMP' \
+					or action like 'ABANDON' \
+					or action like 'EXITWITHKEY' \
+					or action like 'EXITWITHTIMEOUT' \
+					)")]
+	cursor = queueutils.select(
+				fields = ['time(timestamp) as hour', 'callid'],
+				where = where_uncompleted,
+				order=['timestamp'])
+
+	htmltext("<p>%s: %s</p>" % (_("Period"), date))
+
+	htmltext("<br/><h3>%s</h3>" % _("List of uncompleted callers"))
+	makeCallBackTable(cursor, where).getHtml(border=1)
+
+
+def perDayInMonth [plain] (month, year, queue):
+	
+	date1 = "%s-%s-01" % (year, month)
+	date2 = "%s-%s-31" % (year, month)
+	where = []
+	where.append("date(timestamp) between date('%s') and date('%s')" % (date1, date2))
+	where.append("qname = '%s'" % queue)
+	
+	where_uncompleted = where + [("( action like 'AGENTDUMP' \
+					or action like 'ABANDON' \
+					or action like 'EXITWITHKEY' \
+					or action like 'EXITWITHTIMEOUT' \
+					)")]
+	cursor = queueutils.select(
+				fields = ['time(timestamp)', 'callid'],
+				where = where_uncompleted,
+				order=['timestamp'])
+
+	htmltext("<p>%s: %s to %s</p>" % (_("Period"), date1, date2))
+
+	htmltext("<br/><h3>%s</h3>" % _("List of uncompleted callers"))
+	makeCallBackTable(cursor, where).getHtml(border=1)
+
+	
+def perMonthInYear [plain] (year, queue):
+	date1 = "%s-01-01" % (year)
+	date2 = "%s-12-31" % (year)
+	where = []
+	where.append("date(timestamp) between date('%s') and date('%s')" % (date1, date2))
+	where.append("qname = '%s'" % queue)
+
+	where_uncompleted = where + [("( action like 'AGENTDUMP' \
+					or action like 'ABANDON' \
+					or action like 'EXITWITHKEY' \
+					or action like 'EXITWITHTIMEOUT' \
+					)")]
+	cursor = queueutils.select(
+				fields = ['time(timestamp)', 'callid'],
+				where = where_uncompleted,
+				order=['timestamp'])
+
+	htmltext("<p>%s: %s to %s</p>" % (_("Period"), date1, date2))
+
+	htmltext("<br/><h3>%s</h3>" % _("List of uncompleted callers"))
+	makeCallBackTable(cursor, where).getHtml(border=1)
+
+
+def perYear [plain] (queue):
+	where = []
+	where.append("qname = '%s'" % queue)
+
+	where_uncompleted = where + [("( action like 'AGENTDUMP' \
+					or action like 'ABANDON' \
+					or action like 'EXITWITHKEY' \
+					or action like 'EXITWITHTIMEOUT' \
+					)")]
+	cursor = queueutils.select(
+				fields = ['time(timestamp)', 'callid'],
+				where = where_uncompleted,
+				order=['timestamp'])
+
+	htmltext("<p>%s: %s</p>" % (_("Period"), _("All Years")))
+
+	htmltext("<br/><h3>%s</h3>" % _("List of uncompleted callers"))
+	makeCallBackTable(cursor, where).getHtml(border=1)
+
+def showResults [plain] (day, month, year, queue):
+	all = N_("All")
+	if day != all and month != all and year != all:
+		perHourInDay(day, month, year, queue)
+	elif day == all and month != all and year != all:
+		perDayInMonth(month, year, queue)
+	elif day == all and month == all and year != all:
+		perMonthInYear(year, queue)
+	elif day == all and month == all and year == all:
+		perYear(queue)
+	else:
+		htmltext("<p style='color:red;'>\n")
+		htmltext("%s" % _("Sorry, this kind of query is not supported yet"))
+		htmltext("</p>")
+
+def makeCallBackTable (cursor, where):
+	table = HtmlTable(1,1)
+	table.setCell(0,0, _("Date"))
+	table.setCell(1,0, _("Caller"))
+	row = cursor.fetchone()
+	y = 1
+	while row:
+		where_caller = where + [("action like 'ENTERQUEUE'")]
+		where_caller.append("callid like '%s'" % row[1])
+		cursor2 = queueutils.select(
+				fields = ['timestamp', 'info2'],
+				where = where_caller,
+				order=['timestamp'])
+		row2 = cursor2.fetchone()
+		if row2:
+			table.setCell(0,y, "%s" % str(row2[0]))
+			table.setCell(1,y, "%s" % str(row2[1]))
+		row = cursor.fetchone()
+		y += 1
+	return table
+
+def cdrForm [plain] (request):
+	htmltext("<h3>%s</h3>" % _("List of calls that entered a Queue but where not completed, by date:"))
+	form = makeForm()
+	form.render()
+	
+	if form.is_submitted() and not form.has_errors():
+		htmltext("<h3>%s</h3>" % _("Results"))
+		showResults(form["day"], form["month"], form["year"], form["queue"])
+	
+def _q_index [plain] (request):
+	header(_q_desc)
+	if pychart_exists:
+		cdrForm(request)
+	else:
+		_("You need to install pychart and use a cdr with sqlite to get these statistics")
+	footer()
+	

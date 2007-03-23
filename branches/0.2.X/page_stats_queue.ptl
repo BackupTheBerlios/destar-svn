@@ -42,7 +42,7 @@ def _q_access(request):
 		cantAccessPage()
 
 def _q_test():
-	return cdrutils.db
+	return queueutils.db
 
 def N_(message): return message
 
