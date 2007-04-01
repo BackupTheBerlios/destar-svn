@@ -1122,6 +1122,12 @@ class CfgApp(Cfg):
 
 	groupName ="Applications"
 
+	def __init__(self,**kw):
+		Cfg.__init__(self,**kw)
+
+	def fixup(self):
+		Cfg.fixup(self)
+
 	def head(self):
 		return (_("Extension"), _("Type"), _("Virtual PBX"))
 

@@ -25,22 +25,55 @@ class CfgAppMeetme(CfgApp):
 
 	shortName   = _("Meeting room")
 	newObjectTitle  = _("New meeting room")
+	description= _("Application that let create dynamic conferencing rooms")
 	
 	def createVariables(self):
-		self.variables   = [	VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
-			VarType("ext",      title=_("Extension"), len=6),
-		       	VarType("confno",   title=_("Conference number"), hint=_("If empty, will be the same as the extension"), optional=True, len=6),
-		       	VarType("pin",      title=_("PIN"), optional=True, len=6),
+		self.variables   = [
+			VarType("pbx",
+				title=_("Virtual PBX"),
+				type="choice",
+				options=getChoice("CfgOptPBX")),
+
+			VarType("ext",
+				title=_("Extension"),
+				len=6),
+
+			VarType("timeout",
+				title=_("Maximun duration in seconds?"),
+				type="int",
+				default=1200,
+				len=6),
+
+		       	VarType("confno",
+				title=_("Conference number"),
+				optional=True,
+				type="int",
+				len=6),
+
+		       	VarType("pin",
+				title=_("PIN"),
+				optional=True,
+				type="int",
+				len=6),
 			
-			VarType("panelLab",   title=_("Operator Panel"), type="label", hide=True),
-	                VarType("panel",      title=_("Show this trunk in the panel"), type="bool", hide=True, optional=True)
-		]
+			VarType("panelLab",
+				title=_("Operator Panel"),
+				type="label",
+				hide=True),
+
+	                VarType("panel",
+				title=_("Show this trunk in the panel"),
+				type="bool",
+				hide=True,
+				optional=True)]
+			
 		self.dependencies = [ DepType("pbx", 
 					type="hard",
 					message = _("This is a Dependency")),
 					]
 	
 	def fixup(self):
+		Cfg.fixup(self)
 		self.lookPanel()
 
 	def createAsteriskConfig(self):
@@ -50,23 +83,24 @@ class CfgAppMeetme(CfgApp):
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
 		c.appendExten(self.ext, "Answer")
-		c.appendExten(self.ext, "Wait(1)")
+		c.appendExten(self.ext, "Set(TIMEOUT(absolute)=%d)" % self.timeout)
 		# 'd' -- dynamically add conference
-		# 'p' -- allow user to exit the conference by pressing '#'
-		if not self.confno:
-			self.confno = self.ext
-		c.appendExten(self.ext, "MeetMe(%s,dp)" % self.confno)
+		# 'P' -- always prompt pin
+		args=""
+		if self.confno:
+			args += "%d" % self.confno
+		args += "|d"
+		if self.pin:
+			args += "P|%d" % self.pin
+		c.appendExten(self.ext, "MeetMe(%s)" % args)
 
-		c = AstConf("meetme.conf")
-		c.setSection("rooms")
-		try:
+		if self.confno:
+			c = AstConf("meetme.conf")
+			c.setSection("rooms")
+			room = str(self.confno)
 			if self.pin:
-				c.append("conf=%s,%s" % (self.confno, self.pin))
-			else:
-				c.append("conf=%s" % self.confno)
-		except AttributeError:
-			pass
-		
+				room += ",%d" % self.pin
+			c.append("conf=%s" % room)
 		try:
 			if panelutils.isConfigured() == 1 and self.panel:
 				panelutils.createMeetmeButton(self)
