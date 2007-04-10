@@ -1,3 +1,6 @@
+2007-04-10:
+* Added port option in sip trunks
+
 2007-04-01:
 * Meetme configuration adjustments. Pin an dynamic rooms work.
 * Added __init__ and fixup methods th CfgApp in configlets.py
