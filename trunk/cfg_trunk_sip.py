@@ -47,7 +47,13 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			VarType("host",
 				title=_("SIP host"),
 				len=25),
-				
+
+			VarType("port",
+				title=_("SIP port"),
+				type="int",
+				default=5060,
+				len=5),				
+
 			VarType("register",
 				title=_("Register with remote host?"),
 				type="bool"),
@@ -171,7 +177,10 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		c = AstConf("sip.conf")
 		c.setSection("general")
 		if self.register:
-			c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
+			if not self.port:
+				c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
+			else:
+				c.append("register=%s:%s@%s:%s" % (self.id, self.pw, self.host, self.port))
 
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
