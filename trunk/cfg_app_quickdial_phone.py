@@ -31,7 +31,7 @@ class CfgAppPhoneQuickDial(CfgApp):
 		self.variables   = [
 			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 			VarType("set",      title=_("Setting prefix"), len=6, default="*7"),
-			VarType("ext",   title=_("Unsetting prefix"), len=6, default="#7#"),
+			VarType("unset",   title=_("Unsetting prefix"), len=6, default="#7#"),
 			VarType("dialprefix",   title=_("Dial prefix"), len=6, default="**"),
 		       ]
 		self.dependencies = [ DepType("pbx", 
@@ -40,12 +40,12 @@ class CfgAppPhoneQuickDial(CfgApp):
 					]
 	
 	def row(self):
-		return ("%s / %s" % (self.set,self.ext),self.shortName,self.pbx)
+		return ("%s / %s" % (self.set,self.unset),self.shortName,self.pbx)
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
 		c.appendExten("_%sXX*X." % self.set, "Set(DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d:2})=${EXTEN:%d})" % (len(self.set),len(self.set)+3))
 		c.appendExten("_%sXX*X." % self.set, "Hangup")
-		c.appendExten("_%sXX" % self.ext, "DBdel(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})" % len(self.ext))
-		c.appendExten("_%sXX" % self.ext, "Hangup")
+		c.appendExten("_%sXX" % self.unset, "DBdel(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})" % len(self.unset))
+		c.appendExten("_%sXX" % self.unset, "Hangup")

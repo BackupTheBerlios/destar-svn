@@ -32,7 +32,7 @@ class CfgAppGlobalQuickDial(CfgApp):
 				VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 				VarType("pin", title=_("Password"), len=20, optional=True),
 				VarType("set",      title=_("Setting prefix"), len=6, default="*9"),
-				VarType("ext",   title=_("Unsetting prefix"), len=6, default="#9#")
+				VarType("unset",   title=_("Unsetting prefix"), len=6, default="#9#")
 		       ]
 		self.dependencies = [ DepType("pbx", 
 					type="hard",
@@ -40,7 +40,19 @@ class CfgAppGlobalQuickDial(CfgApp):
 					]
 	
 	def row(self):
-		return ("%s / %s" % (self.set,self.ext),self.shortName,self.pbx)
+		return ("%s / %s" % (self.set,self.unset),self.shortName,self.pbx)
+
+	def checkConfig(self):
+		import configlets
+		for o in configlets.configlet_tree:
+			if o==self: continue
+			try:
+				if o.ext == self.set:
+					return ("set", _("Extension already in use"))
+				if o.ext == self.unset:
+					return ("unset", _("Extension already in use"))
+			except AttributeError:
+				pass
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
@@ -50,5 +62,5 @@ class CfgAppGlobalQuickDial(CfgApp):
 			c.appendExten("_%sXX*X." % self.set, "Authenticate(%s)" % self.pin)
 		c.appendExten("_%sXX*X." % self.set, "Set(DB(QUICKDIALLIST/GLOBAL/${EXTEN:%d:2})=${EXTEN:%d})" % (len(self.set),len(self.set)+3))
 		c.appendExten("_%sXX*X." % self.set, "Hangup")
-		c.appendExten("_%sXX" % self.ext, "DBdel(QUICKDIALLIST/GLOBAL/${EXTEN:%d})" % len(self.ext))
-		c.appendExten("_%sXX" % self.ext, "Hangup")
+		c.appendExten("_%sXX" % self.unset, "DBdel(QUICKDIALLIST/GLOBAL/${EXTEN:%d})" % len(self.unset))
+		c.appendExten("_%sXX" % self.unset, "Hangup")

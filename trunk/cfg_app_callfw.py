@@ -33,7 +33,7 @@ class CfgAppCallFW(CfgApp):
 			VarType("type", title=_("Type"), type="choice", options=( ("CFIM", _("Call Forwarding Unconditional")), \
 			("CFBS", _("Call Forwarding if Busy")), ("CFTO", _("Call Forwarding if Timeout/Unavailable")) )),
 			VarType("set",      title=_("Setting preffix"), len=6, default="*21"),
-			VarType("ext",   title=_("Unsetting extension"), len=6, default="*22"),
+			VarType("unset",   title=_("Unsetting extension"), len=6, default="*22"),
 			VarType("toggle",   title=_("Set function toggleable"), type="bool"),
 			VarType("devstateprefix",   title=_("Create Devstate extension. Devstate Prefix:"), len=8, optional=True, default="")
 		       	]
@@ -44,7 +44,19 @@ class CfgAppCallFW(CfgApp):
 					]
 	
 	def row(self):
-		return ("%s / %s" % (self.set,self.ext),"%s %s" % (self.shortName, self.type), self.pbx)
+		return ("%s / %s" % (self.set,self.unset),"%s %s" % (self.shortName, self.type), self.pbx)
+
+	def checkConfig(self):
+		import configlets
+		for o in configlets.configlet_tree:
+			if o==self: continue
+			try:
+				if o.ext == self.set:
+					return ("set", _("Extension already in use"))
+				if o.ext == self.unset:
+					return ("unset", _("Extension already in use"))
+			except AttributeError:
+				pass
 
 	def createAsteriskConfig(self):
 		if self.devstateprefix:
@@ -56,8 +68,8 @@ class CfgAppCallFW(CfgApp):
 		c.appendExten("_%s" % self.set, "Set(lastnum=${DB(%s_LASTNUM/%s/${CALLERIDNUM})})" % (self.type, self.pbx))
 		c.appendExten("_%s" % self.set, 'GotoIf($["${lastnum}" = ""]?nonumber)')
 		c.appendExten("_%s" % self.set, "Goto(%s,%s${lastnum},1)" % (self.pbx, self.set))
-		c.appendExten("_%s" % self.set, "Goto(%s,%s,1)" % (self.pbx, self.ext), label="nonumber")
-		c.appendExten("_%s" % self.set, "Goto(%s,%s,1)" % (self.pbx, self.ext), label="switchoff")
+		c.appendExten("_%s" % self.set, "Goto(%s,%s,1)" % (self.pbx, self.unset), label="nonumber")
+		c.appendExten("_%s" % self.set, "Goto(%s,%s,1)" % (self.pbx, self.unset), label="switchoff")
 		c.appendExten("_%s." % self.set, "Answer()")
 		if self.toggle:
 			c.appendExten("_%s." % self.set, "Set(testcf=${DB(%s/%s/${CALLERIDNUM})})" % (self.type, self.pbx))
@@ -74,12 +86,12 @@ class CfgAppCallFW(CfgApp):
 			c.appendExten("_%s." % self.set, "Playback(call-fwd-on-busy)")
 		c.appendExten("_%s." % self.set, "Wait(1)")
 		c.appendExten("_%s." % self.set, "Hangup")
-		c.appendExten("_%s." % self.set, "Goto(%s,%s,1)" % (self.pbx, self.ext), label="switchoff")
+		c.appendExten("_%s." % self.set, "Goto(%s,%s,1)" % (self.pbx, self.unset), label="switchoff")
 
-		c.appendExten("%s" % self.ext, "Answer()")
-		c.appendExten("%s" % self.ext, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type, self.pbx))
+		c.appendExten("%s" % self.unset, "Answer()")
+		c.appendExten("%s" % self.unset, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type, self.pbx))
 		if self.devstateprefix:
-			c.appendExten("%s" % self.ext, "Devstate(%s_%s_${CALLERIDNUM},0)" % (self.type.lower(), self.pbx))
-		c.appendExten("%s" % self.ext, "Playback(call-fwd-cancelled)")
-		c.appendExten("%s" % self.ext, "Wait(1)")
-		c.appendExten("%s" % self.ext, "Hangup")
+			c.appendExten("%s" % self.unset, "Devstate(%s_%s_${CALLERIDNUM},0)" % (self.type.lower(), self.pbx))
+		c.appendExten("%s" % self.unset, "Playback(call-fwd-cancelled)")
+		c.appendExten("%s" % self.unset, "Wait(1)")
+		c.appendExten("%s" % self.unset, "Hangup")

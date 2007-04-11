@@ -46,8 +46,10 @@ class CfgAppDND(CfgApp):
 		for o in configlets.configlet_tree:
 			if o==self: continue
 			try:
-				if o.ext == self.set or o.ext == self.unset:
-					return ("ext", _("Extension already in use"))
+				if o.ext == self.set:
+					return ("set", _("Extension already in use"))
+				if o.ext == self.unset:
+					return ("unset", _("Extension already in use"))
 			except AttributeError:
 				pass
 
