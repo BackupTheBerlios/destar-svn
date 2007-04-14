@@ -199,7 +199,7 @@ CfgAppParking(
 CfgAppMeetme(
 	pbx      = "pbx1",
 	ext      = "9000",
-	confno   = "9000",
+	confno   = 9000,
 	)
 
 CfgAppDND(
