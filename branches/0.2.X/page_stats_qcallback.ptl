@@ -224,6 +224,7 @@ def cdrForm [plain] (request):
 	
 def _q_index [plain] (request):
 	header(_q_desc)
+	x = queueutils.loadQueueLog()
 	if pychart_exists:
 		cdrForm(request)
 	else:

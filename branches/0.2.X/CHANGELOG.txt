@@ -1,4 +1,7 @@
-2001-04-16:
+2007-04-17:
+* Added line to call loadQueueLog every time the queues statistics are seen.
+
+2007-04-16:
 * Configlets that extends from CfgOptSingle now can be deleted.
 * Fixed Bug #8932
 
