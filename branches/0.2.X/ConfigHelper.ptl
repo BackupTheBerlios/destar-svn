@@ -320,7 +320,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		else:
 			form.add(StringWidget,   v.name, "Unknown type %s" % v.type)
 	
-	if new or not obj.isAddable():
+	if new:
 		txt_submit = _("Submit")
 		txt_delete = ""
 	else:
