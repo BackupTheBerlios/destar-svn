@@ -1,3 +1,7 @@
+2007-04-18:
+* Added AgentCallbackLogin config
+* Added agent config page
+
 2007-04-16:
 * Configlets that extends from CfgOptSingle now can be deleted.
 * Fixed Bug #8932

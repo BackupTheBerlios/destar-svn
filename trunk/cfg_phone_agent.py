@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2005 by Holger Schurig,
-# add ons by Michael Bielicki, TAAN Softworks Corp.
+# this module was written by Diego Andrés Asenjo.
 # 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,12 +21,13 @@
 
 from configlets import *
 
-class CfgPhoneAgent(CfgPhone):
+class CfgAgent(CfgPhone):
 
 	shortName = _("Agent")
 	newObjectTitle = _("New agent")
 	description = _("This is a queue agent")
 	technology = "AGENT"
+	groupName = "Agents"
 	
 	def createVariables(self):
 		self.variables = [
