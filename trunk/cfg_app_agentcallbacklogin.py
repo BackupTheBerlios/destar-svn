@@ -69,6 +69,6 @@ class CfgAppAgentCallbackLogin(CfgApp):
 			opts = ""
 		
 		c.appendExten(self.ext, "AgentCallbackLogin(${CALLERIDNUM}|%s|${CALLERIDNUM}@%s)" % (opts, self.pbx) )
-		c.appendExten(self.changeext, "AgentCallbackLogin(${CALLERIDNUM}|%s|'#')" , % (opts) )
-		c.appendExten(self.logoutext, "Dial(Local/*%s@pbx1/n,,D(#))" % self.changeext)
+		c.appendExten(self.changeext, "AgentCallbackLogin(${CALLERIDNUM}|%s|'#')" % (opts) )
+		c.appendExten(self.logoutext, "Dial(Local/%s@pbx1/n,,D(#))" % self.changeext)
 
