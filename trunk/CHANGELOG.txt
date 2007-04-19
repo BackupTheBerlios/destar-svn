@@ -1,3 +1,6 @@
+2007-04-19:
+* configlets.py: fixed technologies for agents
+
 2007-04-18:
 * Added AgentCallbackLogin config
 * Added agent config page

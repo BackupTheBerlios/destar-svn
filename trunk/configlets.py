@@ -1053,7 +1053,7 @@ class CfgPhone(Cfg):
 				c = AstConf("queues.conf")
 				for queue in self.queues.split(','):
 					c.setSection(queue)
-					if self.technology == 'SIP' or self.technology == 'IAX':
+					if self.technology == 'SIP' or self.technology == 'IAX2' or self.technology == 'ZAP':
 						c.append("member => %s/%s" % (self.technology,self.name))
 					if self.technology == 'AGENT':
 						c.append("member => %s/%s" % (self.technology,self.number))
