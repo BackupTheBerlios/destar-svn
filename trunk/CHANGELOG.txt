@@ -1,6 +1,8 @@
 2007-04-19:
 * configlets.py: fixed technologies for agents
 * cfg_phone_agent.py: allow agents with no password
+* cfg_app_agentcallbacklogin.py, added change location ext,
+  allow silent login, automatic logout
 
 2007-04-18:
 * Added AgentCallbackLogin config

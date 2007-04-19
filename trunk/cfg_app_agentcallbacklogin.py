@@ -33,13 +33,22 @@ class CfgAppAgentCallbackLogin(CfgApp):
 					type="choice",
 					options=getChoice("CfgOptPBX")),
 
-			VarType("loginext",
+			VarType("ext",
 					title=_("Login extension"),
+					len=6),
+
+			VarType("changeext",
+					title=_("Change location"),
 					len=6),
 
 			VarType("logoutext",
 					title=_("Logout extension"),
 					len=6),
+
+			VarType("silentlogin",
+					title=_("Silent login"),
+					type="bool",
+					optional=True),
 			]
 
 		self.dependencies = [ DepType("pbx", 
@@ -49,9 +58,17 @@ class CfgAppAgentCallbackLogin(CfgApp):
 
 	def createAsteriskConfig(self):
 		needModule("chan_agent")
+		needModule("chan_local")
 	
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.loginext, "AgentCallbackLogin(||${CALLERIDNUM})")
-		c.appendExten(self.logoutext, "AgentCallbackLogin(||l)")
+
+		if self.silentlogin:
+			opts = "s"
+		else:
+			opts = ""
+		
+		c.appendExten(self.ext, "AgentCallbackLogin(${CALLERIDNUM}|%s|${CALLERIDNUM}@%s)" % (opts, self.pbx) )
+		c.appendExten(self.changeext, "AgentCallbackLogin(${CALLERIDNUM}|%s|'#')" , % (opts) )
+		c.appendExten(self.logoutext, "Dial(Local/*%s@pbx1/n,,D(#))" % self.changeext)
 
