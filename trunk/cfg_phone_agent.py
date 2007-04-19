@@ -48,7 +48,7 @@ class CfgAgent(CfgPhone):
 			VarType("secret",
 					title=_("Password"),
 					type="int",
-					optional=True
+					optional=True,
 					len=15),
 					
 			VarType("QueueLab",
@@ -79,6 +79,11 @@ class CfgAgent(CfgPhone):
 
 		ag = AstConf("agents.conf")
 		ag.setSection("agents")
-		ag.append("agent=%d,%d,%s" % (self.number, self.secret, self.name))
+		if self.secret:
+			ag.append("agent=%d,%d,%s" % (self.number, self.secret, self.name))
+		else:
+			ag.append("agent=%d,,%s" % (self.number, self.name))
+
+
 
 		self.createQueuesConfig()
