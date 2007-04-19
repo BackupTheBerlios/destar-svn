@@ -27,6 +27,7 @@ class CfgPhoneQueue(CfgPhone):
 	shortName = _("Normal Call Queue")
 	newObjectTitle = _("New Call Queue")
 	technology = "QUEUE"
+	groupName = "Queues"
 	
 	def createVariables(self):
 		self.variables = [

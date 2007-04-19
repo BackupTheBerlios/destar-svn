@@ -27,7 +27,7 @@ class CfgAgent(CfgPhone):
 	newObjectTitle = _("New agent")
 	description = _("This is a queue agent")
 	technology = "AGENT"
-	groupName = "Agents"
+	groupName = "Queues"
 	
 	def createVariables(self):
 		self.variables = [

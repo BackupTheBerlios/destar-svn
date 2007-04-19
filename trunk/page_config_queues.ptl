@@ -26,9 +26,9 @@ from quixote import get_request, get_session
 class Page(AccessControlled, Directory): 
 
 	_q_parent  = 'page_config'
-	_q_title   = _("Agents")
-	_q_desc    = _("Agents and their settings")
-	_q_link    = 'agents'
+	_q_title   = _("Queues")
+	_q_desc    = _("Queues and agents and their settings")
+	_q_link    = 'queues'
 	_q_menupos = 25
 	_q_level   = 3
 
@@ -42,5 +42,5 @@ class Page(AccessControlled, Directory):
 
 	def _q_index [plain] (self):
 		header(self._q_desc)
-		presentConfiglets('Agents')
+		presentConfiglets('Queues')
 		footer()

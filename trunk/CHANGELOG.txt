@@ -3,6 +3,7 @@
 * cfg_phone_agent.py: allow agents with no password
 * cfg_app_agentcallbacklogin.py, added change location ext,
   allow silent login, automatic logout
+* New groupName and ptl for queues and agents
 
 2007-04-18:
 * Added AgentCallbackLogin config
