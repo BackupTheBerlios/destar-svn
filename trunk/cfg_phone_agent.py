@@ -48,6 +48,7 @@ class CfgAgent(CfgPhone):
 			VarType("secret",
 					title=_("Password"),
 					type="int",
+					optional=True
 					len=15),
 					
 			VarType("QueueLab",

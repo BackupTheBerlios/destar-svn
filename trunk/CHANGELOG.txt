@@ -1,5 +1,6 @@
 2007-04-19:
 * configlets.py: fixed technologies for agents
+* cfg_phone_agent.py: allow agents with no password
 
 2007-04-18:
 * Added AgentCallbackLogin config
