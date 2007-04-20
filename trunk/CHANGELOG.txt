@@ -2,7 +2,8 @@
 * configlets.py: fixed technologies for agents, persistent queues members
 * cfg_phone_agent.py: allow agents with no password
 * cfg_app_agentcallbacklogin.py, added change location ext,
-  allow silent login, automatic logout
+  allow silent login, automatic logout,
+  remove DND when agent logs in.
 * New groupName and ptl for queues and agents
 
 2007-04-18:
