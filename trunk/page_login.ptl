@@ -82,16 +82,18 @@ class Page(AccessControlled, Directory):
 					self.session.phone = obj.phone
 					self.session.language = obj.language
 					self.session.pbx = obj.pbx
-					return redirect(str('../user/info'))
+					return redirect('../user/info/')
 
 			# Now search for a phone entry with proper extension/voicemail pin
 			for obj in backend.getConfiglets(group="Phones"):
-				if (obj.ext==res[0] or obj.name==res[0]) and (obj.secret==res[1] or obj.pin==res[1]):
+				if type(obj) == 'CfgPhoneExtension':
+					continue
+				if (obj.ext==res[0] or obj.name==res[0]) and (obj.secret==res[1] or str(obj.pin)==res[1]):
 					self.session.user  = obj.name
 					self.session.level = 1
 					self.session.phone = obj.name
 					self.session.language = 'en'
 					self.session.pbx = obj.pbx
-					return redirect(str('../user/info'))
+					return redirect('../user/info/')
 			self.notLoggedIn()
 		footer()

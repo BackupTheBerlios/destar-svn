@@ -8,6 +8,7 @@
   allow silent login, automatic logout,
   remove DND when agent logs in.
 * New groupName and ptl for queues and agents
+* Fixed bug in the login page.
 
 2007-04-18:
 * Added AgentCallbackLogin config
