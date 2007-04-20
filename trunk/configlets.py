@@ -1051,8 +1051,6 @@ class CfgPhone(Cfg):
 		try:
 			if self.queues:
 				c = AstConf("queues.conf")
-				c.setSection("general")
-				c.append("persistentmembers = yes")
 				for queue in self.queues.split(','):
 					c.setSection(queue)
 					if self.technology == 'SIP' or self.technology == 'IAX2' or self.technology == 'ZAP':

@@ -1,3 +1,6 @@
+2007-04-20:
+* queues and agents general settings in cfg_opt_queuesagents.py.  
+
 2007-04-19:
 * configlets.py: fixed technologies for agents, persistent queues members
 * cfg_phone_agent.py: allow agents with no password
