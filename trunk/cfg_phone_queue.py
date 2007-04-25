@@ -46,7 +46,12 @@ class CfgPhoneQueue(CfgPhone):
 					len=6),
 
 			VarType("timeout",
-					title=_("Phone timeout"),
+					title=_("Agent timeout"),
+					optional=True,
+					len=6),
+
+			VarType("retry",
+					title=_("How long to wait before trying all the members again?"),
 					optional=True,
 					len=6),
 
@@ -82,11 +87,6 @@ class CfgPhoneQueue(CfgPhone):
 						("rrmemory",_("Round robin with memory - remember where we left off last ring pass"))), 
 					default="ringall"),
 
-			VarType("retry",
-					title=_("How long to wait before trying all the members again?"),
-					optional=True,
-					len=6),
-	
 			VarType("Announces",
 					title=_("Announces"),
 					type="label",

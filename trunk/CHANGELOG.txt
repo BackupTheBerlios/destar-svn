@@ -1,5 +1,6 @@
 2007-04-24:
 * Use actual pbx instead pbx1 in cfg_app_agentcallbacklogin
+* cfg_phone_queue: a few more order in the form variables.
 
 2007-04-20:
 * queues and agents general settings in cfg_opt_queuesagents.py.  
