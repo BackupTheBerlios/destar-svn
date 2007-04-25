@@ -1,3 +1,7 @@
+2007-04-25
+* Added panel buttons for agents. (still does not work at all)
+* Allow configuring op_server debug level.
+
 2007-04-24:
 * Use actual pbx instead pbx1 in cfg_app_agentcallbacklogin
 * cfg_phone_queue: a few more order in the form variables.

@@ -61,7 +61,18 @@ class CfgAgent(CfgPhone):
 					type="mchoice",
 					optional=True,
 					options=getChoice("CfgPhoneQueue"),
-					hide=True)]
+					hide=True),
+					
+			VarType("panelLab",
+				title=_("Operator Panel"),
+				type="label",
+				hide=True),
+
+			VarType("panel",
+				title=_("Show this phone in the panel"),
+				type="bool",
+				hide=True,
+				optional=True)]
 					
 		queues = len(configlet_tree.getConfigletsByName('CfgPhoneQueue'))
 		if queues > 0:
@@ -76,7 +87,7 @@ class CfgAgent(CfgPhone):
 		]
 
 	def createAsteriskConfig(self):
-
+		needModule('chan_agent')
 		ag = AstConf("agents.conf")
 		ag.setSection("agents")
 		if self.secret:
@@ -87,3 +98,4 @@ class CfgAgent(CfgPhone):
 
 
 		self.createQueuesConfig()
+		self.createPanelConfig()

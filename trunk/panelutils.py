@@ -60,7 +60,6 @@ def createDefaultConfig(c):
 	c.append("auth_md5=1")
 	c.append("poll_voicemail=0")
 	c.append("kill_zombies=0")
-	c.append("debug=0")
 	c.append("conference_context=apps")
 	c.append("clid_format=(xxx)xxx-xxxx")
 	c.append("clid_privacy=0")
@@ -120,6 +119,13 @@ def createExtButton(obj):
 	p.append("Position=n")
 	p.append("Icon=1")
 	p.append("Extension=%s" % obj.ext)
+	p.append("Label=%s" % obj.name)
+
+def createAgentButton(obj):
+	p = AstConf("op_buttons.cfg")
+	p.setSection("%s/%s" % (obj.technology, obj.number) )
+	p.append("Position=n")
+	p.append("Icon=6")
 	p.append("Label=%s" % obj.name)
 
 def createTrunkButton(obj):

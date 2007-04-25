@@ -7,7 +7,7 @@ LOCALEDIR=$(DESTDIR)/usr/share/locale
 MANDIR=$(DESTDIR)/usr/share/man/man8
 
 # To use with asternic.org op_panel tarball:
-#PANEL_HTML_DIR=/usr/local/op_panel/html
+#PANEL_HTML_DIR=/usr/local/op_panel-0.27/flash
 
 # To use with op-panel .deb package:
 PANEL_HTML_DIR=/usr/share/op-panel/flash

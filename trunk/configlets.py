@@ -1115,7 +1115,10 @@ class CfgPhone(Cfg):
 	def createPanelConfig(self):
 		try:
 			if panelutils.isConfigured() == 1 and self.panel:
-				panelutils.createExtButton(self)
+				if self.technology == 'AGENT':
+					panelutils.createAgentButton(self)
+				else:
+					panelutils.createExtButton(self)
 		except AttributeError:
 			pass
 

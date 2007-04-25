@@ -68,7 +68,13 @@ class CfgOptOPPanel(CfgOptSingle):
 				title=_("Frequency in seconds to poll for sip and iax status"),
 				len=10,
 				default="60"),
-		]
+
+			VarType("debug",
+				title=_("Debug level"),
+				len=3,
+				type="int",
+				default=0)]
+
 
 	def createAsteriskConfig(self):
 		c = AstConf("op_server.cfg")
@@ -78,6 +84,7 @@ class CfgOptOPPanel(CfgOptSingle):
 
 		c.appendValue(self, "security_code")	
 		c.appendValue(self, "poll_interval")	
+		c.appendValue(self, "debug")	
 		panelutils.createManagerConfig(self)
 		panelutils.createDefaultConfig(c)	
 
