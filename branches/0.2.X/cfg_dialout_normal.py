@@ -139,7 +139,7 @@ class CfgDialoutNormal(CfgDialout):
 			c.appendExten("s","GotoIf($[${ARG3} = 0]?5:8)")
 			c.appendExten("s",'Set(timeout=0)')
 			c.appendExten("s",'Set(options=%s)' % opts)
-			c.appendExten("s",'Goto(9)')
+			c.appendExten("s",'Goto(10)')
 		c.appendExten("s",'Set(timeout=%d)' % self.maxtime)
 		c.appendExten("s",'Set(options=%sL(%d000:10000))' % (opts,self.maxtime))
 		#TODO: add this trunks sorted by price and with a default one.

@@ -1,5 +1,6 @@
 2007-04-25:
 * Fixed bug in macro-voicemail: added missing t and T extensions and a priority after calling VoiceMail application.
+* Fixed incerdible bug in the timelimit settings for a macro.
 
 2007-04-19:
 * Fixed bug in the login page.
