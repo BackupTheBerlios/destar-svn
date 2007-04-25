@@ -275,14 +275,13 @@ def initializeAsteriskConfig():
 	c.append("; format: Macro(voicemail,<VoiceMail arguments>)")
 	c.append(";")
 	c.setSection("macro-voicemail")
+	c.append("exten => t,1,Hangup()")
+	c.append("exten => T,1,Hangup()")
 	c.append("exten => s,1,Answer")
 	c.append("exten => s,2,Set(TIMEOUT(absolute)=240)")
 	c.append("exten => s,3,Wait(1)")
 	c.append("exten => s,4,VoiceMail(${ARG1})")
-	c.append(";exten => s,105,Macro(dial-result,3)")
-
-	c.append(";exten => h,1,Macro(dial-result)")
-	c.append(";exten => t,1,Macro(dial-result)")
+	c.append("exten => s,5,Hangup()")
 
 	c.append(";")
 	c.append("; format: Macro(dial-result,[<cause>])")
