@@ -54,12 +54,26 @@ class CfgAppDND(CfgApp):
 				pass
 
 	def createAsteriskConfig(self):
+		import configlets
+		tapisupport = False
+		for obj in configlets.configlet_tree:
+			if obj.__class__.__name__ == 'CfgOptSettings':
+				if obj.tapi:
+				    tapisupport = True
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
 		c.appendExten("%s" % self.set, "Set(DB(DND/%s/${CALLERIDNUM})=True)" % self.pbx)
+		if tapisupport:
+			c.appendExten("%s" % self.set, "Set(CHAN=${CUT(CHANNEL|-|1)})")
+			c.appendExten("%s" % self.set, "UserEvent(ASTDB|Channel: ${CHAN}^Family: DND^Value: True" )
+				
 		c.appendExten("%s" % self.set, "Playback(do-not-disturb)")
 		c.appendExten("%s" % self.set, "Hangup")
+
 		c.appendExten("%s" % self.unset, "DBdel(DND/%s/${CALLERIDNUM})" % self.pbx)
+		if tapisupport:
+			c.appendExten("%s" % self.unset, "Set(CHAN=${CUT(CHANNEL|-|1)})")
+			c.appendExten("%s" % self.unset, "UserEvent(ASTDB|Channel: ${CHAN}^Family: DND^Value: ^" )
 		c.appendExten("%s" % self.unset, "Playback(do-not-disturb)")
 		c.appendExten("%s" % self.unset, "Playback(cancelled)")
 		c.appendExten("%s" % self.unset, "Hangup")
