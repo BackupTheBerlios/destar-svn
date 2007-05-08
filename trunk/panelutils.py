@@ -120,6 +120,7 @@ def createExtButton(obj):
 	p.append("Icon=1")
 	p.append("Extension=%s" % obj.ext)
 	p.append("Label=%s" % obj.name)
+	p.append("Astdbkey=%s/%s" % (obj.pbx, obj.ext))
 
 def createAgentButton(obj):
 	p = AstConf("op_buttons.cfg")

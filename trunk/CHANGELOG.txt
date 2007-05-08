@@ -1,3 +1,6 @@
+2007-05-07:
+* Added Astdbkey for the extension buttons in the panel.
+
 2007-04-25
 * Added panel buttons for agents. (still does not work at all)
 * Allow configuring op_server debug level.
