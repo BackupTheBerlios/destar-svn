@@ -1,0 +1,93 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
+import backend, manager
+import time
+
+class Page(AccessControlled, Directory): 
+
+	_q_parent  = 'page_user'
+	_q_title   = _("User Info")
+	_q_desc    = _("Your access rights in DeStar")
+	_q_link    = 'info'
+	_q_menupos = 10
+	_q_level   = 0
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+
+	def _q_index [plain] (self):
+		header(self._q_desc)
+
+		'<p>'
+		if self.session.user:
+			htmltext(_('You are now logged in as user'))
+			" '<b>"
+			self.session.user
+			"</b>'. "
+			if self.session.level:
+				htmltext(_("Your access level is "))
+				levels=[_("disabled"),
+					_("User"),
+					_("Administrator"),
+					_("Configurator"),
+					_("Programmer")]
+				"'%s'. " % levels[self.session.level]
+			else:
+				htmltext(_("Your account is disabled. "))
+		else:
+			htmltext(_("You are not logged in."))
+		' '
+		htmltext(_('You can do'))
+		":</p><ul>"
+		if self.session.level >= 0:
+			"<li>"
+			htmltext(_('Access all public accessible info pages'))
+			"</li>"
+		if self.session.level >= 1 and self.session.phone:
+			"<li>"
+			htmltext(_('Change your personal phone settings'))
+			"</li>"
+		if self.session.level >= 2:
+			"<li>"
+			htmltext(_('Change phone settings of other people'))
+			"</li>"
+		if self.session.level >= 3:
+			"<li>"
+			htmltext(_('Configure the PBX'))
+			"</li>"
+		if self.session.level >= 4:
+			"<li>"
+			htmltext(_('Access debug pages to help program DeStar'))
+			"</li>"
+		"</ul><p>"
+		htmltext(_("Have fun!"))
+		"</p>"
+
+		footer()
