@@ -180,7 +180,7 @@ def initializeAsteriskConfig():
 	c.append("values => '${CDR(clid)}','${CDR(src)}','${CDR(dst)}','${CDR(dcontext)}','${CDR(channel)}','${CDR(dstchannel)}','${CDR(lastapp)}','${CDR(lastdata)}','${CDR(start)}','${CDR(answer)}','${CDR(end)}','${CDR(duration)}','${CDR(billsec)}','${CDR(disposition)}','${CDR(amaflags)}','${CDR(accountcode)}','${CDR(uniqueid)}','${CDR(userfield)}','${CDR(pbx)}','${CDR(intrunk)}','${CDR(outtrunk)}','${CDR(dialout)}'")
 
 	needModule("res_indications")
-	c = AstConf("macros.inc")
+	c = AstConf("procs.inc")
 	c.append(";")
 	c.append("; Proc to dial a standard local extension")
 	c.append(";")

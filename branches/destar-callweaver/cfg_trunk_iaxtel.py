@@ -92,4 +92,4 @@ class CfgTrunkIaxtel(CfgTrunk):
 			c = AstConf("extensions.conf")
 			c.setSection("in-iaxtel")
 			# TODO: don't hardcode the "SIP/" here:
-			c.appendExten(self.iaxtelid, "Macro(exten-std,SIP/%s)" % self.phone)
+			c.appendExten(self.iaxtelid, "Proc(exten-std,SIP/%s)" % self.phone)

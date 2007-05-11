@@ -114,8 +114,8 @@ class CfgDialoutNormal(CfgDialout):
 
 
 	def createAsteriskConfig(self):
-		c = AstConf("macros.inc")
-		c.setSection("macro-%s" % self.name)
+		c = AstConf("procs.inc")
+		c.setSection("proc-%s" % self.name)
 		c.append("; params: exten,secret,timeout")
 		needModule("app_authenticate")
 		if self.dis_transfer:

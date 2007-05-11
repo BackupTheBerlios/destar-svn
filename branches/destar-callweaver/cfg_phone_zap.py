@@ -289,7 +289,7 @@ class CfgPhoneZap(CfgPhone):
 
 
 	def createDialEntry(self, extensions, exten, pbx, ext):
-		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%s,%s)" % (
+		ret = extensions.appendExten(exten, "Proc(dial-std-exten,%s/%s,out-%s,%s,%s)" % (
 			self.technology,
 			self.channels,
 			self.name,

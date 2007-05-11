@@ -225,7 +225,7 @@ def needModule(mod,preload=False):
 			app =	[
 				"app_db",
 				"app_dial", # needs res_musiconhold, res_parking
-				"app_macro",
+				"app_proc",
 				"app_playback",
 				"app_cdr",
 				],
@@ -983,7 +983,7 @@ class CfgPhone(Cfg):
 					v.hide = False
 
 	def createDialEntry(self, extensions, exten, pbx, ext):
-		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%s,%s)" % (
+		ret = extensions.appendExten(exten, "Proc(dial-std-exten,%s/%s,out-%s,%s,%s)" % (
 			self.technology,
 			self.name,
 			self.name,
@@ -1102,9 +1102,9 @@ class CfgPhone(Cfg):
 						
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)							
 						if secret:
-							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
+							c.appendExten("%s" % obj.pattern,"Proc(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
 						else:
-							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue))
+							c.appendExten("%s" % obj.pattern,"Proc(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue))
 				except KeyError:
 					pass
 			elif obj.__class__.__name__ == 'CfgAppPhoneQuickDial':
