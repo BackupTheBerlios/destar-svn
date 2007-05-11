@@ -21,10 +21,10 @@
 import sys, os, types, sha, binascii, time
 import panelutils
 
-CONF_DIR = "/etc/asterisk"
+CONF_DIR = "/opt/etc/callweaver"
 DOC_DIR = os.getenv('DESTAR_DOC_DIR', default='/tmp/destar-doc')
 CONF_TAG = "; Automatically created by DESTAR\n"
-ASTERISK_MODULES_DIR = os.getenv('ASTERISK_MODULES_DIR', default='/usr/lib/asterisk/modules') 
+CALLWEAVER_MODULES_DIR = os.getenv('CALLWEAVER_MODULES_DIR', default='/opt/lib/callweaver/modules') 
 
 
 class AsteriskConfigFile:
@@ -231,8 +231,8 @@ def needModule(mod,preload=False):
 				],
 			preload = [],
 			)
-		# Get list of codecs and formats from ASTERISK_MODULES_DIR
-		for f in os.listdir(ASTERISK_MODULES_DIR):
+		# Get list of codecs and formats from CALLWEAVER_MODULES_DIR
+		for f in os.listdir(CALLWEAVER_MODULES_DIR):
 			if f.startswith('codec_'): c.modules["codec"].append(f[:-3])
 			if f.startswith('format_'): c.modules["format"].append(f[:-3])
 	

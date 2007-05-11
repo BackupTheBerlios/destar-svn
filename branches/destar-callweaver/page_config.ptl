@@ -76,9 +76,9 @@ class Page(AccessControlled, Directory):
 				"add/CfgOptUser",
 				[_("Configuration"), _("Options"), _("DeStar user")] )
 
-		if not os.access("/etc/asterisk", os.O_RDWR):
+		if not os.access("/opt/etc/callweaver", os.O_RDWR):
 			self.configurationTip(
-				_("You should enable write access to the directory /etc/asterisk. Without the ability to modify the configuration files DeStar would be pretty useless. You should 'chmod g+rwx' this directory and set it's group to one of '%s'." % groups),
+				_("You should enable write access to the directory /opt/etc/callweaver. Without the ability to modify the configuration files DeStar would be pretty useless. You should 'chmod g+rwx' this directory and set it's group to one of '%s'." % groups),
 				"",
 				[])
 

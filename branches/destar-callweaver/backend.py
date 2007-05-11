@@ -42,7 +42,7 @@ __loaded = False
 
 def loadPythonConfig():
 	"""This loads the destar_cfg.py config file either from
-	/etc/asterisk or from the current directory."""
+	/opt/callweaver/etc or from the current directory."""
 
 
 	global __loaded
@@ -79,7 +79,7 @@ def fixupConfiglets():
 		obj.createDependencies()
 
 def createPythonConfig(f=None):
-	"""This writes /etc/asterisk/destar_cfg.py.
+	"""This writes /opt/callweaver/etc/destar_cfg.py.
 
 	The output will be written into file hand 'f' if you provide one.
 	Use this for debugging, like this:
@@ -374,7 +374,7 @@ def initializeAsteriskConfig():
 
 
 def createAsteriskConfig():
-	"""This creates all the Asterisk config files in /etc/asterisk.
+	"""This creates all the Asterisk config files in /opt/callweaver/etc.
 
 	First, we create an in-memory representation of all config files
 	to create. Then we check if any of the config files is already

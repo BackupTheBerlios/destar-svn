@@ -1,6 +1,7 @@
 2007-05-11:
 * Branching destar for callweaver
 * Changing {M,m}acro for Proc and proc
+* moving /etc/asterisk to /opt/etc/callweaver
 
 2007-05-08:
 * Added the needed UserEvents in the dialplan to manage DND completely.
