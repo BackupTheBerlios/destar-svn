@@ -47,7 +47,7 @@ class CfgOptLogger(CfgOptSingle):
 				optional=True,
 				default="error,warning,notice,verbose"),
 		       VarType("messages",
-				title=_("Output in /var/log/asterisk/messages"),
+				title=_("Output in /var/log/callweaver/messages"),
 				type="mchoice",
 				options=_opt,
 				optional=True,

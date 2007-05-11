@@ -269,7 +269,7 @@ class CfgPhoneSip(CfgPhone):
 		sip.append("type=friend")
 		sip.append("qualify=yes")
 		m = md5.new()
-		m.update('%s:asterisk:%s' % (self.name,self.secret))
+		m.update('%s:callweaver:%s' % (self.name,self.secret))
 		sip.append("md5secret=%s" % m.hexdigest())
 		sip.append("host=dynamic")
 		if self.host:

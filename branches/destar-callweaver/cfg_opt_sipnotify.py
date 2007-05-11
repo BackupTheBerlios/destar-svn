@@ -29,7 +29,7 @@ class CfgOptEnum(CfgOpt):
 	def createVariables(self):
 		self.variables = [
 			VarType("info",
-			    title=_("Enables the sip notify command to reboot or sync phones on asterisk commanline."),
+			    title=_("Enables the sip notify command to reboot or sync phones on callweaver commanline."),
 			    type="label",
 			    )]
 

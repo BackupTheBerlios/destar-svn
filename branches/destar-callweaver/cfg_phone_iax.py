@@ -123,7 +123,7 @@ class CfgPhoneIax(CfgPhone):
 			
 
 			VarType("notransfer",
-					title=_("Skip asterisk media path?"),
+					title=_("Skip callweaver media path?"),
 					type="bool"),
 	
 			VarType("Outbound",

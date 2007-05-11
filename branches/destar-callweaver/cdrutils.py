@@ -28,7 +28,7 @@ except ImportError:
 	print _("Note: you should install python-pysqlite2 to have CDR functionality")
 
 try:
-	if not  os.access("/usr/lib/asterisk/modules/cdr_sqlite3_custom.so", os.F_OK):
+	if not  os.access("/opt/lib/callweaver/modules/cdr_sqlite3_custom.so", os.F_OK):
 		raise ImportError
 	needModule("cdr_sqlite3_custom")
 except:
@@ -36,7 +36,7 @@ except:
 	
 
 try:
-	db_fn = "/var/log/asterisk/master.db"
+	db_fn = "/var/log/callweaver/master.db"
 	if not os.access(db_fn, os.O_RDWR):
 		raise ImportError
 	db = sqlite.connect(db_fn, isolation_level="IMMEDIATE")
