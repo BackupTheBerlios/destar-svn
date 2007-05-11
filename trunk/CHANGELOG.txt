@@ -1,5 +1,6 @@
 2007-05-08:
 * Added the needed UserEvents in the dialplan to manage DND completely.
+* Fixed some apps names
 
 2007-05-07:
 * Added Astdbkey for the extension buttons in the panel.
