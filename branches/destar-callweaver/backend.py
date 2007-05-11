@@ -26,7 +26,7 @@ import re
 
 DESTAR_CFG = "destar_cfg.py"
 CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
-CALLWEAVER_MODULES_DIR = os.getenv('CALLWEAVER_MODULES_DIR', default='/opt/usr/lib/callweaver/modules')
+CALLWEAVER_MODULES_DIR = os.getenv('CALLWEAVER_MODULES_DIR', default='/opt/callweaver/usr/lib/callweaver/modules')
 
 
 

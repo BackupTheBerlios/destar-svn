@@ -21,10 +21,10 @@
 import sys, os, types, sha, binascii, time
 import panelutils
 
-CONF_DIR = "/opt/etc/callweaver"
+CONF_DIR = "/opt/callweaver/etc/callweaver"
 DOC_DIR = os.getenv('DESTAR_DOC_DIR', default='/tmp/destar-doc')
 CONF_TAG = "; Automatically created by DESTAR\n"
-CALLWEAVER_MODULES_DIR = os.getenv('CALLWEAVER_MODULES_DIR', default='/opt/lib/callweaver/modules') 
+CALLWEAVER_MODULES_DIR = os.getenv('CALLWEAVER_MODULES_DIR', default='/opt/callweaver/lib/callweaver/modules') 
 
 
 class AsteriskConfigFile:

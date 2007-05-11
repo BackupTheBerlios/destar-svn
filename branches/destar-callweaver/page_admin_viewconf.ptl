@@ -75,7 +75,7 @@ class Page(AccessControlled, Directory):
 			cantAccessPage()
 
 	def _q_test(self):
-		return os.access("/opt/etc/callweaver", os.O_RDWR)
+		return os.access("/opt/callweaver/etc/callweaver", os.O_RDWR)
 
 
 	def _q_index [plain] (self):
@@ -126,7 +126,7 @@ class Page(AccessControlled, Directory):
 	def showMissingModules [plain] (self, missingModules):
 		'<div id="error">\n'
 		'<p>'
-		htmltext(_("WARNING: This configuration might experience grave problems because the following asterisk modules are missing on your system:"))
+		htmltext(_("WARNING: This configuration might experience grave problems because the following callweaver modules are missing on your system:"))
 		'</p>'
 		'<ul>'
 		for mod in missingModules:

@@ -28,7 +28,7 @@ except ImportError:
 	print _("Note: you should install python-pysqlite2 to have CDR functionality")
 
 try:
-	if not  os.access("/opt/lib/callweaver/modules/cdr_sqlite3_custom.so", os.F_OK):
+	if not  os.access("/opt/callweaver/lib/callweaver/modules/cdr_sqlite3_custom.so", os.F_OK):
 		raise ImportError
 	needModule("cdr_sqlite3_custom")
 except:

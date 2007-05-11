@@ -4,6 +4,7 @@
 * moving /etc/asterisk to /opt/etc/callweaver
 * backend.py: Fixed apps names
 * cfg_phone_sip.py: fixed realm for MD5
+* Using /opt/callweaver, according to FHS
 
 2007-05-08:
 * Added the needed UserEvents in the dialplan to manage DND completely.
