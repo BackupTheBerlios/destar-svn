@@ -208,7 +208,7 @@ class ManagerClient(asynchat.async_chat):
 		if self.action_data.has_key(id):
 			self.action_data[id] = data
 
-		if data[0]=="Asterisk Call Manager/1.0":
+		if data[0]=="CallWeaver Call Manager/1.0":
 			self.set_terminator('\r\n\r\n')
 			self.call_nowait('Login', Username=self.username, Secret=self.password)
 

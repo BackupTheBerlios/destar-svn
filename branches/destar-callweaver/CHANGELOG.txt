@@ -1,5 +1,6 @@
-2007-05-15:
+2007-05-14:
 * Changing some labels to CallWeaver
+* Fixed CallWeaver Call Manager access
 
 2007-05-12:
 * Added cfg_trunk_unicall
