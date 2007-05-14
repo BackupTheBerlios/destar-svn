@@ -28,7 +28,7 @@ class Page(AccessControlled, Directory):
 
 	_q_parent  = 'page_main'
 	_q_title   = _("Configuration")
-	_q_desc    = _("Modify Asterisk configuration")
+	_q_desc    = _("Modify CallWeaver configuration")
 	_q_menupos = 30
 	_q_level   = 3
 
@@ -84,7 +84,7 @@ class Page(AccessControlled, Directory):
 
 		if not backend.countConfiglets(clazz="CfgOptManager"):
 			self.configurationTip(
-				_("You should create a management API entry. Without this entry, DeStar can't control the Asterisk PBX software."),
+				_("You should create a management API entry. Without this entry, DeStar can't control the CallWeaver PBX software."),
 				"add/CfgOptManager",
 				[_("Configuration"), _("Options"), _("Management API access")] )
 

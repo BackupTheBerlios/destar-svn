@@ -114,7 +114,7 @@ class Page(AccessControlled, Directory):
 		manager.connect()
 		if not manager.isConnected():
 			'<p><span class="errornotice">'
-			htmltext(_("Asterisk is not running!"))
+			htmltext(_("CallWeaver is not running!"))
 			'</span></p>'
 		elif not manager.isLoggedIn():
 			# TODO: describe how to set this up

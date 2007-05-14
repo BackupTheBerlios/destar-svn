@@ -26,7 +26,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 
 	shortName   = _("Standard IAX Trunk")
 	newObjectTitle  = _("New standard IAX trunk")
-	description = _("""Used to setup an IAX trunk to another Asterisk server or an IAX termination.""")
+	description = _("""Used to setup an IAX trunk to another CallWeaver or Asterisk server or an IAX termination.""")
 	technology = "IAX2"
 	
 	def createVariables(self):

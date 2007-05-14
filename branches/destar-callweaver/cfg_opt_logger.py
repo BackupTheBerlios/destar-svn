@@ -24,7 +24,7 @@ from configlets import *
 class CfgOptLogger(CfgOptSingle):
 	shortName   = _("Logger options")
 	newObjectTitle  = _("Logger options")
-	description = _("Asterisk can emit many events to it's console or a log file, Here you can make it more (or less) verbose:")
+	description = _("CallWeaver can emit many events to it's console or a log file, Here you can make it more (or less) verbose:")
 	
 	def createVariables(self):
 		_opt = [('error',   _("Errors")),

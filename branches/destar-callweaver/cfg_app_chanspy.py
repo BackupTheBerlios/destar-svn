@@ -25,7 +25,7 @@ class CfgAppChanspy(CfgApp):
 
 	shortName   = _("Listen calls")
 	newObjectTitle  = _("New spy extension")
-	description = _("Listen all calls on the Asterisk server. Jump through calls pressing *.")
+	description = _("Listen all calls on the CallWeaver server. Jump through calls pressing *.")
 	
 	def createVariables(self):
 		self.variables   = [ 

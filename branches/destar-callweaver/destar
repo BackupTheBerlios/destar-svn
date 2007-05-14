@@ -47,7 +47,7 @@ def print_version():
 
 def print_usage():
 	program = "destar"
-	print _("DeStar: Asterisk Management web interface")
+	print _("DeStar: CallWeaver Management web interface")
 	print
 	print _("Usage:")
 	print _("  %s [options]: normal execution") % program

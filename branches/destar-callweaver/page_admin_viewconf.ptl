@@ -61,7 +61,7 @@ class Page(AccessControlled, Directory):
 
 	_q_parent  = 'page_admin'
 	_q_title   = _("View/Save Configuration")
-	_q_desc    = _("Show and Save Asterisk configuration files")
+	_q_desc    = _("Show and Save CallWeaver configuration files")
 	_q_link    = 'viewconf'
 	_q_menupos = 90
 	_q_level   = 3
@@ -99,7 +99,7 @@ class Page(AccessControlled, Directory):
 				showForm.render()
 
 			elif showForm['_show']:
-				header(_("Asterisk configuration files"))
+				header(_("CallWeaver configuration files"))
 				if not missingModules == []: self.showMissingModules(missingModules)
 				entries = []
 				for file,cnf in configEntries:
