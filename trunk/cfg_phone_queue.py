@@ -45,6 +45,11 @@ class CfgPhoneQueue(CfgPhone):
 					optional=True,
 					len=6),
 
+                        VarType("clid",
+                                        title = _("Cambiar texto Identificador de Llamante a:"),
+                                        len = 25,
+                                        optional = True),
+
 			VarType("timeout",
 					title=_("Agent timeout"),
 					optional=True,
@@ -254,6 +259,10 @@ class CfgPhoneQueue(CfgPhone):
 
 			if self.ring:
 				opt = opt + "r"
+
+                        if self.clid:
+                                needModule("func_callerid")
+                                extensions.appendExten(qname,"Set(CALLERID(name)=%s)" %  self.clid)
 				
 			if self.moh:
 				extensions.appendExten(qname, "Answer")
