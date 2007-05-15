@@ -157,6 +157,7 @@ class CfgDialoutNormal(CfgDialout):
 					if obj.clidnumout:
 						c.append("exten=>s,n,Set(CALLERID(number)=%s)" % obj.clidnumout)
 				        if tapisupport:
+						needModule("app_cut")
 					        c.append("exten=>s,n,Set(chan=${CUT(CHANNEL,,1)})")
 					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_NEWCALL ${chan})")
 	    				        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALTONE)")

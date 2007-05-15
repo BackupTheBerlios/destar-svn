@@ -64,6 +64,7 @@ class CfgAppDND(CfgApp):
 		c.setSection(self.pbx)
 		c.appendExten("%s" % self.set, "Set(DB(DND/%s/${CALLERIDNUM})=True)" % self.pbx)
 		if tapisupport:
+			needModule("app_cut")
 			c.appendExten("%s" % self.set, "Set(CHAN=${CUT(CHANNEL|-|1)})")
 			c.appendExten("%s" % self.set, "UserEvent(ASTDB|Channel: ${CHAN}^Family: DND^Value: True" )
 				

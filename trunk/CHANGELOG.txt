@@ -1,3 +1,6 @@
+2007-05-15:
+* Little bug fix: need to load app_cut to make the right UserEvent.
+
 2007-05-08:
 * Added the needed UserEvents in the dialplan to manage DND completely.
 * Fixed some apps names
