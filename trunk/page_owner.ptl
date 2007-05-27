@@ -38,7 +38,7 @@ class Page(AccessControlled, Directory):
 		self.request = get_request()
 		if self.session.level < self._q_level:
 			cantAccessPage()
-		if not backend.getConfiglets(name='CfgOptPbx'):
+		if not backend.getConfiglets(name='CfgOptPBX'):
 			cantAccessPage()
 		if not request.session.pbx:
 			cantAccessPage()
