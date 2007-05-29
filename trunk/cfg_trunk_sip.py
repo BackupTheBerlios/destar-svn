@@ -188,6 +188,8 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			c.append("username=%s" % self.id)
 			c.append("secret=%s" % self.pw)
 			c.append("host=%s" % self.host)
+			if self.port:
+				c.append("port=%s" % self.port)
 			c.append("context=in-%s" % self.name)
 			c.append("canreinvite=no")
 			if self.fromdomain:
