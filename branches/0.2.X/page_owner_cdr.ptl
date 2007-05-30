@@ -48,6 +48,8 @@ def _q_access(request):
 def _q_test():
 	return cdrutils.db
 
+def M_(message): return _(str(message))
+
 def N_(message): return message
 
 def formScript [html] ():
@@ -71,8 +73,8 @@ def pageIndex [html] (pagenum, total, limit):
 	"<p>"
 	lastpage = total/limit
 	if pagenum > 1:
-		"<a href='javascript:gotopage(\"_newest\")'>%s</a> &nbsp; \n" % _(str("First"))
-		"<a href='javascript:gotopage(\"_newer\")'>%s</a> &nbsp; \n" % _(str("Previous"))
+		"<a href='javascript:gotopage(\"_newest\")'>%s</a> &nbsp; \n" % M_("First")
+		"<a href='javascript:gotopage(\"_newer\")'>%s</a> &nbsp; \n" % M_("Previous")
 	
 	pagelist = [i for i in range(pagenum-10, pagenum+10) if i >= 0 and  i < lastpage]
 
@@ -83,8 +85,8 @@ def pageIndex [html] (pagenum, total, limit):
 			"%d &nbsp; \n" % (i+1)
 
 	if pagenum < lastpage:
-		"<a href='javascript:gotopage(\"_older\")'>%s</a> &nbsp; \n" % _(str("Next"))
-		"<a href='javascript:gotopage(\"_oldest\")'>%s</a> \n" % _(str("Last"))
+		"<a href='javascript:gotopage(\"_older\")'>%s</a> &nbsp; \n" % M_("Next")
+		"<a href='javascript:gotopage(\"_oldest\")'>%s</a> \n" % M_("Last")
 	"</p>\n <br />"
 
 def     generateYearsNumbers():
@@ -152,8 +154,8 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	form.add_single_select('today', value=localday, options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers()  ), render_br=True)
 		
 	form.add(HiddenWidget, 'pagenumber', value='_newest')
-	form.add(HiddenWidget, 'order', value='ASC')
-	form.add(HiddenWidget, 'orderby', value=_('Time_of_start'))
+	form.add(HiddenWidget, 'order', value='DESC')
+	form.add(HiddenWidget, 'orderby', 'Time_of_start')
 
 	form.add(SubmitWidget, '_submit', _("Search"), render_br=True)
 
@@ -239,7 +241,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	
 	return render()
 
-def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_start"), order="DESC"):
+def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", order="DESC"):
 	if total == 0:
 		'<p>'
 		'--No records to Show--'
@@ -259,13 +261,13 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_
 				'<th>'
 				if s[0] == field:
 					neworder = (order=='ASC' and 'DESC') or 'ASC'
-					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], neworder, _(str(s[0])))
+					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], neworder, M_(s[0]))
 					if order=='ASC':
-						" <img src='/static/down.gif' border='0' alt='%s'>\n" % _(str('Asc. Order'))
+						" <img src='/static/down.gif' border='0' alt='%s'>\n" % M_('Asc. Order')
 					else:
-						" <img src='/static/up.gif' border='0' alt='%s'>\n" % _(str('Desc. Order'))
+						" <img src='/static/up.gif' border='0' alt='%s'>\n" % M_('Desc. Order')
 				else:
-					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], order, _(str(s[0])))
+					"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], order, M_(s[0]))
 				'</th>'
                 	'</tr></thead><tbody>'
 		
@@ -295,11 +297,12 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_
 
 			f = offset + limit
 			if total >= f:			
-				_(str('Showing records from %s to %s of %s <br /><br />')) % (offset+1, f, total)
+				M_('Showing records from %s to %s of %s' % (offset+1, f, total))
 			else:
-				_(str('Showing records from %s to %s of %s <br /><br />')) % (offset+1, total, total)
+				M_('Showing records from %s to %s of %s' % (offset+1, total, total))
+			'<br /><br />'
 
-		_(str('Total Duration of shown calls: %s min.' % totalmin))
+		M_('Total Duration of shown calls: %s min.' % totalmin)
 		'</p>'
 
 

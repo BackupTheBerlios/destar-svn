@@ -1,5 +1,6 @@
 2007-05-30:
 * Menu adjustment for other languages, _() is not needed.
+* Bug fixes and translation adjustments for PBX owner statistics.
 
 2007-05-29:
 * Don't show PBX Owner menu entry when logged in as 'Configurator' user. 
