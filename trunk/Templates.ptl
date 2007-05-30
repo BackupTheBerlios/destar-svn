@@ -268,7 +268,7 @@ def getMenu():
 				submenu.append( (sub._q_menupos, '/'.join(['',parent_name,sub._q_link]), sub._q_title, []) )
 		submenu.sort()
 
-		if session.level == 3 and e._q_title == _("Virtual PBX Owner"):
+		if session.level == 3 and e._q_title == "Virtual PBX Owner":
 			continue
 		else:
 			m.append( (e._q_menupos, '/'.join(['',e._q_link]), e._q_title, submenu) )
