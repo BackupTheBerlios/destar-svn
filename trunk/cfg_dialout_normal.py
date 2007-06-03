@@ -54,13 +54,13 @@ class CfgDialoutNormal(CfgDialout):
 			title=_("Maximum call time in seconds"), 
 			type="int", 
 			len=15, 
-			default=6000),
+			default=7200),
 
 		VarType("ringtime", 
 			title=_("Ringing time in seconds"), 
 			type="int", 
 			len=15, 
-			default=30),
+			default=600),
 
 		VarType("qlookup", 
 			title=_("Search on quick dial list?"), 
@@ -119,9 +119,9 @@ class CfgDialoutNormal(CfgDialout):
 		c.append("; params: exten,secret,timeout")
 		needModule("app_authenticate")
 		if self.dis_transfer:
-		       opts="tWr"
+		       opts="tW"
 		else:
-		       opts="TtWr"
+		       opts="TtW"
 		c.append("exten=>s,1,SetVar(options=%s)" % opts)
 		if self.qlookup:
 			c.append("exten=>s,n(quickd),Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})")
