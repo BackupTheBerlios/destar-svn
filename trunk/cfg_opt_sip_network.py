@@ -84,6 +84,12 @@ class CfgOptSipNetwork(CfgOptSingle):
 					optional=True,
 					default="184"),
 
+			VarType("srvlookup",
+					title=_("Enable DNS SRV lookups on outbound calls"),
+					type="bool",
+					default=True,
+					optional=True),
+
 			VarType("sipdefaults",
 					title=_("Defaults"), 
 					type="label"),
@@ -134,3 +140,5 @@ class CfgOptSipNetwork(CfgOptSingle):
      		if self.pedantic:
              		c.append("pedantic=yes")
 		c.append("nat=%s" % self.globalnat)
+		if self.srvlookup:
+			c.append("srvlookup=yes")

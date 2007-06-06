@@ -1,4 +1,6 @@
+2007-06-06:
 * Removed default op-panel config in destar_cfg.py sample.
+* Added srvlookup setting for sip.conf
 
 2007-05-30:
 * Menu adjustment for other languages, _() is not needed.
