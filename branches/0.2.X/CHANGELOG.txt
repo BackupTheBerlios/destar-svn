@@ -1,5 +1,6 @@
 2007-06-06:
 * Added srvlookup setting for sip.conf
+* Fixed typo in cfg_trunk_sip Dial cmd
 
 2007-05-30:
 * Menu adjustment for other languages, _() is not needed.

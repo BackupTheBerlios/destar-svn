@@ -169,7 +169,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		else:
 			self.dial = "SIP/${ARG1}@%s" % (self.host)
 		if self.forward:
-			self.dial += "/{$ARG1}" 
+			self.dial += "/${ARG1}" 
 		
 		#What to do with incoming calls
 		self.createIncomingContext()
