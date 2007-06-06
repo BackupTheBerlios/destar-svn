@@ -154,7 +154,7 @@ def createParkButton(obj):
 
 def createQueueButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection(obj.name)
+	p.setSection("%s/%s" % (obj.technology, obj.name) )
 	p.append("Position=n")
 	p.append("Icon=3")
 	p.append("Extension=-1")
