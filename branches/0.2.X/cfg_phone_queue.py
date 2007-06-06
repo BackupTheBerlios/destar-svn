@@ -271,4 +271,9 @@ class CfgPhoneQueue(CfgPhone):
 				extensions.appendExten(qname, "Queue(%s|%s)" % (self.name, opt))
 		self.createPanelConfig()
 
-
+        def createPanelConfig(self):
+                try:
+                        if panelutils.isConfigured() == 1 and self.panel:
+                                panelutils.createQueueButton(self)
+                except AttributeError:
+                        pass
