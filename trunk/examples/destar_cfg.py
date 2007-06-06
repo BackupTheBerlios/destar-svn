@@ -34,7 +34,7 @@ CfgPhoneQueue(
 	monitor  = True,
 	monitorfileformat = "wav49",
 	monitorfilename = "${TIMESTAMP}",
-	panel    = True,
+	panel    = False,
 	)
 
 CfgPhoneSip(
@@ -46,7 +46,7 @@ CfgPhoneSip(
 	enablecallgroup = True,
 	callgroup = "1",
 	queues   = "queue1",
-	panel    = True,
+	panel    = False,
 	calleridnum = "2001",
 	calleridname = "Agent 1",
 	dialout_emergency = True,
@@ -65,7 +65,7 @@ CfgPhoneSip(
 	enablecallgroup = True,
 	callgroup = "1",
 	queues   = "queue1",
-	panel    = True,
+	panel    = False,
 	calleridnum = "2002",
 	calleridname = "Agent 2",
 	dialout_local = True,
@@ -82,7 +82,7 @@ CfgPhoneSip(
 	enablecallgroup = True,
 	callgroup = "1",
 	queues   = "queue1",
-	panel    = True,
+	panel    = False,
 	calleridnum = "2003",
 	calleridname = "Agent 3",
 	dialout_local = True,
@@ -98,7 +98,7 @@ CfgPhoneSip(
 	dtmfmode = "rfc2833",
 	enablecallgroup = True,
 	callgroup = "2",
-	panel    = True,
+	panel    = False,
 	calleridnum = "2004",
 	calleridname = "Phone 1",
 	dialout_local = True,
@@ -114,7 +114,7 @@ CfgPhoneSip(
 	dtmfmode = "rfc2833",
 	enablecallgroup = True,
 	callgroup = "2",
-	panel    = True,
+	panel    = False,
 	calleridnum = "2005",
 	calleridname = "Phone 2",
 	dialout_local = True,
@@ -130,7 +130,7 @@ CfgPhoneSip(
 	dtmfmode = "rfc2833",
 	enablecallgroup = True,
 	callgroup = "3",
-	panel    = True,
+	panel    = False,
 	calleridnum = "2006",
 	calleridname = "Phone 3",
 	dialout_local = True,
@@ -146,7 +146,7 @@ CfgPhoneSip(
 	dtmfmode = "rfc2833",
 	enablecallgroup = True,
 	callgroup = "3",
-	panel    = True,
+	panel    = False,
 	calleridnum = "2007",
 	calleridname = "Phone 4",
 	dialout_local = True,
@@ -304,12 +304,6 @@ CfgOptManager(
 	secret   = "9fYMbomD",
 	read     = ",system,call,log,verbose,command,agent,user",
 	write    = ",system,call,log,verbose,command,agent,user",
-	)
-
-CfgOptOPPanel(
-	security_code = "op26.",
-	manager  = "destarman",
-	poll_interval = "8",
 	)
 
 CfgOptPickup(
