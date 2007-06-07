@@ -123,7 +123,7 @@ class CfgDialoutNormal(CfgDialout):
 		else:
 		       opts="TtW"
 		if self.qlookup:
-			c.appendExten("s",'SetVar(options=%sr)' % opts)
+			c.appendExten("s",'Set(options=%sr)' % opts)
 			c.appendExten("s","Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})",e="Goto(3)")
 			c.appendExten("s",'Set(ARG1=${dest})')
 			c.appendExten("s","GotoIf($[${ARG2} = n]?6:5)")
@@ -133,7 +133,7 @@ class CfgDialoutNormal(CfgDialout):
 			c.appendExten("s",'Set(options=%s)' % opts)
 			c.appendExten("s",'Goto(11)')
 		else:
-			c.appendExten("s",'SetVar(options=%sr)' % opts)
+			c.appendExten("s",'Set(options=%sr)' % opts)
 			c.appendExten("s","GotoIf($[${ARG2} = n]?4:3)")
 			c.appendExten("s","Authenticate(${ARG2})")
 			c.appendExten("s","GotoIf($[${ARG3} = 0]?5:8)")
