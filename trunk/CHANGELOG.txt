@@ -1,5 +1,6 @@
 2007-06-07:
 * cfg_trunk_sip.py: Some changes in register and cmd lines to be compatible with budgetone.nl
+* cfg_dialout_normal.py: Better call handling when channels are unavailable
 
 2007-06-06:
 * Removed default op-panel config in destar_cfg.py sample.

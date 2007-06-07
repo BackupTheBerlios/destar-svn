@@ -50,6 +50,12 @@ class CfgDialoutNormal(CfgDialout):
 			optional=True, 
 			default=""),
 
+		VarType("otheropts", 
+			title=_("Other Options for Dial Application"), 
+			len=10, 
+			optional=True, 
+			default=""),
+
 		VarType("maxtime", 
 			title=_("Maximum call time in seconds"), 
 			type="int", 
@@ -119,9 +125,12 @@ class CfgDialoutNormal(CfgDialout):
 		c.append("; params: exten,secret,timeout")
 		needModule("app_authenticate")
 		if self.dis_transfer:
-		       opts="tW"
+			opts="tW"
 		else:
-		       opts="TtW"
+			opts="TtW"
+		if self.otheropts:
+			opts += self.otheropts
+			c.append("exten=>s,n,Playback(llamadasiendotransferida)")
 		c.append("exten=>s,1,SetVar(options=%s)" % opts)
 		if self.qlookup:
 			c.append("exten=>s,n(quickd),Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})")
@@ -138,6 +147,8 @@ class CfgDialoutNormal(CfgDialout):
 		#TODO: add this trunks sorted by price and with a default one.
 
 		import configlets
+		unavail=1
+		c.append("exten=>s,n,Set(TIMEOUT(absolute)=${timeout})")
 		tapisupport = False
 		for obj in configlets.configlet_tree:
 			if obj.__class__.__name__ == 'CfgOptSettings':
@@ -146,8 +157,7 @@ class CfgDialoutNormal(CfgDialout):
 		for obj in configlets.configlet_tree['Trunks']:
 			try:
 				if self.__getitem__("trunk_"+obj.name):
-					c.append("exten=>s,n,Set(TIMEOUT(absolute)=${timeout})")
-					c.append("exten=>s,n,Set(CDR(outtrunk)=%s)" % obj.name)
+					c.append("exten=>s,n(unavail%s),Set(CDR(outtrunk)=%s)" % (unavail, obj.name) )
 					if self.__getitem__("trunk_%s_price" % obj.name):
 						c.append("exten=>s,n,Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))
 					else:
@@ -164,11 +174,14 @@ class CfgDialoutNormal(CfgDialout):
 					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALING)")
 					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_PROCEEDING)")
 					c.append("exten=>s,n,Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
+					unavail+=1
+					c.append('exten=>s,n,GotoIf($["${DIALSTATUS}" = "CHANUNAVAIL"]?unavail%s)' % unavail)
 			except KeyError:
 				pass
-		c.append("exten=>s,n,Congestion(5)")
-		#c.append("exten=>s,n,Goto(9)")
-		c.append("exten=>s,n,Goto(CallLimit)")
+		c.append("exten=>s,n,Goto(busy)")
+		c.append("exten=>s,n(unavail%s),Playback(all-circuits-busy-now)" % unavail)
+		c.append("exten=>s,n(busy),Busy(5)")
+		c.append("exten=>s,n,Hangup()")
 		c.appendExten("T","ResetCDR(w)")
 		c.appendExten("T","NoCDR")
 		c.appendExten("T","Hangup")
