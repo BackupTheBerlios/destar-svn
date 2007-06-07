@@ -1,3 +1,6 @@
+2007-06-07:
+* cfg_trunk_sip.py: Some changes in register and cmd lines to be compatible with budgetone.nl
+
 2007-06-06:
 * Removed default op-panel config in destar_cfg.py sample.
 * Added srvlookup setting for sip.conf
