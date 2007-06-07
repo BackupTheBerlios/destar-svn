@@ -168,8 +168,8 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			self.dial = "SIP/${ARG1}@%s" % (self.name)
 		else:
 			self.dial = "SIP/${ARG1}@%s" % (self.host)
-		if self.forward:
-			self.dial += "/${ARG1}" 
+			if self.forward:
+				self.dial += "/${ARG1}" 
 		
 		#What to do with incoming calls
 		self.createIncomingContext()
@@ -178,14 +178,18 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		c.setSection("general")
 		if self.register:
 			if not self.port:
-				c.append("register=%s:%s@%s" % (self.id, self.pw, self.host))
+				registerstr = "register => %s:%s@%s" % (self.id, self.pw, self.host)
 			else:
-				c.append("register=%s:%s@%s:%s" % (self.id, self.pw, self.host, self.port))
+				registerstr = "register => %s:%s@%s:%s" % (self.id, self.pw, self.host, self.port)
+			if self.forward: 
+				registerstr += "/%s" % self.id
+			c.append(registerstr)
 
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
 			c.append("username=%s" % self.id)
+			c.append("fromuser=%s" % self.id)
 			c.append("secret=%s" % self.pw)
 			c.append("host=%s" % self.host)
 			c.append("context=in-%s" % self.name)

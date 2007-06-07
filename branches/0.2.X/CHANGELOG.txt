@@ -1,5 +1,6 @@
 2007-06-07:
 * cfg_dialout_normal.py: Moved (reverted) SetVar to Set
+* cfg_trunk_sip.py: Some changes in register and cmd lines to be compatible with budgetone.nl 
 
 2007-06-06:
 * Added srvlookup setting for sip.conf
