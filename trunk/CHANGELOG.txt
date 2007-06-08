@@ -1,3 +1,6 @@
+2007-06-08:
+* Added page_admin_cfwstate.ptl to show CFIM, CFBS and DND state.
+
 2007-06-07:
 * cfg_trunk_sip.py: Some changes in register and cmd lines to be compatible with budgetone.nl
 * cfg_dialout_normal.py: Better call handling when channels are unavailable
