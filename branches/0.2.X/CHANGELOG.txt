@@ -1,5 +1,6 @@
 2007-06-12:
 * Fixed bug in Zap trunks (clidnumin needed).
+* Fixed bug in Dialouts. Added fields to change Caller ID.
 
 2007-06-07:
 * cfg_dialout_normal.py: Moved (reverted) SetVar to Set

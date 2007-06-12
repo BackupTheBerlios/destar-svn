@@ -1,3 +1,6 @@
+2007-06-12:
+* Fixed bug in Dialouts. Added fields to change Caller ID.
+
 2007-06-08:
 * Added page_admin_cfwstate.ptl to show CFIM, CFBS and DND state.
 

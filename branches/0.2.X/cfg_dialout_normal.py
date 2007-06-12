@@ -71,6 +71,20 @@ class CfgDialoutNormal(CfgDialout):
 			type="bool", 
 			default=False),
 
+		VarType("Outbound",
+			title=_("Caller ID for calls established through this dialout"),
+			type="label"),
+
+		VarType("clidnameout",
+			title=_("Change Caller*Id Name to:"),
+			len=40,
+			optional=True),
+
+		VarType("clidnumout",
+			title=_("Change Caller*Id Number to:"),
+			len=40,
+			optional=True),
+
 		VarType("Trunks", 
 			title=_("Trunks to use for routing this dialout entry"), 
 			type="label", 
@@ -158,10 +172,10 @@ class CfgDialoutNormal(CfgDialout):
 						c.appendExten("s","Set(CDR(accountcode)=%s)" % self.__getitem__("trunk_%s_price" % obj.name))
 					else:
 						c.appendExten("s","Set(CDR(accountcode)=0)")
-					if obj.clidnameout:
-						c.appendExten("s","Set(CALLERID(name)=%s)" % obj.clidnameout)
-					if obj.clidnumout:
-						c.appendExten("s","Set(CALLERID(number)=%s)" % obj.clidnumout)
+					if self.clidnameout:
+						c.appendExten("s","Set(CALLERID(name)=%s)" % self.clidnameout)
+					if self.clidnumout:
+						c.appendExten("s","Set(CALLERID(number)=%s)" % self.clidnumout)
 				        if tapisupport:
 					        c.appendExten("s","Set(chan=${CUT(CHANNEL,,1)})")
 					        c.appendExten("s","UserEvent(TAPI|TAPIEVENT: LINE_NEWCALL ${chan})")
