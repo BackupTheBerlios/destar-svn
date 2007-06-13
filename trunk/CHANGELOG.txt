@@ -2,6 +2,7 @@
 * cfg_phone_queue: string Spanish to English
 * cfg_trunk_iax.py: added remote port setting
 * cfg_trunk_iax.py: added registry option
+  - using username instead of trunk name in register line
 
 2007-06-12:
 * Fixed bug in Dialouts. Added fields to change Caller ID.

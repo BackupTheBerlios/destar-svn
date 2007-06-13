@@ -36,6 +36,10 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 				len=30,
 				default="iaxtrunk"),
 
+			VarType("id",
+				title=_("IAX username"),
+				len=15),
+
 			VarType("host",
 				title=_("IAX host"),
 				len=80),
@@ -184,7 +188,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 
 		if self.register:
 			c.setSection("general")
-			registerstr = "register => %s" % self.name
+			registerstr = "register => %s" % self.id
 			if self.auth == "plain":
 				registerstr += ":%s" % self.pw
 			# TODO: registration using rsa keys 
@@ -198,7 +202,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			c.setSection(self.name)
 			c.append("type=friend")
 			c.append("host=%s" % self.host)
-			c.append("username=%s" % self.name)
+			c.append("username=%s" % self.id)
 			c.append("context=in-%s" % self.name)
 			c.append("bandwidth=%s" % self.bandwidth)
 			c.append("qualify=yes")
