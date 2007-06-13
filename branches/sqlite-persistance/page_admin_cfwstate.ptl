@@ -1,0 +1,108 @@
+# -*- coding: utf-8 -*-
+#
+# This file has Copyright (C) 2007 by Alejandro Rios P.
+# DeStar has Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from quixote.form2 import *
+import backend, manager, configlets
+import time,types
+
+_q_parent  = 'page_admin'
+_q_title   = _("Call forwarding state")
+_q_desc    = _("Call forwarding state")
+_q_link    = 'cfwstate'
+_q_menupos = 10
+_q_level   = 2
+
+
+def _q_access(request):
+        if request.session.level < _q_level:
+		cantAccessPage()
+
+def CFList [plain] (pbx):
+	cfimlist = manager.getVarFamily("CFIM/%s" % pbx)
+	cfbslist = manager.getVarFamily("CFBS/%s" % pbx)
+	dndlist = manager.getVarFamily("DND/%s" % pbx)
+	if cfimlist != []:
+		# TODO: use CSS
+		'<table border=1 cellspacing="1">'
+		'<tbody><thead>'
+		'<tr><th>%s</th></tr>' % htmltext(_('Extension : CFIM Call Forwarding Inmediate')) 
+		'</thead>'
+		for i in cfimlist:
+			'<tr><td>%s</td></tr>' % _(i)
+		'</tbody>'
+		'</table><br/><br/>'
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("No CFIM entries found"))
+		'</span></p>'
+	if cfbslist != []:
+		# TODO: use CSS
+		'<table border=1 cellspacing="1">'
+		'<tbody><thead>'
+		'<tr><th>%s</th></tr>' % htmltext(_('Extension: CFBS Call Forwarding if Busy')) 
+		'</thead>'
+		for i in cfbslist:
+			'<tr><td>%s</td></tr>' % _(i)
+		'</tbody>'
+		'</table><br/><br/>'
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("No CFBS entries found"))
+		'</span></p>'
+	if dndlist != []:
+		# TODO: use CSS
+		'<table border=1 cellspacing="1">'
+		'<tbody><thead>'
+		'<tr><th>%s</th></tr>' % htmltext(_('Extensions with active DND')) 
+		'</thead>'
+		for i in dndlist:
+			'<tr><td>%s</td></tr>' % _(i)
+		'</tbody>'
+		'</table><br/><br/>'
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("No DND entries found"))
+		'</span></p>'
+
+	
+def _q_index [plain] (request):
+	header(_q_desc,refresh=10)
+	manager.connect()
+	if not manager.isConnected():
+		'<p><span class="errornotice">'
+		htmltext(_("Asterisk is not running!"))
+		'</span></p>'
+	elif not manager.isLoggedIn():
+		# TODO: describe how to set this up
+		'<p><span class="errornotice">'
+		htmltext(_("The manager access is not working!"))
+		'</span></p>'
+	elif self.session.pbx: 
+			QDList(self.session.pbx)
+		else:
+			'<p><span class="errornotice">'
+			htmltext(_("You don't have an associated pbx"))
+			'</span></p>'
+else:
+		CFList()
+	footer()
+

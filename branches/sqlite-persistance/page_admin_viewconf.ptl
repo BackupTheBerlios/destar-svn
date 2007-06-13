@@ -1,0 +1,138 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from ConfigHelper import LabelWidget
+from quixote.form import *
+from quixote.html import htmlescape
+import os, backend, configlets, panelutils
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
+
+def showHtmlConfig [plain] (configEntries):
+	'<div id="config">\n'
+	for file, cfg in configEntries:
+		'\n<div id="configFile">'
+		'<p>'
+		file
+		'</p>'
+		'</div>\n'
+		'<div id="configContents">\n'
+		if cfg.destar_comment:
+			'<p>'
+			configlets.CONF_TAG
+			'</p>'
+		for sect in cfg.order:
+			if sect:
+				'<div id="configSection">'
+				'<p>'
+				'['
+				sect
+				']'
+				'</p>'
+				'</div>\n'
+			'<p>'
+			for l in cfg.sections[sect]:
+				htmlescape(l)
+				'<br />\n'
+			'</p>'
+		'</div>\n'
+	'</div>\n'
+
+class Page(AccessControlled, Directory): 
+
+
+	_q_parent  = 'page_admin'
+	_q_title   = _("View/Save Configuration")
+	_q_desc    = _("Show and Save Asterisk configuration files")
+	_q_link    = 'viewconf'
+	_q_menupos = 90
+	_q_level   = 3
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_test(self):
+		return os.access("/etc/asterisk", os.O_RDWR)
+
+
+	def _q_index [plain] (self):
+
+		res = backend.createAsteriskConfig()
+		configEntries = res[0]
+		missingModules = res[1]
+
+		if not configEntries == []:
+			configEntries.sort()
+
+			showForm = Form(attrs={"id":"showForm"})
+			for file,cnf in configEntries:
+				showForm.add(CheckboxWidget, file, False, title=file)
+			showForm.add(SubmitWidget, '_show', _("Show selected files"), render_br=False)
+			showForm.add(SubmitWidget, '_write', _("Save all changes"))
+
+			if not showForm.is_submitted():
+				header(_(self._q_desc))
+				if not missingModules == []: self.showMissingModules(missingModules)
+				showForm.render()
+
+			elif showForm['_show']:
+				header(_("Asterisk configuration files"))
+				if not missingModules == []: self.showMissingModules(missingModules)
+				entries = []
+				for file,cnf in configEntries:
+					if showForm[file]:
+						entries.append( (file,cnf) )
+				showHtmlConfig(entries)
+				showForm.render()
+			elif showForm['_write']:
+				header(_("Save changes results"))
+				'<p>'
+				if backend.writeAsteriskConfig():
+					_("Configuration files saved")
+				else:
+					_("There were problems writing the configuration. Please take a look at the error logs.")
+				'</p>'
+
+		else:
+				header(_("Nothing to Show"))
+				'<p>'
+				_("There is nothing configured yet.")
+				'</p>'
+		footer()
+
+	def showMissingModules [plain] (self, missingModules):
+		'<div id="error">\n'
+		'<p>'
+		htmltext(_("WARNING: This configuration might experience grave problems because the following asterisk modules are missing on your system:"))
+		'</p>'
+		'<ul>'
+		for mod in missingModules:
+			'<li>'
+			mod
+			'</li>'
+		'</ul>'
+		'</div>\n'
+

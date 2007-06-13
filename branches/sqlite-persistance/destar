@@ -1,0 +1,138 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+"""
+An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
+"""
+
+# A simple HTTP server, using Medusa, that publishes a Quixote application,
+# based on medusa_http.py from Quixote
+
+
+
+import language
+language.setLanguage('en')
+
+import sys, getopt, panelutils
+import daemonize
+be_daemon = False
+rport = 8080
+pid_file = '/var/run/destar.pid'
+VERSION = 'DEVELOPMENT SNAPSHOT'
+
+def print_version():
+	print _("DeStar %s, Copyright (C) 2005 by Holger Schurig and contributors.\n\n"\
+	"DeStar comes with ABSOLUTELY NO WARRANTY. This is free software,\n"\
+	"you are welcome to redistribute it under certain conditions;\n"\
+	"see the included files GPL-2.txt and COPYRIGHT.txt\n") % VERSION
+	
+
+def print_usage():
+	program = "destar"
+	print _("DeStar: Asterisk Management web interface")
+	print
+	print _("Usage:")
+	print _("  %s [options]: normal execution") % program
+	print _("  %s -h|--help: print this text and exit peacefully") % program
+	print _("  %s -v|--version: only print version information") % program
+	print ""
+	print _("Options:")
+	print _("  -p <pid>  | --pid=<pid>: use <pid> to store the daemon's PID")
+	print _("  -d | --daemonize: run in the background")
+	print _("  -r <port> | --port=<port>: run on port <port> (default: 8080)")
+	print _("  -b | --backend: run on backend mode")
+
+
+try:
+	opts,args = getopt.getopt(sys.argv[1:],'dhpr:vb', 
+		['daemonize','help','pid=', 'port=', 'version', 'backend'])
+except getopt.GetoptError:
+	print _("DeStar: Command-line parsing error. Aborting.")
+	print_usage()
+	sys.exit(2)
+
+for opt,val in opts:
+	if opt in  ('-d', '--daemonize'):
+		be_daemon=True
+	if opt in  ('-h', '--help'):
+		print_usage()
+		sys.exit(0)
+	if opt in ('-p', '--pid'):
+		pid_file = val
+	if opt in ('-r', '--port'):
+		rport = val
+	if opt in ('-v', '--version'):
+		print_version()
+		sys.exit(0)
+	if opt in ('-b', '--backend'):
+		import backend
+		backend.loadPythonConfig()
+		backend.createPythonConfig()
+		backend.createAsteriskConfig()
+		backend.writeAsteriskConfig()
+		sys.exit(0)
+
+# Validate parameters to give better errors:
+try:
+	rport_num = int(rport)
+except ValueError:
+	print _("Error: rport (-r <num>/--port=<num> must be a number)")
+	print_usage()
+	sys.exit(2)
+
+print_version()
+
+
+# 'medusa' is a stand-alone web server
+import medusa
+
+# 'quixote' is a web application framework
+try:
+	import quixote
+	if quixote.__version__ < "2.0":
+		raise ImportError
+except ImportError:
+	print _("Error:"), _("please install Quixote >= 2.0")
+	import sys
+	sys.exit(1)
+
+# 'Publisher.py' contains our session management, 'page_main' contains
+# the start page.
+import Server, Publisher
+pub = Server.Server("page_main", Publisher.create_publisher, port=int(rport))
+
+
+
+
+# only daemonize after binding to the port. This makes error handling saner
+if be_daemon:
+	quixote.config.DISPLAY_EXCEPTIONS = 'plain'
+	daemonize.daemonize(stdout='/var/log/asterisk/destar.log', stderr='/var/log/asterisk/destar.err', pidfile=pid_file)
+
+	if panelutils.isConfigured():
+		panelutils.startPanelDaemon()
+
+try:
+	pub.run()
+except KeyboardInterrupt:
+	if panelutils.isConfigured():
+		panelutils.stopPanelDaemon()
+	pass
