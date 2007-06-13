@@ -40,11 +40,21 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 				title=_("IAX host"),
 				len=80),
 
+			VarType("port",
+				title=_("IAX2 remote port"),
+				type="int",
+				default=4569,
+				len=5),				
+
 			VarType("bandwidth",
 				title=_("Bandwith"),
 				type="choice",
 				len=25,
 				options=[('low',_("Low")),('high', _("High"))]),
+
+			VarType("register",
+				title=_("Register with remote host?"),
+				type="bool"),
 		
 			VarType("authLabel",
 				title=_("Authentication"),
@@ -73,7 +83,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 				hint=_("For 'RSA' only"),
 				len=80,
 				optional=True),
-
+	
 			VarType("trunk",
 				title=_("Enable trunking?"),
 				type="bool",
@@ -171,6 +181,19 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 		self.createIncomingContext()
 		
 		c = AstConf("iax.conf")
+
+		if self.register:
+			c.setSection("general")
+			registerstr = "register => %s" % self.name
+			if self.auth == "plain":
+				registerstr += ":%s" % self.pw
+			# TODO: registration using rsa keys 
+			#elif self.auth = "rsa":
+			registerstr += "@%s" % self.host
+			if self.port:
+				registerstr += ":%s" % self.port
+			c.append(registerstr)
+
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
