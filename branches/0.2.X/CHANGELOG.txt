@@ -2,6 +2,7 @@
 * Changed coding header to utf-8 in all files.
 * cfg_trunk_iax.py: added remote port setting
 * cfg_trunk_iax.py: added registry option
+* Reverted po/es.po from revsion 708.
 
 2007-06-12:
 * Fixed bug in Zap trunks (clidnumin needed).
