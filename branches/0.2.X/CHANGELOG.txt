@@ -4,6 +4,7 @@
 * cfg_trunk_iax.py: added registry option
   - using username instead of trunk name in register line
 * Reverted po/es.po from revsion 708.
+* Changed po/Makefile to create a .pot file, use msgmerge and have better variable names.
 
 2007-06-12:
 * Fixed bug in Zap trunks (clidnumin needed).
