@@ -1,3 +1,6 @@
+2007-06-13:
+* cfg_phone_queue: string Spanish to English
+
 2007-06-12:
 * Fixed bug in Dialouts. Added fields to change Caller ID.
 

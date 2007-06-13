@@ -46,7 +46,7 @@ class CfgPhoneQueue(CfgPhone):
 					len=6),
 
                         VarType("clid",
-                                        title = _("Cambiar texto Identificador de Llamante a:"),
+                                        title = _("Change Caller ID name to:"),
                                         len = 25,
                                         optional = True),
 
