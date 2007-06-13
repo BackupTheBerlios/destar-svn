@@ -60,7 +60,7 @@ def loadPythonConfig():
 			try:
 				execfile(DESTAR_CFG)
 			except IOError:
-				print _("Warning: There is no %s or %s file yet." % (fn,DESTAR_CFG))
+				print _("Warning: Configuration file could not be found.")
 	except NameError:
 		pass
 		

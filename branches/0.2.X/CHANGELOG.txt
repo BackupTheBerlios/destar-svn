@@ -6,6 +6,7 @@
 * Reverted po/es.po from revsion 708.
 * Changed po/Makefile to create a .pot file, use msgmerge and have better variable names.
 * Updated .po files with the new Makefile rules.
+* Some strings adjustments. Needs revision, and .po updating and translation.
 
 2007-06-12:
 * Fixed bug in Zap trunks (clidnumin needed).

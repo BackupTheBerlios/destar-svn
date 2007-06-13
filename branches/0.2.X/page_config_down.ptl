@@ -38,4 +38,4 @@ def _q_lookup(request, component):
 	if obj:
 		return request.redirect("../" + obj.groupName.lower())
 	else:
-		return errorpage(_("Could not swap id's %s and %s") % (self._id-1,self._id))
+		return errorpage(_("Could not swap id's %(id-1)s and %(id)s") % {'id-1': self._id-1, 'id': self._id})
