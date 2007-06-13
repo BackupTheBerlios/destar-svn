@@ -5,6 +5,7 @@
   - using username instead of trunk name in register line
 * Reverted po/es.po from revsion 708.
 * Changed po/Makefile to create a .pot file, use msgmerge and have better variable names.
+* Updated .po files with the new Makefile rules.
 
 2007-06-12:
 * Fixed bug in Zap trunks (clidnumin needed).
