@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 # Copyright (C) 2004 Michael Bielicki
 # Copyright (C) 2006 Manuel Cerón <ceronman@gmail.com>
 # based on Free World Dialup Module by Hoger Schurig

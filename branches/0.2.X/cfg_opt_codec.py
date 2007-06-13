@@ -1,4 +1,4 @@
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 #
 # This module is Copyright (C) 2005 by Alejandro Rios,
 # Destar is Copyright (C) 2005 by Holger Schurig,

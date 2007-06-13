@@ -1,4 +1,4 @@
-# -*- coding: iso-latin-1 -*-
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2005 by Holger Schurig,
 # add ons by Michael Bielicki, TAAN Softworks Corp.

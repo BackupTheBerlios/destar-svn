@@ -1,3 +1,6 @@
+2007-06-13:
+* Changed coding header to utf-8 in all files.
+
 2007-06-12:
 * Fixed bug in Zap trunks (clidnumin needed).
 * Fixed bug in Dialouts. Added fields to change Caller ID.
