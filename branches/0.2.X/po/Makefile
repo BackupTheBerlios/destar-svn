@@ -11,7 +11,7 @@ createdirs:
 
 %.mo:	%.po createdirs
 	msgfmt -o $@ $<
-	install -m 644 $@ $(patsubst %.mo,../lang/%/LC_MESSAGES/destar.mo,$@)
+	mv $@ $(patsubst %.mo,../lang/%/LC_MESSAGES/destar.mo,$@)
 
 %.po:	pot destar.pot	
 	msgmerge -U $@ destar.pot 
