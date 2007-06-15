@@ -1,3 +1,6 @@
+2007-06-15:
+* cfg_phone_queue.py: queuetimeout works without queuetimeoutext
+
 2007-06-13:
 * cfg_phone_queue: string Spanish to English
 * cfg_trunk_iax.py: added remote port setting

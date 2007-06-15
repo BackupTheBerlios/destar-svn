@@ -51,7 +51,7 @@ class CfgPhoneQueue(CfgPhone):
                                         optional = True),
 
 			VarType("timeout",
-					title=_("Agent timeout"),
+					title=_("Agent calling timeout"),
 					optional=True,
 					len=6),
 
@@ -61,7 +61,7 @@ class CfgPhoneQueue(CfgPhone):
 					len=6),
 
 	                VarType("queuetimeout",
-        	            		title=_("Queue Timeout"),
+        	            		title=_("Queue timeout"),
                                 	optional=True,
                                 	len=6),
 
@@ -268,15 +268,16 @@ class CfgPhoneQueue(CfgPhone):
 				extensions.appendExten(qname, "Answer")
 				extensions.appendExten(qname, "SetMusicOnHold(%s)" % self.moh)
 
-			if self.queuetimeout and self.queuetimeoutext:
+			if self.queuetimeout:
 				opt = opt + "n"
 				extensions.appendExten(qname, "Queue(%s|%s|||%s)" % (self.name, opt, self.queuetimeout))
-				import configlets
-				obj = configlets.configlet_tree.getConfigletByName(self.queuetimeoutext)
-				try:
-					extensions.appendExten(qname, "Goto(%s,%s,1)" %  (obj.pbx, self.queuetimeoutext))
-				except AttributeError:
-					pass
+				if self.queuetimeoutext:
+					import configlets
+					obj = configlets.configlet_tree.getConfigletByName(self.queuetimeoutext)
+					try:
+						extensions.appendExten(qname, "Goto(%s,%s,1)" %  (obj.pbx, self.queuetimeoutext))
+					except AttributeError:
+						pass
 			else:
 				extensions.appendExten(qname, "Queue(%s|%s)" % (self.name, opt))
 		self.createPanelConfig()
