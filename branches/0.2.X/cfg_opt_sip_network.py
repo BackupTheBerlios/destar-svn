@@ -89,8 +89,8 @@ class CfgOptSipNetwork(CfgOptSingle):
 					default=True,
 					optional=True),
 
-			VarType("sipdefaults",
-					title=_("Defaults"), 
+			VarType("other",
+					title=_("Other options"), 
 					type="label"),
 
 			VarType("moh",

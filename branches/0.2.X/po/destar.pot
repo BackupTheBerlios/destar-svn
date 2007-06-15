@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 10:30-0500\n"
+"POT-Creation-Date: 2007-06-15 12:29-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1221,7 +1221,7 @@ msgid "Enable DNS SRV lookups on outbound calls"
 msgstr ""
 
 #: ../cfg_opt_sip_network.py:93
-msgid "Defaults"
+msgid "Other options"
 msgstr ""
 
 #: ../cfg_opt_sip_network.py:97
@@ -1898,7 +1898,7 @@ msgid "New Call Queue"
 msgstr ""
 
 #: ../cfg_phone_queue.py:48
-msgid "Agent calling timeout"
+msgid "Agent ring timeout"
 msgstr ""
 
 #: ../cfg_phone_queue.py:53

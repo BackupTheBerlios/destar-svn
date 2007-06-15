@@ -45,7 +45,7 @@ class CfgPhoneQueue(CfgPhone):
 					len=6),
 
 			VarType("timeout",
-					title=_("Agent calling timeout"),
+					title=_("Agent ring timeout"),
 					optional=True,
 					len=6),
 

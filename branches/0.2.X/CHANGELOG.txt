@@ -1,6 +1,7 @@
 2007-06-15:
 * destar.pot updated, some spanish translations.
 * languages Makefile updated, there is no need to install the mo files, just move them.
+* String translations and adjustments.
 
 2007-06-13:
 * Changed coding header to utf-8 in all files.

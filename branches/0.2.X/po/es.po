@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DeStar 0.2beta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 10:30-0500\n"
-"PO-Revision-Date: 2007-06-15 10:34-0500\n"
+"POT-Creation-Date: 2007-06-15 12:16-0500\n"
+"PO-Revision-Date: 2007-06-15 12:38-0500\n"
 "Last-Translator: dasenjo <dasenjo@avatar.com.co>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -119,8 +119,8 @@ msgid ""
 "Note: you need the cdr_sqlite3_custom module to have CDR and Stats "
 "functionalities"
 msgstr ""
-"Nota: usted necesita instalar el módulo cdr_sqlite3_custom para hacer uso de las "
-"funcionalidades estadísticas y de CDR"
+"Nota: usted necesita instalar el módulo cdr_sqlite3_custom para hacer uso de "
+"las funcionalidades estadísticas y de CDR"
 
 #: ../cdrutils.py:44
 #, python-format
@@ -562,29 +562,24 @@ msgid "Voicemail settings"
 msgstr "Configuración de correo de voz"
 
 #: ../cfg_app_voicemailsettings.py:27
-#, fuzzy
 msgid "Extensions to set/unset voicemail."
-msgstr "Extensión para programar/desprogramar la redirección de llamadas."
+msgstr "Extensión para programar/desprogramar el correo de voz."
 
 #: ../cfg_app_voicemailsettings.py:28
-#, fuzzy
 msgid "New extensions to set/unset voicemail"
-msgstr ""
-"Nuevas extensiones para programar/desprogramar la redirección de llamadas"
+msgstr "Nuevas extensiones para programar/desprogramar el correo de voz"
 
 #: ../cfg_app_voicemailsettings.py:39
 msgid "Voicemail Unconditional"
 msgstr "Diálogo de correo de voz inmediato"
 
 #: ../cfg_app_voicemailsettings.py:40
-#, fuzzy
 msgid "Voicemail if Busy"
-msgstr "PIN del correo de voz"
+msgstr "Correo de voz si la extensión está ocupada"
 
 #: ../cfg_app_voicemailsettings.py:41
-#, fuzzy
 msgid "Voicemail if Timeout/Unavailable"
-msgstr "Redirección de llamadas si no está disponible o se vence el tiempo"
+msgstr "Correo de voz si la extensión no está disponible o no se contesta"
 
 #: ../cfg_dialout_normal.py:27
 msgid "Normal dialout entry"
@@ -859,9 +854,8 @@ msgid "Custom map, destination"
 msgstr ""
 
 #: ../cfg_opt_did.py:74
-#, fuzzy
 msgid "CallerID:"
-msgstr "Identificador de Llamante"
+msgstr "Identificador de Llamante:"
 
 #: ../cfg_opt_did.py:114
 msgid "DID already in use for that trunk."
@@ -1012,19 +1006,16 @@ msgid "Very Small"
 msgstr ""
 
 #: ../cfg_opt_oppanel.py:54
-#, fuzzy
 msgid "Small"
-msgstr "Llamadas"
+msgstr "Pequeño"
 
 #: ../cfg_opt_oppanel.py:55
-#, fuzzy
 msgid "Normal"
-msgstr "Noruega"
+msgstr "Normal"
 
 #: ../cfg_opt_oppanel.py:56
-#, fuzzy
 msgid "Large"
-msgstr "Idioma"
+msgstr "Grande"
 
 #: ../cfg_opt_oppanel.py:57
 msgid "Very Large"
@@ -1210,9 +1201,8 @@ msgid "Tapi Support"
 msgstr ""
 
 #: ../cfg_opt_sip_network.py:28 ../cfg_opt_sip_network.py:29
-#, fuzzy
 msgid "SIP Options"
-msgstr "Opciones de audio de SIP"
+msgstr "Opciones de SIP"
 
 #: ../cfg_opt_sip_network.py:34
 msgid "Bind specific address?"
@@ -1275,14 +1265,12 @@ msgid "Enable DNS SRV lookups on outbound calls"
 msgstr ""
 
 #: ../cfg_opt_sip_network.py:93
-#, fuzzy
-msgid "Defaults"
-msgstr "Resultados"
+msgid "Other options"
+msgstr "Otras opciones"
 
 #: ../cfg_opt_sip_network.py:97
-#, fuzzy
 msgid "Music on hold"
-msgstr "Tipo de Música en Espera"
+msgstr "Música en espera"
 
 #: ../cfg_opt_transfer.py:27 ../cfg_opt_transfer.py:28
 msgid "Transfer Extensions"
@@ -1367,9 +1355,8 @@ msgid "Please choose a Virtual PBX for this user."
 msgstr "Por favor, escoja la PBX Virtual para este usuario."
 
 #: ../cfg_opt_voicemail.py:31
-#, fuzzy
 msgid "Enable Voicemail on phones"
-msgstr "PIN del correo de voz"
+msgstr "Habilitar correo de voz para los teléfonos"
 
 #: ../cfg_opt_voicemail.py:32
 msgid "Recording settings"
@@ -1971,14 +1958,12 @@ msgid "New Call Queue"
 msgstr "Nueva cola de llamadas"
 
 #: ../cfg_phone_queue.py:48
-#, fuzzy
-msgid "Agent calling timeout"
-msgstr "Tipo de señalización"
+msgid "Agent ring timeout"
+msgstr "Tiempo de timbrado para los agentes"
 
 #: ../cfg_phone_queue.py:53
-#, fuzzy
 msgid "Queue timeout"
-msgstr "Tiempo límite"
+msgstr "Tiempo límite para marcar a otra extensión"
 
 #: ../cfg_phone_queue.py:58
 msgid "On queue timeout forward to extension"
@@ -2200,9 +2185,8 @@ msgstr ""
 "terminación IAX."
 
 #: ../cfg_trunk_iax.py:40
-#, fuzzy
 msgid "IAX username"
-msgstr "Nombre de Usuario SIP"
+msgstr "Nombre de usuario IAX"
 
 #: ../cfg_trunk_iax.py:44
 msgid "IAX host"
@@ -2284,14 +2268,12 @@ msgstr "Extensión a timbrar"
 
 #: ../cfg_trunk_iax.py:140 ../cfg_trunk_sip.py:121 ../cfg_trunk_zappbx.py:118
 #: ../cfg_trunk_zappri.py:126
-#, fuzzy
 msgid "Allow dial extension from which Virtual PBX"
-msgstr "Permitir la marcación a todas las extensiones de la PBX"
+msgstr "Permitir la marcación a las extensiones de la PBX"
 
 #: ../cfg_trunk_iax.py:146 ../cfg_trunk_sip.py:127
-#, fuzzy
 msgid "Outgoing calls to IAX trunk"
-msgstr "Llamadas salientes por troncal"
+msgstr "Llamadas salientes a través de la troncal IAX"
 
 #: ../cfg_trunk_iaxtel.py:26
 msgid "VOIP-Provider Iaxtel"
@@ -2548,24 +2530,22 @@ msgid "Restarting the panel daemon ..."
 msgstr "Reiniciando el demonio del pánel ..."
 
 #: ../queueutils.py:36
-#, fuzzy
 msgid ""
 "Note: you should install python-pysqlite2 to have Queue Stats functionality"
 msgstr ""
 "Nota: usted debe instalar python-pysqlite2 para hacer uso de la "
-"funcionalidad de CDR"
+"funcionalidad de estadísticas de las colas"
 
 #: ../queueutils.py:45
-#, fuzzy, python-format
+#, python-format
 msgid "Note: you don't seem to have access to %s. See INSTALL.txt for details."
 msgstr ""
-"Nota: aún no hay acceso al archivo %s creado por el módulo "
-"cdr_sqlite3_custom. Vea más información en el archivo INSTALL.txt"
+"Nota: aún no hay acceso al archivo %s . Vea más información en el archivo INSTALL.txt"
 
 #: ../queueutils.py:55
-#, fuzzy, python-format
+#, python-format
 msgid "Note: you don't seem to have access to %s."
-msgstr "Nota: al parecer, usted aún no tiene acceso a %s"
+msgstr "Nota: al parecer usted no tiene acceso al archivo %s"
 
 #: ../ConfigHelper.ptl:53
 msgid "E"
@@ -2782,9 +2762,9 @@ msgid "Moves a configlet one position down"
 msgstr "Mover un «configlet» una posición abajo"
 
 #: ../page_config_down.ptl:41 ../page_config_up.ptl:41
-#, fuzzy, python-format
+#, python-format
 msgid "Could not swap id's %(id-1)s and %(id)s"
-msgstr "No es posible intercambiar id's %s y %s"
+msgstr "No es posible intercambiar los id's %(id-1)s y %(id-1)s"
 
 #: ../page_config_edit.ptl:27
 msgid "Edit a configlet"
@@ -3150,16 +3130,14 @@ msgid "Desc. Order"
 msgstr "Orden Descendente"
 
 #: ../page_owner_cdr.ptl:300 ../page_stats_cdr.ptl:302
-#, fuzzy, python-format
+#, python-format
 msgid "Showing records from %(offset)s to %(f)s of %(total)s"
-msgstr ""
-"Mostrando los registros del %(offset)s al %(f)s de un total de %(total)s"
+msgstr "Mostrando los registros del %(offset)s al %(f)s de un total de %(total)s"
 
 #: ../page_owner_cdr.ptl:302 ../page_stats_cdr.ptl:304
-#, fuzzy, python-format
+#, python-format
 msgid "Showing records from %(offset)s to %(total)s of %(total)s"
-msgstr ""
-"Mostrando los registros del %(offset)s al %(total)s de un total de %(total)s"
+msgstr "Mostrando los registros del %(offset)s al %(total)s de un total de %(total)s"
 
 #: ../page_owner_cdr.ptl:305 ../page_stats_cdr.ptl:307
 #, python-format
@@ -3500,7 +3478,6 @@ msgstr "Hora de respuesta"
 
 #: ../page_stats_queue.ptl:437 ../page_stats_queue.ptl:445
 #: ../StatsHelper.ptl:171
-#, fuzzy
 msgid "Number of calls"
 msgstr "Número de llamadas"
 
@@ -3514,9 +3491,8 @@ msgid "Service Level Graphic"
 msgstr ""
 
 #: ../page_stats_queue.ptl:445
-#, fuzzy
 msgid "Time of Answer"
-msgstr "Hora_de_la_respuesta"
+msgstr "Hora de respuesta"
 
 #: ../page_stats_queue.ptl:466
 msgid "Statistics for a Queue by Date:"
@@ -3675,21 +3651,16 @@ msgid "Seconds of incoming ring time"
 msgstr "Tiempo de timbre en segundos"
 
 #: ../page_user_settings.ptl:64
-#, fuzzy
 msgid "Immediate voice mailbox"
-msgstr "Usar correo de voz"
+msgstr "Usar correo de voz inmediatamente"
 
 #: ../page_user_settings.ptl:65
-#, fuzzy
 msgid "Voice mailbox on busy"
-msgstr "PIN del correo de voz"
+msgstr "Usar correo de voz cuando esté ocupado"
 
 #: ../page_user_settings.ptl:66
-#, fuzzy
 msgid "Voice mailbox on timeout/unavailable"
-msgstr ""
-"Redirigir las llamadas cuando se alcance el tiempo límite o no esté "
-"disponible a "
+msgstr "Usar correo de voz no conteste o no esté disponible"
 
 #: ../page_user_settings.ptl:67
 msgid "Voicemail pin"
@@ -3802,6 +3773,10 @@ msgstr "Error"
 #: ../Templates.ptl:287
 msgid "You don't have access to this page"
 msgstr "Usted no tiene acceso a esta ubicación"
+
+#, fuzzy
+#~ msgid "Defaults"
+#~ msgstr "Resultados"
 
 #, fuzzy
 #~ msgid "Phone timeout"

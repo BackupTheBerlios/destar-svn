@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-13 16:53-0500\n"
+"POT-Creation-Date: 2007-06-15 12:16-0500\n"
 "PO-Revision-Date: 2006-11-11 15:38+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,7 +151,7 @@ msgstr "Nouvelles extensions d'activation/désactivation de transfère d'appel"
 #: ../cfg_app_voicemailsettings.py:33 ../cfg_opt_pbx.py:27
 #: ../cfg_phone_epygi.py:36 ../cfg_phone_ext.py:34 ../cfg_phone_iax.py:33
 #: ../cfg_phone_mgcp.py:33 ../cfg_phone_queue.py:34 ../cfg_phone_sip.py:36
-#: ../cfg_phone_zap.py:34 ../cfg_trunk_iax.py:121 ../cfg_trunk_sip.py:106
+#: ../cfg_phone_zap.py:34 ../cfg_trunk_iax.py:125 ../cfg_trunk_sip.py:106
 #: ../cfg_trunk_zappbx.py:103 ../cfg_trunk_zappri.py:111
 #: ../cfg_trunk_zap.py:96 ../configlets.py:959 ../configlets.py:1128
 #: ../page_config_pbx.ptl:27 ../page_config_pbx.ptl:28
@@ -209,7 +209,7 @@ msgstr ""
 #: ../cfg_phone_mgcp.py:227 ../cfg_phone_mgcp.py:234 ../cfg_phone_queue.py:181
 #: ../cfg_phone_queue.py:184 ../cfg_phone_sip.py:229 ../cfg_phone_sip.py:236
 #: ../cfg_phone_zap.py:226 ../cfg_phone_zap.py:233 ../cfg_trunk_capimsn.py:42
-#: ../cfg_trunk_fwdiax.py:57 ../cfg_trunk_iax.py:163 ../cfg_trunk_iax.py:166
+#: ../cfg_trunk_fwdiax.py:57 ../cfg_trunk_iax.py:167 ../cfg_trunk_iax.py:170
 #: ../cfg_trunk_iaxtel.py:56 ../cfg_trunk_sip.py:148 ../cfg_trunk_sip.py:151
 #: ../cfg_trunk_zappbx.py:130 ../cfg_trunk_zappbx.py:133
 #: ../cfg_trunk_zappri.py:137 ../cfg_trunk_zappri.py:140
@@ -247,7 +247,7 @@ msgstr "Extension"
 
 #: ../cfg_app_chanspy.py:43 ../cfg_app_quickdial_global.py:33
 #: ../cfg_opt_user.py:32 ../cfg_phone_epygi.py:45 ../cfg_phone_iax.py:42
-#: ../cfg_phone_mgcp.py:42 ../cfg_phone_sip.py:45 ../cfg_trunk_iax.py:70
+#: ../cfg_phone_mgcp.py:42 ../cfg_phone_sip.py:45 ../cfg_trunk_iax.py:74
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -338,13 +338,13 @@ msgstr "PIN"
 
 #: ../cfg_app_meetme.py:60 ../cfg_opt_oppanel.py:27 ../cfg_opt_oppanel.py:28
 #: ../cfg_phone_epygi.py:96 ../cfg_phone_iax.py:89 ../cfg_phone_queue.py:168
-#: ../cfg_phone_sip.py:97 ../cfg_phone_zap.py:95 ../cfg_trunk_iax.py:93
+#: ../cfg_phone_sip.py:97 ../cfg_phone_zap.py:95 ../cfg_trunk_iax.py:97
 #: ../cfg_trunk_sip.py:74 ../cfg_trunk_zappbx.py:53 ../cfg_trunk_zappri.py:67
 #: ../cfg_trunk_zap.py:52 ../page_admin_panel.ptl:26
 msgid "Operator Panel"
 msgstr "Panneau de l'opérateur"
 
-#: ../cfg_app_meetme.py:65 ../cfg_trunk_iax.py:98 ../cfg_trunk_sip.py:79
+#: ../cfg_app_meetme.py:65 ../cfg_trunk_iax.py:102 ../cfg_trunk_sip.py:79
 #: ../cfg_trunk_zappbx.py:58 ../cfg_trunk_zappri.py:72 ../cfg_trunk_zap.py:57
 msgid "Show this trunk in the panel"
 msgstr "Affiche ce canal dans le panneau"
@@ -649,14 +649,14 @@ msgstr ""
 msgid "Caller ID for calls established through this dialout"
 msgstr ""
 
-#: ../cfg_dialout_normal.py:79 ../cfg_opt_did.py:78 ../cfg_trunk_iax.py:146
+#: ../cfg_dialout_normal.py:79 ../cfg_opt_did.py:78 ../cfg_trunk_iax.py:150
 #: ../cfg_trunk_sip.py:131
 #, fuzzy
 msgid "Change Caller*Id Name to:"
 msgstr "Changer le Caller*Id en :"
 
-#: ../cfg_dialout_normal.py:84 ../cfg_opt_did.py:83 ../cfg_trunk_iax.py:113
-#: ../cfg_trunk_iax.py:151 ../cfg_trunk_sip.py:98 ../cfg_trunk_sip.py:136
+#: ../cfg_dialout_normal.py:84 ../cfg_opt_did.py:83 ../cfg_trunk_iax.py:117
+#: ../cfg_trunk_iax.py:155 ../cfg_trunk_sip.py:98 ../cfg_trunk_sip.py:136
 #: ../cfg_trunk_zappbx.py:95 ../cfg_trunk_zappri.py:103 ../cfg_trunk_zap.py:88
 #, fuzzy
 msgid "Change Caller*Id Number to:"
@@ -825,19 +825,19 @@ msgstr "DID"
 msgid "From Trunk:"
 msgstr "A partir du canal :"
 
-#: ../cfg_opt_did.py:45 ../cfg_trunk_iax.py:118 ../cfg_trunk_sip.py:103
+#: ../cfg_opt_did.py:45 ../cfg_trunk_iax.py:122 ../cfg_trunk_sip.py:103
 #: ../cfg_trunk_zappbx.py:100 ../cfg_trunk_zappri.py:108
 #: ../cfg_trunk_zap.py:93
 msgid "Go to"
 msgstr "Aller à"
 
-#: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:121 ../cfg_trunk_sip.py:106
+#: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:125 ../cfg_trunk_sip.py:106
 #: ../cfg_trunk_zappbx.py:103 ../cfg_trunk_zappri.py:111
 #: ../cfg_trunk_zap.py:96
 msgid "Phone"
 msgstr "Téléphone"
 
-#: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:121 ../cfg_trunk_sip.py:106
+#: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:125 ../cfg_trunk_sip.py:106
 #: ../cfg_trunk_zappbx.py:103 ../cfg_trunk_zappri.py:111
 #: ../cfg_trunk_zap.py:96
 msgid "IVR"
@@ -852,7 +852,7 @@ msgstr ""
 msgid "Phone to ring"
 msgstr "Téléphone à faire sonner"
 
-#: ../cfg_opt_did.py:57 ../cfg_trunk_iax.py:130 ../cfg_trunk_sip.py:115
+#: ../cfg_opt_did.py:57 ../cfg_trunk_iax.py:134 ../cfg_trunk_sip.py:115
 #: ../cfg_trunk_zappbx.py:112 ../cfg_trunk_zappri.py:120
 #: ../cfg_trunk_zap.py:105
 msgid "IVR to jump to"
@@ -1281,8 +1281,8 @@ msgstr ""
 
 #: ../cfg_opt_sip_network.py:93
 #, fuzzy
-msgid "Defaults"
-msgstr "Résultat"
+msgid "Other options"
+msgstr "Options du logger"
 
 #: ../cfg_opt_sip_network.py:97
 #, fuzzy
@@ -1977,13 +1977,12 @@ msgid "New Call Queue"
 msgstr "Nouvelle file d'appel"
 
 #: ../cfg_phone_queue.py:48
-#, fuzzy
-msgid "Phone timeout"
-msgstr "Status du téléphone"
+msgid "Agent ring timeout"
+msgstr ""
 
 #: ../cfg_phone_queue.py:53
 #, fuzzy
-msgid "Queue Timeout"
+msgid "Queue timeout"
 msgstr "Timeout"
 
 #: ../cfg_phone_queue.py:58
@@ -2213,89 +2212,94 @@ msgstr ""
 "point d'accès IAX."
 
 #: ../cfg_trunk_iax.py:40
+#, fuzzy
+msgid "IAX username"
+msgstr "Nom d'utilisateur SIP"
+
+#: ../cfg_trunk_iax.py:44
 msgid "IAX host"
 msgstr "Hôte IAX"
 
-#: ../cfg_trunk_iax.py:44
+#: ../cfg_trunk_iax.py:48
 msgid "IAX2 remote port"
 msgstr ""
 
-#: ../cfg_trunk_iax.py:50
+#: ../cfg_trunk_iax.py:54
 msgid "Bandwith"
 msgstr "Bande passante"
 
-#: ../cfg_trunk_iax.py:53
+#: ../cfg_trunk_iax.py:57
 msgid "Low"
 msgstr "Basse"
 
-#: ../cfg_trunk_iax.py:53
+#: ../cfg_trunk_iax.py:57
 msgid "High"
 msgstr "Haute"
 
-#: ../cfg_trunk_iax.py:56 ../cfg_trunk_sip.py:58
+#: ../cfg_trunk_iax.py:60 ../cfg_trunk_sip.py:58
 msgid "Register with remote host?"
 msgstr "S'enregistrer (se faire connaître) de l'hôte distant ?"
 
-#: ../cfg_trunk_iax.py:60
+#: ../cfg_trunk_iax.py:64
 msgid "Authentication"
 msgstr "Authentification"
 
-#: ../cfg_trunk_iax.py:64
+#: ../cfg_trunk_iax.py:68
 msgid "Authentication Method"
 msgstr "Méthode d'Authentification"
 
-#: ../cfg_trunk_iax.py:67
+#: ../cfg_trunk_iax.py:71
 msgid "Plain text"
 msgstr "Textuelle"
 
-#: ../cfg_trunk_iax.py:67
+#: ../cfg_trunk_iax.py:71
 msgid "RSA"
 msgstr "RSA"
 
-#: ../cfg_trunk_iax.py:67
+#: ../cfg_trunk_iax.py:71
 msgid "MD5"
 msgstr "MD5"
 
-#: ../cfg_trunk_iax.py:71
+#: ../cfg_trunk_iax.py:75
 msgid "For 'Plain' or 'MD5' only"
 msgstr "Seulement pour 'Textuelle' ou 'MD5'"
 
-#: ../cfg_trunk_iax.py:76
+#: ../cfg_trunk_iax.py:80
 msgid "Public key from remote server"
 msgstr "Clé publique du serveur distant"
 
-#: ../cfg_trunk_iax.py:77 ../cfg_trunk_iax.py:83
+#: ../cfg_trunk_iax.py:81 ../cfg_trunk_iax.py:87
 msgid "For 'RSA' only"
 msgstr "Seulement pour 'RSA'"
 
-#: ../cfg_trunk_iax.py:82
+#: ../cfg_trunk_iax.py:86
 msgid "Private local key"
 msgstr "Clé privée locale"
 
-#: ../cfg_trunk_iax.py:88
+#: ../cfg_trunk_iax.py:92
 msgid "Enable trunking?"
 msgstr "Active le trunking"
 
-#: ../cfg_trunk_iax.py:104
+#: ../cfg_trunk_iax.py:108
 msgid "Calls from IAX trunk"
 msgstr "Appels venant d'un canal IAX"
 
-#: ../cfg_trunk_iax.py:108 ../cfg_trunk_sip.py:93 ../cfg_trunk_zappbx.py:90
+#: ../cfg_trunk_iax.py:112 ../cfg_trunk_sip.py:93 ../cfg_trunk_zappbx.py:90
 #: ../cfg_trunk_zappri.py:98 ../cfg_trunk_zap.py:83
 msgid "Change Caller*Id to:"
 msgstr "Changer le Caller*Id en :"
 
-#: ../cfg_trunk_iax.py:124 ../cfg_trunk_sip.py:109 ../cfg_trunk_zappbx.py:106
+#: ../cfg_trunk_iax.py:128 ../cfg_trunk_sip.py:109 ../cfg_trunk_zappbx.py:106
 #: ../cfg_trunk_zappri.py:114 ../cfg_trunk_zap.py:99
 msgid "Extension to ring"
 msgstr "Extension à faire sonner"
 
-#: ../cfg_trunk_iax.py:136 ../cfg_trunk_sip.py:121 ../cfg_trunk_zappbx.py:118
+#: ../cfg_trunk_iax.py:140 ../cfg_trunk_sip.py:121 ../cfg_trunk_zappbx.py:118
 #: ../cfg_trunk_zappri.py:126
 msgid "Allow dial extension from which Virtual PBX"
 msgstr "Autorise l'extension d'appel à partir de quel PBX VIrtual"
 
-#: ../cfg_trunk_iax.py:142 ../cfg_trunk_sip.py:127
+#: ../cfg_trunk_iax.py:146 ../cfg_trunk_sip.py:127
 #, fuzzy
 msgid "Outgoing calls to IAX trunk"
 msgstr "Appels sortant par canal"
@@ -3814,6 +3818,14 @@ msgstr "Erreur"
 #: ../Templates.ptl:287
 msgid "You don't have access to this page"
 msgstr "Vous n'avez pas accès à cette page"
+
+#, fuzzy
+#~ msgid "Defaults"
+#~ msgstr "Résultat"
+
+#, fuzzy
+#~ msgid "Phone timeout"
+#~ msgstr "Status du téléphone"
 
 #~ msgid "Warning: There is no %s or %s file yet."
 #~ msgstr "Avertissement: Le fichier %s ou %s n'existe pas"
