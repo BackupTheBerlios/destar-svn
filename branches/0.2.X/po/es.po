@@ -7,13 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DeStar 0.2beta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-13 16:53-0500\n"
-"PO-Revision-Date: 2006-09-19 16:31-0500\n"
+"POT-Creation-Date: 2007-06-15 10:30-0500\n"
+"PO-Revision-Date: 2007-06-15 10:34-0500\n"
 "Last-Translator: dasenjo <dasenjo@avatar.com.co>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../destar:43
 #, python-format
@@ -115,13 +115,12 @@ msgstr ""
 "funcionalidad de CDR"
 
 #: ../cdrutils.py:35
-#, fuzzy
 msgid ""
 "Note: you need the cdr_sqlite3_custom module to have CDR and Stats "
 "functionalities"
 msgstr ""
-"Nota: usted debe instalar python-pysqlite2 para hacer uso de la "
-"funcionalidad de CDR"
+"Nota: usted necesita instalar el módulo cdr_sqlite3_custom para hacer uso de las "
+"funcionalidades estadísticas y de CDR"
 
 #: ../cdrutils.py:44
 #, python-format
@@ -154,7 +153,7 @@ msgstr ""
 #: ../cfg_app_voicemailsettings.py:33 ../cfg_opt_pbx.py:27
 #: ../cfg_phone_epygi.py:36 ../cfg_phone_ext.py:34 ../cfg_phone_iax.py:33
 #: ../cfg_phone_mgcp.py:33 ../cfg_phone_queue.py:34 ../cfg_phone_sip.py:36
-#: ../cfg_phone_zap.py:34 ../cfg_trunk_iax.py:121 ../cfg_trunk_sip.py:106
+#: ../cfg_phone_zap.py:34 ../cfg_trunk_iax.py:125 ../cfg_trunk_sip.py:106
 #: ../cfg_trunk_zappbx.py:103 ../cfg_trunk_zappri.py:111
 #: ../cfg_trunk_zap.py:96 ../configlets.py:959 ../configlets.py:1128
 #: ../page_config_pbx.ptl:27 ../page_config_pbx.ptl:28
@@ -212,7 +211,7 @@ msgstr ""
 #: ../cfg_phone_mgcp.py:227 ../cfg_phone_mgcp.py:234 ../cfg_phone_queue.py:181
 #: ../cfg_phone_queue.py:184 ../cfg_phone_sip.py:229 ../cfg_phone_sip.py:236
 #: ../cfg_phone_zap.py:226 ../cfg_phone_zap.py:233 ../cfg_trunk_capimsn.py:42
-#: ../cfg_trunk_fwdiax.py:57 ../cfg_trunk_iax.py:163 ../cfg_trunk_iax.py:166
+#: ../cfg_trunk_fwdiax.py:57 ../cfg_trunk_iax.py:167 ../cfg_trunk_iax.py:170
 #: ../cfg_trunk_iaxtel.py:56 ../cfg_trunk_sip.py:148 ../cfg_trunk_sip.py:151
 #: ../cfg_trunk_zappbx.py:130 ../cfg_trunk_zappbx.py:133
 #: ../cfg_trunk_zappri.py:137 ../cfg_trunk_zappri.py:140
@@ -221,14 +220,12 @@ msgid "This is a Dependency"
 msgstr "Ésta es una dependencia"
 
 #: ../cfg_app_chanspy.py:26
-#, fuzzy
 msgid "Listen calls"
-msgstr "Otras llamadas"
+msgstr "Escuchar llamadas"
 
 #: ../cfg_app_chanspy.py:27
-#, fuzzy
 msgid "New spy extension"
-msgstr "Nueva extensión"
+msgstr "Nueva extensión para escuchar llamadas"
 
 #: ../cfg_app_chanspy.py:28
 msgid "Listen all calls on the Asterisk server. Jump through calls pressing *."
@@ -250,7 +247,7 @@ msgstr "Extensión"
 
 #: ../cfg_app_chanspy.py:43 ../cfg_app_quickdial_global.py:33
 #: ../cfg_opt_user.py:32 ../cfg_phone_epygi.py:45 ../cfg_phone_iax.py:42
-#: ../cfg_phone_mgcp.py:42 ../cfg_phone_sip.py:45 ../cfg_trunk_iax.py:70
+#: ../cfg_phone_mgcp.py:42 ../cfg_phone_sip.py:45 ../cfg_trunk_iax.py:74
 msgid "Password"
 msgstr "Contraseña"
 
@@ -332,9 +329,8 @@ msgid "Application that let create dynamic conferencing rooms"
 msgstr ""
 
 #: ../cfg_app_meetme.py:42
-#, fuzzy
 msgid "Maximun duration in seconds?"
-msgstr "Tamaño máximo de las llamadas en segundos"
+msgstr "Duración máxima de las llamadas en segundos?"
 
 #: ../cfg_app_meetme.py:54
 msgid "PIN"
@@ -342,13 +338,13 @@ msgstr "PIN"
 
 #: ../cfg_app_meetme.py:60 ../cfg_opt_oppanel.py:27 ../cfg_opt_oppanel.py:28
 #: ../cfg_phone_epygi.py:96 ../cfg_phone_iax.py:89 ../cfg_phone_queue.py:168
-#: ../cfg_phone_sip.py:97 ../cfg_phone_zap.py:95 ../cfg_trunk_iax.py:93
+#: ../cfg_phone_sip.py:97 ../cfg_phone_zap.py:95 ../cfg_trunk_iax.py:97
 #: ../cfg_trunk_sip.py:74 ../cfg_trunk_zappbx.py:53 ../cfg_trunk_zappri.py:67
 #: ../cfg_trunk_zap.py:52 ../page_admin_panel.ptl:26
 msgid "Operator Panel"
 msgstr "Pánel de Operadora"
 
-#: ../cfg_app_meetme.py:65 ../cfg_trunk_iax.py:98 ../cfg_trunk_sip.py:79
+#: ../cfg_app_meetme.py:65 ../cfg_trunk_iax.py:102 ../cfg_trunk_sip.py:79
 #: ../cfg_trunk_zappbx.py:58 ../cfg_trunk_zappri.py:72 ../cfg_trunk_zap.py:57
 msgid "Show this trunk in the panel"
 msgstr "Mostrar esta troncal en el pánel de operadora"
@@ -577,9 +573,8 @@ msgstr ""
 "Nuevas extensiones para programar/desprogramar la redirección de llamadas"
 
 #: ../cfg_app_voicemailsettings.py:39
-#, fuzzy
 msgid "Voicemail Unconditional"
-msgstr "Diálogo de correo de voz"
+msgstr "Diálogo de correo de voz inmediato"
 
 #: ../cfg_app_voicemailsettings.py:40
 #, fuzzy
@@ -649,18 +644,16 @@ msgstr ""
 msgid "Caller ID for calls established through this dialout"
 msgstr ""
 
-#: ../cfg_dialout_normal.py:79 ../cfg_opt_did.py:78 ../cfg_trunk_iax.py:146
+#: ../cfg_dialout_normal.py:79 ../cfg_opt_did.py:78 ../cfg_trunk_iax.py:150
 #: ../cfg_trunk_sip.py:131
-#, fuzzy
 msgid "Change Caller*Id Name to:"
-msgstr "Cambiar el Identificador de llamante a:"
+msgstr "Cambiar el nombre del Identificador de llamante a:"
 
-#: ../cfg_dialout_normal.py:84 ../cfg_opt_did.py:83 ../cfg_trunk_iax.py:113
-#: ../cfg_trunk_iax.py:151 ../cfg_trunk_sip.py:98 ../cfg_trunk_sip.py:136
+#: ../cfg_dialout_normal.py:84 ../cfg_opt_did.py:83 ../cfg_trunk_iax.py:117
+#: ../cfg_trunk_iax.py:155 ../cfg_trunk_sip.py:98 ../cfg_trunk_sip.py:136
 #: ../cfg_trunk_zappbx.py:95 ../cfg_trunk_zappri.py:103 ../cfg_trunk_zap.py:88
-#, fuzzy
 msgid "Change Caller*Id Number to:"
-msgstr "Cambiar el Identificador de llamante a:"
+msgstr "Cambiar número del Identificador de llamante a:"
 
 #: ../cfg_dialout_normal.py:89
 msgid "Trunks to use for routing this dialout entry"
@@ -824,19 +817,19 @@ msgstr "DID"
 msgid "From Trunk:"
 msgstr "De la troncal:"
 
-#: ../cfg_opt_did.py:45 ../cfg_trunk_iax.py:118 ../cfg_trunk_sip.py:103
+#: ../cfg_opt_did.py:45 ../cfg_trunk_iax.py:122 ../cfg_trunk_sip.py:103
 #: ../cfg_trunk_zappbx.py:100 ../cfg_trunk_zappri.py:108
 #: ../cfg_trunk_zap.py:93
 msgid "Go to"
 msgstr "Ir a"
 
-#: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:121 ../cfg_trunk_sip.py:106
+#: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:125 ../cfg_trunk_sip.py:106
 #: ../cfg_trunk_zappbx.py:103 ../cfg_trunk_zappri.py:111
 #: ../cfg_trunk_zap.py:96
 msgid "Phone"
 msgstr "Teléfono"
 
-#: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:121 ../cfg_trunk_sip.py:106
+#: ../cfg_opt_did.py:48 ../cfg_trunk_iax.py:125 ../cfg_trunk_sip.py:106
 #: ../cfg_trunk_zappbx.py:103 ../cfg_trunk_zappri.py:111
 #: ../cfg_trunk_zap.py:96
 msgid "IVR"
@@ -851,7 +844,7 @@ msgstr ""
 msgid "Phone to ring"
 msgstr "Teléfono a timbrar"
 
-#: ../cfg_opt_did.py:57 ../cfg_trunk_iax.py:130 ../cfg_trunk_sip.py:115
+#: ../cfg_opt_did.py:57 ../cfg_trunk_iax.py:134 ../cfg_trunk_sip.py:115
 #: ../cfg_trunk_zappbx.py:112 ../cfg_trunk_zappri.py:120
 #: ../cfg_trunk_zap.py:105
 msgid "IVR to jump to"
@@ -1242,9 +1235,8 @@ msgid "Yes"
 msgstr "Sí"
 
 #: ../cfg_opt_sip_network.py:47
-#, fuzzy
 msgid "Always"
-msgstr "Días"
+msgstr "Siempre"
 
 #: ../cfg_opt_sip_network.py:48
 msgid "Route"
@@ -1980,12 +1972,12 @@ msgstr "Nueva cola de llamadas"
 
 #: ../cfg_phone_queue.py:48
 #, fuzzy
-msgid "Phone timeout"
-msgstr "Estado del Teléfono"
+msgid "Agent calling timeout"
+msgstr "Tipo de señalización"
 
 #: ../cfg_phone_queue.py:53
 #, fuzzy
-msgid "Queue Timeout"
+msgid "Queue timeout"
 msgstr "Tiempo límite"
 
 #: ../cfg_phone_queue.py:58
@@ -2208,90 +2200,95 @@ msgstr ""
 "terminación IAX."
 
 #: ../cfg_trunk_iax.py:40
+#, fuzzy
+msgid "IAX username"
+msgstr "Nombre de Usuario SIP"
+
+#: ../cfg_trunk_iax.py:44
 msgid "IAX host"
 msgstr "Equipo IAX"
 
-#: ../cfg_trunk_iax.py:44
+#: ../cfg_trunk_iax.py:48
 msgid "IAX2 remote port"
 msgstr ""
 
-#: ../cfg_trunk_iax.py:50
+#: ../cfg_trunk_iax.py:54
 msgid "Bandwith"
 msgstr "Ancho de banda"
 
-#: ../cfg_trunk_iax.py:53
+#: ../cfg_trunk_iax.py:57
 msgid "Low"
 msgstr "Bajo"
 
-#: ../cfg_trunk_iax.py:53
+#: ../cfg_trunk_iax.py:57
 msgid "High"
 msgstr "Alto"
 
-#: ../cfg_trunk_iax.py:56 ../cfg_trunk_sip.py:58
+#: ../cfg_trunk_iax.py:60 ../cfg_trunk_sip.py:58
 msgid "Register with remote host?"
 msgstr "¿Registrar con el equipo remoto?"
 
-#: ../cfg_trunk_iax.py:60
+#: ../cfg_trunk_iax.py:64
 msgid "Authentication"
 msgstr "Autenticación"
 
-#: ../cfg_trunk_iax.py:64
+#: ../cfg_trunk_iax.py:68
 msgid "Authentication Method"
 msgstr "Método de autenticación"
 
-#: ../cfg_trunk_iax.py:67
+#: ../cfg_trunk_iax.py:71
 msgid "Plain text"
 msgstr "Texto plano"
 
-#: ../cfg_trunk_iax.py:67
+#: ../cfg_trunk_iax.py:71
 msgid "RSA"
 msgstr "RSA"
 
-#: ../cfg_trunk_iax.py:67
+#: ../cfg_trunk_iax.py:71
 msgid "MD5"
 msgstr "MD5"
 
-#: ../cfg_trunk_iax.py:71
+#: ../cfg_trunk_iax.py:75
 msgid "For 'Plain' or 'MD5' only"
 msgstr "Sólo para \"Texto plano\" o \"RSA\""
 
-#: ../cfg_trunk_iax.py:76
+#: ../cfg_trunk_iax.py:80
 msgid "Public key from remote server"
 msgstr "Llave pública del servidor remoto"
 
-#: ../cfg_trunk_iax.py:77 ../cfg_trunk_iax.py:83
+#: ../cfg_trunk_iax.py:81 ../cfg_trunk_iax.py:87
 msgid "For 'RSA' only"
 msgstr "Sólo para \"RSA\""
 
-#: ../cfg_trunk_iax.py:82
+#: ../cfg_trunk_iax.py:86
 msgid "Private local key"
 msgstr "Llave privada local"
 
-#: ../cfg_trunk_iax.py:88
+#: ../cfg_trunk_iax.py:92
 msgid "Enable trunking?"
 msgstr "¿Habilitar trunking?"
 
-#: ../cfg_trunk_iax.py:104
+#: ../cfg_trunk_iax.py:108
 msgid "Calls from IAX trunk"
 msgstr "Llamadas desde troncal IAX"
 
-#: ../cfg_trunk_iax.py:108 ../cfg_trunk_sip.py:93 ../cfg_trunk_zappbx.py:90
+#: ../cfg_trunk_iax.py:112 ../cfg_trunk_sip.py:93 ../cfg_trunk_zappbx.py:90
 #: ../cfg_trunk_zappri.py:98 ../cfg_trunk_zap.py:83
 msgid "Change Caller*Id to:"
 msgstr "Cambiar el Identificador de llamante a:"
 
-#: ../cfg_trunk_iax.py:124 ../cfg_trunk_sip.py:109 ../cfg_trunk_zappbx.py:106
+#: ../cfg_trunk_iax.py:128 ../cfg_trunk_sip.py:109 ../cfg_trunk_zappbx.py:106
 #: ../cfg_trunk_zappri.py:114 ../cfg_trunk_zap.py:99
 msgid "Extension to ring"
 msgstr "Extensión a timbrar"
 
-#: ../cfg_trunk_iax.py:136 ../cfg_trunk_sip.py:121 ../cfg_trunk_zappbx.py:118
+#: ../cfg_trunk_iax.py:140 ../cfg_trunk_sip.py:121 ../cfg_trunk_zappbx.py:118
 #: ../cfg_trunk_zappri.py:126
 #, fuzzy
 msgid "Allow dial extension from which Virtual PBX"
 msgstr "Permitir la marcación a todas las extensiones de la PBX"
 
-#: ../cfg_trunk_iax.py:142 ../cfg_trunk_sip.py:127
+#: ../cfg_trunk_iax.py:146 ../cfg_trunk_sip.py:127
 #, fuzzy
 msgid "Outgoing calls to IAX trunk"
 msgstr "Llamadas salientes por troncal"
@@ -2358,9 +2355,8 @@ msgid "SIP host"
 msgstr "Equipo SIP"
 
 #: ../cfg_trunk_sip.py:52
-#, fuzzy
 msgid "SIP port"
-msgstr "Equipo SIP"
+msgstr "Puerto SIP"
 
 #: ../cfg_trunk_sip.py:62
 msgid "Enable forward address type?"
@@ -2375,9 +2371,8 @@ msgid "Bypass auth for incoming calls?"
 msgstr "¿Omitir autenticación para llamadas entrantes?"
 
 #: ../cfg_trunk_sip.py:84
-#, fuzzy
 msgid "Sip domain:"
-msgstr "España"
+msgstr "Dominio SIP:"
 
 #: ../cfg_trunk_sip.py:89 ../cfg_trunk_zappbx.py:86
 msgid "Calls from SIP trunk"
@@ -3157,12 +3152,14 @@ msgstr "Orden Descendente"
 #: ../page_owner_cdr.ptl:300 ../page_stats_cdr.ptl:302
 #, fuzzy, python-format
 msgid "Showing records from %(offset)s to %(f)s of %(total)s"
-msgstr "Mostrando los registros del %(offset)s al %(f)s de un total de %(total)s"
+msgstr ""
+"Mostrando los registros del %(offset)s al %(f)s de un total de %(total)s"
 
 #: ../page_owner_cdr.ptl:302 ../page_stats_cdr.ptl:304
 #, fuzzy, python-format
 msgid "Showing records from %(offset)s to %(total)s of %(total)s"
-msgstr "Mostrando los registros del %(offset)s al %(total)s de un total de %(total)s"
+msgstr ""
+"Mostrando los registros del %(offset)s al %(total)s de un total de %(total)s"
 
 #: ../page_owner_cdr.ptl:305 ../page_stats_cdr.ptl:307
 #, python-format
@@ -3385,34 +3382,29 @@ msgid "List of uncompleted callers"
 msgstr ""
 
 #: ../page_stats_qcallback.ptl:175 ../page_stats_queue.ptl:241
-#, fuzzy
 msgid "All Years"
-msgstr "Años"
+msgstr "Todos los años"
 
 #: ../page_stats_qcallback.ptl:198
-#, fuzzy
 msgid "Caller"
-msgstr "Identificador de llamante"
+msgstr "Llamante"
 
 #: ../page_stats_qcallback.ptl:217
 msgid "List of calls that entered a Queue but where not completed, by date:"
 msgstr ""
 
 #: ../page_stats_queue.ptl:35
-#, fuzzy
 msgid "Queue Statistics"
-msgstr "Estadísticas"
+msgstr "Estadísticas de colas"
 
 #: ../page_stats_queue.ptl:36
-#, fuzzy
 msgid "Incoming Call Statistics by Queue"
-msgstr "Estadísticas de Llamadas"
+msgstr "Estadísticas de llamadas entrantes por cola"
 
 #: ../page_stats_queue.ptl:117 ../page_stats_queue.ptl:160
 #: ../page_stats_queue.ptl:203 ../page_stats_queue.ptl:243
-#, fuzzy
 msgid "Completed Calls"
-msgstr "Llamadas fallidas"
+msgstr "Llamadas completadas"
 
 #: ../page_stats_queue.ptl:120 ../page_stats_queue.ptl:163
 #: ../page_stats_queue.ptl:206 ../page_stats_queue.ptl:246
@@ -3421,9 +3413,8 @@ msgstr ""
 
 #: ../page_stats_queue.ptl:123 ../page_stats_queue.ptl:166
 #: ../page_stats_queue.ptl:209 ../page_stats_queue.ptl:249
-#, fuzzy
 msgid "Uncompleted Calls"
-msgstr "Llamadas contestadas"
+msgstr "Llamadas no completadas"
 
 #: ../page_stats_queue.ptl:126 ../page_stats_queue.ptl:169
 #: ../page_stats_queue.ptl:212 ../page_stats_queue.ptl:252
@@ -3440,9 +3431,8 @@ msgid "Distribution by Hour"
 msgstr ""
 
 #: ../page_stats_queue.ptl:131
-#, fuzzy
 msgid "Hour"
-msgstr "Horas"
+msgstr "Hora"
 
 #: ../page_stats_queue.ptl:173
 msgid "Distribution by Days"
@@ -3485,9 +3475,8 @@ msgid "Total uncompleted calls"
 msgstr ""
 
 #: ../page_stats_queue.ptl:421
-#, fuzzy
 msgid "Calls dumped by agents"
-msgstr "Llamadas por día en un mes"
+msgstr "Llamadas abandonadas por los agentes"
 
 #: ../page_stats_queue.ptl:423
 msgid "Calls abandoned by caller"
@@ -3506,9 +3495,8 @@ msgid "Average position at abandon time"
 msgstr ""
 
 #: ../page_stats_queue.ptl:436
-#, fuzzy
 msgid "Time of answer"
-msgstr "Hora_de_la_respuesta"
+msgstr "Hora de respuesta"
 
 #: ../page_stats_queue.ptl:437 ../page_stats_queue.ptl:445
 #: ../StatsHelper.ptl:171
@@ -3531,9 +3519,8 @@ msgid "Time of Answer"
 msgstr "Hora_de_la_respuesta"
 
 #: ../page_stats_queue.ptl:466
-#, fuzzy
 msgid "Statistics for a Queue by Date:"
-msgstr "Estadísticas de las llamadas por fecha:"
+msgstr "Estadísticas para una cola por fecha:"
 
 #: ../page_stats_trunks.ptl:34
 msgid "Trunk Statistics"
@@ -3815,6 +3802,10 @@ msgstr "Error"
 #: ../Templates.ptl:287
 msgid "You don't have access to this page"
 msgstr "Usted no tiene acceso a esta ubicación"
+
+#, fuzzy
+#~ msgid "Phone timeout"
+#~ msgstr "Estado del Teléfono"
 
 #~ msgid "Warning: There is no %s or %s file yet."
 #~ msgstr "Advertencia: Aún no existe el archivo %s o %s."
