@@ -258,15 +258,16 @@ class CfgPhoneQueue(CfgPhone):
 				extensions.appendExten(qname, "Answer")
 				extensions.appendExten(qname, "SetMusicOnHold(%s)" % self.moh)
 
-			if self.queuetimeout and self.queuetimeoutext:
+			if self.queuetimeout:
 				opt = opt + "n"
 				extensions.appendExten(qname, "Queue(%s|%s|||%s)" % (self.name, opt, self.queuetimeout))
-				import configlets
-				obj = configlets.configlet_tree.getConfigletByName(self.queuetimeoutext)
-				try:
-					extensions.appendExten(qname, "Goto(%s,%s,1)" %  (obj.pbx, self.queuetimeoutext))
-				except AttributeError:
-					pass
+				if self.queuetimeoutext:
+					import configlets
+					obj = configlets.configlet_tree.getConfigletByName(self.queuetimeoutext)
+					try:
+						extensions.appendExten(qname, "Goto(%s,%s,1)" %  (obj.pbx, self.queuetimeoutext))
+					except AttributeError:
+						pass
 			else:
 				extensions.appendExten(qname, "Queue(%s|%s)" % (self.name, opt))
 		self.createPanelConfig()
