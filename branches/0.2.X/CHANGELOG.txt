@@ -1,3 +1,6 @@
+2007-06-18:
+* More translations. 
+
 2007-06-15:
 * destar.pot updated, some spanish translations.
 * languages Makefile updated, there is no need to install the mo files, just move them.

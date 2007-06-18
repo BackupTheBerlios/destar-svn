@@ -7,13 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DeStar 0.2beta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 12:16-0500\n"
-"PO-Revision-Date: 2007-06-15 12:38-0500\n"
+"POT-Creation-Date: 2007-06-15 13:04-0500\n"
+"PO-Revision-Date: 2007-06-15 13:03-0500\n"
 "Last-Translator: dasenjo <dasenjo@avatar.com.co>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: ../destar:43
 #, python-format
@@ -96,7 +96,7 @@ msgstr "Por favor, instale Quixote > 1.2 y < 2.0"
 
 #: ../backend.py:63
 msgid "Warning: Configuration file could not be found."
-msgstr ""
+msgstr "Advertencia: El archivo de configuración no pudo ser encontrado"
 
 #: ../backend.py:431
 #, python-format
@@ -190,11 +190,11 @@ msgstr "Extension para desprogramar"
 
 #: ../cfg_app_callfw.py:37 ../cfg_app_voicemailsettings.py:51
 msgid "Set function toggleable"
-msgstr ""
+msgstr "Hacer la función intercambiable"
 
 #: ../cfg_app_callfw.py:38 ../cfg_app_voicemailsettings.py:54
 msgid "Create Devstate extension. Devstate Prefix:"
-msgstr ""
+msgstr "Crear una extensión \"Devstate\". Prefijo \"Devstate\":"
 
 #: ../cfg_app_callfw.py:43 ../cfg_app_chanspy.py:54
 #: ../cfg_app_conference.py:36 ../cfg_app_directory.py:36 ../cfg_app_dnd.py:38
@@ -230,6 +230,8 @@ msgstr "Nueva extensión para escuchar llamadas"
 #: ../cfg_app_chanspy.py:28
 msgid "Listen all calls on the Asterisk server. Jump through calls pressing *."
 msgstr ""
+"Escuchar todas las llamadas del servidor Asterisk. Para saltar entra "
+"llamadas, presionar la tecla *"
 
 #: ../cfg_app_chanspy.py:38 ../cfg_app_conference.py:32
 #: ../cfg_app_directory.py:32 ../cfg_app_echo.py:33 ../cfg_app_meetme.py:38
@@ -253,7 +255,7 @@ msgstr "Contraseña"
 
 #: ../cfg_app_chanspy.py:47
 msgid "Be quiet?"
-msgstr ""
+msgstr "¿Escuchar las llamadas en silencio?"
 
 #: ../cfg_app_conference.py:26
 msgid "Conference room"
@@ -326,7 +328,7 @@ msgstr "Nueva sala de conferencia"
 
 #: ../cfg_app_meetme.py:28
 msgid "Application that let create dynamic conferencing rooms"
-msgstr ""
+msgstr "Aplicación que permite crear salas de conferencia dinámicas"
 
 #: ../cfg_app_meetme.py:42
 msgid "Maximun duration in seconds?"
@@ -633,11 +635,13 @@ msgstr "¿Buscar en la lista de marcado rápido?"
 
 #: ../cfg_dialout_normal.py:70
 msgid "Disable transfer to the calling party?"
-msgstr ""
+msgstr "¿Deshabilitar la conferencia para el usuario llamante?"
 
 #: ../cfg_dialout_normal.py:75
 msgid "Caller ID for calls established through this dialout"
 msgstr ""
+"Identificador de Llamante para las llamadas establecidas a través de este "
+"destino"
 
 #: ../cfg_dialout_normal.py:79 ../cfg_opt_did.py:78 ../cfg_trunk_iax.py:150
 #: ../cfg_trunk_sip.py:131
@@ -774,19 +778,19 @@ msgstr "GSM"
 
 #: ../cfg_opt_codec.py:41
 msgid "ILBC"
-msgstr ""
+msgstr "ILBC"
 
 #: ../cfg_opt_codec.py:42
 msgid "g726"
-msgstr ""
+msgstr "g726"
 
 #: ../cfg_opt_codec.py:43
 msgid "g723.1"
-msgstr ""
+msgstr "g723.1"
 
 #: ../cfg_opt_codec.py:44
 msgid "g729"
-msgstr ""
+msgstr "g729"
 
 #: ../cfg_opt_did.py:26
 msgid "Direct inward dialing (DID) number"
@@ -832,7 +836,7 @@ msgstr "IVR"
 
 #: ../cfg_opt_did.py:48
 msgid "Custom map"
-msgstr ""
+msgstr "Destino personalizado"
 
 #: ../cfg_opt_did.py:51 ../cfg_trunk_capimsn.py:35 ../cfg_trunk_fwdiax.py:50
 #: ../cfg_trunk_iaxtel.py:49
@@ -847,11 +851,11 @@ msgstr "saltar a IVR"
 
 #: ../cfg_opt_did.py:63
 msgid "Custom map, PBX"
-msgstr ""
+msgstr "Destino personalizado, PBX"
 
 #: ../cfg_opt_did.py:69
 msgid "Custom map, destination"
-msgstr ""
+msgstr "Destino personalizado, destino"
 
 #: ../cfg_opt_did.py:74
 msgid "CallerID:"
@@ -999,11 +1003,11 @@ msgstr "Código de seguridad"
 
 #: ../cfg_opt_oppanel.py:50
 msgid "Button Size"
-msgstr ""
+msgstr "Tamaño de los botones"
 
 #: ../cfg_opt_oppanel.py:53
 msgid "Very Small"
-msgstr ""
+msgstr "Muy pequeño"
 
 #: ../cfg_opt_oppanel.py:54
 msgid "Small"
@@ -1019,7 +1023,7 @@ msgstr "Grande"
 
 #: ../cfg_opt_oppanel.py:57
 msgid "Very Large"
-msgstr ""
+msgstr "Muy grande"
 
 #: ../cfg_opt_oppanel.py:63
 msgid "Manager agent"
@@ -1198,7 +1202,7 @@ msgstr "El lenguaje se usa para los diálogos de voz"
 
 #: ../cfg_opt_settings.py:330
 msgid "Tapi Support"
-msgstr ""
+msgstr "Soporte para Tapi"
 
 #: ../cfg_opt_sip_network.py:28 ../cfg_opt_sip_network.py:29
 msgid "SIP Options"
@@ -1214,7 +1218,7 @@ msgstr "Dirección a enlazar"
 
 #: ../cfg_opt_sip_network.py:43
 msgid "Global NAT"
-msgstr ""
+msgstr "NAT Global"
 
 #: ../cfg_opt_sip_network.py:45 ../cfg_phone_queue.py:107
 msgid "No"
@@ -1230,11 +1234,11 @@ msgstr "Siempre"
 
 #: ../cfg_opt_sip_network.py:48
 msgid "Route"
-msgstr ""
+msgstr "Enrutado"
 
 #: ../cfg_opt_sip_network.py:53
 msgid "SIP Pedantic checking of Call-ID"
-msgstr ""
+msgstr "Chequeo de identificador tipo \"pedantic\""
 
 #: ../cfg_opt_sip_network.py:58
 msgid "External/Internal IP"
@@ -1258,11 +1262,11 @@ msgstr "Máscara de red"
 
 #: ../cfg_opt_sip_network.py:81
 msgid "TOS Field"
-msgstr ""
+msgstr "Campo de TOS"
 
 #: ../cfg_opt_sip_network.py:87
 msgid "Enable DNS SRV lookups on outbound calls"
-msgstr ""
+msgstr "Habilitar consultas DNS·SRV para las llamadas salientes"
 
 #: ../cfg_opt_sip_network.py:93
 msgid "Other options"
@@ -1790,63 +1794,63 @@ msgstr "Factor de volumen escuchado"
 #: ../cfg_phone_queue.py:142 ../cfg_phone_queue.py:156 ../cfg_phone_sip.py:178
 #: ../cfg_phone_sip.py:192 ../cfg_phone_zap.py:176 ../cfg_phone_zap.py:190
 msgid "+4"
-msgstr ""
+msgstr "+4"
 
 #: ../cfg_phone_epygi.py:178 ../cfg_phone_epygi.py:192 ../cfg_phone_iax.py:175
 #: ../cfg_phone_iax.py:189 ../cfg_phone_mgcp.py:178 ../cfg_phone_mgcp.py:192
 #: ../cfg_phone_queue.py:143 ../cfg_phone_queue.py:157 ../cfg_phone_sip.py:179
 #: ../cfg_phone_sip.py:193 ../cfg_phone_zap.py:177 ../cfg_phone_zap.py:191
 msgid "+3"
-msgstr ""
+msgstr "+3"
 
 #: ../cfg_phone_epygi.py:179 ../cfg_phone_epygi.py:193 ../cfg_phone_iax.py:176
 #: ../cfg_phone_iax.py:190 ../cfg_phone_mgcp.py:179 ../cfg_phone_mgcp.py:193
 #: ../cfg_phone_queue.py:144 ../cfg_phone_queue.py:158 ../cfg_phone_sip.py:180
 #: ../cfg_phone_sip.py:194 ../cfg_phone_zap.py:178 ../cfg_phone_zap.py:192
 msgid "+2"
-msgstr ""
+msgstr "+2"
 
 #: ../cfg_phone_epygi.py:180 ../cfg_phone_epygi.py:194 ../cfg_phone_iax.py:177
 #: ../cfg_phone_iax.py:191 ../cfg_phone_mgcp.py:180 ../cfg_phone_mgcp.py:194
 #: ../cfg_phone_queue.py:145 ../cfg_phone_queue.py:159 ../cfg_phone_sip.py:181
 #: ../cfg_phone_sip.py:195 ../cfg_phone_zap.py:179 ../cfg_phone_zap.py:193
 msgid "+1"
-msgstr ""
+msgstr "+1"
 
 #: ../cfg_phone_epygi.py:181 ../cfg_phone_epygi.py:195 ../cfg_phone_iax.py:178
 #: ../cfg_phone_iax.py:192 ../cfg_phone_mgcp.py:181 ../cfg_phone_mgcp.py:195
 #: ../cfg_phone_queue.py:146 ../cfg_phone_queue.py:160 ../cfg_phone_sip.py:182
 #: ../cfg_phone_sip.py:196 ../cfg_phone_zap.py:180 ../cfg_phone_zap.py:194
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../cfg_phone_epygi.py:182 ../cfg_phone_epygi.py:196 ../cfg_phone_iax.py:179
 #: ../cfg_phone_iax.py:193 ../cfg_phone_mgcp.py:182 ../cfg_phone_mgcp.py:196
 #: ../cfg_phone_queue.py:147 ../cfg_phone_queue.py:161 ../cfg_phone_sip.py:183
 #: ../cfg_phone_sip.py:197 ../cfg_phone_zap.py:181 ../cfg_phone_zap.py:195
 msgid "-1"
-msgstr ""
+msgstr "-1"
 
 #: ../cfg_phone_epygi.py:183 ../cfg_phone_epygi.py:197 ../cfg_phone_iax.py:180
 #: ../cfg_phone_iax.py:194 ../cfg_phone_mgcp.py:183 ../cfg_phone_mgcp.py:197
 #: ../cfg_phone_queue.py:148 ../cfg_phone_queue.py:162 ../cfg_phone_sip.py:184
 #: ../cfg_phone_sip.py:198 ../cfg_phone_zap.py:182 ../cfg_phone_zap.py:196
 msgid "-2"
-msgstr ""
+msgstr "-2"
 
 #: ../cfg_phone_epygi.py:184 ../cfg_phone_epygi.py:198 ../cfg_phone_iax.py:181
 #: ../cfg_phone_iax.py:195 ../cfg_phone_mgcp.py:184 ../cfg_phone_mgcp.py:198
 #: ../cfg_phone_queue.py:149 ../cfg_phone_queue.py:163 ../cfg_phone_sip.py:185
 #: ../cfg_phone_sip.py:199 ../cfg_phone_zap.py:183 ../cfg_phone_zap.py:197
 msgid "-3"
-msgstr ""
+msgstr "-3"
 
 #: ../cfg_phone_epygi.py:185 ../cfg_phone_epygi.py:199 ../cfg_phone_iax.py:182
 #: ../cfg_phone_iax.py:196 ../cfg_phone_mgcp.py:185 ../cfg_phone_mgcp.py:199
 #: ../cfg_phone_queue.py:150 ../cfg_phone_queue.py:164 ../cfg_phone_sip.py:186
 #: ../cfg_phone_sip.py:200 ../cfg_phone_zap.py:184 ../cfg_phone_zap.py:198
 msgid "-4"
-msgstr ""
+msgstr "-4"
 
 #: ../cfg_phone_epygi.py:189 ../cfg_phone_iax.py:186 ../cfg_phone_mgcp.py:189
 #: ../cfg_phone_queue.py:154 ../cfg_phone_sip.py:190 ../cfg_phone_zap.py:188
@@ -1967,11 +1971,11 @@ msgstr "Tiempo límite para marcar a otra extensión"
 
 #: ../cfg_phone_queue.py:58
 msgid "On queue timeout forward to extension"
-msgstr ""
+msgstr "Reenviar a la extensión después de que se cumpla el tiempo límite"
 
 #: ../cfg_phone_queue.py:70
 msgid "Ring instead of playing Music-on-Hold?"
-msgstr ""
+msgstr "¿Reproducir el timbre en vez de la música en espera?"
 
 #: ../cfg_phone_queue.py:74
 msgid "Strategy:"
@@ -2194,7 +2198,7 @@ msgstr "Equipo IAX"
 
 #: ../cfg_trunk_iax.py:48
 msgid "IAX2 remote port"
-msgstr ""
+msgstr "Puerto IAX remoto"
 
 #: ../cfg_trunk_iax.py:54
 msgid "Bandwith"
@@ -2540,7 +2544,8 @@ msgstr ""
 #, python-format
 msgid "Note: you don't seem to have access to %s. See INSTALL.txt for details."
 msgstr ""
-"Nota: aún no hay acceso al archivo %s . Vea más información en el archivo INSTALL.txt"
+"Nota: aún no hay acceso al archivo %s . Vea más información en el archivo "
+"INSTALL.txt"
 
 #: ../queueutils.py:55
 #, python-format
@@ -2735,7 +2740,7 @@ msgstr "Aplicaciones especiales de Asterisk"
 
 #: ../page_config_codecs.ptl:27
 msgid "Codecs"
-msgstr ""
+msgstr "Codecs"
 
 #: ../page_config_codecs.ptl:28
 msgid "Audio codecs to use on SIP and IAX channels."
@@ -3132,12 +3137,14 @@ msgstr "Orden Descendente"
 #: ../page_owner_cdr.ptl:300 ../page_stats_cdr.ptl:302
 #, python-format
 msgid "Showing records from %(offset)s to %(f)s of %(total)s"
-msgstr "Mostrando los registros del %(offset)s al %(f)s de un total de %(total)s"
+msgstr ""
+"Mostrando los registros del %(offset)s al %(f)s de un total de %(total)s"
 
 #: ../page_owner_cdr.ptl:302 ../page_stats_cdr.ptl:304
 #, python-format
 msgid "Showing records from %(offset)s to %(total)s of %(total)s"
-msgstr "Mostrando los registros del %(offset)s al %(total)s de un total de %(total)s"
+msgstr ""
+"Mostrando los registros del %(offset)s al %(total)s de un total de %(total)s"
 
 #: ../page_owner_cdr.ptl:305 ../page_stats_cdr.ptl:307
 #, python-format
@@ -3336,15 +3343,15 @@ msgstr "Estadísticas globales de la PBX y CDR"
 
 #: ../page_stats_qcallback.ptl:35
 msgid "Queue Callback"
-msgstr ""
+msgstr "Llamadas perdidas en las colas"
 
 #: ../page_stats_qcallback.ptl:36
 msgid "Call Back List by Queue"
-msgstr ""
+msgstr "Lista de llamadas perdidasd por cola"
 
 #: ../page_stats_qcallback.ptl:61 ../page_stats_queue.ptl:61
 msgid "Queue:"
-msgstr ""
+msgstr "Cola:"
 
 #: ../page_stats_qcallback.ptl:108 ../page_stats_qcallback.ptl:132
 #: ../page_stats_qcallback.ptl:155 ../page_stats_qcallback.ptl:175
@@ -3352,12 +3359,12 @@ msgstr ""
 #: ../page_stats_queue.ptl:201 ../page_stats_queue.ptl:241
 #: ../StatsHelper.ptl:171
 msgid "Period"
-msgstr ""
+msgstr "Periodo"
 
 #: ../page_stats_qcallback.ptl:110 ../page_stats_qcallback.ptl:134
 #: ../page_stats_qcallback.ptl:157 ../page_stats_qcallback.ptl:177
 msgid "List of uncompleted callers"
-msgstr ""
+msgstr "Lista de llamantes que no completaron la llamada"
 
 #: ../page_stats_qcallback.ptl:175 ../page_stats_queue.ptl:241
 msgid "All Years"
@@ -3370,6 +3377,8 @@ msgstr "Llamante"
 #: ../page_stats_qcallback.ptl:217
 msgid "List of calls that entered a Queue but where not completed, by date:"
 msgstr ""
+"Lista de las llamadas que entraron a la cola pero no se completaron, por "
+"fecha:"
 
 #: ../page_stats_queue.ptl:35
 msgid "Queue Statistics"
@@ -3387,7 +3396,7 @@ msgstr "Llamadas completadas"
 #: ../page_stats_queue.ptl:120 ../page_stats_queue.ptl:163
 #: ../page_stats_queue.ptl:206 ../page_stats_queue.ptl:246
 msgid "Service Level"
-msgstr ""
+msgstr "Nivel de servicio"
 
 #: ../page_stats_queue.ptl:123 ../page_stats_queue.ptl:166
 #: ../page_stats_queue.ptl:209 ../page_stats_queue.ptl:249
@@ -3397,16 +3406,16 @@ msgstr "Llamadas no completadas"
 #: ../page_stats_queue.ptl:126 ../page_stats_queue.ptl:169
 #: ../page_stats_queue.ptl:212 ../page_stats_queue.ptl:252
 msgid "Distribution by Agent"
-msgstr ""
+msgstr "Distribución por Agente"
 
 #: ../page_stats_queue.ptl:128 ../page_stats_queue.ptl:171
 #: ../page_stats_queue.ptl:214 ../page_stats_queue.ptl:254
 msgid "Agent"
-msgstr ""
+msgstr "Agente"
 
 #: ../page_stats_queue.ptl:130
 msgid "Distribution by Hour"
-msgstr ""
+msgstr "Distribución por hora"
 
 #: ../page_stats_queue.ptl:131
 msgid "Hour"
@@ -3414,43 +3423,43 @@ msgstr "Hora"
 
 #: ../page_stats_queue.ptl:173
 msgid "Distribution by Days"
-msgstr ""
+msgstr "Distribución por días"
 
 #: ../page_stats_queue.ptl:216
 msgid "Distribution by Month"
-msgstr ""
+msgstr "Distribución por mes"
 
 #: ../page_stats_queue.ptl:256
 msgid "Distribution by Year"
-msgstr ""
+msgstr "Distribución por año"
 
 #: ../page_stats_queue.ptl:396
 msgid "Total completed calls"
-msgstr ""
+msgstr "Total de llamadas completadas"
 
 #: ../page_stats_queue.ptl:398
 msgid "Calls terminated by agents"
-msgstr ""
+msgstr "Llamadas terminadas por los agentes"
 
 #: ../page_stats_queue.ptl:400
 msgid "Calls terminated by caller"
-msgstr ""
+msgstr "Llamadas terminadas por el llamante"
 
 #: ../page_stats_queue.ptl:402
 msgid "Total call duration"
-msgstr ""
+msgstr "Duración total de la llamada"
 
 #: ../page_stats_queue.ptl:404
 msgid "Average call duration"
-msgstr ""
+msgstr "Duración promedio de las llamadas"
 
 #: ../page_stats_queue.ptl:406
 msgid "Average hold time"
-msgstr ""
+msgstr "Tiempo de espera promedio"
 
 #: ../page_stats_queue.ptl:419
 msgid "Total uncompleted calls"
-msgstr ""
+msgstr "Total de llamadas no completadas"
 
 #: ../page_stats_queue.ptl:421
 msgid "Calls dumped by agents"
@@ -3458,19 +3467,19 @@ msgstr "Llamadas abandonadas por los agentes"
 
 #: ../page_stats_queue.ptl:423
 msgid "Calls abandoned by caller"
-msgstr ""
+msgstr "Llamadas abandonadas por el usuario llamante"
 
 #: ../page_stats_queue.ptl:425
 msgid "Calls timed out"
-msgstr ""
+msgstr "Llamads que cumplieron el tiempo límite"
 
 #: ../page_stats_queue.ptl:427
 msgid "Average waiting time"
-msgstr ""
+msgstr "Tiempo promedio de espera"
 
 #: ../page_stats_queue.ptl:429
 msgid "Average position at abandon time"
-msgstr ""
+msgstr "Posición promedio al abandonar la cola"
 
 #: ../page_stats_queue.ptl:436
 msgid "Time of answer"
@@ -3484,11 +3493,11 @@ msgstr "Número de llamadas"
 #: ../page_stats_queue.ptl:438
 #, python-format
 msgid "% of Total Calls"
-msgstr ""
+msgstr "% de las llamadas totales"
 
 #: ../page_stats_queue.ptl:445
 msgid "Service Level Graphic"
-msgstr ""
+msgstr "Gráfico de nivel de servicio"
 
 #: ../page_stats_queue.ptl:445
 msgid "Time of Answer"
@@ -3756,15 +3765,15 @@ msgstr "Fallida"
 
 #: ../StatsHelper.ptl:243
 msgid "Distribution by period"
-msgstr ""
+msgstr "Distribución por periodo"
 
 #: ../StatsHelper.ptl:245
 msgid "Completed"
-msgstr ""
+msgstr "Completadas"
 
 #: ../StatsHelper.ptl:246
 msgid "Uncompleted"
-msgstr ""
+msgstr "No completadas"
 
 #: ../Templates.ptl:279
 msgid "Error"
