@@ -31,12 +31,14 @@ An HTTP handler for Medusa that publishes the Asterisk setup Quixote application
 import language
 language.setLanguage('en')
 
+from version import *
+
 import sys, getopt, panelutils
 import daemonize
 be_daemon = False
 rport = 8080
 pid_file = '/var/run/destar.pid'
-VERSION = 'DEVELOPMENT SNAPSHOT'
+VERSION = destar_version
 
 def print_version():
 	print _("DeStar %s, Copyright (C) 2005 by Holger Schurig and contributors.\n\n"\

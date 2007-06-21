@@ -25,8 +25,9 @@ from quixote.util import get_directory_path
 from quixote.errors import AccessError
 import os, sys, copy
 
+from version import *
 
-VERSION = 'DEVELOPMENT SNAPSHOT'
+VERSION = destar_version
 
 
 class HtmlTable:
