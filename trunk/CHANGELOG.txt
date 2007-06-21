@@ -1,3 +1,6 @@
+2007-06-21:
+* page_admin_cfwstate.ptl: updated to Quixote 2
+
 2007-06-15:
 * cfg_phone_queue.py: queuetimeout works without queuetimeoutext
 
