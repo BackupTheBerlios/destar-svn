@@ -1,3 +1,6 @@
+2007-06-27:
+* Added zaptel dynamic spans support (TDMoE)
+
 2007-06-21:
 * page_admin_cfwstate.ptl: updated to Quixote 2
 * Added version.py
