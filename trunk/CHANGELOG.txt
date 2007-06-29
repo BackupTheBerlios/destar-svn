@@ -3,6 +3,7 @@
 * page_user_info.ptl: _q_level should be 1.
 * Added logging information for destar's users sessions.
 * Added logging information for configlets edition.
+* Moved misc/page_admin_systemstate to / and added more info.
 
 2007-06-27:
 * Added zaptel dynamic spans support (TDMoE)

@@ -20,19 +20,30 @@
 
 
 from Templates import *
-import os, commands
+import os, commands, backend
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
 
-_q_parent  = 'page_admin'
-_q_title   = _("System Status")
-_q_desc    = _("System information of your machine")
-_q_link    = 'systemstatus'
-_q_menupos = 10
-_q_level   = 3
+class Page(AccessControlled, Directory): 
+	_q_parent  = 'page_admin'
+	_q_title   = _("System Status")
+	_q_desc    = _("System information of your machine")
+	_q_link    = 'systemstatus'
+	_q_menupos = 10
+	_q_level   = 3
+	_q_exports = ['']
 
 
-def _q_access(request):
-        if request.session.level < _q_level:
-		cantAccessPage()
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+	
+	def _q_index [plain] (self):
+		header(self._q_desc,refresh=10)
+		systemState()	
+		footer()
 
 def systemState [plain] ():
 	# TODO: use CSS
@@ -41,6 +52,9 @@ def systemState [plain] ():
 		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('System')), " ". join(os.uname()) )
 	except OSError:
 		pass
+	import configlets
+	'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Number of DeStar Configlets')), len(configlets.configlet_tree))
+	'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_("DeStar users logged in")), backend.frontend_sessions)
 	try:
 		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Load Average in the last minute')), os.getloadavg()[0] )
 		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Load Average in the last 5 minutes')), os.getloadavg()[1] )
@@ -89,9 +103,4 @@ def systemState [plain] ():
 	'</table>'
 
 		
-	
-def _q_index [plain] (request):
-	header(_q_desc,refresh=10)
-	systemState()	
-	footer()
 

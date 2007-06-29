@@ -64,7 +64,6 @@ class Page(AccessControlled, Directory): #order matters
 
 		# Import all cfg_*.py files once when the module loads.
 		for s in os.listdir(backend.CONFIGLETS_DIR):
-			#continue
 			if not s.startswith('page_'):
 				continue
 			m = None
