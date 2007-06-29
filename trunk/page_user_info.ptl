@@ -31,7 +31,7 @@ class Page(AccessControlled, Directory):
 	_q_desc    = _("Your access rights in DeStar")
 	_q_link    = 'info'
 	_q_menupos = 10
-	_q_level   = 0
+	_q_level   = 1
 
 	_q_exports = ['']
 
