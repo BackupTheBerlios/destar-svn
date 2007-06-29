@@ -300,12 +300,15 @@ class ConfigletTree:
 				if group[i]._id == _id:
 					for dep in group[i].dependent_objs:
 						self.deleteConfiglet(dep.configlet._id)
+					obj = group[i]
+					print ("[%s] Deleting configlet '%s' with id '%s' from group '%s'" % (time.asctime(time.localtime()), obj.name, obj._id, obj.groupName))
 					del group[i]
 					return
 					
 	def moveConfigletUp(self, _id):
 		obj = self.getConfiglet(_id)
 		configlet_list = self.groups[obj.groupName]
+		print ("[%s] Moving up configlet '%s' with id '%s' in group '%s'" % (time.asctime(time.localtime()), obj.name, obj._id, obj.groupName))
 		
 		for i in range(len(configlet_list)):
 			if configlet_list[i]._id == obj._id and i > 0:
@@ -317,6 +320,7 @@ class ConfigletTree:
 	def moveConfigletDown(self, _id):
 		obj = self.getConfiglet(_id)
 		configlet_list = self.groups[obj.groupName]
+		print ("[%s] Moving down configlet '%s' with id '%s' in group '%s'" % (time.asctime(time.localtime()), obj.name, obj._id, obj.groupName))
 		
 		for i in range(len(configlet_list)):
 			if configlet_list[i]._id == obj._id and i < (len(configlet_list) -1):
@@ -374,6 +378,7 @@ class ConfigletTree:
 	def addConfiglet(self, configlet):
 		if not self.groups.has_key(configlet.groupName):
 			self.groups[configlet.groupName] = []
+		print ("[%s] Loading configlet '%s' with id '%s' in group '%s'" % (time.asctime(time.localtime()), configlet.name, configlet._id, configlet.groupName))
 		self.groups[configlet.groupName].append(configlet)
 		
 	def generateUniqueId(self):
@@ -662,7 +667,6 @@ class Cfg(Holder):
 				cont = '"""%s"""' % _v
 			elif v.type=="int":
 				if _v == 0:
-					print v.name
 					continue
 				else:
 					cont = _v

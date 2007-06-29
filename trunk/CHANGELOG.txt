@@ -1,3 +1,9 @@
+2007-06-28:
+* page_admin_cfwstate.ptl: small fix on subrutine call.
+* page_user_info.ptl: _q_level should be 1.
+* Added logging information for destar's users sessions.
+* Added logging information for configlets edition.
+
 2007-06-27:
 * Added zaptel dynamic spans support (TDMoE)
 

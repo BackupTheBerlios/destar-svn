@@ -23,7 +23,7 @@ from quixote.form import *
 from quixote.html import htmlescape
 from quixote import redirect
 import backend
-import types, string
+import types, string, time
 
 
 class ROStringWidget(StringWidget):
@@ -163,6 +163,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 
 	def saveConfig(withCallback=True):
 		"""Saves all values from the form into the configlet 'obj'."""
+
+		print ("[%s] Saving configlet '%s' with id '%s' in group '%s'" % (time.asctime(time.localtime()), obj.name, obj._id, obj.groupName))
 
 		#print "action", obj
 		for v in obj.variables:
