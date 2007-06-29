@@ -108,7 +108,6 @@ class Page(AccessControlled, Directory):
 			htmltext(_("You don't have an associated pbx"))
 			'</span></p>'
 		else:
-			QDList(self.session.pbx)
-			CFList()
+			CFList(self.session.pbx)
 		footer()
 
