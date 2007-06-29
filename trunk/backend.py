@@ -28,9 +28,15 @@ DESTAR_CFG = "destar_cfg.py"
 CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
 ASTERISK_MODULES_DIR = os.getenv('ASTERISK_MODULES_DIR', default='/usr/lib/asterisk/modules')
 
+frontend_sessions = 0
 
-
-
+def add_session():
+	global frontend_sessions
+	frontend_sessions += 1
+	
+def del_session():
+	global frontend_sessions
+	frontend_sessions -= 1
 ####################################################################################
 #
 # We start with functions that work on the configuration file level:

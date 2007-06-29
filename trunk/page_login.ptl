@@ -22,7 +22,7 @@ from Templates import *
 from quixote.form import *
 from quixote import get_request, get_session, redirect
 from quixote.directory import Directory, AccessControlled
-import types, backend
+import types, backend, time
 
 class Page(AccessControlled, Directory): 
 
@@ -59,7 +59,7 @@ class Page(AccessControlled, Directory):
 
 	def notLoggedIn [plain] (self):
 		'<p>'
-		htmltext(_('Invalid username or password'))
+		htmltext(_('Invalid username or password, or disabled account.'))
 		self.loginForm(render=1)
 		'.</p>'
 
@@ -77,12 +77,15 @@ class Page(AccessControlled, Directory):
 			# First search for a user entry
 			for obj in backend.getConfiglets(name="CfgOptUser"):
 				if obj.name==res[0] and obj.secret==res[1]:
-					self.session.user  = obj.name
-					self.session.level = int(obj.level)
-					self.session.phone = obj.phone
-					self.session.language = obj.language
-					self.session.pbx = obj.pbx
-					return redirect('../user/info/')
+					if int(obj.level):
+						self.session.user  = obj.name
+						self.session.level = int(obj.level)
+						self.session.phone = obj.phone
+						self.session.language = obj.language
+						self.session.pbx = obj.pbx
+						print ("[%s] User %s logged in from %s, port %s" % (time.asctime(time.localtime()),self.session.user,self.session.ip,self.session.port))
+						backend.add_session()
+						return redirect('../user/info/')
 
 			# Now search for a phone entry with proper extension/voicemail pin
 			for obj in backend.getConfiglets(group="Phones"):
@@ -94,6 +97,8 @@ class Page(AccessControlled, Directory):
 					self.session.phone = obj.name
 					self.session.language = 'en'
 					self.session.pbx = obj.pbx
+					print ("[%s] User %s logged in from %s, port %s" % (time.asctime(time.localtime()),self.session.user,self.session.ip,self.session.port))
+					backend.add_session()
 					return redirect('../user/info/')
 			self.notLoggedIn()
 		footer()

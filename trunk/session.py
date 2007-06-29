@@ -40,6 +40,7 @@ class DestarSession(Session):
 			self.ip = request.environ['HTTP_X_FORWARDED_FOR']
 		except:
 			self.ip = request.environ['REMOTE_ADDR']
+		self.port = request.environ['REMOTE_PORT']
 
 
 		#session = sessions.setdefault(ip,
@@ -64,6 +65,7 @@ class DestarSession(Session):
 				self.user  = "programmer"
 				self.level = 4
 				self.language = 'en'
+				print ("[%s] Logging in with user 'programmer' from ip %s, port %s" % (time.asctime(time.localtime()), self.ip, self.port))
 			else:
 				for user in users:
 					if user.pc == self.ip:
