@@ -301,14 +301,22 @@ class ConfigletTree:
 					for dep in group[i].dependent_objs:
 						self.deleteConfiglet(dep.configlet._id)
 					obj = group[i]
-					print ("[%s] Deleting configlet '%s' with id '%s' from group '%s'" % (time.asctime(time.localtime()), obj.name, obj._id, obj.groupName))
+					try: 
+						obj_name = obj.name
+					except AttributeError:
+						obj_name = obj.shortName
+					sys.stderr.write ("[%s] Deleting configlet '%s' with id '%s' from group '%s\n'" % (time.asctime(time.localtime()), obj_name, obj._id, obj.groupName))
 					del group[i]
 					return
 					
 	def moveConfigletUp(self, _id):
 		obj = self.getConfiglet(_id)
 		configlet_list = self.groups[obj.groupName]
-		print ("[%s] Moving up configlet '%s' with id '%s' in group '%s'" % (time.asctime(time.localtime()), obj.name, obj._id, obj.groupName))
+		try: 
+			obj_name = obj.name
+		except AttributeError:
+			obj_name = obj.shortName
+		sys.stderr.write ("[%s] Moving up configlet '%s' with id '%s' in group '%s'\n" % (time.asctime(time.localtime()), obj_name, obj._id, obj.groupName))
 		
 		for i in range(len(configlet_list)):
 			if configlet_list[i]._id == obj._id and i > 0:
@@ -320,7 +328,11 @@ class ConfigletTree:
 	def moveConfigletDown(self, _id):
 		obj = self.getConfiglet(_id)
 		configlet_list = self.groups[obj.groupName]
-		print ("[%s] Moving down configlet '%s' with id '%s' in group '%s'" % (time.asctime(time.localtime()), obj.name, obj._id, obj.groupName))
+		try: 
+			obj_name = obj.name
+		except AttributeError:
+			obj_name = obj.shortName
+		sys.stderr.write ("[%s] Moving down configlet '%s' with id '%s' in group '%s'\n" % (time.asctime(time.localtime()), obj_name, obj._id, obj.groupName))
 		
 		for i in range(len(configlet_list)):
 			if configlet_list[i]._id == obj._id and i < (len(configlet_list) -1):
@@ -378,7 +390,11 @@ class ConfigletTree:
 	def addConfiglet(self, configlet):
 		if not self.groups.has_key(configlet.groupName):
 			self.groups[configlet.groupName] = []
-		print ("[%s] Loading configlet '%s' with id '%s' in group '%s'" % (time.asctime(time.localtime()), configlet.name, configlet._id, configlet.groupName))
+		try: 
+			obj_name = configlet.name
+		except AttributeError:
+			obj_name = configlet.shortName
+		sys.stderr.write ("[%s] Loading configlet '%s' with id '%s' in group '%s'\n" % (time.asctime(time.localtime()), obj_name, configlet._id, configlet.groupName))
 		self.groups[configlet.groupName].append(configlet)
 		
 	def generateUniqueId(self):
