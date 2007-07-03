@@ -22,7 +22,7 @@ from Templates import *
 from quixote.form import *
 from quixote import get_request, get_session, redirect
 from quixote.directory import Directory, AccessControlled
-import types, backend, time
+import types, backend, time, sys
 
 class Page(AccessControlled, Directory): 
 
@@ -83,7 +83,7 @@ class Page(AccessControlled, Directory):
 						self.session.phone = obj.phone
 						self.session.language = obj.language
 						self.session.pbx = obj.pbx
-						print ("[%s] User %s logged in from %s, port %s" % (time.asctime(time.localtime()),self.session.user,self.session.ip,self.session.port))
+						sys.stderr.write ("[%s] User %s logged in from %s, port %s\n" % (time.asctime(time.localtime()),self.session.user,self.session.ip,self.session.port))
 						backend.add_session()
 						return redirect('../user/info/')
 
@@ -97,7 +97,7 @@ class Page(AccessControlled, Directory):
 					self.session.phone = obj.name
 					self.session.language = 'en'
 					self.session.pbx = obj.pbx
-					print ("[%s] User %s logged in from %s, port %s" % (time.asctime(time.localtime()),self.session.user,self.session.ip,self.session.port))
+					sys.stderr.write ("[%s] User %s logged in from %s, port %s\n" % (time.asctime(time.localtime()),self.session.user,self.session.ip,self.session.port))
 					backend.add_session()
 					return redirect('../user/info/')
 			self.notLoggedIn()

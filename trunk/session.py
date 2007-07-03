@@ -21,7 +21,7 @@
 from quixote.session import Session, SessionManager
 from quixote import get_request
 import configlets, backend, language
-import time
+import time, sys
 
 class DestarSession(Session):
 	def __init__(self, id):
@@ -65,7 +65,7 @@ class DestarSession(Session):
 				self.user  = "programmer"
 				self.level = 4
 				self.language = 'en'
-				print ("[%s] Logging in with user 'programmer' from ip %s, port %s" % (time.asctime(time.localtime()), self.ip, self.port))
+				sys.stderr.write ("[%s] Logging in with user 'programmer' from ip %s, port %s\n" % (time.asctime(time.localtime()), self.ip, self.port))
 			else:
 				for user in users:
 					if user.pc == self.ip:

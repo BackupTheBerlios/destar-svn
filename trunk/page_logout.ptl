@@ -21,7 +21,7 @@
 from Templates import *
 from quixote.directory import Directory, AccessControlled
 from quixote import get_request, get_session, redirect
-import backend, time
+import backend, time, sys
 
 class Page(AccessControlled, Directory): 
 
@@ -43,7 +43,7 @@ class Page(AccessControlled, Directory):
 
 	def _q_index(self):
 		# TODO: move this into Publisher.py
-		print ("[%s] User %s logged out from %s, port %s" % (time.asctime(time.localtime()),self.session.user,self.session.ip,self.session.port))
+		sys.stderr.write ("[%s] User %s logged out from %s, port %s\n" % (time.asctime(time.localtime()),self.session.user,self.session.ip,self.session.port))
 		self.session.user = ''
 		self.session.phone = ''
 		self.session.level = -1

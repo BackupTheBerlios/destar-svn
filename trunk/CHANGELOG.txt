@@ -1,3 +1,7 @@
+2007-07-03:
+* configlets.py: log configlet shortName if name is not present.
+* Changed 'print' for 'sys.stderr.write' on some log messages.
+
 2007-06-30:
 * Added option to return to operator on macro-voicemail.
 
