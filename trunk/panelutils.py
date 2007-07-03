@@ -119,7 +119,7 @@ def createExtButton(obj):
 	p.append("Position=n")
 	p.append("Icon=1")
 	p.append("Extension=%s" % obj.ext)
-	p.append("Label=%s" % obj.name)
+	p.append('Label="%s"' % obj.name)
 	p.append("Astdbkey=%s/%s" % (obj.pbx, obj.ext))
 
 def createAgentButton(obj):
@@ -127,7 +127,7 @@ def createAgentButton(obj):
 	p.setSection("%s/%s" % (obj.technology, obj.number) )
 	p.append("Position=n")
 	p.append("Icon=6")
-	p.append("Label=%s" % obj.name)
+	p.append('Label="%s"' % obj.name)
 
 def createTrunkButton(obj):
 	p = AstConf("op_buttons.cfg")
@@ -146,7 +146,7 @@ def createMeetmeButton(obj):
 
 def createParkButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection("%s%s" % (_("PARK"),obj.ext))
+	p.setSection("%s/%s" % ("PARK",obj.ext))
 	p.append("Position=n")
 	p.append("Icon=3")
 	p.append("Extension=%s" % obj.ext)
@@ -154,11 +154,11 @@ def createParkButton(obj):
 
 def createQueueButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection("%s/%s" % (obj.technology, obj.name) )
+	p.setSection("%s/%s" % ("QUEUE",obj.name))
 	p.append("Position=n")
 	p.append("Icon=3")
 	p.append("Extension=-1")
-	p.append("Label=%s" % obj.name)
+	p.append('Label="%s"' % obj.name)
 
 def startPanelDaemon():
         return commands.getoutput(PANEL_START_CMD)

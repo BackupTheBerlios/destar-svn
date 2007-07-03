@@ -4,6 +4,7 @@
 * cfg_opt_zappri: CRC is optional, CAS format is better with colons.
 * cfg_phone_ext: use this more like a 'virtual' extension than just an alias.
 * Added configlet._id as Queue member priority.
+* panelutils.py: small typos on PARK and QUEUE.
 
 2007-06-30:
 * Added option to return to operator on macro-voicemail.
