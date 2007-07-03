@@ -47,6 +47,7 @@ class CfgOptZapPRI(CfgOpt):
 								  options=[('d4',_('D4 (T1)')),('esf', _('ESF (T1)')),('ccs',_('CSS (E1)')),('cas',_('CAS (E1)'))]),
 			VarType("coding", title=_("Coding"), type="choice",
 								  options=[('ami',_('AMI (T1/E1)')),('b8zs', _('B8ZF (T1)')),('hdb3',_('HDB3 (E1)'))]),
+			 VarType("crc", title=_("Enable CRC4 chacking?"), type="bool", default=False),
 	
 			VarType("channels",    title=_("Channels"), hint=_("i.e. 1-15,17-31"), type="string", len=20),
 			VarType("dchannel",    title=_("Signaling channel"), hint=_("i.e. 16"), type="string", len=5),
@@ -63,8 +64,16 @@ class CfgOptZapPRI(CfgOpt):
 		c.setSection("")
 		c.destar_comment = False
 		c.append("# %s" % self.name)
-		c.append("span=%s,%s,%s,%s,%s,crc4" % (self.span,self.timing,self.distance,self.framing,self.coding))
-		c.append("bchan=%s" % self.channels)
+		if self.crc:
+			c.append("span=%s,%s,%s,%s,%s,crc4" % (self.span,self.timing,self.distance,self.framing,self.coding))
+		else:
+			c.append("span=%s,%s,%s,%s,%s" % (self.span,self.timing,self.distance,self.framing,self.coding))
 		c.append("dchan=%s" % self.dchannel)
+		chan = self.channels.split(',')
+		for ch in chan:
+			if self.framing == 'cas':
+				c.append("cas=%s:1101" % ch)
+			else:
+				c.append("bchan=%s" % ch)
 		c.append("")
 
