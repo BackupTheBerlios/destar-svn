@@ -1,6 +1,9 @@
 2007-07-03:
-* configlets.py: log configlet shortName if name is not present.
+* Use configlet shortName on logs if name is not present.
 * Changed 'print' for 'sys.stderr.write' on some log messages.
+* cfg_opt_zappri: CRC is optional, CAS format is better with colons.
+* cfg_phone_ext: use this more like a 'virtual' extension than just an alias.
+* Added configlet._id as Queue member priority.
 
 2007-06-30:
 * Added option to return to operator on macro-voicemail.

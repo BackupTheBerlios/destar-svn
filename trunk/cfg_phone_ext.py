@@ -51,7 +51,24 @@ class CfgPhoneExtension(CfgPhone):
 			VarType("phone",
 					title=_("Real phone to ring"),
 					type="choice",
-					options=getChoice("CfgPhone")),]
+					options=getChoice("CfgPhone")),
+
+			VarType("Voicemail",
+					title=_("Voicemail settings"),
+					type="label",
+					len=6),
+					
+			VarType("pin",
+					title=_("Voicemail PIN"),
+					type="int",
+					optional=True,
+					len=6),
+			
+			VarType("email",
+					title=_("Voicemail email"),
+					optional=True,
+					len=60)
+			]	
 
 		self.dependencies = [
 			DepType("pbx", 
@@ -79,6 +96,24 @@ class CfgPhoneExtension(CfgPhone):
 
 
 	def createAsteriskConfig(self):
-		ext = AstConf("extensions.conf")
-		ext.setSection(self.pbx)
-		ext.appendExten(self.ext, "Goto(%s,1)" % self.phone)
+		extensions = AstConf("extensions.conf")
+		extensions.setSection(self.pbx)
+		extensions.appendExten(self.ext,"Set(CDR(pbx)=%s,CDR(userfield)=%s,CALLERID(num)=${CALLERIDNUM}-%s)" % (self.pbx,self.name,self.ext))
+		self.createDialEntry(extensions, self.ext, self.pbx, self.ext)
+		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s,CALLERID(num)=${CALLERIDNUM}-%s)" % (self.pbx,self.name,self.ext))
+		self.createDialEntry(extensions, self.name, self.pbx, self.ext)
+		self.usemwi = False
+		self.createVoicemailConfig(extensions)
+
+	def createDialEntry(self, extensions, exten, pbx, ext):
+		import configlets
+		obj = configlets.configlet_tree.getConfigletByName(self.phone)
+		ret = extensions.appendExten(exten, "Macro(dial-std-exten,%s/%s,out-%s,%s,%s)" % (
+			obj.technology,
+			self.phone,
+			self.phone,
+			ext,
+			pbx
+			))
+
+
