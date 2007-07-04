@@ -297,6 +297,18 @@ def initializeAsteriskConfig():
 	c.append("exten => s,4,VoiceMail(${ARG1}@${ARG2})")
 	c.append("exten => s,5,Hangup()")
 
+	c.append(";")
+	c.append("; format: Macro(record,filename,format,maxduration)")
+	c.append(";")
+	c.setSection("macro-record")
+	c.append("exten => s,1,Answer")
+	c.append("exten => s,n,Wait(1)")
+	c.append("exten => s,n,Playback(vm-message)")
+	c.append("exten => s,n,Playback(is-now-being-recorded)")
+	c.append("exten => s,n,Playback(after-the-tone)")
+	c.append("exten => s,n,Record(${ARG1}.${ARG2}|1|${ARG3})")
+	c.append("exten => s,n,Playback(vm-message)")
+	c.append("exten => s,n,Playback(recorded)")
 
 	c.append(";")
 	c.append("; format: Macro(dial-result,[<cause>])")

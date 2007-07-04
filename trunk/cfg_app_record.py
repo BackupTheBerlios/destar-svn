@@ -25,22 +25,23 @@ class CfgAppRecord(CfgApp):
 
 	shortName   = _("Record sound")
 	newObjectTitle  = _("New recording extension")
-	description = _("""Allows you to record a sound file. You can hang up, be silent for
+	description = _("""Allows you to record a sound file. You can be silent for
 			a second or dial '#' to stop the recording.""")
 			
 	def createVariables(self):
 		self.variables   = [
 			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 			VarType("ext",      title=_("Extension"), len=6),
+			VarType("max",      title=_("Max duration"), len=6, default=0),
 			VarType("filename", title=_("File name")),
 			VarType("format",   title=_("Sound format"), type="choice",
 				options=(("gsm", _("GSM compression")),
 					 ("ulaw",_("PCM format 'ulaw'")),
 					 ("alaw",_("alaw")),
-									 ("vox", _("vox")),
-									 ("wav", _("WAV-File with Microsoft PCM, 16 bit, mono 8000 Hz")),
-									 ("WAV", _("WAV-File with GSM 6.10 compression, mono 8000 Hz")),
-									),
+					 ("vox", _("vox")),
+					 ("wav", _("WAV-File with Microsoft PCM, 16 bit, mono 8000 Hz")),
+					 ("WAV", _("WAV-File with GSM 6.10 compression, mono 8000 Hz")),
+					),
 				default="WAV")
 		]
 		self.dependencies = [ DepType("pbx", 
@@ -62,9 +63,13 @@ class CfgAppRecord(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Set(TIMEOUT(absolute)=20)")
-		c.appendExten(self.ext, "Answer")
-		c.appendExten(self.ext, "Wait(1)")
-		# TODO: don't hardcode ":gsm" here
-		c.appendExten(self.ext, "Record(%s:%s)" % (self.filename, self.format) )
+		c.appendExten(self.ext, "Goto(record-%s,s,1)" % self.filename)
 		c.appendExten(self.ext, "Hangup")
+		c.setSection("record-%s" % self.filename)
+		c.append("exten => s,1,Macro(record,%s,%s,%s)" % (self.filename, self.format, self.max))
+		c.append("exten => s,n(menu),Background(press-1&to-listen-to-it&or&press-2&to-rerecord-yr-message)")
+		c.append("exten => s,n,WaitExten(5)")
+		c.append("exten => s,n,Hangup()")
+		c.append("exten => 1,1,Playback(%s)" % self.filename)
+		c.append("exten => 1,n,Goto(s,menu)")
+		c.append("exten => 2,1,Goto(s,1)")
