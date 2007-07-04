@@ -37,10 +37,12 @@ class CallData:
 		self.not_answered = 0
 		self.busy = 0
 		self.failed = 0
-		self.pattern = None
-		self.name = None
-		self.group = None
-		self.host = None
+		self.seconds = 0
+		self.holdtime = 0
+		self.completed_by_agent = 0
+		self.completed_by_caller = 0
+		self.uncompleted = 0
+
 	
 	def addCall(self, seconds, cost_per_minute, disp):
 		self.calls_number += 1
@@ -60,36 +62,17 @@ class CallData:
 		elif disp == "FAILED":
 			self.failed += 1
 	
-	def asignPattern(self, pat):
-		self.pattern = re.compile(pat.replace('X','[0-9]'))
-	
-	def match(self, pat):
-		return self.pattern.match(pat)
-	
-	def isIncommingCall(self, dcontext):
-		pat = re.compile('in-(.*)')
-		match = pat.match(dcontext)
-		if match:
-			if self.name == match.group(1):
-				return True
-	
-		return False
-	
-	def isOutgoingCall(self, lastdata):
-		patZap = re.compile('Zap/g([0-9]+)/.*')
-		patIax = re.compile('IAX2/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})/.*')
-		
-		match = patZap.match(lastdata)
-		if match:
-			if str(self.group) == match.group(1):
-				return True
-		
-		match = patIax.match(lastdata)
-		if match:
-			if str(self.host) == match.group(1):
-				return True
+	def addQueueCall(self, holdtime=0, calltime=0, disp=""):
+		self.calls_number += 1
+		self.seconds += int(calltime)
+		self.holdtime += int(holdtime)
+		if disp == "COMPLETEAGENT":
+			self.completed_by_agent += 1
+		elif disp == "COMPLETECALLER":
+			self.completed_by_caller += 1
+		elif disp == "uncompleted":
+			self.uncompleted += 1
 
-		return False
 
 startyear = 2005
 all = _("All")
@@ -132,7 +115,60 @@ def makeCallsTable [plain] (label, calls, names):
 		"<td>%d</td>" % calls[i].busy
 		"<td>%d</td>" % calls[i].failed
 		'</tr>\n'
-	'</table>'
+	'</table>\n<br/>'
+
+#def makeAgentCallsTable [plain] (label, completed, dumped, transfered, names):
+def makeAgentCallsTable [plain] (label, completed, dumped, names):
+	'<table border="1"> \n'
+	'<tr> <td><b>'+ label
+	'</b></td><td><b>'+_(str("Number of Calls"))
+	#'</b></td><td><b>'+_(str("% Number of Calls"))
+	'</b></td><td><b>'+_(str("Avg. Hold Time"))
+	#'</b></td><td><b>'+_(str("% Avg. Hold Time"))
+	'</b></td><td><b>'+_(str("Avg. Call Duration"))
+	#'</b></td><td><b>'+_(str("% Avg. Call Duration"))
+	#'</b></td><td><b>'+_(str("Transfered Calls"))
+	#'</b></td><td><b>'+_(str("% Transfered Calls"))
+	'</b></td><td><b>'+_(str("Dumped Calls"))
+	#'</b></td><td><b>'+_(str("% Dumped Calls"))
+	'</b></td></tr>\n'
+	for i in range(len(names)):
+		'<tr>'
+		"<td>%s</td>" % names[i]
+		"<td>%d</td>" % completed[i].calls_number
+		"<td>%d</td>" % (completed[i].calls_number and (completed[i].holdtime / completed[i].calls_number) or 0)
+		"<td>%d</td>" % (completed[i].calls_number and (completed[i].seconds / completed[i].calls_number) or 0)
+		if i < len(dumped):
+			"<td>%d</td>" % dumped[i].calls_number
+		else:
+			"<td>0</td>" 
+		'</tr>\n'
+	'</table>\n<br/>'
+
+def makeQueueCallsTable [plain] (label, completed, uncompleted, names):
+	'<table border="1"> \n'
+	'<tr> <td><b>'+ label
+	'</b></td><td><b>'+_(str("Completed Calls"))
+	#'</b></td><td><b>'+_(str("% Completed"))
+	'</b></td><td><b>'+_(str("Uncompleted Calls"))
+	#'</b></td><td><b>'+_(str("% Uncompleted"))
+	'</b></td><td><b>'+_(str("Avg. Hold Time"))
+	#'</b></td><td><b>'+_(str("% Avg. Hold Time"))
+	'</b></td><td><b>'+_(str("Avg. Call Duration"))
+	#'</b></td><td><b>'+_(str("% Avg. Call Duration"))
+	#'</b></td><td><b>'+_(str("Transfered Calls"))
+	#'</b></td><td><b>'+_(str("% Transfered Calls"))
+	'</b></td></tr>\n'
+	for i in range(len(names)):
+		'<tr>'
+		"<td>%s</td>" % names[i]
+		"<td>%d</td>" % completed[i].calls_number
+		"<td>%d</td>" % uncompleted[i].calls_number
+		"<td>%d</td>" % (completed[i].calls_number and (completed[i].holdtime / completed[i].calls_number) or 0)
+		"<td>%d</td>" % (completed[i].calls_number and (completed[i].seconds / completed[i].calls_number) or 0)
+		'</tr>\n'
+	'</table>\n<br/>'
+	makeQueueCallsGraphic(names, completed, uncompleted, _("Number of calls"),_("Period"), "calls_per_period.png")
 
 def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 	theme.use_color = True;
@@ -159,7 +195,7 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 								width = 15,
 								data = data)
 	
-	ar = area.T(x_axis=axis.X(label=labelx),
+	ar = area.T(x_axis=axis.X(label=_(labelx) ),
 				y_axis=axis.Y(label=_('Calls'), tic_interval=interval))
 	
 	plot1=bar_plot.T(label=_('Answered'), hcol=1, fill_style=fill_style.goldenrod)
@@ -167,6 +203,48 @@ def makeCallsGraphic [plain] (names, calls, title, labelx, filename):
 	plot3=bar_plot.T(label=_('Busy'), hcol=3, stack_on = plot2, fill_style=fill_style.gray50)
 	plot4=bar_plot.T(label=_('Failed'), hcol=4, stack_on = plot3, fill_style=fill_style.darkseagreen)
 	ar.add_plot(plot1,plot2,plot3,plot4)
+	ar.draw(can)
+	can.close()
+	
+	htmltext('<br/><br/><h3>')
+	htmltext(title)
+	htmltext('</h3>')
+	
+	htmltext('<p>')
+	htmltext('<img alt="table" src="/graphs/%s" />' % filename)
+	htmltext('</p>')				
+
+def makeQueueCallsGraphic [plain] (names, completed, uncompleted, title, labelx, filename):
+	theme.use_color = True;
+	theme.default_font_size = 14
+	theme.reinitialize()
+	
+	can = canvas.init("/tmp/%s" % filename, "png")
+	
+	completed_calls = [i.calls_number for i in completed]
+	
+	interval = max(completed_calls) // 6
+
+	names = [i[:3] for i in names]
+
+	data = zip( names,
+				[i.calls_number for i in completed],
+				[i.calls_number for i in uncompleted])
+
+	chart_object.set_defaults(area.T, 
+								size = (510, 280),
+								x_coord = category_coord.T(data, 0))
+	
+	chart_object.set_defaults(bar_plot.T,
+								width = 15,
+								data = data)
+	
+	ar = area.T(x_axis=axis.X(label=_(labelx) ),
+				y_axis=axis.Y(label=_('Distribution by period'), tic_interval=interval))
+	
+	plot1=bar_plot.T(label=_('Completed'), hcol=1, fill_style=fill_style.goldenrod)
+	plot2=bar_plot.T(label=_('Uncompleted'), hcol=2, stack_on = plot1, fill_style=fill_style.gray70)
+	ar.add_plot(plot1,plot2)
 	ar.draw(can)
 	can.close()
 	
@@ -198,7 +276,7 @@ def makeGraphic [plain] (names, values, title, labelx, labely, filename):
 								width = 15,
 								data = data)
 	
-	ar = area.T(x_axis=axis.X(label=_(labelx)),
+	ar = area.T(x_axis=axis.X(label=_(labelx) ),
 				y_axis=axis.Y(label=_(labely), tic_interval=interval))
 	
 	plot1=bar_plot.T(label=_(labely), hcol=1, fill_style=fill_style.darkseagreen)
@@ -206,11 +284,13 @@ def makeGraphic [plain] (names, values, title, labelx, labely, filename):
 	ar.draw(can)
 	can.close()
 	
-	htmltext('<br/><br/><h3>')
-	htmltext(title)
-	htmltext('</h3>')
+	html = htmltext('<br/><br/><h3>')
+	html += htmltext(title)
+	html += htmltext('</h3>')
 	
-	htmltext('<p>')
-	htmltext('<img alt="table" src="/graphs/%s" />' % filename)
-	htmltext('</p>')
+	html += htmltext('<p>')
+	html += htmltext('<img alt="table" src="/graphs/%s" />' % filename)
+	html += htmltext('</p>')
+
+	return html
 	
