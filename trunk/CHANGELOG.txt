@@ -1,5 +1,6 @@
 2007-07-04:
 * Improved Record-Sound Application.
+* Added cfg_ivr_treenode to make simple IVR trees.
 
 2007-07-03:
 * Use configlet shortName on logs if name is not present.
