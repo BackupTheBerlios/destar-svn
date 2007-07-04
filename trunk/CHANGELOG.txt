@@ -4,6 +4,7 @@
 * Merged Queue Statistics from 0.2.X branch.
 * Added routine to install initial queue.db
 * Added https support
+* Always treat voicemail pin as int, not string.
 
 2007-07-03:
 * Use configlet shortName on logs if name is not present.

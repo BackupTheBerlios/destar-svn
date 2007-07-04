@@ -54,7 +54,7 @@ def phoneSettingsForm(self, phone, exitPath=".."):
 	form.add(CheckboxWidget,     "vmim", vmim, title=_("Immediate voice mailbox"))
 	form.add(CheckboxWidget,     "vmbs", vmbs, title=_("Voice mailbox on busy"))
 	form.add(CheckboxWidget,     "vmu",  vmu,  title=_("Voice mailbox on timeout/unavailable"))
-	form.add(StringWidget,       "pin", phone.pin, title=_("Voicemail pin"), maxlength=10)
+	form.add(IntWidget,       "pin", phone.pin, title=_("Voicemail pin"), maxlength=10)
 	try:
 		if phone.secret:
 			form.add(StringWidget,  "secret", phone.secret, title=_("Extension Password"), maxlength=10)
