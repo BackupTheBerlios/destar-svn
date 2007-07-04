@@ -3,6 +3,7 @@
 * Added cfg_ivr_treenode to make simple IVR trees.
 * Merged Queue Statistics from 0.2.X branch.
 * Added routine to install initial queue.db
+* Added https support
 
 2007-07-03:
 * Use configlet shortName on logs if name is not present.

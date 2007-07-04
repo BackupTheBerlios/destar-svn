@@ -13,7 +13,7 @@ from cStringIO import StringIO
 try:
 	from quixote.http_response import Stream
 except:
-	print "You need Quixote 1.x, not Quixote 0.6"
+	print "You need Quixote 2.x or greater"
 	sys.exit(1)
 from quixote.publish import Publisher
 from medusa import http_server, xmlrpc_handler
@@ -33,7 +33,7 @@ class StreamProducer:
 
 
 class QuixoteHandler:
-    def __init__(self, publisher, server_name, server):
+    def __init__(self, publisher, server_name, server, https=False):
 	"""QuixoteHandler(publisher:Publisher, server_name:string,
 			server:medusa.http_server.http_server)
 
@@ -43,6 +43,7 @@ class QuixoteHandler:
 	self.publisher = publisher
 	self.server_name = server_name
 	self.server = server
+	self.https = https
 
     def match(self, request):
 	# Always match, since this is the only handler there is.
@@ -101,6 +102,9 @@ class QuixoteHandler:
 		   'SERVER_SOFTWARE': self.server_name,
 		   }
 
+	if self.https:
+		   environ['HTTPS'] = 'on'
+
 	# Propagate HTTP headers
 	for title, header in msg.items():
 	    envname = title.replace('-', '_').upper()
@@ -155,12 +159,13 @@ class Server:
     """
 
     def __init__(self, approot, create_publisher, config_file=None, port=80,
-	       enable_ptl=True):
+	       enable_ptl=True, https=False):
 	self.approot = approot
 	self.config_file = config_file
 	self.port = port
 	#self.publishclass = publisher
 	self.publisher = create_publisher()
+	self.https = https
 	if enable_ptl:
 	    from quixote import enable_ptl
 	    enable_ptl()
@@ -172,7 +177,7 @@ class Server:
 #	if self.config_file:
 #	    publisher.read_config(self.config_file)
 #	publisher.setup_logs()
-	dh = QuixoteHandler(self.publisher, self.approot, server)
+	dh = QuixoteHandler(self.publisher, self.approot, server, self.https)
 	server.install_handler(dh)
 	asyncore.loop()
 
