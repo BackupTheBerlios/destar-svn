@@ -23,7 +23,7 @@
 #
 
 
-import sys, os, string
+import sys, os, string, time
 import language
 from datetime import datetime
 from time import strptime
@@ -86,11 +86,11 @@ def loadQueueLog ():
 		try:
 			cursor.execute( "INSERT INTO queuelog (timestamp,callid,qname,agent,action,info1,info2,info3) VALUES  ('%s','%s','%s','%s','%s','%s','%s','%s')" % tuple(s) )
 		except:
-			print "Failed to execute insert at timestamp %s" % s[0]
+			sys.stderr.write("[%s] queue.db: Failed to execute insert at timestamp %s\n" % (time.asctime(time.localtime()), s[0]))
 			if __name__ == "__main__": sys.exit(0)
 		rows += 1
 	in_file.close()
-	print "%d rows were inserted" % rows
+	sys.stderr.write("[%s] queue.db: %d rows were inserted\n" % (time.asctime(time.localtime()),(rows)))
 	return rows
 
 

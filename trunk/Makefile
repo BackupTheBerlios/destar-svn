@@ -4,6 +4,7 @@ PYDIR=$(DESTDIR)/usr/share/destar/python
 PAGES_DIR=$(DESTDIR)/usr/share/destar/static
 SBINDIR=$(DESTDIR)/usr/sbin
 LOCALEDIR=$(DESTDIR)/usr/share/locale
+LOGDIR=$(DESTDIR)/var/log/asterisk
 MANDIR=$(DESTDIR)/usr/share/man/man8
 
 # To use with asternic.org op_panel tarball:
@@ -66,6 +67,9 @@ endif
 	install -d $(MANDIR)
 	gzip -9 <misc/destar.8 >$(MANDIR)/destar.8.gz
 	chmod 0644 $(MANDIR)/destar.8.gz
+ifneq ($(shell [ -a $(LOGDIR)/queue.db ] && echo 1),1)
+	install -m 754 queue.db $(LOGDIR)/
+endif
 
 test:
 	./tests.py
