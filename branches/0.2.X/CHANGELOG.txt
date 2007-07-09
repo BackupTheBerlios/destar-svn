@@ -1,3 +1,6 @@
+2007-07-09:
+* cfg_phone_ext: "alias extension" for shor name and obj title
+
 2007-06-18:
 * More translations. 
 
