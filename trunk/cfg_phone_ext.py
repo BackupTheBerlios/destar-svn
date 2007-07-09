@@ -23,8 +23,8 @@ from configlets import *
 
 class CfgPhoneExtension(CfgPhone):
 
-	shortName = _("Extension")
-	newObjectTitle = _("New extension")
+	shortName = _("Alias extension")
+	newObjectTitle = _("New alias extension")
 	description = _("Set an 'alias' extension to a phone")
 	technology = "virtual"
 	
