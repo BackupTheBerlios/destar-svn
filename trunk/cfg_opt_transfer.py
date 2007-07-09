@@ -50,4 +50,5 @@ class CfgOptTransfer(CfgOptSingle):
 		if self.blindxfer:
 			c.appendValue(self, "blindxfer")
 		if self.atxfer:
+			needModule("chan_local")
 			c.appendValue(self, "atxfer")
