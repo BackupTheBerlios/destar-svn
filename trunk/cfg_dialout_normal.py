@@ -145,7 +145,7 @@ class CfgDialoutNormal(CfgDialout):
 		if self.otheropts:
 			opts += self.otheropts
 			c.append("exten=>s,n,Playback(llamadasiendotransferida)")
-		c.append("exten=>s,1,SetVar(options=%s)" % opts)
+		c.append("exten=>s,1,Set(options=%s)" % opts)
 		if self.qlookup:
 			c.append("exten=>s,n(quickd),Set(dest=${DB(QUICKDIALLIST/GLOBAL/${ARG1})})")
 			c.append("exten=>s,quickd+1,Goto(ifAuth)")

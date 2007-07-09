@@ -1,6 +1,7 @@
 2007-07-09:
 * cfg_phone_ext: "alias extension" for shor name and obj title
 * Built-in attended transfer seems to need chan_local.
+* cfg_dialout_normal: SetVar is depricated.
 
 2007-07-04:
 * Improved Record-Sound Application.
