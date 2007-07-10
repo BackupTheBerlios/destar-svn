@@ -69,6 +69,7 @@ class CfgAppDND(CfgApp):
 			c.appendExten("%s" % self.set, "UserEvent(ASTDB|Channel: ${CHAN}^Family: DND^Value: True" )
 				
 		c.appendExten("%s" % self.set, "Playback(do-not-disturb)")
+		c.appendExten("%s" % self.set, "Playback(activated)")
 		c.appendExten("%s" % self.set, "Hangup")
 
 		c.appendExten("%s" % self.unset, "DBdel(DND/%s/${CALLERIDNUM})" % self.pbx)
