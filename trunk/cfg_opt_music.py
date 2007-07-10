@@ -33,7 +33,7 @@ class CfgOptMusic(CfgOpt):
 				type="choice", 
 				options=(("mp3", "mp3"), 
 					("quietmp3", _("Quiet mp3")) ,
-					("mp3nb", _("mp3 nbuffered")),
+					("mp3nb", _("mp3 unbuffered")),
 					("quietmp3nb", _("Quiet mp3 unbuffered")),
 					("custom", _("Custom")),
 					("files", _("Files"))),

@@ -25,7 +25,7 @@ class CfgAppMeetme(CfgApp):
 
 	shortName   = _("Meeting room")
 	newObjectTitle  = _("New meeting room")
-	description= _("Application that let create dynamic conferencing rooms")
+	description= _("Application that allows the creation of dynamic conferencing rooms")
 	
 	def createVariables(self):
 		self.variables   = [
