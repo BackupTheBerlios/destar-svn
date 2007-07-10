@@ -167,7 +167,7 @@ class CfgIVRAutoatt(CfgIVR):
 		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.exten))	
 		if self.operator:
 			s.appendExten("%s" % self.operator, "Goto(%s,%s,1)" % (pbx,self.exten))	
-		s.appendExten("i","Playback(privacy-invalid)")	
+		s.appendExten("i","Playback(invalid)")	
 		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.exten))	
 		s.appendExten("t","ResetCDR(w)")
 		s.appendExten("t","NoCDR")

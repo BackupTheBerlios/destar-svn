@@ -321,7 +321,7 @@ class CfgIVRTreeNode(CfgIVR):
 		if self.phone_ast:
 			s.appendExten("*","Goto(%s,%s,1)" % (pbx,self.phone_ast))	
 		s.appendExten("0", "Goto(%s,%s,1)" % (pbx,self.operator))	
-		s.appendExten("i","Playback(privacy-invalid)")	
+		s.appendExten("i","Playback(invalid)")	
 		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.operator))	
 		s.appendExten("t","ResetCDR(w)")
 		s.appendExten("t","NoCDR")

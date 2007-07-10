@@ -1088,7 +1088,7 @@ class CfgPhone(Cfg):
 		except AttributeError:
 			pbx = "phones"
 		c.append("include=>%s" % pbx)
-		c.appendExten("i","Playback(privacy-invalid)")
+		c.appendExten("i","Playback(invalid)")
 		try:
 			timeoutvalue = not self.timeout and "0" or "1"
 		except AttributeError:
@@ -1129,7 +1129,7 @@ class CfgPhone(Cfg):
 					pass
 			elif obj.__class__.__name__ == 'CfgAppPhoneQuickDial':
 				prefix = obj.dialprefix
-				c.appendExten("_%sXX" % prefix,"Set(dest=${DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})})" % len(prefix), e="Playback(privacy-invalid)")
+				c.appendExten("_%sXX" % prefix,"Set(dest=${DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})})" % len(prefix), e="Playback(invalid)")
 				c.appendExten("_%sXX" % prefix,"Goto(${dest},1)")
 	
 	def createPanelConfig(self):

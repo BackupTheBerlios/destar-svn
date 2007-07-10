@@ -3,6 +3,7 @@
 	- Added a menu and made asterisk say the digits pressed.
 	- TODO: check Devstate lower case.
 * Added a more clear message to DND application.
+* Changed inexistant 'privacy-invalid' sound for 'invalid'.
 
 2007-07-09:
 * cfg_phone_ext: "alias extension" for shor name and obj title
