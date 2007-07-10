@@ -6,6 +6,7 @@
 * Changed inexistant 'privacy-invalid' sound for 'invalid'.
 * cfg_opt_music: fixed typo. by jmacz
 * cfg_app_meetme: better description. by jmacz
+* Updated es.po. by jmacz
 
 2007-07-09:
 * cfg_phone_ext: "alias extension" for shor name and obj title
