@@ -59,39 +59,46 @@ class CfgAppCallFW(CfgApp):
 				pass
 
 	def createAsteriskConfig(self):
+		if self.type == "CFIM":
+			msg = "call-fwd-unconditional"
+		elif self.type == "CFTO":
+			msg = "call-fwd-no-ans"
+		else:
+			msg = "call-fwd-on-busy"
 		if self.devstateprefix:
 		    needModule("app_devstate")
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten("_%s" % self.set, "Set(testcf=${DB(%s/%s/${CALLERIDNUM})})" % (self.type, self.pbx))
-		c.appendExten("_%s" % self.set, 'GotoIf($["${testcf}" != ""]?switchoff)')	
-		c.appendExten("_%s" % self.set, "Set(lastnum=${DB(%s_LASTNUM/%s/${CALLERIDNUM})})" % (self.type, self.pbx))
-		c.appendExten("_%s" % self.set, 'GotoIf($["${lastnum}" = ""]?nonumber)')
-		c.appendExten("_%s" % self.set, "Goto(%s,%s${lastnum},1)" % (self.pbx, self.set))
-		c.appendExten("_%s" % self.set, "Goto(%s,%s,1)" % (self.pbx, self.unset), label="nonumber")
-		c.appendExten("_%s" % self.set, "Goto(%s,%s,1)" % (self.pbx, self.unset), label="switchoff")
-		c.appendExten("_%s." % self.set, "Answer()")
-		if self.toggle:
-			c.appendExten("_%s." % self.set, "Set(testcf=${DB(%s/%s/${CALLERIDNUM})})" % (self.type, self.pbx))
-			c.appendExten("_%s." % self.set, 'GotoIf($["${testcf}" != ""]?switchoff)')	
-		c.appendExten("_%s." % self.set, "Set(DB(%s/%s/${CALLERIDNUM})=${EXTEN:%d})" % (self.type, self.pbx,len(self.set)))
-		c.appendExten("_%s." % self.set, "Set(DB(%s_LASTNUM/%s/${CALLERIDNUM})=${EXTEN:%d})" % (self.type, self.pbx,len(self.set)))
-		if self.devstateprefix:
-			c.appendExten("_%s." % self.set, "Devstate(%s_%s_${CALLERIDNUM},2)" % (self.type.lower(), self.pbx))
-		if self.type == "CFIM":
-			c.appendExten("_%s." % self.set, "Playback(call-fwd-unconditional)")
-		elif self.type == "CFTO":
-			c.appendExten("_%s." % self.set, "Playback(call-fwd-no-ans)")
-		else:
-			c.appendExten("_%s." % self.set, "Playback(call-fwd-on-busy)")
-		c.appendExten("_%s." % self.set, "Wait(1)")
+		c.appendExten(self.set, "Goto(cfw-%s,s,1)" % self.set)
+		c.appendExten(self.set, "Hangup")
+		c.appendExten("_%s." % self.set, "Macro(call-forward,%s,%s,${EXTEN:%d},%s)" % (self.type,self.pbx,len(self.set),msg))
 		c.appendExten("_%s." % self.set, "Hangup")
-		c.appendExten("_%s." % self.set, "Goto(%s,%s,1)" % (self.pbx, self.unset), label="switchoff")
-
 		c.appendExten("%s" % self.unset, "Answer()")
 		c.appendExten("%s" % self.unset, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type, self.pbx))
 		if self.devstateprefix:
-			c.appendExten("%s" % self.unset, "Devstate(%s_%s_${CALLERIDNUM},0)" % (self.type.lower(), self.pbx))
+			c.appendExten("%s" % self.unset, "Devstate(%s_%s_${CALLERIDNUM},0)" % (self.type, self.pbx))
 		c.appendExten("%s" % self.unset, "Playback(call-fwd-cancelled)")
 		c.appendExten("%s" % self.unset, "Wait(1)")
 		c.appendExten("%s" % self.unset, "Hangup")
+
+		c.setSection("cfw-%s" % self.set)
+		if self.toggle:
+			c.appendExten("s", "Set(testcf=${DB(%s/%s/${CALLERIDNUM})})" % (self.type, self.pbx))
+			c.appendExten("s", 'GotoIf($["${testcf}" != ""]?switchoff)')	
+		c.appendExten("s", "Set(TIMEOUT(digit)=2)")
+		c.appendExten("s", "Set(lastnum=${DB(%s_LASTNUM/%s/${CALLERIDNUM})})" % (self.type, self.pbx))
+		c.appendExten("s", 'GotoIf($["${lastnum}" = ""]?nonumber)')
+		c.appendExten("s","Background(press-1&to-enter-a-number&or&press-2&for&vm-last&number)")
+		c.appendExten("s","WaitExten(3)")
+		c.appendExten("s","Hangup()")
+		c.appendExten("s", "Goto(1,1)", label="nonumber")
+		c.appendExten("s", "Goto(%s,%s,1)" % (self.pbx, self.unset), label="switchoff")
+		c.appendExten("2","Macro(call-forward,%s,%s,${lastnum},%s)" % (self.type,self.pbx,msg))
+		if self.devstateprefix:
+			c.appendExten("2", "Devstate(%s_%s_${CALLERIDNUM},2)" % (self.type.lower(), self.pbx))
+		c.appendExten("1", "Playback(please-enter-the&number&after-the-tone&beep)")
+		c.appendExten("1","WaitExten(5)")
+		c.appendExten("_X.","Macro(call-forward,%s,%s,${EXTEN},%s)" % (self.type,self.pbx,msg))
+		if self.devstateprefix:
+			c.appendExten("_X.", "Devstate(%s_%s_${CALLERIDNUM},2)" % (self.type.lower(), self.pbx))
+

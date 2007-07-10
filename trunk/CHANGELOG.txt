@@ -1,3 +1,8 @@
+2007-07-10:
+* Improved call-forwarding applications:
+	- Added a menu and made asterisk say the digits pressed.
+	- TODO: check Devstate lower case.
+
 2007-07-09:
 * cfg_phone_ext: "alias extension" for shor name and obj title
 * Built-in attended transfer seems to need chan_local.
