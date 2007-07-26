@@ -147,6 +147,12 @@ class CfgPhoneSip(CfgPhone):
 					optional=True,
 					type="bool"),
 
+			VarType("monitorinbound",
+					title=_("Monitor calls made to this extension?"),
+					optional=True,
+					default=False,
+					type="bool"),
+
 			VarType("monitorfilename",
 					title=_("Monitor file name"),
 					hint=_("Otherwise it will use Date-CallerIdName(CallerIdNum)-Exten"),
