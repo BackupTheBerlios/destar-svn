@@ -1,3 +1,9 @@
+2007-07-26:
+* Now header title is an option on CfgOptSettings.
+* Fixed some int values expected where strings types found.
+* Added Themes support in Templates.ptl and CfgOptSettings.
+* Added FileWidgwt to ConfigHelper and option to upload a logo image on CfgOptSettings.
+
 2007-07-10:
 * Improved call-forwarding applications:
 	- Added a menu and made asterisk say the digits pressed.

@@ -20,6 +20,11 @@
 
 from configlets import *
 
+STATIC_DIR = os.getenv('STATICPAGES_DIR','static') 
+styles = []
+for f in os.listdir('%s/themes/' % STATIC_DIR):
+	styles.append((f,f))
+
 
 countries = {
 	"at": {"description": _("Austria"),
@@ -322,16 +327,47 @@ class CfgOptSettings(CfgOptSingle):
 			type="choice",
 			options=countries_lookup),
 		     VarType("language",
-			title=_("language"),
+			title=_("Language"),
 			hint=_("The language is used for voice prompts"),
 			len=10,
 			type="string"),
+		     VarType("header_text",
+			title=_("Header text"),
+			len=20,
+			type="string"),
+		     VarType("style",
+			title=_("Web UI theme to use"),
+			type="choice",
+			options=styles),
+		     VarType("logo",
+			title=_("Web UI logo to use"),
+			hint="/static/imgs/logo",
+			type="file",
+			optional=True),
 		     VarType("tapi",
 			title=_("Tapi Support"),
 			type="bool",
 			default = True),
 		]
 
+	def checkConfig(self):
+		res = CfgOpt.checkConfig(self)
+		if res:
+			return res
+		max_size = 2000000
+		#upload = get_field('filetoupload')
+		if self.logo:
+			upload = self.logo
+			pos = upload.fp.tell()  # Save current position in file.
+			upload.fp.seek(0, 2)    # Go to end of file.
+			size = upload.fp.tell() # Get new position (which is the file size).
+			upload.fp.seek(pos, 0)  # Return to previous position.
+			upload.size = size
+			if size > max_size:
+				msg = "The uploaded file is too big (size=%s, max=%s bytes)"
+				msg %= (size, max_size)
+				return _("File bigger than %s bytes") % max_size
+		
 	def createAsteriskConfig(self):
 		country = countries[self.country]
 
@@ -357,3 +393,16 @@ class CfgOptSettings(CfgOptSingle):
 		if self.tapi:
 			needModule("app_userevent")
 			needModule("app_cut")
+		if self.logo:
+			upload = self.logo
+			dest = '%s/imgs/logo' % STATIC_DIR
+			out = open(dest, 'wb')
+			# Copy file in chunks to avoid using lots of memory.
+			while 1:
+				chunk = upload.read(1024 * 1024)
+				if not chunk:
+				   break
+				out.write(chunk)
+			out.close()
+			upload.close()
+		self.logo = None 

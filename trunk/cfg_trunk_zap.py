@@ -41,7 +41,8 @@ class CfgTrunkZap(CfgTrunk):
 			VarType("signalling",
 				title=_("Signalling type"),
 				type="choice",
-				options=[('fxs_ls','loopstart'),('fxs_ks', 'kewlstart')]),
+				options=[('fxs_ls', _('loopstart')),
+					('fxs_ks', _('kewlstart'))]),
 
 			VarType("group",
 				title=_("Callout group"),

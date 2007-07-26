@@ -33,6 +33,15 @@ class ROStringWidget(StringWidget):
 	def render_content(self):
 		return _(self.value)
 
+class FileHintWidget(FileWidget):
+	"""Widget for uploading files, but showing current file on hint
+	"""
+
+	def render_hint(self, hint):
+		if hint:
+			return htmltext('<div class="hint"><a href="%s">%s</a></div>') % (hint,hint)
+		else:
+			return ''
 
 class LabelWidget(Widget):
 	"""Widget for output of a simple label, useful for grouping.
@@ -177,7 +186,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 			#print "0", _v, v.name, v.type
 			if v.type=="bool" and not _v:
 				_v = False
-			elif v.type=="string" and _v==None:
+			elif (v.type=="string" or v.type=="file") and _v==None:
 				_v = ""
 			elif type(_v) == types.ListType:
 				_v = ','.join(_v)
@@ -253,7 +262,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		footer()
 
 
-	form = Form()
+	#form = Form()
+	form = Form(enctype="multipart/form-data")
 
 	if request.form.has_key('_cancel'):
 		return redirect(exitPath)
@@ -288,6 +298,8 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		
 		if v.type=="string":
 			form.add(StringWidget, v.name, _v, t, v.hint, r, render_br=v.render_br, maxlength=v.len, size=min(v.size,56) )
+		elif v.type=="file":
+			form.add(FileHintWidget, v.name, _v, t, v.hint, r, render_br=v.render_br, maxlength=v.len, size=min(v.size,254) )
 		elif v.type=="text":
 			form.add(TextWidget,   v.name, _v, t, v.hint, r, render_br=v.render_br, rows=v.__dict__.setdefault("rows",8), cols=v.__dict__.setdefault("cols",65) )
 		elif v.type=="choice":

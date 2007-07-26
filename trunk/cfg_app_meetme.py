@@ -88,10 +88,10 @@ class CfgAppMeetme(CfgApp):
 		# 'P' -- always prompt pin
 		args=""
 		if self.confno:
-			args += "%d" % self.confno
+			args += "%d" % int(self.confno)
 		args += "|d"
 		if self.pin:
-			args += "P|%d" % self.pin
+			args += "P|%d" % int(self.pin)
 		c.appendExten(self.ext, "MeetMe(%s)" % args)
 
 		if self.confno:

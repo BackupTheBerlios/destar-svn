@@ -23,7 +23,7 @@ from quixote.publish import get_publisher, get_request
 from quixote import get_session
 from quixote.util import get_directory_path
 from quixote.errors import AccessError
-import os, sys, copy
+import os, sys, copy, backend
 
 from version import *
 
@@ -153,22 +153,25 @@ class HtmlTable:
 # such as JavaScript.
 def header [html] (title, menu=None, refresh=None, scripts=None):
 
+	header_text = backend.getConfig('CfgOptSettings','header_text', 'Asterisk/DeStar PBX')
+	web_style = backend.getConfig('CfgOptSettings','style', 'destar')
+
 	# Boilerplate
   	'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n'
    	'<html xmlns="http://www.w3.org/1999/xhtml">\n'
    	'<head>\n'
    	if refresh:
    		'<meta http-equiv="Refresh" content="%d;" />\n' % refresh
-  	'<title>Asterisk/DeStar PBX :: %s</title>\n' % title
+  	'<title>%s :: %s</title>\n' % (header_text, title)
   	'<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n'
   	'<style type="text/css" media="screen, tv, projection">\n'
-  	'	@import url("/static/css/general.css");\n' 
-  	'	@import url("/static/css/Menu.css");\n'
+  	'	@import url("/static/themes/%s/css/general.css");\n' % web_style
+  	'	@import url("/static/themes/%s/css/Menu.css");\n' % web_style
   	'</style>\n'
   	'<!--[if lte IE 6]>\n'
   	'<style type="text/css" media="screen, tv, projection">\n'
-  	'	@import "/static/css/Menu4IE.css";\n'
-  	'	body { behavior:url("/static/css/ADxMenu.htc"); }\n'
+  	'	@import "/static/themes/%s/css/Menu4IE.css";\n' % web_style
+  	'	body { behavior:url("/static/themes/%s/css/ADxMenu.htc"); }\n' % web_style
   	'</style>\n'
   	'<![endif]-->\n'
  
@@ -180,12 +183,10 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
 	'<body>\n'
 	#'<body onload="window.resizeTo(800,600);">'
 
-
 	# Header
  	'<div id="wrapper">\n'
  	'	<div id="header">\n'
- 	'		<h1>DeStar/Asterisk PBX</h1>\n'
-
+	'               <h1><img src="/static/imgs/logo" alt="%s"/></h1>\n' %header_text
 	
 	# Side menu
 	# e[0]: priority, only needed for sorting, discarded

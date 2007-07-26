@@ -694,7 +694,7 @@ def getConfig(clazz, name, default=None):
 	obj = configlets.configlet_tree.getConfigletsByName(clazz)
 	if obj is not None and len(obj) > 0:
 		obj = obj[0]
-		return getattr(obj, name, default)
+		return getattr(obj, str(name), default)
 	return default
 
 # Configlets can't import the Backend (because the Backend loads/imports
