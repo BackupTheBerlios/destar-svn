@@ -98,9 +98,9 @@ class CfgPhoneExtension(CfgPhone):
 	def createAsteriskConfig(self):
 		extensions = AstConf("extensions.conf")
 		extensions.setSection(self.pbx)
-		extensions.appendExten(self.ext,"Set(CDR(pbx)=%s,CDR(userfield)=%s,CALLERID(num)=${CALLERIDNUM}-%s)" % (self.pbx,self.name,self.ext))
+		extensions.appendExten(self.ext,"Set(CDR(pbx)=%s,CDR(userfield)=%s,CALLERID(num)=${CALLERIDNUM}-%s)" % (self.pbx,self.name,self.ext), self.pbx)
 		self.createDialEntry(extensions, self.ext, self.pbx, self.ext)
-		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s,CALLERID(num)=${CALLERIDNUM}-%s)" % (self.pbx,self.name,self.ext))
+		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s,CALLERID(num)=${CALLERIDNUM}-%s)" % (self.pbx,self.name,self.ext), self.pbx)
 		self.createDialEntry(extensions, self.name, self.pbx, self.ext)
 		self.usemwi = False
 		self.createVoicemailConfig(extensions)
@@ -113,7 +113,7 @@ class CfgPhoneExtension(CfgPhone):
 			self.phone,
 			self.phone,
 			ext,
-			pbx
-			))
+			pbx),
+			self.pbx)
 
 

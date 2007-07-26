@@ -41,6 +41,6 @@ class CfgAppDirectory(CfgApp):
 	
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Directory(default)")
-		c.appendExten(self.ext, "Hangup")
+		c.appendExten(self.ext, "Directory(default)", self.pbx)
+		c.appendExten(self.ext, "Hangup", self.pbx)
 

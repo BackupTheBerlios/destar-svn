@@ -82,17 +82,17 @@ class CfgAppMeetme(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Answer")
-		c.appendExten(self.ext, "Set(TIMEOUT(absolute)=%d)" % self.timeout)
+		c.appendExten(self.ext, "Answer", self.pbx)
+		c.appendExten(self.ext, "Set(TIMEOUT(absolute)=%d)" % self.timeout, self.pbx)
 		# 'd' -- dynamically add conference
 		# 'P' -- always prompt pin
 		args=""
 		if self.confno:
-			args += "%d" % int(self.confno)
+			args += "%d" % self.confno
 		args += "|d"
 		if self.pin:
-			args += "P|%d" % int(self.pin)
-		c.appendExten(self.ext, "MeetMe(%s)" % args)
+			args += "P|%d" % self.pin
+		c.appendExten(self.ext, "MeetMe(%s)" % args, self.pbx)
 
 		if self.confno:
 			c = AstConf("meetme.conf")

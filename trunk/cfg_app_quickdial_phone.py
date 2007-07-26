@@ -45,7 +45,7 @@ class CfgAppPhoneQuickDial(CfgApp):
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten("_%sXX*X." % self.set, "Set(DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d:2})=${EXTEN:%d})" % (len(self.set),len(self.set)+3))
-		c.appendExten("_%sXX*X." % self.set, "Hangup")
-		c.appendExten("_%sXX" % self.unset, "DBdel(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})" % len(self.unset))
-		c.appendExten("_%sXX" % self.unset, "Hangup")
+		c.appendExten("_%sXX*X." % self.set, "Set(DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d:2})=${EXTEN:%d})" % (len(self.set),len(self.set)+3), self.pbx)
+		c.appendExten("_%sXX*X." % self.set, "Hangup", self.pbx)
+		c.appendExten("_%sXX" % self.unset, "DBdel(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})" % len(self.unset), self.pbx)
+		c.appendExten("_%sXX" % self.unset, "Hangup", self.pbx)

@@ -294,7 +294,7 @@ class CfgPhoneEpygiSip(CfgPhone):
 		extensions = AstConf("extensions.conf")
 		extensions.setSection(self.pbx)
 		if self.ext:
-			extensions.appendExten(self.ext, "Macro(dial-std-exten,%s/%s@%s:5060,out-%s,%s,%s)" % (self.technology,self.name,self.gw,self.name,self.pbx,self.ext))
+			extensions.appendExten(self.ext, "Macro(dial-std-exten,%s/%s@%s:5060,out-%s,%s,%s)" % (self.technology,self.name,self.gw,self.name,self.pbx,self.ext), self.pbx)
 
 		self.createVoicemailConfig(sip)
 		self.createOutgoingContext()

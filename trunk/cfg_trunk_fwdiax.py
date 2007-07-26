@@ -116,9 +116,9 @@ class CfgTrunkFwdIax(CfgTrunk):
 			ext = "_%s." % self.ext
 			c.setSection(self.context)
 			if self.callerid:
-				c.appendExten(ext, "Set(CALLERID(name)=%s)" % self.callerid)
-			c.appendExten(ext, "Set(CALLERID(number)=%s)" % self.fwdid)
-			c.appendExten(ext, "Dial(IAX2/%s:%s@iax2.fwdnet.net/${EXTEN:%d},60,r)" % (self.fwdid, self.fwdpw, len(self.ext)))
+				c.appendExten(ext, "Set(CALLERID(name)=%s)" % self.callerid, self.context)
+			c.appendExten(ext, "Set(CALLERID(number)=%s)" % self.fwdid, self.context)
+			c.appendExten(ext, "Dial(IAX2/%s:%s@iax2.fwdnet.net/${EXTEN:%d},60,r)" % (self.fwdid, self.fwdpw, len(self.ext)), self.context)
 			#c.appendExten(ext, "Busy")
 
 		c = AstConf("iax.conf")
@@ -135,5 +135,6 @@ class CfgTrunkFwdIax(CfgTrunk):
 
 		if self.phone:
 			c = AstConf("extensions.conf")
-			c.setSection("in-iaxfwd")
-			c.appendExten(self.fwdid, "Goto(phones,%s,1)" % self.phone)
+			context="in-iaxfwd"
+			c.setSection(context)
+			c.appendExten(self.fwdid, "Goto(phones,%s,1)" % self.phone, context)

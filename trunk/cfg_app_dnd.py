@@ -62,20 +62,20 @@ class CfgAppDND(CfgApp):
 				    tapisupport = True
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten("%s" % self.set, "Set(DB(DND/%s/${CALLERIDNUM})=True)" % self.pbx)
+		c.appendExten("%s" % self.set, "Set(DB(DND/%s/${CALLERIDNUM})=True)" % self.pbx, self.pbx)
 		if tapisupport:
 			needModule("app_cut")
-			c.appendExten("%s" % self.set, "Set(CHAN=${CUT(CHANNEL|-|1)})")
-			c.appendExten("%s" % self.set, "UserEvent(ASTDB|Channel: ${CHAN}^Family: DND^Value: True" )
+			c.appendExten("%s" % self.set, "Set(CHAN=${CUT(CHANNEL|-|1)})", self.pbx)
+			c.appendExten("%s" % self.set, "UserEvent(ASTDB|Channel: ${CHAN}^Family: DND^Value: True", self.pbx )
 				
-		c.appendExten("%s" % self.set, "Playback(do-not-disturb)")
-		c.appendExten("%s" % self.set, "Playback(activated)")
-		c.appendExten("%s" % self.set, "Hangup")
+		c.appendExten("%s" % self.set, "Playback(do-not-disturb)", self.pbx)
+		c.appendExten("%s" % self.set, "Playback(activated)", self.pbx)
+		c.appendExten("%s" % self.set, "Hangup", self.pbx)
 
-		c.appendExten("%s" % self.unset, "DBdel(DND/%s/${CALLERIDNUM})" % self.pbx)
+		c.appendExten("%s" % self.unset, "DBdel(DND/%s/${CALLERIDNUM})" % self.pbx, self.pbx)
 		if tapisupport:
-			c.appendExten("%s" % self.unset, "Set(CHAN=${CUT(CHANNEL|-|1)})")
-			c.appendExten("%s" % self.unset, "UserEvent(ASTDB|Channel: ${CHAN}^Family: DND^Value: ^" )
-		c.appendExten("%s" % self.unset, "Playback(do-not-disturb)")
-		c.appendExten("%s" % self.unset, "Playback(cancelled)")
-		c.appendExten("%s" % self.unset, "Hangup")
+			c.appendExten("%s" % self.unset, "Set(CHAN=${CUT(CHANNEL|-|1)})", self.pbx)
+			c.appendExten("%s" % self.unset, "UserEvent(ASTDB|Channel: ${CHAN}^Family: DND^Value: ^", self.pbx )
+		c.appendExten("%s" % self.unset, "Playback(do-not-disturb)", self.pbx)
+		c.appendExten("%s" % self.unset, "Playback(cancelled)", self.pbx)
+		c.appendExten("%s" % self.unset, "Hangup", self.pbx)

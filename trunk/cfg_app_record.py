@@ -63,8 +63,8 @@ class CfgAppRecord(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Goto(record-%s,s,1)" % self.filename)
-		c.appendExten(self.ext, "Hangup")
+		c.appendExten(self.ext, "Goto(record-%s,s,1)" % self.filename, self.pbx)
+		c.appendExten(self.ext, "Hangup", self.pbx)
 		c.setSection("record-%s" % self.filename)
 		c.append("exten => s,1,Macro(record,%s,%s,%s)" % (self.filename, self.format, self.max))
 		c.append("exten => s,n(menu),Background(press-1&to-listen-to-it&or&press-2&to-rerecord-yr-message)")

@@ -50,6 +50,6 @@ class CfgAppParking(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Park(%s)" % self.ext)
+		c.appendExten(self.ext, "Park(%s)" % self.ext, self.pbx)
 		
 		panelutils.createParkButton(self)

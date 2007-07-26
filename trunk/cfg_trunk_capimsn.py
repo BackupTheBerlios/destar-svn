@@ -77,5 +77,6 @@ class CfgTrunkCapiMSN(CfgTrunk):
 		needModule("chan_capi")
 
 		c = AstConf("extensions.conf")
-		c.setSection("in-capi")
-		c.appendExten(self.msn, "Goto(phones,%s,1)" % self.phone)
+		context="in-capi"
+		c.setSection(context)
+		c.appendExten(self.msn, "Goto(phones,%s,1)" % self.phone, context)

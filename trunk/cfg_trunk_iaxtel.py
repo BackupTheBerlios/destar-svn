@@ -70,9 +70,9 @@ class CfgTrunkIaxtel(CfgTrunk):
 			ext = "_%s." % self.ext
 			c.setSection(self.context)
 			if self.callerid:
-				c.appendExten(ext, "Set(CALLERID(name)=%s)" % self.callerid)
-			c.appendExten(ext, "Set(CALLERID(number)=%s)" % self.iaxtelid)
-			c.appendExten(ext, "Dial(IAX2/%s:%s@iaxtel.com/${EXTEN:%d@iaxtel},60,r)" % (self.iaxtelid, self.iaxtelpw, len(self.ext)))
+				c.appendExten(ext, "Set(CALLERID(name)=%s)" % self.callerid, self.context)
+			c.appendExten(ext, "Set(CALLERID(number)=%s)" % self.iaxtelid, self.context)
+			c.appendExten(ext, "Dial(IAX2/%s:%s@iaxtel.com/${EXTEN:%d@iaxtel},60,r)" % (self.iaxtelid, self.iaxtelpw, len(self.ext)), self.context)
 			#c.appendExten(ext, "Busy")
 
 		c = AstConf("iax.conf")
@@ -90,6 +90,7 @@ class CfgTrunkIaxtel(CfgTrunk):
 
 		if self.phone:
 			c = AstConf("extensions.conf")
-			c.setSection("in-iaxtel")
+			context = "in-iaxtel"
+			c.setSection(context)
 			# TODO: don't hardcode the "SIP/" here:
-			c.appendExten(self.iaxtelid, "Macro(exten-std,SIP/%s)" % self.phone)
+			c.appendExten(self.iaxtelid, "Macro(exten-std,SIP/%s)" % self.phone, context)

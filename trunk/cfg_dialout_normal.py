@@ -135,7 +135,8 @@ class CfgDialoutNormal(CfgDialout):
 
 	def createAsteriskConfig(self):
 		c = AstConf("macros.inc")
-		c.setSection("macro-%s" % self.name)
+		context="macro-%s" % self.name
+		c.setSection(context)
 		c.append("; params: exten,secret,timeout")
 		needModule("app_authenticate")
 		if self.dis_transfer:
@@ -196,12 +197,12 @@ class CfgDialoutNormal(CfgDialout):
 		c.append("exten=>s,n(unavail%s),Playback(all-circuits-busy-now)" % unavail)
 		c.append("exten=>s,n(busy),Busy(5)")
 		c.append("exten=>s,n,Hangup()")
-		c.appendExten("T","ResetCDR(w)")
-		c.appendExten("T","NoCDR")
-		c.appendExten("T","Hangup")
-		c.appendExten("t","ResetCDR(w)")
-		c.appendExten("t","NoCDR")
-		c.appendExten("t","Hangup")
+		c.appendExten("T","ResetCDR(w)", context=context)
+		c.appendExten("T","NoCDR", context=context)
+		c.appendExten("T","Hangup", context=context)
+		c.appendExten("t","ResetCDR(w)", context=context)
+		c.appendExten("t","NoCDR", context=context)
+		c.appendExten("t","Hangup", context=context)
 		if tapisupport:
-		        c.appendExten("h","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_IDLE)")
+		        c.appendExten("h","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_IDLE)", context=context)
 

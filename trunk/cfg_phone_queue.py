@@ -255,31 +255,31 @@ class CfgPhoneQueue(CfgPhone):
 		for qname in qnames:
 			opt = "Tth"
 			if mon_line:
-				extensions.appendExten(qname, mon_line)
+				extensions.appendExten(qname, mon_line, self.pbx)
 
 			if self.ring:
 				opt = opt + "r"
 
                         if self.clid:
                                 needModule("func_callerid")
-                                extensions.appendExten(qname,"Set(CALLERID(name)=%s)" %  self.clid)
+                                extensions.appendExten(qname,"Set(CALLERID(name)=%s)" %  self.clid, self.pbx)
 				
 			if self.moh:
-				extensions.appendExten(qname, "Answer")
-				extensions.appendExten(qname, "SetMusicOnHold(%s)" % self.moh)
+				extensions.appendExten(qname, "Answer", self.pbx)
+				extensions.appendExten(qname, "SetMusicOnHold(%s)" % self.moh, self.pbx)
 
 			if self.queuetimeout:
 				opt = opt + "n"
-				extensions.appendExten(qname, "Queue(%s|%s|||%s)" % (self.name, opt, self.queuetimeout))
+				extensions.appendExten(qname, "Queue(%s|%s|||%s)" % (self.name, opt, self.queuetimeout), self.pbx)
 				if self.queuetimeoutext:
 					import configlets
 					obj = configlets.configlet_tree.getConfigletByName(self.queuetimeoutext)
 					try:
-						extensions.appendExten(qname, "Goto(%s,%s,1)" %  (obj.pbx, self.queuetimeoutext))
+						extensions.appendExten(qname, "Goto(%s,%s,1)" %  (obj.pbx, self.queuetimeoutext), self.pbx)
 					except AttributeError:
 						pass
 			else:
-				extensions.appendExten(qname, "Queue(%s|%s)" % (self.name, opt))
+				extensions.appendExten(qname, "Queue(%s|%s)" % (self.name, opt), self.pbx)
 		self.createPanelConfig()
 
         def createPanelConfig(self):

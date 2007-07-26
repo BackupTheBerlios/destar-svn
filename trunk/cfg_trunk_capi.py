@@ -75,4 +75,4 @@ class CfgTrunkCapi(CfgTrunk):
 		if self.ext:
 			c = AstConf("extensions.conf")
 			c.setSection("default")
-			c.appendExten("_%s." % self.ext, "Dial(CAPI/%s:b${EXTEN:%d},90,T)" % (self.msn, len(self.ext)))
+			c.appendExten("_%s." % self.ext, "Dial(CAPI/%s:b${EXTEN:%d},90,T)" % (self.msn, len(self.ext)), "default")

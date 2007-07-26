@@ -40,9 +40,9 @@ class CfgAppMusic(CfgApp):
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Answer")
-		c.appendExten(self.ext, "Wait(1)")
+		c.appendExten(self.ext, "Answer", self.pbx)
+		c.appendExten(self.ext, "Wait(1)", self.pbx)
 		if self.moh:
-			c.appendExten(self.ext, "MusicOnHold(%s)" % self.moh)
+			c.appendExten(self.ext, "MusicOnHold(%s)" % self.moh, self.pbx)
 		else: 
-			c.appendExten(self.ext, "MusicOnHold")
+			c.appendExten(self.ext, "MusicOnHold", self.pbx)

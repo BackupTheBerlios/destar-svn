@@ -42,6 +42,6 @@ class CfgAppMilliwatt(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Answer")
-		c.appendExten(self.ext, "Milliwatt")
-		c.appendExten(self.ext, "Hangup")
+		c.appendExten(self.ext, "Answer", self.pbx)
+		c.appendExten(self.ext, "Milliwatt", self.pbx)
+		c.appendExten(self.ext, "Hangup", self.pbx)

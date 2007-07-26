@@ -41,9 +41,9 @@ class CfgAppConference(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Answer")
-		c.appendExten(self.ext, "Wait(1)")
-		c.appendExten(self.ext, "Conference")
+		c.appendExten(self.ext, "Answer", self.pbx)
+		c.appendExten(self.ext, "Wait(1)", self.pbx)
+		c.appendExten(self.ext, "Conference", self.pbx)
 
 	def isAddable(self):
 		# TODO: should only be addable if app_conference.so exists

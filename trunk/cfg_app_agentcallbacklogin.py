@@ -68,12 +68,12 @@ class CfgAppAgentCallbackLogin(CfgApp):
 		else:
 			opts = ""
 		
-		c.appendExten(self.ext, "AgentCallbackLogin(${CALLERIDNUM}|%s|${CALLERIDNUM}@%s)" % (opts, self.pbx) )
-		c.appendExten(self.ext, "DBdel(DND/%s/${CALLERIDNUM})")
-		c.appendExten(self.ext, "Playback(do-not-disturb)")
-		c.appendExten(self.ext, "Playback(cancelled)")
-		c.appendExten(self.ext, "Hangup")
+		c.appendExten(self.ext, "AgentCallbackLogin(${CALLERIDNUM}|%s|${CALLERIDNUM}@%s)" % (opts, self.pbx), self.pbx )
+		c.appendExten(self.ext, "DBdel(DND/%s/${CALLERIDNUM})", self.pbx)
+		c.appendExten(self.ext, "Playback(do-not-disturb)", self.pbx)
+		c.appendExten(self.ext, "Playback(cancelled)", self.pbx)
+		c.appendExten(self.ext, "Hangup", self.pbx)
 
-		c.appendExten(self.changeext, "AgentCallbackLogin(${CALLERIDNUM}|%s|'#')" % (opts) )
-		c.appendExten(self.logoutext, "Dial(Local/%s@%s/n,,D(#))" % (self.changeext, self.pbx))
+		c.appendExten(self.changeext, "AgentCallbackLogin(${CALLERIDNUM}|%s|'#')" % (opts), self.pbx )
+		c.appendExten(self.logoutext, "Dial(Local/%s@%s/n,,D(#))" % (self.changeext, self.pbx), self.pbx)
 

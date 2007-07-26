@@ -294,5 +294,6 @@ class CfgPhoneZap(CfgPhone):
 			self.channels,
 			self.name,
 			pbx,
-			ext)
+			ext), 
+			self.pbx
 		      )

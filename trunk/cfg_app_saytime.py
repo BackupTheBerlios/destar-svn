@@ -43,7 +43,7 @@ class CfgAppSayTime(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Answer")
-		c.appendExten(self.ext, "Wait(1)")
-		c.appendExten(self.ext, "SayUnixTime(,,%s)" % self.what)
-		c.appendExten(self.ext, "Hangup")
+		c.appendExten(self.ext, "Answer", self.pbx)
+		c.appendExten(self.ext, "Wait(1)", self.pbx)
+		c.appendExten(self.ext, "SayUnixTime(,,%s)" % self.what, self.pbx)
+		c.appendExten(self.ext, "Hangup", self.pbx)

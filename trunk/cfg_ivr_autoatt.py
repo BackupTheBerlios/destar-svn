@@ -146,35 +146,35 @@ class CfgIVRAutoatt(CfgIVR):
 		else:	
 			pbx = "phones"
 		s.append("include=%s" % pbx)
-		s.appendExten("s","Wait(%d)" % self.waittime)
-		s.appendExten("s","Set(TIMEOUT(digit)=%d)" % self.digittimeout)
+		s.appendExten("s","Wait(%d)" % self.waittime, context=self.name)
+		s.appendExten("s","Set(TIMEOUT(digit)=%d)" % self.digittimeout, context=self.name)
 		if self.moh:
-			s.appendExten("s","Setmusiconhold(%s)" % self.moh)
-			s.appendExten("s","Set(DIAL_OPTIONS=m)")
+			s.appendExten("s","Setmusiconhold(%s)" % self.moh, context=self.name)
+			s.appendExten("s","Set(DIAL_OPTIONS=m)", context=self.name)
 		else:
-			s.appendExten("s","Set(DIAL_OPTIONS=r)")
+			s.appendExten("s","Set(DIAL_OPTIONS=r)", context=self.name)
 		if self.ivrtime:
 			if self.times:
 				times=self.times.split(',')
 				for t in times:
-					s.appendExten("s","GotoIfTime(%s?%s,s,1)" % (t,self.ivrtime))
+					s.appendExten("s","GotoIfTime(%s?%s,s,1)" % (t,self.ivrtime), context=self.name)
 		if self.timeout:
-			s.appendExten("s","Set(TIMEOUT(absolute)=%s)" % self.timeout)
+			s.appendExten("s","Set(TIMEOUT(absolute)=%s)" % self.timeout, context=self.name)
 		for i in range(self.repeat):
-			s.appendExten("s","Background(ivr/%s)" % self.backgroundfile)	
+			s.appendExten("s","Background(ivr/%s)" % self.backgroundfile, context=self.name)	
 			if self.pause:
-				s.appendExten("s","WaitExten(%s)" % self.pause)
-		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.exten))	
+				s.appendExten("s","WaitExten(%s)" % self.pause, context=self.name)
+		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.exten), context=self.name)	
 		if self.operator:
-			s.appendExten("%s" % self.operator, "Goto(%s,%s,1)" % (pbx,self.exten))	
-		s.appendExten("i","Playback(invalid)")	
-		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.exten))	
-		s.appendExten("t","ResetCDR(w)")
-		s.appendExten("t","NoCDR")
-		s.appendExten("t","Hangup")
-		s.appendExten("T","ResetCDR(w)")
-		s.appendExten("T","NoCDR")
-		s.appendExten("T","Hangup")
+			s.appendExten("%s" % self.operator, "Goto(%s,%s,1)" % (pbx,self.exten), context=self.name)	
+		s.appendExten("i","Playback(invalid)", context=self.name)	
+		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.exten), context=self.name)	
+		s.appendExten("t","ResetCDR(w)", context=self.name)
+		s.appendExten("t","NoCDR", context=self.name)
+		s.appendExten("t","Hangup", context=self.name)
+		s.appendExten("T","ResetCDR(w)", context=self.name)
+		s.appendExten("T","NoCDR", context=self.name)
+		s.appendExten("T","Hangup", context=self.name)
 	
 
 	def row(self):

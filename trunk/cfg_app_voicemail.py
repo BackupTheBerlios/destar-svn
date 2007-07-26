@@ -44,10 +44,10 @@ class CfgAppVoiceMail(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "Answer")
-		c.appendExten(self.ext, "Wait(1)")
+		c.appendExten(self.ext, "Answer", self.pbx)
+		c.appendExten(self.ext, "Wait(1)", self.pbx)
 		if not self.mailbox:
-			c.appendExten(self.ext, "VoiceMailMain(${CALLERIDNUM}@%s)" % self.pbx)
+			c.appendExten(self.ext, "VoiceMailMain(${CALLERIDNUM}@%s)" % self.pbx, self.pbx)
 		else:
-			c.appendExten(self.ext, "VoiceMailMain(@%s)" % self.pbx)
-		c.appendExten(self.ext, "Hangup")
+			c.appendExten(self.ext, "VoiceMailMain(@%s)" % self.pbx, self.pbx)
+		c.appendExten(self.ext, "Hangup", self.pbx)

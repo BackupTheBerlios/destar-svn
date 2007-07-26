@@ -59,8 +59,8 @@ class CfgAppGlobalQuickDial(CfgApp):
 		c.setSection(self.pbx)
 		if self.pin:
 			needModule("app_authenticate")
-			c.appendExten("_%sXX*X." % self.set, "Authenticate(%s)" % self.pin)
-		c.appendExten("_%sXX*X." % self.set, "Set(DB(QUICKDIALLIST/GLOBAL/${EXTEN:%d:2})=${EXTEN:%d})" % (len(self.set),len(self.set)+3))
-		c.appendExten("_%sXX*X." % self.set, "Hangup")
-		c.appendExten("_%sXX" % self.unset, "DBdel(QUICKDIALLIST/GLOBAL/${EXTEN:%d})" % len(self.unset))
-		c.appendExten("_%sXX" % self.unset, "Hangup")
+			c.appendExten("_%sXX*X." % self.set, "Authenticate(%s)" % self.pin, self.pbx)
+		c.appendExten("_%sXX*X." % self.set, "Set(DB(QUICKDIALLIST/GLOBAL/${EXTEN:%d:2})=${EXTEN:%d})" % (len(self.set),len(self.set)+3), self.pbx)
+		c.appendExten("_%sXX*X." % self.set, "Hangup", self.pbx)
+		c.appendExten("_%sXX" % self.unset, "DBdel(QUICKDIALLIST/GLOBAL/${EXTEN:%d})" % len(self.unset), self.pbx)
+		c.appendExten("_%sXX" % self.unset, "Hangup", self.pbx)

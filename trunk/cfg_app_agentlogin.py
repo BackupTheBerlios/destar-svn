@@ -47,5 +47,5 @@ class CfgAppAgentLogin(CfgApp):
 	
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
-		c.appendExten(self.ext, "AgentLogin()")
+		c.appendExten(self.ext, "AgentLogin()", self.pbx)
 
