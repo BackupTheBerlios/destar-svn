@@ -58,7 +58,8 @@ class AsteriskConfigFile:
 		self.extpriority = 1
 		self.section  = "general"
 		self.destar_comment = True
-		self.lastext  = None
+		#self.lastext  = None
+		self.addedexts  = {}
 
 	def write(self, f=None):
 		"Write myself into the config file"
@@ -104,28 +105,29 @@ class AsteriskConfigFile:
 			self.order.append(self.section)
 		self.dirty = True
 
-	def appendExten(self,ext,l,e=None, label=None):
+	def appendExten(self, ext, l, e=None, label=None, context="phones"):
 		"""Append an extension line l to the current section. Append
-		an optional error extenion e as well. Increments the priorty
-		if the extension stays the same, resets the prio to 1 if the
-		extension changes."""
+		an optional error extenion e as well. Uses 'n' special
+		priority."""
 
-		if ext != self.lastext:
-			self.extpriority = 1
-		self.lastext = ext
+		priority = '1'
+
+		if not self.addedexts.has_key(context):
+			self.addedexts[context] = [ext]
+		else:
+			if ext in self.addedexts[context]:	
+				priority = 'n'
+			else:
+				self.addedexts[context].append(ext)
 
 		if label:
-		    self.append("exten=%s,%d(%s),%s" % (ext, self.extpriority, label, l))
+		    self.append("exten=%s,%s(%s),%s" % (ext, priority, label, l))
 		else:
-		    self.append("exten=%s,%d,%s" % (ext, self.extpriority, l))
+		    self.append("exten=%s,%s,%s" % (ext, priority, l))
 
 		if e:
-			self.append("exten=%s,%d,%s" % (ext, self.extpriority+101, e))
+			self.append("exten=%s,%s,%s" % (ext, 'n+101', e))
 			
-		ret = self.extpriority
-		self.extpriority = self.extpriority + 1
-		return ret
-
 	def setPriority(self,n):
 		"""Manually set extension priority to an arbitrary number."""
 		self.extpriority = n
@@ -905,63 +907,63 @@ class CfgTrunk(Cfg):
 		c = AstConf("extensions.conf")
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
-		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name)
+		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name, context=contextin)
 		if self.clid:
 			needModule("func_callerid")
-			c.appendExten("s","Set(CALLERID(name)=%s)" %  self.clid)
+			c.appendExten("s","Set(CALLERID(name)=%s)" %  self.clid, context=contextin)
 		if self.clidnumin:
 			needModule("func_callerid")
-			c.appendExten("s","Set(CALLERID(number)=%s)" %  self.clidnumin)
+			c.appendExten("s","Set(CALLERID(number)=%s)" %  self.clidnumin, context=contextin)
 		global configlet_tree
 		if self.contextin == 'phone' and self.phone:
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
-				c.appendExten("s", "Goto(%s,%s,1)" % (pbx,self.phone))
+				c.appendExten("s", "Goto(%s,%s,1)" % (pbx,self.phone), context=contextin)
 			except AttributeError:
 				pass
 		if self.contextin == 'ivr' and self.ivr:
-			c.appendExten("s", "Goto(%s,s,1)" % self.ivr)
+			c.appendExten("s", "Goto(%s,s,1)" % self.ivr, context=contextin)
 		if self.contextin == 'pbx' and self.pbx:
-			c.appendExten("s", "Goto(%s,s,1)" % self.pbx)
+			c.appendExten("s", "Goto(%s,s,1)" % self.pbx, context=contextin)
 
-		c.appendExten("_X","Set(CDR(intrunk)=%s)" %  self.name)
+		c.appendExten("_X","Set(CDR(intrunk)=%s)" %  self.name, context=contextin)
 		if self.clid:
 			needModule("func_callerid")
-			c.appendExten("_X","Set(CALLERID(name)=%s)" %  self.clid)
+			c.appendExten("_X","Set(CALLERID(name)=%s)" %  self.clid, context=contextin)
 		if self.clidnumin:
 			needModule("func_callerid")
-			c.appendExten("_X","Set(CALLERID(number)=%s)" %  self.clidnumin)
+			c.appendExten("_X","Set(CALLERID(number)=%s)" %  self.clidnumin, context=contextin)
 		if self.contextin == 'phone' and self.phone:
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
-				c.appendExten("_X", "Goto(%s,%s,1)" % (pbx,self.phone))
+				c.appendExten("_X", "Goto(%s,%s,1)" % (pbx,self.phone), context=contextin)
 			except AttributeError:
 				pass
 		if self.contextin == 'ivr' and self.ivr:
-			c.appendExten("_X", "Goto(%s,s,1)" % self.ivr)
+			c.appendExten("_X", "Goto(%s,s,1)" % self.ivr, context=contextin)
 		if self.contextin == 'pbx' and self.pbx:
-			c.appendExten("_X", "Goto(%s,${EXTEN},1)" % self.pbx)
+			c.appendExten("_X", "Goto(%s,${EXTEN},1)" % self.pbx, context=contextin)
 
-		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name)
+		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name, context=contextin)
 		if self.clid:
 			needModule("func_callerid")
-			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid)
+			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid, context=contextin)
 		if self.clidnumin:
 			needModule("func_callerid")
-			c.appendExten("_X.","Set(CALLERID(number)=%s)" %  self.clidnumin)
+			c.appendExten("_X.","Set(CALLERID(number)=%s)" %  self.clidnumin, context=contextin)
 		if self.contextin == 'phone' and self.phone:
 			obj = configlet_tree.getConfigletByName(self.phone)
 			try:
 				pbx = obj.pbx
-				c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone))
+				c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone), context=contextin)
 			except AttributeError:
 				pass
 		if self.contextin == 'ivr' and self.ivr:
-			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr)
+			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr, context=contextin)
 		if self.contextin == 'pbx' and self.pbx:
-			c.appendExten("_X.", "Goto(%s,${EXTEN},1)" % self.pbx)
+			c.appendExten("_X.", "Goto(%s,${EXTEN},1)" % self.pbx, context=contextin)
 
 		
 class CfgPhone(Cfg):
@@ -1009,7 +1011,7 @@ class CfgPhone(Cfg):
 			self.name,
 			ext,
 			pbx
-			))
+			), context=pbx)
 
 	def createExtensionConfig(self):
 		needModule("res_adsi")
@@ -1022,9 +1024,9 @@ class CfgPhone(Cfg):
                 extensions.setSection(pbx)
 		extensions.append("exten=%s,hint,%s/%s" % (self.ext, self.technology, self.name))
 		extensions.append("exten=%s,hint,%s/%s" % (self.name, self.technology, self.name))
-		extensions.appendExten(self.ext,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
+		extensions.appendExten(self.ext, "Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name), context=pbx)
+		extensions.appendExten(self.name, "Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name), context=pbx)
 		self.createDialEntry(extensions, self.ext, pbx, self.ext)
-		extensions.appendExten(self.name,"Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name))
 		self.createDialEntry(extensions, self.name, pbx, self.ext)
 		for obj in configlet_tree:
 			if obj.__class__.__name__ == 'CfgAppCallFW':
@@ -1082,13 +1084,14 @@ class CfgPhone(Cfg):
 
 	def createOutgoingContext(self):
 		c = AstConf("extensions.conf")
-		c.setSection("out-%s" % self.name)
+		contextout = "out-%s" % self.name 
+		c.setSection(contextout)
 		try:
 			pbx = self.pbx
 		except AttributeError:
 			pbx = "phones"
 		c.append("include=>%s" % pbx)
-		c.appendExten("i","Playback(invalid)")
+		c.appendExten("i","Playback(invalid)", context=contextout)
 		try:
 			timeoutvalue = not self.timeout and "0" or "1"
 		except AttributeError:
@@ -1098,11 +1101,11 @@ class CfgPhone(Cfg):
 			if obj.__class__.__name__ == 'CfgDialoutNormal':
 				try:
 					if self.__getitem__("dialout_"+obj.name):
-						c.appendExten("%s" % obj.pattern,"Set(CDR(pbx)=%s)" % (self.pbx))
-						c.appendExten("%s" % obj.pattern,"Set(CDR(userfield)=%s)" % (self.name))
-						c.appendExten("%s" % obj.pattern,"Set(CDR(dialout)=%s)" % (obj.name))
+						c.appendExten("%s" % obj.pattern,"Set(CDR(pbx)=%s)" % (self.pbx), context=contextout)
+						c.appendExten("%s" % obj.pattern,"Set(CDR(userfield)=%s)" % (self.name), context=contextout)
+						c.appendExten("%s" % obj.pattern,"Set(CDR(dialout)=%s)" % (obj.name), context=contextout)
 						if self.calleridnum:
-							c.appendExten("%s" % obj.pattern,"Set(CALLERID(number)=%s)" % self.calleridnum)
+							c.appendExten("%s" % obj.pattern,"Set(CALLERID(number)=%s)" % self.calleridnum, context=contextout)
 							
 						if self.monitor:
 							needModule("app_mixmonitor")	
@@ -1116,21 +1119,21 @@ class CfgPhone(Cfg):
 							else:          
 								options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
 							if self.monitorfilename:
-								c.appendExten("%s" % obj.pattern, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options))
+								c.appendExten("%s" % obj.pattern, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options), context=contextout)
 							else:
-								c.appendExten("%s" % obj.pattern, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options))
+								c.appendExten("%s" % obj.pattern, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options), context=contextout)
 						
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)							
 						if secret:
-							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue))
+							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},%s,%s)" % (obj.name,obj.addprefix,obj.rmprefix,secret,timeoutvalue), context=contextout)
 						else:
-							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue))
+							c.appendExten("%s" % obj.pattern,"Macro(%s,%s${EXTEN:%s},n,%s)" % (obj.name,obj.addprefix,obj.rmprefix,timeoutvalue), context=contextout)
 				except KeyError:
 					pass
 			elif obj.__class__.__name__ == 'CfgAppPhoneQuickDial':
 				prefix = obj.dialprefix
-				c.appendExten("_%sXX" % prefix,"Set(dest=${DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})})" % len(prefix), e="Playback(invalid)")
-				c.appendExten("_%sXX" % prefix,"Goto(${dest},1)")
+				c.appendExten("_%sXX" % prefix,"Set(dest=${DB(QUICKDIALLIST/${CALLERIDNUM}/${EXTEN:%d})})" % len(prefix), e="Playback(invalid)", context=contextout)
+				c.appendExten("_%sXX" % prefix,"Goto(${dest},1)", context=contextout)
 	
 	def createPanelConfig(self):
 		try:

@@ -3,6 +3,8 @@
 * Fixed some int values expected where strings types found.
 * Added Themes support in Templates.ptl and CfgOptSettings.
 * Added FileWidgwt to ConfigHelper and option to upload a logo image on CfgOptSettings.
+* configlets.py: appendExten() uses 'n' priority and doesn't reset the
+  priority when the extension changes.
 
 2007-07-10:
 * Improved call-forwarding applications:
