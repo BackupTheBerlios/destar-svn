@@ -5,6 +5,7 @@
 * Added FileWidgwt to ConfigHelper and option to upload a logo image on CfgOptSettings.
 * configlets.py: appendExten() uses 'n' priority and doesn't reset the
   priority when the extension changes.
+* configlets.py: allows monitoring incoming calls
 
 2007-07-10:
 * Improved call-forwarding applications:

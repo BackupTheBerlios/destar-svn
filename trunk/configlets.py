@@ -1026,6 +1026,25 @@ class CfgPhone(Cfg):
 		extensions.append("exten=%s,hint,%s/%s" % (self.name, self.technology, self.name))
 		extensions.appendExten(self.ext, "Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name), context=pbx)
 		extensions.appendExten(self.name, "Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name), context=pbx)
+
+		if self.monitorinbound:
+			needModule("app_mixmonitor")	
+			options = ""
+			if self.monitorappend:
+				options = 'a' 
+			if self.monitorwhenbridged:
+				options = options+'b'
+			if self.heardvol == self.spokenvol:
+				options = options+'W(%s)' % (self.heardvol)
+			else:          
+				options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
+			if self.monitorfilename:
+				extensions.appendExten(self.ext, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options), context=pbx)
+				extensions.appendExten(self.name, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options), context=pbx)
+			else:
+				extensions.appendExten(self.ext, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options), context=pbx)
+				extensions.appendExten(self.name, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options), context=pbx)
+
 		self.createDialEntry(extensions, self.ext, pbx, self.ext)
 		self.createDialEntry(extensions, self.name, pbx, self.ext)
 		for obj in configlet_tree:
