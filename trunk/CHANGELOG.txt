@@ -1,3 +1,7 @@
+2007-07-27:
+* cfg_opt_did.py: fixed typos on appendExten().
+* Templates, cfg_opt_settings:  changed logo location.
+
 2007-07-26:
 * Now header title is an option on CfgOptSettings.
 * Fixed some int values expected where strings types found.

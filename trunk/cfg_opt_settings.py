@@ -341,7 +341,7 @@ class CfgOptSettings(CfgOptSingle):
 			options=styles),
 		     VarType("logo",
 			title=_("Web UI logo to use"),
-			hint="/static/imgs/logo",
+			hint="/static/logo",
 			type="file",
 			optional=True),
 		     VarType("tapi",
@@ -394,7 +394,7 @@ class CfgOptSettings(CfgOptSingle):
 			needModule("app_cut")
 		if self.logo:
 			upload = self.logo
-			dest = '%s/imgs/logo' % STATIC_DIR
+			dest = '%s/logo' % STATIC_DIR
 			out = open(dest, 'wb')
 			# Copy file in chunks to avoid using lots of memory.
 			while 1:

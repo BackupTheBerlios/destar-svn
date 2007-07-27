@@ -120,22 +120,23 @@ class CfgOptDID(CfgOpt):
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection("in-%s" % self.trunk)
-		c.appendExten(self.did,"Set(CDR(intrunk)=%s)" %  self.trunk, self.pbx)
+		context = "in-%s" % self.trunk
+		c.setSection(context)
+		c.appendExten(self.did,"Set(CDR(intrunk)=%s)" %  self.trunk, context)
 		if self.clid:
 			needModule("func_callerid")
-			c.appendExten(self.did,"Set(CALLERID(name)=%s)" %  self.clid, self.pbx)
+			c.appendExten(self.did,"Set(CALLERID(name)=%s)" %  self.clid, context)
 		if self.clidnum:
 			needModule("func_callerid")
-			c.appendExten(self.did,"Set(CALLERID(number)=%s)" %  self.clidnum, self.pbx)
+			c.appendExten(self.did,"Set(CALLERID(number)=%s)" %  self.clidnum, context)
 		if self.contextin == 'phone' and self.phone:
 			import configlets
 			obj = configlets.configlet_tree.getConfigletByName(self.phone)
 			try:
-				c.appendExten(self.did,"Goto(%s,%s,1)" %  (obj.pbx,self.phone), self.pbx)
+				c.appendExten(self.did,"Goto(%s,%s,1)" %  (obj.pbx,self.phone), context)
 			except AttributeError:
 				pass
 		elif self.contextin == 'ivr' and self.ivr:
-			c.appendExten(self.did,"Goto(%s,s,1)" % self.ivr, self.pbx)
+			c.appendExten(self.did,"Goto(%s,s,1)" % self.ivr, context)
         	elif self.contextin == 'custommap' and self.custommapdest:
-        		c.appendExten(self.did,"Goto(%s,%s,1)" % (self.custommappbx, self.custommapdest), self.pbx)
+        		c.appendExten(self.did,"Goto(%s,%s,1)" % (self.custommappbx, self.custommapdest), context)

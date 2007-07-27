@@ -186,7 +186,7 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
 	# Header
  	'<div id="wrapper">\n'
  	'	<div id="header">\n'
-	'               <h1><img src="/static/imgs/logo" alt="%s"/></h1>\n' %header_text
+	'               <h1><img src="/static/logo" alt="%s"/></h1>\n' %header_text
 	
 	# Side menu
 	# e[0]: priority, only needed for sorting, discarded
