@@ -1,0 +1,217 @@
+# -*- coding: utf-8 -*-
+#
+# This file has Copyright (C) 2006 Ian Esper <ian@bratech.com.br> 
+# Destar has Copyright (C) 2006 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+import MySQLdb
+from Templates import *
+from quixote.form2 import *
+from pychart import *
+import re
+import time
+from reportlab.pdfgen import canvas
+
+startyear = 2005
+all = _("All")
+years = ["%d"%i for i in range(startyear,time.localtime()[0]+1)]
+months = ["%02d"%(i+1) for i in range(12)]
+days = ["%02d"%(i+1) for i in range(31)]
+hours = ["%02d"%i for i in range(24)]
+
+yearnames = years
+monthnames = [ _('January'), _('February'), _('March'),
+                                _('April'),     _('May'), _('June'), _('July'), _('August'),
+                                _('September'), _('October'), _('November'), _('December') ]
+daynames = ["%d"%(i+1) for i in range(31)]
+hournames =["%d:00"%i for i in range(24)]
+
+
+class BillDB:
+	def __init__(self):
+		self.query = "SELECT callDate, callerID, calledNumber, billableDuration, callCost FROM cdr";
+		try:
+			self.db=MySQLdb.connect("localhost","asterisk","asterisk","rating")
+			self.cursor=self.db.cursor()
+		
+		except MySQLdb.OperationalError, message:
+			errorMessage = "Error %d:\n%s" % (message[ 0 ], message[ 1 ] )
+			return
+			
+	def close(self):
+		try:
+			self.cursor.close()
+			self.db.close()
+		except MySQLdb.OperationalError, message:
+			errorMessage = "Error %d:\n%s" % (message[ 0 ], message[ 1 ] )
+			return
+	def getRate (self, extension, fromdate, todate, linesToShow, offset):
+		self.where = " where"
+		self.where += " ANI like "  + '"' + extension + '"'
+		self.where += " and callDate > "  + '"' + fromdate + '"' 
+		self.where += " and callDate < " + '"' +  todate + '"' 
+		self.where += " and callCost not like '0.0000'" 
+		self.limit = " limit " + str(linesToShow)  + " offset " + str(offset) 
+	
+	def getRate1(self):
+		self.cursor.execute(self.query + self.where)
+		self.data = self.cursor.fetchall()   
+		self.fields = self.cursor.description
+	
+	def getRate2(self): 		
+		self.cursor.execute(self.query + self.where + self.limit)
+		self.data = self.cursor.fetchall()   
+		self.fields = self.cursor.description
+	
+	def getSum(self):
+		bquery = "SELECT sum(callCost) as TotalCost FROM cdr"
+		self.cursor.execute(bquery + self.where)
+		self.totalcost = self.cursor.fetchall()
+	
+	def getCount (self):
+		cquery = "SELECT count(*) as numrows FROM cdr"
+		self.cursor.execute(cquery + self.where)
+		self.numrows = self.cursor.fetchall()[0][0]
+	   
+	def getTime(self):
+		tquery = "SELECT sum(billableDuration) as Totaltime FROM cdr"
+		self.cursor.execute(tquery + self.where)
+		self.totaltime = self.cursor.fetchall()
+
+	def makeBillsTable [html] (self):
+		'<table border="1"> \n'
+		'</b></td><td><b>'+_("Call Date")
+		'</b></td><td><b>'+_("Caller ID")
+      		'</b></td><td><b>'+_("Called Number")
+        	'</b></td><td><b>'+_("Duration (sec)")
+       		'</b></td><td><b>'+_("Call Cost")
+       		'</td></tr>\n'
+       		for row in range(len(self.data)):
+       			'<tr>'
+               		"<td>%s</td>" % str(self.data[row][0])
+               		"<td>%s</td>" % str(self.data[row][1])
+               		"<td>%s</td>" % str(self.data[row][2])
+               		"<td>%s</td>" % str(self.data[row][3])
+               		"<td>%s</td>" % str(self.data[row][4])
+       			'</tr>\n'
+       		'</table>'
+
+	def makeTotalTable [html] (self):
+		'<table border="1"> \n'
+                '</b></td><td><b>'+_("Total Cost")
+                '</td></tr>\n'
+                '<tr>'
+                "<td>R$ %s</td>" % (self.totalcost[0][0])
+                '</tr>\n'
+                '</table>'
+	
+        def export(self, c, extension, fromdate, todate):
+		from reportlab.pdfgen import canvas
+                x = 10
+                y = 694
+		pag = (len(self.data) / 69) + 1
+		n = 1
+		time = self.totaltime[0][0] / 60 
+		c = canvas.Canvas("/usr/share/destar/static/report/%s_%s_%s.pdf" % (fromdate, todate, extension))
+		c.drawImage("/usr/share/destar/static/logos/bratechtelecom2.gif", 0,0)
+		c.drawImage("/usr/share/destar/static/logos/topo.gif", 0,780)
+		c.setFont("Helvetica", 8.5)
+		c.drawString(x,744,_("Extension = %s") % extension)
+                c.drawString(x+150,744,_("From Date = %s") % fromdate)
+                c.drawString(x+300,744,_("Até = %s") % todate)
+                c.drawString(x+450,744,_("Página = %s/%s") % (n, pag))
+		c.drawString(x,724,_("Total Cost = R$ %s") % self.totalcost[0][0])
+		c.drawString(x+150,724,_("Total de Ligações = %s") % self.numrows)
+		c.drawString(x+300,724,_("Tempo Total = %s min") % time)
+               	c.drawString(x,704,_("Call Date"))
+               	c.drawString(x+150,704,_("Ramal"))
+               	c.drawString(x+240,704,_("Número"))
+               	c.drawString(x+350,704,_("Duração"))
+               	c.drawString(x+410,704,_("Call Cost"))
+		if len(self.data) > 69:
+			for row in range(69):
+               			c.drawString(x,y,"%s" % self.data[row][0])
+               			c.drawString(x+150,y,"%s" % self.data[row][1])
+           	    		c.drawString(x+240,y,"%s" % self.data[row][2])
+               			c.drawString(x+350,y,"%s" % self.data[row][3])
+               			c.drawString(x+410,y,"R$ %s" % self.data[row][4])
+       				y = y-10
+			c.showPage()
+			for i in range(69,len(self.data),69):
+				n = n + 1
+				c.drawImage("/usr/share/destar/static/logos/bratechtelecom2.gif", 0,0)
+	                	c.drawImage("/usr/share/destar/static/logos/topo.gif", 0,780)
+				c.setFont("Helvetica", 8.5)
+				c.drawString(x,744,_("Extension = %s") % extension)
+              			c.drawString(x+150,744,_("From Date = %s") % fromdate)
+           			c.drawString(x+300,744,_("Até = %s") % todate)
+                		c.drawString(x+450,744,_("Página = %s/%s") % (n, pag))
+				c.drawString(x+150,724,_("Total de Ligações = %s") % self.numrows)
+				c.drawString(x+300,724,_("Tempo Total = %s min") % time)
+				c.drawString(x,724,_("Total Cost = R$ %s") % self.totalcost[0][0])
+               			c.drawString(x,704,_("Call Date"))
+               			c.drawString(x+150,704,_("Ramal"))
+               			c.drawString(x+240,704,_("Número"))
+               			c.drawString(x+350,704,_("Duração"))
+               			c.drawString(x+410,704,_("Call Cost"))
+				x = 10
+				y = 694
+				if i < len(self.data)-69:
+					for row in range(i,i+69):
+				 		c.drawString(x,y,"%s" % self.data[row][0])
+           	    				c.drawString(x+150,y,"%s" % self.data[row][1])
+               					c.drawString(x+240,y,"%s" % self.data[row][2])
+               					c.drawString(x+350,y,"%s" % self.data[row][3])
+               					c.drawString(x+410,y,"R$ %s" % self.data[row][4])
+       						y = y-10
+					c.showPage()
+			c.drawImage("/usr/share/destar/static/logos/bratechtelecom2.gif", 0,0)
+			c.drawImage("/usr/share/destar/static/logos/topo.gif", 0,780)
+			c.setFont("Helvetica", 8.5)		
+			c.drawString(x,744,_("Extension = %s") % extension)
+                	c.drawString(x+150,744,_("From Date = %s") % fromdate)
+                	c.drawString(x+300,744,_("Até = %s") % todate)
+                	c.drawString(x+450,744,_("Página = %s/%s") % (pag, pag))
+			c.drawString(x+150,724,_("Total de Ligações = %s") % self.numrows)
+			c.drawString(x+300,724,_("Tempo Total = %s min") % time)
+			c.drawString(x,724,_("Total Cost = R$ %s") % self.totalcost[0][0])
+               		c.drawString(x,704,_("Call Date"))
+               		c.drawString(x+150,704,_("Ramal"))
+               		c.drawString(x+240,704,_("Número"))
+               		c.drawString(x+350,704,_("Duração"))
+               		c.drawString(x+410,704,_("Call Cost"))
+			a = len(self.data) / 69
+			for row in range((a*69)+1,len(self.data)):
+				c.drawString(x,y,"%s" % self.data[row][0])
+               			c.drawString(x+150,y,"%s" % self.data[row][1])
+           			c.drawString(x+240,y,"%s" % self.data[row][2])
+           			c.drawString(x+350,y,"%s" % self.data[row][3])
+        	   		c.drawString(x+410,y,"R$ %s" % self.data[row][4])
+       				y = y-10
+			c.showPage()
+		
+		else:
+			for row in range(len(self.data)):
+               			c.drawString(x,y,"%s" % self.data[row][0])
+               			c.drawString(x+150,y,"%s" % self.data[row][1])
+           	    		c.drawString(x+240,y,"%s" % self.data[row][2])
+               			c.drawString(x+350,y,"%s" % self.data[row][3])
+               			c.drawString(x+410,y,"R$ %s" % self.data[row][4])
+       				y = y-10
+			c.showPage()
+		c.save()
+				
