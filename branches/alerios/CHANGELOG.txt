@@ -1,3 +1,10 @@
+2007-07-27:
+* cfg_opt_did.py: fixed typos on appendExten().
+* Templates, cfg_opt_settings:  changed logo location.
+* manager.py: added functions to retrieve queue status.
+* Added page_config_file.ptl as an example of file uploading on a ptl.
+* Added page_admin_outboundcampaign.ptl and cfg_phone_outboundqueue.py:  Some initial work on a "unpredictive" dialer.
+
 2007-07-26:
 * Now header title is an option on CfgOptSettings.
 * Fixed some int values expected where strings types found.

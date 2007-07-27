@@ -1,0 +1,97 @@
+# -*- coding: utf-8 -*-
+#
+# Destar has Copyright (C) 2005 by Holger Schurig
+# This file has Copyright (C) 2007 by Alejandro Rios P.
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from quixote.form import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect, get_field
+import backend, manager, configlets
+import time,types,sys,os
+
+def FileUploadForm [plain] (self, exitPath="."):
+
+	if self.form.has_key('_cancel'):
+		return redirect(exitPath)
+	form = Form(enctype="multipart/form-data")
+	form.add(FileWidget, "filetoupload", "", title=_("File to upload:"), size=30, required=True)
+	form.add(StringWidget, "destination", "", title=_("Destination directory"))
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)
+	form.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
+
+	if not form.is_submitted() or form.has_errors():
+		return form.render()
+
+	if form["filetoupload"]:
+		max_size = 2000000
+		#upload = get_field('filetoupload')
+		upload = form['filetoupload']
+		pos = upload.fp.tell()  # Save current position in file.
+		upload.fp.seek(0, 2)    # Go to end of file.
+		size = upload.fp.tell() # Get new position (which is the file size).
+		upload.fp.seek(pos, 0)  # Return to previous position.
+		upload.size = size
+		if size > max_size:
+			msg = "The uploaded file is too big (size=%s, max=%s bytes)"
+			msg %= (size, max_size)
+			return htmltext(_("File bigger than %s bytes") % max_size)
+		if form["destination"]:
+			dest = os.path.join(form["destination"],upload.base_filename)
+		else:
+			dest = os.path.join("/usr/share/destar/static",upload.base_filename)
+		out = open(dest, 'wb')
+		# Copy file in chunks to avoid using lots of memory.
+		while 1:
+			chunk = upload.read(1024 * 1024)
+			if not chunk:
+			   break
+			out.write(chunk)
+		out.close()
+		upload.close()
+		sys.stderr.write(_("Uploaded file: %s") % dest)
+		return htmltext(_("Uploaded file: %s") % dest)
+	else:
+		return htmltext(_("No file."))
+
+class Page(AccessControlled, Directory): 
+
+	_q_parent  = 'page_config'
+	_q_title   = _("Upload File")
+	_q_desc    = _("Upload some pretty file")
+	_q_link    = 'upload'
+	_q_menupos = 10
+	_q_level   = 3
+
+#	_q_exports = ['', 'static', 'files']
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		'<p>'
+		FileUploadForm(self.request)
+		'.</p>'
+		footer()
+

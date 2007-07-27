@@ -1,0 +1,163 @@
+# -*- coding: utf-8 -*-
+#
+# Destar has Copyright (C) 2004-2007 by Holger Schurig
+# This file has Copyright (C) 2007 by Alejandro Rios P.
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+from Templates import *
+from quixote.form import *
+import queueutils, manager
+import time
+from StatsHelper import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
+
+campaingRunning = False
+currentQueue = ""
+queueObject = None
+
+	
+class Page(AccessControlled, Directory): 
+
+	_q_parent = 'page_admin'
+	_q_title  = _("Control for outbound campaign")
+	_q_desc   = _("Real time control for outbound campaign queues")
+	_q_level  = 3
+	_q_menupos = 30
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_index [plain] (self):
+		manager.connect()
+		if not manager.isConnected():
+			'<p><span class="errornotice">'
+			htmltext(_("Asterisk is not running!"))
+			'</span></p>'
+		elif not manager.isLoggedIn():
+			# TODO: describe how to set this up
+			'<p><span class="errornotice">'
+			htmltext(_("The manager access is not working!"))
+			'</span></p>'
+
+		(evalperiod,callsXround) = evaluateCallRound()
+		#header(self._q_desc, refresh=evalperiod)
+		header(self._q_desc, refresh=4)
+		queueForm(self)
+		global campaingRunning
+		if campaingRunning:
+			htmltext("<h3>%s</h3>" % _("Status"))
+			showStatus(evalperiod,callsXround)
+		footer()
+	
+def getQueues():
+	import configlets
+	objs = configlets.configlet_tree.getConfigletsByName('CfgPhoneOutboundQueue')
+	queues=[]
+	for obj in objs:
+		queues.append(obj.name)		
+	return queues
+
+
+def queueForm [plain] (self):
+	global currentQueue
+	global campaingRunning
+	current_queue = currentQueue
+	form = Form()
+	form.name = "queryform"
+	if not campaingRunning:
+		form.add_single_select('queue', 
+				title=htmltext(_('Queue:')),
+				value=current_queue,
+				options=zip(getQueues(),getQueues(),getQueues()),
+				render_br=True )
+		form.add(SubmitWidget, '_start', _("Start"), render_br=True)
+	else: 
+		htmltext("<h3>%s: %s</h3>" % (_("Queue"),current_queue))
+		form.add(SubmitWidget, '_stop', _("Stop/Pause"), render_br=True)
+	form.render()
+	
+	
+	if form.is_submitted() and not form.has_errors():
+		if self.request.form.has_key('_start'):
+			startCampaign(form["queue"])
+			return redirect(".")
+		if self.request.form.has_key('_stop'):
+			stopCampaign()
+			return redirect(".")
+
+def startCampaign (queue):
+	global campaingRunning
+	global currentQueue
+	global queueObject
+	campaingRunning = True
+	currentQueue = queue
+	import configlets
+	queueObject = configlets.configlet_tree.getConfigletByName(currentQueue)
+
+def stopCampaign ():
+	global campaingRunning
+	global currentQueue
+	global queueObject
+	campaingRunning = False
+	currentQueue = ""
+	queueObject = None
+
+def showStatus [plain] (evalperiod = 0, callsXround = 0):
+	global currentQueue
+	global queueObject
+	queueStatus = manager.getQueue(currentQueue)
+	table = HtmlTable(1,1)
+	table.setCell(0,0, _("Idle Agents"))
+	table.setCell(1,0, "%d" % queueStatus["Not in use"])
+	table.setCell(0,1, _("Callers waiting in queue"))
+	table.setCell(1,1, "%d" % queueStatus["Callers"])
+	table.setCell(0,2, _("Next evaluation period"))
+	table.setCell(1,2, "%d" % evalperiod)
+	table.setCell(0,3, _("Number of calls made in this round"))
+	table.setCell(1,3, "%s" % callsXround)
+	table.getHtml(border=1)
+	#'<p>'
+	#htmltext("%s" % manager.getQueue(currentQueue))
+	#'</p>'
+
+def evaluateCallRound ():
+	global campaingRunning
+	global currentQueue
+	global queueObject
+	if campaingRunning:
+		queueStatus = manager.getQueue(currentQueue)
+		ratio = float(queueObject.ratio.split(":")[0]) / float(queueObject.ratio.split(":")[1]) 
+		evalperiod = (queueObject.calltime + queueObject.resttime) * ratio * max(queueStatus["Callers"],1) / max(queueStatus["Not in use"],1) 
+		callsXround = int(ratio * max(queueStatus["Not in use"],1) / max(queueStatus["Callers"],1))
+		executeCallRound(callsXround)
+		return (evalperiod,callsXround)
+	else:
+		return (0,0)
+
+def executeCallRound (callsXround=0):
+	#TODO:Read list of numbers of this campaign
+	
+	#TODO:Take callsXround numbers and create .call files
+	
+	#TODO:Execute .call files
+	
