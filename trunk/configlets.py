@@ -296,18 +296,24 @@ class ConfigletTree:
 			if configlet_list[i]._id == obj._id:
 				configlet_list[i] = obj
 				
-	def deleteConfiglet(self, _id):
+	def deleteConfiglet(self, _id, deleted=[]):
+		if _id in deleted:
+			return
+		else:
+			deleted.append(_id)
 		for group in self.groups.values():
 			for i in range(len(group)):
 				if group[i]._id == _id:
 					for dep in group[i].dependent_objs:
-						self.deleteConfiglet(dep.configlet._id)
+						self.deleteConfiglet(dep.configlet._id,deleted)
 					obj = group[i]
 					try: 
 						obj_name = obj.name
 					except AttributeError:
 						obj_name = obj.shortName
 					sys.stderr.write ("[%s] Deleting configlet '%s' with id '%s' from group '%s\n'" % (time.asctime(time.localtime()), obj_name, obj._id, obj.groupName))
+					if not obj._id in deleted:
+						deleted.append(obj._id)
 					del group[i]
 					return
 					
