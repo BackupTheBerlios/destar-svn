@@ -21,84 +21,17 @@ CfgOptUser(
 
 CfgIVRAutoatt(
 	name     = "attendant1",
-	ext      = "queue1",
 	pbx      = "pbx1",
-	)
-
-CfgPhoneQueue(
-	pbx      = "pbx1",
-	name     = "queue1",
-	ext      = "0",
-	strategy = "rrmemory",
-	retry    = "5",
-	monitor  = True,
-	monitorfileformat = "wav49",
-	monitorfilename = "${TIMESTAMP}",
-	panel    = False,
-	)
-
-CfgPhoneSip(
-	pbx      = "pbx1",
-	name     = "agent1",
-	secret   = "/GPOyGmK",
-	ext      = "2001",
-	dtmfmode = "rfc2833",
-	enablecallgroup = True,
-	callgroup = "1",
-	queues   = "queue1",
-	panel    = False,
-	calleridnum = "2001",
-	calleridname = "Agent 1",
-	dialout_emergency = True,
-	dialout_local = True,
-	dialout_international = True,
-	dialout_018X_numbers = True,
-	dialout_quickdial = True,
-	)
-
-CfgPhoneSip(
-	pbx      = "pbx1",
-	name     = "agent2",
-	secret   = "/GPOyGmK",
-	ext      = "2002",
-	dtmfmode = "rfc2833",
-	enablecallgroup = True,
-	callgroup = "1",
-	queues   = "queue1",
-	panel    = False,
-	calleridnum = "2002",
-	calleridname = "Agent 2",
-	dialout_local = True,
-	dialout_international = True,
-	dialout_018X_numbers = True,
-	)
-
-CfgPhoneSip(
-	pbx      = "pbx1",
-	name     = "agent3",
-	secret   = "/GPOyGmK",
-	ext      = "2003",
-	dtmfmode = "rfc2833",
-	enablecallgroup = True,
-	callgroup = "1",
-	queues   = "queue1",
-	panel    = False,
-	calleridnum = "2003",
-	calleridname = "Agent 3",
-	dialout_local = True,
-	dialout_international = True,
-	dialout_018X_numbers = True,
 	)
 
 CfgPhoneSip(
 	pbx      = "pbx1",
 	name     = "phone1",
 	secret   = "/GPOyGmK",
-	ext      = "2004",
+	ext      = "2001",
 	dtmfmode = "rfc2833",
 	enablecallgroup = True,
 	callgroup = "2",
-	panel    = False,
 	calleridnum = "2004",
 	calleridname = "Phone 1",
 	dialout_local = True,
@@ -110,11 +43,10 @@ CfgPhoneSip(
 	pbx      = "pbx1",
 	name     = "phone2",
 	secret   = "/GPOyGmK",
-	ext      = "2005",
+	ext      = "2002",
 	dtmfmode = "rfc2833",
 	enablecallgroup = True,
 	callgroup = "2",
-	panel    = False,
 	calleridnum = "2005",
 	calleridname = "Phone 2",
 	dialout_local = True,
@@ -126,11 +58,10 @@ CfgPhoneSip(
 	pbx      = "pbx1",
 	name     = "phone3",
 	secret   = "/GPOyGmK",
-	ext      = "2006",
+	ext      = "2003",
 	dtmfmode = "rfc2833",
 	enablecallgroup = True,
 	callgroup = "3",
-	panel    = False,
 	calleridnum = "2006",
 	calleridname = "Phone 3",
 	dialout_local = True,
@@ -142,16 +73,49 @@ CfgPhoneSip(
 	pbx      = "pbx1",
 	name     = "phone4",
 	secret   = "/GPOyGmK",
-	ext      = "2007",
+	ext      = "2004",
 	dtmfmode = "rfc2833",
 	enablecallgroup = True,
 	callgroup = "3",
-	panel    = False,
 	calleridnum = "2007",
 	calleridname = "Phone 4",
 	dialout_local = True,
 	dialout_international = True,
 	dialout_018X_numbers = True,
+	)
+
+CfgPhoneQueue(
+	pbx      = "pbx1",
+	name     = "queue1",
+	ext      = "0",
+	retry    = "5",
+	strategy = "rrmemory",
+	monitor  = True,
+	monitorfilename = "${TIMESTAMP}",
+	monitorfileformat = "wav49",
+	)
+
+CfgAgent(
+	pbx      = "pbx1",
+	name     = "agent1",
+	number   = 101,
+	secret   = 1234,
+	queues   = "queue1",
+	)
+
+CfgAgent(
+	pbx      = "pbx1",
+	name     = "agent2",
+	number   = 102,
+	secret   = 1234,
+	queues   = "queue1",
+	)
+
+CfgAgent(
+	pbx      = "pbx1",
+	name     = "agent3",
+	number   = 103,
+	secret   = 1234,
 	)
 
 CfgOptPBX(
@@ -162,13 +126,11 @@ CfgAppGlobalQuickDial(
 	pbx      = "pbx1",
 	pin      = "1234",
 	set      = "80",
-	ext      = "81",
 	)
 
 CfgAppPhoneQuickDial(
 	pbx      = "pbx1",
 	set      = "82",
-	ext      = "83",
 	dialprefix = "03",
 	)
 
@@ -176,14 +138,12 @@ CfgAppCallFW(
 	pbx      = "pbx1",
 	type     = "CFIM",
 	set      = "84",
-	ext      = "85",
 	)
 
 CfgAppCallFW(
 	pbx      = "pbx1",
 	type     = "CFBS",
 	set      = "86",
-	ext      = "87",
 	)
 
 CfgAppDirectory(
@@ -291,11 +251,6 @@ CfgOptCodec(
 CfgOptRtp(
 	)
 
-CfgOptSettings(
-	country  = "us",
-	language = "en",
-	)
-
 CfgOptLogger(
 	)
 
@@ -322,5 +277,12 @@ CfgOptMonitor(
 CfgOptTransfer(
 	blindxfer = "#1",
 	atxfer   = "#2",
+	)
+
+CfgOptSettings(
+	country  = "us",
+	language = "en",
+	header_text = "Asterisk/DeStar PBX",
+	style    = "destar",
 	)
 

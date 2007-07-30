@@ -1,5 +1,6 @@
 2007-07-30:
 * fixed awful bug on cascade deletion of configlets due to circular dependencies.
+* updated agentes and general settings in destar_cfg.py
 
 2007-07-27:
 * cfg_opt_did.py: fixed typos on appendExten().
