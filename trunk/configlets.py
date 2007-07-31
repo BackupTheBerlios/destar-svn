@@ -105,7 +105,7 @@ class AsteriskConfigFile:
 			self.order.append(self.section)
 		self.dirty = True
 
-	def appendExten(self, ext, l, e=None, label=None, context="phones"):
+	def appendExten(self, ext, l, context="phones", e=None, label=None):
 		"""Append an extension line l to the current section. Append
 		an optional error extenion e as well. Uses 'n' special
 		priority."""
