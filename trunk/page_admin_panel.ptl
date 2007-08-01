@@ -49,7 +49,10 @@ class Page(AccessControlled, Directory):
 		else:
 			'<p>'
 			htmltext(_('You have a panel configured '))
-			'<a href="/static/panel/index.html">'
+			if self.session.pbx:
+				'<a href="/static/panel/operator_panel.swf?context=%s">' % self.session.pbx
+			else:
+				'<a href="/static/panel/operator_panel.swf?">'
 			htmltext(_('here'))
 			'</a>'
 			'</p>'

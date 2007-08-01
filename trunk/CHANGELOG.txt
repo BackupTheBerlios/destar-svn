@@ -2,6 +2,7 @@
 * Updated es.po
 * Added all: target in Makefile
 * Some gettext related fixes
+* panelutils.py, page_admin_panel: Initial Panel context config
 
 2007-07-31:
 * configlets.py: fixed bug in appendExten
