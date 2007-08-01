@@ -78,7 +78,7 @@ class Page(AccessControlled, Directory):
 
 		if not os.access("/etc/asterisk", os.O_RDWR):
 			self.configurationTip(
-				_("You should enable write access to the directory /etc/asterisk. Without the ability to modify the configuration files DeStar would be pretty useless. You should 'chmod g+rwx' this directory and set it's group to one of '%s'." % groups),
+				_("You should enable write access to the directory /etc/asterisk. Without the ability to modify the configuration files DeStar would be pretty useless. You should 'chmod g+rwx' this directory and set it's group to one of '%s'.") % groups,
 				"",
 				[])
 
@@ -108,18 +108,18 @@ class Page(AccessControlled, Directory):
 
 		if not os.access("/etc/zaptel.conf", os.O_RDWR):
 			self.configurationTip(
-				_("You should enable write access to /etc/zaptel.conf. Without write access to this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set it's group to one of '%s'." % groups),
+				_("You should enable write access to /etc/zaptel.conf. Without write access to this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set it's group to one of '%s'.") % groups,
 				"",
 				[])
 		if not os.access(panelutils.PANEL_CONF_DIR, os.O_RDWR):
 			self.configurationTip(
-				_("You should enable write access to the %s directory. Without the ability to modify the Asternic Flash Operator Panel configuration files DeStar won't be integrated whit the panel." % panelutils.PANEL_CONF_DIR),
+				_("You should enable write access to the %s directory. Without the ability to modify the Asternic Flash Operator Panel configuration files DeStar won't be integrated whit the panel.") % panelutils.PANEL_CONF_DIR,
 				"",
 				[])
 		db_fn = "/var/log/asterisk/master.db"
 		if not os.access(db_fn, os.O_RDWR):
 			self.configurationTip(
-				_("You don't seem to have access to %s yet created by cdr_sqlite3_custom. Without this file CDR reports wont be accesible trough this interface."),
+				_("You don't seem to have access to %s yet created by cdr_sqlite3_custom. Without this file CDR reports wont be accesible trough this interface.") % db_fn,
 				"",
 				[])
 

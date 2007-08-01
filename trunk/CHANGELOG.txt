@@ -1,6 +1,7 @@
 2007-08-01:
 * Updated es.po
 * Added all: target in Makefile
+* Some gettext related fixes
 
 2007-07-31:
 * configlets.py: fixed bug in appendExten
