@@ -1,3 +1,6 @@
+2007-08-01:
+* The ZAP trunk buttons need the channel number, the IAX and SIP ones, the username.
+
 2007-07-09:
 * cfg_phone_ext: "alias extension" for shor name and obj title
 

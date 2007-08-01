@@ -122,7 +122,10 @@ def createExtButton(obj):
 
 def createTrunkButton(obj):
 	p = AstConf("op_buttons.cfg")
-	p.setSection("%s/%s" % (obj.technology, obj.name) )
+	if obj.technology == 'ZAP':
+		p.setSection("%s/%s" % (obj.technology, obj.channels) )
+	else:
+		p.setSection("%s/%s" % (obj.technology, obj.name) )
 	p.append("Position=n")
 	p.append("Icon=2")
 	p.append("Extension=-1")
