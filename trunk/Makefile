@@ -16,6 +16,8 @@ PANEL_HTML_DIR=/usr/share/op-panel/flash
 # set SYS_MEDUSA to 1 to use system copy of medusa
 SYS_MEDUSA=0
 
+all: languages install install-panel
+
 clean:
 	(find -name "*.pyc" ; \
 	 find -name "*.ptlc" ; \
@@ -38,7 +40,7 @@ release:
 
 
 install-panel:
-	ln -s $(PANEL_HTML_DIR) $(PAGES_DIR)/panel
+	ln -sf $(PANEL_HTML_DIR) $(PAGES_DIR)/panel
 
 languages: 
 	cd po && $(MAKE)
