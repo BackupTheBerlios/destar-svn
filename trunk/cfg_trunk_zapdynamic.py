@@ -55,6 +55,20 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 				options=[('pri_cpe',_('PRI signalling, CPE side')),
 					('pri_net', _('PRI signalling, Network side'))]),
 
+			VarType("pridialplan",
+				title=_("PRI Dialplan"),
+				type="choice",
+				options=[('unknown',_('Unknown')),
+					('private', _('Private ISDN')),
+					('local', _('Local ISDN')),
+					('national', _('National ISDN')),
+					('international', _('International ISDN')),
+					('dynamic', _('Dynamic')),
+					],
+				default="local",
+
+				),
+
 			VarType("group",
 				title=_("Callout group"),
 				type="int",
@@ -142,6 +156,17 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 				type="int", 
 				len=2),
 
+			VarType("panelLab",
+				Title=_("Operator Panel"),
+				type="label",
+				hide=True),
+
+			VarType("panel",
+				title=_("Show this trunk in the panel"),
+				type="bool",
+				hide=True,
+				optional=True),
+
 			VarType("dial",
 				hide=True,
 				len=50),
@@ -170,8 +195,22 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 		c.append("; Zaptel Trunk %s" % self.name)
 		c.appendValue(self, "signalling")
 		c.append("context=in-%s" % self.name)
-		c.append("transfer=yes")
+		c.append("usecallerid=yes")
 		c.append("callerid=asreceived")
+		c.append("hidecallerid=no")
+		c.append("callwaiting=no")
+		c.append("usecallingpres=yes")
+		c.append("callwaitingcallerid=no")
+		c.append("threewaycalling=yes")
+		c.append("transfer=yes")
+		c.append("cancallforward=yes")
+		c.append("callreturn=no")
+		c.append("echocancel=yes")
+		c.append("echocancelwhenbridged=yes")
+		c.append("echotraining=yes")
+		c.append("relaxdtmf=yes")
+		c.append("immediate=no")
+		c.append("busydetect=no")
 		if self.group:
 			c.appendValue(self, "group")
 		c.append("channel=%s" % self.channels)
@@ -187,6 +226,6 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 		#What to do with incoming calls
 		self.createIncomingContext()
 
-		#if panelutils.isConfigured() == 1 and self.panel:
-		#	panelutils.createTrunkButton(self)
+		if panelutils.isConfigured() == 1 and self.panel:
+			panelutils.createTrunkButton(self)
 
