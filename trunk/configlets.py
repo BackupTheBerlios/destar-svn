@@ -1028,31 +1028,27 @@ class CfgPhone(Cfg):
                 except AttributeError:
                         pbx = "phones"
                 extensions.setSection(pbx)
-		extensions.append("exten=%s,hint,%s/%s" % (self.ext, self.technology, self.name))
-		extensions.append("exten=%s,hint,%s/%s" % (self.name, self.technology, self.name))
-		extensions.appendExten(self.ext, "Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name), context=pbx)
-		extensions.appendExten(self.name, "Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name), context=pbx)
+	
+		for tmp_ext in (self.ext, self.name):
+			extensions.append("exten=%s,hint,%s/%s" % (tmp_ext, self.technology, self.name))
+			extensions.appendExten(tmp_ext, "Set(CDR(pbx)=%s,CDR(userfield)=%s)" % (pbx,self.name), context=pbx)
+			if self.monitorinbound:
+				needModule("app_mixmonitor")	
+				options = ""
+				if self.monitorappend:
+					options = 'a' 
+				if self.monitorwhenbridged:
+					options = options+'b'
+				if self.heardvol == self.spokenvol:
+					options = options+'W(%s)' % (self.heardvol)
+				else:          
+					options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
+				if self.monitorfilename:
+					extensions.appendExten(tmp_ext, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options), context=pbx)
+				else:
+					extensions.appendExten(tmp_ext, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options), context=pbx)
+			self.createDialEntry(extensions, tmp_ext, pbx, self.ext)
 
-		if self.monitorinbound:
-			needModule("app_mixmonitor")	
-			options = ""
-			if self.monitorappend:
-				options = 'a' 
-			if self.monitorwhenbridged:
-				options = options+'b'
-			if self.heardvol == self.spokenvol:
-				options = options+'W(%s)' % (self.heardvol)
-			else:          
-				options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
-			if self.monitorfilename:
-				extensions.appendExten(self.ext, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options), context=pbx)
-				extensions.appendExten(self.name, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options), context=pbx)
-			else:
-				extensions.appendExten(self.ext, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options), context=pbx)
-				extensions.appendExten(self.name, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options), context=pbx)
-
-		self.createDialEntry(extensions, self.ext, pbx, self.ext)
-		self.createDialEntry(extensions, self.name, pbx, self.ext)
 		for obj in configlet_tree:
 			if obj.__class__.__name__ == 'CfgAppCallFW':
 				if obj.devstateprefix:
@@ -1101,9 +1097,11 @@ class CfgPhone(Cfg):
 				for queue in self.queues.split(','):
 					c.setSection(queue)
 					if self.technology == 'SIP' or self.technology == 'IAX2' or self.technology == 'ZAP':
-						c.append("member => %s/%s,%s" % (self.technology,self.name,self._id))
+						#c.append("member => %s/%s,%s" % (self.technology,self.name,self._id))
+						c.append("member => %s/%s" % (self.technology,self.name))
 					if self.technology == 'AGENT':
-						c.append("member => %s/%s,%s" % (self.technology,self.numer,self._id))
+						#c.append("member => %s/%s,%s" % (self.technology,self.numer,self._id))
+						c.append("member => %s/%s" % (self.technology,self.numer))
 		except AttributeError:
 			pass
 

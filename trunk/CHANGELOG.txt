@@ -4,6 +4,9 @@
 * cfg_trunk_sip:
   - removed default trunk name
   - phone is optional
+* configlets.py: 
+  - Arranged createExtensionConfig 
+  - removed penalty from queues
 
 2007-08-03:
 * cfg_trunk_zapdynamic: added panel, pridialplan configs and some default
