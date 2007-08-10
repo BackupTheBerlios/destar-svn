@@ -7,6 +7,9 @@
 * configlets.py: 
   - Arranged createExtensionConfig 
   - removed penalty from queues
+* cfg_trunk_zapdynamic:
+  - Truely added pridialplan config
+  - Added coding config
 
 2007-08-03:
 * cfg_trunk_zapdynamic: added panel, pridialplan configs and some default

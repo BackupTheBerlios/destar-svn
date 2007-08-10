@@ -55,6 +55,14 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 				options=[('pri_cpe',_('PRI signalling, CPE side')),
 					('pri_net', _('PRI signalling, Network side'))]),
 
+			VarType("coding",
+			        title=_("Coding"),
+			        type="choice",
+			        options=[('alaw',_('A-Law')),
+			                ('ulaw', _('Mu-Law'))],
+			        optional=True,
+			        ),
+
 			VarType("pridialplan",
 				title=_("PRI Dialplan"),
 				type="choice",
@@ -66,7 +74,6 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 					('dynamic', _('Dynamic')),
 					],
 				default="local",
-
 				),
 
 			VarType("group",
@@ -186,6 +193,8 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 		c.append("# %s" % self.name)
 		c.append("dynamic=eth,%s/%s,%d,%d" % (self.localdriver, self.address, self.numchannels, self.timing))
 		c.append("bchan=%s" % self.channels)
+		if self.coding:
+			c.append("%s => %s" % (self.coding,self.channels))
 		c.append("dchan=%s" % self.dchannel)
 		c.append("")
 
@@ -211,8 +220,13 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 		c.append("relaxdtmf=yes")
 		c.append("immediate=no")
 		c.append("busydetect=no")
+		if self.pridialplan:
+			c.appendValue(self, "pridialplan")
 		if self.group:
 			c.appendValue(self, "group")
+		c.append("switchtype=>euroisdn")
+		if self.coding:
+			c.append("%s => %s" % (self.coding,self.channels))
 		c.append("channel=%s" % self.channels)
 		c.append("")
 
