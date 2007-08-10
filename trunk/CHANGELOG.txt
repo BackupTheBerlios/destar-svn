@@ -1,3 +1,6 @@
+2007-08-10:
+* cfg_ivr_treenode: fixed context for appendExten
+
 2007-08-03:
 * cfg_trunk_zapdynamic: added panel, pridialplan configs and some default
   settings.

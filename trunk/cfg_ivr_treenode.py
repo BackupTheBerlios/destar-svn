@@ -255,83 +255,84 @@ class CfgIVRTreeNode(CfgIVR):
 		
 	def createAsteriskConfig(self):
 		s = AstConf("extensions.conf")
-		s.setSection(self.name)
+		context = self.name
+		s.setSection(context)
 		if self.pbx:
 			pbx = self.pbx
 		else:	
 			pbx = "phones"
 		s.append("include=%s" % pbx)
-		s.appendExten("s","Set(TIMEOUT(digit)=%d)" % self.digittimeout, self.pbx)
+		s.appendExten("s","Set(TIMEOUT(digit)=%d)" % self.digittimeout, context)
 		if self.moh:
-			s.appendExten("s","Setmusiconhold(%s)" % self.moh, self.pbx)
-			s.appendExten("s","Set(DIAL_OPTIONS=m)", self.pbx)
+			s.appendExten("s","Setmusiconhold(%s)" % self.moh, context)
+			s.appendExten("s","Set(DIAL_OPTIONS=m)", context)
 		else:
-			s.appendExten("s","Set(DIAL_OPTIONS=r)", self.pbx)
+			s.appendExten("s","Set(DIAL_OPTIONS=r)", context)
 		if self.ivrtime:
 			if self.times:
 				times=self.times.split(',')
 				for t in times:
-					s.appendExten("s","GotoIfTime(%s?%s,s,1)" % (t,self.ivrtime), self.pbx)
+					s.appendExten("s","GotoIfTime(%s?%s,s,1)" % (t,self.ivrtime), context)
 		if self.timeout:
-			s.appendExten("s","Set(TIMEOUT(absolute)=%s)" % self.timeout, self.pbx)
+			s.appendExten("s","Set(TIMEOUT(absolute)=%s)" % self.timeout, context)
 		for i in range(self.repeat):
-			s.appendExten("s","Background(%s)" % self.backgroundfile, self.pbx)	
+			s.appendExten("s","Background(%s)" % self.backgroundfile, context)	
 			if self.pause:
-				s.appendExten("s","WaitExten(%s)" % self.pause, self.pbx)
-		s.appendExten("s","WaitExten(%d)" % self.waittime, self.pbx)
-		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.operator), self.pbx)	
+				s.appendExten("s","WaitExten(%s)" % self.pause, context)
+		s.appendExten("s","WaitExten(%d)" % self.waittime, context)
+		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.operator), context)	
 		if self.ivr_1:
-			s.appendExten("1","Goto(%s,s,1)" % self.ivr_1, self.pbx)	
+			s.appendExten("1","Goto(%s,s,1)" % self.ivr_1, context)	
 		if self.ivr_2:
-			s.appendExten("2","Goto(%s,s,1)" % self.ivr_2, self.pbx)	
+			s.appendExten("2","Goto(%s,s,1)" % self.ivr_2, context)	
 		if self.ivr_3:
-			s.appendExten("3","Goto(%s,s,1)" % self.ivr_3, self.pbx)	
+			s.appendExten("3","Goto(%s,s,1)" % self.ivr_3, context)	
 		if self.ivr_4:
-			s.appendExten("4","Goto(%s,s,1)" % self.ivr_4, self.pbx)	
+			s.appendExten("4","Goto(%s,s,1)" % self.ivr_4, context)	
 		if self.ivr_5:
-			s.appendExten("5","Goto(%s,s,1)" % self.ivr_5, self.pbx)	
+			s.appendExten("5","Goto(%s,s,1)" % self.ivr_5, context)	
 		if self.ivr_6:
-			s.appendExten("6","Goto(%s,s,1)" % self.ivr_6, self.pbx)	
+			s.appendExten("6","Goto(%s,s,1)" % self.ivr_6, context)	
 		if self.ivr_7:
-			s.appendExten("7","Goto(%s,s,1)" % self.ivr_7, self.pbx)	
+			s.appendExten("7","Goto(%s,s,1)" % self.ivr_7, context)	
 		if self.ivr_8:
-			s.appendExten("8","Goto(%s,s,1)" % self.ivr_8, self.pbx)	
+			s.appendExten("8","Goto(%s,s,1)" % self.ivr_8, context)	
 		if self.ivr_9:
-			s.appendExten("9","Goto(%s,s,1)" % self.ivr_9, self.pbx)	
+			s.appendExten("9","Goto(%s,s,1)" % self.ivr_9, context)	
 		if self.ivr_ast:
-			s.appendExten("*","Goto(%s,s,1)" % self.ivr_ast, self.pbx)	
+			s.appendExten("*","Goto(%s,s,1)" % self.ivr_ast, context)	
 		if self.phone_1:
-			s.appendExten("1","Goto(%s,%s,1)" % (pbx,self.phone_1), self.pbx)	
+			s.appendExten("1","Goto(%s,%s,1)" % (pbx,self.phone_1), context)	
 		if self.phone_2:
-			s.appendExten("2","Goto(%s,%s,1)" % (pbx,self.phone_2), self.pbx)	
+			s.appendExten("2","Goto(%s,%s,1)" % (pbx,self.phone_2), context)	
 		if self.phone_3:
-			s.appendExten("3","Goto(%s,%s,1)" % (pbx,self.phone_3), self.pbx)	
+			s.appendExten("3","Goto(%s,%s,1)" % (pbx,self.phone_3), context)	
 		if self.phone_4:
-			s.appendExten("4","Goto(%s,%s,1)" % (pbx,self.phone_4), self.pbx)	
+			s.appendExten("4","Goto(%s,%s,1)" % (pbx,self.phone_4), context)	
 		if self.phone_5:
-			s.appendExten("5","Goto(%s,%s,1)" % (pbx,self.phone_5), self.pbx)	
+			s.appendExten("5","Goto(%s,%s,1)" % (pbx,self.phone_5), context)	
 		if self.phone_6:
-			s.appendExten("6","Goto(%s,%s,1)" % (pbx,self.phone_6), self.pbx)	
+			s.appendExten("6","Goto(%s,%s,1)" % (pbx,self.phone_6), context)	
 		if self.phone_7:
-			s.appendExten("7","Goto(%s,%s,1)" % (pbx,self.phone_7), self.pbx)	
+			s.appendExten("7","Goto(%s,%s,1)" % (pbx,self.phone_7), context)	
 		if self.phone_8:
-			s.appendExten("8","Goto(%s,%s,1)" % (pbx,self.phone_8), self.pbx)	
+			s.appendExten("8","Goto(%s,%s,1)" % (pbx,self.phone_8), context)	
 		if self.phone_9:
-			s.appendExten("9","Goto(%s,%s,1)" % (pbx,self.phone_9), self.pbx)	
+			s.appendExten("9","Goto(%s,%s,1)" % (pbx,self.phone_9), context)	
 		if self.phone_ast:
-			s.appendExten("*","Goto(%s,%s,1)" % (pbx,self.phone_ast), self.pbx)	
-		s.appendExten("0", "Goto(%s,%s,1)" % (pbx,self.operator), self.pbx)	
-		s.appendExten("i","Playback(invalid)", self.pbx)	
-		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.operator), self.pbx)	
-		s.appendExten("t","ResetCDR(w)", self.pbx)
-		s.appendExten("t","NoCDR", self.pbx)
-		s.appendExten("t","Hangup", self.pbx)
-		s.appendExten("T","ResetCDR(w)", self.pbx)
-		s.appendExten("T","NoCDR", self.pbx)
-		s.appendExten("T","Hangup", self.pbx)
-		s.appendExten("#","ResetCDR(w)", self.pbx)
-		s.appendExten("#","NoCDR", self.pbx)
-		s.appendExten("#","Hangup", self.pbx)
+			s.appendExten("*","Goto(%s,%s,1)" % (pbx,self.phone_ast), context)	
+		s.appendExten("0", "Goto(%s,%s,1)" % (pbx,self.operator), context)	
+		s.appendExten("i","Playback(invalid)", context)	
+		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.operator), context)	
+		s.appendExten("t","ResetCDR(w)", context)
+		s.appendExten("t","NoCDR", context)
+		s.appendExten("t","Hangup", context)
+		s.appendExten("T","ResetCDR(w)", context)
+		s.appendExten("T","NoCDR", context)
+		s.appendExten("T","Hangup", context)
+		s.appendExten("#","ResetCDR(w)", context)
+		s.appendExten("#","NoCDR", context)
+		s.appendExten("#","Hangup", context)
 	
 
 	def row(self):
