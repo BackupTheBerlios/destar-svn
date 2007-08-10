@@ -33,8 +33,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 		self.variables   = [
 			VarType("name",
 				title=_("Name"),
-				len=15,
-				default="siptrunk"),
+				len=15),
 			
 			VarType("id",
 				title=_("SIP username"),
@@ -108,7 +107,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			VarType("phone",
 				title=_("Extension to ring"),
 				type="choice",
-				optional=False,
+				optional=True,
 				options=getChoice("CfgPhone")),
 			
 			VarType("ivr",
