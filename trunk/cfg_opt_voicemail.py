@@ -31,7 +31,7 @@ class CfgOptVoicemail(CfgOptSingle):
 				 VarType("enable", title=_("Enable Voicemail on phones"), type="bool", default=True),
 				 VarType("recording", title=_("Recording settings"), type="label"),
 				 VarType("format", title=_("File format for voicemail messages"), type="choice",
-								   options=[('wav49','WAV (common sound format)'),('gsm','GSM (smaller)')], default="wav49"),
+								   options=[('wav49',_('WAV (common sound format)')),('gsm',_('GSM (smaller)'))], default="wav49"),
 				 VarType("maxmessage", title=_("Maximal message length (in seconds)"), type="int", default=180, len=3),
 				 VarType("minmessage", title=_("Minimal message length (in seconds)"), type="int", default=2, len=3),
 				 VarType("maxsilence", title=_("Seconds of silence to end the recording"), type="int", default=2, len=2),
@@ -66,6 +66,7 @@ class CfgOptVoicemail(CfgOptSingle):
 		c.appendValue(self, "silencethreshold")
 		c.appendValue(self, "maxlogins")
 		c.append("skipms=%d" % (self.skipms * 1000))
+		c.append("operator=yes")
 		
 		if self.enable:
 			needModule("res_adsi")
