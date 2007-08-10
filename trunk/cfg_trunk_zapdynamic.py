@@ -76,6 +76,22 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 				default="local",
 				),
 
+			VarType("switchtype",
+				title=_("Switch type"),
+				type="choice",
+				options=[
+			 		("national", _("National ISDN 2")),
+					("dms100", _("Nortel DMS100")),
+					("4ess", _("AT&T 4ESS")),
+					("5ess", _("Lucent 5ESS")),
+					("euroisdn", _("EuroISDN")),
+					("ni1", _("Old National ISDN 1")),
+					("qsig", _("Q.SIG")),
+					],
+				deafult="national",
+				optional=True,
+				),	
+
 			VarType("group",
 				title=_("Callout group"),
 				type="int",
@@ -224,7 +240,8 @@ class CfgiTrunkZapDynamic(CfgTrunk):
 			c.appendValue(self, "pridialplan")
 		if self.group:
 			c.appendValue(self, "group")
-		c.append("switchtype=>euroisdn")
+		if self.switchtype:
+			c.appendValue(self, "switchtype")
 		if self.coding:
 			c.append("%s => %s" % (self.coding,self.channels))
 		c.append("channel=%s" % self.channels)
