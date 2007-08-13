@@ -1,3 +1,6 @@
+2007-08-13:
+* configlets.py: only add queues if the really exist
+
 2007-08-10:
 * cfg_ivr_treenode: fixed context for appendExten
 * cfg_opt_voicemail: gettext(form strings). operator=yes

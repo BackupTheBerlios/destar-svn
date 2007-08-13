@@ -1095,13 +1095,14 @@ class CfgPhone(Cfg):
 			if self.queues:
 				c = AstConf("queues.conf")
 				for queue in self.queues.split(','):
-					c.setSection(queue)
-					if self.technology == 'SIP' or self.technology == 'IAX2' or self.technology == 'ZAP':
-						#c.append("member => %s/%s,%s" % (self.technology,self.name,self._id))
-						c.append("member => %s/%s" % (self.technology,self.name))
-					if self.technology == 'AGENT':
-						#c.append("member => %s/%s,%s" % (self.technology,self.numer,self._id))
-						c.append("member => %s/%s" % (self.technology,self.numer))
+					if queue != "":
+						c.setSection(queue)
+						if self.technology == 'SIP' or self.technology == 'IAX2' or self.technology == 'ZAP':
+							#c.append("member => %s/%s,%s" % (self.technology,self.name,self._id))
+							c.append("member => %s/%s" % (self.technology,self.name))
+						if self.technology == 'AGENT':
+							#c.append("member => %s/%s,%s" % (self.technology,self.numer,self._id))
+							c.append("member => %s/%s" % (self.technology,self.numer))
 		except AttributeError:
 			pass
 
