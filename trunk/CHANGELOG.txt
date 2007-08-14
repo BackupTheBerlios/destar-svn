@@ -1,3 +1,6 @@
+2007-08-14:
+* cfg_phone_iax: defaultip= line added if not empty value. Patch by Tzafrir
+
 2007-08-13:
 * configlets.py: only add queues if the really exist
 

@@ -272,7 +272,8 @@ class CfgPhoneIax(CfgPhone):
 		iax.append("type=friend")
 		iax.appendValue(self, "secret")
 		iax.append("host=dynamic")
-		iax.appendValue(self, "host", "defaultip")
+		if self.host != '':
+			iax.appendValue(self, "host", "defaultip")
 		iax.append("context=out-%s" % self.name)
 		if self.calleridname and self.calleridnum:
 			iax.append('callerid="%s" <%s>' % (self.calleridname, self.calleridnum))
