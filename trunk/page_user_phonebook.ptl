@@ -1,0 +1,61 @@
+# -*- coding: iso-latin-1 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
+import backend, manager, configlets
+import time,types
+
+class Page(AccessControlled, Directory): 
+
+
+	_q_parent  = 'page_user'
+	_q_title   = _("Phones List")
+	_q_desc    = _("All Phones and Shortcuts")
+	_q_link    = 'phoneslist'
+	_q_menupos = 10
+	_q_level   = 1
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+
+	def _q_index [plain] (self):
+		header(self._q_desc)
+        
+		'<h3>Phones</h3>'
+		'<table>'
+		'<tr><th>Number</th> <th>Short Name</th> <th>Name</th></tr>'
+		for o in backend.getConfiglets('Phones'):
+			if self.session.pbx:
+				if o.pbx == self.session.pbx:
+					'<tr><td>%s</td> <td>%s</td> <td>%s</td></tr>' % (o.ext, o.shortName, o.name)
+			else:
+				'<tr><td>%s</td> <td>%s</td> <td>%s</td></tr>' % (o.ext, o.shortName, o.name)
+		'</table>'
+		
+		footer()
+
