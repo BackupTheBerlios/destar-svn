@@ -63,9 +63,11 @@ class CfgPhoneSip(CfgPhone):
 					title=_("DTMF mode:"),
 					type="choice",
 					options=(
+						("auto",_("Find automatically")),
 						("rfc2833",_("RFC 2833 (RTP)")),
 						("inband",_("In Band (only with ulaw/alaw)")),
-						("info",_("SIP INFO")) ), default="info"),
+						("info",_("SIP INFO")) ), 
+					default="auto"),
 	
 			VarType("Call Group",
 					title=_("Call group"),

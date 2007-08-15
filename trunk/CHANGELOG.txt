@@ -1,3 +1,6 @@
+2007-08-15:
+* cfg_phone_sip: dtmf auto by default. Patch by Tzafrir
+
 2007-08-14:
 * cfg_phone_iax: defaultip= line added if not empty value. Patch by Tzafrir
 * Added page_user_phonebook.ptl. Thanks to Tzafrir
