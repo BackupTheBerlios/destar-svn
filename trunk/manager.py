@@ -617,6 +617,12 @@ def setVar(family, key, val):
 	else:
 		conn.action('Command', Command='database del %s %s' % (family,key))
 
+def originateCallApp(channel,application,data):
+	return conn.action('Originate', Channel=channel, Application=application)
+
+def originateCallExt(channel,context,extension,priority):
+	return conn.action('Originate', Channel=channel, Context=context, Exten=extension, Priority=priority)
+
 def getVarFamily(family):
 	varlist = []
 	for s in conn.action('Command', Command='database show %s' % family):

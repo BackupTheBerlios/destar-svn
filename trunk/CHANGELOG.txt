@@ -1,3 +1,6 @@
+2007-08-16:
+* Added phone_user_dial.ptl: Initial work to click-to-dial from user's phone book.
+
 2007-08-15:
 * cfg_phone_sip: dtmf auto by default. Patch by Tzafrir
 
