@@ -21,7 +21,7 @@
 from configlets import *
 
 
-class CfgOptEnum(CfgOpt):
+class CfgOptSipNotify(CfgOpt):
 
 	shortName = _("Sip notify")
 	newObjectTitle= _("Sip notify")
