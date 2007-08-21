@@ -1102,7 +1102,7 @@ class CfgPhone(Cfg):
 							c.append("member => %s/%s" % (self.technology,self.name))
 						if self.technology == 'AGENT':
 							#c.append("member => %s/%s,%s" % (self.technology,self.numer,self._id))
-							c.append("member => %s/%s" % (self.technology,self.numer))
+							c.append("member => %s/%s" % (self.technology,self.number))
 		except AttributeError:
 			pass
 
