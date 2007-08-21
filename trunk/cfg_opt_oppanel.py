@@ -38,7 +38,7 @@ class CfgOptOPPanel(CfgOptSingle):
 
 			VarType("web_hostname",
 				title=_("FQDN/IP to access the panel via web"),
-				len=15,
+				len=30,
 				optional=True),
 			
 			VarType("security_code",
