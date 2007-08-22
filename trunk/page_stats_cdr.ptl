@@ -216,7 +216,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	if form["dstextension"]:
 		where.append("dst like '%s'" % form["dstextension"])
 	if form["duration"]:
-		where.append("billsec %s '%s'" % (form["durationoperand"],form["duration"]))
+		where.append("CAST(billsec as integer) %s '%s'" % (form["durationoperand"],form["duration"]))
 			
 	if form["searchBetweenDates"]:
 	

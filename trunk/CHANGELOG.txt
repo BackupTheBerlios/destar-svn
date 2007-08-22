@@ -1,3 +1,6 @@
+2007-08-22:
+* Cast of billsec as integer in page_stats_cdr.ptl
+
 2007-08-20:
 * confilets.py: fixed typo. Thanks to Joan-Carles Samaranch
 * cfg_opt_sipnotify.py: fixed class name. Thanks to Joan-Carles Samaranch
