@@ -3,7 +3,9 @@
 * cfg_app_agentcallbacklogin. variable replacement was missing. Thanks
   to Joan-Carles Samaranch 
 * cfg_app_dnd. Fixed typos. Thanks to Joan-Carles Samaranch 
-* cfg_trunk_iax port optional. Comment by Joan-Carles Samaranch
+* cfg_trunk_iax:
+  - port optional. Comment by Joan-Carles Samaranch
+  - Added register with RSA keys. Thanks to Joan-Carles Samaranch 
 
 2007-08-22:
 * Cast of billsec as integer in page_stats_cdr.ptl

@@ -192,8 +192,8 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			registerstr = "register => %s" % self.id
 			if self.auth == "plain":
 				registerstr += ":%s" % self.pw
-			# TODO: registration using rsa keys 
-			#elif self.auth = "rsa":
+			elif self.auth == "rsa":
+				registerstr += ":[%s]" % self.outkey
 			registerstr += "@%s" % self.host
 			if self.port:
 				registerstr += ":%s" % self.port
