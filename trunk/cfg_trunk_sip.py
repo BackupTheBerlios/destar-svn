@@ -51,6 +51,7 @@ class CfgTrunkSiptrunk(CfgTrunk):
 				title=_("SIP port"),
 				type="int",
 				default=5060,
+				optional=True,
 				len=5),				
 
 			VarType("register",
