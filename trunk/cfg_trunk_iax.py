@@ -34,7 +34,7 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			VarType("name",
 				title=_("Name"),
 				len=30,
-				default="iaxtrunk"),
+				),
 
 			VarType("id",
 				title=_("IAX username"),
