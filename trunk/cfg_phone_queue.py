@@ -264,7 +264,7 @@ class CfgPhoneQueue(CfgPhone):
                                 needModule("func_callerid")
                                 extensions.appendExten(qname,"Set(CALLERID(name)=%s)" %  self.clid, self.pbx)
 				
-			if self.moh:
+			if self.moh and not self.ring:
 				extensions.appendExten(qname, "Answer", self.pbx)
 				extensions.appendExten(qname, "SetMusicOnHold(%s)" % self.moh, self.pbx)
 

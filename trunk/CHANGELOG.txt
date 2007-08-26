@@ -1,3 +1,7 @@
+2007-08-26:
+* cfg_phone_queue: Don't answer and set MoH if Ring is usedi. Thanks to
+  Joan-Carles Samaranch 
+
 2007-08-24:
 * cfg_trunk_sip port optional. Comment by Joan-Carles Samaranch
 * cfg_app_agentcallbacklogin. variable replacement was missing. Thanks
