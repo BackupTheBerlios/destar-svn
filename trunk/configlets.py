@@ -26,6 +26,7 @@ DOC_DIR = os.getenv('DESTAR_DOC_DIR', default='/tmp/destar-doc')
 CONF_TAG = "; Automatically created by DESTAR\n"
 ASTERISK_MODULES_DIR = os.getenv('ASTERISK_MODULES_DIR', default='/usr/lib/asterisk/modules') 
 
+MAXSECRETLENGTH = 15
 
 class AsteriskConfigFile:
 	"""

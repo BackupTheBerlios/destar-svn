@@ -43,7 +43,7 @@ class CfgPhoneSip(CfgPhone):
 
 			VarType("secret",
 					title=_("Password"),
-					len=15),
+					len=MAXSECRETLENGTH),
 
 			VarType("host",
 					title=_("IP address of phone"),

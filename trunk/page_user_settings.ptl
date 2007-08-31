@@ -57,7 +57,7 @@ def phoneSettingsForm(self, phone, exitPath=".."):
 	form.add(IntWidget,       "pin", phone.pin, title=_("Voicemail pin"), maxlength=10)
 	try:
 		if phone.secret:
-			form.add(StringWidget,  "secret", phone.secret, title=_("Extension Password"), maxlength=10)
+			form.add(StringWidget,  "secret", phone.secret, title=_("Extension Password"), maxlength=configlets.MAXSECRETLENGTH)
 	except AttributeError:
 		pass
 	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)

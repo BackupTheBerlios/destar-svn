@@ -41,7 +41,7 @@ class CfgPhoneIax(CfgPhone):
 			VarType("secret",
 					title=_("Password"),
 					optional=True,
-					len=15),
+					len=MAXSECRETLENGTH),
 
 			VarType("host",
 					title=_("IP address of phone"),

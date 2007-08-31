@@ -44,7 +44,7 @@ class CfgPhoneEpygiSip(CfgPhone):
 			VarType("secret",
 					title=_("Password"),
 					optional=True,
-					len=15),
+					len=MAXSECRETLENGTH),
 
 			VarType("gw",
 					title=_("IP address of Epygi gateway"),
