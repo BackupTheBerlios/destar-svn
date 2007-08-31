@@ -1,6 +1,7 @@
 2007-08-31:
 * panelutils: use CallerID as label if it exists
 * Use the same length for phone secrets
+* first test for a better handling of Busy/NO available channels
 
 2007-08-26:
 * cfg_phone_queue: Don't answer and set MoH if Ring is usedi. Thanks to
