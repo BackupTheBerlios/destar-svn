@@ -1,0 +1,10 @@
+The FRONTEND
+-=--=--=--=-
+
+The current frontend is centered around Quixote. And it consists of various
+Python files as well as Python template files.
+
+All Frontend files start with a capital letter or are of the form page_*.ptl.
+
+page_*.ptl files are automagically nested on menus, according to their settings.
+

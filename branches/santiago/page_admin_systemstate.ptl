@@ -1,0 +1,106 @@
+# -*- coding: utf-8 -*-
+#
+# This file has Copyright (C) 2005 by Alejandro Rios P.
+# Destar has Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+import os, commands, backend
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
+
+class Page(AccessControlled, Directory): 
+	_q_parent  = 'page_admin'
+	_q_title   = _("System Status")
+	_q_desc    = _("System information of your machine")
+	_q_link    = 'systemstatus'
+	_q_menupos = 10
+	_q_level   = 3
+	_q_exports = ['']
+
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+	
+	def _q_index [plain] (self):
+		header(self._q_desc,refresh=10)
+		systemState()	
+		footer()
+
+def systemState [plain] ():
+	# TODO: use CSS
+	'<table border=1 cellpadding=2 cellspacing=0>'
+	try:
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('System')), " ". join(os.uname()) )
+	except OSError:
+		pass
+	import configlets
+	'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Number of DeStar Configlets')), len(configlets.configlet_tree))
+	'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_("DeStar users logged in")), backend.frontend_sessions)
+	try:
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Load Average in the last minute')), os.getloadavg()[0] )
+		'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Load Average in the last 5 minutes')), os.getloadavg()[1] )
+	except OSError:
+		pass
+	try:
+		cpuinfo = commands.getoutput('cat /proc/cpuinfo').split("\n")
+		cpus=0
+		for s in cpuinfo:
+			if s.startswith('model name'):
+				cpus += 1
+				'<tr><td>%s # %d:</td><td>%s</td></tr>' % ( htmltext(_('Processor')), cpus, s[13:] )
+			if s.startswith('cpu MHz'):
+				'<tr><td>%s:</td><td>%s MHz</td></tr>' % ( htmltext(_('Frequency')), s[11:] )
+		
+		meminfo = commands.getoutput('cat /proc/meminfo').split("\n")
+		for s in meminfo:
+			if s.startswith('MemTotal:'):
+				'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Total Memory')), s[9:] )
+			if s.startswith('MemFree:'):
+				'<tr><td>%s:</td><td>%s</td></tr>' % ( htmltext(_('Free Memory')), s[8:] )
+
+		diskinfo = commands.getoutput('df -hT').split("\n")
+		diskinfo.remove(diskinfo[0])
+		'<tr><td colspan="2">%s:<br/><br/>' % htmltext(_('Disk Usage'))
+		'<table border=0 align="center">'
+		'<tr>'
+		'<td>%s</td>' % htmltext(_('Device'))
+		'<td>%s</td>' % htmltext(_('FileSystem type'))
+		'<td>%s</td>' % htmltext(_('Total Size'))
+		'<td>%s</td>' % htmltext(_('Used'))
+		'<td>%s</td>' % htmltext(_('Available'))
+		'<td>%s</td>' % htmltext(_('Use percentage'))
+		'<td>%s</td>' % htmltext(_('Mount point'))
+		'</tr>'
+		for s in diskinfo:
+			'<tr>'
+			for a in s.split():
+				'<td>%s</td>' % a
+			'</tr>'
+		'</table>'
+	except:
+		pass
+
+
+	'</table>'
+
+		
+

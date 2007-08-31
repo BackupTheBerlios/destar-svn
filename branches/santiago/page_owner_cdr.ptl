@@ -1,0 +1,314 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2005 Holger Schurig
+# Copyright (C) 2005 Manuel Alejandro Cerón Estrada <ceronman@gmail.com>
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+# ToDo:
+# - improve the appearance and usability
+# - show the "navigation" buttons only when they are needed
+# - use the current date in the "To:" option
+# - glosary of the CDR terms, see README.cdr of asterisk
+
+# - improve the code and change the name of some variable
+# - ...
+
+
+from Templates import *
+from quixote.form import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
+import cdrutils
+import time
+
+def N_(message): return message
+
+def     generateYearsNumbers():
+	years = range(2004,time.localtime()[0]+1)
+	return years
+
+def	generateMonthsNumbers():
+	months = range(1,13)
+	for i in range(0,9) :
+		months[i] = "0%s" % months[i]
+	return months
+
+def	generateDaysNumbers():
+	days = range(1,32)
+	for i in range(0,9) :
+		days[i] = "0%s" % days[i]
+	return days
+	
+def 	generateOptionSelect(text=False):
+	option = range (0,110,10)
+	if text:
+		option[0]=_("All")
+	return option
+
+	
+operands=['=','<>','<=','<','>=','>']
+		
+class Page(AccessControlled, Directory): 
+
+	_q_parent = 'page_owner'
+	_q_title  = _("Call Details For Virtual PBX")
+	_q_desc   = _("Get statistics about made and received calls")
+	_q_level  = 2
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_test(self):
+		return cdrutils.db
+
+	def formScript [html] (self):
+		'<script language="JavaScript" type="text/javascript"> \n'
+		'<!-- \n'
+		'function gotopage ( page ) \n'
+		'{ \n'
+		'  document.searchform.pagenumber.value = page; \n'
+		'  document.searchform.submit() ; \n'
+		'} \n'
+		'function orderby ( column, order ) \n'
+		'{ \n'
+		'  document.searchform.orderby.value = column; \n'
+		'  document.searchform.order.value = order; \n'
+		'  document.searchform.submit() ; \n'
+		'} \n'
+		'--> \n'
+		'</script> \n'
+
+	def pageIndex [html] (self, pagenum, total, limit):
+		"<p>"
+		lastpage = total/limit
+		if pagenum > 1:
+			"<a href='javascript:gotopage(\"_newest\")'>%s</a> &nbsp; \n" % _(str("First"))
+			"<a href='javascript:gotopage(\"_newer\")'>%s</a> &nbsp; \n" % _(str("Previous"))
+		
+		pagelist = [i for i in range(pagenum-10, pagenum+10) if i >= 0 and  i < lastpage]
+
+		for i in pagelist:
+			if pagenum != (i+1):
+				"<a href='javascript:gotopage(\"%d\")'>%d</a> &nbsp; \n" % (i+1, i+1)
+			else:
+				"%d &nbsp; \n" % (i+1)
+
+		if pagenum < lastpage:
+			"<a href='javascript:gotopage(\"_older\")'>%s</a> &nbsp; \n" % _(str("Next"))
+			"<a href='javascript:gotopage(\"_oldest\")'>%s</a> \n" % _(str("Last"))
+		"</p>\n <br />"
+
+	def cdrForm [plain] (self, request, srcextension="", dstextension="", mincost="", duration="", clid=""):
+
+		monthsnumbers = [ '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12' ]
+		monthsnames = [ _('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('August'), _('September'), _('October'), _('November'), _('December') ]
+
+		localtime = time.localtime()
+		
+		localyear = localtime[0]
+		
+		# fix the month value for those smaller than 10 (january ... september) 1 -> 01, 2 ->02 
+		if localtime[1] < 10:
+			localmonth = '0%s' % localtime[1] 
+		else:
+			localmonth = localtime[1]
+		
+		#the same for the day
+		if localtime[2] < 10:
+			localday = '0%s' % localtime[2]
+		else:
+			localday = localtime[2]
+
+		form = Form()
+
+		form.name = "searchform"
+		
+		form.add(StringWidget, "srcextension",  "%s" % srcextension, title=htmltext(_("Source ")),hint=htmltext(_("Wildcards: % is the 'zero or more characters' wildcard, and _ is the 'exactly one character' wildcard")), render_br=True )
+		form.add(StringWidget, "clid",  "%s" % clid, title=htmltext(_("Caller ID")),hint=htmltext(_("Wildcards: % is the 'zero or more characters' wildcard, and _ is the 'exactly one character' wildcard")), render_br=True )
+		form.add(StringWidget, "dstextension",  "%s" % dstextension, title=htmltext(_("Destination")),hint=htmltext(_("You can use the same wildcards as above")), render_br=True)
+		form.add(OptionSelectWidget, "durationoperand",  "%s" % duration, title=htmltext(_("Duration")), options=zip(operands,operands,operands),render_br=False)
+		form.add(StringWidget, "duration",  "%s" % duration, hint=htmltext(_("In seconds")),render_br=True)
+		form.add(OptionSelectWidget,'linesToShow', title=_('Number of records to show:'),options=zip( generateOptionSelect(), generateOptionSelect(text=True), generateOptionSelect() ), value=20)	
+		form.add_checkbox('searchBetweenDates',title= _("Search between the following dates"), render_br=True)
+		form.add_single_select('fromyear', title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Start:')), value="", options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False )
+		form.add_single_select('frommonth', options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False )
+		form.add_single_select('fromday', options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers() ), render_br=True )
+		form.add_single_select('toyear', value=localyear, title=htmltext(_('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;End:')), options=zip( generateYearsNumbers(), generateYearsNumbers() ), render_br=False)
+		form.add_single_select('tomonth', value=localmonth, options=zip( generateMonthsNumbers(), monthsnames, generateMonthsNumbers() ), render_br=False)
+		form.add_single_select('today', value=localday, options=zip( generateDaysNumbers() , range(1,32), generateDaysNumbers()  ), render_br=True)
+			
+		form.add(HiddenWidget, 'pagenumber', value='_newest')
+		form.add(HiddenWidget, 'order', value='ASC')
+		form.add(HiddenWidget, 'orderby', value=_('Time_of_start'))
+
+		form.add(SubmitWidget, '_submit', _("Search"), render_br=True)
+
+		where = []
+		where.append("pbx like '%s%%'" % request.session.pbx)
+		
+		def render [html] ():
+
+			name = form['pagenumber']
+			
+			global pagenum
+
+			if not name in ['_newest','_newer', '_older', '_oldest']:
+				pagenum = int(name)
+
+			cursor = cdrutils.count(where = where)
+			total = cursor
+
+			global q
+			global p
+
+			p = form["linesToShow"]
+
+			if p == 0:
+				p = total
+			
+			if (name == True or name == '1' or name == '_newest'):
+				pagenum = 1
+				q = 0
+		
+			elif name == '_newer': 
+				pagenum -= 1
+				q = q-form["linesToShow"]
+				if q < 0:
+					q=0
+								
+						
+			elif name == '_older': 
+				pagenum += 1
+				q += p
+				if q >= total:
+					q = total - total % p
+			
+			elif name == '_oldest':
+				q = total - total % p
+				pagenum = total / p
+
+			elif name in [str(x+1) for x in range(total/p)]:
+				q = int(name) * p
+				
+				if q >= total:
+					q = total - total % p
+				
+			elif p == total:
+				q = 0
+			else : 
+				p = 20
+				q = 0
+					
+			form.render()
+			pageIndex(pagenum, total, p)
+			cdrShowResults(where, p, q, total,form["orderby"],form["order"])
+
+		if not form.is_submitted() or form.has_errors():
+			return render()
+		
+		if form["srcextension"]:
+			where.append("src like '%s'" % form["srcextension"])
+		if form["clid"]:
+			where.append("clid like '%s'" % form["clid"])
+		if form["dstextension"]:
+			where.append("dst like '%s'" % form["dstextension"])
+		if form["duration"]:
+			where.append("billsec %s '%s'" % (form["durationoperand"],form["duration"]))
+				
+		if form["searchBetweenDates"]:
+		
+			fromdate = "%s-%s-%s" % (form["fromyear"], form["frommonth"], form["fromday"])
+			where.append ("date(start) >= date('%s')" % fromdate )
+		
+			todate = "%s-%s-%s" % (form["toyear"], form["tomonth"], form["today"])
+			where.append ("date(end) <= date('%s')" % todate)
+		
+		return render()
+
+	def	cdrShowResults [html] (where=[], limit, offset, total = 0, field=_("Time_of_start"), order="DESC"):
+		if total == 0:
+			'<p>'
+			'--No records to Show--'
+			'</p>'
+		else:
+			orderby = '%s %s' % (N_(field), order)	
+			cursor = cdrutils.select(order=[str(orderby)], where = where, limit = limit, offset = offset)
+			
+			totalcost = 0
+			totalmin = 0
+			
+			row = cursor.fetchone()
+			if row and int(offset) >= 0 and int(offset) <= total and cursor.description:
+			
+				'<table border="1"><thead><tr>'
+				for s in cursor.description:
+					'<th>'
+					if s[0] == field:
+						neworder = (order=='ASC' and 'DESC') or 'ASC'
+						"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], neworder, _(str(s[0])))
+						if order=='ASC':
+							" <img src='/static/down.gif' border='0' alt='%s'>\n" % _(str('Asc. Order'))
+						else:
+							" <img src='/static/up.gif' border='0' alt='%s'>\n" % _(str('Desc. Order'))
+					else:
+						"<a href='javascript:orderby(\"%s\",\"%s\")'>%s</a>" % (s[0], order, _(str(s[0])))
+					'</th>'
+				'</tr></thead><tbody>'
+			
+				if cursor.description:
+					fieldIndices = range(len(cursor.description))
+				else:
+					fieldIndices = []
+
+				while row:
+					'<tr>'
+					for fieldIndex in fieldIndices:
+						'<td><center>'
+						if row[fieldIndex] == "1969-12-31 19:00:00":
+							'-'
+						elif cursor.description[fieldIndex][0] == _(str("Duration")):
+							s = int(row[fieldIndex])
+							min = (s % 60) and ((s / 60) + 1) or (s / 60)
+							totalmin += min
+							min
+						else: 
+							row[fieldIndex]
+						'</center></td>'
+					'</tr>'
+					row = cursor.fetchone()
+				'</tbody></table><br/>'
+				'<p>'
+
+				f = offset + limit
+				if total >= f:			
+					_(str('Showing records from %s to %s of %s <br /><br />')) % (offset+1, f, total)
+				else:
+					_(str('Showing records from %s to %s of %s <br /><br />')) % (offset+1, total, total)
+
+			_(str('Total Duration of shown calls: %s min.' % totalmin))
+			'</p>'
+
+
+	def _q_index [plain] (self):
+		header(self._q_desc, scripts=[formScript])
+		cdrForm()
+		footer()
