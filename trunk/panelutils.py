@@ -119,7 +119,11 @@ def createExtButton(obj):
 	p.append("Position=n")
 	p.append("Icon=1")
 	p.append("Extension=%s" % obj.ext)
-	p.append('Label="%s"' % obj.name)
+	if obj.calleridname:
+		label = "%s %s" % (obj.ext, obj.calleridname)
+	else:
+		label = "%s %s" % (obj.ext, obj.name)
+	p.append('Label="%s"' % label)
 	p.append("Astdbkey=%s/%s" % (obj.pbx, obj.ext))
 	p.append("Panel_context=%s" % obj.pbx)
 

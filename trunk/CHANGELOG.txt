@@ -1,3 +1,6 @@
+2007-08-31:
+* panelutils: use CallerID as label if it exists
+
 2007-08-26:
 * cfg_phone_queue: Don't answer and set MoH if Ring is usedi. Thanks to
   Joan-Carles Samaranch 
