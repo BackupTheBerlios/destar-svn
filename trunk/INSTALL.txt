@@ -15,7 +15,7 @@ Get and install Python. We use Python 2.4 for development, but maybe Python
 Quixote
 -------
 
-Then install Quixote 1.2, *NOT* 0.6.1 nor 1.0 nor 2.X.
+Then install Quixote 2.X. Not an older version.
 
 If you can't find it in your Linux distribution, then download the source
 from http://www.mems-exchange.org/software/quixote/

@@ -1,3 +1,6 @@
+2007-09-08:
+* INSTALL.txt: Updated Quixote info
+
 2007-08-31:
 * panelutils: use CallerID as label if it exists
 * Use the same length for phone secrets
