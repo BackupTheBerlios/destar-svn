@@ -1,3 +1,6 @@
+2007-09-10:
+* Improvements in macro-dial-std-exten
+
 2007-08-31:
 * panelutils: use CallerID as label if it exists
 * Use the same length for phone secrets
