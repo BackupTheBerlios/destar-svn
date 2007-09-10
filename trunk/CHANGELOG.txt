@@ -1,3 +1,6 @@
+2007-09-09:
+* Templates.ptl: missing quotes in ul tag
+
 2007-09-08:
 * INSTALL.txt: Updated Quixote info
 
