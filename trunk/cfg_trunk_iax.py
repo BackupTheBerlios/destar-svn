@@ -47,7 +47,6 @@ class CfgTrunkIaxtrunk(CfgTrunk):
 			VarType("port",
 				title=_("IAX2 remote port"),
 				type="int",
-				default=4569,
 				optional=True,
 				len=5),				
 

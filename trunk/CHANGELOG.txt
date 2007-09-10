@@ -1,5 +1,6 @@
 2007-09-10:
 * cfg_dialout_normal.py: Fixed dialouts when Dialing options were added
+* cfg_trunk_{sip,iax}: really removed default ports
 
 2007-09-09:
 * Templates.ptl: missing quotes in ul tag
