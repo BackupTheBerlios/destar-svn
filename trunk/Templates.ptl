@@ -194,7 +194,7 @@ def header [html] (title, menu=None, refresh=None, scripts=None):
 	# e[2]: link
 	# e[3]: submenu
  	'<div id="menu" class="nav">\n'
- 	'<ul id=menuList class="adxm">\n'
+ 	'<ul id="menuList" class="adxm">\n'
  	def showMenu [html] (menu, submenu=False):
   		for e in menu:
  			'<li>\n'
