@@ -40,7 +40,8 @@ class CfgOptUser(CfgOpt):
 		                            ("2",_("Virtual PBX Administrator")),
 		                            ("3",_("Configurator")) )),
 		VarType("language", title=_("Language"), type="choice",
-				    options=( ("en","en"),
+				    options=( ("de","de"),
+				    	      ("en","en"),
 				    	      ("es","es"),
 					      ("fr","fr") )),
 		     ]
