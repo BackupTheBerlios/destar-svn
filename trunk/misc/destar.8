@@ -18,7 +18,7 @@
 .SH NAME
 destar \- Asterisk management interface
 .SH SYNOPSIS
-\fBdestar\fP [\fB-d\fP|\fB--daemonize\fP] [-\fBp\fP|--\fBpid\fP=\fIPIDFILE\fP] [-\fBr\fP|--\fBport\fP=\fIPORT\fP]
+\fBdestar\fP [\fB-d\fP|\fB--daemonize\fP] [-\fBp\fP|--\fBpid\fP=\fIPIDFILE\fP] [-\fBr\fP|--\fBport\fP=\fIPORT\fP] [-\fBs\fP|--\fBhttps\fP]
 
 \fBdestar\fP \fB-b\fP|\fB--backend\fP
 
@@ -35,7 +35,7 @@ if installed.
 .B -d --daemonize
 .RS
 Run as daemon: fork into background, and redirect standard output and standard error to 
-/var/log/asterisk/destar.log and /var/log/asterisk/destar.log respectively.
+/var/log/asterisk/destar.log and /var/log/asterisk/destar.err respectively.
 .RE
 
 .B -b --backend
@@ -65,8 +65,15 @@ Run on specified \fIPORT\fP instead of the default 8080
 .RE
 
 .B -h --help
+.RS
 Print help text and exit.
 .RE
+
+.B -s --https
+.RS
+Run on https mode. Requires stunnel or similar.
+.RE
+
 .SH ENVIRONMENT
 .B CONFIGLETS_DIR
 .RS

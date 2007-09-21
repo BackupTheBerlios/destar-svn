@@ -1,3 +1,8 @@
+2007-09-21:
+* Added stunnel clues on INSTALL.txt
+* Started work to release 0.3.0 on Makefile and man page.
+* Updated *.po i18n files.
+
 2007-09-10:
 * cfg_dialout_normal.py: Fixed dialouts when Dialing options were added
 * cfg_trunk_{sip,iax}: really removed default ports

@@ -43,13 +43,26 @@ the calls made with your PBX.
 You can download it from http://home.gna.org/pychart/ , or get it from your
 distribution.
 
+Optional: Stunnel
+-----------------
+
+This is needed to use the -s (HTTPS) option of running destar using medusa and SSL.
+
+You would need to generate a valid certificate. For example:
+
+	# cd /etc/ssl/certs; openssl req -new -x509 -nodes -days 365 -out destar.pem -keyout destar.pem
+	# chmod 600 destar.pem
+	# dd if=/dev/urandom of=temp_file count=2; openssl dhparam -rand temp_file 512 >> destar.pem
+	# ln -sf destar.pem `openssl x509 -noout -hash < destar.pem`.0
+
 
 Install Destar
 --------------
 
 Run
 
-   # make clean install
+   # make clean-all
+   # make all
 
 in the directory where you have stored destar.
 

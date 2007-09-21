@@ -6,6 +6,7 @@ SBINDIR=$(DESTDIR)/usr/sbin
 LOCALEDIR=$(DESTDIR)/usr/share/locale
 LOGDIR=$(DESTDIR)/var/log/asterisk
 MANDIR=$(DESTDIR)/usr/share/man/man8
+VER=0.3.0
 
 # To use with asternic.org op_panel tarball:
 #PANEL_HTML_DIR=/usr/local/op_panel-0.27/flash
@@ -17,6 +18,8 @@ PANEL_HTML_DIR=/usr/share/op-panel/flash
 SYS_MEDUSA=0
 
 all: languages install install-panel
+
+clean-all: clean clean-languages clean-panel
 
 clean:
 	(find -name "*.pyc" ; \
@@ -32,9 +35,12 @@ clean-panel:
 	rm -f $(PAGES_DIR)/panel
 
 release:
-	svn export svn+ssh://svn.berlios.de/svnroot/repos/destar/trunk destar-0.2.0
-	tar cjf destar-0.2.tar.bz2 destar-0.2.0
-	tar czf destar-0.2.tar.gz destar-0.2.0
+	vi version.py
+	svn export svn+ssh://svn.berlios.de/svnroot/repos/destar/trunk destar-$(VER)
+	svn cp svn+ssh://svn.berlios.de/svnroot/repos/destar/trunk \
+		svn+ssh://svn.berlios.de/svnroot/repos/destar/tags/$(VER)
+	tar cjf destar-$(VER).tar.bz2 destar-$(VER)
+	tar czf destar-$(VER).tar.gz destar-$(VER)
 	#scp destar-$(DATE).tar.bz2 shell.berlios.de:/home/groups/ftp/pub/destar/
 	#rm -rf destar-$(DATE) destar-$(DATE).tar.bz2
 
