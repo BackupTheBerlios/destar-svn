@@ -1,5 +1,6 @@
 2007-10-04:
-* Added special Trunk for SPA400 gateway
+* Added special Trunk for Linksys SPA400 gateway
+* Added special Trunk for Suncomm SC-375 Voip-GSM gateway
 
 2007-09-21:
 * Added stunnel clues on INSTALL.txt

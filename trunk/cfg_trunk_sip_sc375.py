@@ -22,11 +22,11 @@ from configlets import *
 import panelutils
 
 
-class CfgTrunkSipSPA400(CfgTrunk):
+class CfgTrunkSipSC375(CfgTrunk):
 
-	shortName   = _("SPA400 SIP Trunk")
-	newObjectTitle  = _("New SPA400 SIP trunk")
-	description = _("""Used to setup a SIP trunk to a SPA400 gateway.""")
+	shortName   = _("SC-375 SIP Trunk")
+	newObjectTitle  = _("New SC375 SIP trunk")
+	description = _("""Used to setup a SC-375 SunComm's GSM GW.""")
 	technology = "SIP"
 	
 	def createVariables(self):
@@ -36,9 +36,9 @@ class CfgTrunkSipSPA400(CfgTrunk):
 				len=15,
 				default="siptrunk"),
 			
-			VarType("host",
-				title=_("SIP host"),
-				len=25),
+			VarType("pw",
+				title=_("SIP password"),
+				len=15),
 
 			VarType("nat",
 				title=_("Is the trunk behind NAT?"),
@@ -110,27 +110,34 @@ class CfgTrunkSipSPA400(CfgTrunk):
 		needModule("res_crypto")
 		needModule("chan_sip")
 
+		#Dial part to use on dialout macro
+		#If we use the host it will not use authentication
+		#it's safe to use the peer name 
 		self.dial = "SIP/${ARG1}@%s" % (self.name)
 		
 		#What to do with incoming calls
 		self.createIncomingContext()
 		
 		c = AstConf("sip.conf")
-		c.setSection("general")
-		c.append("register=%s@%s/%s" % (self.name, self.host, self.name))
-
-
 		if not c.hasSection(self.name):
 			c.setSection(self.name)
 			c.append("type=friend")
-			c.append("user=%s" % self.name)
-			c.append("host=%s" % self.host)
+			c.append("username=%s" % self.name)
+			c.append("regexten=%s" % self.name)
+			c.append("fromuser=%s" % self.name)
+			c.append("secret=%s" % self.pw)
+			c.append("host=dynamic")
+			c.append("insecure=very")
 			c.append("context=in-%s" % self.name)
 			c.append("canreinvite=no")
-			c.append("dtmfmode=rfc2833")
+			c.append("dtmfmode=inband")
+			c.append("call-limit=1")
 			if self.nat:
 				c.append("nat=yes")
-			c.append("insecure=very")
+			c.append("qualify=yes")
+			c.append("disallow=all")
+			c.append("allow=ulaw")
+			c.append("allow=alaw")
 
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)
