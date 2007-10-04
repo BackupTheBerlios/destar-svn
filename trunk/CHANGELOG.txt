@@ -1,3 +1,6 @@
+2007-10-04:
+* Added special Trunk for SPA400 gateway
+
 2007-09-21:
 * Added stunnel clues on INSTALL.txt
 * Started work to release 0.3.0 on Makefile and man page.
