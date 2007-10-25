@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-13 19:21-0500\n"
+"POT-Creation-Date: 2007-10-25 11:49-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,8 +189,8 @@ msgstr ""
 #: ../cfg_app_voicemailsettings.py:62 ../cfg_dialout_normal.py:109
 #: ../cfg_ivr_autoatt.py:114 ../cfg_ivr_autoatt.py:117
 #: ../cfg_ivr_autoatt.py:120 ../cfg_ivr_autoatt.py:123 ../cfg_opt_did.py:91
-#: ../cfg_opt_did.py:94 ../cfg_opt_did.py:97 ../cfg_opt_user.py:50
-#: ../cfg_opt_user.py:53 ../cfg_phone_epygi.py:227 ../cfg_phone_epygi.py:234
+#: ../cfg_opt_did.py:94 ../cfg_opt_did.py:97 ../cfg_opt_user.py:51
+#: ../cfg_opt_user.py:54 ../cfg_phone_epygi.py:227 ../cfg_phone_epygi.py:234
 #: ../cfg_phone_ext.py:59 ../cfg_phone_iax.py:224 ../cfg_phone_iax.py:231
 #: ../cfg_phone_mgcp.py:227 ../cfg_phone_mgcp.py:234 ../cfg_phone_queue.py:181
 #: ../cfg_phone_queue.py:184 ../cfg_phone_sip.py:229 ../cfg_phone_sip.py:236
@@ -1228,6 +1228,22 @@ msgstr ""
 msgid "Music on hold"
 msgstr ""
 
+#: ../cfg_opt_sip_network.py:103
+msgid "Send ring progress tones in band?"
+msgstr ""
+
+#: ../cfg_opt_sip_network.py:106
+msgid "yes"
+msgstr ""
+
+#: ../cfg_opt_sip_network.py:107
+msgid "no"
+msgstr ""
+
+#: ../cfg_opt_sip_network.py:108
+msgid "never"
+msgstr ""
+
 #: ../cfg_opt_transfer.py:27 ../cfg_opt_transfer.py:28
 msgid "Transfer Extensions"
 msgstr ""
@@ -1304,7 +1320,7 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: ../cfg_opt_user.py:65
+#: ../cfg_opt_user.py:66
 msgid "Please choose a Virtual PBX for this user."
 msgstr ""
 

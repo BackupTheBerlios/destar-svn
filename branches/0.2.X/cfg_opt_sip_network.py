@@ -81,7 +81,7 @@ class CfgOptSipNetwork(CfgOptSingle):
 					title=_("TOS Field"),
 					len=10,
 					optional=True,
-					default="184"),
+					default="0x18"),
 
 			VarType("srvlookup",
 					title=_("Enable DNS SRV lookups on outbound calls"),
@@ -98,6 +98,14 @@ class CfgOptSipNetwork(CfgOptSingle):
                                         type="choice",
                                         optional = True,
                                         options=getChoice("CfgOptMusic")),
+
+			VarType("progressinband",
+                                        title=_("Send ring progress tones in band?"),
+                                        type="choice",
+                                        options=(
+						("yes",_("yes")),
+						("no",_("no")),
+						("never",_("never"))) ),
 		]
 
 	def checkConfig(self):
@@ -138,3 +146,4 @@ class CfgOptSipNetwork(CfgOptSingle):
 		c.append("nat=%s" % self.globalnat)
 		if self.srvlookup:
 			c.append("srvlookup=yes")
+		c.appendValue(self,"progressinband")

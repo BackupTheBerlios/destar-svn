@@ -1,3 +1,6 @@
+2007-10-25:
+* cfg_opt_sip_network.py: added progressinband option, tos default changed to 0x18
+
 2007-09-13:
 * Initial german translation by Nina Mabe.
 

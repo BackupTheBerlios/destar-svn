@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DeStar 0.2beta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 13:04-0500\n"
-"PO-Revision-Date: 2007-06-15 13:03-0500\n"
+"POT-Creation-Date: 2007-10-25 11:49-0500\n"
+"PO-Revision-Date: 2007-10-25 11:47-0500\n"
 "Last-Translator: dasenjo <dasenjo@avatar.com.co>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -205,8 +205,8 @@ msgstr "Crear una extensión \"Devstate\". Prefijo \"Devstate\":"
 #: ../cfg_app_voicemailsettings.py:62 ../cfg_dialout_normal.py:109
 #: ../cfg_ivr_autoatt.py:114 ../cfg_ivr_autoatt.py:117
 #: ../cfg_ivr_autoatt.py:120 ../cfg_ivr_autoatt.py:123 ../cfg_opt_did.py:91
-#: ../cfg_opt_did.py:94 ../cfg_opt_did.py:97 ../cfg_opt_user.py:50
-#: ../cfg_opt_user.py:53 ../cfg_phone_epygi.py:227 ../cfg_phone_epygi.py:234
+#: ../cfg_opt_did.py:94 ../cfg_opt_did.py:97 ../cfg_opt_user.py:51
+#: ../cfg_opt_user.py:54 ../cfg_phone_epygi.py:227 ../cfg_phone_epygi.py:234
 #: ../cfg_phone_ext.py:59 ../cfg_phone_iax.py:224 ../cfg_phone_iax.py:231
 #: ../cfg_phone_mgcp.py:227 ../cfg_phone_mgcp.py:234 ../cfg_phone_queue.py:181
 #: ../cfg_phone_queue.py:184 ../cfg_phone_sip.py:229 ../cfg_phone_sip.py:236
@@ -238,12 +238,12 @@ msgstr ""
 #: ../cfg_app_milliwatt.py:33 ../cfg_app_music.py:32 ../cfg_app_parking.py:32
 #: ../cfg_app_play.py:32 ../cfg_app_record.py:34 ../cfg_app_saytime.py:31
 #: ../cfg_app_voicemail.py:32 ../cfg_opt_monitor.py:32 ../cfg_opt_pickup.py:32
-#: ../cfg_phone_epygi.py:59 ../cfg_phone_ext.py:26 ../cfg_phone_ext.py:43
-#: ../cfg_phone_iax.py:52 ../cfg_phone_mgcp.py:51 ../cfg_phone_queue.py:43
-#: ../cfg_phone_sip.py:59 ../cfg_phone_zap.py:59 ../cfg_trunk_fwdiax.py:45
-#: ../cfg_trunk_iaxtel.py:44 ../configlets.py:582 ../configlets.py:959
-#: ../configlets.py:1128 ../configlets.py:1149 ../page_stats_phone.ptl:65
-#: ../page_user_state.ptl:66 ../page_user_state.ptl:81
+#: ../cfg_phone_epygi.py:59 ../cfg_phone_ext.py:43 ../cfg_phone_iax.py:52
+#: ../cfg_phone_mgcp.py:51 ../cfg_phone_queue.py:43 ../cfg_phone_sip.py:59
+#: ../cfg_phone_zap.py:59 ../cfg_trunk_fwdiax.py:45 ../cfg_trunk_iaxtel.py:44
+#: ../configlets.py:582 ../configlets.py:959 ../configlets.py:1128
+#: ../configlets.py:1149 ../page_stats_phone.ptl:65 ../page_user_state.ptl:66
+#: ../page_user_state.ptl:81
 msgid "Extension"
 msgstr "Extensión"
 
@@ -1276,6 +1276,22 @@ msgstr "Otras opciones"
 msgid "Music on hold"
 msgstr "Música en espera"
 
+#: ../cfg_opt_sip_network.py:103
+msgid "Send ring progress tones in band?"
+msgstr "¿Enviar timbres de progreso en banda?"
+
+#: ../cfg_opt_sip_network.py:106
+msgid "yes"
+msgstr "sí"
+
+#: ../cfg_opt_sip_network.py:107
+msgid "no"
+msgstr "no"
+
+#: ../cfg_opt_sip_network.py:108
+msgid "never"
+msgstr "nunca"
+
 #: ../cfg_opt_transfer.py:27 ../cfg_opt_transfer.py:28
 msgid "Transfer Extensions"
 msgstr "Extensiones de transferencia"
@@ -1354,7 +1370,7 @@ msgstr "Configurador"
 msgid "Language"
 msgstr "Idioma"
 
-#: ../cfg_opt_user.py:65
+#: ../cfg_opt_user.py:66
 msgid "Please choose a Virtual PBX for this user."
 msgstr "Por favor, escoja la PBX Virtual para este usuario."
 
@@ -1867,9 +1883,13 @@ msgstr "Destinos permitidos"
 msgid "Enable time restriction?"
 msgstr "¿Habilitar la restricción de tiempo?"
 
+#: ../cfg_phone_ext.py:26
+msgid "Alias extension"
+msgstr "Alias de la extensión"
+
 #: ../cfg_phone_ext.py:27
-msgid "New extension"
-msgstr "Nueva extensión"
+msgid "New alias extension"
+msgstr "Nuevo alias para la extensión"
 
 #: ../cfg_phone_ext.py:28
 msgid "Set an 'alias' extension to a phone"
@@ -2517,19 +2537,19 @@ msgstr ""
 "0,Sin tiempo límite|300,5 minutos|600,10 minutos|1200,20 minutos|2400,40 "
 "minutos|3000,50 minutos"
 
-#: ../panelutils.py:136
+#: ../panelutils.py:139
 msgid "Meetme"
 msgstr "Sala de Conferencia"
 
-#: ../panelutils.py:140
+#: ../panelutils.py:143
 msgid "PARK"
 msgstr "Parqueo"
 
-#: ../panelutils.py:144
+#: ../panelutils.py:147
 msgid "Park"
 msgstr "Parqueo"
 
-#: ../panelutils.py:162
+#: ../panelutils.py:165
 msgid "Restarting the panel daemon ..."
 msgstr "Reiniciando el demonio del pánel ..."
 
