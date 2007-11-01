@@ -1,3 +1,7 @@
+2007-11-01:
+* New way to restart panel daemon. 
+* Fixed tarball html directory in panelutils.
+
 2007-10-04:
 * Added special Trunk for Linksys SPA400 gateway
 * Added special Trunk for Suncomm SC-375 Voip-GSM gateway
