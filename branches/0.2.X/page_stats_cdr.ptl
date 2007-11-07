@@ -289,6 +289,17 @@ def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", or
 						min = (s % 60) and ((s / 60) + 1) or (s / 60)
                                                	totalmin += min
 						min
+					elif cursor.description[fieldIndex][0] == "Result":
+						s = row[fieldIndex]
+						if s == 8:
+							s="ANSWERED"
+						if s == 4:
+							s="NOT ANSWERED"
+						if s == 2:
+							s="BUSY"
+						if s == 1:
+							s="FAILED"
+						s
 					else: 
 						row[fieldIndex]
         	                       	'</center></td>'

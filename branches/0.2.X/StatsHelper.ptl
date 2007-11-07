@@ -53,13 +53,13 @@ class CallData:
 		self.minutes += mins
 		self.cost += mins * cost_per_minute
 		
-		if disp == "ANSWERED":
+		if disp == "ANSWERED" or disp == 8:
 			self.answered += 1
-		elif disp == "NO ANSWER":
+		elif disp == "NO ANSWER" or disp == 4:
 			self.not_answered += 1
-		elif disp == "BUSY":
+		elif disp == "BUSY" or disp == 2:
 			self.busy += 1
-		elif disp == "FAILED":
+		elif disp == "FAILED" or disp == 1:
 			self.failed += 1
 	
 	def addQueueCall(self, holdtime=0, calltime=0, disp=""):
