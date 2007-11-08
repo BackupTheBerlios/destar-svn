@@ -218,7 +218,7 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		header(title, menu)
 		#render_desc()
 		form2 = Form()
-		form2.add(SubmitWidget, '_cascade_delete', _(str("Cascade Delete")), render_br=False)
+		form2.add(SubmitWidget, '_cascade_delete', _(str("Delete Anyway")), render_br=False)
 		form2.add(SubmitWidget, '_cancel', _(str("Cancel")), render_br=False)
 		'<h2>'
 		_(str("Warning"))
@@ -269,11 +269,22 @@ def configletsForm (request, obj, title, exitPath="..", actionCallback=None, new
 		return redirect(exitPath)
 	if request.form.has_key('_delete'):
 		if obj.hasDependencies():
-			return showDependencies()
+                        # update dependencies once
+                        old_dependent_objs = obj.dependent_objs
+                        obj.dependent_objs = []
+                        for dep in old_dependent_objs:
+                                dep_obj = backend.getConfiglet(_id=dep.configlet._id)
+                                dep_obj.createDependencies()
+
+                if obj.hasDependencies():
+                        # if we still have dependencies, show them and ask
+                        return showDependencies()
 		else:
+			# delete it with no more questions
 			backend.deleteConfiglet(obj._id)
 			return redirect(exitPath)
 	if request.form.has_key('_cascade_delete'):
+		# go ahead and delete at user risk
 		backend.deleteConfiglet(obj._id)
 		return redirect(exitPath)
 
