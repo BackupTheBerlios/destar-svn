@@ -1,5 +1,6 @@
 2007-11-13:
 * Recording capability for conference rooms.
+* Added 'disallow=all' as an option for the codecs confgiration.
 
 2007-11-07:
 * Some old cdr modules store disposition values as integers. A little try to handle it.

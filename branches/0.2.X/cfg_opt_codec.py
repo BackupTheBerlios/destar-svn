@@ -35,6 +35,7 @@ class CfgOptCodec(CfgOpt):
 			VarType("name", title=_("Allow codec"), type="choice",
 				options=(
 					("all",_("Use all codecs")),
+					("disallow",_("Disallow all codecs")),
 					("alaw",_("A Law (g711a)")),
 					("ulaw",_("U Law (g711u)")),
 					("gsm",_("GSM")),
@@ -58,6 +59,8 @@ class CfgOptCodec(CfgOpt):
 			if self.name == "g723":
 				c.append("allow=%s.1" % self.name)
 				needModule("codec_%s_1" % self.name)
+			if self.name == "disallow":
+				c.append("disallow=all")
 			else:	
 				c.append("allow=%s" % self.name)
 				needModule("codec_%s" % self.name)
