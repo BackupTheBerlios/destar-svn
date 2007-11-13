@@ -56,6 +56,62 @@ class CfgAppMeetme(CfgApp):
 				type="int",
 				len=6),
 			
+			VarType("recordLab",
+				title=_("Recording"),
+				type="label"),
+
+	                VarType("record",
+				title=_("Record conferences?"),
+				type="bool",
+				optional=True),
+			
+			VarType("recordfilename",
+					title=_("Monitor file name"),
+					hint=_("Otherwise it will use Date-CallerIdName(CallerIdNum)-Exten"),
+					len=25,
+					optional=True),
+
+			VarType("recordfileformat",
+					title=_("Monitor file format"),
+					type="choice",
+					options=(	("gsm",_("GSM")),
+							("wav",_("WAV")),
+							("wav49",_("WAV49"))), 
+					default="gsm"),
+
+			VarType("recordappend",
+					title=_("Append to existing file instead of overwriting it?"),
+					optional=True,
+					type="bool"),
+
+			VarType("heardvol",
+					title=_("Heard volume factor"),
+					type="choice",
+					options=(       ("+4",_("+4")),
+					("+3",_("+3")),
+					("+2",_("+2")),
+					("+1",_("+1")),
+					("0",_("0")),
+					("-1",_("-1")),
+					("-2",_("-2")),
+					("-3",_("-3")),                   
+					("-4",_("-4"))),	
+					default="0"),
+
+			VarType("spokenvol",
+					title=_("Spoken volume factor"),
+					type="choice",
+					options=(       ("+4",_("+4")),
+					("+3",_("+3")),
+					("+2",_("+2")),
+					("+1",_("+1")),
+					("0",_("0")),
+					("-1",_("-1")),
+					("-2",_("-2")),
+					("-3",_("-3")),                   
+					("-4",_("-4"))),
+					default="0"),
+					
 			VarType("panelLab",
 				title=_("Operator Panel"),
 				type="label",
@@ -82,7 +138,25 @@ class CfgAppMeetme(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
+
+		mon_line=""
+		if self.record:
+			needModule("app_mixmonitor")
+			options = ""
+			if self.recordappend:
+				options = 'a' 
+			if self.heardvol == self.spokenvol:
+				options = options+'W(%s)' % (self.heardvol)
+			else:          
+				options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
+			if self.recordfilename:
+				mon_line = "MixMonitor(%s.%s|%s)" % (self.recordfilename,self.recordfileformat,options)
+			else:
+				mon_line = "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.recordfileformat,options)
+
 		c.appendExten(self.ext, "Answer")
+		if mon_line:
+			c.appendExten(self.ext, mon_line)
 		c.appendExten(self.ext, "Set(TIMEOUT(absolute)=%d)" % self.timeout)
 		# 'd' -- dynamically add conference
 		# 'P' -- always prompt pin

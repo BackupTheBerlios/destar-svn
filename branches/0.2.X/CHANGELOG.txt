@@ -1,5 +1,8 @@
+2007-11-13:
+* Recording capability for conference rooms.
+
 2007-11-07:
-- Some old cdr modules store disposition values as integers. A little try to handle it.
+* Some old cdr modules store disposition values as integers. A little try to handle it.
 
 2007-11-01:
 * New way to restart panel daemon. 
