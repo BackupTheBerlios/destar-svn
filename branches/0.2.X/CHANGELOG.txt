@@ -1,3 +1,6 @@
+2007-11-14:
+* Basic and not very secure samba integration. Debian based. 
+
 2007-11-13:
 * Recording capability for conference rooms.
 * Added 'disallow=all' as an option for the codecs confgiration.

@@ -1,0 +1,16 @@
+To allow a basic and not very secure integration with samba you can follow
+these steps:
+
+* Copy the sambautils.py file from this folder to the destar root folder.
+* Grant write permissions to the users in the asterisk group for the 
+  /etc/samba/smb.conf file and the /usr/share/asterisk/mohmp3/ folder.
+* Configure sudo to allow the asterisk user (the same that should run
+  destar as) to execute the samba init script, adduser, userdel and
+  smbpasswd. See sudoers-samba.sample.
+* Apply the samba.patch to the destar code.
+* Restart destar and have fun! :)
+
+This patch creates a system user without password for each destar one, add
+the user to the smbpasswd database and the same destar password and create
+two shares: one for the mohmp3 and one for the monitor folder. Adding a new
+share is almost trivial.

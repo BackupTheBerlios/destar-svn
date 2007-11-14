@@ -1,0 +1,91 @@
+Index: ConfigHelper.ptl
+===================================================================
+--- ConfigHelper.ptl	(revisión: 819)
++++ ConfigHelper.ptl	(copia de trabajo)
+@@ -23,6 +23,8 @@
+ from quixote.html import htmlescape
+ import backend
+ import types, string
++import sambautils
++from cfg_opt_user import CfgOptUser
+ 
+ 
+ class ROStringWidget(StringWidget):
+@@ -249,6 +251,9 @@
+ 		if obj.hasDependencies():
+ 			return showDependencies()
+ 		else:
++			if isinstance(obj, CfgOptUser):
++				print "Deleting user %s from samba and from system" % obj.name
++				sambautils.deleteUser(obj.name)
+ 			backend.deleteConfiglet(obj._id)
+ 			return request.redirect(exitPath)
+ 	if request.form.has_key('_cascade_delete'):
+Index: cfg_opt_user.py
+===================================================================
+--- cfg_opt_user.py	(revisión: 819)
++++ cfg_opt_user.py	(copia de trabajo)
+@@ -17,7 +17,8 @@
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ #
+ 
+-import language
++import language,sambautils
++import backend
+ from configlets import *
+ 
+ class CfgOptUser(CfgOpt):
+@@ -68,7 +69,39 @@
+ 				pass
+ 
+ 	def createAsteriskConfig(self):
+-		pass
++		users = ""
++		for user in backend.getConfiglets(name="CfgOptUser"):
++			if user.level == "3":
++				users += "%s, " % user.name
++		if users:
++			users = users.strip(', ')
++			c = AstConf("smb.conf")
++			c.__init__("smb.conf")
+ 
++			c.setSection("global")
++			c.append("workgroup = DESTAR")
++			c.append("server string = DeStar")
++			c.append("security = user")
++			c.append("socket options = TCP_NODELAY SO_RCVBUF=8192 SO_SNDBUF=8192")
++
++			c.setSection("mohmp3")
++			c.append("path = /usr/share/asterisk/mohmp3/")
++			c.append("valid users = %s" % users)
++			c.append("public = no")
++			c.append("writable = yes")
++			c.append("printable = no")
++			c.append("create mask = 0770")
++
++			c.setSection("monitor")
++			c.append("path = /var/spool/asterisk/monitor/")
++			c.append("valid users = %s" % users)
++			c.append("public = no")
++			c.append("writable = yes")
++			c.append("printable = no")
++			c.append("create mask = 0770")
++
++			sambautils.setPassword(self.name, self.secret)
++			sambautils.reloadDaemon()
++
+ 	def row(self):
+ 		return (self.shortName, self.name)
+Index: configlets.py
+===================================================================
+--- configlets.py	(revisión: 819)
++++ configlets.py	(copia de trabajo)
+@@ -45,6 +45,8 @@
+ 	def __init__(self, fn):
+ 		if fn == 'zaptel.conf':
+ 			fn = os.path.join("/etc", fn)
++                if fn == 'smb.conf':
++                        fn = os.path.join("/etc/samba", fn)
+ 		if fn == 'op_server.cfg' or \
+ 		   	fn == 'op_buttons.cfg' or\
+ 			fn == 'op_style.cfg' :
