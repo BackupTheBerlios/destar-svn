@@ -23,7 +23,7 @@ from configlets import *
 import panelutils
 
 
-class CfgiTrunkZapDynamic(CfgTrunk):
+class CfgTrunkZapDynamic(CfgTrunk):
 
 	shortName = _("Zaptel dynamic span configuration")
 	newObjectTitle = _("Zaptel dynamic span configuration")
