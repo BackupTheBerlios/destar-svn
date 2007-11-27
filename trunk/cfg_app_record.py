@@ -32,6 +32,7 @@ class CfgAppRecord(CfgApp):
 		self.variables   = [
 			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
 			VarType("ext",      title=_("Extension"), len=6),
+			VarType("password", type="int", title=_("Password"), len=6, optional=True),
 			VarType("max",      title=_("Max duration"), len=6, default=0),
 			VarType("filename", title=_("File name")),
 			VarType("format",   title=_("Sound format"), type="choice",
@@ -63,6 +64,8 @@ class CfgAppRecord(CfgApp):
 
 		c = AstConf("extensions.conf")
 		c.setSection(self.pbx)
+		if self.password:
+			c.appendExten(self.ext, "Authenticate(%s)" % self.password, self.pbx)
 		c.appendExten(self.ext, "Goto(record-%s,s,1)" % self.filename, self.pbx)
 		c.appendExten(self.ext, "Hangup", self.pbx)
 		c.setSection("record-%s" % self.filename)
