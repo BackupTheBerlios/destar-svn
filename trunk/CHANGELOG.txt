@@ -1,5 +1,13 @@
+2007-11-27
+* Added password field to Cfg Record.
+* Fixed typo in cfg_trunk_zapdynamic.py
+* Added pridialplan option to trunk zap pri.
+* Better verification of dependencies for ZapOptAudio and ZapOptTrunk.
+* Added missing clidnum to cfg sip SPA400.
+* Changed MAXPASSWORDLENGHT from 15 to 45.
+
 2007-11-08
-* Tentative fix of grave Bug #10513, "Not updated/deleted dependencies", please test.
+* Tentative fix of grave Bug #10513, "Not updated/deleted dependencies".
 
 2007-11-01:
 * New way to restart panel daemon. 
