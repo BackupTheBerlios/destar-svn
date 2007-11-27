@@ -42,7 +42,7 @@ class CfgOptZapTrunk(CfgOptSingle):
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.configlet_tree:
-			if obj.__class__.__name__ == 'CfgTrunkZap':
+			if obj.__class__.__name__.startswith('CfgTrunkZap'):
 				return CfgOptSingle.isAddable(self)
 		return False
 	isAddable = classmethod(isAddable)
