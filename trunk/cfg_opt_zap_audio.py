@@ -44,7 +44,7 @@ class CfgOptZapAudio(CfgOptSingle):
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.configlet_tree:
-			if obj.__class__.__name__ in ('CfgPhoneZap','CfgTrunkZap'):
+			if obj.__class__.__name__.startswith('CfgTrunkZap') or obj.__class__.__name__.startswith('CfgPhoneZap'):
 				return CfgOptSingle.isAddable(self)
 		return False
 	isAddable = classmethod(isAddable)
