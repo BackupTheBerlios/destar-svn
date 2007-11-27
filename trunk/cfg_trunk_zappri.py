@@ -44,14 +44,25 @@ class CfgTrunkZapPRI(CfgTrunk):
 			VarType("switchtype",
 				title=_("Switch type"),
 				type="choice",
-			      	options=[('national','National ISDN 2'),
-					('dms100', 'Nortel DMS100'),
-					('4ess', 'AT&T 4ESS'),
-					('5ess', 'Lucent 5ESS'),
-					('euroisdn', 'Euro ISDN'),
-					('ni1', 'Old National ISDN 1')],
+			      	options=[('national',_('National ISDN 2')),
+					('dms100', _('Nortel DMS100')),
+					('4ess', _('AT&T 4ESS')),
+					('5ess', _('Lucent 5ESS')),
+					('euroisdn', _('Euro ISDN')),
+					('ni1', _('Old National ISDN 1'))],
 				default="euroisdn"),
 				
+			VarType("pridialplan",
+				title=_("PRI Dialplan"),
+				type="choice",
+			      	options=[('unknown',_('Unknown')),
+					('private', _('Private ISDN')),
+					('local', _('Local ISDN')),
+					('national', _('National ISDN')),
+					('international', _('International ISDN')),
+					('dynamic', _('Dynamically selects the appropriate dialplan'))],
+				default="unknown"),
+
 			VarType("channels",
 				title=_("Channels"),
 				hint=_("i.e. 1-15,17-31"),
@@ -201,7 +212,7 @@ class CfgTrunkZapPRI(CfgTrunk):
 			c.appendValue(self, "group")
 		c.appendValue(self, "signalling")
 		c.appendValue(self, "switchtype")
-		c.append("pridialplan=unknown")
+		c.appendValue(self, "pridialplan")
 		contextin = "in-%s" % self.name
 		c.append("context=%s" % contextin)
 		c.append("usecallerid=yes")
