@@ -28,7 +28,7 @@ class CfgTrunkSipSPA400(CfgTrunk):
 	newObjectTitle  = _("New SPA400 SIP trunk")
 	description = _("""Used to setup a SIP trunk to a SPA400 gateway.""")
 	technology = "SIP"
-	
+
 	def createVariables(self):
 		self.variables   = [
 			VarType("name",
@@ -53,14 +53,19 @@ class CfgTrunkSipSPA400(CfgTrunk):
 				title=_("Show this trunk in the panel"),
 				type="bool",
 				hide=True),
-	
+
 			VarType("Inbound",
-				title=_("Calls from SIP trunk"),
+				title=_("For incoming calls through this trunk:"),
 				type="label"),
 				
 			VarType("clid",
 				title=_("Change Caller*Id to:"),
 				len=25,
+				optional=True),
+
+			VarType("clidnumin",
+				title=_("Change Caller*Id Number to:"),
+				len=40,
 				optional=True),
 			
 			VarType("contextin",
@@ -72,7 +77,7 @@ class CfgTrunkSipSPA400(CfgTrunk):
 			VarType("phone",
 				title=_("Extension to ring"),
 				type="choice",
-				optional=False,
+				optional=True,
 				options=getChoice("CfgPhone")),
 			
 			VarType("ivr",
@@ -105,7 +110,7 @@ class CfgTrunkSipSPA400(CfgTrunk):
 		res = CfgTrunk.checkConfig(self)
 		if res:
 			return res
-                
+		
 	def createAsteriskConfig(self):
 		needModule("res_crypto")
 		needModule("chan_sip")
