@@ -69,7 +69,11 @@ class Page(AccessControlled, Directory): #order matters
 			m = None
 			if s.endswith('.ptl'):
 				s= s[:-4]
-				m = __import__(s)
+				try:
+					m = __import__(s)
+				except SyntaxError, e:
+					sys.stderr.write('Warning: Module %s failed to compile. Disabling.\n' % s)
+					continue
 			elif s.endswith('.py'):
 				s = s[:-3]
 				m =  __import__(s)
