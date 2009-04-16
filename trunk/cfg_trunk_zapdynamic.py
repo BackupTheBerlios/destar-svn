@@ -23,10 +23,10 @@ from configlets import *
 import panelutils
 
 
-class CfgTrunkZapDynamic(CfgTrunk):
+class CfgTrunkDAHDIDynamic(CfgTrunk):
 
-	shortName = _("Zaptel dynamic span configuration")
-	newObjectTitle = _("Zaptel dynamic span configuration")
+	shortName = _("DAHDItel dynamic span configuration")
+	newObjectTitle = _("DAHDItel dynamic span configuration")
 	technology = "ZAP"
 
 	def createVariables(self):
@@ -174,8 +174,8 @@ class CfgTrunkZapDynamic(CfgTrunk):
 				default=31),
 
 			VarType("timing",    
-				title=_("Zaptel timing parameter"), 
-				hint=_("Read zaptel documentation"), 
+				title=_("DAHDItel timing parameter"), 
+				hint=_("Read system documentation"), 
 				type="int", 
 				len=2),
 
@@ -201,9 +201,9 @@ class CfgTrunkZapDynamic(CfgTrunk):
                         return res
 
 	def createAsteriskConfig(self):
-		needModule("chan_zap")
+		needModule("chan_dahdi")
 
-		c = AstConf("zaptel.conf")
+		c = AstConf("system.conf")
 		c.setSection("")
 		c.destar_comment = False
 		c.append("# %s" % self.name)
@@ -214,10 +214,10 @@ class CfgTrunkZapDynamic(CfgTrunk):
 		c.append("dchan=%s" % self.dchannel)
 		c.append("")
 
-		# Create config for chan_zap:
-		c = AstConf("zapata.conf")
+		# Create config for chan_dahdi:
+		c = AstConf("chan_dahdi.conf")
 		c.append("")
-		c.append("; Zaptel Trunk %s" % self.name)
+		c.append("; DAHDItel Trunk %s" % self.name)
 		c.appendValue(self, "signalling")
 		c.append("context=in-%s" % self.name)
 		c.append("usecallerid=yes")
@@ -250,9 +250,9 @@ class CfgTrunkZapDynamic(CfgTrunk):
 		#Dial part to use on dialout macro
 		self.dial = ""
 		if self.group:
-			self.dial = "Zap/g%d/${ARG1}" % (self.group)
+			self.dial = "DAHDI/g%d/${ARG1}" % (self.group)
 		else:
-			self.dial = "Zap/%s/${ARG1}" % (self.channels)
+			self.dial = "DAHDI/%s/${ARG1}" % (self.channels)
 		
 		#What to do with incoming calls
 		self.createIncomingContext()

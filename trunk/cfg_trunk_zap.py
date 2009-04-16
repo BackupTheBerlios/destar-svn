@@ -22,7 +22,7 @@ from configlets import *
 import panelutils
 
 
-class CfgTrunkZap(CfgTrunk):
+class CfgTrunkDAHDI(CfgTrunk):
 
 	shortName = _("Standard ZAP trunk")
 	newObjectTitle = _("New standard ZAP trunk")
@@ -34,14 +34,15 @@ class CfgTrunkZap(CfgTrunk):
 				len=35),
 
 			VarType("channels",
-				title=_("Zaptel channel number"),
+				title=_("DAHDItel channel number"),
 				type="string",
 				len=5),
 
 			VarType("signalling",
 				title=_("Signalling type"),
 				type="choice",
-				options=[('fxs_ls','loopstart'),('fxs_ks', 'kewlstart')]),
+				options=[('fxs_ls',_('loopstart')),
+					('fxs_ks',_('kewlstart'))]),
 
 			VarType("group",
 				title=_("Callout group"),
@@ -148,18 +149,18 @@ class CfgTrunkZap(CfgTrunk):
 
 
 	def createAsteriskConfig(self):
-		needModule("chan_zap")
+		needModule("chan_dahdi")
 
-		c = AstConf("zaptel.conf")
+		c = AstConf("system.conf")
 		c.setSection("")
 		c.destar_comment = False
 		c.append("fxs%s=%s" % (self.signalling[4:], self.channels))
 		c.append("")
 
-		# Create config for chan_zap:
-		c = AstConf("zapata.conf")
+		# Create config for chan_dahdi:
+		c = AstConf("chan_dahdi.conf")
 		c.append("")
-		c.append("; Zaptel Trunk %s" % self.name)
+		c.append("; DAHDItel Trunk %s" % self.name)
 		c.append("context=in-%s" % self.name)
 		c.append("callerid=asreceived")
                 c.append("busydetect=yes")
@@ -174,9 +175,9 @@ class CfgTrunkZap(CfgTrunk):
 
 		#Dial part to use on dialout macro
 		if self.group:
-			self.dial = "Zap/g%d/${ARG1}" % (self.group)
+			self.dial = "DAHDI/g%d/${ARG1}" % (self.group)
 		else:
-			self.dial = "Zap/%s/${ARG1}" % (self.channels)
+			self.dial = "DAHDI/%s/${ARG1}" % (self.channels)
 		
 		#What to do with incoming calls
 		self.createIncomingContext()

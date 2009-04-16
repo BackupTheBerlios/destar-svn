@@ -22,7 +22,7 @@ from configlets import *
 import panelutils
 
 
-class CfgPhoneZap(CfgPhone):
+class CfgPhoneDAHDI(CfgPhone):
 
 	shortName = _("Normal ZAP phone")
 	newObjectTitle = _("New ZAP phone")
@@ -40,7 +40,7 @@ class CfgPhoneZap(CfgPhone):
 				len=35),
 
 			VarType("channels",
-				title=_("Zaptel channel number"),
+				title=_("DAHDItel channel number"),
 				type="string",
 				len=5),
 
@@ -244,10 +244,10 @@ class CfgPhoneZap(CfgPhone):
 	isAddable = classmethod(isAddable)
 
 	def createAsteriskConfig(self):
-		needModule("chan_zap")
+		needModule("chan_dahdi")
 
-		# Create config for chan_zap:
-		c = AstConf("zapata.conf")
+		# Create config for chan_dahdi:
+		c = AstConf("chan_dahdi.conf")
 		c.append("signalling=fxo_%s" % self.sigtype)
 
 		if self.calleridname and self.calleridnum:
@@ -272,7 +272,7 @@ class CfgPhoneZap(CfgPhone):
 		c.append("channel=%s" % self.channels)
 		c.append("")
 
-		c = AstConf("zaptel.conf")
+		c = AstConf("system.conf")
 		c.setSection("")
 		c.destar_comment = False
 		c.append("fxo%s=%s" % (self.sigtype, self.channels))

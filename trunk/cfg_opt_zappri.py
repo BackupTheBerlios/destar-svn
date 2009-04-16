@@ -23,15 +23,15 @@ from configlets import *
 import panelutils
 
 
-class CfgOptZapPRI(CfgOpt):
+class CfgOptDAHDIPRI(CfgOpt):
 
-	shortName = _("Zaptel configuration for PRI")
-	newObjectTitle = _("Zaptel configuration for PRI")
+	shortName = _("DAHDItel configuration for PRI")
+	newObjectTitle = _("DAHDItel configuration for PRI")
 	def createVariables(self):
 		self.variables = [
 			VarType("name",       title=_("Name"), len=35),
-			VarType("span",    title=_("Zaptel span"), hint=_("i.e. 1 if 1st card"), type="string", len=5),
-			VarType("timing",    title=_("Zaptel timing parameter"), hint=_("Read zaptel documentation"), type="string", len=5),
+			VarType("span",    title=_("DAHDItel span"), hint=_("i.e. 1 if 1st card"), type="string", len=5),
+			VarType("timing",    title=_("DAHDItel timing parameter"), hint=_("Read dahditel documentation"), type="string", len=5),
 			VarType("distance",    title=_("Line Build Out (dB)"), hint=_("Power level based on distance from the card to the service provider's gateway."), type="choice", 
 					options=[
 						('0',_("0: 0 db (CSU) / 0-133 feet (DSX-1)")),
@@ -58,9 +58,9 @@ class CfgOptZapPRI(CfgOpt):
 		return (self.shortName, self.name)
 
 	def createAsteriskConfig(self):
-		needModule("chan_zap")
+		needModule("chan_dahdi")
 
-		c = AstConf("zaptel.conf")
+		c = AstConf("system.conf")
 		c.setSection("")
 		c.destar_comment = False
 		c.append("# %s" % self.name)

@@ -106,9 +106,9 @@ class Page(AccessControlled, Directory):
 				"trunks/",
 				[_("Configuration"), _("Trunks")] )
 
-		if not os.access("/etc/zaptel.conf", os.O_RDWR):
+		if not os.access("/etc/dahdi/system.conf", os.O_RDWR):
 			self.configurationTip(
-				_("You should enable write access to /etc/zaptel.conf. Without write access to this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set it's group to one of '%s'.") % groups,
+				_("You should enable write access to /etc/dahdi/system.conf. Without write access to this file you cannot configure Zaptel devices, e.g. FXO/FXS cards, T1/E1 cards, ZapHFC ISDN cards, etc. You should 'chmod g+rw' this file and set it's group to one of '%s'.") % groups,
 				"",
 				[])
 		if not os.access(panelutils.PANEL_CONF_DIR, os.O_RDWR):

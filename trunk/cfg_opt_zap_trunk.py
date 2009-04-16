@@ -21,10 +21,10 @@
 from configlets import *
 
 
-class CfgOptZapTrunk(CfgOptSingle):
+class CfgOptDAHDITrunk(CfgOptSingle):
 
-	shortName = _("Zaptel Trunk Options")
-	newObjectTitle = _("Zaptel Trunk Options")
+	shortName = _("DAHDItel Trunk Options")
+	newObjectTitle = _("DAHDItel Trunk Options")
 	
 	def createVariables(self):
 		self.variables = [
@@ -42,14 +42,14 @@ class CfgOptZapTrunk(CfgOptSingle):
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.configlet_tree:
-			if obj.__class__.__name__.startswith('CfgTrunkZap'):
+			if obj.__class__.__name__.startswith('CfgTrunkDAHDI'):
 				return CfgOptSingle.isAddable(self)
 		return False
 	isAddable = classmethod(isAddable)
 
 
 	def createAsteriskConfig(self):
-		c = AstConf("zapata.conf")
+		c = AstConf("chan_dahdi.conf")
 		c.setSection("channels")
 
 		c.append("")

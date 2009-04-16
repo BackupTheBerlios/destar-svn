@@ -23,7 +23,7 @@ from configlets import *
 import panelutils
 
 
-class CfgTrunkZapPRI(CfgTrunk):
+class CfgTrunkDAHDIPRI(CfgTrunk):
 
 	shortName = _("Standard ZAP PRI trunk")
 	newObjectTitle = _("New standard ZAP PRI trunk")
@@ -167,13 +167,13 @@ class CfgTrunkZapPRI(CfgTrunk):
 
 	def isAddable(self):
 		"""We can only add this configlet if we have at least one
-		ZapPRI option defined."""
+		DAHDIPRI option defined."""
 
 		# BUG: it does somehow not work to simply write for obj in config_entries,
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.configlet_tree:
-			if obj.__class__.__name__ == 'CfgOptZapPRI':
+			if obj.__class__.__name__ == 'CfgOptDAHDIPRI':
 				return True
 		return False 
 	isAddable = classmethod(isAddable)
@@ -184,7 +184,7 @@ class CfgTrunkZapPRI(CfgTrunk):
                         return res
 		import configlets
 		for obj in configlets.configlet_tree:
-			if obj.__class__.__name__ == 'CfgTrunkZapPRI':
+			if obj.__class__.__name__ == 'CfgTrunkDAHDIPRI':
 				if obj==self: continue
 				try:
 					if obj.group == self.group and obj.group:
@@ -202,12 +202,12 @@ class CfgTrunkZapPRI(CfgTrunk):
 
 
 	def createAsteriskConfig(self):
-		needModule("chan_zap")
+		needModule("chan_dahdi")
 
-		# Create config for chan_zap:
-		c = AstConf("zapata.conf")
+		# Create config for chan_dahdi:
+		c = AstConf("chan_dahdi.conf")
 		c.append("")
-		c.append("; Zaptel Trunk %s" % self.name)
+		c.append("; DAHDItel Trunk %s" % self.name)
 		if self.group:
 			c.appendValue(self, "group")
 		c.appendValue(self, "signalling")
@@ -238,9 +238,9 @@ class CfgTrunkZapPRI(CfgTrunk):
 
 		#Dial part to use on dialout macro
 		if self.group:
-			self.dial = "Zap/g%s/${ARG1}" % (self.group)
+			self.dial = "DAHDI/g%s/${ARG1}" % (self.group)
 		else:
-			self.dial = "Zap/%s/${ARG1}" % (self.channels)
+			self.dial = "DAHDI/%s/${ARG1}" % (self.channels)
 		
 		#What to do with incoming calls
 		self.createIncomingContext()

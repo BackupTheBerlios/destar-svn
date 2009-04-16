@@ -123,7 +123,7 @@ def initializeAsteriskConfig():
 	* extensions.conf
 	* sip.conf
 	* iax.conf
-	* zapata.conf
+	* chan_dahdi.conf
 	* macros.inc
 	"""
 
@@ -168,7 +168,7 @@ def initializeAsteriskConfig():
 	c.append("language=%s" % getSetting('language', 'en'))
 
 
-	c = AstConf("zapata.conf")
+	c = AstConf("chan_dahdi.conf")
 	c.setSection("channels")
 	c.append("language=%s" % getSetting('language', 'en'))
 	c.append("immediate=no")
@@ -460,11 +460,11 @@ def createAsteriskConfig():
 	# test if all config files are OK to be written or overwritten
 	tmp_conf = []
 	for fn,cnf in configlets.asterisk_configfiles:
-		# zaptel.conf can't have CONF_TAG at the top, so no need to search for it
+		# system.conf can't have CONF_TAG at the top, so no need to search for it
 		if os.path.exists(cnf.fn):
 			f = open(cnf.fn, "r")
 			s = f.readline()
-			if s != configlets.CONF_TAG or fn == 'zaptel.conf':
+			if s != configlets.CONF_TAG or fn == 'system.conf':
 				# Backup file not created by us
 				try:
 					backupAsteriskConfig(fn)

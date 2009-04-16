@@ -22,7 +22,7 @@ from configlets import *
 import panelutils
 
 
-class CfgTrunkZapBRI(CfgTrunk):
+class CfgTrunkDAHDIBRI(CfgTrunk):
 
 	shortName = _("Standard ZAP BRI trunk")
 	newObjectTitle = _("New standard ZAP BRI trunk")
@@ -35,7 +35,7 @@ class CfgTrunkZapBRI(CfgTrunk):
 				len=35),
 
 			VarType("channels",
-				title=_("Zaptel channel number"),
+				title=_("DAHDItel channel number"),
 				type="int",
 				len=2,
 				default = 1),
@@ -139,9 +139,9 @@ class CfgTrunkZapBRI(CfgTrunk):
                         return res
 
 	def createAsteriskConfig(self):
-		needModule("chan_zap")
+		needModule("chan_dahdi")
 
-		c = AstConf("zaptel.conf")
+		c = AstConf("system.conf")
 		c.setSection("")
 		c.destar_comment = False
 		for n in range(self.cards):
@@ -152,8 +152,8 @@ class CfgTrunkZapBRI(CfgTrunk):
 		c.append("alaw=%d-%d" % (self.channels + n * 3, self.channels + n * 3 + 2))
 		c.append("")
 
-		# Create config for chan_zap:
-		c = AstConf("zapata.conf")
+		# Create config for chan_dahdi:
+		c = AstConf("chan_dahdi.conf")
 		c.append("")
 		c.append("nationalprefix = 0")
 		c.append("internationalprefix = 00")
@@ -181,7 +181,7 @@ class CfgTrunkZapBRI(CfgTrunk):
 
 		#Dial part to use on dialout macro
 		if self.group:
-			self.dial = "Zap/g%d/${ARG1}" % (self.group)
+			self.dial = "DAHDI/g%d/${ARG1}" % (self.group)
 		
 		#What to do with incoming calls
 		self.createIncomingContext()

@@ -21,10 +21,10 @@
 from configlets import *
 
 
-class CfgOptZapAudio(CfgOptSingle):
+class CfgOptDAHDIAudio(CfgOptSingle):
 
-	shortName = _("Zaptel Audio Options")
-	newObjectTitle = _("Zaptel Audio Options")
+	shortName = _("DAHDItel Audio Options")
+	newObjectTitle = _("DAHDItel Audio Options")
 	
 	def createVariables(self):
 		self.variables = [
@@ -44,14 +44,14 @@ class CfgOptZapAudio(CfgOptSingle):
 		# despite the "from configlets import *" above
 		import configlets
 		for obj in configlets.configlet_tree:
-			if obj.__class__.__name__.startswith('CfgTrunkZap') or obj.__class__.__name__.startswith('CfgPhoneZap'):
+			if obj.__class__.__name__.startswith('CfgTrunkDAHDI') or obj.__class__.__name__.startswith('CfgPhoneDAHDI'):
 				return CfgOptSingle.isAddable(self)
 		return False
 	isAddable = classmethod(isAddable)
 
 
 	def createAsteriskConfig(self):
-		c = AstConf("zapata.conf")
+		c = AstConf("chan_dahdi.conf")
 		c.setSection("channels")
 
 		c.append("")
