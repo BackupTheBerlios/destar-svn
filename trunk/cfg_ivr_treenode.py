@@ -97,7 +97,7 @@ class CfgIVRTreeNode(CfgIVR):
 
 			VarType("times",
 					title=_("Times string"),
-					hint=_("i.e. *|*|25|dec,*|*|20|jul (comma separated)"),
+					hint=_("i.e. *,*,25,dec,*,*,20,jul (comma separated)"),
 					default="",
 					optional=True,
 					len=300),

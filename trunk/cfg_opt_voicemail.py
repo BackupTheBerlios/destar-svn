@@ -89,5 +89,5 @@ class CfgOptVoicemail(CfgOptSingle):
 
 		c.setSection("zonemessages")
 		# TODO: find out our own timezone somehow
-		c.append("cest=Europe/Berlin|'vm-received' Q 'digits/at' k 'oclock' M")
+		c.append("cest=Europe/Berlin,'vm-received' Q 'digits/at' k 'oclock' M")
 

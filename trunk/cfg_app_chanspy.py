@@ -66,6 +66,6 @@ class CfgAppChanspy(CfgApp):
 		if self.password:
 			c.appendExten(self.ext, "Authenticate(%s)" % self.password, self.pbx)
 		if self.quiet:
-			c.appendExten(self.ext, "Chanspy(%s|q)" % self.scanspec, self.pbx)
+			c.appendExten(self.ext, "Chanspy(%s,q)" % self.scanspec, self.pbx)
 		else: 
 			c.appendExten(self.ext, "Chanspy(%s)" % self.scanspec, self.pbx)

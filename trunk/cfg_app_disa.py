@@ -84,4 +84,4 @@ class CfgAppDisa(CfgApp):
 		c.appendExten("%s" % self.ext ,"Set(TIMEOUT(digit)=5)", self.pbx)
 		c.appendExten("%s" % self.ext ,"Set(TIMEOUT(response)=10)", self.pbx)
 		c.appendExten("%s" % self.ext ,"Authenticate(%s)" % self.pin, self.pbx)
-		c.appendExten("%s" % self.ext ,"DISA(no-password|out-%s)" % self.name, self.pbx)
+		c.appendExten("%s" % self.ext ,"DISA(no-password,out-%s)" % self.name, self.pbx)

@@ -17,6 +17,8 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+# FIXME: not available on 1.6. How do we tell Asterisk is 1.6? Any 
+# replacement dialplan?
 
 from configlets import *
 

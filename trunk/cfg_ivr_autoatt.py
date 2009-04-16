@@ -96,7 +96,7 @@ class CfgIVRAutoatt(CfgIVR):
 
 			VarType("times",
 					title=_("Times string"),
-					hint=_("i.e. hours|weekdays|monthdays|months (comma separated)"),
+					hint=_("i.e. hours,weekdays,monthdays,months (comma separated)"),
 					default="",
 					optional=True,
 					len=300),

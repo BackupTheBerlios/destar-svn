@@ -242,9 +242,9 @@ class CfgPhoneQueue(CfgPhone):
 			else:          
 				options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
 			if self.monitorfilename:
-				mon_line = "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options)
+				mon_line = "MixMonitor(%s.%s,%s)" % (self.monitorfilename,self.monitorfileformat,options)
 			else:
-				mon_line = "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options)
+				mon_line = "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s,%s)" % (self.monitorfileformat,options)
 
 		qnames = []
 		if self.ext:
@@ -270,7 +270,7 @@ class CfgPhoneQueue(CfgPhone):
 
 			if self.queuetimeout:
 				opt = opt + "n"
-				extensions.appendExten(qname, "Queue(%s|%s|||%s)" % (self.name, opt, self.queuetimeout), self.pbx)
+				extensions.appendExten(qname, "Queue(%s,%s,,,%s)" % (self.name, opt, self.queuetimeout), self.pbx)
 				if self.queuetimeoutext:
 					import configlets
 					obj = configlets.configlet_tree.getConfigletByName(self.queuetimeoutext)
@@ -279,7 +279,7 @@ class CfgPhoneQueue(CfgPhone):
 					except AttributeError:
 						pass
 			else:
-				extensions.appendExten(qname, "Queue(%s|%s)" % (self.name, opt), self.pbx)
+				extensions.appendExten(qname, "Queue(%s,%s)" % (self.name, opt), self.pbx)
 		self.createPanelConfig()
 
         def createPanelConfig(self):

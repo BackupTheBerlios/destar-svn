@@ -184,11 +184,11 @@ class CfgDialoutNormal(CfgDialout):
 				        if tapisupport:
 						needModule("app_cut")
 					        c.append("exten=>s,n,Set(chan=${CUT(CHANNEL,,1)})")
-					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_NEWCALL ${chan})")
-	    				        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALTONE)")
-					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALING)")
-					        c.append("exten=>s,n,UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_PROCEEDING)")
-					c.append("exten=>s,n,Dial(%s,%d|${options})" % (obj.dial,self.ringtime))
+					        c.append("exten=>s,n,UserEvent(TAPI,TAPIEVENT: LINE_NEWCALL ${chan})")
+	    				        c.append("exten=>s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALTONE)")
+					        c.append("exten=>s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALING)")
+					        c.append("exten=>s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_PROCEEDING)")
+					c.append("exten=>s,n,Dial(%s,%d,${options})" % (obj.dial,self.ringtime))
 					unavail+=1
 					c.append('exten=>s,n,GotoIf($["${DIALSTATUS}" = "CHANUNAVAIL"]?unavail%s)' % unavail)
 			except KeyError:
@@ -204,5 +204,5 @@ class CfgDialoutNormal(CfgDialout):
 		c.appendExten("t","NoCDR", context=context)
 		c.appendExten("t","Hangup", context=context)
 		if tapisupport:
-		        c.appendExten("h","UserEvent(TAPI|TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_IDLE)", context=context)
+		        c.appendExten("h","UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_IDLE)", context=context)
 

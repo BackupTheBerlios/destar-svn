@@ -89,7 +89,7 @@ class CfgAppMeetme(CfgApp):
 		args=""
 		if self.confno:
 			args += "%d" % self.confno
-		args += "|d"
+		args += ",d"
 		if self.pin:
 			args += "P|%d" % self.pin
 		c.appendExten(self.ext, "MeetMe(%s)" % args, self.pbx)

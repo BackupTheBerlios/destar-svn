@@ -1045,9 +1045,9 @@ class CfgPhone(Cfg):
 				else:          
 					options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
 				if self.monitorfilename:
-					extensions.appendExten(tmp_ext, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options), context=pbx)
+					extensions.appendExten(tmp_ext, "MixMonitor(%s.%s,%s)" % (self.monitorfilename,self.monitorfileformat,options), context=pbx)
 				else:
-					extensions.appendExten(tmp_ext, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options), context=pbx)
+					extensions.appendExten(tmp_ext, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s,%s)" % (self.monitorfileformat,options), context=pbx)
 			self.createDialEntry(extensions, tmp_ext, pbx, self.ext)
 
 		for obj in configlet_tree:
@@ -1144,9 +1144,9 @@ class CfgPhone(Cfg):
 							else:          
 								options = options+'v(%s)V(%s)' % (self.heardvol, self.spokenvol)        
 							if self.monitorfilename:
-								c.appendExten("%s" % obj.pattern, "MixMonitor(%s.%s|%s)" % (self.monitorfilename,self.monitorfileformat,options), context=contextout)
+								c.appendExten("%s" % obj.pattern, "MixMonitor(%s.%s,%s)" % (self.monitorfilename,self.monitorfileformat,options), context=contextout)
 							else:
-								c.appendExten("%s" % obj.pattern, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s|%s)" % (self.monitorfileformat,options), context=contextout)
+								c.appendExten("%s" % obj.pattern, "MixMonitor(${TIMESTAMP}-${CALLERIDNAME}(${CALLERIDNUM})-${EXTEN}.%s,%s)" % (self.monitorfileformat,options), context=contextout)
 						
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)							
 						if secret:
