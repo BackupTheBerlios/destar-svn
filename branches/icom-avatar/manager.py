@@ -208,7 +208,7 @@ class ManagerClient(asynchat.async_chat):
 		if self.action_data.has_key(id):
 			self.action_data[id] = data
 
-		if data[0]=="Asterisk Call Manager/1.0":
+		if data[0]=="Asterisk Call Manager/1.1":
 			self.set_terminator('\r\n\r\n')
 			self.call_nowait('Login', Username=self.username, Secret=self.password)
 
@@ -620,8 +620,8 @@ def setVar(family, key, val):
 def originateCallApp(channel,application,data):
 	return conn.action('Originate', Channel=channel, Application=application)
 
-def originateCallExt(channel,context,extension,priority):
-	return conn.action('Originate', Channel=channel, Context=context, Exten=extension, Priority=priority)
+def originateCallExt(channel,context,extension,priority,callerid):
+	return conn.action('Originate', Channel=channel, Context=context, Exten=extension, Priority=priority, CallerID=callerid)
 
 def getVarFamily(family):
 	varlist = []
@@ -629,6 +629,10 @@ def getVarFamily(family):
 		if s.startswith("/%s" % family):
 			varlist.append(s[len(family)+2:])
 	return varlist
+	
+def getSIPPeers():
+	return conn.action('Command', Command='sip show peers')
+
 
 def checkMailBox(ext):
 	vmstate = {}
@@ -644,26 +648,6 @@ def reloadAsterisk():
 
 def reloadMoH():
 	return conn.action('Command', Command='moh reload')
-
-def getQueues():
-       return conn.action('Command', Command='show queues')
-
-def getQueue(queue):
-       qstate = {}
-       qstate['In use'] = 0
-       qstate['Unavailable'] = 0
-       qstate['Not in use'] = 0
-       qstate['Callers'] = 0
-       for s in conn.action('Command', Command='show queue %s' % queue):
-               if s.find('(In use)') > 0 or s.find('(Ringing)') > 0:
-                       qstate['In use'] += 1
-               if s.find('(Unavailable)') > 0:
-                       qstate['Unavailable'] += 1
-               if s.find('(Not in use)') > 0:
-                       qstate['Not in use'] += 1
-               if s.find('(wait: ') > 0:
-                       qstate['Callers'] += 1
-       return qstate
 
 if __name__ == '__main__':
 	connect()

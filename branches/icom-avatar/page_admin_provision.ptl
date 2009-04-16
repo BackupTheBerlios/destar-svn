@@ -1,0 +1,261 @@
+# -*- coding: utf-8 -*-
+#
+# Destar has Copyright (C) 2005 by Holger Schurig
+# This file has Copyright (C) 2007 by Alejandro Rios P.
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from quixote.form import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect, get_field
+import backend, manager, configlets
+import sys, os, re, commands
+
+TFTP_DIR="/actualizaciones"
+GS_TEMPLATES_DIR="/actualizaciones/plantillas"
+GS_CFG_GEN_BIN="/usr/local/GS_CFG_GEN/bin/encode.sh"
+
+def getGSTemplate():
+	gs_templates = []
+	for f in os.listdir(GS_TEMPLATES_DIR):
+		if f.endswith('.txt'):
+			gs_templates.append((f,f))
+	return gs_templates
+
+def getPhones():
+	import configlets
+	objs = configlets.configlet_tree.getConfigletsByName('CfgPhoneSip')
+	phones=[]
+	for obj in objs:
+		phones.append(obj.name)		
+	return phones
+
+def getPBXs():
+	import configlets
+	objs = configlets.configlet_tree.getConfigletsByName('CfgOptPBX')
+	pbxs=[]
+	for obj in objs:
+		pbxs.append(obj.name)		
+	return pbxs
+
+def createConfig(template,MAC,phone_obj,prefix=""):
+	# Replace template with phone's data
+	dest_template = os.path.join("/tmp","config_%s" % MAC)
+	orig_template =  os.path.join(GS_TEMPLATES_DIR,template)
+	if os.path.exists(orig_template):
+		in_file = open(orig_template, "r")
+		out_text = in_file.read()
+		out_text = re.sub("P35[\ =](.*)", "P35 = %s" % phone_obj.name, out_text)
+		out_text = re.sub("P36[\ =](.*)", "P36 = %s" % phone_obj.name, out_text)
+		out_text = re.sub("P34[\ =](.*)", "P34 = %s" % phone_obj.secret, out_text)
+		if phone_obj.calleridname:
+			out_text = re.sub("P3[\ =](.*)", "P3 = %s - %s" % (phone_obj.calleridname.replace("ñ","n"),phone_obj.ext), out_text)
+		out_file = open(dest_template, 'wb')
+		out_file.write(out_text)
+		out_file.close()
+	sys.stderr.write(_("Created file: %s\n") % dest_template)
+	
+	# Create TFTP_DIR/cfgMAC
+	if prefix:
+		encode_cmd = "%s %s %s %s/%scfg%s" % (GS_CFG_GEN_BIN,MAC,dest_template,TFTP_DIR,prefix,MAC)
+	else:
+		encode_cmd = "%s %s %s %s/cfg%s" % (GS_CFG_GEN_BIN,MAC,dest_template,TFTP_DIR,MAC)
+	sys.stderr.write(_("Executing: %s\n") % encode_cmd)
+	res = commands.getoutput(encode_cmd)
+	if not res: 
+		if prefix:
+			sys.stderr.write(_("Created: %s/%scfg%s") % (TFTP_DIR,prefix,MAC))
+		else:
+			sys.stderr.write(_("Created: %s/cfg%s") % (TFTP_DIR,MAC))
+		return True
+	else:
+		sys.stderr.write(_("Operation failed"))
+		return False
+
+def createPhoneBook(pbx):
+	try:
+		dest = os.path.join(TFTP_DIR,"gs_phonebook.xml")
+		out_file = open(dest, 'wb')
+		out_file.write('<?xml version="1.0"?>\n')
+		out_file.write('<AddressBook>\n')
+		for o in backend.getConfiglets('Phones'):
+			if o.pbx == pbx:
+				out_file.write('<Contact>\n')
+				try:
+					if o.calleridname:
+						calleridname = o.calleridname.replace("ñ","n")
+						clidlen=len(calleridname.split(" "))
+						if clidlen > 2:
+							out_file.write('<FirstName>%s</FirstName>\n' % " ".join(calleridname.split(" ")[-1:]))
+							out_file.write('<LastName>%s</LastName>\n' % " ".join(calleridname.split(" ")[:-1]))
+						if clidlen == 2:
+							out_file.write('<FirstName>%s</FirstName>\n' % calleridname.split(" ")[1])
+							out_file.write('<LastName>%s</LastName>\n' % calleridname.split(" ")[0])
+					else:
+						out_file.write('<FirstName>%s</FirstName>\n' % o.pbx)
+						out_file.write('<LastName>%s</LastName>\n' % o.name)
+				except:
+						out_file.write('<FirstName>%s</FirstName>\n' % o.pbx)
+						out_file.write('<LastName>%s</LastName>\n' % o.name)
+				if o.ext:
+					out_file.write('<Phone>\n')
+					out_file.write('<phonenumber>%s</phonenumber>\n' % o.ext)
+					out_file.write('<accountindex>0</accountindex>\n</Phone>\n')
+				out_file.write('</Contact>\n')
+		out_file.write('</AddressBook>')
+		out_file.close()
+		return str(dest)
+	except:
+		return False
+
+
+def ProvisionForm [plain] (self, exitPath="."):
+
+	if self.form.has_key('_cancel'):
+		return redirect(exitPath)
+	form = Form(enctype="multipart/form-data")
+	form.add_single_select('gs_template', 
+				title=htmltext(_('Use Template:')),
+				value="",
+				options=getGSTemplate(), 
+				)
+	form.add(FileWidget, "filetoupload", "", title=_("File to upload:"))
+	form.add_single_select('phone', 
+				title=htmltext(_('Phone account to configure:')),
+				value="",
+				options=zip(getPhones(),getPhones(),getPhones()),
+				)
+	form.add(StringWidget, "mac", title=_("Hardphone MAC"), hint=_("Without spaces or colons."), size=12)
+	form.add(StringWidget, "prefix", title=_("Prefix"), hint=_("Without spaces or colons."), size=12)
+	#000b82030560
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)
+	form.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
+	form.add_single_select('pbx', 
+				title=htmltext(_('PBX phonebook to create:')),
+				value="",
+				options=zip(getPBXs(),getPBXs(),getPBXs()),
+				)
+	form.add(SubmitWidget, '_phonebook', _("Create Phonebook"), render_br=False)
+
+	if not form.is_submitted() or form.has_errors():
+		return form.render()
+
+	if form["_phonebook"] and form["pbx"]:
+		res = createPhoneBook(form["pbx"])
+		if res:
+			return htmltext(_("Created: %s") % res)
+		else:
+			return htmltext(_("Operation failed"))
+
+	if form["gs_template"] and form["phone"] and form["mac"]:
+		# Get phone object
+		import configlets
+		phone_obj = configlets.configlet_tree.getConfigletByName(form["phone"])
+		
+		MAC = form["mac"].replace(":","").lower()
+		
+		# Replace template with phone's data
+		res = createConfig(form["gs_template"],MAC,phone_obj,form["prefix"])
+		if res: 
+			return htmltext(_("Created: %s/cfg%s") % (TFTP_DIR,MAC))
+		else:
+			return htmltext(_("Operation failed"))
+
+	if form["gs_template"] and form["filetoupload"]:
+		max_size = 5000000
+		upload = form['filetoupload']
+		pos = upload.fp.tell()  # Save current position in file.
+		upload.fp.seek(0, 2)    # Go to end of file.
+		size = upload.fp.tell() # Get new position (which is the file size).
+		upload.fp.seek(pos, 0)  # Return to previous position.
+		upload.size = size
+		if size > max_size:
+			msg = "The uploaded file is too big (size=%s, max=%s bytes)"
+			msg %= (size, max_size)
+			return htmltext(_("File bigger than %s bytes") % max_size)
+		created_files=[]
+		failed_files=[]
+		import configlets
+		while 1:
+			fline = upload.readline()
+			if not fline:
+				break
+			flinecontents = fline.replace("\"","").lower().split(",")
+			ext = flinecontents[0]
+			MAC = flinecontents[1].replace(":","").replace("\n","")
+			phone_obj = configlets.configlet_tree.getPhoneByExtension(ext)
+			if phone_obj != None:
+				res = createConfig(form["gs_template"],MAC,phone_obj,form["prefix"])
+				if res: 
+					created_files.append("%s -> %s" % (MAC,phone_obj.name))
+				else:
+					failed_files.append("%s -> %s" % (MAC,phone_obj.name))
+			else:
+				failed_files.append("%s -> %s" % (MAC,ext))
+		upload.close()
+		res_html=""
+		if len(created_files) > 0:
+			table_created = HtmlTable(0,1)
+			table_created.setCell(0,0, _("Created files"))
+			y=1
+			for r in created_files:
+				table_created.setCell(0,y,r)
+				y=y+1
+			res_html = res_html+table_created.getHtml(border=0)
+		if len(failed_files) > 0:
+			table_failed = HtmlTable(0,1)
+			table_failed.setCell(0,0, _("Failed creation of files"))
+			y=1
+			for r in failed_files:
+				table_failed.setCell(0,y,r)
+				y=y+1
+			res_html = res_html+htmltext("<br/>")+table_failed.getHtml(border=1)
+		return res_html 
+	else:
+		return htmltext(_("Error in form."))
+
+class Page(AccessControlled, Directory): 
+
+	_q_parent  = 'page_admin'
+	_q_title   = _("Provision GS Hardware")
+	_q_desc    = _("Provision Grandstream Phones with DeStar phone accounts")
+	_q_link    = 'provision'
+	_q_menupos = 10
+	_q_level   = 3
+	
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		'<p>'
+		htmltext(_('This functionality requires the Grandstream Configuration Tool available at '))
+		'<a href="http://www.grandstream.com/configurationtool.html">'
+		htmltext("http://www.grandstream.com/configurationtool.html")
+		'</a>'
+		'</p>'
+		'<p>'
+		ProvisionForm(self.request)
+		'</p>'
+		footer()
+

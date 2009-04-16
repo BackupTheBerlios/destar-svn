@@ -1,0 +1,493 @@
+# -*- coding: utf-8 -*-
+#
+# Destar has Copyright (C) 2004-2007 by Holger Schurig
+# This file has Copyright (C) 2007 by Alejandro Rios P.
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+from Templates import *
+from quixote.form import *
+import queuemaster
+import time, datetime
+from datetime import *
+from time import strptime
+from StatsHelper import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session
+
+pychart_exists = True
+try:	
+	from pychart import *
+except ImportError:
+	pychart_exists = False
+	
+class Page(AccessControlled, Directory): 
+
+	_q_parent = 'page_stats'
+	_q_title  = _("Queue Statistics")
+	_q_desc   = _("Incoming Call Statistics by Queue")
+	_q_level  = 2
+	_q_menupos = 30
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_test(self):
+		return queuemaster.db3
+	
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		#x = queueutils.loadQueueLog()
+		#y = queuemaster.populateMaster()
+		if pychart_exists:
+			cdrForm()
+		else:
+			_("You need to install pychart and use a cdr with sqlite to get these statistics")
+		footer()
+	
+def N_(message): return message
+
+def getQueues():
+	import configlets
+	objs = configlets.configlet_tree.getConfigletsByName('CfgPhoneQueue')
+	queues=[]
+	for obj in objs:
+		queues.append(obj.name)		
+	return queues
+
+def makeForm():
+	form = Form()
+	form.name = "queryform"
+	form.add_single_select('queue', 
+							title=htmltext(_('Queue:')),
+							value="",
+							options=zip(getQueues(),getQueues(),getQueues()),
+							render_br=True )
+
+	form.add_single_select('year', 
+							title=htmltext(_('Day:')),
+							value="",
+							options=zip([all] + years, 
+										[_(all)] + years,
+										[all] + years),
+							render_br=False )
+							
+	form.add_single_select('month', 
+							options=zip([all] + months, 
+										[_(all)] + getMonthnames(),
+										[all] + months),
+
+							render_br=False )
+							
+	form.add_single_select('day',
+							options=zip([all] + days,
+										[_(all)] + daynames,
+										[all] + days),
+							render_br=True )
+							
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=True)
+	
+	return form
+		
+def perHourInDay [plain] (day, month, year, queue):
+	
+	date = "%s-%s-%s" % (year, month, day)
+	where = []
+	where.append("date(start) = date('%s')" % date)
+	where.append("qname = '%s'" % queue)
+	where_completed = where + [("disposition like 'Atendida'")]
+	cursor = queuemaster.select(
+				fields = ['time(start) as hour', 'agent', 'enterqueue','connect','duration','abandon','exitwithkey','agentdump','calltime','completeagent','completecaller','exitwithtimeout','transfer'],
+				where = where_completed,
+				order = ['start','agent'])
+	completed = completedPerPeriod (cursor, hours, hournames)
+
+	where_uncompleted = where + [("disposition like 'No atendida'")]
+	cursor = queuemaster.select(
+				fields = ['time(start) as hour', 'disposition','agent', 'enterqueue','connect','duration','abandon','exitwithkey','agentdump','calltime','completeagent','completecaller','exitwithtimeout','transfer'],
+				where = where_uncompleted,
+				order = ['start','agent'])
+	uncompleted = uncompletedPerPeriod (cursor, hours, hournames, agentnames = completed[2])
+
+	htmltext("<p>%s: %s</p>" % (_("Period"), date))
+
+	htmltext("<br/><h3>%s</h3>" % _("Completed Calls"))
+	completed[3].getHtml(border=1)
+
+	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
+	completed[4]
+
+	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
+	uncompleted[3].getHtml(border=1)
+
+	#htmltext("<br/><h3>%s</h3>" % _("Distribution by Agent"))
+	#Here we use the same agentnames list of completed calls to allow data consolitation
+	#makeAgentCallsTable(_("Agent"), completed[1], uncompleted[1], names=uncompleted[2])
+
+	htmltext("<h3>%s</h3>" % _("Distribution by Hour"))
+	makeQueueCallsTable(_("Hour"), completed[0], uncompleted[0], hournames)
+
+def perDayInMonth [plain] (month, year, queue):
+	
+	date1 = "%s-%s-01" % (year, month)
+	date2 = "%s-%s-31" % (year, month)
+	where = []
+	where.append("date(start) between date('%s') and date('%s')" % (date1, date2))
+	where.append("qname = '%s'" % queue)
+	where_completed = where + [("disposition like 'Atendida'")]
+	cursor = queuemaster.select(
+				fields = ['date(start) as day', 'agent', 'enterqueue','connect','duration','abandon','exitwithkey','agentdump','calltime','completeagent','completecaller','exitwithtimeout','transfer'],
+				where = where_completed,
+				order = ['start','agent'])
+	completed = completedPerPeriod (cursor, days, daynames)
+
+	where_uncompleted = where + [("disposition like 'No atendida'")]
+	cursor = queuemaster.select(
+				fields = ['date(start) as day', 'disposition','agent', 'enterqueue','connect','duration','abandon','exitwithkey','agentdump','calltime','completeagent','completecaller','exitwithtimeout','transfer'],
+				where = where_uncompleted,
+				order = ['start','agent'])
+	uncompleted = uncompletedPerPeriod (cursor, days, daynames, agentnames = completed[2])
+
+	htmltext("<p>%s: %s to %s</p>" % (_("Period"), date1, date2))
+
+
+	htmltext("<br/><h3>%s</h3>" % _("Completed Calls"))
+	completed[3].getHtml(border=1)
+
+	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
+	completed[4]
+
+	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
+	uncompleted[3].getHtml(border=1)
+
+#	htmltext("<br/><h3>%s</h3>" % _("Distribution by Agent"))
+	#Here we use the same agentnames list of completed calls to allow data consolitation
+#	makeAgentCallsTable(_("Agent"), completed[1], uncompleted[1], names=uncompleted[2])
+
+	htmltext("<h3>%s</h3>" % _("Distribution by Days"))
+	makeQueueCallsTable(_("Day"), completed[0], uncompleted[0], daynames)
+
+	
+def perMonthInYear [plain] (year, queue):
+	date1 = "%s-01-01" % (year)
+	date2 = "%s-12-31" % (year)
+	where = []
+	where.append("date(start) between date('%s') and date('%s')" % (date1, date2))
+	where.append("qname = '%s'" % queue)
+	where_completed = where + [("disposition like 'Atendida'")]
+	cursor = queuemaster.select(
+				fields = ['date(start) as month', 'agent', 'enterqueue','connect','duration','abandon','exitwithkey','agentdump','calltime','completeagent','completecaller','exitwithtimeout','transfer'],
+				where = where_completed,
+				order = ['start','agent'])
+	completed = completedPerPeriod (cursor, months, monthnames)
+
+	where_uncompleted = where + [("disposition like 'No atendida'")]
+	cursor = queuemaster.select(
+				fields = ['date(start) as month', 'disposition','agent', 'enterqueue','connect','duration','abandon','exitwithkey','agentdump','calltime','completeagent','completecaller','exitwithtimeout','transfer'],
+				where = where_uncompleted,
+				order = ['start','agent'])
+	uncompleted = uncompletedPerPeriod (cursor, months, monthnames, agentnames = completed[2])
+
+	htmltext("<p>%s: %s to %s</p>" % (_("Period"), date1, date2))
+
+	htmltext("<br/><h3>%s</h3>" % _("Completed Calls"))
+	completed[3].getHtml(border=1)
+
+	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
+	completed[4]
+
+	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
+	uncompleted[3].getHtml(border=1)
+
+	#htmltext("<br/><h3>%s</h3>" % _("Distribution by Agent"))
+	#Here we use the same agentnames list of completed calls to allow data consolitation
+	#makeAgentCallsTable(_("Agent"), completed[1], uncompleted[1], names=uncompleted[2])
+
+	makeQueueCallsTable(_("Month"), completed[0], uncompleted[0], monthnames)
+
+
+def perYear [plain] (queue):
+	where = []
+	where.append("qname = '%s'" % queue)
+	where_completed = where + [("disposition like 'Atendida'")]
+	cursor = queuemaster.select(
+				fields = ['date(start) as year', 'agent', 'enterqueue','connect','duration','abandon','exitwithkey','agentdump','calltime','completeagent','completecaller','exitwithtimeout','transfer'],
+				where = where_completed,
+				order = ['start','agent'])
+	completed = completedPerPeriod (cursor, years, yearnames)
+
+	where_uncompleted = where + [("disposition like 'No atendida'")]
+	cursor = queuemaster.select(
+				fields = ['date(start) as year', 'disposition','agent', 'enterqueue','connect','duration','abandon','exitwithkey','agentdump','calltime','completeagent','completecaller','exitwithtimeout','transfer'],
+				where = where_uncompleted,
+				order = ['start','agent'])
+
+	uncompleted = uncompletedPerPeriod (cursor, years, yearnames, agentnames = completed[2])
+
+	htmltext("<p>%s: %s</p>" % (_("Period"), _("All Years")))
+
+	htmltext("<br/><h3>%s</h3>" % _("Completed Calls"))
+	completed[3].getHtml(border=1)
+
+	htmltext("<br/><h3>%s</h3>" % _("Service Level"))
+	completed[4]
+
+	htmltext("<br/><h3>%s</h3>" % _("Uncompleted Calls"))
+	uncompleted[3].getHtml(border=1)
+
+	#htmltext("<br/><h3>%s</h3>" % _("Distribution by Agent"))
+	#Here we use the same agentnames list of completed calls to allow data consolitation
+	#makeAgentCallsTable(_("Agent"), completed[1], uncompleted[1], names=uncompleted[2])
+
+	htmltext("<h3>%s</h3>" % _("Distribution by Year"))
+	makeQueueCallsTable(_("Year"), completed[0], uncompleted[0], yearnames)
+
+
+def completedPerPeriod [plain] (cursor, periods, periodnames):
+	row = cursor.fetchone()
+	calls_per_period = [CallData() for i in periods]
+	calls_by_agent = []
+	agentnames = []
+	total_completed_by_agent = 0
+	total_completed_by_caller = 0
+	total_transfered = 0
+	total_duration = 0
+	total_holdtime = 0
+	total_atendidas = 0
+	period=0
+	tenterqueue=0
+	disposition=""
+	tconnect=0
+	holdtimes = []
+	for h in range(5,95,5):
+		holdtimes.append('< %s' % h)
+	holdtimes.append('>= 90')
+
+	calls_per_holdtime = [CallData() for i in holdtimes]
+
+	if cursor.description:
+		fieldIndices = range(len(cursor.description))
+	else:
+		fieldIndices = []
+
+	while row:
+		for fieldIndex in fieldIndices:
+			c = cursor.description[fieldIndex][0]
+			s = row[fieldIndex]
+			if c=='hour':
+				period = s.split(":")
+				period = int(period[0])
+			if c=='day':
+				period = s.split("-")
+				period = int(period[2]) - 1
+			if c=='month':
+				period = s.split("-")
+				period = int(period[1]) - 1
+			if c=='year':
+				period = s.split("-")
+				period = int(period[0]) - startyear
+			if c=='agent':
+				if s != "0":
+					agent = s.split("-")[0]
+				else:
+					agent ="NONE"
+				if not agentnames.count(agent):
+					agentnames.append(agent)
+					calls_by_agent.insert(agentnames.index(agent), CallData())
+			if c=='completeagent':
+				if s != "0":
+					total_completed_by_agent += 1
+			if c=='completecaller':
+				if s != "0":
+					total_completed_by_caller += 1
+			if c=='transfer':
+				if s != "0":
+					total_transfered += 1
+			if c=='enterqueue':
+				if s != "0":
+					tenterqueue= datetime(*strptime(s, "%Y-%m-%d %H:%M:%S")[0:6])
+				else:
+					tenterqueue=0
+				total_atendidas += 1
+			if c=='connect':
+				if s != "0":
+					tconnect= datetime(*strptime(s, "%Y-%m-%d %H:%M:%S")[0:6])
+				else:
+					tconnect=0
+			if c=='calltime':
+				try:
+					calltime = int(s)
+				except ValueError:
+					calltime = 0
+			if c=='disposition':
+				disposition = s
+
+		if tenterqueue != 0 and tconnect != 0: 
+			holdtime = (tconnect - tenterqueue).seconds
+		else:
+			holdtime=0
+		total_duration += calltime
+		total_holdtime += holdtime
+		calls_per_period [period].addQueueCall(holdtime, calltime, disposition)
+		if holdtime / 5 > 18 : 
+			calls_per_holdtime[6].addQueueCall(0,0,"")
+		else: 
+			calls_per_holdtime[holdtime/5].addQueueCall(0,0,"")
+		calls_by_agent[agentnames.index(agent)].addQueueCall(holdtime, calltime, "")
+		row = cursor.fetchone()
+
+	print total_atendidas
+	total_transfered = int(total_atendidas) - int(total_completed_by_agent) - int(total_completed_by_caller)
+	completed_table = makeCompletedTable(total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime, total_transfered)
+	service_table = makeServiceTable((total_completed_by_agent + total_completed_by_caller + total_transfered), calls_per_holdtime, holdtimes)
+
+	return [calls_per_period, calls_by_agent, agentnames, completed_table, service_table]
+	
+def uncompletedPerPeriod [plain] (cursor, periods, periodnames, agentnames):
+	row = cursor.fetchone()
+	calls_per_period = [CallData() for i in periods]
+	calls_by_agent = []
+	total_dumped_by_agent = 0
+	total_abandoned_by_caller = 0
+	total_exited_with_key = 0
+	total_timed_out = 0
+	total_waittime = 0
+	total_position = 0
+	period=0
+
+	while row:
+		# Period
+		c = cursor.description[0][0]
+		s = row[0]
+		if c=='hour':
+			period = s.split(":")
+			period = int(period[0])
+		if c=='day':
+			period = s.split("-")
+			period = int(period[2]) - 1
+		if c=='month':
+			period = s.split("-")
+			period = int(period[1]) - 1
+		if c=='year':
+			period = s.split("-")
+			period = int(period[0]) - startyear
+		# Action
+		disposition = row[1]
+		if disposition=='No atendida':
+			total_dumped_by_agent += 1
+			if row[1] != "0" or row[1] != "":
+				agent = row[1].split("-")[0]
+			else:
+				agent ="NONE"
+			if not agentnames.count(agent):
+				agentnames.append(agent)
+				calls_by_agent.insert(agentnames.index(agent), CallData())
+			try:
+				calls_by_agent[agentnames.index(agent)].addQueueCall(0,0,"")
+			except:
+				pass
+
+		if disposition == "Interrumpida":
+			total_abandoned_by_caller += 1
+
+		calls_per_period [period].addQueueCall(0,0,disp = "uncompleted")
+		row = cursor.fetchone()
+
+	table = makeUncompletedTable (total_dumped_by_agent,
+				total_abandoned_by_caller)
+
+	return [calls_per_period, calls_by_agent, agentnames, table]
+
+def makeCompletedTable [plain] (total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime, total_transfered):
+	total_completed = total_completed_by_agent + total_completed_by_caller + total_transfered
+	table = HtmlTable(1,1)
+	table.setCell(0,0, _("Total completed calls"))
+	table.setCell(1,0, "%d" % total_completed)
+	table.setCell(0,1, _("Calls terminated by agents"))
+	table.setCell(1,1, "%d" % total_completed_by_agent)
+	table.setCell(0,2, _("Calls terminated by caller"))
+	table.setCell(1,2, "%d" % total_completed_by_caller)
+	table.setCell(0,3, _("Calls transfered by agent"))
+	table.setCell(1,3, "%d" % total_transfered)
+	table.setCell(0,4, _("Total call duration"))
+	table.setCell(1,4, "%d" % total_duration)
+	table.setCell(0,5, _("Average call duration"))
+	table.setCell(1,5, "%d" % (total_completed and (total_duration / total_completed) or 0))
+	table.setCell(0,6, _("Average hold time"))
+	table.setCell(1,6, "%d" % (total_completed and (total_holdtime / total_completed) or 0))
+	return table
+	
+def makeUncompletedTable [plain] (
+				total_dumped_by_agent,
+				total_abandoned_by_caller):
+	total_uncompleted = total_dumped_by_agent + total_abandoned_by_caller
+	table = HtmlTable(1,1)
+	table.setCell(0,0, _("Total uncompleted calls"))
+	table.setCell(1,0, "%d" % total_uncompleted)
+	#table.setCell(0,1, _("Calls dumped by agents"))
+	#table.setCell(1,1, "%d" % total_dumped_by_agent)
+	#table.setCell(0,2, _("Calls abandoned by caller"))
+	#table.setCell(1,2, "%d" % (total_abandoned_by_caller))
+	#table.setCell(0,4, _("Average waiting time"))
+	#table.setCell(1,4, "%d" % (total_abandoned_by_caller and (total_waittime / total_abandoned_by_caller) or 0))
+	return table
+
+def makeServiceTable [plain] (total_completed, calls_per_holdtime, holdtimes):
+	table = HtmlTable(1,1)
+	table.setCell(0,0, _("Time of answer"))
+	table.setCell(1,0, _("Number of calls"))
+	table.setCell(2,0, _("% of Total Calls"))
+	y = 1
+	for i in range(len(holdtimes)):
+		table.setCell(0,y, "%s" % holdtimes[i])
+		table.setCell(1,y, "%d" % calls_per_holdtime[i].calls_number)
+		table.setCell(2,y, "%f" % (total_completed and (float(calls_per_holdtime[i].calls_number)*100 / float(total_completed)) or 0))
+		y += 1
+	graph = makeGraphic(holdtimes, [i.calls_number for i in calls_per_holdtime], _("Service Level Graphic"),_("Time of Answer"), _("Number of calls"), "service_level.png")
+	table_html = table.getHtml(border=1)
+
+	#return table_html+graph
+	return graph
+
+def showResults [plain] (day, month, year, queue):
+	all = N_("All")
+	if day != all and month != all and year != all:
+		perHourInDay(day, month, year, queue)
+	elif day == all and month != all and year != all:
+		perDayInMonth(month, year, queue)
+	elif day == all and month == all and year != all:
+		perMonthInYear(year, queue)
+	elif day == all and month == all and year == all:
+		perYear(queue)
+	else:
+		htmltext("<p style='color:red;'>\n")
+		htmltext("%s" % _("Sorry, this kind of query is not supported yet"))
+		htmltext("</p>")
+
+def cdrForm [plain] ():
+	htmltext("<h3>%s</h3>" % _("Statistics for a Queue by Date:"))
+	form = makeForm()
+	form.render()
+	
+	if form.is_submitted() and not form.has_errors():
+		htmltext("<h3>%s</h3>" % _("Results"))
+		showResults(form["day"], form["month"], form["year"], form["queue"])
+

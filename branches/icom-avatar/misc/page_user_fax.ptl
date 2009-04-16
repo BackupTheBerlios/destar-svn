@@ -1,0 +1,122 @@
+# -*- coding: utf-8 -*-
+#
+# Destar has Copyright (C) 2005 by Holger Schurig
+# This file has Copyright (C) 2007 by Alejandro Rios P.
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from quixote.form import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect, get_field
+from quixote.util import StaticDirectory
+import backend, manager, configlets
+import time,types,sys,os
+
+def FileUploadForm [plain] (self, exitPath="."):
+
+	if self.form.has_key('_cancel'):
+		return redirect(exitPath)
+	form = Form(enctype="multipart/form-data")
+	form.add(FileWidget, "filetoupload", "", title=_("File to upload:"), required=True)
+	form.add(IntWidget, "number", title=_("Destination number"), required=True)
+	form.add(IntWidget, "extension", title=_("Dial an extension?"))
+	form.add(IntWidget, "waittime", 2, title=_("How many seconds to wait before starting transmition"), required=True)
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)
+	form.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
+	## Trunk to use
+	#
+	if not form.is_submitted() or form.has_errors():
+		return form.render()
+
+	#if form["filetoupload"].base_filename.endswith(".pdf"):
+	if form["filetoupload"]:
+		max_size = 5000000
+		#upload = get_field('filetoupload')
+		upload = form['filetoupload']
+		pos = upload.fp.tell()  # Save current position in file.
+		upload.fp.seek(0, 2)    # Go to end of file.
+		size = upload.fp.tell() # Get new position (which is the file size).
+		upload.fp.seek(pos, 0)  # Return to previous position.
+		upload.size = size
+		if size > max_size:
+			msg = "The uploaded file is too big (size=%s, max=%s bytes)"
+			msg %= (size, max_size)
+			return htmltext(_("File bigger than %s bytes") % max_size)
+		dest = os.path.join("/tmp/",upload.base_filename)
+		out = open(dest, 'wb')
+		# Copy file in chunks to avoid using lots of memory.
+		while 1:
+			chunk = upload.read(1024 * 1024)
+			if not chunk:
+			   break
+			out.write(chunk)
+		out.close()
+		upload.close()
+		sys.stderr.write(_("Uploaded file: %s") % dest)
+		if form["number"]:
+			# create call
+			dest_number = str(form["number"])
+			if form["extension"]:
+				# add WW and extension
+				dest_number.append("WW%d") % form["extension"]
+			# manager -> do call
+			res = manager.callApplication("ZAP/g1/%s" % dest_number,"Macro","sendfax|%s|%s" % (dest, form["waittime"]), "fax <4224660>")
+		return htmltext(_("Trying to send file: %s  To: %s .....  %s") % (dest.split('/')[-1:], dest_number, res))
+	else:
+		return htmltext(_("No file."))
+
+class Page(AccessControlled, Directory): 
+
+	_q_parent  = 'page_user'
+	_q_title   = _("Upload fax")
+	_q_desc    = _("Upload a .PDF file and send it over fax")
+	_q_link    = 'uploadfax'
+	_q_menupos = 10
+	_q_level   = 1
+
+	_q_exports = ['', 'static', 'faxes']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		'<p>'
+		htmltext(_('All Faxes received can be seen '))
+		'<a href="/faxes/">'
+		htmltext(_('here'))
+		'</a>'
+		'</p>'
+		manager.connect()
+		if not manager.isConnected():
+			'<p><span class="errornotice">'
+			htmltext(_("Asterisk is not running!"))
+			'</span></p>'
+		elif not manager.isLoggedIn():
+			# TODO: describe how to set this up
+			'<p><span class="errornotice">'
+			htmltext(_("The manager access is not working!"))
+			'</span></p>'
+		'<p>'
+		FileUploadForm(self.request)
+		'</p>'
+		footer()
+

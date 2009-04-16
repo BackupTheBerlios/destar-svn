@@ -1,0 +1,133 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+from quixote.form import *
+from quixote.directory import Directory, AccessControlled
+from quixote import get_request, get_session, redirect
+import backend, manager, configlets
+import time,types
+
+def phoneSettingsForm(self, phone, exitPath=".."):
+
+	if self.form.has_key('_cancel'):
+		return redirect(exitPath)
+	form = Form()
+
+	dnd  = manager.getVar('DND/%s' % phone.pbx,  phone.ext, False)
+	dsec = int(manager.getVar('DSEC/%s' % phone.pbx, phone.ext, 20))
+	cfim = manager.getVar('CFIM/%s' % phone.pbx, phone.ext, '')
+	cfbs = manager.getVar('CFBS/%s' % phone.pbx, phone.ext, '')
+	cfto = manager.getVar('CFTO/%s' % phone.pbx, phone.ext, '')
+	vmim = manager.getVar('VMIM/%s' % phone.pbx,  phone.ext, False)
+	vmbs = manager.getVar('VMBS/%s' % phone.pbx,  phone.ext, False)
+	vmu  = manager.getVar('VMU/%s' % phone.pbx,  phone.ext, False)
+
+	phones = backend.getChoice("CfgPhone")
+	if type(phones) == types.FunctionType:
+		phones = phones()
+	phones.remove( (phone.name,phone.name) )
+	phones.insert(0, ('',''))
+
+	form.add(CheckboxWidget,     "dnd",  dnd,  title=_("Enable 'do not disturb'"))
+	form.add(StringWidget, 	     "cfim", cfim, title=_("Immediate call forwarding to"))
+	form.add(StringWidget,       "cfbs", cfbs, title=_("Forward call when busy to"))
+	form.add(StringWidget,       "cfto", cfto, title=_("Forward call when timeout/unavailable to"))
+	form.add(IntWidget,          "dsec", dsec, title=_("Seconds of incoming ring time"), maxlength=3, size=3)
+	form.add(CheckboxWidget,     "vmim", vmim, title=_("Immediate voice mailbox"))
+	form.add(CheckboxWidget,     "vmbs", vmbs, title=_("Voice mailbox on busy"))
+	form.add(CheckboxWidget,     "vmu",  vmu,  title=_("Voice mailbox on timeout/unavailable"))
+	form.add(IntWidget,       "pin", phone.pin, title=_("Voicemail pin"), maxlength=10)
+	try:
+		if phone.secret:
+			form.add(StringWidget,  "secret", phone.secret, title=_("Extension Password"), maxlength=configlets.MAXSECRETLENGTH)
+	except AttributeError:
+		pass
+	form.add(SubmitWidget, '_submit', _("Submit"), render_br=False)
+	form.add(SubmitWidget, '_cancel', _("Cancel"), render_br=False)
+
+	if not form.is_submitted() or form.has_errors():
+		return form.render()
+
+	manager.setVar('DND/%s' % phone.pbx,  phone.ext, form['dnd'])
+	manager.setVar('DSEC/%s' % phone.pbx, phone.ext, form['dsec'])
+	manager.setVar('CFIM/%s' % phone.pbx, phone.ext, form['cfim'] or '')
+	manager.setVar('CFBS/%s' % phone.pbx, phone.ext, form['cfbs'] or '')
+	manager.setVar('CFTO/%s' % phone.pbx, phone.ext, form['cfto'] or '')
+	manager.setVar('VMIM/%s' % phone.pbx, phone.ext, form['vmim'])
+	manager.setVar('VMBS/%s' % phone.pbx, phone.ext, form['vmbs'])
+	manager.setVar('VMU/%s' % phone.pbx,  phone.ext, form['vmu'])
+
+	if form["pin"]:
+		phone.pin = form["pin"]
+	try:
+		if form["secret"]:
+			phone.secret = form["secret"]
+	except KeyError:	
+		pass
+	backend.updateConfiglet(phone)
+	try:
+		backend.createPythonConfig()
+	except IOError:
+		'<p>'
+		htmltext(_("Could not create destar configuration file."))
+		'.</p>'
+
+	return redirect(exitPath)
+
+class Page(AccessControlled, Directory): 
+
+	_q_parent  = 'page_user'
+	_q_title   = _("Phone Settings")
+	_q_desc    = _("Set your phone settings")
+	_q_link    = 'settings'
+	_q_menupos = 10
+	_q_level   = 1
+
+	_q_exports = ['']
+
+	def _q_access(self):
+		self.session = get_session()
+		self.request = get_request()
+		if self.session.level < self._q_level:
+			cantAccessPage()
+
+	def _q_index [plain] (self):
+		header(self._q_desc)
+		manager.connect()
+		if not manager.isConnected():
+			'<p><span class="errornotice">'
+			htmltext(_("Asterisk is not running!"))
+			'</span></p>'
+		elif not manager.isLoggedIn():
+			# TODO: describe how to set this up
+			'<p><span class="errornotice">'
+			htmltext(_("The manager access is not working!"))
+			'</span></p>'
+		elif self.session.phone: 
+			phone = backend.getConfiglet(name=self.session.phone)
+			phone.fixup()
+			phoneSettingsForm(self.request, phone)
+		else:
+			'<p><span class="errornotice">'
+			htmltext(_("You don't have an associated phone"))
+			'</span></p>'
+		footer()
+

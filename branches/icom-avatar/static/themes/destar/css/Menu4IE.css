@@ -1,0 +1,60 @@
+/* 
+ *		Horizontal, top-2-bottom menu ## Tweaks for IE5, IE6
+ *		Copyright Aleksandar Vacic, www.aplus.co.yu, some rights reserved http://creativecommons.org/licenses/by/2.0/
+ */
+
+/*		------	Basic style	------		*/
+
+/* Fix IE6's inability to expand clickable area */
+#menu li a
+{
+	position:relative;
+}
+
+/* IE can't handle display, so fail-over to visibility */
+#menu li ul
+{
+	display:block;
+	visibility:hidden;
+}
+
+/* simulate child selector for IE */
+#menu li:hover ul,
+#menu li:hover li:hover ul,
+#menu li:hover li:hover li:hover ul
+{
+	visibility:visible;
+}
+#menu li:hover li ul,
+#menu li:hover li:hover li ul,
+#menu li:hover li:hover li:hover li ul
+{
+	visibility:hidden;
+}
+
+#menuList
+{
+	height:26px;
+}
+
+/*		------   Make-up	--------			*/
+
+#menu a:hover
+{
+	color:#f89833;
+	background:url("../imgs/menu-f1.gif") left top no-repeat;
+}
+	#menu a:hover span
+	{
+		color:#f89833;
+		background:url("../imgs/menu-f2.gif") right top no-repeat;
+		display:block;
+	}
+#menu li li a:hover
+{
+	color:#000000;
+	text-decoration:underline;
+	background:none;
+}
+
+/* 	------	Behaviors --------		*/

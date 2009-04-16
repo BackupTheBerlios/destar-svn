@@ -1,0 +1,11 @@
+* Faltó la carpeta lang en el commit inicial de compass
+--Esta línea y las que están debajo serán ignoradas--
+
+A    pt
+A    pt/LC_MESSAGES
+AM   pt/LC_MESSAGES/destar.mo
+A    pt_BR
+A    pt_BR/LC_MESSAGES
+AM   pt_BR/LC_MESSAGES/destar.mo
+M    es/LC_MESSAGES/destar.mo
+M    fr/LC_MESSAGES/destar.mo

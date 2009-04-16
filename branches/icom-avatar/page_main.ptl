@@ -1,0 +1,178 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2005 by Holger Schurig
+# 
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+from Templates import *
+import sys, os, quixote, backend
+from quixote import get_session, get_session_manager, redirect
+from quixote.errors import PublishError
+from quixote.util import StaticDirectory
+from quixote.directory import Directory, AccessControlled
+
+
+#######################################################################
+#
+# This boilerplate is only in main_page.ptl. It automatically loads
+# all page_*.py/page_*.ptl files and creates a hierarchical menu with
+# them. For this it needs this variables in each page_*-module.
+#
+#    _q_link    = 'blah'             # link name for the page
+#    _q_title   = 'Some title'       # must be present, if it is '', then no menu
+#                                    # entry will be generated
+#    _q_desc    = 'Long description' # may be empty
+#    _q_menupos = 0                  # used for sorting the generated menu
+#    _q_level   = 3                  # access level needed for the page
+#    _q_parent  = 'page_blah'        # this means: we should be put into
+#                                    # page_blah's menu
+#    _q_exports = []                 # may contain local things, but will be
+#                                    # automatically created/populated
+#    _q_menu    = []                 # will be automatically created/populated
+#    def _q_index(request):          # the method that will generate the web page
+#    def _q_test():                  # option, if this func return False, then
+#                                    # the menu entry won't be generated
+#	
+#######################################################################
+
+
+class Page(AccessControlled, Directory): #order matters
+
+        # Our main page
+
+	_q_exports = ['', 'static', 'graphs']
+        _q_parent  = ''
+        _q_title   = _("Main menu")
+        _q_desc    = _("DeStar main page")
+        _q_level   = 0
+
+	def __init__(self):
+
+		# Import all cfg_*.py files once when the module loads.
+		for s in os.listdir(backend.CONFIGLETS_DIR):
+			if not s.startswith('page_'):
+				continue
+			m = None
+			if s.endswith('.ptl'):
+				s= s[:-4]
+				m = __import__(s)
+			elif s.endswith('.py'):
+				s = s[:-3]
+				m =  __import__(s)
+			if m:
+				for a in ('_q_parent', '_q_title', '_q_access'):
+					if not m.Page.__dict__.has_key(a):
+						print "Error: '%s' doesn't define %s" % (s,a)
+						sys.exit(1)
+
+				# instantiate eventually missing variables
+				if not m.Page.__dict__.has_key('_q_menu'):
+					m.Page._q_menu = []
+				if not m.Page.__dict__.has_key('_q_menupos'):
+					m.Page._q_menupos = 0
+				if not m.Page.__dict__.has_key('_q_exports'):
+					m.Page._q_exports = []
+				if not m.Page.__dict__.has_key('_q_desc'):
+					m.Page._q_desc = ''
+				if not m.Page.__dict__.has_key('_q_level'):
+					m.Page._q_level = 4
+				if not m.Page.__dict__.has_key('_q_link'):
+					m.Page._q_link = s[5:]
+				
+		# Build the menu structure for all page modules
+
+		for s in sys.modules:
+			if not s.startswith('page_'):
+				continue
+			if s == 'page_main':
+				continue
+			
+			this_mod = sys.modules[s].Page
+			if this_mod.__dict__.has_key('_q_test') and not this_mod()._q_test():
+				continue
+
+			try:
+				parent_mod = sys.modules[this_mod._q_parent].Page
+			except KeyError:
+				print "Note: %s does not exist, menu is now garbled" % this_mod._q_parent
+				parent_mod = sys.modules['page_main'].Page
+			s = s[5:]	# strip 'page_'
+
+			# Append module to parent's menu and export-list
+			link = this_mod._q_link
+			#parent_mod._q_menu.append( (link, this_mod._q_title, this_mod._q_desc, this_mod._q_level, this_mod))
+			if this_mod._q_title:
+				parent_mod._q_menu.append( this_mod )
+			parent_mod._q_exports.append( link )
+			# Make this module known in the parent's module namespace
+			#parent_mod.__dict__[link] = this_mod
+			#import pdb; pdb.set_trace()
+			setattr(parent_mod, link, this_mod())
+			# 'Convert' the _q_parent from type String to type Module
+			#this_mod._q_parent = parent_mod
+
+#######################################################################
+#
+# End of boilerplate, now comes the contents of 'page_main':
+#
+#######################################################################
+
+	def _q_index [plain] (self):
+		if get_session().level < 1:
+			return redirect(str('/login'))
+		header(self._q_desc)
+		'<p>'
+		htmltext(_('This page is empty. Please select one option from the menu.'))
+		'</p>'
+		footer()
+		#import configlets
+
+        def _q_access(self):
+                if get_session().level < self._q_level:
+                        cantAccessPage()
+	                #raise AccessError(htmltext(_("You don't have access to this page")))
+
+        def _q_exception_handler [plain] (self, exc):
+                if isinstance(exc, quixote.errors.AccessError) or isinstance(exc, quixote.errors.PublishError):
+                        if (exc.title == "Access denied"):
+                                header(_('Access Denied'))
+                                '<p>'
+                                htmltext(_("You don't have access to this page."))
+                                '</p>'
+                                footer()
+                        else:
+                                header(_(exc.title))
+                                '<p>'
+                                _(exc.public_msg)
+                                '</p>'
+                                footer()
+                else:
+                        raise exc
+
+	def _q_traverse(self, path):
+		try:
+			return Directory._q_traverse(self, path)
+		except PublishError, exc:
+			return self._q_exception_handler(exc)	
+
+	#from page_login import Page as Page
+	#login = Page()
+	#login = __import__("page_main", "", "", "Page")
+
+# Out static things like images and style-sheets:
+	static = StaticDirectory(os.path.abspath(os.getenv('STATICPAGES_DIR','static')), list_directory=1, follow_symlinks=1)
+	graphs = StaticDirectory(os.path.abspath('/tmp'), list_directory=1, follow_symlinks=1)
