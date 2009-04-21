@@ -248,7 +248,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", agent="", durati
 	
 	return render()
 
-def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", order="DESC"):
+def	cdrShowResults [html] (where, limit, offset, total = 0, field="start", order="DESC"):
 	if total == 0:
 		'<p>'
 		'--No records to Show--'
