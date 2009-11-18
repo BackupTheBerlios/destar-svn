@@ -101,7 +101,7 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2):
 	fromdate = "%s-%s-%s" % (year1, month1, day1)
 	todate = "%s-%s-%s" % (year2, month2, day2)
 	where = []
-	where.append ("date(start) >= date('%s')" % fromdate )
+	where.append ("date(calldate) >= date('%s')" % fromdate )
 	where.append ("date(end) <= date('%s')" % todate)
 	cursor = cdrutils.select(fields=['dialout', 'disposition', 'accountcode', 'billsec'], where = where)
 		
@@ -150,7 +150,7 @@ def showResults [plain] (day1, month1, year1, day2, month2, year2):
 			
 		row = cursor.fetchone()
 		
-	out_calls_per_dialout.append(nomatch)
+	#out_calls_per_dialout.append(nomatch)
 		
 	dialout_names = [i.name for i in out_calls_per_dialout]
 	htmltext('<br/><br/><h3>%s</h3>' % _('Outgoing Calls per Dialout Entry'))

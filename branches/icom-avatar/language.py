@@ -29,8 +29,8 @@
 
 
 import os, fnmatch, re, gettext
+from config import *
 
-CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
 
 def setLanguage(lang):
 	"Set the language via gnuttext"

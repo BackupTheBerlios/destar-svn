@@ -153,13 +153,13 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 		
 	form.add(HiddenWidget, 'pagenumber', value='_newest')
 	form.add(HiddenWidget, 'order', value='DESC')
-	form.add(HiddenWidget, 'orderby', value='timestamp')
+	form.add(HiddenWidget, 'orderby', value='time')
 
 	form.add(SubmitWidget, '_submit', _("Search"), render_br=True)
 
 	where = []
 	where.append("agent != 'Agent/'")
-	where.append("(action like 'AGENTCALLBACKLOG%' or action like 'AGENTLOG%' or action like 'PAUSEALL' or action like 'UNPAUSEALL')")
+	where.append("(event like 'AGENTCALLBACKLOG%' or event like 'AGENTLOG%' or event like 'PAUSEALL' or event like 'UNPAUSEALL' or event like 'RINGNOANSWER')")
 	
 	def render [html] ():
 
@@ -230,11 +230,11 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	
 		fromdate = "%s-%s-%s" % (form["fromyear"], form["frommonth"], form["fromday"])
 		todate = "%s-%s-%s" % (form["toyear"], form["tomonth"], form["today"])
-		where.append("date(timestamp) between date('%s') and date('%s')" % (fromdate, todate))
+		where.append("date(FROM_UNIXTIME(time)) between date('%s') and date('%s')" % (fromdate, todate))
 	
 	return render()
 
-def	cdrShowResults [html] (where, limit, offset, total = 0, field="start", order="DESC"):
+def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="start", order="DESC"):
 	if total == 0:
 		'<p>'
 		'--No records to Show--'
@@ -275,6 +275,8 @@ def	cdrShowResults [html] (where, limit, offset, total = 0, field="start", order
 					'<td><center>'
 					if row[fieldIndex] == "1969-12-31 19:00:00":
 						'-'
+					elif cursor.description[fieldIndex][0] == "callid":
+						'<a href="/stats/detail/%s">%s</a>' % (row[fieldIndex],row[fieldIndex])
 					elif cursor.description[fieldIndex][0] == "info2":
 						if row[fieldIndex]:
 							s = int(row[fieldIndex])
@@ -324,6 +326,5 @@ class Page(AccessControlled, Directory):
 
 	def _q_index [plain] (self):
 		header(self._q_desc, scripts=[formScript])
-		x = queueutils.loadQueueLog()
 		cdrForm(self.request)
 		footer()

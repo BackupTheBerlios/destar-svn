@@ -79,15 +79,27 @@ class CfgOptSipNetwork(CfgOptSingle):
 					optional=True),
 
 			VarType("tos",
-					title=_("TOS Field"),
+					title=_("TOS audio Field"),
 					len=10,
 					optional=True,
-					default="184"),
+					default="ef"),
 
 			VarType("srvlookup",
 					title=_("Enable DNS SRV lookups on outbound calls"),
 					type="bool",
-					default=True,
+					default=False,
+					optional=True),
+
+			VarType("t38",
+					title=_("Enable T38 udptl"),
+					type="bool",
+					default=False,
+					optional=True),
+
+			VarType("canreinvite",
+					title=_("Enable can-reinvite"),
+					type="bool",
+					default=False,
 					optional=True),
 
 			VarType("sipdefaults",
@@ -134,7 +146,7 @@ class CfgOptSipNetwork(CfgOptSingle):
 			if self.intnet:
 				c.append("localnet=%s/%s" % (self.intnet,self.intnetmask))
 		if self.tos:
-			c.append("tos=%s" % self.tos)
+			c.append("tos_audio=%s" % self.tos)
 		if self.moh:
 			c.append("musiconhold=%s" % self.moh)
      		if self.pedantic:
@@ -142,3 +154,11 @@ class CfgOptSipNetwork(CfgOptSingle):
 		c.append("nat=%s" % self.globalnat)
 		if self.srvlookup:
 			c.append("srvlookup=yes")
+		else:
+			c.append("srvlookup=no")
+		if self.canreinvite:
+			c.append("canreinvite=yes")
+		else:
+			c.append("canreinvite=no")
+		if self.t38:
+			c.append("t38pt_udptl=yes")

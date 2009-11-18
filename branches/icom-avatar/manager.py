@@ -620,8 +620,8 @@ def setVar(family, key, val):
 def originateCallApp(channel,application,data):
 	return conn.action('Originate', Channel=channel, Application=application)
 
-def originateCallExt(channel,context,extension,priority,callerid):
-	return conn.action('Originate', Channel=channel, Context=context, Exten=extension, Priority=priority, CallerID=callerid)
+def originateCallExt(channel,context,extension,priority,callerid,variable=None):
+	return conn.action('Originate', Channel=channel, Context=context, Exten=extension, Priority=priority, CallerID=callerid,Variable=variable)
 
 def getVarFamily(family):
 	varlist = []
@@ -633,6 +633,12 @@ def getVarFamily(family):
 def getSIPPeers():
 	return conn.action('Command', Command='sip show peers')
 
+def getConferenceComand(command):
+	varlist = []
+	for s in conn.action('Command', Command='conference %s' % command):
+		if s.startswith("User"):
+			varlist.append(s)
+	return varlist 
 
 def checkMailBox(ext):
 	vmstate = {}

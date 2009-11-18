@@ -264,11 +264,17 @@ class CfgIVRTreeNode(CfgIVR):
 		s.append("include=%s" % pbx)
 		s.appendExten("s","Ringing()", context)
 		s.appendExten("s","Set(TIMEOUT(digit)=%d)" % self.digittimeout, context)
+		dopt=""
 		if self.moh:
+			# Use Music as ringback tone
 			s.appendExten("s","Setmusiconhold(%s)" % self.moh, context)
-			s.appendExten("s","Set(DIAL_OPTIONS=m)", context)
+			dopt+=("m")
 		else:
-			s.appendExten("s","Set(DIAL_OPTIONS=r)", context)
+			# Ringback
+			dopt+=("r")
+		if VICIDIAL_INTEGRATION:
+			dopt+=("o")
+		s.appendExten("s","Set(DIAL_OPTIONS=%s)" % dopt, context)
 		if self.ivrtime:
 			if self.times:
 				times=self.times.split(',')

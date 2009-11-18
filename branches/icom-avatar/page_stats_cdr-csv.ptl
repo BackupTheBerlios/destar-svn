@@ -222,12 +222,12 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	if form["dstextension"]:
 		where.append("dst like '%s'" % form["dstextension"])
 	if form["duration"]:
-		where.append("CAST(billsec as integer) %s '%s'" % (form["durationoperand"],form["duration"]))
+		where.append("billsec %s '%s'" % (form["durationoperand"],form["duration"]))
 			
 	if form["searchBetweenDates"]:
 	
 		fromdate = "%s-%s-%s" % (form["fromyear"], form["frommonth"], form["fromday"])
-		where.append ("date(start) >= date('%s')" % fromdate )
+		where.append ("date(calldate) >= date('%s')" % fromdate )
 	
 		todate = "%s-%s-%s" % (form["toyear"], form["tomonth"], form["today"])
 		where.append ("date(end) <= date('%s')" % todate)
@@ -241,7 +241,7 @@ def cdrForm [plain] (request, srcextension="", dstextension="", mincost="", dura
 	
 	return render()
 
-def	cdrShowResults [html] (where, limit, offset, total = 0, field="start", order="DESC"):
+def	cdrShowResults [html] (where=[], limit, offset, total = 0, field="calldate", order="DESC"):
 	if total == 0:
 		'<p>'
 		'--No records to Show--'
@@ -287,7 +287,14 @@ def	cdrShowResults [html] (where, limit, offset, total = 0, field="start", order
                                                	totalmin += min
 						min
 					elif cursor.description[fieldIndex][0] == "Record":
-						'<a href="/stats/record/%s.WAV">%s</a>' % (row[fieldIndex],row[fieldIndex])
+						recfile=str(row[fieldIndex])
+						if recfile:
+							recfile=recfile.replace("wav49".s,"WAV".s)
+							if os.path.exists(recfile):
+								recbasename=os.path.basename(recfile)
+								'<a href="/stats/record/%s">%s</a>' % (recbasename,recbasename)
+					elif cursor.description[fieldIndex][0] == "UniqueId":
+						'<a href="/stats/detail/%s">%s</a>' % (row[fieldIndex],row[fieldIndex])
 					else: 
 						row[fieldIndex]
         	                       	'</center></td>'

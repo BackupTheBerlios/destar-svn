@@ -76,6 +76,11 @@ class CfgTrunkSiptrunk(CfgTrunk):
 				title=_("Bypass auth for incoming calls?"),
 				type="bool"),
 	
+			VarType("t38enable",
+					title=_("Enable T.38 for this peer?"),
+					type="bool",
+					optional=True),
+					
 			VarType("panelLab",
 				title=_("Operator Panel"),
 				type="label",
@@ -203,13 +208,17 @@ class CfgTrunkSiptrunk(CfgTrunk):
 			if self.dtmfmode:
 				c.append("dtmfmode=%s" % self.dtmfmode)
 			c.append("context=in-%s" % self.name)
-			c.append("canreinvite=no")
 			if self.fromdomain:
 				c.append("fromdomain=%s" % self.fromdomain)
 			if self.nat:
 				c.append("nat=yes")
 			if self.insecure:
 				c.append("insecure=port,invite")
+			if self.t38enable:
+				c.append("t38pt_udptl=yes")
+				c.append("canreinvite=yes")
+			else:
+				c.append("canreinvite=no")
 
 		if panelutils.isConfigured() == 1 and self.panel:
 			panelutils.createTrunkButton(self)

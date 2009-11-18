@@ -18,19 +18,10 @@
 #
 
 import os, re, commands, shutil
+from config import *
 import backend
 from configlets import *
 
-# To use with asternic.org op_panel tarball:
-#PANEL_CONF_DIR	= "/usr/local/op_panel"
-#PANEL_HTML_DIR	= "/usr/local/op_panel/flash"
-#PANEL_RESTART_CMD = "killall -HUP op_server.pl"
-
-
-# Configuration to use with op-panel .deb package:
-PANEL_CONF_DIR	= "/etc/op-panel"
-PANEL_HTML_DIR	= "/usr/share/op-panel/flash"
-PANEL_RESTART_CMD = "killall -HUP op_server"
 
 def N_(message): return message
 

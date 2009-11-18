@@ -19,14 +19,12 @@
 
 
 import os
+from config import *
 import language
 import configlets
 import commands
 import re
 
-DESTAR_CFG = "destar_cfg.py"
-CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
-ASTERISK_MODULES_DIR = os.getenv('ASTERISK_MODULES_DIR', default='/usr/lib/asterisk/modules')
 
 frontend_sessions = 0
 
@@ -164,6 +162,7 @@ def initializeAsteriskConfig():
 	c.append("defaultexpiry=120")
 	c.append("disallow=all")
 	c.append("limitonpeers=yes")
+	c.append("t38pt_udptl = yes")
 
 	c = AstConf("iax.conf")
 	c.append("language=%s" % getSetting('language', 'en'))
@@ -239,7 +238,11 @@ def initializeAsteriskConfig():
                 c.append("exten=s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_OFFERING)")
                 c.append("exten=s,n,UserEvent(TAPI,TAPIEVENT: SET CALLERID ${CALLERID})")
                 c.append("exten=s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLINFO LINECALLINFOSTATE_CALLERID)")
-	c.append("exten=s,n(MainDial),Dial(${ARG1}${prng},${dsec},TtWwr${dopt})")
+	if VICIDIAL_INTEGRATION:
+		c.append("exten=s,n(MainDial),AGI(call_inbound.agi,${ARG1}-----${CALLERID}-----${CDR(intrunk)}-----x-----y-----z-----w)")
+		c.append("exten=s,n,Dial(${ARG1}${prng},${dsec},TtWwr${dopt})")
+	else:
+		c.append("exten=s,n(MainDial),Dial(${ARG1}${prng},${dsec},TtWwr${dopt})")
 	c.append(";")
 	c.append("; Dial result was 'timeout'")
 	c.append("exten=s,n(dialtimeout),Set(fw_ext=${DB(CFTO/${ARG4}/${ARG3})})")
@@ -307,15 +310,22 @@ def initializeAsteriskConfig():
 	c.append(";")
 	c.append("; format: Macro(sendfax,filename,waittime)")
 	c.append(";")
-	context="macro-sendfax"
+	context="faxout"
 	c.setSection(context)
-	c.appendExten("s", "Answer()", context)
-	c.appendExten("s", "Set(LOCALHEADERINFO=MMF)", context)
-	c.appendExten("s", "Set(LOCALHEADERINFO=MMF)", context)
-	c.appendExten("s", "Wait(${ARG2})", context)
-	c.appendExten("s", "TxFax(${ARG1},caller,debug)", context)
-	c.appendExten("s", "UserEvent(FAX,SEND: Call ended normally)", context)
-	c.appendExten("s", "Hangup", context)
+#	c.appendExten("s", "Answer()", context)
+	c.appendExten("s", "Set(LOCALSTATIONID=Fax Avatar Ltda)", context)
+#	c.appendExten("s", "Wait(${ARG2})", context)
+	c.appendExten("s", "SendFAX(${FAXFILE})", context)
+#	c.appendExten("s", "UserEvent(FAX,SEND: Call ended normally)", context)
+	c.appendExten("h", "NoOp(TX: REMOTESTATIONID is ${REMOTESTATIONID})", context)
+
+	c.append(";")
+	c.append("; format: Macro(recvfax)")
+	c.append(";")
+	context="macro-recvfax"
+	c.setSection(context)
+	c.appendExten("s","Answer()", context)
+	c.appendExten("s","ReceiveFAX(${FAXFILE}.tif)", context)
 
 	c.append(";")
 	c.append("; format: Macro(call-forward,type,pbx,destination,message-to-play)")

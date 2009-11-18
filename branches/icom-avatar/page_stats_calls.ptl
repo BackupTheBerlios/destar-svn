@@ -70,8 +70,8 @@ def perHourInDay [plain] (day, month, year):
 	
 	date = "%s-%s-%s" % (year, month, day)
 	where = []
-	where.append("date(start) = date('%s')" % date)
-	cursor = cdrutils.select(fields=['time(start)', 'disposition', 'accountcode', 'billsec'], where = where)
+	where.append("date(calldate) = date('%s')" % date)
+	cursor = cdrutils.select(fields=['time(calldate)', 'disposition', 'accountcode', 'billsec'], where = where)
 	row = cursor.fetchone()
 	calls_per_hour = [CallData() for i in hours]
 
@@ -80,8 +80,8 @@ def perHourInDay [plain] (day, month, year):
 		for fieldIndex in fieldIndices:
 			c = cursor.description[fieldIndex][0]
 			s = row[fieldIndex]
-			if c=='time(start)':
-				hour = s.split(":")
+			if c=='time(calldate)':
+				hour = str(s).split(":")
 				hour = int(hour[0])
 			if c=='disposition':
 				disposition = s
@@ -104,8 +104,8 @@ def perDayInMonth [plain] (month, year):
 	date1 = "%s-%s-01" % (year, month)
 	date2 = "%s-%s-31" % (year, month)
 	where = []
-	where.append("date(start) between date('%s') and date('%s')" % (date1, date2))
-	cursor = cdrutils.select(fields=['date(start)', 'disposition', 'accountcode', 'billsec'], where = where)
+	where.append("date(calldate) between '%s' and '%s'" % (date1, date2))
+	cursor = cdrutils.select(fields=['date(calldate)', 'disposition', 'accountcode', 'billsec'], where = where)
 	row = cursor.fetchone()
 	calls_per_day = [CallData() for i in days]
 	
@@ -114,8 +114,8 @@ def perDayInMonth [plain] (month, year):
 		for fieldIndex in fieldIndices:
 			c = cursor.description[fieldIndex][0]
 			s = row[fieldIndex]
-			if c=='date(start)':
-				day = s.split("-")
+			if c=='date(calldate)':
+				day = s.isoformat().split("-")
 				day = int(day[2]) - 1
 			if c=='disposition':
 				disposition = s
@@ -138,8 +138,8 @@ def perMonthInYear [plain] (year):
 	date1 = "%s-01-01" % (year)
 	date2 = "%s-12-31" % (year)
 	where = []
-	where.append("date(start) between date('%s') and date('%s')" % (date1, date2))
-	cursor = cdrutils.select(fields=['date(start)', 'disposition', 'accountcode', 'billsec'], where = where)
+	where.append("date(calldate) between date('%s') and date('%s')" % (date1, date2))
+	cursor = cdrutils.select(fields=['date(calldate)', 'disposition', 'accountcode', 'billsec'], where = where)
 	row = cursor.fetchone()
 	calls_per_month = [CallData() for i in months]
 	
@@ -152,8 +152,8 @@ def perMonthInYear [plain] (year):
 		for fieldIndex in fieldIndices:
 			c = cursor.description[fieldIndex][0]
 			s = row[fieldIndex]
-			if c=='date(start)':
-				month = s.split("-")
+			if c=='date(calldate)':
+				month = s.isoformat().split("-")
 				month = int(month[1]) - 1
 			if c=='disposition':
 				disposition = s
@@ -174,7 +174,7 @@ def perMonthInYear [plain] (year):
 
 def perYear [plain] ():
 	where = []
-	cursor = cdrutils.select(fields=['date(start)', 'disposition', 'accountcode', 'billsec'], where = where)
+	cursor = cdrutils.select(fields=['date(calldate)', 'disposition', 'accountcode', 'billsec'], where = where)
 	row = cursor.fetchone()
 	calls_per_year = [CallData() for i in years]
 	
@@ -184,7 +184,7 @@ def perYear [plain] ():
 		for fieldIndex in fieldIndices:
 			c = str(cursor.description[fieldIndex][0])
 			s = str(row[fieldIndex])
-			if c=='date(start)':
+			if c=='date(calldate)':
 				year = s.split("-")
 				year = int(year[0]) - startyear
 			if c=='disposition':

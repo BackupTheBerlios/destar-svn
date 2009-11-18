@@ -59,6 +59,11 @@ class CfgPhoneSip(CfgPhone):
 			VarType("ext",
 					title=_("Extension"),
 					len=13),
+
+			VarType("t38enable",
+					title=_("Enable T.38 for this peer?"),
+					type="bool",
+					optional=True),
 					
 			VarType("tags",
 					title=_("Etiquetas"),
@@ -298,7 +303,6 @@ class CfgPhoneSip(CfgPhone):
 			sip.appendValue(self, "host", "defaultip")
 		sip.append("dtmfmode=%s" % self.dtmfmode)
 		sip.append("context=out-%s" % self.name)
-		sip.append("canreinvite=no")
 
 		if self.calleridname:
 			sip.append('callerid="%s" <%s>' % (self.calleridname, self.ext))
@@ -311,6 +315,12 @@ class CfgPhoneSip(CfgPhone):
 
 		if self.nat:
 			sip.append("nat=yes")
+
+		if self.t38enable:
+			sip.append("t38pt_udptl=yes")
+			sip.append("canreinvite=yes")
+		else:
+			sip.append("canreinvite=no")
 
         	try:
             		pbx = self.pbx

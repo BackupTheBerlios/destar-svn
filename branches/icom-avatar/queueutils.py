@@ -28,23 +28,29 @@ import language
 from datetime import datetime
 from time import strptime
 language.setLanguage('en')
-
+from config import *
 
 try:
-	from pysqlite2 import dbapi2 as sqlite
+	import MySQLdb as mysql
 except ImportError:
-	print _("Note: you should install python-pysqlite2 to have Queue Stats functionality")
+	print _("Note: you should install python mysql libs to have CDR Stats in MySQL")
 
 try:
-	db_fn = "/var/log/asterisk/queue.db"
-	if not os.access(db_fn, os.O_RDWR):
+	if not  os.access("/usr/lib/asterisk/modules/cdr_addon_mysql.so", os.F_OK):
 		raise ImportError
-	db = sqlite.connect(db_fn)
-	db.isolation_level = None
+	needModule("cdr_addon_mysql")
 except:
-	print _("Note: you don't seem to have access to %s. See INSTALL.txt for details.") % db_fn
+	print _("Note: you need the cdr_addon_mysql module to have CDR and Stats functionalities")
+	
+try:
+	db = mysql.connect(host = DBHOST, db = DBNAME, user = DBUSER, passwd = DBPASSWD)
+#	db3.isolation_level = None
+except:
+	print _("Note: you don't seem to have access to mysql.")
 	if __name__ == "__main__": sys.exit(0)
 	db = None
+
+
 
 def loadQueueLog ():
 	try:
@@ -56,7 +62,7 @@ def loadQueueLog ():
 		if __name__ == "__main__": sys.exit(0)
 
 	cursor = db.cursor()
-	cursor.execute("select max(timestamp) from queuelog")
+	cursor.execute("select max(time) from queuelog")
 	row = cursor.fetchone()
 	maxtime = datetime.fromtimestamp(float(0))
 	if row[0]:
@@ -84,7 +90,7 @@ def loadQueueLog ():
 		if (length < 8):
 			s.append('')
 		try:
-			cursor.execute( "INSERT INTO queuelog (timestamp,callid,qname,agent,action,info1,info2,info3) VALUES  ('%s','%s','%s','%s','%s','%s','%s','%s')" % tuple(s) )
+			cursor.execute( "INSERT INTO queue_log (time,callid,queuename,agent,event,info1,info2,info3) VALUES  ('%s','%s','%s','%s','%s','%s','%s','%s')" % tuple(s) )
 		except:
 			sys.stderr.write("[%s] queue.db: Failed to execute insert at timestamp %s\n" % (time.asctime(time.localtime()), s[0]))
 			if __name__ == "__main__": sys.exit(0)
@@ -97,27 +103,29 @@ def loadQueueLog ():
 def N_(message): return message
 
 def select(
-		fields=['timestamp',
+		fields=['FROM_UNIXTIME(time) as time',
 			'callid',
-			'qname',
+			'queuename',
 			'agent',
-			'action',
+			'event',
 			'info1',
 			'info2',
-			'info3'
+			'info3',
+			'info4'
 			],
 		groupby=[],
 		having=[],
 		where=[],
-		order=['timestamp'],
+		order=['time'],
 		limit=0,
 		offset=0,
 	):
+	db = mysql.connect(host = DBHOST, db = DBNAME, user = DBUSER, passwd = DBPASSWD)
 	cursor = db.cursor()
 
 	sql = ['SELECT']
 	sql.append( ','.join(fields) )
-	sql.append('FROM queuelog')
+	sql.append('FROM queue_log')
 
 	if where:
 		sql.append('WHERE ')
@@ -149,10 +157,11 @@ def count(
 		groupby=[],
 		having=[],
 	):
+	db = mysql.connect(host = DBHOST, db = DBNAME, user = DBUSER, passwd = DBPASSWD)
 	cursor = db.cursor()
 
 	sql = ['SELECT count(*)']
-	sql.append('FROM queuelog')
+	sql.append('FROM queue_log')
 
 	if where:
 		sql.append('WHERE ')
@@ -166,11 +175,12 @@ def count(
 		sql.append('HAVING')
 		sql.append( ','.join(having) )
 	
+	print ' '.join(sql) 
 	cursor.execute( ' '.join(sql) )
 	resultRow = cursor.fetchone()
 	result = int(resultRow[0])
 
 	return result
 
-if __name__ == "__main__":
-	loadQueueLog()
+#if __name__ == "__main__":
+	#loadQueueLog()

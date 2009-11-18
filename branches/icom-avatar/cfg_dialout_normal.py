@@ -188,6 +188,9 @@ class CfgDialoutNormal(CfgDialout):
 	    				        c.append("exten=>s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALTONE)")
 					        c.append("exten=>s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_DIALING)")
 					        c.append("exten=>s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_PROCEEDING)")
+					if VICIDIAL_INTEGRATION:
+						needModule("res_agi")
+						c.append("exten=>s,n,AGI(agi://127.0.0.1:4577/call_log)")
 					c.append("exten=>s,n,Dial(%s,%d,${options})" % (obj.dial,self.ringtime))
 					unavail+=1
 					c.append('exten=>s,n,GotoIf($["${DIALSTATUS}" = "CHANUNAVAIL"]?unavail%s)' % unavail)

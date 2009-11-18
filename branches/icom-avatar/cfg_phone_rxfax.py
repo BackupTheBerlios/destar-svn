@@ -26,7 +26,7 @@ class CfgPhoneRxfax(CfgPhone):
 
 	shortName = _("RxFax extension")
 	newObjectTitle = _("New RxFax extensiom")
-	description = _("This is an extension to receive faxes through the RxFax asterisk application.")
+	description = _("This is an extension to receive faxes through the ReceiveFax asterisk 1.6 application.")
 	groupName = "Fax"
 	
 	def createVariables(self):
@@ -67,23 +67,18 @@ class CfgPhoneRxfax(CfgPhone):
 	isAddable = classmethod(isAddable)
 
 	def createAsteriskConfig(self):
-		needModule("app_txfax")
-		needModule("app_rxfax")
+		needModule("app_fax")
 		needModule("app_system")
 		fax = AstConf("extensions.conf")
 		fax.setSection(self.pbx)
 		if self.filename:
 			dest_file = "/var/spool/asterisk/fax/%s" % self.filename
 		else:
-			dest_file = "/var/spool/asterisk/fax/${STRFTIME(${EPOCH},,%Y%m%d%H%M%S)}-${CALLERID(name)}(${CALLERID(num)})"
-		fax.appendExten(self.ext,"Goto(fax,s,1)")
-		fax.appendExten(self.name,"Goto(fax,s,1)")
+			dest_file = "/var/spool/asterisk/fax/${UNIQUEID}"
+		fax.appendExten("_%s" % self.ext,"Goto(fax,${EXTEN},1)")
 		fax.setSection("fax")
-		fax.append("exten => s,1,Macro(recvfax)")
-		#fax.append('''exten => h,1,System('fax2mail --cid-number "${CALLERID(num)}" --cid-name "${CALLERID(name)}" -f "${FAXFILE}"''')                                           
-		context="macro-recvfax"
-		fax.setSection(context)
-		fax.appendExten("s","Set(FAXFILE=%s)" % dest_file, context)
-		fax.appendExten("s","Answer()")
-		fax.appendExten("s","RxFax(${FAXFILE}.tif,debug)", context)
-
+		fax.append("exten=>_%s,1,Set(FAXFILE=%s)" % (self.ext,dest_file))
+		fax.append("exten=>_%s,n,ReceiveFAX(${FAXFILE}.tif)" %  (self.ext))
+		fax.append("exten=>_%s,n,Wait(2)" %  (self.ext))
+		fax.append('''exten=>_%s,n,System(/usr/bin/fax2mail --cid-number "${CALLERID(num)}" --cid-name "${CALLERID(name)}" -f "${FAXFILE}"''' %  (self.ext) )
+		fax.append("exten=>_%s,n,Hangup()" %  (self.ext))

@@ -74,6 +74,15 @@ class CfgTrunkDAHDIPRI(CfgTrunk):
 				type="string",
 				optional=True),
 
+			VarType("dialmethod",
+				title=_("Dial Group Method: G/g/R/r"),
+				type="choice",
+				options=[('g',_('g: Ascending sequential hunt group')),
+					('G', _('G: Descending sequential hunt group')),
+					('r', _('r: Ascending rotary hunt group')),
+					('R', _('R: Descending rotary hunt group'))],
+				default="g"),
+
 			VarType("panelLab",
 				title=_("Operator Panel"),
 				type="label",
@@ -240,7 +249,7 @@ class CfgTrunkDAHDIPRI(CfgTrunk):
 
 		#Dial part to use on dialout macro
 		if self.group:
-			self.dial = "DAHDI/g%s/${ARG1}" % (self.group)
+                        self.dial = "DAHDI/%s%s/${ARG1}" % (self.dialmethod, self.group)
 		else:
 			self.dial = "DAHDI/%s/${ARG1}" % (self.channels)
 		

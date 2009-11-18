@@ -20,13 +20,8 @@
 
 import sys, os, types, sha, binascii, time
 import panelutils
+from config import *
 
-CONF_DIR = "/etc/asterisk"
-DOC_DIR = os.getenv('DESTAR_DOC_DIR', default='/tmp/destar-doc')
-CONF_TAG = "; Automatically created by DESTAR\n"
-ASTERISK_MODULES_DIR = os.getenv('ASTERISK_MODULES_DIR', default='/usr/lib/asterisk/modules') 
-
-MAXSECRETLENGTH = 45
 
 class AsteriskConfigFile:
 	"""
@@ -933,63 +928,32 @@ class CfgTrunk(Cfg):
 		c = AstConf("extensions.conf")
 		contextin = "in-%s" % self.name
 		c.setSection(contextin)
-		c.appendExten("s","Set(CDR(intrunk)=%s)" %  self.name, context=contextin)
-		if self.clid:
-			needModule("func_callerid")
-			c.appendExten("s","Set(CALLERID(name)=%s)" %  self.clid, context=contextin)
-		if self.clidnumin:
-			needModule("func_callerid")
-			c.appendExten("s","Set(CALLERID(number)=%s)" %  self.clidnumin, context=contextin)
-		global configlet_tree
-		if self.contextin == 'phone' and self.phone:
-			obj = configlet_tree.getConfigletByName(self.phone)
-			try:
-				pbx = obj.pbx
-				c.appendExten("s", "Goto(%s,%s,1)" % (pbx,self.phone), context=contextin)
-			except AttributeError:
-				pass
-		if self.contextin == 'ivr' and self.ivr:
-			c.appendExten("s", "Goto(%s,s,1)" % self.ivr, context=contextin)
-		if self.contextin == 'pbx' and self.pbx:
-			c.appendExten("s", "Goto(%s,s,1)" % self.pbx, context=contextin)
+		if VICIDIAL_INTEGRATION: 
+                        needModule("res_agi")
+                        c.appendExten("h","DeadAGI(agi://127.0.0.1:4577/call_log--HVcauses--PRI-----NODEBUG-----${HANGUPCAUSE}-----${DIALSTATUS}-----${DIALEDTIME}-----${ANSWEREDTIME}))", context=contextin)
 
-		c.appendExten("_X","Set(CDR(intrunk)=%s)" %  self.name, context=contextin)
-		if self.clid:
-			needModule("func_callerid")
-			c.appendExten("_X","Set(CALLERID(name)=%s)" %  self.clid, context=contextin)
-		if self.clidnumin:
-			needModule("func_callerid")
-			c.appendExten("_X","Set(CALLERID(number)=%s)" %  self.clidnumin, context=contextin)
-		if self.contextin == 'phone' and self.phone:
-			obj = configlet_tree.getConfigletByName(self.phone)
-			try:
-				pbx = obj.pbx
-				c.appendExten("_X", "Goto(%s,%s,1)" % (pbx,self.phone), context=contextin)
-			except AttributeError:
-				pass
-		if self.contextin == 'ivr' and self.ivr:
-			c.appendExten("_X", "Goto(%s,s,1)" % self.ivr, context=contextin)
-		if self.contextin == 'pbx' and self.pbx:
-			c.appendExten("_X", "Goto(%s,${EXTEN},1)" % self.pbx, context=contextin)
-
-		c.appendExten("_X.","Set(CDR(intrunk)=%s)" %  self.name, context=contextin)
-		if self.clid:
-			needModule("func_callerid")
-			c.appendExten("_X.","Set(CALLERID(name)=%s)" %  self.clid, context=contextin)
-		if self.clidnumin:
-			needModule("func_callerid")
-			c.appendExten("_X.","Set(CALLERID(number)=%s)" %  self.clidnumin, context=contextin)
-		if self.contextin == 'phone' and self.phone:
-			obj = configlet_tree.getConfigletByName(self.phone)
-			try:
-				pbx = obj.pbx
-				c.appendExten("_X.", "Goto(%s,%s,1)" % (pbx,self.phone), context=contextin)
-			except AttributeError:
-				pass
-		if self.contextin == 'ivr' and self.ivr:
-			c.appendExten("_X.", "Goto(%s,s,1)" % self.ivr, context=contextin)
-		if self.contextin == 'pbx' and self.pbx:
-			c.appendExten("_X.", "Goto(%s,${EXTEN},1)" % self.pbx, context=contextin)
+		for X in ["s","_X","_X."]:
+			if VICIDIAL_INTEGRATION: 
+				c.appendExten(X,"AGI(agi://127.0.0.1:4577/call_log)", context=contextin)
+				c.appendExten(X,"Answer()", context=contextin)
+			c.appendExten(X,"Set(CDR(intrunk)=%s)" %  self.name, context=contextin)
+			if self.clid:
+				needModule("func_callerid")
+				c.appendExten(X,"Set(CALLERID(name)=%s)" %  self.clid, context=contextin)
+			if self.clidnumin:
+				needModule("func_callerid")
+				c.appendExten(X,"Set(CALLERID(number)=%s)" %  self.clidnumin, context=contextin)
+			if self.contextin == 'phone' and self.phone:
+				obj = configlet_tree.getConfigletByName(self.phone)
+				try:
+					pbx = obj.pbx
+					c.appendExten(X, "Goto(%s,%s,1)" % (pbx,self.phone), context=contextin)
+				except AttributeError:
+					pass
+			if self.contextin == 'ivr' and self.ivr:
+				c.appendExten(X, "Goto(%s,s,1)" % self.ivr, context=contextin)
+			if self.contextin == 'pbx' and self.pbx:
+				c.appendExten(X, "Goto(%s,${EXTEN},1)" % self.pbx, context=contextin)
 
 		
 class CfgPhone(Cfg):
@@ -1079,7 +1043,8 @@ class CfgPhone(Cfg):
 				if self.monitorfilename:
 					extensions.appendExten(tmp_ext, "MixMonitor(%s.%s,%s)" % (self.monitorfilename,self.monitorfileformat,options), context=pbx)
 				else:
-					extensions.appendExten(tmp_ext, "MixMonitor(${UNIQUEID}.%s,%s)" % (self.monitorfileformat,options), context=pbx)
+					extensions.appendExten(tmp_ext, "MixMonitor(${STRFTIME(${EPOCH},,%%Y%%m%%d%%H%%M%%S)}-${CALLERID(num)}-${EXTEN}-${UNIQUEID}.%s,%s)" % (self.monitorfileformat,options), context=pbx)
+				extensions.appendExten(tmp_ext, "Set(CDR(record)=${MIXMONITOR_FILENAME})", context=pbx)
 			self.createDialEntry(extensions, tmp_ext, pbx, self.ext)
 
 		for obj in configlet_tree:
@@ -1143,6 +1108,8 @@ class CfgPhone(Cfg):
 			pbx = self.pbx
 		except AttributeError:
 			pbx = "phones"
+		#c.append("exten=16,1,Playback(vm-password)")
+		#c.append("exten=16,n,DISA(/etc/asterisk/disa-%s.conf)" % pbx)
 		c.appendExten("i","Playback(invalid)", context=contextout)
 		c.append("exten=_X!,1,Set(fw_ext=${DB(CFIM/%s/${CALLERID(num)})})" % pbx)
 		c.append('exten=_X!,n,GotoIf($["${fw_ext}" != ""]?cfim)')
@@ -1190,6 +1157,9 @@ class CfgPhone(Cfg):
 		c.append("include=>%s" % pbx)
 		c.append("include=>%s-apps" % pbx)
 		c.appendExten("i","Playback(invalid)", context=contextout)
+		if VICIDIAL_INTEGRATION:
+			needModule("res_agi")
+			c.appendExten("h","DeadAGI(agi://127.0.0.1:4577/call_log--HVcauses--PRI-----NODEBUG-----${HANGUPCAUSE}-----${DIALSTATUS}-----${DIALEDTIME}-----${ANSWEREDTIME}))", context=contextout)
 		try:
 			timeoutvalue = not self.timeout and "0" or "1"
 		except AttributeError:
@@ -1224,7 +1194,8 @@ class CfgPhone(Cfg):
 							if self.monitorfilename:
 								c.appendExten("%s" % obj.pattern, "MixMonitor(%s.%s,%s)" % (self.monitorfilename,self.monitorfileformat,options), context=contextout)
 							else:
-								c.appendExten("%s" % obj.pattern, "MixMonitor(${UNIQUEID}.%s,%s)" % (self.monitorfileformat,options), context=contextout)
+								c.appendExten("%s" % obj.pattern, "MixMonitor(${STRFTIME(${EPOCH},,%%Y%%m%%d%%H%%M%%S)}-${CALLERID(num)}-${EXTEN}-${UNIQUEID}.%s,%s)" % (self.monitorfileformat,options), context=contextout)
+							c.appendExten("%s" % obj.pattern, "Set(CDR(record)=${MIXMONITOR_FILENAME})", context=contextout)
 						
 						secret = self.__getitem__("dialout_%s_secret" % obj.name)							
 						if secret:

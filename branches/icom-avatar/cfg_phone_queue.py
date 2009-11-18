@@ -245,7 +245,7 @@ class CfgPhoneQueue(CfgPhone):
 			if self.monitorfilename:
 				mon_line = "MixMonitor(%s.%s,%s)" % (self.monitorfilename,self.monitorfileformat,options)
 			else:
-				mon_line = "MixMonitor(${UNIQUEID}.%s,%s)" % (self.monitorfileformat,options)
+				mon_line = "MixMonitor(${STRFTIME(${EPOCH},,%%Y%%m%%d%%H%%M%%S)}-${CALLERID(num)}-${EXTEN}-${UNIQUEID}.%s,%s)" % (self.monitorfileformat,options)
 
 		qnames = []
 		if self.ext:
@@ -257,6 +257,7 @@ class CfgPhoneQueue(CfgPhone):
 			opt = "Tt"
 			if mon_line:
 				extensions.appendExten(qname, mon_line, self.pbx)
+				extensions.appendExten(qname, "Set(CDR(record)=${MIXMONITOR_FILENAME})", self.pbx)
 
 			if self.ring:
 				opt = opt + "r"
@@ -266,6 +267,7 @@ class CfgPhoneQueue(CfgPhone):
                                 extensions.appendExten(qname,"Set(CALLERID(name)=${CALLERID(num)}-%s)" %  self.clid, self.pbx)
 				
 			if self.moh and not self.ring:
+                                needModule("func_channel")
 				extensions.appendExten(qname, "Answer", self.pbx)
 				extensions.appendExten(qname, "Set(CHANNEL(musicclass)=%s)" % self.moh, self.pbx)
 

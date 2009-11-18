@@ -1,14 +1,3 @@
-2009-04-21
- * Added fixes related to Debian's bug #501207
-   ( http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=501207 )
-
-2009-04-16
- * In this branch:
- 	- Asterisk 1.6 support
-	- queue_log precesing and merging with CDR
-	- New features (click to dial, export to csv)
-	- Bug fixes
-
 2007-11-27
 * Added password field to Cfg Record.
 * Fixed typo in cfg_trunk_zapdynamic.py

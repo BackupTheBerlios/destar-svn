@@ -21,50 +21,50 @@
 import sys, os
 import language
 from configlets import needModule
+from config import *
 
 try:
-	from pysqlite2 import dbapi2 as sqlite
+	import MySQLdb as mysql
 except ImportError:
-	print _("Note: you should install python-pysqlite2 to have CDR functionality")
+	print _("Note: you should install python mysql libs to have CDR Stats in MySQL")
 
 try:
-	if not  os.access("/usr/lib/asterisk/modules/cdr_sqlite3_custom.so", os.F_OK):
+	if not  os.access("/usr/lib/asterisk/modules/cdr_addon_mysql.so", os.F_OK):
 		raise ImportError
-	needModule("cdr_sqlite3_custom")
+	needModule("cdr_addon_mysql")
 except:
-	print _("Note: you need the cdr_sqlite3_custom module to have CDR and Stats functionalities")
+	print _("Note: you need the cdr_addon_mysql module to have CDR and Stats functionalities")
 	
-
 try:
-	db_fn = "/var/log/asterisk/master.db"
-	if not os.access(db_fn, os.O_RDWR):
-		raise ImportError
-	db = sqlite.connect(db_fn, isolation_level="IMMEDIATE")
+	db = mysql.connect(host = DBHOST, db = DBNAME, user = DBUSER, passwd = DBPASSWD)
+#	db3.isolation_level = None
 except:
-	print _("Note: you don't seem to have access to %s yet created by cdr_sqlite3_custom. See INSTALL.txt for details.") % db_fn
+	print _("Note: you don't seem to have access to mysql.")
 	if __name__ == "__main__": sys.exit(0)
 	db = None
 
 def N_(message): return message
 
 def select(
-		fields=['start as %s' % N_("Time_of_start"),
+		fields=['calldate as %s' % N_("Time_of_start"),
 			'src as %s' % N_("Source"),
 			'clid as %s' % N_("Caller_ID"),
 			'dst as %s' % N_("Destination"),
-			'answer as %s' % N_("Time_of_answer"),
 			'billsec as %s' % N_("Duration"),
 			'billsec as %s' % N_("Seconds"),
 			'disposition as %s' % N_("Result"),
 			'pbx as %s' % N_("PBX"),
-			'uniqueid as %s' % N_("Record")],
+			'uniqueid as %s' % N_("UniqueId"),
+			'record as %s' % N_("Record")],
 		groupby=[],
 		having=[],
 		where=[],
-		order=['Acctid'],
+		order=[],
+#		order=['Acctid'],
 		limit=0,
 		offset=0,
 	):
+	db = mysql.connect(host = DBHOST, db = DBNAME, user = DBUSER, passwd = DBPASSWD)
 	cursor = db.cursor()
 
 	sql = ['SELECT']
@@ -91,7 +91,7 @@ def select(
 		sql.append('LIMIT %d' % limit)
 		if offset:
 			sql.append('OFFSET %d' % offset)
-
+	print ' '.join(sql)
 	cursor.execute( ' '.join(sql) )
 	return cursor
 
@@ -100,6 +100,7 @@ def count(
 		groupby=[],
 		having=[],
 	):
+	db = mysql.connect(host = DBHOST, db = DBNAME, user = DBUSER, passwd = DBPASSWD)
 	cursor = db.cursor()
 
 	sql = ['SELECT count(*)']
@@ -117,6 +118,7 @@ def count(
 		sql.append('HAVING')
 		sql.append( ','.join(having) )
 	
+	#print ' '.join(sql)
 	cursor.execute( ' '.join(sql) )
 	resultRow = cursor.fetchone()
 	result = int(resultRow[0])
