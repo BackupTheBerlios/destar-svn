@@ -1,3 +1,15 @@
+2009-12-14
+* page_stats_*.ptl: set _q_level = 2
+* Added page_stats_agents.ptl
+* Added TRANSFER query on page_stats_queue.ptl
+
+2009-04-16
+* Zap -> DAHDI changes from branch icom-avatar
+* Manager API 1.1 (from branch icom-avatar). This only works on Asterisk 1.6
+With this reload will fail on Asterisk < 1.6.0
+* If a module fails to load: warn. Don't Panic.
+* A first shot at Asterisk 1.6 compatibility: s/|/,/
+
 2007-11-27
 * Added password field to Cfg Record.
 * Fixed typo in cfg_trunk_zapdynamic.py

@@ -178,7 +178,7 @@ class Page(AccessControlled, Directory):
 	_q_parent = 'page_stats'
 	_q_title  = _("Extension Statistics")
 	_q_desc   = _("Statistics for an Extension")
-	_q_level  = 3
+	_q_level  = 2
 	_q_menupos = 32
 
 	_q_exports = ['']

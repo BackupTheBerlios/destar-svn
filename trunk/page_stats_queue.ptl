@@ -37,7 +37,7 @@ class Page(AccessControlled, Directory):
 	_q_parent = 'page_stats'
 	_q_title  = _("Queue Statistics")
 	_q_desc   = _("Incoming Call Statistics by Queue")
-	_q_level  = 3
+	_q_level  = 2
 	_q_menupos = 30
 
 	_q_exports = ['']
@@ -110,7 +110,7 @@ def perHourInDay [plain] (day, month, year, queue):
 	where = []
 	where.append("date(timestamp) = date('%s')" % date)
 	where.append("qname = '%s'" % queue)
-	where_completed = where + [("action like 'COMPLETE%'")]
+	where_completed = where + [("(action like 'COMPLETE%' or action like 'TRANSFER')")]
 	cursor = queueutils.select(
 				fields = ['time(timestamp) as hour', 'agent', 'action', 'info1', 'info2', 'info3'],
 				where = where_completed,
@@ -153,7 +153,7 @@ def perDayInMonth [plain] (month, year, queue):
 	where = []
 	where.append("date(timestamp) between date('%s') and date('%s')" % (date1, date2))
 	where.append("qname = '%s'" % queue)
-	where_completed = where + [("action like 'COMPLETE%'")]
+	where_completed = where + [("(action like 'COMPLETE%' or action like 'TRANSFER')")]
 	cursor = queueutils.select(
 				fields = ['date(timestamp) as day', 'agent', 'action', 'info1', 'info2', 'info3'],
 				where = where_completed,
@@ -196,7 +196,7 @@ def perMonthInYear [plain] (year, queue):
 	where = []
 	where.append("date(timestamp) between date('%s') and date('%s')" % (date1, date2))
 	where.append("qname = '%s'" % queue)
-	where_completed = where + [("action like 'COMPLETE%'")]
+	where_completed = where + [("(action like 'COMPLETE%' or action like 'TRANSFER')")]
 	cursor = queueutils.select(
 				fields = ['date(timestamp) as month', 'agent', 'action', 'info1', 'info2', 'info3'],
 				where = where_completed,
@@ -236,7 +236,7 @@ def perMonthInYear [plain] (year, queue):
 def perYear [plain] (queue):
 	where = []
 	where.append("qname = '%s'" % queue)
-	where_completed = where + [("action like 'COMPLETE%'")]
+	where_completed = where + [("(action like 'COMPLETE%' or action like 'TRANSFER')")]
 	cursor = queueutils.select(
 				fields = ['date(timestamp) as year', 'agent', 'action', 'info1', 'info2', 'info3'],
 				where = where_completed,
@@ -280,9 +280,14 @@ def completedPerPeriod [plain] (cursor, periods, periodnames):
 	agentnames = []
 	total_completed_by_agent = 0
 	total_completed_by_caller = 0
+	total_transfered = 0
 	total_duration = 0
 	total_holdtime = 0
-	holdtimes = ['< 15','< 30','< 45','< 60','< 75','< 90','>= 90']
+	holdtimes = []
+	for h in range(5,95,5):
+		holdtimes.append('< %s' % h)
+	holdtimes.append('>= 90')
+
 	calls_per_holdtime = [CallData() for i in holdtimes]
 
 	if cursor.description:
@@ -317,6 +322,8 @@ def completedPerPeriod [plain] (cursor, periods, periodnames):
 					total_completed_by_agent += 1
 				if disposition == "COMPLETECALLER":
 					total_completed_by_caller += 1
+				if disposition == "TRANSFER":
+					total_transfered += 1
 			if c=='info1':
 				try:
 					holdtime = int(s)
@@ -327,11 +334,26 @@ def completedPerPeriod [plain] (cursor, periods, periodnames):
 					calltime = int(s)
 				except ValueError:
 					calltime = 0
-			if c=='info2':
-				try:
-					origposition = int(s)
-				except ValueError:
-					origposition = 0
+			if c=='info3':
+				if disposition != "TRANSFER":
+					try:
+						origposition = int(s)
+					except ValueError:
+						origposition = 0
+				else:
+					try:
+						holdtime = int(s)
+					except ValueError:
+						holdtime = 0
+#			if c=='info4':
+#				if disposition == "TRANSFER":
+#					try:
+#						calltime = int(s)
+#					except ValueError:
+#						calltime = 0
+
+
+
 		total_duration += calltime
 		total_holdtime += holdtime
 		calls_per_period [period].addQueueCall(holdtime, calltime, disposition)
@@ -342,8 +364,8 @@ def completedPerPeriod [plain] (cursor, periods, periodnames):
 		calls_by_agent[agentnames.index(agent)].addQueueCall(holdtime, calltime, "")
 		row = cursor.fetchone()
 
-	completed_table = makeCompletedTable(total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime)
-	service_table = makeServiceTable((total_completed_by_agent + total_completed_by_caller), calls_per_holdtime, holdtimes)
+	completed_table = makeCompletedTable(total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime, total_transfered)
+	service_table = makeServiceTable((total_completed_by_agent + total_completed_by_caller + total_transfered), calls_per_holdtime, holdtimes)
 
 	return [calls_per_period, calls_by_agent, agentnames, completed_table, service_table]
 	
@@ -406,8 +428,8 @@ def uncompletedPerPeriod [plain] (cursor, periods, periodnames, agentnames):
 
 	return [calls_per_period, calls_by_agent, agentnames, table]
 
-def makeCompletedTable [plain] (total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime):
-	total_completed = total_completed_by_agent + total_completed_by_caller
+def makeCompletedTable [plain] (total_completed_by_agent, total_completed_by_caller, total_duration, total_holdtime, total_transfered):
+	total_completed = total_completed_by_agent + total_completed_by_caller + total_transfered
 	table = HtmlTable(1,1)
 	table.setCell(0,0, _("Total completed calls"))
 	table.setCell(1,0, "%d" % total_completed)
@@ -415,12 +437,14 @@ def makeCompletedTable [plain] (total_completed_by_agent, total_completed_by_cal
 	table.setCell(1,1, "%d" % total_completed_by_agent)
 	table.setCell(0,2, _("Calls terminated by caller"))
 	table.setCell(1,2, "%d" % total_completed_by_caller)
-	table.setCell(0,3, _("Total call duration"))
-	table.setCell(1,3, "%d" % total_duration)
-	table.setCell(0,4, _("Average call duration"))
-	table.setCell(1,4, "%d" % (total_completed and (total_duration / total_completed) or 0))
-	table.setCell(0,5, _("Average hold time"))
-	table.setCell(1,5, "%d" % (total_completed and (total_holdtime / total_completed) or 0))
+	table.setCell(0,3, _("Calls transfered by agent"))
+	table.setCell(1,3, "%d" % total_transfered)
+	table.setCell(0,4, _("Total call duration"))
+	table.setCell(1,4, "%d" % total_duration)
+	table.setCell(0,5, _("Average call duration"))
+	table.setCell(1,5, "%d" % (total_completed and (total_duration / total_completed) or 0))
+	table.setCell(0,6, _("Average hold time"))
+	table.setCell(1,6, "%d" % (total_completed and (total_holdtime / total_completed) or 0))
 	return table
 	
 def makeUncompletedTable [plain] (
