@@ -1,3 +1,6 @@
+2009-12-15
+* Added avatar web style
+
 2009-12-14
 * page_stats_*.ptl: set _q_level = 2
 * Added page_stats_agents.ptl
