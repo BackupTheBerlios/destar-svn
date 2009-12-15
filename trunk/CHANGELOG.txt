@@ -2,6 +2,7 @@
 * page_stats_*.ptl: set _q_level = 2
 * Added page_stats_agents.ptl
 * Added TRANSFER query on page_stats_queue.ptl
+* Fixed missing argument to originateCallExt in page_user_dial.ptl
 
 2009-04-16
 * Zap -> DAHDI changes from branch icom-avatar

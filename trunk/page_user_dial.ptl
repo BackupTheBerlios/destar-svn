@@ -46,8 +46,8 @@ class Page(AccessControlled, Directory):
 		if component:
 			if self.session.phone:
 				phone = backend.getConfiglet(name=self.session.phone)
-				manager.originateCallExt("%s/%s" % (phone.technology, phone.name), "out-%s" % phone.name, component, "1")
-				return redirect("../")
+				manager.originateCallExt("%s/%s" % (phone.technology, phone.name), "out-%s" % phone.name, component, "1", phone.ext)
+				return redirect("../phoneslist")
 			else:
 				return errorpage(_("You don't have an associated phone"))
 		else:
