@@ -35,6 +35,15 @@ class CfgIVRTreeNode(CfgIVR):
 					title=_("Name"),
 					len=25),
 
+			VarType("ext",
+					title=_("Extension to test"),
+					len=6),
+
+                        VarType("clid",
+                                        title = _("Change Caller ID name to:"),
+                                        len = 35,
+                                        optional = True),
+
 			VarType("digittimeout",
 					title=_("How much time has the user to dial an extension?"),
 					hint=_("(in seconds)"),
@@ -73,6 +82,7 @@ class CfgIVRTreeNode(CfgIVR):
 			VarType("operator",
 					title=_("Extension to ring after file playing or by pressing '0'"),
 					type="choice",
+					optional=True,
 					options=getChoice("CfgPhone")),
 
 			VarType("waittime",
@@ -256,12 +266,19 @@ class CfgIVRTreeNode(CfgIVR):
 	def createAsteriskConfig(self):
 		s = AstConf("extensions.conf")
 		context = self.name
-		s.setSection(context)
 		if self.pbx:
 			pbx = self.pbx
 		else:	
 			pbx = "phones"
+		if self.ext:
+			s.setSection(pbx)
+			s.appendExten(self.ext,"Goto(%s,s,1)" % self.name, context=pbx)	
+		s.setSection(context)
 		s.append("include=%s" % pbx)
+		if self.clid:
+                                needModule("func_callerid")
+                                s.appendExten("s","Set(CALLERID(name)=%s)" %  self.clid, context)
+	
 		s.appendExten("s","Set(TIMEOUT(digit)=%d)" % self.digittimeout, context)
 		if self.moh:
 			s.appendExten("s","Setmusiconhold(%s)" % self.moh, context)
@@ -280,7 +297,10 @@ class CfgIVRTreeNode(CfgIVR):
 			if self.pause:
 				s.appendExten("s","WaitExten(%s)" % self.pause, context)
 		s.appendExten("s","WaitExten(%d)" % self.waittime, context)
-		s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.operator), context)	
+		if self.operator:
+			s.appendExten("s","Goto(%s,%s,1)" % (pbx,self.operator), context)	
+		else:
+			s.appendExten("s","Goto(s,1)", context)	
 		if self.ivr_1:
 			s.appendExten("1","Goto(%s,s,1)" % self.ivr_1, context)	
 		if self.ivr_2:
@@ -323,7 +343,8 @@ class CfgIVRTreeNode(CfgIVR):
 			s.appendExten("*","Goto(%s,%s,1)" % (pbx,self.phone_ast), context)	
 		s.appendExten("0", "Goto(%s,%s,1)" % (pbx,self.operator), context)	
 		s.appendExten("i","Playback(invalid)", context)	
-		s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.operator), context)	
+		#s.appendExten("i","Goto(%s,%s,1)" % (pbx,self.operator), context)	
+		s.appendExten("i","Goto(s,1)", context)	
 		s.appendExten("t","ResetCDR(w)", context)
 		s.appendExten("t","NoCDR", context)
 		s.appendExten("t","Hangup", context)
