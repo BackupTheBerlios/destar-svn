@@ -5,6 +5,10 @@
 * Fixed missing argument to originateCallExt in page_user_dial.ptl
 * Added manager verification on page_user_phonebook.ptl
 * Added cfg_phone_rxfax to use ReceiveFax asterisk 1.6 app.
+* backend.py:
+  - Add Call Forwarding loop detection
+  - Added macro-send-fax
+  - Added macro-call-forward-warning
 
 2009-04-16
 * Zap -> DAHDI changes from branch icom-avatar
