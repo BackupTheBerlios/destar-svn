@@ -13,6 +13,7 @@
   - Added extension to test IVR from the inside.
   - Admin may change incoming callerID.
   - Choose if jump to operator or head of IVR by default.
+* Added AtributeException catch on cfg_app_disa.py
 
 2009-04-16
 * Zap -> DAHDI changes from branch icom-avatar

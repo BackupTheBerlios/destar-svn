@@ -46,22 +46,25 @@ class CfgAppDisa(CfgApp):
 				len=6,
 				default="*171"),
 
-			VarType("Dialout",
-				title=_("Allowed dialout-entries"),
-				type="label",
-				hide=True),
+			VarType("phone",
+					title=_("Log into phone"),
+					type="choice",
+					options=getChoice("CfgPhone"))
+				]
+	def isAddable(self):
+		"We can only add this object if we have at least one other phone defined."
 
-			VarType("timeout",
-				title=_("Enable time restriction?"),
-				type="bool",
-				optional=True,
-				hide=True),]
-		if varlist_manager.hasDialouts():
-                        self.variables += varlist_manager.getDialouts()
-                        for v in self.variables:
-                                if v.name == "Dialout" or v.name=="timeout":
-                                        v.hide = False
-	
+		# BUG: it does somehow not work to simply write for obj in config_entries,
+		# despite the "from configlets import *" above
+		import configlets
+		if len(configlets.configlet_tree.getConfigletsByName('CfgOptPBX')) > 0:
+			for obj in configlets.configlet_tree:
+				if obj.groupName == 'Phones':
+					return True
+		return False
+	isAddable = classmethod(isAddable)
+
+
 	
 	def row(self):
 		return ("%s" % (self.ext),self.shortName)
@@ -81,7 +84,20 @@ class CfgAppDisa(CfgApp):
 		c = AstConf("extensions.conf")
 		c.setSection("%s" % self.pbx)
 		needModule("app_disa")	
-		c.appendExten("%s" % self.ext ,"Set(TIMEOUT(digit)=5)", self.pbx)
-		c.appendExten("%s" % self.ext ,"Set(TIMEOUT(response)=10)", self.pbx)
-		c.appendExten("%s" % self.ext ,"Authenticate(%s)" % self.pin, self.pbx)
-		c.appendExten("%s" % self.ext ,"DISA(no-password,out-%s)" % self.name, self.pbx)
+		import configlets
+		obj = configlets.configlet_tree.getConfigletByName(self.phone)
+                try:
+                        if obj.calleridname:
+                                cidname=obj.calleridname
+                        else:
+                                cidname=obj.name
+                        if obj.calleridnum:
+                                cidnum=obj.calleridnum
+                        else:
+                                cidnum=obj.ext
+                        c.appendExten("%s" % self.ext ,"Set(TIMEOUT(digit)=5)", self.pbx)
+                        c.appendExten("%s" % self.ext ,"Set(TIMEOUT(response)=10)", self.pbx)
+                        c.appendExten("%s" % self.ext ,"Authenticate(%s)" % self.pin, self.pbx)
+                        c.appendExten("%s" % self.ext ,'DISA(no-password,real-out-%s,"%s" <%s>' % (obj.name, cidname, cidnum), self.pbx)
+                except AttributeError:
+                        pass
