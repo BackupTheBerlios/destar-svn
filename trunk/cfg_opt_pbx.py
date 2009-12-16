@@ -45,6 +45,8 @@ class CfgOptPBX(CfgOpt):
 		s = AstConf("extensions.conf")
 		s.setSection(self.name)
 		s.append(";Virtual PBX")
+		s.setSection("%s-apps" % self.name)
+		s.append(";Virtual PBX Applications")
 	
 	def row(self):
 		return (self.shortName,self.name)

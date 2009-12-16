@@ -1,5 +1,5 @@
 2009-12-16
-* cfg_app_*: separate context for all apps.
+* cfg_opt_pbx.py cfg_app_*: separate context for all apps.
 * Replaced CALLERIDNUM with CALLERID(num).
 * Added cfg_app_cidblock.py to implement ex-girlfriend feature.
 
