@@ -68,15 +68,15 @@ class CfgAppCallFW(CfgApp):
 		if self.devstateprefix:
 		    needModule("app_devstate")
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		c.setSection("%s-apps" % self.pbx)
 		c.appendExten(self.set, "Goto(cfw-%s,s,1)" % self.set, self.pbx)
 		c.appendExten(self.set, "Hangup", self.pbx)
 		c.appendExten("_%s." % self.set, "Macro(call-forward,%s,%s,${EXTEN:%d},%s)" % (self.type,self.pbx,len(self.set),msg), self.pbx)
 		c.appendExten("_%s." % self.set, "Hangup", self.pbx)
 		c.appendExten("%s" % self.unset, "Answer()", self.pbx)
-		c.appendExten("%s" % self.unset, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type, self.pbx), self.pbx)
+		c.appendExten("%s" % self.unset, "DBdel(%s/%s/${CALLERID(num)})" % (self.type, self.pbx), self.pbx)
 		if self.devstateprefix:
-			c.appendExten("%s" % self.unset, "Devstate(%s_%s_${CALLERIDNUM},0)" % (self.type, self.pbx), self.pbx)
+			c.appendExten("%s" % self.unset, "Devstate(%s_%s_${CALLERID(num)},0)" % (self.type, self.pbx), self.pbx)
 		c.appendExten("%s" % self.unset, "Playback(call-fwd-cancelled)", self.pbx)
 		c.appendExten("%s" % self.unset, "Wait(1)", self.pbx)
 		c.appendExten("%s" % self.unset, "Hangup", self.pbx)
@@ -84,22 +84,23 @@ class CfgAppCallFW(CfgApp):
 		context="cfw-%s" % self.set
 		c.setSection(context)
 		if self.toggle:
-			c.appendExten("s", "Set(testcf=${DB(%s/%s/${CALLERIDNUM})})" % (self.type, self.pbx), context)
+			c.appendExten("s", "Set(testcf=${DB(%s/%s/${CALLERID(num)})})" % (self.type, self.pbx), context)
 			c.appendExten("s", 'GotoIf($["${testcf}" != ""]?switchoff)', context)	
 		c.appendExten("s", "Set(TIMEOUT(digit)=2)", context)
-		c.appendExten("s", "Set(lastnum=${DB(%s_LASTNUM/%s/${CALLERIDNUM})})" % (self.type, self.pbx), context)
+		c.appendExten("s", "Set(lastnum=${DB(%s_LASTNUM/%s/${CALLERID(num)})})" % (self.type, self.pbx), context)
 		c.appendExten("s", 'GotoIf($["${lastnum}" = ""]?nonumber)', context)
 		c.appendExten("s","Background(press-1&to-enter-a-number&or&press-2&for&vm-last&number)", context)
 		c.appendExten("s","WaitExten(3)", context)
 		c.appendExten("s","Hangup()", context)
 		c.appendExten("s", "Goto(1,1)", context, label="nonumber")
 		c.appendExten("s", "Goto(%s,%s,1)" % (self.pbx, self.unset), context, label="switchoff")
+		c.appendExten("i", "Goto(1,1)", context, label="nonumber")
 		c.appendExten("2","Macro(call-forward,%s,%s,${lastnum},%s)" % (self.type,self.pbx,msg), context)
 		if self.devstateprefix:
-			c.appendExten("2", "Devstate(%s_%s_${CALLERIDNUM},2)" % (self.type.lower(), self.pbx), context)
+			c.appendExten("2", "Devstate(%s_%s_${CALLERID(num)},2)" % (self.type.lower(), self.pbx), context)
 		c.appendExten("1", "Playback(please-enter-the&number&after-the-tone&beep)", context)
 		c.appendExten("1","WaitExten(5)", context)
 		c.appendExten("_X.","Macro(call-forward,%s,%s,${EXTEN},%s)" % (self.type,self.pbx,msg), context)
 		if self.devstateprefix:
-			c.appendExten("_X.", "Devstate(%s_%s_${CALLERIDNUM},2)" % (self.type.lower(), self.pbx), context)
+			c.appendExten("_X.", "Devstate(%s_%s_${CALLERID(num)},2)" % (self.type.lower(), self.pbx), context)
 

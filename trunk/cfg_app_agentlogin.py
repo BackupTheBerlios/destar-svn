@@ -46,6 +46,6 @@ class CfgAppAgentLogin(CfgApp):
 		needModule("chan_agent")
 	
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		c.setSection("%s-apps" % self.pbx)
 		c.appendExten(self.ext, "AgentLogin()", self.pbx)
 

@@ -30,10 +30,17 @@ class CfgAppChanspy(CfgApp):
 	def createVariables(self):
 		self.variables   = [ 
 			VarType("pbx",
-				title=_("Virtual PBX"),
+				title=_("Virtual PBX allowed to dial"),
 				type="choice",
+				optional = True,
 				options=getChoice("CfgOptPBX")),
 			
+			VarType("phone",
+				title = _("Phone allowed to dial"),
+				optional = True,
+				type ="choice",
+				options = getChoice("CfgPhone")),
+
 			VarType("ext",
 				title=_("Extension"),
 				len=6),
@@ -41,6 +48,11 @@ class CfgAppChanspy(CfgApp):
 			VarType("scanspec",
 				title=_("Channel pattern to scan?"),
 				hint="<scanspec>",
+				optional=True,
+				len=15),
+
+			VarType("spygroup",
+				title=_("Spy Group"),
 				optional=True,
 				len=15),
 
@@ -62,10 +74,17 @@ class CfgAppChanspy(CfgApp):
 	def createAsteriskConfig(self):
 		needModule("app_chanspy")
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		if self.pbx:
+			c.setSection("%s-apps" % self.pbx)
+		else:
+			c.setSection("real-out-%s" % self.phone)
 		if self.password:
 			c.appendExten(self.ext, "Authenticate(%s)" % self.password, self.pbx)
 		if self.quiet:
-			c.appendExten(self.ext, "Chanspy(%s,q)" % self.scanspec, self.pbx)
-		else: 
-			c.appendExten(self.ext, "Chanspy(%s)" % self.scanspec, self.pbx)
+			quiet = "q"
+		else:
+			quiet = ""
+		if self.spygroup:
+			c.appendExten(self.ext, "Chanspy(,g(%s)%s)" % (self.spygroup,quiet), self.pbx)
+		else:
+			c.appendExten(self.ext, "Chanspy(%s,q%s" % (self.scanspec,quiet), self.pbx)

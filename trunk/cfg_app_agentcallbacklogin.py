@@ -63,19 +63,19 @@ class CfgAppAgentCallbackLogin(CfgApp):
 		needModule("chan_local")
 	
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		c.setSection("%s-apps" % self.pbx)
 
 		if self.silentlogin:
 			opts = "s"
 		else:
 			opts = ""
 		
-		c.appendExten(self.ext, "AgentCallbackLogin(${CALLERIDNUM}|%s|${CALLERIDNUM}@%s)" % (opts, self.pbx), self.pbx )
-		c.appendExten(self.ext, "DBdel(DND/%s/${CALLERIDNUM})" % self.pbx, self.pbx)
+		c.appendExten(self.ext, "AgentCallbackLogin(${CALLERID(num)},%s,${CALLERID(num)}@%s)" % (opts, self.pbx), self.pbx )
+		c.appendExten(self.ext, "DBdel(DND/%s/${CALLERID(num)})" % self.pbx, self.pbx)
 		c.appendExten(self.ext, "Playback(do-not-disturb)", self.pbx)
 		c.appendExten(self.ext, "Playback(cancelled)", self.pbx)
 		c.appendExten(self.ext, "Hangup", self.pbx)
 
-		c.appendExten(self.changeext, "AgentCallbackLogin(${CALLERIDNUM}|%s|'#')" % (opts), self.pbx )
+		c.appendExten(self.changeext, "AgentCallbackLogin(${CALLERID(num)},%s,'#')" % (opts), self.pbx )
 		c.appendExten(self.logoutext, "Dial(Local/%s@%s/n,,D(#))" % (self.changeext, self.pbx), self.pbx)
 

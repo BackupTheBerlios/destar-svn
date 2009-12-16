@@ -49,7 +49,7 @@ class CfgAppParking(CfgApp):
 		# transferdigittimeout
 
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		c.setSection("%s-apps" % self.pbx)
 		c.appendExten(self.ext, "Park(%s)" % self.ext, self.pbx)
 		
 		panelutils.createParkButton(self)

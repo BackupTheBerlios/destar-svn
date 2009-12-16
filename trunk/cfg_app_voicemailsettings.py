@@ -69,14 +69,14 @@ class CfgAppVoicemailSettings(CfgApp):
 		if self.devstateprefix:
 		    needModule("app_devstate")
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		c.setSection("%s-apps" % self.pbx)
 		c.appendExten("%s" % self.set, "Answer()", self.pbx)
 		if self.toggle:
-			c.appendExten("%s" % self.set, "Set(togglestate=${DB(%s/%s/${CALLERIDNUM})})" % (self.type, self.pbx), self.pbx)
+			c.appendExten("%s" % self.set, "Set(togglestate=${DB(%s/%s/${CALLERID(num)})})" % (self.type, self.pbx), self.pbx)
 			c.appendExten("%s" % self.set, 'GotoIf($["${togglestate}" != ""]?switchoff)', self.pbx)
-		c.appendExten("%s" % self.set, "Set(DB(%s/%s/${CALLERIDNUM})=1)" % (self.type, self.pbx), self.pbx)
+		c.appendExten("%s" % self.set, "Set(DB(%s/%s/${CALLERID(num)})=1)" % (self.type, self.pbx), self.pbx)
 		if self.devstateprefix:
-			c.appendExten("%s" % self.set, "Devstate(%s_%s_${CALLERIDNUM},2)" % (self.type.lower(), self.pbx), self.pbx)
+			c.appendExten("%s" % self.set, "Devstate(%s_%s_${CALLERID(num)},2)" % (self.type.lower(), self.pbx), self.pbx)
 		if self.type == "VMIM":
 			c.appendExten("%s" % self.set, "Playback(voice-mail-system)", self.pbx)
 			c.appendExten("%s" % self.set, "Playback(activated)", self.pbx)
@@ -90,9 +90,9 @@ class CfgAppVoicemailSettings(CfgApp):
 		c.appendExten("%s" % self.set, "Hangup", self.pbx)
 		c.appendExten("%s" % self.set, "Goto(%s,%s,1)" % (self.pbx, self.ext), self.pbx, label="switchoff")
 		c.appendExten("%s" % self.ext, "Answer()", self.pbx)
-		c.appendExten("%s" % self.ext, "DBdel(%s/%s/${CALLERIDNUM})" % (self.type, self.pbx), self.pbx)
+		c.appendExten("%s" % self.ext, "DBdel(%s/%s/${CALLERID(num)})" % (self.type, self.pbx), self.pbx)
 		if self.devstateprefix:
-			c.appendExten("%s" % self.ext, "Devstate(%s_%s_${CALLERIDNUM},0)" % (self.type.lower(), self.pbx), self.pbx)
+			c.appendExten("%s" % self.ext, "Devstate(%s_%s_${CALLERID(num)},0)" % (self.type.lower(), self.pbx), self.pbx)
 		c.appendExten("%s" % self.ext, "Playback(voice-mail-system)", self.pbx)
 		c.appendExten("%s" % self.ext, "Playback(cancelled)", self.pbx)
 		c.appendExten("%s" % self.ext, "Wait(1)", self.pbx)

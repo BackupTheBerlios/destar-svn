@@ -56,7 +56,7 @@ class CfgAppGlobalQuickDial(CfgApp):
 
 	def createAsteriskConfig(self):
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		c.setSection("%s-apps" % self.pbx)
 		if self.pin:
 			needModule("app_authenticate")
 			c.appendExten("_%sXX*X." % self.set, "Authenticate(%s)" % self.pin, self.pbx)

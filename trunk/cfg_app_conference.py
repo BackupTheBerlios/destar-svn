@@ -40,7 +40,7 @@ class CfgAppConference(CfgApp):
 		needModule("app_conference")
 
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		c.setSection("%s-apps" % self.pbx)
 		c.appendExten(self.ext, "Answer", self.pbx)
 		c.appendExten(self.ext, "Wait(1)", self.pbx)
 		c.appendExten(self.ext, "Conference", self.pbx)

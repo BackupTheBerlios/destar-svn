@@ -47,7 +47,7 @@ class CfgAppVoiceMail(CfgApp):
 		c.appendExten(self.ext, "Answer", self.pbx)
 		c.appendExten(self.ext, "Wait(1)", self.pbx)
 		if not self.mailbox:
-			c.appendExten(self.ext, "VoiceMailMain(${CALLERIDNUM}@%s)" % self.pbx, self.pbx)
+			c.appendExten(self.ext, "VoiceMailMain(${CALLERID(num)}@%s)" % self.pbx, self.pbx)
 		else:
 			c.appendExten(self.ext, "VoiceMailMain(@%s)" % self.pbx, self.pbx)
 		c.appendExten(self.ext, "Hangup", self.pbx)

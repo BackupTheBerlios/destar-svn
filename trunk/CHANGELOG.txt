@@ -1,3 +1,8 @@
+2009-12-16
+* cfg_app_*: separate context for all apps.
+* Replaced CALLERIDNUM with CALLERID(num).
+* Added cfg_app_cidblock.py to implement ex-girlfriend feature.
+
 2009-12-15
 * Added avatar web style
 

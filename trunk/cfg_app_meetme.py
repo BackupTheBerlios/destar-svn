@@ -81,7 +81,7 @@ class CfgAppMeetme(CfgApp):
 		needModule("app_meetme")
 
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
+		c.setSection("%s-apps" % self.pbx)
 		c.appendExten(self.ext, "Answer", self.pbx)
 		c.appendExten(self.ext, "Set(TIMEOUT(absolute)=%d)" % self.timeout, self.pbx)
 		# 'd' -- dynamically add conference
@@ -91,7 +91,7 @@ class CfgAppMeetme(CfgApp):
 			args += "%d" % self.confno
 		args += ",d"
 		if self.pin:
-			args += "P|%d" % self.pin
+			args += "P,%d" % self.pin
 		c.appendExten(self.ext, "MeetMe(%s)" % args, self.pbx)
 
 		if self.confno:

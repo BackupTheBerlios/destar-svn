@@ -61,8 +61,8 @@ class CfgAppDND(CfgApp):
 				if obj.tapi:
 				    tapisupport = True
 		c = AstConf("extensions.conf")
-		c.setSection(self.pbx)
-		c.appendExten("%s" % self.set, "Set(DB(DND/%s/${CALLERIDNUM})=True)" % self.pbx, self.pbx)
+		c.setSection("%s-apps" % self.pbx)
+		c.appendExten("%s" % self.set, "Set(DB(DND/%s/${CALLERID(num)})=True)" % self.pbx, self.pbx)
 		if tapisupport:
 			needModule("app_cut")
 			c.appendExten("%s" % self.set, "Set(CHAN=${CUT(CHANNEL,-,1)})", self.pbx)
@@ -72,7 +72,7 @@ class CfgAppDND(CfgApp):
 		c.appendExten("%s" % self.set, "Playback(activated)", self.pbx)
 		c.appendExten("%s" % self.set, "Hangup", self.pbx)
 
-		c.appendExten("%s" % self.unset, "DBdel(DND/%s/${CALLERIDNUM})" % self.pbx, self.pbx)
+		c.appendExten("%s" % self.unset, "DBdel(DND/%s/${CALLERID(num)})" % self.pbx, self.pbx)
 		if tapisupport:
 			c.appendExten("%s" % self.unset, "Set(CHAN=${CUT(CHANNEL,-,1)})", self.pbx)
 			c.appendExten("%s" % self.unset, "UserEvent(ASTDB,Channel: ${CHAN}^Family: DND^Value: ^)", self.pbx )

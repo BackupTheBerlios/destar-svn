@@ -21,34 +21,30 @@
 
 from configlets import *
 
-class CfgAppPickup(CfgApp):
+class CfgAppCIDBlocking(CfgApp):
 
-	shortName   = _("Channel Pickup")
-	newObjectTitle  = _("New extensions to pickup a ringing Channel")
-	description = _("Extensions to pickup a ringing Channel.")
+	shortName   = _("Caller Identifier Blocking List")
+	description = _("Extensions to add/remove from personal CID blocking list. The add extension will be of the form prefix+*+number_to_block. The remove extension will be of the form prefix+*+number_to_block.")
+	newObjectTitle = _("New extensions to add/remove/access personal CID blocking list")
 	
 	def createVariables(self):
 		self.variables   = [
-			VarType("pbx",
-				title=_("Virtual PBX"),
-				type="choice",
-				options=getChoice("CfgOptPBX")),
-			VarType("prefix",
-				title=_("Channel Pickup Prefix"),
-				len=6,
-				default="*8")
+			VarType("pbx",    title=_("Virtual PBX"), type="choice", options=getChoice("CfgOptPBX")),
+			VarType("set",      title=_("Setting prefix"), len=6, default="*9"),
+			VarType("unset",   title=_("Unsetting prefix"), len=6, default="#9"),
 		       ]
 		self.dependencies = [ DepType("pbx", 
 					type="hard",
 					message = _("This is a Dependency")),
 					]
-
-	def row(self):
-		return ("%s" % (self.prefix), self.shortName, self.pbx)
 	
+	def row(self):
+		return ("%s / %s" % (self.set,self.unset),self.shortName,self.pbx)
+
 	def createAsteriskConfig(self):
-		needModule("app_directed_pickup")
 		c = AstConf("extensions.conf")
-		c.setSection("%s-apps" % self.pbx)
-		c.appendExten("_%s." % self.prefix, "Pickup(${EXTEN:%d}@PICKUPMARK)" % (len(self.prefix)), self.pbx)
-		c.appendExten("_%s." % self.prefix, "Hangup", self.pbx)
+		c.setSection(self.pbx)
+		c.appendExten("_%s*X." % self.set, "Set(DB(CIDBLOCKLIST/${CALLERID(num)}/${EXTEN:%d})=${EXTEN:%d})" % (len(self.set)+1,len(self.set)+1))
+		c.appendExten("_%s*X." % self.set, "Hangup")
+		c.appendExten("_%s*X" % self.unset, "DBdel(CIDBLOCKLIST/${CALLERID(num)}/${EXTEN:%d})" % len(self.unset)+1)
+		c.appendExten("_%s*X" % self.unset, "Hangup")
