@@ -55,6 +55,15 @@ You would need to generate a valid certificate. For example:
 	# dd if=/dev/urandom of=temp_file count=2; openssl dhparam -rand temp_file 512 >> destar.pem
 	# ln -sf destar.pem `openssl x509 -noout -hash < destar.pem`.0
 
+# Todo, document:
+Optional: Vicidial
+-----------------
+Optional: Samba
+-----------------
+Optional: OP-Panel
+-----------------
+
+
 
 Install Destar
 --------------

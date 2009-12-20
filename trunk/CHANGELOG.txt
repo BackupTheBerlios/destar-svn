@@ -4,6 +4,13 @@
 * cfg_phone_ext.py: in 1.6, set only accepts one variable at a time.
 * cfg_opt_voicemail.py: change colon for pipe.
 * page_user_phonebook.ptl: catch an AttributeException.
+* Added config.py to put general settings.
+* backend.py:
+ - Use config.py
+ - VoiceMail has new sintax in 1.6
+ - Added VICIDIAL_INTEGRATION option.
+* cfg_opt_user.py: Added SAMBA_ENABLED option.
+* Added sambautils.py
 
 2009-12-16
 * cfg_opt_pbx.py, cfg_app_*: separate context for all apps.

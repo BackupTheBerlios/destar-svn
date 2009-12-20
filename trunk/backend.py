@@ -19,14 +19,12 @@
 
 
 import os
+from config import *
 import language
 import configlets
 import commands
 import re
 
-DESTAR_CFG = "destar_cfg.py"
-CONFIGLETS_DIR = os.getenv('CONFIGLETS_DIR', default='.') 
-ASTERISK_MODULES_DIR = os.getenv('ASTERISK_MODULES_DIR', default='/usr/lib/asterisk/modules')
 
 frontend_sessions = 0
 
@@ -160,9 +158,11 @@ def initializeAsteriskConfig():
 
 	c = AstConf("sip.conf")
 	c.append("language=%s" % getSetting('language', 'en'))
-	c.append("maxexpirey=3600")
-	c.append("defaultexpirey=3600")
+	c.append("maxexpiry=3600")
+	c.append("defaultexpiry=120")
 	c.append("disallow=all")
+	c.append("limitonpeers=yes")
+	c.append("t38pt_udptl = yes")
 
 	c = AstConf("iax.conf")
 	c.append("language=%s" % getSetting('language', 'en'))
@@ -238,7 +238,11 @@ def initializeAsteriskConfig():
                 c.append("exten=s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLSTATE LINECALLSTATE_OFFERING)")
                 c.append("exten=s,n,UserEvent(TAPI,TAPIEVENT: SET CALLERID ${CALLERID})")
                 c.append("exten=s,n,UserEvent(TAPI,TAPIEVENT: LINE_CALLINFO LINECALLINFOSTATE_CALLERID)")
-	c.append("exten=s,n(MainDial),Dial(${ARG1}${prng},${dsec},TtWwr${dopt})")
+	if VICIDIAL_INTEGRATION:
+		c.append("exten=s,n(MainDial),AGI(call_inbound.agi,${ARG1}-----${CALLERID}-----${CDR(intrunk)}-----x-----y-----z-----w)")
+		c.append("exten=s,n,Dial(${ARG1}${prng},${dsec},TtWwr${dopt})")
+	else:
+		c.append("exten=s,n(MainDial),Dial(${ARG1}${prng},${dsec},TtWwr${dopt})")
 	c.append(";")
 	c.append("; Dial result was 'timeout'")
 	c.append("exten=s,n(dialtimeout),Set(fw_ext=${DB(CFTO/${ARG4}/${ARG3})})")
@@ -266,17 +270,18 @@ def initializeAsteriskConfig():
 	c.append('exten=s,n,GotoIf($["${vmbs}" != ""]?vmbs)')
 	c.append("exten=s,n,Answer()")
 	c.append("exten=s,n,PlayTones(busy)")
-	c.append("exten=s,n,Busy()")
+	#c.append("exten=s,n,Busy()")
+	c.append("exten=s,n,Hangup()")
 	c.append(";")
 	c.append("exten=s,n(fw),Set(cf_count=$[${cf_count} + 1])")
 	c.append("exten=s,n,Set(CALLERID(num)=${CALLERID(num)}-${ARG3})")
 	c.append("exten=s,n,Goto(real-${ARG2},${fw_ext},1)")
 	c.append(";")
 	c.append('exten=s,n(vmu),Set(vmopt=u)')
-	c.append("exten=s,n,Macro(voicemail,${vmopt}${ARG3},${ARG4})")
+	c.append("exten=s,n,Macro(voicemail,${ARG3},${ARG4},${vmopt})")
 	c.append(";")
 	c.append('exten=s,n(vmbs),Set(vmopt=b)')
-	c.append("exten=s,n,Macro(voicemail,${vmopt}${ARG3},${ARG4})")
+	c.append("exten=s,n,Macro(voicemail,${ARG3},${ARG4},${vmopt})")
 	c.append(";")
 	c.append("exten=s,n(hangup),Hangup()")
 	c.append(";")
@@ -297,9 +302,9 @@ def initializeAsteriskConfig():
 	c.append("exten => t,1,Hangup()")
 	c.append("exten => T,1,Hangup()")
 	c.append("exten => s,1,Answer")
-	c.append("exten => s,2,Set(TIMEOUT(absolute)=240)")
+	c.append("exten => s,2,Set(TIMEOUT(absolute)=7200)")
 	c.append("exten => s,3,Wait(1)")
-	c.append("exten => s,4,VoiceMail(${ARG1}@${ARG2})")
+	c.append("exten => s,4,VoiceMail(${ARG1}@${ARG2},${ARG3})")
 	c.append("exten => s,5,Hangup()")
 
 	c.append(";")
@@ -307,14 +312,16 @@ def initializeAsteriskConfig():
 	c.append(";")
 	needModule("app_fax")
 	context="macro-sendfax"
+	context="faxout"
 	c.setSection(context)
 	c.appendExten("s", "Answer()", context)
 	c.appendExten("s", "Wait(${ARG2})", context)
-        c.appendExten("s", "Set(LOCALSTATIONID=%s)" getSetting('header_text', 'DeStar PBX'), context)
-        c.appendExten("s", "SendFAX(${FAXFILE})", context)
+	c.appendExten("s", "Set(LOCALSTATIONID=%s)" getSetting('header_text', 'DeStar PBX'), context)
+	c.appendExten("s", "SendFAX(${FAXFILE})", context)
 	c.appendExten("s", "Hangup", context)
-        c.appendExten("h", "NoOp(TX: REMOTESTATIONID is ${REMOTESTATIONID})", context)
+	c.appendExten("h", "NoOp(TX: REMOTESTATIONID is ${REMOTESTATIONID})", context)
 	c.appendExten("h", "UserEvent(FAX|SEND: Call ended normally)", context)
+
 
 	c.append(";")
 	c.append("; format: Macro(call-forward,type,pbx,destination,message-to-play)")
@@ -322,8 +329,8 @@ def initializeAsteriskConfig():
 	context="macro-call-forward"
 	c.setSection(context)
 	c.appendExten("s", "Answer()", context)
-	c.appendExten("s", "Set(DB(${ARG1}/${ARG2}/${CALLERIDNUM})=${ARG3})", context)
-	c.appendExten("s", "Set(DB(${ARG1}_LASTNUM/${ARG2}/${CALLERIDNUM})=${ARG3})", context)
+	c.appendExten("s", "Set(DB(${ARG1}/${ARG2}/${CALLERID(num)})=${ARG3})", context)
+	c.appendExten("s", "Set(DB(${ARG1}_LASTNUM/${ARG2}/${CALLERID(num)})=${ARG3})", context)
 	c.appendExten("s", "Playback(${ARG4})", context)
 	c.appendExten("s", "Playback(has-been-set-to)", context)
 	c.appendExten("s", "SayDigits(${ARG3})", context)
@@ -436,6 +443,15 @@ def initializeAsteriskConfig():
 	c.append("exten => T,1,PlayTones(congestion)")
 	c.append("exten => T,2,Wait(5)")
 	c.append("exten => T,3,Hangup")
+
+	if SAMBA_ENABLED:
+		c = AstConf("smb.conf")
+		c.setSection("global")
+		c.append("workgroup = DeStarPBX")
+		c.append("server string = DeStarPBX")
+		c.append("log file = /var/log/samba/log.%m")
+		c.append("security = user")
+		c.append("socket options = TCP_NODELAY SO_RCVBUF=8192 SO_SNDBUF=8192")
 
 
 def createAsteriskConfig():

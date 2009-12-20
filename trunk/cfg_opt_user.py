@@ -17,7 +17,9 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
+from config import *
 import language
+import sambautils
 from configlets import *
 
 class CfgOptUser(CfgOpt):
@@ -30,14 +32,13 @@ class CfgOptUser(CfgOpt):
 		self.variables = [
 		VarType("name",   title=_("Name"), len=15),
 		VarType("secret", title=_("Password"), len=15),
-		VarType("pc",     title=_("Associated IP address of PC"), hint=_("Trusted for auto-login"), len=15, optional=True),
 		VarType("phone",  title=_("Associated phone"), type="choice", optional=True,
 		                  options=getChoice("CfgPhone")),
 		VarType("pbx",	  title=_("Associated Virtual PBX"), type="choice", optional=True, options=getChoice("CfgOptPBX")),
 		VarType("level",  title=_("Type"), type="choice",
 		                  options=( ("0",_("disabled")),
 		                            ("1",_("User")),
-		                            ("2",_("Virtual PBX Administrator")),
+		                            ("2",_("Report Manager")),
 		                            ("3",_("Configurator")) )),
 		VarType("language", title=_("Language"), type="choice",
 				    options=( ("en","en"),
@@ -60,14 +61,30 @@ class CfgOptUser(CfgOpt):
 		for obj in configlets.configlet_tree:
 			if obj==self: 
 				continue
-			try:
-				if self.level == "2" and not self.pbx:
-					return ("pbx", _("Please choose a Virtual PBX for this user."))
-			except AttributeError:
-				pass
+			#try:
+			#	if self.level == "2" and not self.pbx:
+			#		return ("pbx", _("Please choose a Virtual PBX for this user."))
+			#except AttributeError:
+			#	pass
 
 	def createAsteriskConfig(self):
 		pass
+		if int(self.level) == 3 and config.SAMBA_ENABLED:
+			c = AstConf("smb.conf")
+			c.setSection("%s-spool" % self.name)
+			c.append("path = /var/spool/asterisk/")
+			c.append("valid users = %s" % self.name)
+			c.append("force user = root")
+                        c.append("read only = no")
+
+			c.setSection("%s-share" % self.name)
+			c.append("path = /usr/share/asterisk/")
+			c.append("valid users = %s" % self.name)
+			c.append("force user = root")
+                        c.append("read only = no")
+
+			sambautils.setPassword(self.name, self.secret)
+			sambautils.restartDaemon()
 
 	def row(self):
 		return (self.shortName, self.name)
