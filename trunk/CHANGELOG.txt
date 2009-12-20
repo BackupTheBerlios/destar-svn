@@ -1,5 +1,6 @@
 2009-12-20
 * page_admin_cfwstate.ptl: Added CFTO, VMU and VMBS.
+* page_admin_pbxstate.ptl: changed table distribution.
 
 2009-12-16
 * cfg_opt_pbx.py, cfg_app_*: separate context for all apps.
