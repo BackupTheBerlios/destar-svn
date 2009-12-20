@@ -12,6 +12,8 @@
 * cfg_opt_user.py: Added SAMBA_ENABLED option.
 * Added sambautils.py
 * cfg_phone_zap.py: added missing monitorinbound variable.
+* Added dahdi-gen and created dahdi-gen/Dahdi/Config/Gen/Destar.pm
+  as a proof-of-concept (thanks tzafrir).
 
 2009-12-16
 * cfg_opt_pbx.py, cfg_app_*: separate context for all apps.
