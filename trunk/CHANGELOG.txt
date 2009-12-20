@@ -1,6 +1,7 @@
 2009-12-20
 * page_admin_cfwstate.ptl: Added CFTO, VMU and VMBS.
 * page_admin_pbxstate.ptl: changed table distribution.
+* cfg_phone_ext.py: in 1.6, set only accepts one variable at a time.
 
 2009-12-16
 * cfg_opt_pbx.py, cfg_app_*: separate context for all apps.
