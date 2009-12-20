@@ -3,6 +3,7 @@
 * page_admin_pbxstate.ptl: changed table distribution.
 * cfg_phone_ext.py: in 1.6, set only accepts one variable at a time.
 * cfg_opt_voicemail.py: change colon for pipe.
+* page_user_phonebook.ptl: catch an AttributeException.
 
 2009-12-16
 * cfg_opt_pbx.py, cfg_app_*: separate context for all apps.

@@ -63,9 +63,12 @@ class Page(AccessControlled, Directory):
 			if o.pbx == self.session.pbx or self.session.level >= 3 :
 				'<tr>'
 				'<td><a href="../dial/%s">%s</a></td>' % (o.ext, o.ext)
-				if o.calleridname:
-					'<td><a href="../dial/%s">%s</a></td>' % (o.ext, o.calleridname)
-				else:
+				try:
+					if o.calleridname:
+						'<td><a href="../dial/%s">%s</a></td>' % (o.ext, o.calleridname)
+					else:
+						'<td><a href="../dial/%s">%s</a></td>' % (o.ext, o.name)
+				except:
 					'<td><a href="../dial/%s">%s</a></td>' % (o.ext, o.name)
 				'</tr>'
 		'</table>'
