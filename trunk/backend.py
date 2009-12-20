@@ -916,3 +916,24 @@ def createDocs():
 	for c in configletsList():
 		cfg = globals()[c.__name__](autoAdd=False)
 		cfg.writeDoc()
+
+def dahdigenconf():
+	"""This calls dahdi_genconf."""
+	dahdi_genconf = commands.getoutput('dahdi_genconf system destar')
+	if dahdi_genconf:
+		fn = os.path.join(configlets.CONF_DIR,"destar_channels.py")
+		try:
+			try:
+				reload(sys)
+				sys.setdefaultencoding('utf-8')
+				execfile(fn)
+			except IOError:
+				try:
+					execfile(DESTAR_CFG)
+				except IOError:
+					print _("Warning: There is no %s or %s file yet." % (fn,DESTAR_CFG))
+		except NameError:
+			pass
+		return True
+	else:
+		return False
