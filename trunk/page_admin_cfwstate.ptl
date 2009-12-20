@@ -29,7 +29,10 @@ import time,types
 def CFList [plain] (pbx):
 	cfimlist = manager.getVarFamily("CFIM/%s" % pbx)
 	cfbslist = manager.getVarFamily("CFBS/%s" % pbx)
+	cftolist = manager.getVarFamily("CFTO/%s" % pbx)
 	dndlist = manager.getVarFamily("DND/%s" % pbx)
+	vmulist = manager.getVarFamily("VMU/%s" % pbx)
+	vmbslist = manager.getVarFamily("VMBS/%s" % pbx)
 	if cfimlist != []:
 		# TODO: use CSS
 		'<table border=1 cellspacing="1">'
@@ -44,6 +47,21 @@ def CFList [plain] (pbx):
 		'<p><span class="errornotice">'
 		htmltext(_("No CFIM entries found"))
 		'</span></p>'
+	if cftolist != []:
+		# TODO: use CSS
+		'<table border=1 cellspacing="1">'
+		'<tbody><thead>'
+		'<tr><th>%s</th></tr>' % htmltext(_('Extension : CFTO Call Forwarning if Timeout')) 
+		'</thead>'
+		for i in cftolist:
+			'<tr><td>%s</td></tr>' % _(i)
+		'</tbody>'
+		'</table><br/><br/>'
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("No CFTO entries found"))
+		'</span></p>'
+
 	if cfbslist != []:
 		# TODO: use CSS
 		'<table border=1 cellspacing="1">'
@@ -72,6 +90,34 @@ def CFList [plain] (pbx):
 		'<p><span class="errornotice">'
 		htmltext(_("No DND entries found"))
 		'</span></p>'
+	if vmulist != []:
+		# TODO: use CSS
+		'<table border=1 cellspacing="1">'
+		'<tbody><thead>'
+		'<tr><th>%s</th></tr>' % htmltext(_('Extensions with active VMU')) 
+		'</thead>'
+		for i in vmulist:
+			'<tr><td>%s</td></tr>' % _(i)
+		'</tbody>'
+		'</table><br/><br/>'
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("No VMU entries found"))
+		'</span></p>'
+	if vmbslist != []:
+		# TODO: use CSS
+		'<table border=1 cellspacing="1">'
+		'<tbody><thead>'
+		'<tr><th>%s</th></tr>' % htmltext(_('Extensions with active VMBS')) 
+		'</thead>'
+		for i in vmbslist:
+			'<tr><td>%s</td></tr>' % _(i)
+		'</tbody>'
+		'</table><br/><br/>'
+	else:
+		'<p><span class="errornotice">'
+		htmltext(_("No VMBS entries found"))
+		'</span></p>'
 
 
 class Page(AccessControlled, Directory): 
@@ -81,7 +127,7 @@ class Page(AccessControlled, Directory):
 	_q_desc    = _("Call forwarding state")
 	_q_link    = 'cfwstate'
 	_q_menupos = 10
-	_q_level   = 2
+	_q_level   = 3
 
 	_q_exports = ['']
 
