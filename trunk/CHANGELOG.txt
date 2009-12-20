@@ -11,6 +11,7 @@
  - Added VICIDIAL_INTEGRATION option.
 * cfg_opt_user.py: Added SAMBA_ENABLED option.
 * Added sambautils.py
+* cfg_phone_zap.py: added missing monitorinbound variable.
 
 2009-12-16
 * cfg_opt_pbx.py, cfg_app_*: separate context for all apps.
