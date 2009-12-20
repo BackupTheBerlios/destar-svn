@@ -28,8 +28,9 @@ class Page(AccessControlled, Directory):
 
 
 	_q_parent  = 'page_admin'
-	_q_title   = _("Autodetect Dahdi channels")
-	_q_desc    = _("Uses dahdi_genconf to autodetect channels and create DeStar's trunks")
+	_q_title   = _("Autodetect Dahdi channels (beta)")
+	_q_desc    = _("Uses dahdi_genconf to autodetect channels and create DeStar's trunks\
+			Warning: this is beta and could break your current config.")
 	_q_link    = 'genconf'
 	_q_menupos = 90
 	_q_level   = 3
