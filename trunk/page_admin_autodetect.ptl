@@ -20,7 +20,6 @@
 
 from Templates import *
 import backend
-import manager
 from quixote.directory import Directory, AccessControlled
 from quixote import get_request, get_session
 
@@ -45,23 +44,11 @@ class Page(AccessControlled, Directory):
 
 	def _q_index [html] (self):
 		header(self._q_desc)
-		manager.connect()
-		if not manager.isConnected():
-			'<p><span class="errornotice">'
-			_("Asterisk is not running!")
-			'</span></p>'
-		elif not manager.isLoggedIn():
-			# TODO: describe how to set this up
-			'<p><span class="errornotice">'
-			_("The manager access is not working!")
-			'</span></p>'
-		else:
-			'<p>'
-			_('Doing a reload, result is:')
-			'</p>'
+		'<p>'
+		_('Doing a reload, result is:')
+		'</p>'
 
-			'<tt><p>'
-			backend.dahdigenconf()
-			'</p></tt>'
-
+		'<tt><p>'
+		backend.dahdigenconf()
+		'</p></tt>'
 		footer()

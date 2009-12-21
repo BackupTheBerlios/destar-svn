@@ -316,7 +316,7 @@ def initializeAsteriskConfig():
 	c.setSection(context)
 	c.appendExten("s", "Answer()", context)
 	c.appendExten("s", "Wait(${ARG2})", context)
-	c.appendExten("s", "Set(LOCALSTATIONID=%s)" getSetting('header_text', 'DeStar PBX'), context)
+	c.appendExten("s", "Set(LOCALSTATIONID=%s)" % getSetting('header_text', 'DeStar PBX'), context)
 	c.appendExten("s", "SendFAX(${FAXFILE})", context)
 	c.appendExten("s", "Hangup", context)
 	c.appendExten("h", "NoOp(TX: REMOTESTATIONID is ${REMOTESTATIONID})", context)
@@ -919,8 +919,8 @@ def createDocs():
 
 def dahdigenconf():
 	"""This calls dahdi_genconf."""
-	dahdi_genconf = commands.getoutput('dahdi_genconf system destar')
-	if dahdi_genconf:
+	dahdi_genconf = commands.getoutput('dahdi_genconf system destar').split("\n")
+	if dahdi_genconf[0] != "Empty configuration -- no spans":
 		fn = os.path.join(configlets.CONF_DIR,"destar_channels.py")
 		try:
 			try:
@@ -929,11 +929,14 @@ def dahdigenconf():
 				execfile(fn)
 			except IOError:
 				try:
-					execfile(DESTAR_CFG)
+					execfile("dahdi-gen/destar_channels.py")
 				except IOError:
-					print _("Warning: There is no %s or %s file yet." % (fn,DESTAR_CFG))
+					print _("Warning: There is no %s or %s file yet." % (fn,"dahdi-gen/destar_channels.py"))
+					return False
 		except NameError:
 			pass
+		fixupConfiglets()
+		createPythonConfig()
 		return True
 	else:
 		return False

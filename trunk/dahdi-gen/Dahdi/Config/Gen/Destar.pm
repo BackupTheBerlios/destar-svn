@@ -62,11 +62,9 @@ sub gen_digital($$$) {
 	my $type = $span->type() || die "$0: Span #$num -- unkown type\n";
 	my $termtype = $span->termtype() || die "$0: Span #$num -- unkown termtype [NT/TE]\n";
 	my $group = $gconfig->{'group'}{"$type"};
-	my $context = $gconfig->{'context'}{"$type"};
-	my @to_reset = qw/context group/;
+	my @to_reset = qw/group/;
 
 	die "$0: missing default group (termtype=$termtype)\n" unless defined($group);
-	die "$0: missing default context\n" unless $context;
 
 	my $sig = $span->signalling || die "missing signalling info for span #$num type $type";
 	grep($gconfig->{'bri_sig_style'} eq $_, 'bri', 'bri_ptmp', 'pri') or die "unknown signalling style for BRI";

@@ -74,6 +74,15 @@ class CfgTrunkDAHDIPRI(CfgTrunk):
 				type="string",
 				optional=True),
 
+			VarType("dialmethod",
+				title=_("Dial Group Method: G/g/R/r"),
+				type="choice",
+				options=[('g',_('g: Ascending sequential hunt group')),
+					('G', _('G: Descending sequential hunt group')),
+					('r', _('r: Ascending rotary hunt group')),
+					('R', _('R: Descending rotary hunt group'))],
+				default="g"),
+
 			VarType("panelLab",
 				title=_("Operator Panel"),
 				type="label",
@@ -165,32 +174,32 @@ class CfgTrunkDAHDIPRI(CfgTrunk):
 					message = _("This is a Dependency"))
 		]
 
-	def isAddable(self):
-		"""We can only add this configlet if we have at least one
-		DAHDIPRI option defined."""
-
-		# BUG: it does somehow not work to simply write for obj in config_entries,
-		# despite the "from configlets import *" above
-		import configlets
-		for obj in configlets.configlet_tree:
-			if obj.__class__.__name__ == 'CfgOptDAHDIPRI':
-				return True
-		return False 
-	isAddable = classmethod(isAddable)
+#	def isAddable(self):
+#		"""We can only add this configlet if we have at least one
+#		DAHDIPRI option defined."""
+#
+#		# BUG: it does somehow not work to simply write for obj in config_entries,
+#		# despite the "from configlets import *" above
+#		import configlets
+#		for obj in configlets.configlet_tree:
+#			if obj.__class__.__name__ == 'CfgOptDAHDIPRI':
+#				return True
+#		return False 
+#	isAddable = classmethod(isAddable)
 
 	def checkConfig(self):
                 res = CfgTrunk.checkConfig(self)
                 if res:
                         return res
-		import configlets
-		for obj in configlets.configlet_tree:
-			if obj.__class__.__name__ == 'CfgTrunkDAHDIPRI':
-				if obj==self: continue
-				try:
-					if obj.group == self.group and obj.group:
-						return ("group", _("Group already in use"))
-				except AttributeError:
-					pass
+		#import configlets
+		#for obj in configlets.configlet_tree:
+		#	if obj.__class__.__name__ == 'CfgTrunkDAHDIPRI':
+		#		if obj==self: continue
+		#		try:
+		#			if obj.group == self.group and obj.group:
+		#				return ("group", _("Group already in use"))
+		#		except AttributeError:
+		#			pass
 
 
 	def fixup(self):
@@ -212,6 +221,8 @@ class CfgTrunkDAHDIPRI(CfgTrunk):
 			c.appendValue(self, "group")
 		c.appendValue(self, "signalling")
 		c.appendValue(self, "switchtype")
+		c.append("resetinterval=never")
+		c.append("prilocaldialplan=local")
 		c.appendValue(self, "pridialplan")
 		contextin = "in-%s" % self.name
 		c.append("context=%s" % contextin)
@@ -238,7 +249,7 @@ class CfgTrunkDAHDIPRI(CfgTrunk):
 
 		#Dial part to use on dialout macro
 		if self.group:
-			self.dial = "DAHDI/g%s/${ARG1}" % (self.group)
+                        self.dial = "DAHDI/%s%s/${ARG1}" % (self.dialmethod, self.group)
 		else:
 			self.dial = "DAHDI/%s/${ARG1}" % (self.channels)
 		
